@@ -46,7 +46,9 @@ Completed task: `T22 — BridgeGate, TrustGuard, and proof-use classification`.
 
 Completed task: `T23 — Standard geometry proof loop`.
 
-Current task: `T24 — RunTrace, ProviderRunManifest, ResourceUsageReport, contribution tracking`.
+Completed task: `T24 — RunTrace, ProviderRunManifest, ResourceUsageReport, contribution tracking`.
+
+Current task: `T25 — Regression and mutation suite`.
 
 Claim ceiling from RC-2 remains active: do not claim full LeanGeo theorem-corpus build, solver/compiler integration, final theorem support, v0.3 completion, R-ID VERIFIED status, or evidence beyond the LeanGeo.Abbre elaborated `#check` fixture path.
 
