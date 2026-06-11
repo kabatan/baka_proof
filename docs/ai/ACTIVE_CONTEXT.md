@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
 version: v0.3-admission-candidate
-status: RC2_PENDING_REVIEW_AFTER_LEANGEO_FIXTURE_ELABORATION
+status: T14_IN_PROGRESS_AFTER_RC2_PASS
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -32,9 +32,11 @@ Implementation remains limited to the reviewed Base Spec and Plan. Git initializ
 
 ## Current Task Pointer
 
-Current gate: `RC-2 — target subset and extraction` pending Guardian review after LeanGeo toolchain setup and LeanGeo.Abbre fixture elaboration.
+Completed gate: `RC-2 — target subset and extraction` passed Guardian boundary review.
 
-Next task: run `guardian_boundary_reviewer` for RC-2 with fresh evidence. Do not claim RC-2 PASS until reviewer accepts the evidence.
+Current task: `T14 — GeometrySolverPolicy and resource-aware ExecutionPlan`.
+
+Claim ceiling from RC-2 remains active: do not claim full LeanGeo theorem-corpus build, solver/compiler integration, final theorem support, v0.3 completion, R-ID VERIFIED status, or evidence beyond the LeanGeo.Abbre elaborated `#check` fixture path.
 
 ## Evidence Directory
 
