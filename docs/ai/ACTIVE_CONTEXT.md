@@ -1,34 +1,36 @@
 ---
-title: Guardian Active Context — geometry × Lean v0.3
-context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
-version: v0.3-fixture-release-reviewed
-status: FINAL_REVIEW_PASSED_FIXTURE_LEVEL
+title: Guardian Active Context — geometry x Lean v0.3A
+context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003A
+version: v0.3A-recovery-admitted
+status: READY_TO_START_V03A_T001
 created: 2026-06-11
-base_spec: MARP-GEOLEAN-BASE-003
-plan: MARP-GEOLEAN-PLAN-003
+last_updated: 2026-06-12
+base_spec: MARP-GEOLEAN-BASE-003A
+plan: MARP-GEOLEAN-PLAN-003A
 purpose: Minimal navigation state for the current Guardian change.
 authority: Navigation only; never overrides Base Spec, Plan, source map, evidence, or user approval state.
 ---
 
-# Guardian Active Context — geometry × Lean v0.3
+# Guardian Active Context — geometry x Lean v0.3A
 
 ## Status
 
-Guardian Lane is active for the geometry × Lean v0.3 implementation track.
+Guardian Lane is active for the geometry x Lean v0.3A real-integration recovery preparation track.
 
-Implementation permission: **granted** by the 2026-06-11 user request and recorded in:
+v0.3 fixture-level release acceptance remains recorded under:
 
-- `docs/ai/changes/geometry-lean-v0_3/evidence/user_implementation_approval.md`
+- `docs/ai/changes/geometry-lean-v0_3/CLOSURE.md`
 
-Implementation remains limited to the reviewed Base Spec and Plan. Git initialization and frequent commits are authorized.
+The v0.3A Base Spec and Plan amendments are Guardian-boundary admitted for recovery work. The 2026-06-12 recovery instruction authorizes agent-owned dependency bootstrap and real-integration recovery under the admitted recovery Base Spec and Plan.
 
 ## Read First
 
-1. `docs/ai/changes/geometry-lean-v0_3/BASE_SPEC.md`
-2. `docs/ai/changes/geometry-lean-v0_3/PLAN.md`
-3. `docs/ai/changes/geometry-lean-v0_3/source_map.md`
-4. Current Plan task and required R-IDs.
-5. Files in the admitted ReadSet before editing.
+1. `docs/ai/specs/MARP-GEOLEAN-BASE-003A.md`
+2. `docs/ai/plans/MARP-GEOLEAN-PLAN-003A.md`
+3. `docs/ai/changes/geometry-lean-v0_3a/source_map.md`
+4. `docs/ai/changes/geometry-lean-v0_3/evidence/v03_completion_blocker_report.md`
+5. Current Plan task and required R-IDs.
+6. Files in the admitted ReadSet before editing.
 
 ## Current Task Pointer
 
@@ -58,16 +60,20 @@ Completed task: `T26 — EvaluationFunnel and Level 2 matrix`.
 
 Completed task: `T27 — Release acceptance and closure`.
 
-Completed gate: `Final closure review — spec verifier, quality reviewer, and Guardian boundary reviewer` passed within the fixture-level claim ceiling.
+Completed gate: v0.3 final closure review passed within the fixture-level claim ceiling.
 
-Current claim ceiling: do not claim full LeanGeo theorem-corpus build, real Newclid/GenesisGeo/TongGeometry integration, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3 completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. Current positive claims are limited to the geometry x Lean v0.3 Guardian track passing fixture-level release acceptance and final reviews for the recorded schemas/contracts, target-subset and extraction fixtures, provider/resource fixtures, compiler/construction fixtures, bridge/trust guards, worker-applied local final-verification fixture, run trace/replay fixtures, and the Level 2 smoke matrix fixture.
+Completed v0.3A gate: `BASE-003A / PLAN-003A Guardian boundary admission`.
+
+Current v0.3A task pointer: `T-001 — Preserve current fixture-level evidence`.
+
+Current claim ceiling: do not claim full LeanGeo theorem-corpus build, real Newclid/GenesisGeo/TongGeometry integration, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3 completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. Current positive claims remain limited to the geometry x Lean v0.3 Guardian track passing fixture-level release acceptance and final reviews for the recorded fixture scope.
 
 ## Evidence Directory
 
-Default evidence path:
+Default v0.3A evidence path:
 
 ```text
-docs/ai/changes/geometry-lean-v0_3/evidence/
+docs/ai/changes/geometry-lean-v0_3a/evidence/
 ```
 
 Use this directory for source hashes, review outputs, permission records, dependency reports, command logs, and closure evidence.
@@ -83,3 +89,4 @@ Stop and request decision if any work requires:
 - bypassing `ResourceGovernor`;
 - trusting raw provider/model output as proof evidence;
 - claiming completion without fresh evidence.
+- interpreting v0.3A as a real Level 2 advantage target.

@@ -19,7 +19,7 @@ authority: Navigation and classification only; individual Base Spec and Plan fil
 
 Purpose: Guardian-managed implementation track for the geometry × Lean v0.3 mathematical auto-research pipeline.
 
-Status: boundary/spec/quality reviews passed and source-fidelity review passed; explicit user implementation approval is still missing.
+Status: fixture-level release acceptance and final reviews passed; full v0.3 completion is blocked by real-integration and corpus evidence ceilings.
 
 Primary documents:
 
@@ -29,6 +29,21 @@ Primary documents:
 - `docs/ai/changes/geometry-lean-v0_3/RESOURCE_POLICY.md` — companion local resource policy template.
 - `docs/ai/changes/geometry-lean-v0_3/REVIEW_PACKET.md` — review scope and evidence index for Guardian reviewers.
 - `docs/ai/changes/geometry-lean-v0_3/CLOSURE_TEMPLATE.md` — final closure template for future implementation work.
+- `docs/ai/changes/geometry-lean-v0_3/evidence/v03_completion_blocker_report.md` — blocker report for full v0.3 completion.
+
+### geometry-lean-v0_3A
+
+Purpose: Guardian-managed recovery track for resolving v0.3 completion blockers through real provider integration and a limited real LeanGeo corpus.
+
+Status: Base Spec/Plan amendment Guardian-admitted for recovery work; claims remain fixture-level until fresh v0.3A evidence and final reviews pass.
+
+Primary documents:
+
+- `docs/ai/specs/MARP-GEOLEAN-BASE-003A.md` — candidate recovery correctness authority after admission.
+- `docs/ai/plans/MARP-GEOLEAN-PLAN-003A.md` — candidate recovery execution contract after admission.
+- `docs/ai/changes/geometry-lean-v0_3a/source_map.md` — source-to-R-ID traceability aid.
+- `docs/ai/changes/geometry-lean-v0_3a/README.md` — recovery change index.
+- `docs/ai/changes/geometry-lean-v0_3a/evidence/` — recovery evidence.
 
 Architecture documents:
 
