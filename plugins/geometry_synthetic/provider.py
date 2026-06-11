@@ -248,8 +248,24 @@ class TongGeometryCompatibleHeavySearchAdapter(DummyEngineAdapter):
     def __init__(self) -> None:
         super().__init__(ENGINE_HEAVY_SEARCH, "tonggeometry-compatible-fixture:0.1", "tonggeometry_compatible")
 
+    def should_use_real_engine(self, request: GeometrySolveRequest) -> bool:
+        return bool(request.constraints.get("use_real_tonggeometry"))
+
     def run(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> EngineAdapterResult:
         return _result_from_heavy_raw_output(request, self.engine_role, self.external_command(request, step))
+
+    def real_external_command(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> list[str]:
+        claim_spec = request.constraints.get("claim_spec")
+        if not isinstance(claim_spec, dict):
+            claim_spec = {}
+        return [
+            sys.executable,
+            "scripts/run_tonggeometry_probe.py",
+            "--request-id",
+            request.request_id,
+            "--claim-spec-json",
+            json.dumps(claim_spec, sort_keys=True),
+        ]
 
     def external_command(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> list[str]:
         target = {}
@@ -688,7 +704,8 @@ def _run_external_heavy_adapter(
     request: GeometrySolveRequest,
     step: GeometryExecutionStep,
 ) -> tuple[EngineAdapterResult, dict[str, Any]]:
-    command = adapter.external_command(request, step)
+    real_engine = adapter.should_use_real_engine(request)
+    command = adapter.real_external_command(request, step) if real_engine else adapter.external_command(request, step)
     soft_timeout = step.resource_request.timeout_sec
     hard_timeout = float(request.constraints.get("heavy_search_hard_timeout_sec", 1.0))
     process_report = run_process_group(command, timeout_sec=soft_timeout, hard_timeout_sec=hard_timeout)
@@ -710,6 +727,10 @@ def _run_external_heavy_adapter(
                 raw_output=raw_output,
                 normalized_output_ref=None,
                 diagnostic_ref=f"diagnostic:{request.request_id}:{step.engine_role}:timeout_killed",
+                engine_family=adapter.engine_family,
+                engine_version=_tonggeometry_engine_version() if real_engine else adapter.version,
+                fixture_flag=not real_engine,
+                real_integration_flag=real_engine,
             ),
             {
                 "timed_out": True,
@@ -724,11 +745,32 @@ def _run_external_heavy_adapter(
     stdout = process_report["stdout"]
     stderr = process_report["stderr"]
     raw_output = stdout.strip() or stderr.strip()
+    if real_engine:
+        return (
+            _result_from_tonggeometry_raw_output(request, adapter.engine_role, raw_output),
+            _external_process_state(process_report, "external_tonggeometry_stdout"),
+        )
     return (
         _result_from_heavy_raw_output(request, adapter.engine_role, raw_output),
         {
             **_external_process_state(process_report, "external_process_stdout"),
         },
+    )
+
+
+def _result_from_tonggeometry_raw_output(request: GeometrySolveRequest, engine_role: str, raw_output: Any) -> EngineAdapterResult:
+    if not isinstance(raw_output, str):
+        raw_output = json.dumps(raw_output, sort_keys=True)
+    return EngineAdapterResult(
+        engine_role=engine_role,
+        status="diagnostic_only",
+        raw_output=raw_output,
+        normalized_output_ref=None,
+        diagnostic_ref=f"diagnostic:{request.request_id}:heavy_search:tonggeometry_real",
+        engine_family="tonggeometry_compatible",
+        engine_version=_tonggeometry_engine_version(),
+        fixture_flag=False,
+        real_integration_flag=True,
     )
 
 
@@ -816,6 +858,12 @@ def _genesisgeo_engine_version() -> str:
     genesis_root = Path("vendor") / "GenesisGeo"
     commit = _git_head(genesis_root)
     return f"GenesisGeo@{commit or 'unavailable'}"
+
+
+def _tonggeometry_engine_version() -> str:
+    tong_root = Path("vendor") / "tong-geometry"
+    commit = _git_head(tong_root)
+    return f"tong-geometry@{commit or 'unavailable'}"
 
 
 def _git_head(path: Path) -> str | None:

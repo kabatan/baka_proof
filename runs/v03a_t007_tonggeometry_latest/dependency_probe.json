@@ -1,0 +1,62 @@
+{
+  "bootstrap_mode": "probe",
+  "created_at": "2026-06-11T19:53:08.113400+00:00",
+  "engines": [
+    {
+      "checkpoint_hash": null,
+      "command_checks": [
+        {
+          "command": "tonggeometry",
+          "path": null,
+          "status": "unavailable",
+          "version": "unavailable"
+        },
+        {
+          "command": "tong-geometry",
+          "path": null,
+          "status": "unavailable",
+          "version": "unavailable"
+        }
+      ],
+      "family": "tonggeometry_compatible",
+      "install_plan": "git clone https://github.com/bigai-ai/tong-geometry.git vendor/tong-geometry",
+      "install_status": "installed",
+      "python_import_checks": [],
+      "role": "heavy_search",
+      "source_url": "https://github.com/bigai-ai/tong-geometry",
+      "vendor_path": "vendor\\tong-geometry",
+      "version_or_commit": "d00925f07dc3174f91326386cb8e785e539a91a1"
+    }
+  ],
+  "evidence_refs": [
+    "sha256:3d8a92045e541073d2fa9f55af145677193675af36f6e126cf8548104fae526b"
+  ],
+  "lake_version": "Lake version 5.0.0-src+d024af0 (Lean version 4.30.0)",
+  "lean_version": "Lean (version 4.30.0, x86_64-w64-windows-gnu, commit d024af099ca4bf2c86f649261ebf59565dc8c622, Release)",
+  "os": "Windows-11-10.0.26200-SP0",
+  "packages": [
+    {
+      "lock_ref": "sha256:1e7f3733286703a37a2331f10637db6ec6756003bd220731bb472725e3684654",
+      "name": "pyproject.toml",
+      "source": "local",
+      "version_or_commit": "workspace"
+    },
+    {
+      "lock_ref": "sha256:6aaab023828cd945394970b9c439a4e395dccc616d17dab1c2dab8719cfaaa61",
+      "name": "lakefile.lean",
+      "source": "local",
+      "version_or_commit": "workspace"
+    },
+    {
+      "lock_ref": "sha256:59ce121d7744e33a27cb2a2a35a087d367f0bb774fda57f9dcfc145f972abe30",
+      "name": "lake-manifest.json",
+      "source": "local",
+      "version_or_commit": "workspace"
+    }
+  ],
+  "python_version": "3.12.11",
+  "report_id": "dependency_probe:v03a_t007_tonggeometry_latest",
+  "run_id": "v03a_t007_tonggeometry_latest",
+  "schema_version": "1.0.0",
+  "unresolved": []
+}

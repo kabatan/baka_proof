@@ -220,6 +220,41 @@ class CompositeProviderTest(unittest.TestCase):
         self.assertGreaterEqual(run.resource_usage_reports[-1]["heartbeat_count"], 1)
         self.assertEqual(run.result.proof_use_status, "not_allowed")
 
+    def test_real_tonggeometry_heavy_search_diagnostic_is_policy_gated(self) -> None:
+        medium = CompositeSyntheticGeometryProviderV1().run(
+            request_for(
+                "medium",
+                {
+                    "explicit_escalation": True,
+                    "heavy_search_requested": True,
+                    "claim_spec": claim_spec_fixture(),
+                    "use_real_tonggeometry": True,
+                },
+            )
+        )
+        self.assertNotIn("heavy_search", [run["engine_role"] for run in medium.manifest.engine_runs])
+
+        heavy = CompositeSyntheticGeometryProviderV1().run(
+            request_for(
+                "heavy",
+                {
+                    "explicit_escalation": True,
+                    "heavy_search_requested": True,
+                    "claim_spec": claim_spec_fixture(),
+                    "use_real_tonggeometry": True,
+                },
+            )
+        )
+        heavy_run = heavy.manifest.engine_runs[-1]
+        self.assertEqual(heavy_run["engine_role"], "heavy_search")
+        self.assertEqual(heavy_run["engine_family"], "tonggeometry_compatible")
+        self.assertIn("tong-geometry@", heavy_run["engine_version"])
+        self.assertFalse(heavy_run["fixture_flag"])
+        self.assertTrue(heavy_run["real_integration_flag"])
+        self.assertEqual(heavy.resource_usage_reports[-1]["logs_ref"], "external_tonggeometry_stdout")
+        self.assertEqual(heavy.result.proof_use_status, "not_allowed")
+        self.assertIsNone(heavy.result.geotrace_ref)
+
     def test_base_source_does_not_branch_on_internal_engine_names(self) -> None:
         base_files = list(Path("src/math_auto_research/base").rglob("*.py"))
         text = "\n".join(path.read_text(encoding="utf-8") for path in base_files)

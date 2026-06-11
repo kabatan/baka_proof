@@ -47,6 +47,8 @@ def main() -> int:
         constraints["use_real_newclid"] = True
     if os.environ.get("USE_REAL_GENESISGEO") == "1":
         constraints["use_real_genesisgeo"] = True
+    if os.environ.get("USE_REAL_TONGGEOMETRY") == "1":
+        constraints["use_real_tonggeometry"] = True
 
     request = GeometrySolveRequest(
         schema_version="1.0.0",

@@ -85,6 +85,16 @@ The T-006 provider diagnostic run recorded:
 - no `GENESISGEO_MODEL_PATH` / `GENESISGEO_CHECKPOINT` is configured;
 - provider output remains Diagnostic-only and `proof_use_status = not_allowed`.
 
+## T-007 TongGeometry Runtime Update
+
+TongGeometry source is vendored at `vendor/tong-geometry` and pinned to commit `d00925f07dc3174f91326386cb8e785e539a91a1`.
+
+The T-007 provider diagnostic run recorded:
+
+- the vendored `tonggeometry` Python package is importable from `vendor/tong-geometry`;
+- no `TONGGEOMETRY_TOKENIZER`, `TONGGEOMETRY_LM_S`, `TONGGEOMETRY_LM_L`, or `TONGGEOMETRY_CLS` model paths are configured;
+- provider output remains Diagnostic-only and `proof_use_status = not_allowed`.
+
 ## Run Artifacts
 
 - `runs/v03a_t002_dry_run_latest/dependency_probe.json`
@@ -96,6 +106,8 @@ The T-006 provider diagnostic run recorded:
 - `runs/v03a_t005_newclid_latest/real_newclid_provider_smoke.json`
 - `runs/v03a_t006_genesisgeo_latest/dependency_probe.json`
 - `runs/v03a_t006_genesisgeo_latest/construction_smoke.json`
+- `runs/v03a_t007_tonggeometry_latest/dependency_probe.json`
+- `runs/v03a_t007_tonggeometry_latest/heavy_search_smoke.json`
 
 ## Claim Ceiling
 
@@ -105,7 +117,7 @@ The T-005 Newclid smoke evidence is limited to the explicitly recorded smoke `Ge
 
 - broad real provider behavior;
 - GenesisGeo model-backed construction proposal;
-- real TongGeometry integration;
+- TongGeometry model-backed heavy search;
 - arbitrary LeanGeo theorem support;
 - real Level 2 advantage;
 - v0.3 completion.
