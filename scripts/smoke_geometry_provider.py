@@ -19,7 +19,20 @@ from plugins.geometry_synthetic.provider import CompositeSyntheticGeometryProvid
 def main() -> int:
     budget = os.environ.get("BUDGET", "medium")
     requested_role = os.environ.get("ENGINE_ROLE")
-    constraints = {"construction_needed": True}
+    constraints = {
+        "construction_needed": True,
+        "claim_spec": {
+            "schema_version": "1.0.0",
+            "claim_id": "geometry_claim:smoke",
+            "target_library": "LeanGeoSubsetV1:1.0.0",
+            "objects": ["A:Point", "B:Point", "C:Point"],
+            "hypotheses": ["collinear"],
+            "target": {"form": "collinear", "raw": "Coll A B C"},
+            "nondegeneracy_assumptions": [],
+            "orientation_assumptions": [],
+            "source_goal_ref": "lean-check:smoke",
+        },
+    }
     if requested_role == "heavy_search":
         constraints.update({"explicit_escalation": True, "heavy_search_requested": True})
     elif requested_role == "symbolic_closure":

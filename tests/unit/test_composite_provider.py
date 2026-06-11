@@ -7,7 +7,7 @@ from pathlib import Path
 
 from math_auto_research.schema_validation import validate_artifact
 from plugins.geometry_synthetic.facade import GeometrySolveRequest
-from plugins.geometry_synthetic.provider import CompositeSyntheticGeometryProvider
+from plugins.geometry_synthetic.provider import CompositeSyntheticGeometryProvider, convert_claim_spec_to_newclid_fixture
 
 
 def request_for(budget: str = "medium", constraints: dict | None = None) -> GeometrySolveRequest:
@@ -24,11 +24,25 @@ def request_for(budget: str = "medium", constraints: dict | None = None) -> Geom
 
 
 class CompositeProviderTest(unittest.TestCase):
+    def test_newclid_compatible_input_conversion(self) -> None:
+        claim_spec = {
+            "objects": ["A:Point", "B:Point", "C:Point"],
+            "hypotheses": ["collinear"],
+            "target": {"form": "collinear", "raw": "Coll A B C"},
+            "nondegeneracy_assumptions": [],
+            "orientation_assumptions": [],
+        }
+        converted = convert_claim_spec_to_newclid_fixture(claim_spec)
+        self.assertEqual(converted["objects"], ["A:Point", "B:Point", "C:Point"])
+        self.assertEqual(converted["known_predicates"], ["collinear"])
+        self.assertEqual(converted["target"], "collinear")
+
     def test_provider_returns_normalized_result_and_manifest(self) -> None:
         run = CompositeSyntheticGeometryProvider().run(request_for())
         self.assertEqual(run.result.proof_use_status, "not_allowed")
         self.assertEqual(run.result.provider_run_manifest_ref, run.manifest.manifest_id)
         self.assertEqual(run.manifest.provider_id, "geometry_solver_provider:composite_synthetic:v1")
+        self.assertIn("newclid-compatible-fixture", run.manifest.adapter_versions["symbolic_closure"])
         self.assertGreaterEqual(len(run.manifest.resource_usage_refs), 1)
         self.assertEqual(len(run.manifest.resource_usage_refs), len(run.resource_usage_reports))
         for engine_run in run.manifest.engine_runs:

@@ -1,0 +1,70 @@
+{
+  "manifest": {
+    "adapter_versions": {
+      "construction_proposer": "dummy-construction:0.1",
+      "heavy_search": "dummy-heavy:0.1",
+      "symbolic_closure": "newclid-compatible-fixture:0.1"
+    },
+    "engine_runs": [
+      {
+        "adapter_commit": "dummy-adapter-local",
+        "adapter_version": "newclid-compatible-fixture:0.1",
+        "checkpoint_hash": "not_applicable",
+        "config_hash": "2fcdc1126e0c246a",
+        "engine_family": "symbolic_closure",
+        "engine_role": "symbolic_closure",
+        "normalized_output_ref": null,
+        "raw_output_hash": "9cb446b7e294ea9b",
+        "resource_usage_ref": "resource_usage:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:ad1101ad2192e32f",
+        "seed": 0,
+        "status": "diagnostic_only"
+      }
+    ],
+    "manifest_id": "provider_run_manifest:503e6b40de1e7905",
+    "normalized_output_refs": [],
+    "provider_id": "geometry_solver_provider:composite_synthetic:v1",
+    "raw_output_hashes": [
+      "9cb446b7e294ea9b"
+    ],
+    "request_id": "geometry_request:smoke:symbolic_closure:medium",
+    "resource_usage_refs": [
+      "resource_usage:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:ad1101ad2192e32f"
+    ],
+    "schema_version": "1.0.0",
+    "side_condition_loss_count": 0,
+    "unsupported_rule_count": 0
+  },
+  "resource_usage_reports": [
+    {
+      "admission_status": "admitted",
+      "budget": "medium",
+      "component": "geometry_solver_provider",
+      "cpu_time_sec": 0,
+      "ended_at": "1781189354.2455187",
+      "exit_status": "completed",
+      "gpu_vram_peak_mb": null,
+      "logs_ref": "inline_dummy_adapter",
+      "peak_rss_mb": 0,
+      "queue_wait_sec": 0,
+      "report_id": "resource_usage:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:ad1101ad2192e32f",
+      "role": "symbolic_closure",
+      "run_id": "geometry_request:smoke:symbolic_closure:medium",
+      "schema_version": "1.0.0",
+      "started_at": "1781189354.2455187",
+      "wall_time_sec": 0.0
+    }
+  ],
+  "result": {
+    "construction_candidate_refs": [],
+    "diagnostic_refs": [
+      "diagnostic:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:newclid_fixture"
+    ],
+    "geotrace_ref": null,
+    "proof_use_status": "not_allowed",
+    "provider_run_manifest_ref": "provider_run_manifest:503e6b40de1e7905",
+    "request_id": "geometry_request:smoke:symbolic_closure:medium",
+    "result_id": "provider_result:geometry_request:smoke:symbolic_closure:medium",
+    "schema_version": "1.0.0",
+    "status": "unsupported"
+  }
+}

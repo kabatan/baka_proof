@@ -89,6 +89,50 @@ class DummyEngineAdapter:
         )
 
 
+class NewclidCompatibleSymbolicClosureAdapter(DummyEngineAdapter):
+    def __init__(self) -> None:
+        super().__init__(ENGINE_SYMBOLIC_CLOSURE, "newclid-compatible-fixture:0.1")
+
+    def run(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> EngineAdapterResult:
+        claim_spec = request.constraints.get("claim_spec")
+        if not isinstance(claim_spec, dict):
+            raw_output = json.dumps(
+                {
+                    "engine_family": "newclid_compatible_symbolic_closure",
+                    "request_id": request.request_id,
+                    "status": "diagnostic_only",
+                    "reason": "missing_claim_spec",
+                },
+                sort_keys=True,
+            )
+            return EngineAdapterResult(
+                engine_role=self.engine_role,
+                status="diagnostic_only",
+                raw_output=raw_output,
+                normalized_output_ref=None,
+                diagnostic_ref=f"diagnostic:{request.request_id}:symbolic_closure:missing_claim_spec",
+            )
+
+        engine_input = convert_claim_spec_to_newclid_fixture(claim_spec)
+        closure_found = engine_input["target"] in engine_input["known_predicates"]
+        raw_output = json.dumps(
+            {
+                "engine_family": "newclid_compatible_symbolic_closure",
+                "engine_input": engine_input,
+                "closure_found": closure_found,
+                "status": "diagnostic_only",
+            },
+            sort_keys=True,
+        )
+        return EngineAdapterResult(
+            engine_role=self.engine_role,
+            status="diagnostic_only",
+            raw_output=raw_output,
+            normalized_output_ref=None,
+            diagnostic_ref=f"diagnostic:{request.request_id}:symbolic_closure:newclid_fixture",
+        )
+
+
 class CompositeSyntheticGeometryProvider:
     provider_id = "geometry_solver_provider:composite_synthetic:v1"
 
@@ -99,7 +143,7 @@ class CompositeSyntheticGeometryProvider:
     ) -> None:
         self.governor = governor or ResourceGovernor()
         self.adapters = adapters or {
-            ENGINE_SYMBOLIC_CLOSURE: DummyEngineAdapter(ENGINE_SYMBOLIC_CLOSURE, "dummy-symbolic:0.1"),
+            ENGINE_SYMBOLIC_CLOSURE: NewclidCompatibleSymbolicClosureAdapter(),
             ENGINE_CONSTRUCTION_PROPOSER: DummyEngineAdapter(ENGINE_CONSTRUCTION_PROPOSER, "dummy-construction:0.1"),
             ENGINE_HEAVY_SEARCH: DummyEngineAdapter(ENGINE_HEAVY_SEARCH, "dummy-heavy:0.1"),
         }
@@ -165,7 +209,7 @@ class CompositeSyntheticGeometryProvider:
             request_id=request.request_id,
             status=status,
             proof_use_status="not_allowed",
-            geotrace_ref=None,
+            geotrace_ref=next((result.normalized_output_ref for result in engine_results if result.normalized_output_ref), None),
             construction_candidate_refs=(),
             diagnostic_refs=tuple(result.diagnostic_ref for result in engine_results),
             provider_run_manifest_ref=manifest.manifest_id,
@@ -234,3 +278,15 @@ def _resource_usage_report(
 
 def _hash_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def convert_claim_spec_to_newclid_fixture(claim_spec: dict[str, Any]) -> dict[str, Any]:
+    target = claim_spec.get("target", {})
+    return {
+        "objects": list(claim_spec.get("objects", [])),
+        "known_predicates": list(claim_spec.get("hypotheses", [])),
+        "target": target.get("form"),
+        "target_raw": target.get("raw"),
+        "nondegeneracy_assumptions": list(claim_spec.get("nondegeneracy_assumptions", [])),
+        "orientation_assumptions": list(claim_spec.get("orientation_assumptions", [])),
+    }

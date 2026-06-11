@@ -14,6 +14,10 @@ if "%1"=="test-regression" (
   python scripts\check_no_loose_options.py
   exit /b %ERRORLEVEL%
 )
+if "%1"=="test-integration" (
+  python -m unittest tests.unit.test_composite_provider
+  exit /b %ERRORLEVEL%
+)
 if "%1"=="smoke-env-bootstrap" (
   python scripts\probe_dependencies.py --json
   exit /b %ERRORLEVEL%
