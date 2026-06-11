@@ -26,7 +26,6 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
     parser.add_argument("--output", default=str(EVIDENCE_DIR / "release_acceptance_report.json"))
-    parser.add_argument("--skip-expensive-gates", action="store_true")
     args = parser.parse_args()
 
     checks: list[dict[str, Any]] = []
@@ -35,16 +34,7 @@ def main() -> int:
     checks.append(_run_command(["python", "scripts/check_domain_contamination.py"], "domain_contamination"))
     checks.append(_run_command(["python", "scripts/check_no_loose_options.py"], "no_loose_options"))
     checks.append(_run_command(["python", "-m", "unittest", "tests.unit.test_schema_validation"], "schema_validation"))
-    if args.skip_expensive_gates:
-        checks.append(
-            {
-                "check_id": "gate:expensive_commands",
-                "status": "waived",
-                "details": {"reason": "explicit test-only --skip-expensive-gates"},
-            }
-        )
-    else:
-        checks.extend(_release_gate_commands())
+    checks.extend(_release_gate_commands())
 
     matrix_status = "failed"
     try:
@@ -66,7 +56,7 @@ def main() -> int:
 
     blockers = _blocked_real_integrations(DEPENDENCY_PROBE)
     checklist = _release_checklist(checks, blockers)
-    status = "passed" if all(item["status"] in {"passed", "blocked", "waived"} for item in checks + checklist + blockers) else "failed"
+    status = "passed" if all(item["status"] in {"passed", "blocked"} for item in checks + checklist + blockers) else "failed"
     report = {
         "schema_version": "1.0.0",
         "report_id": f"release_acceptance:{int(time.time())}",
@@ -238,6 +228,8 @@ def _status_by_check_id(checks: list[dict[str, Any]], check_id: str) -> str:
 
 
 def _test_named_in_gate(checks: list[dict[str, Any]], test_name: str) -> bool:
+    if _status_by_check_id(checks, "gate:make_test") != "passed":
+        return False
     makefile = ROOT / "Makefile"
     make_bat = ROOT / "make.bat"
     haystack = ""

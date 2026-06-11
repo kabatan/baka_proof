@@ -44,7 +44,7 @@ cmd /c make test
 
 Result: passed:
 
-- 87 unit tests;
+- 88 unit tests;
 - 71 regression tests plus domain/no-loose checks;
 - 45 mutation tests;
 - 12 integration tests.
@@ -80,8 +80,9 @@ Result: passed after spec-verifier blocker remediation. The generated release ac
 ## Quality Review Blocker Remediation
 
 - `scripts/check_release_acceptance.py` now derives blocked real integrations from `dependency_probe.json` instead of static literals.
-- Release blocker/final checklist entries now validate backing files, commands, blocked dependency evidence, and named test modules.
+- Release blocker/final checklist entries now validate backing files, commands, blocked dependency evidence, and named test modules; named test evidence also requires a passed aggregate test gate.
 - Added regression coverage for missing dependency probes, contradictory dependency probes, and bogus checklist test evidence.
+- Added regression coverage that named checklist test evidence fails when the aggregate test gate did not pass.
 - `test-regression` now explicitly includes `tests.unit.test_evaluation_matrix`, matching the release checklist evidence for replay counts.
 
 ## Claim Ceiling

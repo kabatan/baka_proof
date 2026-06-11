@@ -39,6 +39,16 @@ class ReleaseAcceptanceTest(unittest.TestCase):
         )
         self.assertEqual(result["status"], "failed")
 
+    def test_checklist_test_evidence_requires_passed_gate(self) -> None:
+        result = _validate_checklist_item(
+            "release_blocker_19_evaluation_replay_counts",
+            "test",
+            "tests.unit.test_evaluation_matrix",
+            [{"check_id": "gate:make_test", "status": "failed"}],
+            [],
+        )
+        self.assertEqual(result["status"], "failed")
+
 
 if __name__ == "__main__":
     unittest.main()
