@@ -1,6 +1,18 @@
-.PHONY: test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-geometry-trace smoke-geometry-construction smoke-geometry-final-verify
+.PHONY: fmt lint typecheck test test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-geometry-trace smoke-geometry-construction smoke-geometry-final-verify
 
 PYTHON ?= python
+
+fmt:
+	$(PYTHON) -m compileall -q src plugins scripts tests
+
+lint:
+	$(PYTHON) scripts/check_domain_contamination.py
+	$(PYTHON) scripts/check_no_loose_options.py
+
+typecheck:
+	$(PYTHON) -m unittest tests.unit.test_schema_validation
+
+test: test-unit test-regression test-mutation test-integration
 
 test-unit:
 	$(PYTHON) -m unittest discover -s tests/unit -p "test_*.py"

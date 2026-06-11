@@ -1,0 +1,115 @@
+{
+  "checks": [
+    {
+      "check_id": "benchmark_config",
+      "details": {
+        "path": "configs\\benchmark_runs\\geometry_level2_smoke.yaml"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "evidence:user_implementation_approval.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\user_implementation_approval.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "evidence:rc1_guardian_boundary_review.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\rc1_guardian_boundary_review.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "evidence:rc2_guardian_boundary_review.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\rc2_guardian_boundary_review.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "evidence:rc3_guardian_boundary_review.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\rc3_guardian_boundary_review.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "evidence:rc4_guardian_boundary_review.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\rc4_guardian_boundary_review.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "evidence:rc5_guardian_boundary_review.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\rc5_guardian_boundary_review.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "evidence:t26_verification.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\t26_verification.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "domain_contamination",
+      "details": {
+        "command": [
+          "python",
+          "scripts/check_domain_contamination.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "domain contamination check passed\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "no_loose_options",
+      "details": {
+        "command": [
+          "python",
+          "scripts/check_no_loose_options.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "no loose options check passed\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "schema_validation",
+      "details": {
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "tests.unit.test_schema_validation"
+        ],
+        "returncode": 0,
+        "stderr_tail": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.014s\n\nOK\n",
+        "stdout_tail": ""
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "level2_matrix",
+      "details": {
+        "baseline_count": 6,
+        "claim_ceiling": "fixture_level_matrix_not_level2_advantage_claim",
+        "run_dir": "runs\\geometry_level2_smoke"
+      },
+      "status": "passed"
+    }
+  ],
+  "claim_ceiling": "fixture_level_release_acceptance_not_v0_3_completion_claim",
+  "config_ref": "configs\\benchmark_runs\\geometry_level2_smoke.yaml",
+  "report_id": "release_acceptance:1781194435",
+  "schema_version": "1.0.0",
+  "status": "passed"
+}

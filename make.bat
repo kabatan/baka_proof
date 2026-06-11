@@ -1,5 +1,29 @@
 @echo off
 if exist "%USERPROFILE%\.elan\bin\lean.exe" set "PATH=%USERPROFILE%\.elan\bin;%PATH%"
+if "%1"=="fmt" (
+  python -m compileall -q src plugins scripts tests
+  exit /b %ERRORLEVEL%
+)
+if "%1"=="lint" (
+  python scripts\check_domain_contamination.py
+  if errorlevel 1 exit /b %ERRORLEVEL%
+  python scripts\check_no_loose_options.py
+  exit /b %ERRORLEVEL%
+)
+if "%1"=="typecheck" (
+  python -m unittest tests.unit.test_schema_validation
+  exit /b %ERRORLEVEL%
+)
+if "%1"=="test" (
+  call "%~f0" test-unit
+  if errorlevel 1 exit /b %ERRORLEVEL%
+  call "%~f0" test-regression
+  if errorlevel 1 exit /b %ERRORLEVEL%
+  call "%~f0" test-mutation
+  if errorlevel 1 exit /b %ERRORLEVEL%
+  call "%~f0" test-integration
+  exit /b %ERRORLEVEL%
+)
 if "%1"=="test-unit" (
   python -m unittest discover -s tests/unit -p "test_*.py"
   exit /b %ERRORLEVEL%
