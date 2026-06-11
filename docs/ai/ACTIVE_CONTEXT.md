@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3A
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003A
 version: v0.3A-recovery-admitted
-status: READY_TO_START_V03A_T009
+status: READY_TO_START_V03A_T010
 created: 2026-06-11
 last_updated: 2026-06-12
 base_spec: MARP-GEOLEAN-BASE-003A
@@ -86,7 +86,11 @@ Completed v0.3A gate: `RC-003A-3 — real engine integrations or blocker evidenc
 
 Completed v0.3A task: `T-008 — Define LeanGeoSubsetV1.RealSmokeCorpus`.
 
-Current v0.3A task: `T-009 — Add real-vs-fixture integration tests`.
+Completed v0.3A task: `T-009 — Add real-vs-fixture integration tests`.
+
+Completed v0.3A gate: `RC-003A-4 — corpus and real-vs-fixture tests` passed Guardian boundary review.
+
+Current v0.3A task: `T-010 — Re-run release acceptance and final reviews`.
 
 Current claim ceiling: do not claim full LeanGeo theorem-corpus build, GenesisGeo model-backed construction proposal, TongGeometry model-backed heavy search, broad Newclid theorem coverage, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3 completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. Current positive claims include the prior geometry x Lean v0.3 fixture-level release acceptance, the T-005 real Newclid-compatible symbolic-closure smoke path, the T-006 GenesisGeo-compatible external diagnostic engine-run path, the T-007 TongGeometry-compatible external diagnostic engine-run path, and the T-008 limited `LeanGeoSubsetV1.RealSmokeCorpus` manifest/checks only within their recorded smoke-scope evidence. T-006/T-007 full provider smoke runs are mixed fixture/real and do not support whole-provider real-integration claims.
 

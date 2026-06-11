@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -12,8 +13,22 @@ MANIFEST = ROOT / "benchmarks" / "leangeo" / "real_smoke_corpus.yaml"
 
 
 def main() -> int:
-    errors = validate_manifest(load_manifest())
-    payload = {"manifest": str(MANIFEST.relative_to(ROOT)), "status": "passed" if not errors else "failed", "errors": errors}
+    manifest = load_manifest()
+    errors = validate_manifest(manifest)
+    payload = {
+        "manifest": str(MANIFEST.relative_to(ROOT)),
+        "status": "passed" if not errors else "failed",
+        "errors": errors,
+        "entries": [
+            {
+                "entry_id": entry.get("entry_id"),
+                "theorem_file_path": entry.get("theorem_file_path"),
+                "expected_final_verification_status": entry.get("expected_final_verification_status"),
+                "observed_final_verification_status": entry.get("observed_final_verification_status"),
+            }
+            for entry in manifest.get("entries", [])
+        ],
+    }
     print(json.dumps(payload, indent=2, sort_keys=True))
     return 0 if not errors else 1
 
@@ -61,7 +76,39 @@ def _validate_entry(entry: dict[str, Any]) -> list[str]:
         errors.append(f"entry_target_library_not_LeanGeoSubsetV1:{entry.get('entry_id')}")
     if entry.get("acceptance_eligible") is not True:
         errors.append(f"entry_not_acceptance_eligible:{entry.get('entry_id')}")
+    if entry.get("acceptance_eligible") is True:
+        verification = _verify_lean_file(path)
+        entry["observed_final_verification_status"] = verification["status"]
+        entry["observed_final_verification_stdout_tail"] = verification["stdout_tail"]
+        entry["observed_final_verification_stderr_tail"] = verification["stderr_tail"]
+        if verification["status"] != "passed":
+            errors.append(f"lean_final_verification_failed:{entry.get('entry_id')}:{verification['returncode']}")
     return errors
+
+
+def _verify_lean_file(path: Path) -> dict[str, Any]:
+    lake = _lake_executable()
+    completed = subprocess.run(
+        [str(lake), "env", "lean", str(path.relative_to(ROOT))],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=600,
+    )
+    return {
+        "status": "passed" if completed.returncode == 0 else "failed",
+        "returncode": completed.returncode,
+        "stdout_tail": completed.stdout[-1000:],
+        "stderr_tail": completed.stderr[-1000:],
+    }
+
+
+def _lake_executable() -> Path:
+    elan_lake = Path.home() / ".elan" / "bin" / ("lake.exe" if sys.platform == "win32" else "lake")
+    if elan_lake.exists():
+        return elan_lake
+    return Path("lake")
 
 
 if __name__ == "__main__":

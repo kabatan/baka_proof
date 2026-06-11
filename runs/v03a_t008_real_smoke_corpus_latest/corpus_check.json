@@ -1,4 +1,12 @@
 {
+  "entries": [
+    {
+      "entry_id": "real_smoke:fixture_collinear",
+      "expected_final_verification_status": "lean_file_elaborates",
+      "observed_final_verification_status": "passed",
+      "theorem_file_path": "benchmarks/leangeo/RealSmokeCorpus.lean"
+    }
+  ],
   "errors": [],
   "manifest": "benchmarks\\leangeo\\real_smoke_corpus.yaml",
   "status": "passed"

@@ -19,6 +19,7 @@ Supports:
 - Added `benchmarks/leangeo/RealSmokeCorpus.lean`.
 - The corpus manifest records theorem file path, theorem name, statement hash, extraction class, supported predicates, construction/rule coverage, expected final verification status, and acceptance eligibility.
 - Added `scripts/check_real_smoke_corpus.py`.
+- Updated `scripts/check_real_smoke_corpus.py` after RC-003A-4 blocker review so it runs `lake env lean` for every `acceptance_eligible` theorem file and records observed per-entry final verification status.
 - Added regression tests for:
   - manifest shape and statement hash;
   - extraction from the recorded theorem statement;
@@ -39,7 +40,22 @@ Result: passed.
 python scripts\check_real_smoke_corpus.py
 ```
 
-Result: passed.
+Result: passed after final-verification wiring.
+
+```text
+{
+  "entries": [
+    {
+      "entry_id": "real_smoke:fixture_collinear",
+      "expected_final_verification_status": "lean_file_elaborates",
+      "observed_final_verification_status": "passed",
+      "theorem_file_path": "benchmarks/leangeo/RealSmokeCorpus.lean"
+    }
+  ],
+  "errors": [],
+  "status": "passed"
+}
+```
 
 ```text
 python -m unittest tests.unit.test_real_smoke_corpus
@@ -48,7 +64,7 @@ python -m unittest tests.unit.test_real_smoke_corpus
 Result: passed.
 
 ```text
-Ran 5 tests in 0.013s
+Ran 5 tests in 31.652s
 OK
 ```
 
@@ -71,7 +87,7 @@ Result: passed.
 ```text
 domain contamination check passed
 no loose options check passed
-Ran 79 tests in 26.173s
+Ran 79 tests in 28.412s
 OK
 ```
 
