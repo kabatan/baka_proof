@@ -64,5 +64,9 @@ if "%1"=="smoke-geometry-provider" (
   python scripts\smoke_geometry_provider.py
   exit /b %ERRORLEVEL%
 )
+if "%1"=="smoke-geometry-trace" (
+  python scripts\smoke_geometry_trace.py
+  exit /b %ERRORLEVEL%
+)
 echo unsupported target: %1
 exit /b 2

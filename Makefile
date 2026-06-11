@@ -1,4 +1,4 @@
-.PHONY: test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider
+.PHONY: test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-geometry-trace
 
 PYTHON ?= python
 
@@ -48,3 +48,6 @@ smoke-leangeo-extraction:
 
 smoke-geometry-provider:
 	$(PYTHON) scripts/smoke_geometry_provider.py
+
+smoke-geometry-trace:
+	$(PYTHON) scripts/smoke_geometry_trace.py

@@ -98,6 +98,8 @@ def resolve_schema_path(artifact_path: Path, explicit_schema: Path | None = None
         return Path("schemas/geometry/rule_registry_v1.schema.json")
     if artifact_path.name == "side_condition_report.json":
         return Path("schemas/geometry/side_condition_report.schema.json")
+    if artifact_path.name == "trace_compilation_result.json":
+        return Path("schemas/geometry/trace_compilation_result.schema.json")
     raise SchemaValidationError(f"no schema mapping for {artifact_path}")
 
 

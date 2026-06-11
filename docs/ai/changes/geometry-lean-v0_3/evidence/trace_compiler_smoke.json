@@ -1,0 +1,18 @@
+{
+  "compilation": {
+    "blockers": [],
+    "lean_patch": "namespace MathAutoResearch.GeometryTraceFixture\n\ntheorem compiled_trace_fixture (p : Prop) (h : p) : p := by\n  exact h\n\nend MathAutoResearch.GeometryTraceFixture\n",
+    "lean_patch_candidate_ref": "lean_patch_candidate:9c2fd709f4c1589c",
+    "proof_use_status": "lean_patch_candidate",
+    "result_id": "trace_compilation:8beb80204f3c343e",
+    "schema_version": "1.0.0",
+    "side_condition_report_refs": [
+      "side_condition:points_declared:A:B:C"
+    ],
+    "status": "compiled",
+    "trace_id": "geotrace:smoke"
+  },
+  "lean_exit_code": 0,
+  "lean_stderr": "",
+  "lean_stdout": ""
+}

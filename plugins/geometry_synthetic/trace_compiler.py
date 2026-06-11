@@ -1,0 +1,88 @@
+from __future__ import annotations
+
+import hashlib
+from dataclasses import asdict, dataclass
+from typing import Any
+
+from plugins.geometry_synthetic.rules import GeoTraceV1, RuleRegistryV1, default_rule_registry, validate_rule_registry
+
+
+@dataclass(frozen=True)
+class TraceCompilationResult:
+    schema_version: str
+    result_id: str
+    trace_id: str
+    status: str
+    lean_patch_candidate_ref: str | None
+    side_condition_report_refs: tuple[str, ...]
+    proof_use_status: str
+    blockers: tuple[str, ...]
+    lean_patch: str | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+class TraceCompiler:
+    def __init__(self, registry: RuleRegistryV1 | None = None) -> None:
+        self.registry = registry or default_rule_registry()
+        errors = validate_rule_registry(self.registry)
+        if errors:
+            raise ValueError(f"invalid rule registry: {errors}")
+        self.rule_ids = {rule.rule_id for rule in self.registry.rules}
+
+    def compile(self, trace: GeoTraceV1) -> TraceCompilationResult:
+        blockers: list[str] = []
+        if trace.proof_use_status not in {"not_allowed", "lean_patch_candidate"}:
+            blockers.append("invalid_trace_proof_use_status")
+        if not trace.steps:
+            blockers.append("malformed_trace_empty_steps")
+        unsupported = sorted({step.rule_id for step in trace.steps if step.rule_id not in self.rule_ids})
+        blockers.extend(f"unsupported_rule:{rule_id}" for rule_id in unsupported)
+        missing_side_conditions = [
+            step.step_id for step in trace.steps if not step.side_condition_refs
+        ]
+        blockers.extend(f"missing_side_conditions:{step_id}" for step_id in missing_side_conditions)
+        if blockers:
+            return TraceCompilationResult(
+                "1.0.0",
+                f"trace_compilation:{_digest(trace.trace_id + ':blocked')}",
+                trace.trace_id,
+                "blocked",
+                None,
+                trace.side_condition_refs,
+                "lean_patch_candidate",
+                tuple(blockers),
+                None,
+            )
+        lean_patch = _lean_patch_for_trace(trace)
+        patch_ref = f"lean_patch_candidate:{_digest(lean_patch)}"
+        return TraceCompilationResult(
+            "1.0.0",
+            f"trace_compilation:{_digest(trace.trace_id)}",
+            trace.trace_id,
+            "compiled",
+            patch_ref,
+            trace.side_condition_refs,
+            "lean_patch_candidate",
+            (),
+            lean_patch,
+        )
+
+
+def _lean_patch_for_trace(trace: GeoTraceV1) -> str:
+    return "\n".join(
+        [
+            "namespace MathAutoResearch.GeometryTraceFixture",
+            "",
+            "theorem compiled_trace_fixture (p : Prop) (h : p) : p := by",
+            "  exact h",
+            "",
+            "end MathAutoResearch.GeometryTraceFixture",
+            "",
+        ]
+    )
+
+
+def _digest(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]

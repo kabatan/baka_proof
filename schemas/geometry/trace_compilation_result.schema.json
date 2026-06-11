@@ -1,0 +1,27 @@
+{
+  "$id": "geometry.trace_compilation_result.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "result_id",
+    "trace_id",
+    "status",
+    "lean_patch_candidate_ref",
+    "side_condition_report_refs",
+    "proof_use_status",
+    "blockers",
+    "lean_patch"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "result_id": {"type": "string", "pattern": "^trace_compilation:.*"},
+    "trace_id": {"type": "string"},
+    "status": {"type": "string", "enum": ["compiled", "blocked", "rejected"]},
+    "lean_patch_candidate_ref": {"type": ["string", "null"]},
+    "side_condition_report_refs": {"type": "array", "items": {"type": "string"}},
+    "proof_use_status": {"type": "string", "enum": ["lean_patch_candidate"]},
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "lean_patch": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}
