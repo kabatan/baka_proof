@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
 version: v0.3-admission-candidate
-status: T11_COMPLETE_BLOCKED_REAL_LEANGEO
+status: T12_COMPLETE
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -32,9 +32,9 @@ Implementation remains limited to the reviewed Base Spec and Plan. Git initializ
 
 ## Current Task Pointer
 
-Current gate: `T11 — LeanGeo dependency discovery and TargetLibraryManifest` complete for manifest/status reporting; real LeanGeo integration is blocked by local dependency compatibility.
+Current gate: `T12 — LeanGeoSubsetV1 theorem grammar` complete.
 
-Next task: `T12 — LeanGeoSubsetV1 theorem grammar`.
+Next task: `T13 — GeometryExtractionContract`.
 
 ## Evidence Directory
 

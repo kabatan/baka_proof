@@ -1,0 +1,30 @@
+{
+  "$id": "geometry.leangeo_subset_v1_grammar.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "grammar_id",
+    "target_library",
+    "object_declarations",
+    "hypothesis_forms",
+    "target_forms",
+    "rejected_forms",
+    "predicate_mappings",
+    "construction_mappings",
+    "relation_mappings",
+    "safe_reject_policy"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "grammar_id": {"type": "string"},
+    "target_library": {"type": "string", "pattern": "LeanGeoSubsetV1:.+"},
+    "object_declarations": {"type": "array", "items": {"type": "string"}},
+    "hypothesis_forms": {"type": "array", "items": {"type": "string"}},
+    "target_forms": {"type": "array", "items": {"type": "string"}},
+    "rejected_forms": {"type": "array", "items": {"type": "string"}},
+    "predicate_mappings": {"type": "object"},
+    "construction_mappings": {"type": "object"},
+    "relation_mappings": {"type": "object"},
+    "safe_reject_policy": {"type": "string"}
+  }
+}

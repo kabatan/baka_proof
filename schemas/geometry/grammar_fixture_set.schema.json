@@ -1,0 +1,24 @@
+{
+  "$id": "geometry.grammar_fixture_set.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "fixture_set_id",
+    "target_library",
+    "positive_fixtures",
+    "negative_fixtures",
+    "ambiguous_fixtures",
+    "safe_reject_fixtures",
+    "mutation_fixtures"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "fixture_set_id": {"type": "string"},
+    "target_library": {"type": "string", "pattern": "LeanGeoSubsetV1:.+"},
+    "positive_fixtures": {"type": "array"},
+    "negative_fixtures": {"type": "array"},
+    "ambiguous_fixtures": {"type": "array"},
+    "safe_reject_fixtures": {"type": "array"},
+    "mutation_fixtures": {"type": "array"}
+  }
+}

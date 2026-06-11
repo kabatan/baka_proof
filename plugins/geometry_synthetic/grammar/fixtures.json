@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "fixture_set_id": "GrammarFixtureSet:LeanGeoSubsetV1:1.0.0",
+  "target_library": "LeanGeoSubsetV1:1.0.0",
+  "positive_fixtures": [
+    {"fixture_id": "positive:collinear", "form": "collinear", "expected": "accepted"},
+    {"fixture_id": "positive:midpoint", "form": "midpoint", "expected": "accepted"},
+    {"fixture_id": "positive:equal_length", "form": "equal_length", "expected": "accepted"}
+  ],
+  "negative_fixtures": [
+    {"fixture_id": "negative:arbitrary_mathlib", "form": "arbitrary_mathlib_expression", "expected": "safe_rejected"}
+  ],
+  "ambiguous_fixtures": [
+    {"fixture_id": "ambiguous:angle_orientation", "form": "unsupported_orientation_semantics", "expected": "safe_rejected"}
+  ],
+  "safe_reject_fixtures": [
+    {"fixture_id": "safe_reject:local_notation", "form": "unsupported_local_notation", "expected": "safe_rejected"},
+    {"fixture_id": "safe_reject:quantifier_alternation", "form": "unsupported_quantifier_alternation", "expected": "safe_rejected"}
+  ],
+  "mutation_fixtures": [
+    {"fixture_id": "mutation:diagram_case_split", "form": "unsupported_diagram_case_split", "expected": "safe_rejected"}
+  ]
+}
