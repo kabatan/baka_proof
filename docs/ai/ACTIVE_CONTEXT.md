@@ -1,8 +1,8 @@
 ---
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
-version: v0.3-admission-candidate
-status: FINAL_REVIEW_PENDING_AFTER_RELEASE_ACCEPTANCE
+version: v0.3-fixture-release-reviewed
+status: FINAL_REVIEW_PASSED_FIXTURE_LEVEL
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -58,9 +58,9 @@ Completed task: `T26 — EvaluationFunnel and Level 2 matrix`.
 
 Completed task: `T27 — Release acceptance and closure`.
 
-Current gate: `Final closure review — spec verifier, quality reviewer, and Guardian boundary reviewer`.
+Completed gate: `Final closure review — spec verifier, quality reviewer, and Guardian boundary reviewer` passed within the fixture-level claim ceiling.
 
-Current claim ceiling: do not claim full LeanGeo theorem-corpus build, real Newclid/GenesisGeo/TongGeometry integration, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3 completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. Current positive claims are limited to the recorded fixture-level implementation evidence, including LeanGeo.Abbre extraction fixtures, the worker-applied local final-verification fixture, run trace/replay fixtures, and the Level 2 smoke matrix fixture.
+Current claim ceiling: do not claim full LeanGeo theorem-corpus build, real Newclid/GenesisGeo/TongGeometry integration, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3 completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. Current positive claims are limited to the geometry x Lean v0.3 Guardian track passing fixture-level release acceptance and final reviews for the recorded schemas/contracts, target-subset and extraction fixtures, provider/resource fixtures, compiler/construction fixtures, bridge/trust guards, worker-applied local final-verification fixture, run trace/replay fixtures, and the Level 2 smoke matrix fixture.
 
 ## Evidence Directory
 
