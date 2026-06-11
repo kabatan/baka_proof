@@ -4,6 +4,8 @@
   "target_library": "LeanGeoSubsetV1:1.0.0",
   "object_declarations": [
     "point",
+    "line",
+    "circle",
     "line_through_two_distinct_points",
     "circle_with_center_through_point"
   ],

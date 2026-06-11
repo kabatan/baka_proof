@@ -42,13 +42,26 @@ class GeometryExtractionReport:
         return asdict(self)
 
 
+@dataclass(frozen=True)
+class RelationEvidence:
+    relation: str
+    direction_needed: str | None = None
+    direction_available: str | None = None
+    source: str = "goal_anchor"
+
+
 class GeometryExtractor:
     def __init__(self, grammar_path: str = "plugins/geometry_synthetic/grammar/leangeo_subset_v1_grammar.json") -> None:
         self.grammar = load_json(grammar_path)
         self.accepted_forms = set(self.grammar["allowed_hypothesis_forms"]) | set(self.grammar["allowed_target_forms"])
         self.rejected_forms = set(self.grammar["rejected_hypothesis_forms"]) | set(self.grammar["rejected_target_forms"])
 
-    def extract(self, lean_goal_text: str, goal_anchor_ref: str) -> tuple[GeometryExtractionReport, GeometryClaimSpec | None]:
+    def extract(
+        self,
+        lean_goal_text: str,
+        goal_anchor_ref: str,
+        relation_evidence: RelationEvidence | None = None,
+    ) -> tuple[GeometryExtractionReport, GeometryClaimSpec | None]:
         if not goal_anchor_ref:
             return (
                 GeometryExtractionReport(
@@ -93,7 +106,27 @@ class GeometryExtractor:
             orientation_assumptions=tuple(parsed["orientation_assumptions"]),
             source_goal_ref=goal_anchor_ref,
         )
-        relation, direction_needed, direction_available = self._classify_relation(lean_goal_text)
+        relation_evidence = relation_evidence or RelationEvidence("exact")
+        relation = relation_evidence.relation
+        direction_needed = relation_evidence.direction_needed
+        direction_available = relation_evidence.direction_available
+        if relation_evidence.source != "goal_anchor":
+            return (
+                GeometryExtractionReport(
+                    "1.0.0",
+                    f"geometry_extraction:{_digest(lean_goal_text)}",
+                    goal_anchor_ref,
+                    "none",
+                    "diagnostic_only",
+                    "safe_rejected",
+                    "relation_evidence_not_goal_anchor",
+                    None,
+                    "not_allowed",
+                    direction_needed,
+                    direction_available,
+                ),
+                None,
+            )
         if relation == "sufficient" and direction_needed != direction_available:
             return (
                 GeometryExtractionReport(
@@ -179,19 +212,6 @@ class GeometryExtractor:
             assumptions.append("explicit_distinctness")
         return assumptions
 
-    def _classify_relation(self, text: str) -> tuple[str, str | None, str | None]:
-        lowered = text.lower()
-        relation_match = re.search(r"relation\s*:\s*(exact|sufficient|related|none)", lowered)
-        relation = relation_match.group(1) if relation_match else "exact"
-        needed_match = re.search(r"direction_needed\s*:\s*(forward|reverse)", lowered)
-        available_match = re.search(r"direction_available\s*:\s*(forward|reverse)", lowered)
-        return (
-            relation,
-            needed_match.group(1) if needed_match else None,
-            available_match.group(1) if available_match else None,
-        )
-
-
 def _digest(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
 
@@ -249,6 +269,10 @@ def _classify_lean_atom(atom: str) -> str | None:
         return "circle_with_center_through_point"
     if re.fullmatch(r"\w+\s*:\s*Point", cleaned) or cleaned == "Point":
         return "point"
+    if re.fullmatch(r"\w+\s*:\s*Line", cleaned) or cleaned == "Line":
+        return "line"
+    if re.fullmatch(r"\w+\s*:\s*Circle", cleaned) or cleaned == "Circle":
+        return "circle"
     return None
 
 

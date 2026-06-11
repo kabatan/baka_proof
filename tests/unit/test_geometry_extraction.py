@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from plugins.geometry_synthetic.extraction import GeometryExtractor
+from plugins.geometry_synthetic.extraction import GeometryExtractor, RelationEvidence
 
 
 class GeometryExtractionTest(unittest.TestCase):
@@ -38,16 +38,18 @@ class GeometryExtractionTest(unittest.TestCase):
 
     def test_sufficient_relation_requires_matching_direction(self) -> None:
         accepted, claim = GeometryExtractor().extract(
-            "theorem t : ∀ (A B C : Point), Coll A B C → Coll A B C relation:sufficient direction_needed:forward direction_available:forward",
+            "theorem t : ∀ (A B C : Point), Coll A B C → Coll A B C",
             "goal:3",
+            RelationEvidence("sufficient", "forward", "forward"),
         )
         self.assertEqual(accepted.status, "accepted")
         self.assertEqual(accepted.relation, "sufficient")
         self.assertIsNotNone(claim)
 
         rejected, rejected_claim = GeometryExtractor().extract(
-            "theorem t : ∀ (A B C : Point), Coll A B C → Coll A B C relation:sufficient direction_needed:forward direction_available:reverse",
+            "theorem t : ∀ (A B C : Point), Coll A B C → Coll A B C",
             "goal:4",
+            RelationEvidence("sufficient", "forward", "reverse"),
         )
         self.assertEqual(rejected.status, "safe_rejected")
         self.assertEqual(rejected.safe_reject_reason, "direction_mismatch")
@@ -55,8 +57,9 @@ class GeometryExtractionTest(unittest.TestCase):
 
     def test_related_relation_cannot_create_goal_level_claim(self) -> None:
         report, claim = GeometryExtractor().extract(
-            "theorem t : ∀ (A B C : Point), Coll A B C → Coll A B C relation:related",
+            "theorem t : ∀ (A B C : Point), Coll A B C → Coll A B C",
             "goal:5",
+            RelationEvidence("related"),
         )
         self.assertEqual(report.status, "safe_rejected")
         self.assertEqual(report.relation, "related")
@@ -73,6 +76,8 @@ class GeometryExtractionTest(unittest.TestCase):
             "equal_length": "theorem t : ∀ (A B C D : Point), |(A─B)| = |(C─D)|",
             "equal_angle_supported_pattern": "theorem t : ∀ (A B C D E F : Point), ∠ A:B:C = ∠ D:E:F",
             "line_through_two_distinct_points": "theorem t : ∀ (A B : Point), line_from_points A B",
+            "line": "theorem t : ∀ (L : Line), L : Line",
+            "circle": "theorem t : ∀ (Ω : Circle), Ω : Circle",
             "intersection_of_two_nonparallel_lines": "theorem t : ∀ (L M : Line), intersection_lines L M",
             "foot_of_perpendicular": "theorem t : ∀ (A B : Point) (l : Line), Foot A B l",
             "circle_with_center_through_point": "theorem t : ∀ (A B : Point), circle_from_points A B",

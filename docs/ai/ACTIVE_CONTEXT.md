@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
 version: v0.3-admission-candidate
-status: T13_COMPLETE_PENDING_RC2
+status: RC2_BLOCKED_REAL_LEANGEO_ELABORATION
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -32,9 +32,9 @@ Implementation remains limited to the reviewed Base Spec and Plan. Git initializ
 
 ## Current Task Pointer
 
-Current gate: `T13 — GeometryExtractionContract` complete; RC-2 review pending.
+Current gate: `RC-2 — target subset and extraction` blocked on real LeanGeo elaboration.
 
-Next task: `RC-2 — target subset and extraction`.
+Next task: Resolve LeanGeo v4.15/toolchain dependency or revise admitted Base/Plan before claiming RC-2 PASS.
 
 ## Evidence Directory
 

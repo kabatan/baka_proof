@@ -1,9 +1,12 @@
-.PHONY: test-unit smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction
+.PHONY: test-unit test-mutation smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction
 
 PYTHON ?= python
 
 test-unit:
 	$(PYTHON) -m unittest discover -s tests/unit -p "test_*.py"
+
+test-mutation:
+	$(PYTHON) -m unittest tests.unit.test_geometry_extraction tests.unit.test_target_subset
 
 smoke-env-bootstrap:
 	$(PYTHON) scripts/probe_dependencies.py --json
