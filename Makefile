@@ -1,4 +1,4 @@
-.PHONY: test-unit smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry
+.PHONY: test-unit smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status
 
 PYTHON ?= python
 
@@ -19,3 +19,6 @@ lean-build:
 
 lean-no-sorry:
 	$(PYTHON) scripts/check_lean_no_sorry.py
+
+smoke-target-library-status:
+	$(PYTHON) -m math_auto_research.cli.report_target_library_status

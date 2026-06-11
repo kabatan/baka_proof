@@ -76,6 +76,10 @@ def resolve_schema_path(artifact_path: Path, explicit_schema: Path | None = None
         return Path("schemas/resources/local_resource_profile.schema.json")
     if artifact_path.name == "default.example.yaml" and "model_provider_sets" in artifact_path.parts:
         return Path("schemas/model_api/model_provider_set_manifest.schema.json")
+    if artifact_path.name == "leangeo_subset_v1.yaml":
+        return Path("schemas/geometry/target_library_manifest.schema.json")
+    if artifact_path.name in {"target_library_status.json", "leangeo_target_status.json"}:
+        return Path("schemas/geometry/target_library_status_report.schema.json")
     raise SchemaValidationError(f"no schema mapping for {artifact_path}")
 
 

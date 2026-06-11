@@ -1,0 +1,30 @@
+{
+  "$id": "geometry.target_library_status_report.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "target_library_id",
+    "source_url",
+    "expected_lean_version",
+    "local_lean_version",
+    "install_status",
+    "namespace_discovery_status",
+    "theorem_discovery_status",
+    "blockers",
+    "claim_ceiling"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "report_id": {"type": "string"},
+    "target_library_id": {"type": "string", "pattern": "LeanGeoSubsetV1:.+"},
+    "source_url": {"type": "string"},
+    "expected_lean_version": {"type": "string"},
+    "local_lean_version": {"type": "string"},
+    "install_status": {"type": "string", "enum": ["available", "blocked", "unavailable"]},
+    "namespace_discovery_status": {"type": "string", "enum": ["completed", "blocked", "not_started"]},
+    "theorem_discovery_status": {"type": "string", "enum": ["completed", "blocked", "not_started"]},
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "claim_ceiling": {"type": "string"}
+  }
+}

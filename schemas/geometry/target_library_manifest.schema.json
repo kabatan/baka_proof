@@ -1,0 +1,25 @@
+{
+  "$id": "geometry.target_library_manifest.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "target_library_id",
+    "target_family",
+    "source_url",
+    "expected_lean_version",
+    "selected",
+    "status",
+    "blocker_reason"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "target_library_id": {"type": "string", "pattern": "LeanGeoSubsetV1:.+"},
+    "target_family": {"type": "string", "enum": ["LeanGeoSubsetV1"]},
+    "source_url": {"type": "string"},
+    "expected_lean_version": {"type": "string"},
+    "selected": {"type": "boolean"},
+    "status": {"type": "string", "enum": ["available", "blocked", "unavailable"]},
+    "blocker_reason": {"type": "string"}
+  }
+}
