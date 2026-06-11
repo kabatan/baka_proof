@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
 version: v0.3-admission-candidate
-status: T05_COMPLETE
+status: T06_COMPLETE
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -32,9 +32,9 @@ Implementation remains limited to the reviewed Base Spec and Plan. Git initializ
 
 ## Current Task Pointer
 
-Current gate: `T05 — ArtifactStore, RunLogger, diagnostics` complete.
+Current gate: `T06 — ProofStateDAG core` complete.
 
-Next task: `T06 — ProofStateDAG core`.
+Next task: `T07 — Plugin registry and manifest loading`.
 
 ## Evidence Directory
 

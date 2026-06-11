@@ -1,0 +1,14 @@
+{
+  "$id": "proof_state.graph_patch.v1",
+  "type": "object",
+  "required": ["patch_id", "schema_id"],
+  "properties": {
+    "patch_id": {"type": "string"},
+    "schema_id": {"const": "proof_state.graph_patch.v1"},
+    "obligations": {"type": "array"},
+    "evidence_refs": {"type": "array"},
+    "derivations": {"type": "array"},
+    "invalidate_obligation_ids": {"type": "array", "items": {"type": "string"}},
+    "metadata": {"type": "object"}
+  }
+}
