@@ -37,22 +37,27 @@ Full native Windows LeanGeo build remains limited by the transitive `lean-cvc5` 
 
 ```powershell
 python -m unittest tests.unit.test_target_subset tests.unit.test_geometry_extraction tests.unit.test_schema_validation
-cmd /c make smoke-geometry-extraction > docs\ai\changes\geometry-lean-v0_3\evidence\geometry_extraction_smoke.json
+cmd /c make smoke-geometry-extraction
 cmd /c make lean-build
 cmd /c make test-mutation TEST_FILTER=extraction
 cmd /c make test-unit
 python scripts/check_domain_contamination.py
 ```
 
+`make smoke-geometry-extraction` now runs the Lean-backed WSL `#check` extraction smoke and writes:
+
+- `wsl_leangeo_check_output.log`
+- `leangeo_extraction_smoke.json`
+
 Results:
 
 ```text
-Ran 13 tests in 0.019s
+Ran 17 focused tests OK
 OK
 Build completed successfully (0 jobs).
-Ran 8 tests in 0.007s
+Ran 12 mutation-target tests OK
 OK
-Ran 38 tests in 1.635s
+Ran 42 unit tests OK
 OK
 domain contamination check passed
 ```

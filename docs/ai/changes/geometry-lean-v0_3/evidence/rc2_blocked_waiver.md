@@ -2,13 +2,20 @@
 title: RC-2 Blocked Waiver
 task: RC-2 — target subset and extraction
 date: 2026-06-11
-status: BLOCKED
+status: SUPERSEDED_BY_RC2_ENVIRONMENT_UNBLOCK
 authority: Evidence-bound waiver; does not override Base Spec or Plan.
 ---
 
 # RC-2 Blocked Waiver
 
-RC-2 cannot be claimed PASS under the current admitted Base Spec and Plan.
+This historical waiver recorded the RC-2 blocker before the user authorized environment changes. It is superseded by:
+
+- `rc2_environment_unblock.md`
+- `rc2_pre_review_verification.md`
+- `wsl_leangeo_check_output.log`
+- `leangeo_extraction_smoke.json`
+
+Do not use this waiver as current RC-2 status.
 
 ## Blocking Condition
 
@@ -43,7 +50,9 @@ All commands passed locally after remediation.
 
 ## Required Unblock
 
-One of the following is required before RC-2 PASS can be claimed:
+At the time this waiver was written, one of the following was required before RC-2 PASS could be claimed:
 
 - install/pin a LeanGeo-compatible Lean 4.15 toolchain and solver dependencies, then implement real Lean elaboration-backed extraction; or
 - obtain an admitted Base/Plan revision that explicitly lowers RC-2 from semantic extraction to scaffold-only.
+
+The first path was later implemented for RC-2 subset evidence using Elan Lean 4.15, WSL Lean 4.15, and LeanGeo.Abbre `#check` output extraction. RC-2 still requires Guardian review before PASS may be claimed.
