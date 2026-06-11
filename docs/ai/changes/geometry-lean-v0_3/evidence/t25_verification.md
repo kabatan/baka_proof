@@ -13,8 +13,8 @@ Supports R-IDs: `R-TEST-001`, `R-V03-TEST-001`, and safety R-IDs covered by the 
 ## Implemented Scope
 
 - Expanded `make test-regression` and `make.bat test-regression` to run the required safety families:
-  domain contamination, schema/public contract checks, dependency/target substitution checks, resource governor/provider timeout checks, extraction, RuleRegistry/TraceCompiler, ConstructionCompiler, trust/final verification, model/provider non-proof-use, standard loop, and run trace/replay.
-- Expanded `make test-mutation` and `make.bat test-mutation` to include extraction/target mutations, TraceCompiler/RuleRegistry side-condition mutations, ConstructionCompiler mutations, TrustGuard/BridgeGate laundering checks, and FinalVerifyGate misuse checks.
+  domain contamination, schema/public contract checks, dependency/target substitution checks, resource governor/provider timeout checks, extraction, RuleRegistry/TraceCompiler, ConstructionCompiler, trust/final verification, model/provider non-proof-use, standard loop, proof-state final verification closure, and run trace/replay.
+- Expanded `make test-mutation` and `make.bat test-mutation` to include extraction/target mutations, TraceCompiler/RuleRegistry side-condition mutations, ConstructionCompiler mutations, TrustGuard/BridgeGate laundering checks, FinalVerifyGate misuse checks, standard-loop worker-patch binding checks, and proof-state forged-final-verification checks.
 
 ## Verification Commands
 
@@ -22,13 +22,13 @@ Supports R-IDs: `R-TEST-001`, `R-V03-TEST-001`, and safety R-IDs covered by the 
 cmd /c make test-regression
 ```
 
-Result: passed; domain contamination and no-loose-options checks passed; 63 regression tests passed.
+Result: passed after RC-5 target correction; domain contamination and no-loose-options checks passed; 69 regression tests passed.
 
 ```text
 cmd /c make test-mutation
 ```
 
-Result: passed, 34 tests.
+Result: passed after RC-5 target correction, 45 tests.
 
 ```text
 cmd /c make test-unit

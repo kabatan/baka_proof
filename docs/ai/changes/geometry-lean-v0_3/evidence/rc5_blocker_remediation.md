@@ -46,13 +46,13 @@ Result: passed. Output included `worker_patch_application = applied`, `final_ver
 cmd /c make test-regression
 ```
 
-Result: passed; domain contamination and no-loose-options checks passed; 63 regression tests passed.
+Result: passed; domain contamination and no-loose-options checks passed; 69 regression tests passed.
 
 ```text
 cmd /c make test-mutation
 ```
 
-Result: passed, 34 tests.
+Result: passed, 45 tests.
 
 ```text
 cmd /c make test-unit

@@ -6,10 +6,10 @@ test-unit:
 	$(PYTHON) -m unittest discover -s tests/unit -p "test_*.py"
 
 test-mutation:
-	$(PYTHON) -m unittest tests.unit.test_geometry_extraction tests.unit.test_target_subset tests.unit.test_trace_compiler tests.unit.test_geotrace_rule_registry tests.unit.test_construction_compiler tests.unit.test_geometry_bridge tests.unit.test_final_verify
+	$(PYTHON) -m unittest tests.unit.test_geometry_extraction tests.unit.test_target_subset tests.unit.test_trace_compiler tests.unit.test_geotrace_rule_registry tests.unit.test_construction_compiler tests.unit.test_geometry_bridge tests.unit.test_final_verify tests.unit.test_geometry_standard_loop tests.unit.test_proof_state_dag
 
 test-regression:
-	$(PYTHON) -m unittest tests.unit.test_domain_contamination tests.unit.test_schema_validation tests.unit.test_target_library_status tests.unit.test_resource_governor tests.unit.test_composite_provider tests.unit.test_geometry_extraction tests.unit.test_trace_compiler tests.unit.test_geotrace_rule_registry tests.unit.test_construction_compiler tests.unit.test_geometry_bridge tests.unit.test_final_verify tests.unit.test_model_provider_set tests.unit.test_geometry_standard_loop tests.unit.test_run_trace
+	$(PYTHON) -m unittest tests.unit.test_domain_contamination tests.unit.test_schema_validation tests.unit.test_target_library_status tests.unit.test_resource_governor tests.unit.test_composite_provider tests.unit.test_geometry_extraction tests.unit.test_trace_compiler tests.unit.test_geotrace_rule_registry tests.unit.test_construction_compiler tests.unit.test_geometry_bridge tests.unit.test_final_verify tests.unit.test_model_provider_set tests.unit.test_geometry_standard_loop tests.unit.test_proof_state_dag tests.unit.test_run_trace
 	$(PYTHON) scripts/check_domain_contamination.py
 	$(PYTHON) scripts/check_no_loose_options.py
 
