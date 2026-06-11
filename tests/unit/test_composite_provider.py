@@ -7,7 +7,11 @@ from pathlib import Path
 
 from math_auto_research.schema_validation import validate_artifact
 from plugins.geometry_synthetic.facade import GeometrySolveRequest
-from plugins.geometry_synthetic.provider import CompositeSyntheticGeometryProvider, convert_claim_spec_to_newclid_fixture
+from plugins.geometry_synthetic.provider import (
+    CompositeSyntheticGeometryProvider,
+    convert_claim_spec_to_newclid_fixture,
+    propose_auxiliary_construction_candidate,
+)
 
 
 def request_for(budget: str = "medium", constraints: dict | None = None) -> GeometrySolveRequest:
@@ -23,19 +27,40 @@ def request_for(budget: str = "medium", constraints: dict | None = None) -> Geom
     )
 
 
+def claim_spec_fixture() -> dict:
+    return {
+        "schema_version": "1.0.0",
+        "claim_id": "geometry_claim:fixture",
+        "target_library": "LeanGeoSubsetV1:1.0.0",
+        "objects": ["A:Point", "B:Point", "C:Point"],
+        "hypotheses": ["collinear"],
+        "target": {"form": "collinear", "raw": "Coll A B C"},
+        "nondegeneracy_assumptions": [],
+        "orientation_assumptions": [],
+        "source_goal_ref": "lean-check:fixture",
+    }
+
+
 class CompositeProviderTest(unittest.TestCase):
     def test_newclid_compatible_input_conversion(self) -> None:
-        claim_spec = {
-            "objects": ["A:Point", "B:Point", "C:Point"],
-            "hypotheses": ["collinear"],
-            "target": {"form": "collinear", "raw": "Coll A B C"},
-            "nondegeneracy_assumptions": [],
-            "orientation_assumptions": [],
-        }
+        claim_spec = claim_spec_fixture()
         converted = convert_claim_spec_to_newclid_fixture(claim_spec)
         self.assertEqual(converted["objects"], ["A:Point", "B:Point", "C:Point"])
         self.assertEqual(converted["known_predicates"], ["collinear"])
         self.assertEqual(converted["target"], "collinear")
+
+    def test_genesisgeo_compatible_candidate_remains_not_proof(self) -> None:
+        candidate = propose_auxiliary_construction_candidate(claim_spec_fixture(), request_for())
+        self.assertEqual(candidate["construction_kind"], "line_through_two_distinct_points")
+        self.assertEqual(candidate["proof_use_status"], "not_allowed")
+
+        run = CompositeSyntheticGeometryProvider().run(
+            request_for("medium", {"construction_needed": True, "claim_spec": claim_spec_fixture()})
+        )
+        self.assertTrue(run.result.construction_candidate_refs)
+        self.assertEqual(run.result.proof_use_status, "not_allowed")
+        self.assertIsNone(run.result.geotrace_ref)
+        self.assertIn("genesisgeo-compatible-fixture", run.manifest.adapter_versions["construction_proposer"])
 
     def test_provider_returns_normalized_result_and_manifest(self) -> None:
         run = CompositeSyntheticGeometryProvider().run(request_for())

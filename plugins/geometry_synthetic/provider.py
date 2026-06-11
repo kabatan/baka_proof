@@ -133,6 +133,49 @@ class NewclidCompatibleSymbolicClosureAdapter(DummyEngineAdapter):
         )
 
 
+class GenesisGeoCompatibleConstructionProposerAdapter(DummyEngineAdapter):
+    def __init__(self) -> None:
+        super().__init__(ENGINE_CONSTRUCTION_PROPOSER, "genesisgeo-compatible-fixture:0.1")
+
+    def run(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> EngineAdapterResult:
+        claim_spec = request.constraints.get("claim_spec")
+        if not isinstance(claim_spec, dict):
+            raw_output = json.dumps(
+                {
+                    "engine_family": "genesisgeo_compatible_construction_proposer",
+                    "request_id": request.request_id,
+                    "status": "diagnostic_only",
+                    "reason": "missing_claim_spec",
+                },
+                sort_keys=True,
+            )
+            return EngineAdapterResult(
+                engine_role=self.engine_role,
+                status="diagnostic_only",
+                raw_output=raw_output,
+                normalized_output_ref=None,
+                diagnostic_ref=f"diagnostic:{request.request_id}:construction_proposer:missing_claim_spec",
+            )
+
+        candidate = propose_auxiliary_construction_candidate(claim_spec, request)
+        raw_output = json.dumps(
+            {
+                "engine_family": "genesisgeo_compatible_construction_proposer",
+                "candidate": candidate,
+                "raw_rationale": "fixture construction proposal; not proof evidence",
+                "status": "auxiliary_construction_candidate",
+            },
+            sort_keys=True,
+        )
+        return EngineAdapterResult(
+            engine_role=self.engine_role,
+            status="auxiliary_construction_candidate",
+            raw_output=raw_output,
+            normalized_output_ref=candidate["candidate_id"],
+            diagnostic_ref=f"diagnostic:{request.request_id}:construction_proposer:genesis_fixture",
+        )
+
+
 class CompositeSyntheticGeometryProvider:
     provider_id = "geometry_solver_provider:composite_synthetic:v1"
 
@@ -144,7 +187,7 @@ class CompositeSyntheticGeometryProvider:
         self.governor = governor or ResourceGovernor()
         self.adapters = adapters or {
             ENGINE_SYMBOLIC_CLOSURE: NewclidCompatibleSymbolicClosureAdapter(),
-            ENGINE_CONSTRUCTION_PROPOSER: DummyEngineAdapter(ENGINE_CONSTRUCTION_PROPOSER, "dummy-construction:0.1"),
+            ENGINE_CONSTRUCTION_PROPOSER: GenesisGeoCompatibleConstructionProposerAdapter(),
             ENGINE_HEAVY_SEARCH: DummyEngineAdapter(ENGINE_HEAVY_SEARCH, "dummy-heavy:0.1"),
         }
 
@@ -209,8 +252,20 @@ class CompositeSyntheticGeometryProvider:
             request_id=request.request_id,
             status=status,
             proof_use_status="not_allowed",
-            geotrace_ref=next((result.normalized_output_ref for result in engine_results if result.normalized_output_ref), None),
-            construction_candidate_refs=(),
+            geotrace_ref=next(
+                (
+                    result.normalized_output_ref
+                    for result in engine_results
+                    if result.normalized_output_ref and result.normalized_output_ref.startswith("geotrace:")
+                ),
+                None,
+            ),
+            construction_candidate_refs=tuple(
+                result.normalized_output_ref
+                for result in engine_results
+                if result.normalized_output_ref
+                and result.normalized_output_ref.startswith("aux_construction_candidate:")
+            ),
             diagnostic_refs=tuple(result.diagnostic_ref for result in engine_results),
             provider_run_manifest_ref=manifest.manifest_id,
         )
@@ -289,4 +344,26 @@ def convert_claim_spec_to_newclid_fixture(claim_spec: dict[str, Any]) -> dict[st
         "target_raw": target.get("raw"),
         "nondegeneracy_assumptions": list(claim_spec.get("nondegeneracy_assumptions", [])),
         "orientation_assumptions": list(claim_spec.get("orientation_assumptions", [])),
+    }
+
+
+def propose_auxiliary_construction_candidate(
+    claim_spec: dict[str, Any],
+    request: GeometrySolveRequest,
+) -> dict[str, Any]:
+    objects = list(claim_spec.get("objects", []))
+    point_names = [item.split(":", 1)[0] for item in objects if item.endswith(":Point")]
+    introduced = "l_aux" if len(point_names) >= 2 else "aux_object"
+    dependencies = point_names[:2]
+    construction_kind = "line_through_two_distinct_points" if len(dependencies) >= 2 else "unsupported"
+    return {
+        "schema_version": "1.0.0",
+        "candidate_id": f"aux_construction_candidate:{request.request_id}:construction_proposer",
+        "construction_kind": construction_kind,
+        "source_provenance": f"provider_run:{request.request_id}:genesisgeo_fixture",
+        "introduced_objects": [f"{introduced}:Line"] if construction_kind != "unsupported" else [],
+        "dependencies": dependencies,
+        "intended_use": "search_hint_for_symbolic_retry",
+        "side_conditions": [f"{dependencies[0]} != {dependencies[1]}"] if len(dependencies) >= 2 else [],
+        "proof_use_status": "not_allowed",
     }
