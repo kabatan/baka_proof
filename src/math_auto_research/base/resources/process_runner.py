@@ -9,23 +9,27 @@ from math_auto_research.base.resources.resource_governor import ResourceGovernor
 
 
 def run_guarded_process(command: list[str], request: ResourceRequest, governor: ResourceGovernor) -> dict[str, Any]:
-    start = time.monotonic()
+    started_at = time.time()
+    start_monotonic = time.monotonic()
     with governor.admit(request):
         completed = subprocess.run(command, capture_output=True, text=True, timeout=request.timeout_sec, check=False)
-    wall = time.monotonic() - start
+    ended_at = time.time()
+    wall = time.monotonic() - start_monotonic
     return {
         "schema_version": "1.0.0",
         "report_id": f"resource_usage:{time.time_ns()}",
         "run_id": "local_smoke",
+        "role": request.engine_role if request.engine_role != "none" else request.component,
+        "admission_status": "admitted",
+        "started_at": str(started_at),
+        "ended_at": str(ended_at),
+        "exit_status": "completed" if completed.returncode == 0 else "failed",
         "component": request.component,
-        "engine_role": request.engine_role,
         "budget": request.budget,
-        "admitted": True,
         "queue_wait_sec": 0,
         "wall_time_sec": round(wall, 6),
         "cpu_time_sec": 0,
         "peak_rss_mb": 0,
         "gpu_vram_peak_mb": None,
-        "exit_status": "success" if completed.returncode == 0 else "failed",
         "logs_ref": "inline",
     }

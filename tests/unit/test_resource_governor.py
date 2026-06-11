@@ -21,8 +21,11 @@ class ResourceGovernorTest(unittest.TestCase):
         governor = ResourceGovernor()
         request = ResourceRequest(component="checker", engine_role="none", budget="tiny", timeout_sec=10)
         report = run_guarded_process([sys.executable, "-c", "print('ok')"], request, governor)
-        self.assertEqual(report["exit_status"], "success")
-        self.assertTrue(report["admitted"])
+        self.assertEqual(report["role"], "checker")
+        self.assertEqual(report["admission_status"], "admitted")
+        self.assertEqual(report["exit_status"], "completed")
+        self.assertIn("started_at", report)
+        self.assertIn("ended_at", report)
 
     def test_probe_local_resources(self) -> None:
         profile = probe_local_resources()

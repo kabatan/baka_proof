@@ -40,7 +40,7 @@
           "status_fields": ["role", "admission_status", "exit_status"],
           "proof_use_fields": [],
           "allowed_values": {
-            "role": ["lean", "proof_worker", "symbolic_closure", "construction_proposer", "heavy_search"],
+            "role": ["lean", "proof_worker", "symbolic_closure", "construction_proposer", "heavy_search", "checker"],
             "admission_status": ["admitted", "rejected", "timeout", "killed"],
             "exit_status": ["completed", "failed", "timeout", "killed", "not_started"]
           }

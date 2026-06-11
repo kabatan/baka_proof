@@ -7,9 +7,9 @@ from dataclasses import asdict, dataclass
 class DiagnosticBundle:
     schema_version: str
     kind: str
-    blame_layer: str
-    severity: str
-    message: str
+    origin: str
+    suggested_action: str
+    status: str
 
     def to_dict(self) -> dict[str, str]:
         return asdict(self)
@@ -20,7 +20,8 @@ class TrustReport:
     schema_version: str
     result_level: str
     proof_use_status: str
-    final_verify_report_ref: str | None
+    reason: str
+    final_verify_ref: str | None
 
     def to_dict(self) -> dict[str, str | None]:
         return asdict(self)

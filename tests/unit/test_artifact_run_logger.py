@@ -37,9 +37,13 @@ class ArtifactRunLoggerTest(unittest.TestCase):
 
     def test_diagnostic_and_trust_records_serialize(self) -> None:
         diagnostic = DiagnosticBundle("1.0.0", "resource_rejected", "resource_policy", "retry", "blocked")
-        trust = TrustReport("1.0.0", "diagnostic_only", "not_allowed", None)
+        trust = TrustReport("1.0.0", "diagnostic_only", "not_allowed", "not_final_verified", None)
         self.assertEqual(diagnostic.to_dict()["kind"], "resource_rejected")
+        self.assertIn("origin", diagnostic.to_dict())
+        self.assertIn("suggested_action", diagnostic.to_dict())
         self.assertEqual(trust.to_dict()["result_level"], "diagnostic_only")
+        self.assertIn("reason", trust.to_dict())
+        self.assertIn("final_verify_ref", trust.to_dict())
 
 
 if __name__ == "__main__":
