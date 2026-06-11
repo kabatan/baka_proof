@@ -1,0 +1,1143 @@
+---
+title: Guardian Base Spec — geometry × Lean 自動研究 pipeline v0.3 実装改訂草案
+spec_id: MARP-GEOLEAN-BASE-002
+version: v0.2-draft
+status: DRAFT_FOR_USER_REVIEW
+created: 2026-06-10
+lane: Guardian Lane
+source_documents:
+  - geometry_lean_pipeline_plan_v0_3.md
+  - geometry_lean_pipeline_review_v0_2_revised.md
+  - fatal_risks_1_2_3_geometry_lean_review.md
+  - math_auto_research_pipeline_final_repo_plan_v1_2.md
+  - user decisions through 2026-06-10 conversation
+intended_repository_root: math-auto-research/
+---
+
+# Guardian Base Spec — geometry × Lean 自動研究 pipeline v0.3 実装改訂草案
+
+## Context Packet
+
+Spec ID: `MARP-GEOLEAN-BASE-002`  
+Type: Change Base Spec / implementation authority draft  
+Status: Draft. User approval is required before this becomes the implementation authority.  
+Parent: none declared in this draft. If the project already has a repo-wide Base Spec, this spec must be admitted as a child and must declare exact parent R-IDs.  
+Scope: v0.3 geometry × Lean plan を Codex agent が実装できる Guardian Base Spec に変換する。今回の改訂では、環境構築権限、Base-level `ModelProviderSet`、Composite synthetic geometry solver、local PC resource governance を追加する。  
+Applies To: `src/math_auto_research/**`, `plugins/geometry_synthetic/**`, `lean/MathAutoResearch/Geometry/**`, `schemas/**`, `configs/**`, `benchmarks/geometry/**`, `tests/**`, `scripts/**`, `docs/architecture/**`, `docs/ai/**`.  
+Blocking Questions: none. `QD-001` from the previous draft is retired and replaced by `R-ENV-*`.  
+Non-blocking Debt: none at draft time.  
+Known Exceptions: none.  
+Read-First R-IDs: `R-ARCH-001`, `R-NOOPT-001`, `R-ENV-001`, `R-MODEL-001`, `R-RSRC-001`, `R-GEO-001`, `R-EXTRACT-001`, `R-SOLVER-001`, `R-RULE-001`, `R-TRUST-001`, `R-VERIFY-001`.  
+Context Packet Authority: non-authoritative digest. The R-ID body below is authoritative.
+
+---
+
+## 0. Authority, status, and implementation permission
+
+This file defines **what correctness means** for the geometry × Lean v0.3 implementation.
+
+It is not an implementation plan. The paired Plan must not add requirements, weaken requirements, reinterpret this Base Spec, or convert excluded items into implementation tasks. If this Base Spec and the Plan conflict, this Base Spec wins.
+
+Implementation may begin only after the user explicitly approves this Base Spec and the paired Plan. Until approval, Codex may read, review, refine, and propose changes, but must not start repository implementation.
+
+---
+
+## 1. Purpose
+
+The purpose of this change is to implement the initial `geometry × Lean` target of the mathematical automatic research pipeline.
+
+The system must take a Lean theorem that is already correctly formalized in a deliberately restricted `LeanGeoSubsetV1`, use model/controller plugins and synthetic geometry solver providers to search for proof strategies, auxiliary constructions, and trace candidates, and produce a final Lean theorem only when Lean final verification succeeds without changing the protected theorem statement.
+
+The implementation must preserve the project’s core design philosophy:
+
+1. Base pipeline remains domain-neutral.
+2. Domain intelligence lives in plugins.
+3. ProofStateDAG is minimal and proof-use oriented.
+4. Plugin updates go through GraphPatch and DAGWriter.
+5. Raw solver/provider/model output is never proof evidence by itself.
+6. Lean final verification is the authority for `final_theorem` claims in this initial geometry target.
+7. Environment bootstrap is allowed, but dependency changes must be reproducible and logged.
+8. Models are not hard-coded inside controller/worker plugins; models are provided through a Base-level `ModelProviderSet`.
+9. Newclid / GenesisGeo / TongGeometry are not Base concepts; they are internal engine roles inside the selected `GeometrySolverProvider`.
+10. Local PC resource usage is managed by a deterministic `ResourceGovernor`; heavy solver runs must not starve Lean build, ProofWorker, or system responsiveness.
+
+---
+
+## 2. Scope
+
+### 2.1 In scope
+
+The implementation MUST include:
+
+1. Base runtime contracts for artifacts, run logging, trust reports, diagnostics, selected implementations, replay metadata, release acceptance checks, and resource governance.
+2. Domain-neutral ProofStateDAG core with `Obligation`, `Derivation`, `EvidenceRef`, `GraphPatch`, `DAGWriter`, closure, acyclicity, invalidation, and StateReader summaries.
+3. Base-level model connection contracts: `ModelProviderSet`, `ModelSlot`, `ModelInvocationRecord`, and injection into controller/worker plugins.
+4. Model-consuming plugin contracts: `ResearchControllerPlugin`, `ProofWorkerPlugin`, `ResearchStatePack`, `ActionPlan`, `WorkOrder`, and `WorkerResult`.
+5. Reproducible dependency bootstrap: Lean/lake, LeanGeo-compatible package, Python packages, Newclid-compatible engine, GenesisGeo-compatible model/engine, TongGeometry-compatible engine where available.
+6. Local resource management: `LocalResourceProfile`, `ResourceBudgetProfile`, `ResourceGovernor`, per-engine semaphores, admission control, timeout/kill policy, and `ResourceUsageReport`.
+7. Lean integration: `LeanPort`, `GoalAnchor`, protected theorem statement hash, `ProofRegionGuard`, `LeanErrorSummary`, and `FinalVerifyGate`.
+8. Geometry plugin `geometry_synthetic` with `geometry.solve` facade.
+9. `TargetSubsetContract`: `LeanGeoSubsetV1TheoremGrammar`, predicate / construction / relation mapping, fixtures, `GeometryExtractionContract`, `GeometryExtractionReport`, and `GeometryClaimSpec`.
+10. `GeometrySolverProvider` boundary, deterministic `GeometrySolverPolicy`, `GeometryExecutionPlan`, `ProviderRunManifest`, and `ProviderResult`.
+11. Composite synthetic geometry provider with internal roles: Newclid-compatible symbolic closure, GenesisGeo-compatible auxiliary construction proposer, TongGeometry-compatible heavy search oracle. Base must see only one selected provider.
+12. `CompilerContract`: `GeoTraceV1`, `RuleRegistryV1`, side-condition calculus, `TraceCompiler`, `AuxiliaryConstructionCandidateV1`, `ConstructionCompiler`.
+13. `BridgeGate`, `TrustGuard`, and result-level classification suitable for geometry × Lean.
+14. Run trace and evaluation records: `ControllerStrategyLog`, `ResearchContributionRecord`, `EvaluationFunnel`, reproducibility report, `ProviderRunManifest`, and `ResourceUsageReport`.
+15. Regression and mutation tests that prevent option creep, proof-use laundering, extraction unsoundness, missing side conditions, protected theorem edits, dependency substitution, and resource policy bypass.
+16. Level 2 evaluation harness showing whether `geometry.solve` improves Lean proof completion relative to controller/worker-only baselines.
+
+### 2.2 Out of scope
+
+The implementation MUST NOT attempt to include:
+
+1. Natural-language problem to Lean theorem formalization.
+2. Informal problem fidelity audit.
+3. Diagram image recognition.
+4. Multi-target library bridge across LeanGeo, Mathlib geometry, and a local geometry micro-library.
+5. AgentC / AgentD core modes or A/B/C/D runtime taxonomy.
+6. Provider-specific proof semantics in Base.
+7. Raw DSL problem proof-use path.
+8. Arbitrary Newclid / GenesisGeo / TongGeometry trace translation.
+9. Coordinate / Wu / Groebner / SOS proof path as proof-use authority.
+10. A claim that the system solves open problems.
+11. Unbounded background solver execution outside `ResourceGovernor`.
+12. A claim that local resource profiles are portable across machines.
+
+Coordinate, Wu, Groebner, SOS, or analytic methods MAY be used inside a provider only as search hints or construction/diagnostic generators. Their outputs remain non-proof artifacts unless converted into accepted `GeoTraceV1` or `AuxiliaryConstructionCandidateV1` artifacts and then verified through the compiler and Lean final verification path.
+
+---
+
+## 3. Source classification
+
+| Source unit | Classification | Normative effect |
+|---|---:|---|
+| User decision: no loose optional AgentC/D; remove AgentC/D taxonomy from core | EXACT | `R-NOOPT-002`, `R-MODEL-001` |
+| User decision: model connections must be externally swappable | EXACT | `R-MODEL-*` |
+| User decision: Codex may perform dependency setup | EXACT | `R-ENV-*` |
+| User decision: Newclid / GenesisGeo / TongGeometry should be used as synthetic solvers, not coordinate solvers | EXACT | `R-SOLVER-*`, `R-ENGINE-*` |
+| User decision: local PC resources may be substantially allocated, but must be planned carefully | EXACT | `R-RSRC-*` |
+| v0.3 decision: target library fixed to LeanGeoSubsetV1 | EXACT | `R-GEO-001` |
+| v0.3 decision: proof-use path starts from Lean goal extraction | EXACT | `R-EXTRACT-001` |
+| v0.3 decision: raw DSL / raw trace not proof | EXACT | `R-TRUST-001` |
+| v0.3 decision: auxiliary construction candidate is standard contract | EXACT | `R-AUX-001` |
+| v0.3 decision: RuleRegistryV1 has side-condition calculus | EXACT | `R-RULE-001` |
+| fatal risk review: Lean theorem to DSL extraction is semantic, not parser-only | EXACT | `R-EXTRACT-001` to `R-EXTRACT-006` |
+| fatal risk review: TraceCompiler needs supported rule subset and side-condition calculus | EXACT | `R-RULE-*`, `R-TRACE-*` |
+| fatal risk review: target library must be one library | EXACT | `R-GEO-001`, `R-GEO-002` |
+| v1.2 base/domain separation and GraphPatch-only mutation | ADAPTED | `R-ARCH-*`, `R-DAG-*` |
+| finite_graph-specific claim templates, certificates, coverage | OUT_OF_SCOPE | not implemented in this geometry initial target |
+| Guardian Lane process | REFERENCE_ONLY for artifact format; normative only where explicitly stated in R-IDs | `R-GUARD-*` |
+
+---
+
+## 4. Requirement IDs
+
+### 4.1 Guardian and authority requirements
+
+#### R-GUARD-001 — Base Spec authority
+
+MUST: This Base Spec is the authority for correctness after approval. The Plan, task instructions, active context, source map, handoff notes, and agent memory must not override it.
+
+Acceptance:
+
+- `docs/ai/changes/geometry-lean-v0_3/BASE_SPEC.md` exists.
+- `docs/ai/changes/geometry-lean-v0_3/PLAN.md` declares this spec ID.
+- Plan tasks map to R-IDs and do not introduce requirements not present here.
+
+#### R-GUARD-002 — Evidence-bound claims
+
+MUST: Final closure claims must be limited to evidence actually produced by commands or review artifacts. Strong claims such as `ACCEPTANCE_COMPLETE`, `VERIFIED`, or `SOURCE_FAITHFUL` must cite fresh evidence files and must have no blocking QuestionDebt for the claimed scope.
+
+Acceptance:
+
+- `CLOSURE.md` template or generated closure includes command evidence paths.
+- Release acceptance script emits a machine-readable report.
+- Closure cannot claim final theorem success without `FinalVerifyReport` references.
+
+#### R-GUARD-003 — Implementation permission gate
+
+MUST: Codex must not implement until the user approves the Base Spec and Plan. Drafting, review, and refinement are allowed before approval.
+
+Acceptance:
+
+- `ACTIVE_CONTEXT.md` states `Implementation permission: missing` until user approval is recorded.
+- Plan task `T00` records user approval before implementation tasks can be marked admitted.
+
+---
+
+### 4.2 Architecture and boundary requirements
+
+#### R-ARCH-001 — Domain-neutral Base
+
+MUST: Base runtime must not import or branch on `geometry_synthetic`, LeanGeo predicates, Newclid, GenesisGeo, TongGeometry, or any geometry-specific concept except through registered schemas and plugin manifests.
+
+Acceptance:
+
+- Domain contamination test fails if `src/math_auto_research/base/**` or `src/math_auto_research/proof_state/**` imports `plugins.geometry_synthetic` or references `Newclid`, `GenesisGeo`, `TongGeometry`, `LeanGeoSubsetV1`, `collinear`, `parallel`, `perpendicular`, or `concyclic`.
+- Base schemas contain no geometry-specific field names.
+
+#### R-ARCH-002 — Plugin-owned domain intelligence
+
+MUST: Geometry-specific grammar, extraction, solver policy, trace rules, side conditions, construction semantics, rendering, and provider wrappers must live under `plugins/geometry_synthetic/**` or `lean/MathAutoResearch/Geometry/**`, not Base.
+
+Acceptance:
+
+- `plugins/geometry_synthetic/plugin.yaml` registers the geometry capability and schemas.
+- Base registries load plugin schemas by manifest, not hard-coded imports.
+
+#### R-ARCH-003 — Stable contracts first
+
+MUST: All public cross-boundary records must be schema-backed and versioned.
+
+Required schemas:
+
+- Base: `ArtifactRef`, `RunRecord`, `TrustReport`, `DiagnosticBundle`, `SelectedImplementations`, `LocalResourceProfile`, `ResourceBudgetProfile`, `ResourceUsageReport`.
+- Proof state: `ObligationNode`, `DerivationNode`, `EvidenceRef`, `GraphPatch`, `GraphPatchCommitResult`.
+- Model API: `ModelProviderSetManifest`, `ModelSlot`, `ModelInvocationRequest`, `ModelInvocationRecord`, `ResearchStatePack`, `ActionPlan`, `WorkOrder`, `WorkerResult`.
+- Geometry: `LeanGeoSubsetV1TheoremGrammar`, `GeometryExtractionReport`, `GeometryClaimSpec`, `GeometrySolveRequest`, `GeometryExecutionPlan`, `ProviderRunManifest`, `ProviderResult`, `GeoTraceV1`, `RuleRegistryV1`, `AuxiliaryConstructionCandidateV1`, `TraceCompilationResult`, `ConstructionCompilationResult`, `GeometryBridgeReport`.
+- Evaluation: `ControllerStrategyLog`, `ResearchContributionRecord`, `EvaluationFunnel`, `MetricsReport`.
+
+Acceptance:
+
+- JSON schemas or Pydantic/dataclass schemas exist for every listed record.
+- Schema version appears in every serialized artifact.
+- Proof-critical schema changes invalidate affected cached artifacts.
+
+---
+
+### 4.3 No loose options requirements
+
+#### R-NOOPT-001 — No loose options
+
+MUST: The core runtime must not expose optional runtime modes for agents, providers, target libraries, trace compilers, trust bypasses, bridge targets, or resource-governor bypasses.
+
+Acceptance:
+
+- `SelectedImplementations` has scalar fields, not arrays, for target library, model provider set, controller, worker, provider, solver policy, rule registry, resource policy, and trust boundary.
+- `scripts/check_no_loose_options.py` fails on core `AgentC`, `AgentD`, `mode_a`, `mode_b`, `mode_c`, `mode_d`, multiple target libraries, provider-specific branches in Base, or trust/resource bypass flags.
+
+#### R-NOOPT-002 — Agent C/D taxonomy removed
+
+MUST: Agent C/D terminology must not appear as core runtime classes, modes, enums, CLI options, config modes, or benchmark run modes.
+
+Allowed:
+
+- A `ResearchControllerPlugin` may internally use multi-agent orchestration, deep research, population search, or rater logic.
+- Such internals must be recorded only through `ControllerStrategyLog` capability flags and counts.
+
+Acceptance:
+
+- No `AgentC` / `AgentD` core classes or run modes exist.
+- Baselines are evaluation configurations, not runtime agent modes.
+
+#### R-NOOPT-003 — Exactly-one-selected implementation
+
+MUST: Each run must have exactly one selected implementation for each public boundary.
+
+Required scalar selections:
+
+```yaml
+SelectedImplementations:
+  target_library: "LeanGeoSubsetV1:<version>"
+  model_provider_set: "model_provider_set:<id>:<version>"
+  research_controller_plugin: "research_controller:<id>:<version>"
+  proof_worker_plugin: "proof_worker:<id>:<version>"
+  geometry_solver_provider: "geometry_solver_provider:<id>:<version>"
+  geometry_solver_policy: "geometry_solver_policy:<id>:<version>"
+  rule_registry: "RuleRegistryV1:<version>"
+  resource_policy: "ResourcePolicy:<id>:<version>"
+  trust_boundary: "strict_lean:<version>"
+```
+
+MUST NOT: Represent Newclid / GenesisGeo / TongGeometry as three Base-level provider options. They are internal roles of the selected `GeometrySolverProvider`.
+
+Acceptance:
+
+- `SelectedImplementations` is logged in every `RunRecord`.
+- Cache keys include `SelectedImplementations` hash.
+
+---
+
+### 4.4 Environment bootstrap requirements
+
+#### R-ENV-001 — Reproducible dependency bootstrap authorization
+
+MUST: Codex is authorized to perform reproducible dependency setup for the approved scope, including Lean/lake packages, LeanGeo-compatible dependencies, Python packages, Newclid-compatible provider dependencies, GenesisGeo-compatible model files, TongGeometry-compatible local engines, solver binaries, and local build tools.
+
+MUST: All dependency additions must be recorded in repo-managed files.
+
+Required records when applicable:
+
+- `lakefile.lean` / `lake-manifest.json`.
+- `pyproject.toml` / lockfile such as `uv.lock` or equivalent.
+- `scripts/bootstrap_env.sh` or equivalent.
+- `configs/dependencies/*.yaml`.
+- `docs/ai/changes/geometry-lean-v0_3/evidence/dependency_resolution.md`.
+
+MUST NOT: Silently replace LeanGeoSubsetV1 with Mathlib-only geometry or a local toy library as the target library.
+
+Acceptance:
+
+- `make setup` or `scripts/bootstrap_env.sh` produces a `DependencyResolutionReport`.
+- Dependency resolution report includes versions, commits, model/checkpoint hashes if applicable, and commands run.
+- If dependency resolution fails, real LeanGeo final theorem support remains blocked, but schema/scaffold/test-fixture work may continue.
+
+#### R-ENV-002 — DependencyResolutionReport
+
+MUST: Every dependency bootstrap attempt must emit `DependencyResolutionReport`.
+
+Required fields:
+
+```yaml
+DependencyResolutionReport:
+  report_id: "..."
+  created_at: "..."
+  os: "..."
+  python_version: "..."
+  lean_version: "..."
+  lake_version: "..."
+  packages:
+    - name: "..."
+      source: "git | local | pypi | release | manual"
+      version_or_commit: "..."
+      lock_ref: "..."
+  engines:
+    - role: "symbolic_closure | construction_proposer | heavy_search"
+      family: "newclid_compatible | genesisgeo_compatible | tonggeometry_compatible"
+      install_status: "installed | unavailable | skipped_by_policy | failed"
+      version_or_commit: "..."
+      checkpoint_hash: "nullable sha256:..."
+  unresolved:
+    - component: "..."
+      consequence: "blocks_real_final_theorem | blocks_heavy_search | nonblocking"
+  evidence_refs:
+    - "sha256:..."
+```
+
+Acceptance:
+
+- Report is stored as artifact and linked from `RunRecord` or setup evidence.
+- Release acceptance fails if a required component is unavailable but claimed as available.
+
+#### R-ENV-003 — Environment setup may not weaken target scope
+
+MUST: If LeanGeo-compatible target support cannot be installed or pinned, Codex must not switch target library. It must mark real LeanGeo final theorem support as blocked and continue only with non-final scaffolding or fixtures.
+
+Acceptance:
+
+- `check_release_acceptance.py` fails any real final theorem claim unless `DependencyResolutionReport` shows target dependency resolved.
+
+---
+
+### 4.5 Model provider requirements
+
+#### R-MODEL-001 — Base-level ModelProviderSet
+
+MUST: Models are connected through a Base-level `ModelProviderSet`. ResearchController and ProofWorker plugins are model consumers, not model owners.
+
+MUST: GPT-Pro, Codex, DeepResearch, local models, smaller models, or multi-agent orchestration must be swappable by changing `ModelProviderSetManifest` and selected implementations, not by changing Base code.
+
+Acceptance:
+
+- `src/math_auto_research/base/model_provider_set.py` or equivalent exists.
+- `ResearchControllerPluginManifest` declares required/allowed model slots.
+- `ProofWorkerPluginManifest` declares required/allowed model slots.
+- No controller/worker plugin hard-codes provider credentials or model identifiers outside manifest/config.
+
+#### R-MODEL-002 — Model slots
+
+MUST: `ModelProviderSetManifest` define named model slots. Slots may be backed by one model, a model wrapper, or an orchestration provider, but Base sees only slot invocation contracts.
+
+Example:
+
+```yaml
+ModelProviderSetManifest:
+  provider_set_id: "model_provider_set:geometry_default:v1"
+  model_slots:
+    strategist:
+      provider: "openai_or_replacement"
+      model_id: "gpt-pro-or-replacement"
+      capabilities: ["long_context_reasoning", "strategy_generation"]
+    proof_worker:
+      provider: "codex_or_replacement"
+      model_id: "codex-agent-or-replacement"
+      capabilities: ["repo_editing", "lean_error_repair"]
+    critic:
+      provider: "openai_or_local_or_none"
+      model_id: "declared-or-disabled"
+      capabilities: ["proof_plan_review"]
+  invocation_policy:
+    logging_required: true
+    raw_model_output_proof_use: false
+```
+
+Acceptance:
+
+- RunRecord logs provider set hash and used slot IDs.
+- Model invocation records are artifacts, not proof evidence.
+
+#### R-MODEL-003 — Model output is never proof evidence
+
+MUST: Model output may propose proof edits, work orders, solver calls, auxiliary constructions, or diagnostics, but may not directly close obligations.
+
+Acceptance:
+
+- TrustGuard rejects `model_output` evidence kind for proof-use closure.
+- Regression test: model says “proved” without Lean final verification -> cannot produce `final_theorem`.
+
+---
+
+### 4.6 Local resource governance requirements
+
+#### R-RSRC-001 — ResourceGovernor is mandatory
+
+MUST: All Lean builds, ProofWorker runs, provider engine calls, model calls where locally constrained, and heavy searches must be admitted through a deterministic `ResourceGovernor`.
+
+MUST NOT: Provider adapters spawn untracked long-running processes.
+
+Acceptance:
+
+- `ResourceGovernor` provides admission control and process group management.
+- `scripts/check_resource_bypass.py` fails on direct `subprocess.Popen`, `multiprocessing`, or solver CLI calls outside approved runner wrappers in provider code, except explicit allowlisted wrappers.
+
+#### R-RSRC-002 — LocalResourceProfile
+
+MUST: The implementation must provide a local resource probe and store a `LocalResourceProfile`.
+
+Required fields:
+
+```yaml
+LocalResourceProfile:
+  profile_id: "sha256:..."
+  created_at: "..."
+  os: "..."
+  cpu_physical_cores: 0
+  cpu_logical_cores: 0
+  total_ram_mb: 0
+  available_ram_mb_at_probe: 0
+  gpu_devices:
+    - name: "..."
+      vram_total_mb: 0
+      vram_available_mb_at_probe: 0
+      backend: "cuda | metal | rocm | none | unknown"
+  disk_free_mb:
+    artifact_root: 0
+    temp_root: 0
+  lean_build_parallelism_default: 0
+  provider_engine_availability:
+    symbolic_closure: "available | unavailable | unknown"
+    construction_proposer: "available | unavailable | unknown"
+    heavy_search: "available | unavailable | unknown"
+```
+
+Acceptance:
+
+- `scripts/probe_local_resources.py --json` emits this record.
+- ResourceProfile hash is stored in `RunRecord`.
+
+#### R-RSRC-003 — ResourceBudgetProfile
+
+MUST: Budget profiles must be machine-relative, not hard-coded to one PC. Defaults must reserve system headroom.
+
+Required budget names:
+
+```text
+tiny, small, medium, heavy, extreme
+```
+
+Default policy:
+
+- Reserve at least 1–2 logical cores or 15% CPU capacity, whichever is larger, for OS, editor, Codex runtime, and Lean feedback.
+- Reserve at least 20% RAM or 4 GB, whichever is larger, unless user overrides locally.
+- Reserve at least 10% artifact/temp disk free space.
+- Reserve GPU VRAM headroom when GPU-backed construction proposer is active.
+- `extreme` may use most PC resources, but must still use admission control, process groups, kill policy, and periodic heartbeat.
+
+Acceptance:
+
+- `configs/resource/default_local.yaml` exists.
+- `configs/resource/local.example.yaml` documents overrides.
+- `ResourceGovernor` refuses a run if estimated minimum resources exceed configured safe limits, returning `resource_rejected` diagnostic.
+
+#### R-RSRC-004 — Engine-role resource semaphores
+
+MUST: Composite provider internal engines must use named semaphores, not ad hoc parallelism.
+
+Required roles:
+
+```yaml
+engine_roles:
+  symbolic_closure:
+    intended_engine_family: "newclid_compatible"
+    default_parallelism: "cpu_moderate"
+  construction_proposer:
+    intended_engine_family: "genesisgeo_compatible"
+    default_parallelism: "gpu_or_cpu_guarded"
+  heavy_search:
+    intended_engine_family: "tonggeometry_compatible"
+    default_parallelism: "exclusive_or_near_exclusive"
+```
+
+MUST: `heavy_search` is exclusive by default and may run only for `budget in {heavy, extreme}` or explicit policy escalation.
+
+Acceptance:
+
+- Simulated concurrent run test proves `heavy_search` does not run concurrently with another `heavy_search` unless config explicitly permits.
+- Lean final verification queue is not starved by heavy provider runs.
+
+#### R-RSRC-005 — Timeout, heartbeat, and kill policy
+
+MUST: Every external engine run must have timeout, heartbeat, and process cleanup policy.
+
+Required behavior:
+
+1. Soft timeout writes partial logs and sends graceful termination.
+2. Hard timeout kills process group.
+3. Interrupted runs produce `DiagnosticBundle` and `ResourceUsageReport`.
+4. Partial raw logs may be stored as artifacts but are not proof evidence.
+5. Heavy search runs must checkpoint if the engine supports it; otherwise they must be safely restartable.
+
+Acceptance:
+
+- Timeout integration test kills a dummy long-running provider and verifies no orphan child process remains.
+- ResourceUsageReport records wall time, peak RSS if available, CPU time if available, GPU memory if available, exit status, and timeout status.
+
+#### R-RSRC-006 — Scheduler priorities
+
+MUST: The scheduler must prioritize quick feedback and final verification over heavy search.
+
+Default priority order:
+
+1. FinalVerifyGate / Lean final theorem verification.
+2. Lean build / Lean error summarization.
+3. ProofWorker short repair tasks.
+4. Newclid-compatible symbolic closure.
+5. GenesisGeo-compatible construction proposer.
+6. TongGeometry-compatible heavy search.
+7. Maintenance / background cache refresh.
+
+Acceptance:
+
+- Scheduler test shows a queued Lean verification job can preempt or wait ahead of heavy search admissions.
+- Heavy search cannot monopolize all worker slots.
+
+---
+
+### 4.7 ProofStateDAG requirements
+
+#### R-DAG-001 — Minimal core node types
+
+MUST: Base ProofStateDAG core node types remain `Obligation`, `Derivation`, and `EvidenceRef`.
+
+MUST NOT: Add geometry-specific node types to Base.
+
+Acceptance:
+
+- Core DAG tests cover closure, acyclicity, invalidation, GraphPatch commit, and projection.
+- No geometry-specific classes under `src/math_auto_research/proof_state/**`.
+
+#### R-DAG-002 — GraphPatch-only mutation
+
+MUST: Plugins cannot directly mutate DAG state. Plugins propose `GraphPatch`; Base `DAGWriter` validates and commits.
+
+Acceptance:
+
+- Mutation test fails if plugin writes DAG store directly.
+- DAGWriter checks schema IDs, rule IDs, acyclicity, evidence validity, trust rules, and status-lattice transitions.
+
+#### R-DAG-003 — Artifact separation
+
+MUST: Raw solver logs, model transcripts, Lean files, trace files, and certificates are artifacts. DAG holds only refs, hashes, evidence status, and closure dependency.
+
+Acceptance:
+
+- Regression test rejects raw logs inserted as proof-use DAG nodes.
+
+---
+
+### 4.8 Lean and verification requirements
+
+#### R-LEAN-001 — Protected theorem statement
+
+MUST: The target theorem statement hash must be protected. ProofWorker may edit only admitted proof regions unless a task explicitly permits helper lemma additions.
+
+Acceptance:
+
+- Mutation test changes theorem statement and FinalVerifyGate rejects it.
+- ProofRegionGuard rejects edits outside allowed proof blocks or helper lemma blocks.
+
+#### R-VERIFY-001 — FinalVerifyGate authority
+
+MUST: Only `FinalVerifyGate` may produce `result_level = lean_theorem` or `proof_use_status = final_theorem`.
+
+Required checks:
+
+- Lean build succeeds for target.
+- Protected theorem statement hash unchanged.
+- No `sorry` in protected target and generated helper lemmas.
+- No forbidden axioms or unsafe declarations according to configured policy.
+- All generated proof imports are from admitted files.
+
+Acceptance:
+
+- Regression test: raw provider trace with “proved” does not become final theorem.
+- Regression test: Lean file compiles with modified statement -> fails protected-hash check.
+
+---
+
+### 4.9 Geometry target and extraction requirements
+
+#### R-GEO-001 — Single target library: LeanGeoSubsetV1
+
+MUST: The initial target library is `LeanGeoSubsetV1` only.
+
+MUST NOT: Add Mathlib geometry or a local geometry micro-library as a second target. Mathlib may be a dependency and LeanGeo shim lemmas may exist only as adapter support, not as a separate target.
+
+Acceptance:
+
+- `TargetLibraryManifest` contains exactly one target library.
+- Release acceptance fails if a benchmark is satisfied only by local toy geometry definitions not mapped to LeanGeoSubsetV1.
+
+#### R-GEO-002 — LeanGeoSubsetV1 theorem grammar
+
+MUST: `LeanGeoSubsetV1` is defined as theorem grammar, not merely a predicate list.
+
+Required grammar areas:
+
+- Object declarations: points, lines from two distinct points, circles from registered constructors.
+- Hypothesis forms: distinctness, collinearity, parallel, perpendicular, midpoint, concyclicity, equal length, equal angle where supported.
+- Target forms: restricted collinearity, parallel, perpendicular, concyclicity, equal length, equal angle.
+- Rejected forms: arbitrary Mathlib expression, unsupported local notation, unsupported quantifier alternation, unsupported orientation semantics, unsupported diagram case split.
+
+Acceptance:
+
+- Positive, negative, ambiguous, and safe-reject fixtures exist.
+- Extractor tests cover every grammar entry.
+
+#### R-EXTRACT-001 — Extraction-first proof-use path
+
+MUST: Proof-use geometry solver path starts from Lean goal/context extraction.
+
+Allowed proof-use path:
+
+```text
+Lean theorem / goal
+  -> GeometryExtractionContract
+  -> GeometryClaimSpec
+  -> geometry.solve
+  -> GeoTraceV1 or AuxiliaryConstructionCandidateV1
+  -> compiler
+  -> Lean patch candidate
+  -> ProofWorker
+  -> FinalVerifyGate
+```
+
+Disallowed proof-use path:
+
+```text
+raw DSL problem -> solver -> proof-use artifact
+```
+
+Acceptance:
+
+- Regression test: raw DSL problem run cannot produce `goal_level_allowed` or `final_theorem`.
+
+#### R-EXTRACT-002 — Semantic extraction, not parser-only
+
+MUST: Extractor must canonicalize Lean expressions into `GeometryClaimSpec` and classify relation to goal.
+
+Required extraction work:
+
+- Extract accepted predicates, objects, constructions, and relations.
+- Remove or normalize implicit coercions, typeclasses, and local notation only within accepted grammar.
+- Extract nondegeneracy, orientation, and diagram assumptions where supported.
+- Classify target relation as `exact`, `sufficient`, `related`, or `none`.
+- Safe-reject unsupported expressions.
+
+Acceptance:
+
+- Fixture tests cover local notation, coercion-like wrappers where applicable, missing nondegeneracy, unsupported angle semantics, and ambiguous targets.
+
+---
+
+### 4.10 Geometry solver provider requirements
+
+#### R-SOLVER-001 — One Base-visible provider
+
+MUST: Base sees exactly one selected `GeometrySolverProvider` per run.
+
+MUST NOT: Base branches on Newclid / GenesisGeo / TongGeometry.
+
+Acceptance:
+
+- `RunRecord.SelectedImplementations.geometry_solver_provider` is scalar.
+- Domain contamination test fails if Base references engine family names.
+
+#### R-SOLVER-002 — Composite synthetic geometry provider roles
+
+MUST: The selected provider may internally use three engine roles:
+
+1. `symbolic_closure`: Newclid-compatible engine. Primary trace/closure engine.
+2. `construction_proposer`: GenesisGeo-compatible engine. Auxiliary construction proposer.
+3. `heavy_search`: TongGeometry-compatible engine. Heavy/extreme budget search oracle.
+
+MUST: Internal engines communicate outward only through provider-normalized records: `GeoTraceV1`, `AuxiliaryConstructionCandidateV1`, `ProviderDiagnostic`, and `ProviderRunManifest`.
+
+Acceptance:
+
+- ProviderRunManifest records internal engine family, version, commit/checkpoint, config, seed, normalized output hashes, raw log hashes, and resource usage refs.
+
+#### R-ENGINE-001 — Newclid-compatible symbolic closure role
+
+MUST: Newclid-compatible engine is the first integration target and primary symbolic closure / trace candidate source.
+
+Expected use:
+
+- Convert `GeometryClaimSpec` to Newclid/JGEX-like input through provider adapter.
+- Run symbolic closure / DDAR-style proof search where available.
+- Normalize derived relations/proof steps to `GeoTraceV1`.
+- Return unsupported rules as blockers, not proofs.
+
+Acceptance:
+
+- Newclid adapter smoke test returns either normalized `GeoTraceV1` or structured diagnostic for a known fixture.
+
+#### R-ENGINE-002 — GenesisGeo-compatible construction proposer role
+
+MUST: GenesisGeo-compatible engine output is treated as auxiliary construction proposal, not proof evidence.
+
+Expected use:
+
+- Trigger after symbolic closure fails or when solver policy requests construction proposals.
+- Return `AuxiliaryConstructionCandidateV1` records.
+- Allow ProofStateDAG obligations for side conditions generated by `ConstructionCompiler`.
+
+Acceptance:
+
+- Regression test: GenesisGeo raw construction rationale cannot close an obligation.
+
+#### R-ENGINE-003 — TongGeometry-compatible heavy search role
+
+MUST: TongGeometry-compatible engine is a heavy-search oracle, not a default proof-use backend.
+
+Expected use:
+
+- Run only for `budget = heavy | extreme` or explicit `GeometrySolverPolicy` escalation.
+- Use exclusive or near-exclusive resource semaphore by default.
+- Return construction candidates, proof-plan candidates, or normalized `GeoTraceV1` only if adapter can faithfully normalize supported subset.
+- Raw TongGeometry trace is not proof evidence.
+
+Acceptance:
+
+- Resource policy test shows heavy search cannot start under `tiny/small/medium` unless policy explicitly escalates and logs reason.
+- Trust regression test shows raw Tong output remains `diagnostic_only` or `search_only`.
+
+#### R-SOLVER-003 — GeometrySolverPolicy
+
+MUST: `GeometrySolverPolicy` is deterministic, versioned, hashed, logged, and resource-aware.
+
+Default routing:
+
+1. Try Newclid-compatible symbolic closure for supported `GeometryClaimSpec`.
+2. If closure fails and constructions are useful, run GenesisGeo-compatible construction proposer under budget.
+3. Re-run symbolic closure with admitted construction candidates when policy permits.
+4. If budget is `heavy` or `extreme`, optionally run TongGeometry-compatible heavy search.
+5. Return consolidated provider result with normalized artifacts and diagnostics.
+
+Acceptance:
+
+- ExecutionPlan records engine roles selected, budget, resource semaphores, timeouts, and reason codes.
+- Policy hash changes when routing table or budget defaults change.
+
+---
+
+### 4.11 Compiler and auxiliary construction requirements
+
+#### R-RULE-001 — RuleRegistryV1 with side-condition calculus
+
+MUST: `RuleRegistryV1` is a target-library-specific registry for `LeanGeoSubsetV1`. It is not just a mapping from DSL rule names to Lean theorem names.
+
+Each supported rule MUST specify:
+
+- `rule_id` and version.
+- Supported provider trace patterns.
+- Lean lemma/template ID.
+- Premise pattern.
+- Conclusion pattern.
+- Required side conditions.
+- Generated obligations.
+- Auto-discharge policy.
+- Unsupported variants.
+- Positive, negative, ambiguous fixtures.
+
+Acceptance:
+
+- `RuleRegistryV1` validation fails a rule missing side conditions or fixtures.
+- Missing side conditions become obligations or blockers; never silent assumptions.
+
+#### R-TRACE-001 — TraceCompiler scope
+
+MUST: `TraceCompiler` compiles only supported `GeoTraceV1` rule subset to Lean patch candidates.
+
+MUST NOT: Attempt arbitrary provider trace translation.
+
+Acceptance:
+
+- Unsupported rule returns blocker.
+- Malformed trace is rejected fail-safe.
+- Positive fixture compiles through Lean where dependencies are available.
+
+#### R-AUX-001 — AuxiliaryConstructionCandidateV1
+
+MUST: Auxiliary construction proposals are first-class typed artifacts, not natural-language suggestions.
+
+Required fields:
+
+```yaml
+AuxiliaryConstructionCandidateV1:
+  construction_id: "aux:<hash>"
+  source_provider_result: "sha256:..."
+  construction_kind: "intersection_of_two_nonparallel_lines | foot_of_perpendicular | midpoint | line_through_two_distinct_points | circle_through_center_and_point | plugin_supported"
+  introduced_objects: []
+  dependencies: {}
+  required_side_conditions:
+    nondegeneracy: []
+    incidence: []
+    existence: []
+    uniqueness_if_needed: []
+    orientation: []
+    diagram_cases: []
+  lean_introduction_plan:
+    theorem_template_id: "..."
+    generated_obligations: []
+  proof_use_status: "not_allowed_until_final_verify"
+```
+
+Acceptance:
+
+- Natural-language auxiliary point rationale cannot become proof evidence.
+- ConstructionCompiler generates Lean introduction patch or explicit blocker.
+
+#### R-AUX-002 — ConstructionCompiler
+
+MUST: `ConstructionCompiler` turns accepted auxiliary construction candidates into Lean introduction patch candidates and generated side-condition obligations.
+
+Acceptance:
+
+- Missing existence/nondegeneracy condition becomes ProofStateDAG obligation or blocker.
+- Final proof-use requires Lean compile and FinalVerifyGate.
+
+---
+
+### 4.12 Trust, bridge, and run trace requirements
+
+#### R-TRUST-001 — Raw output is never proof
+
+MUST: Raw model output, raw provider output, raw Newclid/GenesisGeo/TongGeometry trace, raw DSL problem, raw coordinate proof, and raw analytical proof are never proof evidence.
+
+Acceptance:
+
+- TrustGuard tests cover every raw output kind.
+
+#### R-TRUST-002 — Result levels
+
+MUST: Geometry result levels are:
+
+```text
+diagnostic_only
+raw_candidate
+checked_claim_artifact
+lean_patch_candidate
+lean_compiled_candidate
+lean_theorem
+```
+
+Only `FinalVerifyGate` can emit `lean_theorem`.
+
+#### R-BRIDGE-001 — Geometry BridgeGate is lightweight but mandatory
+
+MUST: Geometry BridgeGate verifies extraction origin, relation to Lean goal, protected theorem identity, and proof-use path provenance.
+
+MUST NOT: Treat BridgeGate as a replacement for Lean final verification.
+
+Acceptance:
+
+- Raw DSL-originated run cannot pass goal-level proof-use.
+- Extracted goal relation `related` or `none` cannot close target theorem.
+
+#### R-RUN-001 — ProviderRunManifest
+
+MUST: Each provider run emits `ProviderRunManifest` including internal engine choices and resource usage refs.
+
+Acceptance:
+
+- Manifest includes engine family, version/commit, config hash, checkpoint hash where relevant, seed, raw log hash, normalized artifact hashes, unsupported rule count, side condition loss count, and `ResourceUsageReport` refs.
+
+#### R-RUN-002 — ControllerStrategyLog
+
+MUST: Controller internals are not standardized, but lightweight attribution logging is required.
+
+Required examples:
+
+- controller ID and manifest hash.
+- capability flags: single model, multi-agent, deep research, population search, rater, human hint.
+- action counts: work orders, geometry solve requests, proof repair requests, construction requests.
+- generated object counts.
+- contribution refs.
+
+Acceptance:
+
+- Evaluation can distinguish controller-only vs geometry-enabled runs without core AgentC/D modes.
+
+#### R-RUN-003 — ResourceUsageReport
+
+MUST: Every admitted external process run emits `ResourceUsageReport`.
+
+Required fields:
+
+```yaml
+ResourceUsageReport:
+  report_id: "..."
+  run_id: "..."
+  component: "lean | proof_worker | model_slot | provider_engine | checker"
+  engine_role: "none | symbolic_closure | construction_proposer | heavy_search"
+  budget: "tiny | small | medium | heavy | extreme"
+  admitted: true
+  queue_wait_sec: 0
+  wall_time_sec: 0
+  cpu_time_sec: 0
+  peak_rss_mb: 0
+  gpu_vram_peak_mb: null
+  exit_status: "success | failed | timeout_soft | timeout_hard | killed | resource_rejected"
+  logs_ref: "sha256:..."
+```
+
+---
+
+### 4.13 Evaluation and release requirements
+
+#### R-EVAL-001 — Level 2 target
+
+MUST: The initial evaluation target is Level 2 domain-tool advantage for Lean-verified geometry proof completion.
+
+Compare at minimum:
+
+- `B0`: ProofWorker-only.
+- `B1`: ResearchController + ProofWorker, no `geometry.solve`.
+- `B2`: Full geometry-enabled pipeline.
+- `B3`: Strong-model without `geometry.solve`.
+- `B4`: Lower-model + `geometry.solve`.
+- `B5`: Full provider with auxiliary construction disabled, for construction contribution diagnosis.
+
+Acceptance:
+
+- Evaluation harness records final theorem rate, proof repair success, auxiliary construction accepted count, trace compile success, side-condition blocker count, and resource usage.
+
+#### R-TEST-001 — Required regression families
+
+MUST: Test suite include:
+
+1. Domain contamination tests.
+2. No loose options tests.
+3. Dependency substitution tests.
+4. Resource bypass and timeout tests.
+5. Extraction mutation tests.
+6. RuleRegistry / TraceCompiler mutation tests.
+7. AuxiliaryConstruction / ConstructionCompiler mutation tests.
+8. Controller observability / non-proof-use tests.
+9. FinalVerifyGate misuse tests.
+10. Provider raw-output laundering tests.
+
+Acceptance:
+
+- `make test-regression` and `make test-mutation` run these families.
+
+#### R-CLAIM-001 — Allowed claims
+
+Allowed closure claims after evidence:
+
+- “Schemas and contracts implemented.”
+- “Dependency bootstrap attempted / resolved with report.”
+- “ResourceGovernor enforced process admission for tested providers.”
+- “LeanGeoSubsetV1 extraction fixtures pass.”
+- “A specific Lean theorem fixture passed FinalVerifyGate.”
+- “In this benchmark matrix, geometry-enabled pipeline improved metric X over baseline Y.”
+
+Disallowed claims without separate evidence and audit:
+
+- “The pipeline solves open problems.”
+- “The pipeline handles all LeanGeo / Mathlib geometry.”
+- “Newclid / GenesisGeo / TongGeometry traces are trusted proofs.”
+- “Resource settings are optimal for all PCs.”
+
+---
+
+## 5. Mechanisms
+
+### MECH-BOOT-001 — Dependency bootstrap mechanism
+
+```text
+inspect repo
+  -> probe system and toolchain
+  -> add/pin Lean/lake dependencies
+  -> add/pin Python/provider dependencies
+  -> install or configure Newclid-compatible engine
+  -> install or configure GenesisGeo-compatible engine/checkpoint if available
+  -> install or configure TongGeometry-compatible engine if available
+  -> run smoke commands
+  -> emit DependencyResolutionReport
+  -> mark unavailable components as blocked, not silently substituted
+```
+
+### MECH-MODEL-001 — Model injection mechanism
+
+```text
+RunConfig
+  -> SelectedImplementations.model_provider_set
+  -> ModelProviderSetManifest
+  -> ModelSlot resolution
+  -> ResearchControllerPlugin receives slot handles
+  -> ProofWorkerPlugin receives slot handles
+  -> model outputs become ActionPlan / WorkOrder / diagnostics
+  -> no model output becomes proof evidence
+```
+
+### MECH-RSRC-001 — Local resource governance mechanism
+
+```text
+LocalResourceProfile
+  -> ResourceBudgetProfile
+  -> ResourceGovernor admission
+  -> per-role semaphore acquisition
+  -> process group runner
+  -> heartbeat monitor
+  -> timeout / kill policy
+  -> ResourceUsageReport
+  -> ProviderRunManifest / RunRecord linkage
+```
+
+### MECH-SOLVER-001 — Composite provider mechanism
+
+```text
+GeometryClaimSpec
+  -> GeometrySolverPolicy
+  -> GeometryExecutionPlan
+  -> symbolic_closure / Newclid-compatible attempt
+  -> if needed: construction_proposer / GenesisGeo-compatible candidates
+  -> symbolic_closure retry with admitted candidate when policy permits
+  -> if budget permits: heavy_search / TongGeometry-compatible oracle
+  -> normalize to GeoTraceV1 or AuxiliaryConstructionCandidateV1
+  -> ProviderResult + ProviderRunManifest
+```
+
+### MECH-PROOF-001 — Verified proof path
+
+```text
+Lean theorem / goal
+  -> GeometryExtractionContract
+  -> GeometryClaimSpec
+  -> geometry.solve
+  -> GeoTraceV1 or AuxiliaryConstructionCandidateV1
+  -> RuleRegistryV1 / TraceCompiler or ConstructionCompiler
+  -> Lean patch candidate
+  -> ProofWorkerPlugin
+  -> LeanPort
+  -> FinalVerifyGate
+  -> lean_theorem
+```
+
+---
+
+## 6. Release blockers
+
+Release acceptance MUST fail if any of the following occurs:
+
+1. Base imports or branches on geometry-specific concepts.
+2. AgentC/D core runtime modes exist.
+3. Target library is not exactly `LeanGeoSubsetV1`.
+4. Real final theorem support is claimed without resolved LeanGeo-compatible dependency.
+5. Models are hard-coded into controller/worker plugins rather than injected through `ModelProviderSet`.
+6. Provider-specific engine names appear in Base logic.
+7. External provider process runs outside `ResourceGovernor`.
+8. Heavy search can starve Lean final verification or run without budget admission.
+9. Raw provider/model output can close an obligation.
+10. Raw DSL-originated problem can produce goal-level proof-use.
+11. RuleRegistry supports a rule without side-condition calculus.
+12. Missing side condition is silently assumed.
+13. Protected theorem statement can be changed while still passing final verification.
+14. ProviderRunManifest, ResourceUsageReport, or DependencyResolutionReport is missing for runs that require them.
+15. Closure claims are not backed by fresh evidence.
+
+---
+
+## 7. Expected final repository additions
+
+```text
+src/math_auto_research/
+  base/
+    artifacts/
+    logging/
+    model_provider_set.py
+    resources/
+      local_resource_profile.py
+      resource_budget.py
+      resource_governor.py
+      process_runner.py
+    trust/
+    registry/
+  proof_state/
+  lean_integration/
+  plugin_api/
+
+plugins/geometry_synthetic/
+  plugin.yaml
+  target_subset/
+  extraction/
+  solver_policy/
+  providers/
+    composite_provider.py
+    newclid_adapter.py
+    genesisgeo_adapter.py
+    tonggeometry_adapter.py
+  compiler/
+    geotrace.py
+    rule_registry.py
+    trace_compiler.py
+    construction_candidate.py
+    construction_compiler.py
+  bridge/
+  renderers/
+  tests/
+
+lean/MathAutoResearch/Geometry/
+  LeanGeoSubset.lean
+  Bridge.lean
+  Generated/
+
+schemas/
+  base/
+  model/
+  resources/
+  proof_state/
+  geometry/
+  evaluation/
+
+configs/
+  selected_implementations/geometry_default.yaml
+  resource/default_local.yaml
+  resource/local.example.yaml
+  solver_policies/geometry_synthetic_v1.yaml
+  model_provider_sets/default.example.yaml
+  benchmark_runs/geometry_level2_smoke.yaml
+  benchmark_runs/geometry_level2_ablation.yaml
+
+scripts/
+  bootstrap_env.sh
+  probe_local_resources.py
+  check_no_loose_options.py
+  check_domain_contamination.py
+  check_resource_bypass.py
+  check_release_acceptance.py
+  run_geometry_level2_matrix.py
+  generate_repro_report.py
+```
