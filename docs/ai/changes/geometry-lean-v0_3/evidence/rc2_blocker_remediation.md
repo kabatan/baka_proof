@@ -25,7 +25,13 @@ authority: Evidence record only; does not override Base Spec or Plan.
 
 ## Explicit Blocker
 
-Full Lean elaboration against real LeanGeo namespaces remains blocked by T11 dependency status: local Lean is 4.30.0 while LeanGeo pins `leanprover/lean4:v4.15.0` and requires solver tools. No alternate target library was introduced.
+The earlier local Lean 4.30 / missing Elan blocker was resolved after explicit user authorization to change the environment. Current evidence is recorded in:
+
+- `rc2_environment_unblock.md`
+- `wsl_lake_update_leangeo.log`
+- `wsl_leangeo_fixture_check.log`
+
+Full native Windows LeanGeo build remains limited by the transitive `lean-cvc5` release archive availability. RC-2 review is scoped to real LeanGeo.Abbre fixture elaboration and extraction from an elaborated goal context, not to full LeanGeo theorem-corpus build.
 
 ## Verification
 
@@ -53,4 +59,4 @@ domain contamination check passed
 
 ## Claim Ceiling
 
-Do not claim full semantic extraction, real LeanGeo integration, solver/compiler integration, RC-2 PASS, or final theorem support. Current state is RC-2 blocked on real LeanGeo elaboration/toolchain setup.
+Do not claim full LeanGeo theorem-corpus build, solver/compiler integration, RC-2 PASS, or final theorem support. Current state is RC-2 pending Guardian review after real LeanGeo.Abbre fixture elaboration.

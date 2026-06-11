@@ -50,11 +50,75 @@ class RelationEvidence:
     source: str = "goal_anchor"
 
 
+@dataclass(frozen=True)
+class LeanGoalContext:
+    source_goal_ref: str
+    elaboration_status: str
+    elaboration_report_ref: str
+    objects: tuple[str, ...]
+    hypotheses: tuple[str, ...]
+    target_form: str
+    target_raw: str
+    nondegeneracy_assumptions: tuple[str, ...] = ()
+    orientation_assumptions: tuple[str, ...] = ()
+
+
 class GeometryExtractor:
     def __init__(self, grammar_path: str = "plugins/geometry_synthetic/grammar/leangeo_subset_v1_grammar.json") -> None:
         self.grammar = load_json(grammar_path)
-        self.accepted_forms = set(self.grammar["allowed_hypothesis_forms"]) | set(self.grammar["allowed_target_forms"])
+        self.accepted_forms = (
+            set(self.grammar["object_declarations"])
+            | set(self.grammar["allowed_hypothesis_forms"])
+            | set(self.grammar["allowed_target_forms"])
+            | set(self.grammar["construction_mappings"])
+        )
         self.rejected_forms = set(self.grammar["rejected_hypothesis_forms"]) | set(self.grammar["rejected_target_forms"])
+
+    def extract_context(
+        self,
+        context: LeanGoalContext,
+        relation_evidence: RelationEvidence | None = None,
+    ) -> tuple[GeometryExtractionReport, GeometryClaimSpec | None]:
+        if context.elaboration_status != "passed":
+            return _reject(context.source_goal_ref, context.target_raw, "lean_elaboration_failed")
+        if not context.source_goal_ref:
+            return _reject(context.source_goal_ref, context.target_raw, "missing_goal_anchor")
+        if not context.elaboration_report_ref:
+            return _reject(context.source_goal_ref, context.target_raw, "missing_elaboration_report")
+        if context.target_form not in self.accepted_forms:
+            return _reject(context.source_goal_ref, context.target_raw, "unsupported_expression")
+        relation_evidence = relation_evidence or RelationEvidence("exact")
+        gated = _relation_reject(context.source_goal_ref, context.target_raw, relation_evidence)
+        if gated is not None:
+            return gated
+        claim_id = f"geometry_claim:{_digest(context.elaboration_report_ref + context.target_raw)}"
+        claim = GeometryClaimSpec(
+            schema_version="1.0.0",
+            claim_id=claim_id,
+            target_library="LeanGeoSubsetV1:1.0.0",
+            objects=context.objects,
+            hypotheses=context.hypotheses,
+            target={"form": context.target_form, "raw": context.target_raw},
+            nondegeneracy_assumptions=context.nondegeneracy_assumptions,
+            orientation_assumptions=context.orientation_assumptions,
+            source_goal_ref=context.source_goal_ref,
+        )
+        return (
+            GeometryExtractionReport(
+                "1.0.0",
+                f"geometry_extraction:{_digest(context.elaboration_report_ref + context.target_raw)}",
+                context.source_goal_ref,
+                relation_evidence.relation,
+                "extracted_claim",
+                "accepted",
+                None,
+                claim_id,
+                "not_allowed",
+                relation_evidence.direction_needed,
+                relation_evidence.direction_available,
+            ),
+            claim,
+        )
 
     def extract(
         self,
@@ -214,6 +278,62 @@ class GeometryExtractor:
 
 def _digest(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def _reject(goal_anchor_ref: str, text: str, reason: str) -> tuple[GeometryExtractionReport, None]:
+    return (
+        GeometryExtractionReport(
+            "1.0.0",
+            f"geometry_extraction:{_digest(text)}",
+            goal_anchor_ref,
+            "none",
+            "diagnostic_only",
+            "safe_rejected",
+            reason,
+            None,
+            "not_allowed",
+        ),
+        None,
+    )
+
+
+def _relation_reject(
+    goal_anchor_ref: str,
+    text: str,
+    relation_evidence: RelationEvidence,
+) -> tuple[GeometryExtractionReport, None] | None:
+    reason: str | None = None
+    relation = relation_evidence.relation
+    if relation_evidence.source != "goal_anchor":
+        relation = "none"
+        reason = "relation_evidence_not_goal_anchor"
+    elif relation_evidence.relation not in {"exact", "sufficient", "related", "none"}:
+        relation = "none"
+        reason = "unknown_relation"
+    elif relation_evidence.relation == "sufficient" and (
+        relation_evidence.direction_needed != relation_evidence.direction_available
+    ):
+        reason = "direction_mismatch"
+    elif relation_evidence.relation in {"related", "none"}:
+        reason = "relation_not_goal_level"
+    if reason is None:
+        return None
+    return (
+        GeometryExtractionReport(
+            "1.0.0",
+            f"geometry_extraction:{_digest(text)}",
+            goal_anchor_ref,
+            relation,
+            "diagnostic_only",
+            "safe_rejected",
+            reason,
+            None,
+            "not_allowed",
+            relation_evidence.direction_needed,
+            relation_evidence.direction_available,
+        ),
+        None,
+    )
 
 
 def _extract_declarations(text: str) -> list[tuple[str, str]]:

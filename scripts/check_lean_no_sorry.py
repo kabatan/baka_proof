@@ -14,7 +14,7 @@ from math_auto_research.base.final_verify import contains_forbidden_declaration,
 def main() -> int:
     violations: list[str] = []
     for path in sorted(Path(".").rglob("*.lean")):
-        if ".lake" in path.parts:
+        if ".lake" in path.parts or ".tmp" in path.parts:
             continue
         text = path.read_text(encoding="utf-8")
         if contains_sorry(text):

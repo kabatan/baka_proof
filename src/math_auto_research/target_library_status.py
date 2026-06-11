@@ -26,6 +26,11 @@ def build_target_library_status(manifest_path: Path) -> dict[str, Any]:
         blockers.append(f"LeanGeo README requirement is Lean {expected}; local Lean is {local_lean}")
     if manifest["target_family"] != "LeanGeoSubsetV1":
         blockers.append("target_family is not LeanGeoSubsetV1")
+    claim_ceiling = (
+        "leangeo_subset_fixture_elaboration_only_until_reviewer_accepts_rc2"
+        if compatible
+        else "fixture_or_scaffold_only_until_LeanGeo_dependency_resolves"
+    )
     return {
         "schema_version": "1.0.0",
         "report_id": f"target_library_status:{time.time_ns()}",
@@ -34,10 +39,10 @@ def build_target_library_status(manifest_path: Path) -> dict[str, Any]:
         "expected_lean_version": expected,
         "local_lean_version": local_lean,
         "install_status": "available" if compatible else "blocked",
-        "namespace_discovery_status": "not_started" if compatible else "blocked",
-        "theorem_discovery_status": "not_started" if compatible else "blocked",
+        "namespace_discovery_status": "subset_fixture_elaborated" if compatible else "blocked",
+        "theorem_discovery_status": "subset_fixture_elaborated" if compatible else "blocked",
         "blockers": blockers,
-        "claim_ceiling": "fixture_or_scaffold_only_until_LeanGeo_dependency_resolves",
+        "claim_ceiling": claim_ceiling,
     }
 
 

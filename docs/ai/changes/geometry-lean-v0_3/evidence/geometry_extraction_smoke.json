@@ -1,12 +1,12 @@
 {
   "claim": {
-    "claim_id": "geometry_claim:46abb337d6c01b68",
+    "claim_id": "geometry_claim:77800a233f99ddb1",
     "hypotheses": [
       "distinct",
       "collinear"
     ],
     "nondegeneracy_assumptions": [
-      "A \u2260 B"
+      "A != B"
     ],
     "objects": [
       "A:Point",
@@ -23,13 +23,13 @@
     "target_library": "LeanGeoSubsetV1:1.0.0"
   },
   "report": {
-    "claim_spec_ref": "geometry_claim:46abb337d6c01b68",
+    "claim_spec_ref": "geometry_claim:77800a233f99ddb1",
     "direction_available": null,
     "direction_needed": null,
     "goal_anchor_ref": "goal:smoke",
     "proof_use_status": "not_allowed",
     "relation": "exact",
-    "report_id": "geometry_extraction:46abb337d6c01b68",
+    "report_id": "geometry_extraction:77800a233f99ddb1",
     "result_level": "extracted_claim",
     "safe_reject_reason": null,
     "schema_version": "1.0.0",

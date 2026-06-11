@@ -1,4 +1,4 @@
-.PHONY: test-unit test-mutation smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction
+.PHONY: test-unit test-mutation smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-leangeo-fixture
 
 PYTHON ?= python
 
@@ -28,3 +28,6 @@ smoke-target-library-status:
 
 smoke-geometry-extraction:
 	$(PYTHON) scripts/smoke_geometry_extraction.py
+
+smoke-leangeo-fixture:
+	$(PYTHON) scripts/check_leangeo_wsl_fixture.py

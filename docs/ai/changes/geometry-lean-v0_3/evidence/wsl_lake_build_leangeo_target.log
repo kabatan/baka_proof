@@ -1,0 +1,330 @@
+✔ [2/6033] Built SystemE.Theory.Sorts.Primitives
+✔ [679/6033] Built Smt.Data.Sexp
+✔ [680/6033] Built Smt.Dsl.Sexp
+✔ [706/6033] Built Smt.Reconstruct.Prop.Core
+✔ [707/6033] Built Smt.Reconstruct.Builtin.Lemmas
+✔ [772/6033] Built Smt.Reconstruct.Prop.Rewrites
+✔ [773/6033] Built Smt.Data.Graph
+✔ [774/6033] Built Smt.Tactic.WHNFConfigurableRef
+✔ [775/6033] Built Smt.Tactic.WHNFConfigurable
+✔ [776/6033] Built Smt.Reconstruct.Bool.Lemmas
+✔ [777/6033] Built Smt.Reconstruct.Builtin.Rewrites
+✔ [778/6033] Built Smt.Reconstruct.Int.Core
+✔ [779/6033] Built Smt.Reconstruct.Int.Lemmas
+✔ [780/6033] Built Smt.Reconstruct.Int.Rewrites
+✔ [781/6033] Built Smt.Reconstruct.Quant.Lemmas
+✔ [782/6033] Built Smt.Reconstruct.UF.Rewrites
+✔ [4394/6033] Built Smt.Translate.Term
+✔ [4778/6033] Built Smt.Options
+⚠ [4789/6033] Built Smt.Reconstruct.BitVec.Bitblast
+warning: ././.lake/packages/smt/././Smt/Reconstruct/BitVec/Bitblast.lean:36:4: declaration uses 'sorry'
+✔ [4800/6033] Built Smt.Attribute
+✔ [4801/6033] Built Smt.Util
+✔ [4815/6033] Built Smt.Reconstruct.Builtin.AC
+✔ [4816/6033] Built Smt.Preprocess.Iff
+✔ [4852/6033] Built SystemE.Tactic.Util
+✔ [4884/6033] Built Smt.Reconstruct.Util
+✔ [5000/6033] Built Smt.Reconstruct.Int.Polynorm
+✔ [5582/6033] Built Smt.Tactic.WHNFSmt
+✔ [5891/6033] Built Smt.Reconstruct.UF.Congruence
+✔ [5892/6033] Built Smt.Translate.Commands
+✔ [5893/6033] Built Smt.Reconstruct.Bool.Tactic
+✔ [5894/6033] Built Smt.Reconstruct.Rewrite
+✔ [5895/6033] Built Smt.Reconstruct.Real.Rewrites
+✔ [5896/6033] Built Smt.Tactic.EqnDef
+✔ [5897/6033] Built SystemE.Theory.Sorts.Segments
+✔ [5898/6033] Built SystemE.Theory.Sorts.Angles
+✔ [5899/6033] Built SystemE.Theory.Sorts.CircleMetrics
+✔ [5900/6033] Built Smt.Reconstruct.Real.Polynorm
+✔ [5901/6033] Built Smt.Reconstruct.Real.Lemmas
+✔ [5902/6033] Built Smt.Preprocess
+✔ [5903/6033] Built SystemE.Tactic.Intros
+✔ [5904/6033] Built Smt.Translate
+✔ [5905/6033] Built Smt.Reconstruct.Prop.Lemmas
+✔ [5906/6033] Built Smt.Reconstruct
+✔ [5907/6033] Built Smt.Translate.Solver
+✔ [5908/6033] Built Smt.Translate.Bool
+✔ [5909/6033] Built Smt.Translate.Int
+✔ [5910/6033] Built Smt.Translate.Nat
+✔ [5911/6033] Built Smt.Translate.String
+✔ [5912/6033] Built Smt.Translate.Prop
+✔ [5913/6033] Built Smt.Translate.BitVec
+✔ [5914/6033] Built Smt.Translate.Query
+✔ [5915/6033] Built SystemE.Theory.Sorts.Triangles
+✔ [5916/6033] Built Smt.Reconstruct.UF
+✔ [5917/6033] Built Smt.Reconstruct.Builtin
+✔ [5918/6033] Built Smt.Reconstruct.BitVec
+✔ [5919/6033] Built Smt.Reconstruct.Quant
+✔ [5920/6033] Built Smt.Reconstruct.Prop
+✔ [5921/6033] Built Smt.Reconstruct.Int
+✔ [5922/6033] Built Smt.Translate.Real
+✔ [5923/6033] Built Smt.Reconstruct.Real
+✔ [5924/6033] Built Smt.Bool
+✔ [5925/6033] Built Smt.Nat
+✔ [5926/6033] Built Smt.String
+⚠ [5927/6033] Built SystemE.Tactic.EQuery
+warning: ././.lake/packages/lib/././SystemE/Tactic/EQuery.lean:29:16: unused variable `r`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+✔ [5928/6033] Built Smt.Tactic.Smt
+✔ [5929/6033] Built Smt.UF
+✔ [5930/6033] Built Smt.Builtin
+✔ [5931/6033] Built Smt.BitVec
+✔ [5932/6033] Built Smt.Quant
+✔ [5933/6033] Built Smt.Prop
+✔ [5934/6033] Built Smt.Int
+✔ [5935/6033] Built SystemE.Theory.Sorts
+✔ [5936/6033] Built Smt.Tactic
+✔ [5937/6033] Built Smt.Real
+✔ [5938/6033] Built SystemE.Theory.Relations
+✔ [5939/6033] Built Smt
+✔ [5940/6033] Built SystemE.Theory.Constructions.LinesAndCircles
+✔ [5941/6033] Built SystemE.Theory.Constructions.Points
+⚠ [5942/6033] Built SystemE.Tactic.Attr
+warning: ././.lake/packages/lib/././SystemE/Tactic/Attr.lean:58:20: unused variable `d`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: ././.lake/packages/lib/././SystemE/Tactic/Attr.lean:65:26: unused variable `stx`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: ././.lake/packages/lib/././SystemE/Tactic/Attr.lean:65:30: unused variable `attrKind`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: ././.lake/packages/lib/././SystemE/Tactic/Attr.lean:72:17: unused variable `declName`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: ././.lake/packages/lib/././SystemE/Tactic/Attr.lean:84:9: unused variable `st`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+✔ [5943/6033] Built SystemE.Theory.Constructions.Intersections
+⚠ [5944/6033] Built SystemE.Tactic.ESmt
+warning: ././.lake/packages/lib/././SystemE/Tactic/ESmt.lean:30:51: unused variable `ac`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: ././.lake/packages/lib/././SystemE/Tactic/ESmt.lean:37:17: unused variable `fvNames₂`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: ././.lake/packages/lib/././SystemE/Tactic/ESmt.lean:58:8: unused variable `pf`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ℹ [5945/6033] Built SystemE.Theory.Inferences.Diagrammatic
+info: ././.lake/packages/lib/././SystemE/Theory/Inferences/Diagrammatic.lean:369:0: (declare-sort LeanGeo.Point 0)
+(declare-sort LeanGeo.Line 0)
+(declare-fun LeanGeo.Point.onLine (LeanGeo.Point LeanGeo.Line) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (distinct a b))) (and (LeanGeo.Point.onLine a M) (LeanGeo.Point.onLine b M))) (= L M)))))))
+(declare-sort LeanGeo.Circle 0)
+(declare-fun LeanGeo.Point.isCentre (LeanGeo.Point LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (LeanGeo.Point.isCentre a |α|) (LeanGeo.Point.isCentre b |α|)) (= a b))))))
+(declare-fun LeanGeo.Point.insideCircle (LeanGeo.Point LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (LeanGeo.Point.isCentre a |α|) (LeanGeo.Point.insideCircle a |α|)))))
+(declare-fun LeanGeo.Point.onCircle (LeanGeo.Point LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (LeanGeo.Point.insideCircle a |α|) (not (LeanGeo.Point.onCircle a |α|))))))
+(declare-fun LeanGeo.between (LeanGeo.Point LeanGeo.Point LeanGeo.Point) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (=> (LeanGeo.between a b c) (and (LeanGeo.between c b a) (and (distinct a b) (and (distinct a c) (not (LeanGeo.between b a c))))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (and (LeanGeo.Point.onLine a L) (LeanGeo.Point.onLine b L))) (LeanGeo.Point.onLine c L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (and (LeanGeo.Point.onLine a L) (LeanGeo.Point.onLine c L))) (LeanGeo.Point.onLine b L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.between a b c) (LeanGeo.between a d b)) (LeanGeo.between a d c)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.between a b c) (LeanGeo.between b c d)) (LeanGeo.between a b d)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (distinct a b) (and (distinct b c) (and (distinct c a) (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (LeanGeo.Point.onLine c L)))))) (or (LeanGeo.between a b c) (or (LeanGeo.between b a c) (LeanGeo.between a c b)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.between a b c) (LeanGeo.between a b d)) (not (LeanGeo.between c b d))))))))
+(declare-fun LeanGeo.Point.sameSide (LeanGeo.Point LeanGeo.Point LeanGeo.Line) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (not (LeanGeo.Point.onLine a L)) (LeanGeo.Point.sameSide a a L)))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (LeanGeo.Point.sameSide a b L) (LeanGeo.Point.sameSide b a L))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (LeanGeo.Point.sameSide a b L) (not (LeanGeo.Point.onLine a L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.Point.sameSide a b L) (LeanGeo.Point.sameSide a c L)) (LeanGeo.Point.sameSide b c L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (not (LeanGeo.Point.onLine a L)) (and (not (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.onLine c L)))) (or (LeanGeo.Point.sameSide a b L) (or (LeanGeo.Point.sameSide a c L) (LeanGeo.Point.sameSide b c L)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (LeanGeo.Point.sameSide a c L)) (LeanGeo.Point.sameSide a b L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (and (LeanGeo.Point.onLine a L) (not (LeanGeo.Point.onLine b L)))) (LeanGeo.Point.sameSide b c L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.sameSide a c L))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (distinct L M) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine b M) (and (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine c M) (distinct a c))) (and (distinct a b) (and (distinct c b) (not (LeanGeo.Point.sameSide a c L)))))))) (LeanGeo.between a b c))))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c M) (and (LeanGeo.Point.onLine d N) (and (LeanGeo.Point.sameSide c d L) (LeanGeo.Point.sameSide b c N)))))))) (not (LeanGeo.Point.sameSide b d M)))))))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c M) (and (LeanGeo.Point.onLine d N) (and (LeanGeo.Point.sameSide c d L) (and (not (LeanGeo.Point.sameSide b d M)) (and (not (LeanGeo.Point.onLine d M)) (distinct b a)))))))))) (LeanGeo.Point.sameSide b c N))))))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((e LeanGeo.Point)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c M) (and (LeanGeo.Point.onLine d N) (and (LeanGeo.Point.sameSide c d L) (and (LeanGeo.Point.sameSide b c N) (and (LeanGeo.Point.sameSide d e M) (LeanGeo.Point.sameSide c e N)))))))))) (LeanGeo.Point.sameSide c e L)))))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((|α| LeanGeo.Circle)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c L) (and (LeanGeo.Point.insideCircle a |α|) (and (LeanGeo.Point.onCircle b |α|) (and (LeanGeo.Point.onCircle c |α|) (distinct b c))))))) (LeanGeo.between b a c))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (or (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onCircle a |α|)) (and (or (LeanGeo.Point.insideCircle b |α|) (LeanGeo.Point.onCircle b |α|)) (LeanGeo.between a c b))) (LeanGeo.Point.insideCircle c |α|)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (or (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onCircle a |α|)) (and (not (LeanGeo.Point.insideCircle c |α|)) (LeanGeo.between a c b))) (and (not (LeanGeo.Point.insideCircle b |α|)) (not (LeanGeo.Point.onCircle b |α|)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((|β| LeanGeo.Circle)) (forall ((L LeanGeo.Line)) (=> (and (distinct |α| |β|) (and (LeanGeo.Point.onCircle c |α|) (and (LeanGeo.Point.onCircle c |β|) (and (LeanGeo.Point.onCircle d |α|) (and (LeanGeo.Point.onCircle d |β|) (and (distinct c d) (and (LeanGeo.Point.isCentre a |α|) (and (LeanGeo.Point.isCentre b |β|) (and (LeanGeo.Point.onLine a L) (LeanGeo.Point.onLine b L)))))))))) (not (LeanGeo.Point.sameSide c d L)))))))))))
+(declare-fun LeanGeo.Line.intersectsLine (LeanGeo.Line LeanGeo.Line) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (and (not (LeanGeo.Point.onLine a L)) (and (not (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.sameSide a b L)))) (and (LeanGeo.Point.onLine a M) (LeanGeo.Point.onLine b M))) (LeanGeo.Line.intersectsLine L M)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (distinct L M))) (LeanGeo.Line.intersectsLine L M))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (=> (and (not (LeanGeo.Point.onLine a L)) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (not (LeanGeo.Line.intersectsLine L M)) (not (LeanGeo.Line.intersectsLine L N)))))) (= M N)))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (LeanGeo.Line.intersectsLine L M) (LeanGeo.Line.intersectsLine M L)))))
+(declare-fun LeanGeo.Line.intersectsCircle (LeanGeo.Line LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((L LeanGeo.Line)) (=> (and (or (LeanGeo.Point.onCircle a |α|) (LeanGeo.Point.insideCircle a |α|)) (and (or (LeanGeo.Point.onCircle b |α|) (LeanGeo.Point.insideCircle b |α|)) (and (not (LeanGeo.Point.onLine a L)) (and (not (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.sameSide a b L)))))) (LeanGeo.Line.intersectsCircle L |α|)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onLine a L)) (LeanGeo.Line.intersectsCircle L |α|))))))
+(declare-fun LeanGeo.Circle.intersectsCircle (LeanGeo.Circle LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((|β| LeanGeo.Circle)) (=> (and (or (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onCircle a |α|)) (and (or (LeanGeo.Point.insideCircle b |α|) (LeanGeo.Point.onCircle b |α|)) (and (LeanGeo.Point.insideCircle a |β|) (and (not (LeanGeo.Point.insideCircle b |β|)) (not (LeanGeo.Point.onCircle b |β|)))))) (LeanGeo.Circle.intersectsCircle |α| |β|)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((|β| LeanGeo.Circle)) (=> (LeanGeo.Point.onCircle a |α|) (=> (LeanGeo.Point.insideCircle b |α|) (=> (LeanGeo.Point.insideCircle a |β|) (=> (LeanGeo.Point.onCircle b |β|) (LeanGeo.Circle.intersectsCircle |α| |β|))))))))))
+35
+✔ [5946/6033] Built SystemE.Theory.Constructions
+⚠ [5947/6033] Built SystemE.Tactic.Solve
+warning: ././.lake/packages/lib/././SystemE/Tactic/Solve.lean:35:17: unused variable `hole`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ℹ [5948/6033] Built SystemE.Theory.Inferences.Metric
+info: ././.lake/packages/lib/././SystemE/Theory/Inferences/Metric.lean:115:0: (declare-sort LeanGeo.Point 0)
+(declare-sort LeanGeo.Line 0)
+(declare-fun LeanGeo.Point.onLine (LeanGeo.Point LeanGeo.Line) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (distinct a b))) (and (LeanGeo.Point.onLine a M) (LeanGeo.Point.onLine b M))) (= L M)))))))
+(declare-sort LeanGeo.Circle 0)
+(declare-fun LeanGeo.Point.isCentre (LeanGeo.Point LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (LeanGeo.Point.isCentre a |α|) (LeanGeo.Point.isCentre b |α|)) (= a b))))))
+(declare-fun LeanGeo.Point.insideCircle (LeanGeo.Point LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (LeanGeo.Point.isCentre a |α|) (LeanGeo.Point.insideCircle a |α|)))))
+(declare-fun LeanGeo.Point.onCircle (LeanGeo.Point LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (LeanGeo.Point.insideCircle a |α|) (not (LeanGeo.Point.onCircle a |α|))))))
+(declare-fun LeanGeo.between (LeanGeo.Point LeanGeo.Point LeanGeo.Point) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (=> (LeanGeo.between a b c) (and (LeanGeo.between c b a) (and (distinct a b) (and (distinct a c) (not (LeanGeo.between b a c))))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (and (LeanGeo.Point.onLine a L) (LeanGeo.Point.onLine b L))) (LeanGeo.Point.onLine c L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (and (LeanGeo.Point.onLine a L) (LeanGeo.Point.onLine c L))) (LeanGeo.Point.onLine b L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.between a b c) (LeanGeo.between a d b)) (LeanGeo.between a d c)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.between a b c) (LeanGeo.between b c d)) (LeanGeo.between a b d)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (distinct a b) (and (distinct b c) (and (distinct c a) (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (LeanGeo.Point.onLine c L)))))) (or (LeanGeo.between a b c) (or (LeanGeo.between b a c) (LeanGeo.between a c b)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.between a b c) (LeanGeo.between a b d)) (not (LeanGeo.between c b d))))))))
+(declare-fun LeanGeo.Point.sameSide (LeanGeo.Point LeanGeo.Point LeanGeo.Line) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (not (LeanGeo.Point.onLine a L)) (LeanGeo.Point.sameSide a a L)))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (LeanGeo.Point.sameSide a b L) (LeanGeo.Point.sameSide b a L))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (LeanGeo.Point.sameSide a b L) (not (LeanGeo.Point.onLine a L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.Point.sameSide a b L) (LeanGeo.Point.sameSide a c L)) (LeanGeo.Point.sameSide b c L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (not (LeanGeo.Point.onLine a L)) (and (not (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.onLine c L)))) (or (LeanGeo.Point.sameSide a b L) (or (LeanGeo.Point.sameSide a c L) (LeanGeo.Point.sameSide b c L)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (LeanGeo.Point.sameSide a c L)) (LeanGeo.Point.sameSide a b L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (and (LeanGeo.Point.onLine a L) (not (LeanGeo.Point.onLine b L)))) (LeanGeo.Point.sameSide b c L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.sameSide a c L))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (distinct L M) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine b M) (and (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine c M) (distinct a c))) (and (distinct a b) (and (distinct c b) (not (LeanGeo.Point.sameSide a c L)))))))) (LeanGeo.between a b c))))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c M) (and (LeanGeo.Point.onLine d N) (and (LeanGeo.Point.sameSide c d L) (LeanGeo.Point.sameSide b c N)))))))) (not (LeanGeo.Point.sameSide b d M)))))))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c M) (and (LeanGeo.Point.onLine d N) (and (LeanGeo.Point.sameSide c d L) (and (not (LeanGeo.Point.sameSide b d M)) (and (not (LeanGeo.Point.onLine d M)) (distinct b a)))))))))) (LeanGeo.Point.sameSide b c N))))))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((e LeanGeo.Point)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c M) (and (LeanGeo.Point.onLine d N) (and (LeanGeo.Point.sameSide c d L) (and (LeanGeo.Point.sameSide b c N) (and (LeanGeo.Point.sameSide d e M) (LeanGeo.Point.sameSide c e N)))))))))) (LeanGeo.Point.sameSide c e L)))))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((|α| LeanGeo.Circle)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c L) (and (LeanGeo.Point.insideCircle a |α|) (and (LeanGeo.Point.onCircle b |α|) (and (LeanGeo.Point.onCircle c |α|) (distinct b c))))))) (LeanGeo.between b a c))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (or (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onCircle a |α|)) (and (or (LeanGeo.Point.insideCircle b |α|) (LeanGeo.Point.onCircle b |α|)) (LeanGeo.between a c b))) (LeanGeo.Point.insideCircle c |α|)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (or (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onCircle a |α|)) (and (not (LeanGeo.Point.insideCircle c |α|)) (LeanGeo.between a c b))) (and (not (LeanGeo.Point.insideCircle b |α|)) (not (LeanGeo.Point.onCircle b |α|)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((|β| LeanGeo.Circle)) (forall ((L LeanGeo.Line)) (=> (and (distinct |α| |β|) (and (LeanGeo.Point.onCircle c |α|) (and (LeanGeo.Point.onCircle c |β|) (and (LeanGeo.Point.onCircle d |α|) (and (LeanGeo.Point.onCircle d |β|) (and (distinct c d) (and (LeanGeo.Point.isCentre a |α|) (and (LeanGeo.Point.isCentre b |β|) (and (LeanGeo.Point.onLine a L) (LeanGeo.Point.onLine b L)))))))))) (not (LeanGeo.Point.sameSide c d L)))))))))))
+(declare-fun LeanGeo.Line.intersectsLine (LeanGeo.Line LeanGeo.Line) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (and (not (LeanGeo.Point.onLine a L)) (and (not (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.sameSide a b L)))) (and (LeanGeo.Point.onLine a M) (LeanGeo.Point.onLine b M))) (LeanGeo.Line.intersectsLine L M)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (distinct L M))) (LeanGeo.Line.intersectsLine L M))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (=> (and (not (LeanGeo.Point.onLine a L)) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (not (LeanGeo.Line.intersectsLine L M)) (not (LeanGeo.Line.intersectsLine L N)))))) (= M N)))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (LeanGeo.Line.intersectsLine L M) (LeanGeo.Line.intersectsLine M L)))))
+(declare-fun LeanGeo.Line.intersectsCircle (LeanGeo.Line LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((L LeanGeo.Line)) (=> (and (or (LeanGeo.Point.onCircle a |α|) (LeanGeo.Point.insideCircle a |α|)) (and (or (LeanGeo.Point.onCircle b |α|) (LeanGeo.Point.insideCircle b |α|)) (and (not (LeanGeo.Point.onLine a L)) (and (not (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.sameSide a b L)))))) (LeanGeo.Line.intersectsCircle L |α|)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onLine a L)) (LeanGeo.Line.intersectsCircle L |α|))))))
+(declare-fun LeanGeo.Circle.intersectsCircle (LeanGeo.Circle LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((|β| LeanGeo.Circle)) (=> (and (or (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onCircle a |α|)) (and (or (LeanGeo.Point.insideCircle b |α|) (LeanGeo.Point.onCircle b |α|)) (and (LeanGeo.Point.insideCircle a |β|) (and (not (LeanGeo.Point.insideCircle b |β|)) (not (LeanGeo.Point.onCircle b |β|)))))) (LeanGeo.Circle.intersectsCircle |α| |β|)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((|β| LeanGeo.Circle)) (=> (LeanGeo.Point.onCircle a |α|) (=> (LeanGeo.Point.insideCircle b |α|) (=> (LeanGeo.Point.insideCircle a |β|) (=> (LeanGeo.Point.onCircle b |β|) (LeanGeo.Circle.intersectsCircle |α| |β|))))))))))
+(declare-fun LeanGeo.length (LeanGeo.Point LeanGeo.Point) Real)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (=> (= (LeanGeo.length a b) 0.0) (= a b)))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (=> (= a b) (= (LeanGeo.length a b) 0.0)))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (<= 0.0 (LeanGeo.length a b)))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (= (LeanGeo.length a b) (LeanGeo.length b a)))))
+(declare-fun LeanGeo.Angle (LeanGeo.Point LeanGeo.Point LeanGeo.Point) Real)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (=> (and (distinct a b) (distinct b c)) (= (LeanGeo.Angle a b c) (LeanGeo.Angle c b a)))))))
+(declare-const LeanGeo.Angle.Right Real)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (=> (and (distinct a b) (distinct b c)) (and (<= 0.0 (LeanGeo.Angle a b c)) (<= (LeanGeo.Angle a b c) (+ LeanGeo.Angle.Right LeanGeo.Angle.Right))))))))
+(declare-fun |LeanGeo.area'| (LeanGeo.Point LeanGeo.Point LeanGeo.Point) Real)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (= (|LeanGeo.area'| a a b) 0.0))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (<= 0.0 (|LeanGeo.area'| a b c))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (= (|LeanGeo.area'| a b c) (|LeanGeo.area'| c a b))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (= (|LeanGeo.area'| a b c) (|LeanGeo.area'| a c b))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|a'| LeanGeo.Point)) (forall ((|b'| LeanGeo.Point)) (forall ((|c'| LeanGeo.Point)) (=> (and (= (LeanGeo.length a b) (LeanGeo.length |a'| |b'|)) (and (= (LeanGeo.length b c) (LeanGeo.length |b'| |c'|)) (and (= (LeanGeo.length c a) (LeanGeo.length |c'| |a'|)) (and (= (LeanGeo.Angle a b c) (LeanGeo.Angle |a'| |b'| |c'|)) (and (= (LeanGeo.Angle b c a) (LeanGeo.Angle |b'| |c'| |a'|)) (= (LeanGeo.Angle c a b) (LeanGeo.Angle |c'| |a'| |b'|))))))) (= (|LeanGeo.area'| a b c) (|LeanGeo.area'| |a'| |b'| |c'|))))))))))
+(declare-fun LeanGeo.CircleMetrics.radius (LeanGeo.Circle) Real)
+(assert (forall ((A LeanGeo.Point)) (forall ((O LeanGeo.Point)) (forall ((|Ω| LeanGeo.Circle)) (=> (and (LeanGeo.Point.isCentre O |Ω|) (LeanGeo.Point.onCircle A |Ω|)) (= (LeanGeo.length O A) (LeanGeo.CircleMetrics.radius |Ω|)))))))
+(declare-fun LeanGeo.CircleMetrics.circlePower (LeanGeo.Point LeanGeo.Circle) Real)
+(assert (forall ((A LeanGeo.Point)) (forall ((O LeanGeo.Point)) (forall ((|Ω| LeanGeo.Circle)) (=> (LeanGeo.Point.isCentre O |Ω|) (= (LeanGeo.CircleMetrics.circlePower A |Ω|) (- (* (LeanGeo.length A O) (LeanGeo.length A O)) (* (LeanGeo.CircleMetrics.radius |Ω|) (LeanGeo.CircleMetrics.radius |Ω|)))))))))
+48
+✔ [5949/6033] Built SystemE.Tactic
+✔ [5950/6033] Built SystemE.Theory.Inferences.Superposition
+ℹ [5951/6033] Built SystemE.Theory.Inferences.Transfer
+info: ././.lake/packages/lib/././SystemE/Theory/Inferences/Transfer.lean:235:0: (declare-sort LeanGeo.Point 0)
+(declare-sort LeanGeo.Line 0)
+(declare-fun LeanGeo.Point.onLine (LeanGeo.Point LeanGeo.Line) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (distinct a b))) (and (LeanGeo.Point.onLine a M) (LeanGeo.Point.onLine b M))) (= L M)))))))
+(declare-sort LeanGeo.Circle 0)
+(declare-fun LeanGeo.Point.isCentre (LeanGeo.Point LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (LeanGeo.Point.isCentre a |α|) (LeanGeo.Point.isCentre b |α|)) (= a b))))))
+(declare-fun LeanGeo.Point.insideCircle (LeanGeo.Point LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (LeanGeo.Point.isCentre a |α|) (LeanGeo.Point.insideCircle a |α|)))))
+(declare-fun LeanGeo.Point.onCircle (LeanGeo.Point LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (LeanGeo.Point.insideCircle a |α|) (not (LeanGeo.Point.onCircle a |α|))))))
+(declare-fun LeanGeo.between (LeanGeo.Point LeanGeo.Point LeanGeo.Point) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (=> (LeanGeo.between a b c) (and (LeanGeo.between c b a) (and (distinct a b) (and (distinct a c) (not (LeanGeo.between b a c))))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (and (LeanGeo.Point.onLine a L) (LeanGeo.Point.onLine b L))) (LeanGeo.Point.onLine c L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (and (LeanGeo.Point.onLine a L) (LeanGeo.Point.onLine c L))) (LeanGeo.Point.onLine b L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.between a b c) (LeanGeo.between a d b)) (LeanGeo.between a d c)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.between a b c) (LeanGeo.between b c d)) (LeanGeo.between a b d)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (distinct a b) (and (distinct b c) (and (distinct c a) (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (LeanGeo.Point.onLine c L)))))) (or (LeanGeo.between a b c) (or (LeanGeo.between b a c) (LeanGeo.between a c b)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.between a b c) (LeanGeo.between a b d)) (not (LeanGeo.between c b d))))))))
+(declare-fun LeanGeo.Point.sameSide (LeanGeo.Point LeanGeo.Point LeanGeo.Line) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (not (LeanGeo.Point.onLine a L)) (LeanGeo.Point.sameSide a a L)))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (LeanGeo.Point.sameSide a b L) (LeanGeo.Point.sameSide b a L))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (LeanGeo.Point.sameSide a b L) (not (LeanGeo.Point.onLine a L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.Point.sameSide a b L) (LeanGeo.Point.sameSide a c L)) (LeanGeo.Point.sameSide b c L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (not (LeanGeo.Point.onLine a L)) (and (not (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.onLine c L)))) (or (LeanGeo.Point.sameSide a b L) (or (LeanGeo.Point.sameSide a c L) (LeanGeo.Point.sameSide b c L)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (LeanGeo.Point.sameSide a c L)) (LeanGeo.Point.sameSide a b L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (and (LeanGeo.Point.onLine a L) (not (LeanGeo.Point.onLine b L)))) (LeanGeo.Point.sameSide b c L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.between a b c) (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.sameSide a c L))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (distinct L M) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine b M) (and (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine c M) (distinct a c))) (and (distinct a b) (and (distinct c b) (not (LeanGeo.Point.sameSide a c L)))))))) (LeanGeo.between a b c))))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c M) (and (LeanGeo.Point.onLine d N) (and (LeanGeo.Point.sameSide c d L) (LeanGeo.Point.sameSide b c N)))))))) (not (LeanGeo.Point.sameSide b d M)))))))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c M) (and (LeanGeo.Point.onLine d N) (and (LeanGeo.Point.sameSide c d L) (and (not (LeanGeo.Point.sameSide b d M)) (and (not (LeanGeo.Point.onLine d M)) (distinct b a)))))))))) (LeanGeo.Point.sameSide b c N))))))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((e LeanGeo.Point)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c M) (and (LeanGeo.Point.onLine d N) (and (LeanGeo.Point.sameSide c d L) (and (LeanGeo.Point.sameSide b c N) (and (LeanGeo.Point.sameSide d e M) (LeanGeo.Point.sameSide c e N)))))))))) (LeanGeo.Point.sameSide c e L)))))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((|α| LeanGeo.Circle)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c L) (and (LeanGeo.Point.insideCircle a |α|) (and (LeanGeo.Point.onCircle b |α|) (and (LeanGeo.Point.onCircle c |α|) (distinct b c))))))) (LeanGeo.between b a c))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (or (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onCircle a |α|)) (and (or (LeanGeo.Point.insideCircle b |α|) (LeanGeo.Point.onCircle b |α|)) (LeanGeo.between a c b))) (LeanGeo.Point.insideCircle c |α|)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (or (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onCircle a |α|)) (and (not (LeanGeo.Point.insideCircle c |α|)) (LeanGeo.between a c b))) (and (not (LeanGeo.Point.insideCircle b |α|)) (not (LeanGeo.Point.onCircle b |α|)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((|β| LeanGeo.Circle)) (forall ((L LeanGeo.Line)) (=> (and (distinct |α| |β|) (and (LeanGeo.Point.onCircle c |α|) (and (LeanGeo.Point.onCircle c |β|) (and (LeanGeo.Point.onCircle d |α|) (and (LeanGeo.Point.onCircle d |β|) (and (distinct c d) (and (LeanGeo.Point.isCentre a |α|) (and (LeanGeo.Point.isCentre b |β|) (and (LeanGeo.Point.onLine a L) (LeanGeo.Point.onLine b L)))))))))) (not (LeanGeo.Point.sameSide c d L)))))))))))
+(declare-fun LeanGeo.Line.intersectsLine (LeanGeo.Line LeanGeo.Line) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (and (not (LeanGeo.Point.onLine a L)) (and (not (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.sameSide a b L)))) (and (LeanGeo.Point.onLine a M) (LeanGeo.Point.onLine b M))) (LeanGeo.Line.intersectsLine L M)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (distinct L M))) (LeanGeo.Line.intersectsLine L M))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (=> (and (not (LeanGeo.Point.onLine a L)) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine a N) (and (not (LeanGeo.Line.intersectsLine L M)) (not (LeanGeo.Line.intersectsLine L N)))))) (= M N)))))))
+(assert (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (LeanGeo.Line.intersectsLine L M) (LeanGeo.Line.intersectsLine M L)))))
+(declare-fun LeanGeo.Line.intersectsCircle (LeanGeo.Line LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((L LeanGeo.Line)) (=> (and (or (LeanGeo.Point.onCircle a |α|) (LeanGeo.Point.insideCircle a |α|)) (and (or (LeanGeo.Point.onCircle b |α|) (LeanGeo.Point.insideCircle b |α|)) (and (not (LeanGeo.Point.onLine a L)) (and (not (LeanGeo.Point.onLine b L)) (not (LeanGeo.Point.sameSide a b L)))))) (LeanGeo.Line.intersectsCircle L |α|)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onLine a L)) (LeanGeo.Line.intersectsCircle L |α|))))))
+(declare-fun LeanGeo.Circle.intersectsCircle (LeanGeo.Circle LeanGeo.Circle) Bool)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((|β| LeanGeo.Circle)) (=> (and (or (LeanGeo.Point.insideCircle a |α|) (LeanGeo.Point.onCircle a |α|)) (and (or (LeanGeo.Point.insideCircle b |α|) (LeanGeo.Point.onCircle b |α|)) (and (LeanGeo.Point.insideCircle a |β|) (and (not (LeanGeo.Point.insideCircle b |β|)) (not (LeanGeo.Point.onCircle b |β|)))))) (LeanGeo.Circle.intersectsCircle |α| |β|)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((|β| LeanGeo.Circle)) (=> (LeanGeo.Point.onCircle a |α|) (=> (LeanGeo.Point.insideCircle b |α|) (=> (LeanGeo.Point.insideCircle a |β|) (=> (LeanGeo.Point.onCircle b |β|) (LeanGeo.Circle.intersectsCircle |α| |β|))))))))))
+(declare-fun LeanGeo.length (LeanGeo.Point LeanGeo.Point) Real)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (=> (= (LeanGeo.length a b) 0.0) (= a b)))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (=> (= a b) (= (LeanGeo.length a b) 0.0)))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (<= 0.0 (LeanGeo.length a b)))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (= (LeanGeo.length a b) (LeanGeo.length b a)))))
+(declare-fun LeanGeo.Angle (LeanGeo.Point LeanGeo.Point LeanGeo.Point) Real)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (=> (and (distinct a b) (distinct b c)) (= (LeanGeo.Angle a b c) (LeanGeo.Angle c b a)))))))
+(declare-const LeanGeo.Angle.Right Real)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (=> (and (distinct a b) (distinct b c)) (and (<= 0.0 (LeanGeo.Angle a b c)) (<= (LeanGeo.Angle a b c) (+ LeanGeo.Angle.Right LeanGeo.Angle.Right))))))))
+(declare-fun |LeanGeo.area'| (LeanGeo.Point LeanGeo.Point LeanGeo.Point) Real)
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (= (|LeanGeo.area'| a a b) 0.0))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (<= 0.0 (|LeanGeo.area'| a b c))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (= (|LeanGeo.area'| a b c) (|LeanGeo.area'| c a b))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (= (|LeanGeo.area'| a b c) (|LeanGeo.area'| a c b))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|a'| LeanGeo.Point)) (forall ((|b'| LeanGeo.Point)) (forall ((|c'| LeanGeo.Point)) (=> (and (= (LeanGeo.length a b) (LeanGeo.length |a'| |b'|)) (and (= (LeanGeo.length b c) (LeanGeo.length |b'| |c'|)) (and (= (LeanGeo.length c a) (LeanGeo.length |c'| |a'|)) (and (= (LeanGeo.Angle a b c) (LeanGeo.Angle |a'| |b'| |c'|)) (and (= (LeanGeo.Angle b c a) (LeanGeo.Angle |b'| |c'| |a'|)) (= (LeanGeo.Angle c a b) (LeanGeo.Angle |c'| |a'| |b'|))))))) (= (|LeanGeo.area'| a b c) (|LeanGeo.area'| |a'| |b'| |c'|))))))))))
+(declare-fun LeanGeo.CircleMetrics.radius (LeanGeo.Circle) Real)
+(assert (forall ((A LeanGeo.Point)) (forall ((O LeanGeo.Point)) (forall ((|Ω| LeanGeo.Circle)) (=> (and (LeanGeo.Point.isCentre O |Ω|) (LeanGeo.Point.onCircle A |Ω|)) (= (LeanGeo.length O A) (LeanGeo.CircleMetrics.radius |Ω|)))))))
+(declare-fun LeanGeo.CircleMetrics.circlePower (LeanGeo.Point LeanGeo.Circle) Real)
+(assert (forall ((A LeanGeo.Point)) (forall ((O LeanGeo.Point)) (forall ((|Ω| LeanGeo.Circle)) (=> (LeanGeo.Point.isCentre O |Ω|) (= (LeanGeo.CircleMetrics.circlePower A |Ω|) (- (* (LeanGeo.length A O) (LeanGeo.length A O)) (* (LeanGeo.CircleMetrics.radius |Ω|) (LeanGeo.CircleMetrics.radius |Ω|)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (=> (LeanGeo.between a b c) (= (+ (LeanGeo.length a b) (LeanGeo.length b c)) (LeanGeo.length a c)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (forall ((|β| LeanGeo.Circle)) (=> (and (LeanGeo.Point.isCentre a |α|) (and (LeanGeo.Point.isCentre a |β|) (and (LeanGeo.Point.onCircle b |α|) (and (LeanGeo.Point.onCircle c |β|) (= (LeanGeo.length a b) (LeanGeo.length a c)))))) (= |α| |β|))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (LeanGeo.Point.isCentre a |α|) (and (LeanGeo.Point.onCircle b |α|) (= (LeanGeo.length a c) (LeanGeo.length a b)))) (LeanGeo.Point.onCircle c |α|)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (LeanGeo.Point.isCentre a |α|) (and (LeanGeo.Point.onCircle b |α|) (LeanGeo.Point.onCircle c |α|))) (= (LeanGeo.length a c) (LeanGeo.length a b))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (LeanGeo.Point.isCentre a |α|) (and (LeanGeo.Point.onCircle b |α|) (< (LeanGeo.length a c) (LeanGeo.length a b)))) (LeanGeo.Point.insideCircle c |α|)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|α| LeanGeo.Circle)) (=> (and (LeanGeo.Point.isCentre a |α|) (and (LeanGeo.Point.onCircle b |α|) (LeanGeo.Point.insideCircle c |α|))) (< (LeanGeo.length a c) (LeanGeo.length a b))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (distinct a b) (and (distinct a c) (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c L) (not (LeanGeo.between b a c))))))) (= (LeanGeo.Angle b a c) 0.0)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (distinct a b) (and (distinct a c) (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (= (LeanGeo.Angle b a c) 0.0))))) (and (LeanGeo.Point.onLine c L) (not (LeanGeo.between b a c)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c M) (and (distinct a b) (and (distinct a c) (and (not (LeanGeo.Point.onLine d L)) (and (not (LeanGeo.Point.onLine d M)) (and (distinct L M) (= (LeanGeo.Angle b a c) (+ (LeanGeo.Angle b a d) (LeanGeo.Angle d a c)))))))))))) (and (LeanGeo.Point.sameSide b d M) (LeanGeo.Point.sameSide c d L))))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c M) (and (distinct a b) (and (distinct a c) (and (not (LeanGeo.Point.onLine d L)) (and (not (LeanGeo.Point.onLine d M)) (and (distinct L M) (and (LeanGeo.Point.sameSide b d M) (LeanGeo.Point.sameSide c d L))))))))))) (= (LeanGeo.Angle b a c) (+ (LeanGeo.Angle b a d) (LeanGeo.Angle d a c)))))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.between a c b) (and (not (LeanGeo.Point.onLine d L)) (= (LeanGeo.Angle a c d) (LeanGeo.Angle d c b)))))) (= (LeanGeo.Angle a c d) LeanGeo.Angle.Right))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.between a c b) (and (not (LeanGeo.Point.onLine d L)) (= (LeanGeo.Angle a c d) LeanGeo.Angle.Right))))) (= (LeanGeo.Angle a c d) (LeanGeo.Angle d c b)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (=> (and (distinct a b) (and (distinct b c) (= (LeanGeo.Angle a b c) (+ LeanGeo.Angle.Right LeanGeo.Angle.Right)))) (LeanGeo.between a b c))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (=> (LeanGeo.between a b c) (= (LeanGeo.Angle a b c) (+ LeanGeo.Angle.Right LeanGeo.Angle.Right)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((|b'| LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((|c'| LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine |b'| L) (and (LeanGeo.Point.onLine a M) (and (LeanGeo.Point.onLine c M) (and (LeanGeo.Point.onLine |c'| M) (and (distinct b a) (and (distinct |b'| a) (and (distinct c a) (and (distinct |c'| a) (and (not (LeanGeo.between b a |b'|)) (not (LeanGeo.between c a |c'|))))))))))))) (= (LeanGeo.Angle b a c) (LeanGeo.Angle |b'| a |c'|)))))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((L LeanGeo.Line)) (forall ((M LeanGeo.Line)) (forall ((N LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine b M) (and (LeanGeo.Point.onLine c M) (and (LeanGeo.Point.onLine c N) (and (LeanGeo.Point.onLine d N) (and (distinct b c) (and (LeanGeo.Point.sameSide a d M) (< (+ (LeanGeo.Angle a b c) (LeanGeo.Angle b c d)) (+ LeanGeo.Angle.Right LeanGeo.Angle.Right)))))))))) (exists ((e LeanGeo.Point)) (and (LeanGeo.Point.onLine e L) (and (LeanGeo.Point.onLine e N) (LeanGeo.Point.sameSide e a M)))))))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (distinct a b))) (= (|LeanGeo.area'| a b c) 0.0)) (LeanGeo.Point.onLine c L)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (distinct a b))) (LeanGeo.Point.onLine c L)) (= (|LeanGeo.area'| a b c) 0.0)))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c L) (and (distinct a b) (and (distinct a c) (and (distinct b c) (and (not (LeanGeo.Point.onLine d L)) (LeanGeo.between a c b)))))))) (= (+ (|LeanGeo.area'| a c d) (|LeanGeo.area'| d c b)) (|LeanGeo.area'| a d b)))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((L LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a L) (and (LeanGeo.Point.onLine b L) (and (LeanGeo.Point.onLine c L) (and (distinct a b) (and (distinct a c) (and (distinct b c) (and (not (LeanGeo.Point.onLine d L)) (= (+ (|LeanGeo.area'| a c d) (|LeanGeo.area'| d c b)) (|LeanGeo.area'| a d b))))))))) (LeanGeo.between a c b))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((AB LeanGeo.Line)) (forall ((CD LeanGeo.Line)) (forall ((AC LeanGeo.Line)) (forall ((BD LeanGeo.Line)) (=> (and (LeanGeo.Point.onLine a AB) (and (LeanGeo.Point.onLine b AB) (and (LeanGeo.Point.onLine c CD) (and (LeanGeo.Point.onLine d CD) (and (LeanGeo.Point.onLine a AC) (and (LeanGeo.Point.onLine c AC) (and (and (LeanGeo.Point.onLine b BD) (and (LeanGeo.Point.onLine d BD) (distinct b d))) (and (LeanGeo.Point.sameSide a c BD) (and (not (LeanGeo.Line.intersectsLine AB CD)) (not (LeanGeo.Line.intersectsLine AC BD))))))))))) (= (+ (|LeanGeo.area'| a c d) (|LeanGeo.area'| a d b)) (+ (|LeanGeo.area'| b a c) (|LeanGeo.area'| b c d)))))))))))))
+(assert (forall ((a LeanGeo.Point)) (forall ((b LeanGeo.Point)) (forall ((c LeanGeo.Point)) (forall ((d LeanGeo.Point)) (forall ((e LeanGeo.Point)) (forall ((f LeanGeo.Point)) (forall ((AB LeanGeo.Line)) (forall ((CD LeanGeo.Line)) (forall ((AC LeanGeo.Line)) (forall ((BD LeanGeo.Line)) (=> (and (and (LeanGeo.Point.onLine a AB) (and (LeanGeo.Point.onLine b AB) (and (LeanGeo.Point.onLine c CD) (and (LeanGeo.Point.onLine d CD) (and (LeanGeo.Point.onLine a AC) (and (LeanGeo.Point.onLine c AC) (and (and (LeanGeo.Point.onLine b BD) (and (LeanGeo.Point.onLine d BD) (distinct b d))) (and (LeanGeo.Point.sameSide a c BD) (and (not (LeanGeo.Line.intersectsLine AB CD)) (not (LeanGeo.Line.intersectsLine AC BD))))))))))) (and (LeanGeo.between a e b) (LeanGeo.between c f d))) (= (+ (+ (+ (|LeanGeo.area'| a c f) (|LeanGeo.area'| a f e)) (|LeanGeo.area'| e f d)) (|LeanGeo.area'| e d b)) (+ (|LeanGeo.area'| a c d) (|LeanGeo.area'| a d b)))))))))))))))
+70
+✔ [5952/6033] Built SystemE.Theory.Inferences
+✔ [5953/6033] Built SystemE.Theory
+✔ [5954/6033] Built SystemE
+✔ [5955/6033] Built Book.Prop01
+✔ [5956/6033] Built Book.Prop04
+✔ [5957/6033] Built LeanGeo.Abbre
+✔ [5958/6033] Built Book.Prop02
+✔ [5959/6033] Built Book.Prop03
+✔ [5960/6033] Built Book.Prop06
+✔ [5961/6033] Built Book.Prop05
+✔ [5962/6033] Built Book.Prop07
+✔ [5963/6033] Built Book.Prop22
+✔ [5964/6033] Built Book.Prop08
+✔ [5965/6033] Built Book.Prop11
+✔ [5966/6033] Built Book.Prop09
+✔ [5967/6033] Built Book.Prop13
+✔ [5968/6033] Built Book.Prop10

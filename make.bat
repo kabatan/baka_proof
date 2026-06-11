@@ -1,4 +1,5 @@
 @echo off
+if exist "%USERPROFILE%\.elan\bin\lean.exe" set "PATH=%USERPROFILE%\.elan\bin;%PATH%"
 if "%1"=="test-unit" (
   python -m unittest discover -s tests/unit -p "test_*.py"
   exit /b %ERRORLEVEL%
@@ -33,6 +34,10 @@ if "%1"=="smoke-target-library-status" (
 )
 if "%1"=="smoke-geometry-extraction" (
   python scripts\smoke_geometry_extraction.py
+  exit /b %ERRORLEVEL%
+)
+if "%1"=="smoke-leangeo-fixture" (
+  python scripts\check_leangeo_wsl_fixture.py
   exit /b %ERRORLEVEL%
 )
 echo unsupported target: %1

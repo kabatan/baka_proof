@@ -6,3 +6,6 @@ package «math_auto_research» where
 
 lean_lib MathAutoResearch where
   roots := #[`MathAutoResearch]
+
+require «lib» from git
+  "https://github.com/project-numina/LeanGeo.git" @ "9212b89ef0cb08adb049b32f6332a1f2b9e551ab"
