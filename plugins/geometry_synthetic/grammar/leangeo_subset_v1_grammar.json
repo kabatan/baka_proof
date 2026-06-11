@@ -7,7 +7,7 @@
     "line_through_two_distinct_points",
     "circle_with_center_through_point"
   ],
-  "hypothesis_forms": [
+  "allowed_hypothesis_forms": [
     "distinct",
     "collinear",
     "parallel",
@@ -17,7 +17,7 @@
     "equal_length",
     "equal_angle_supported_pattern"
   ],
-  "target_forms": [
+  "allowed_target_forms": [
     "collinear",
     "parallel",
     "perpendicular",
@@ -25,7 +25,14 @@
     "equal_length",
     "equal_angle_supported_pattern"
   ],
-  "rejected_forms": [
+  "rejected_hypothesis_forms": [
+    "arbitrary_mathlib_expression",
+    "unsupported_local_notation",
+    "unsupported_quantifier_alternation",
+    "unsupported_orientation_semantics",
+    "unsupported_diagram_case_split"
+  ],
+  "rejected_target_forms": [
     "arbitrary_mathlib_expression",
     "unsupported_local_notation",
     "unsupported_quantifier_alternation",

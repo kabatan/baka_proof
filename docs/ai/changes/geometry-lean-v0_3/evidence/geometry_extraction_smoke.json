@@ -1,32 +1,35 @@
 {
   "claim": {
-    "claim_id": "geometry_claim:a0f9dd7f2bfab4cd",
-    "hypotheses": [],
+    "claim_id": "geometry_claim:46abb337d6c01b68",
+    "hypotheses": [
+      "distinct",
+      "collinear"
+    ],
     "nondegeneracy_assumptions": [
-      "explicit_distinctness"
+      "A \u2260 B"
     ],
     "objects": [
-      "A",
-      "B",
-      "C"
+      "A:Point",
+      "B:Point",
+      "C:Point"
     ],
     "orientation_assumptions": [],
     "schema_version": "1.0.0",
     "source_goal_ref": "goal:smoke",
     "target": {
       "form": "collinear",
-      "raw": "target collinear A B C with distinct A B"
+      "raw": "Coll A B C"
     },
     "target_library": "LeanGeoSubsetV1:1.0.0"
   },
   "report": {
-    "claim_spec_ref": "geometry_claim:a0f9dd7f2bfab4cd",
+    "claim_spec_ref": "geometry_claim:46abb337d6c01b68",
     "direction_available": null,
     "direction_needed": null,
     "goal_anchor_ref": "goal:smoke",
     "proof_use_status": "not_allowed",
     "relation": "exact",
-    "report_id": "geometry_extraction:a0f9dd7f2bfab4cd",
+    "report_id": "geometry_extraction:46abb337d6c01b68",
     "result_level": "extracted_claim",
     "safe_reject_reason": null,
     "schema_version": "1.0.0",

@@ -18,10 +18,12 @@ authority: Evidence record only; does not override Base Spec or Plan.
    - `related`: safe-rejected for goal-level proof-use;
    - `none`: safe-rejected.
 4. Raw DSL / missing goal anchor remains safe-rejected.
+5. Grammar manifest field names are aligned with the v0.3 contract index (`allowed_hypothesis_forms`, `rejected_hypothesis_forms`, `allowed_target_forms`, `rejected_target_forms`).
+6. Extraction tests now cover every accepted grammar form with LeanGeo-style theorem/proposition syntax, using declarations observed in LeanGeo/SystemE source such as `Point`, `Line`, `Circle`, `Coll`, `Cyclic`, `MidPoint`, `PerpLine`, `Foot`, `line_from_points`, `circle_from_points`, and `intersection_lines`.
 
 ## Explicit Blocker
 
-Full semantic Lean expression canonicalization against real LeanGeo namespaces remains blocked by T11 dependency status: local Lean is 4.30.0 while the checked LeanGeo README states Lean 4.15 support/requirement. No alternate target library was introduced.
+Full Lean elaboration against real LeanGeo namespaces remains blocked by T11 dependency status: local Lean is 4.30.0 while LeanGeo pins `leanprover/lean4:v4.15.0` and requires solver tools. No alternate target library was introduced.
 
 ## Verification
 
@@ -35,9 +37,9 @@ python scripts/check_domain_contamination.py
 Results:
 
 ```text
-Ran 12 tests in 0.026s
+Ran 13 tests in 0.019s
 OK
-Ran 37 tests in 1.626s
+Ran 38 tests in 1.635s
 OK
 domain contamination check passed
 ```

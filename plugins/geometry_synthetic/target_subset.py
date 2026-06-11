@@ -31,7 +31,13 @@ def validate_target_subset(grammar_path: Path | str, fixtures_path: Path | str) 
     fixtures = load_json(fixtures_path)
     if grammar["target_library"] != "LeanGeoSubsetV1:1.0.0":
         raise ValueError("target subset must remain LeanGeoSubsetV1")
-    for key in ["object_declarations", "hypothesis_forms", "target_forms", "rejected_forms"]:
+    for key in [
+        "object_declarations",
+        "allowed_hypothesis_forms",
+        "allowed_target_forms",
+        "rejected_hypothesis_forms",
+        "rejected_target_forms",
+    ]:
         if not grammar.get(key):
             raise ValueError(f"missing grammar area: {key}")
     for key in REQUIRED_FIXTURE_CATEGORIES:
@@ -39,13 +45,13 @@ def validate_target_subset(grammar_path: Path | str, fixtures_path: Path | str) 
             raise ValueError(f"missing fixture category: {key}")
     covered_positive_forms = {fixture["form"] for fixture in fixtures["positive_fixtures"]}
     required_positive_forms = set(grammar["object_declarations"])
-    required_positive_forms.update(grammar["hypothesis_forms"])
-    required_positive_forms.update(grammar["target_forms"])
+    required_positive_forms.update(grammar["allowed_hypothesis_forms"])
+    required_positive_forms.update(grammar["allowed_target_forms"])
     required_positive_forms.update(grammar["construction_mappings"])
     missing_positive = sorted(required_positive_forms - covered_positive_forms)
     if missing_positive:
         raise ValueError(f"missing positive fixtures for grammar entries: {missing_positive}")
-    rejected_forms = set(grammar["rejected_forms"])
+    rejected_forms = set(grammar["rejected_hypothesis_forms"]) | set(grammar["rejected_target_forms"])
     for key in ["negative_fixtures", "ambiguous_fixtures", "safe_reject_fixtures", "mutation_fixtures"]:
         for fixture in fixtures[key]:
             if fixture["form"] not in rejected_forms:
@@ -60,7 +66,7 @@ def validate_target_subset(grammar_path: Path | str, fixtures_path: Path | str) 
     if not sufficient.get("allowed_directions"):
         raise ValueError("sufficient relation must declare allowed directions")
     return TargetSubsetValidationResult(
-        accepted_forms=tuple(sorted(set(grammar["hypothesis_forms"]) | set(grammar["target_forms"]))),
+        accepted_forms=tuple(sorted(set(grammar["allowed_hypothesis_forms"]) | set(grammar["allowed_target_forms"]))),
         rejected_forms=tuple(sorted(rejected_forms)),
         fixture_count=fixture_count,
     )

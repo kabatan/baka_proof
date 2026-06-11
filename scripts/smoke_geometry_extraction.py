@@ -15,7 +15,10 @@ from plugins.geometry_synthetic.extraction import GeometryExtractor
 
 
 def main() -> int:
-    report, claim = GeometryExtractor().extract("target collinear A B C with distinct A B", "goal:smoke")
+    report, claim = GeometryExtractor().extract(
+        "theorem smoke : ∀ (A B C : Point), A ≠ B ∧ Coll A B C → Coll A B C",
+        "goal:smoke",
+    )
     payload = {"report": report.to_dict(), "claim": claim.to_dict() if claim else None}
     print(json.dumps(payload, indent=2, sort_keys=True))
     if report.status != "accepted" or claim is None:
