@@ -1,0 +1,40 @@
+{
+  "candidate": {
+    "candidate_id": "aux_construction_candidate:smoke",
+    "construction_kind": "line_through_two_distinct_points",
+    "dependencies": [
+      "A",
+      "B"
+    ],
+    "intended_use": "search_hint_for_symbolic_retry",
+    "introduced_objects": [
+      "l_aux:Line"
+    ],
+    "proof_use_status": "not_allowed",
+    "schema_version": "1.0.0",
+    "side_conditions": [
+      "A != B"
+    ],
+    "source_provenance": "provider_run:smoke"
+  },
+  "compilation": {
+    "blockers": [],
+    "candidate_id": "aux_construction_candidate:smoke",
+    "generated_obligations": [
+      "obligation:A != B"
+    ],
+    "introduction_plan": [
+      "introduce l_aux:Line",
+      "from line_through_two_distinct_points"
+    ],
+    "lean_patch": "namespace MathAutoResearch.GeometryConstructionFixture\n\ntheorem compiled_construction_fixture (p : Prop) (h : p) : p := by\n  exact h\n\nend MathAutoResearch.GeometryConstructionFixture\n",
+    "lean_patch_candidate_ref": "lean_patch_candidate:93dc92e2621b5c8c",
+    "proof_use_status": "lean_patch_candidate",
+    "result_id": "construction_compilation:e0b2e5d2dd269cde",
+    "schema_version": "1.0.0",
+    "status": "compiled"
+  },
+  "lean_exit_code": 0,
+  "lean_stderr": "",
+  "lean_stdout": ""
+}

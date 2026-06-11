@@ -1,0 +1,29 @@
+{
+  "$id": "geometry.construction_compilation_result.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "result_id",
+    "candidate_id",
+    "status",
+    "introduction_plan",
+    "lean_patch_candidate_ref",
+    "generated_obligations",
+    "proof_use_status",
+    "blockers",
+    "lean_patch"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "result_id": {"type": "string", "pattern": "^construction_compilation:.*"},
+    "candidate_id": {"type": "string"},
+    "status": {"type": "string", "enum": ["compiled", "blocked", "rejected"]},
+    "introduction_plan": {"type": "array", "items": {"type": "string"}},
+    "lean_patch_candidate_ref": {"type": ["string", "null"]},
+    "generated_obligations": {"type": "array", "items": {"type": "string"}},
+    "proof_use_status": {"type": "string", "enum": ["lean_patch_candidate"]},
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "lean_patch": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

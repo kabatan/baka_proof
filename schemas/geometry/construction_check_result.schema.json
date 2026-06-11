@@ -1,0 +1,14 @@
+{
+  "$id": "geometry.construction_check_result.v1",
+  "type": "object",
+  "required": ["schema_version", "result_id", "candidate_id", "status", "generated_obligations", "blockers"],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "result_id": {"type": "string", "pattern": "^construction_check:.*"},
+    "candidate_id": {"type": "string"},
+    "status": {"type": "string", "enum": ["accepted", "blocked", "rejected"]},
+    "generated_obligations": {"type": "array", "items": {"type": "string"}},
+    "blockers": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}
