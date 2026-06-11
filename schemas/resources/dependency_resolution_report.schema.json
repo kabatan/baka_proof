@@ -1,0 +1,31 @@
+{
+  "$id": "resources.dependency_resolution_report.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "created_at",
+    "os",
+    "python_version",
+    "lean_version",
+    "lake_version",
+    "packages",
+    "engines",
+    "unresolved",
+    "evidence_refs"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "report_id": {"type": "string"},
+    "created_at": {"type": "string"},
+    "os": {"type": "string"},
+    "python_version": {"type": "string"},
+    "lean_version": {"type": "string"},
+    "lake_version": {"type": "string"},
+    "packages": {"type": "array", "items": {"type": "object"}},
+    "engines": {"type": "array", "items": {"type": "object"}},
+    "unresolved": {"type": "array", "items": {"type": "object"}},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "created_at": "2026-06-11T09:03:44.946295+00:00",
+  "engines": [
+    {
+      "checkpoint_hash": null,
+      "family": "newclid_compatible",
+      "install_status": "unavailable",
+      "role": "symbolic_closure",
+      "version_or_commit": "unavailable"
+    },
+    {
+      "checkpoint_hash": null,
+      "family": "genesisgeo_compatible",
+      "install_status": "unavailable",
+      "role": "construction_proposer",
+      "version_or_commit": "unavailable"
+    },
+    {
+      "checkpoint_hash": null,
+      "family": "tonggeometry_compatible",
+      "install_status": "unavailable",
+      "role": "heavy_search",
+      "version_or_commit": "unavailable"
+    }
+  ],
+  "evidence_refs": [
+    "sha256:bf8fe66eed9c73f69db33278d61e71dc5cac2073dd839808768836d844e1ac3b"
+  ],
+  "lake_version": "Lake version 5.0.0-src+d024af0 (Lean version 4.30.0)",
+  "lean_version": "Lean (version 4.30.0, x86_64-w64-windows-gnu, commit d024af099ca4bf2c86f649261ebf59565dc8c622, Release)",
+  "os": "Windows-11-10.0.26200-SP0",
+  "packages": [
+    {
+      "lock_ref": "sha256:0a1c32c06b06c6ac551590ccca60f056234743c4966bc66cebdf90c4c55040ea",
+      "name": "pyproject.toml",
+      "source": "local",
+      "version_or_commit": "workspace"
+    },
+    {
+      "lock_ref": "sha256:d8615c21443a012ad87770bae6846710016d117b77254feee3e64a164c5660e8",
+      "name": "lakefile.lean",
+      "source": "local",
+      "version_or_commit": "workspace"
+    }
+  ],
+  "python_version": "3.12.11",
+  "report_id": "dependency_resolution:20260611T090344Z",
+  "schema_version": "1.0.0",
+  "unresolved": [
+    {
+      "component": "newclid_compatible",
+      "consequence": "blocks_real_final_theorem"
+    },
+    {
+      "component": "genesisgeo_compatible",
+      "consequence": "blocks_real_final_theorem"
+    },
+    {
+      "component": "tonggeometry_compatible",
+      "consequence": "blocks_heavy_search"
+    }
+  ]
+}

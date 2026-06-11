@@ -70,6 +70,8 @@ def resolve_schema_path(artifact_path: Path, explicit_schema: Path | None = None
         return explicit_schema
     if artifact_path.name == "geometry_default.yaml":
         return Path("schemas/base/selected_implementations.schema.json")
+    if artifact_path.name in {"dependency_probe.json", "dependency_resolution.json"}:
+        return Path("schemas/resources/dependency_resolution_report.schema.json")
     raise SchemaValidationError(f"no schema mapping for {artifact_path}")
 
 
