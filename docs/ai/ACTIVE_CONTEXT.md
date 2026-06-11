@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3A
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003A
 version: v0.3A-recovery-admitted
-status: READY_TO_START_V03A_T008
+status: READY_TO_START_V03A_T009
 created: 2026-06-11
 last_updated: 2026-06-12
 base_spec: MARP-GEOLEAN-BASE-003A
@@ -84,9 +84,11 @@ Completed v0.3A task: `T-007 — TongGeometry-compatible heavy-search integratio
 
 Completed v0.3A gate: `RC-003A-3 — real engine integrations or blocker evidence`.
 
-Current v0.3A task: `T-008 — Define LeanGeoSubsetV1.RealSmokeCorpus`.
+Completed v0.3A task: `T-008 — Define LeanGeoSubsetV1.RealSmokeCorpus`.
 
-Current claim ceiling: do not claim full LeanGeo theorem-corpus build, GenesisGeo model-backed construction proposal, TongGeometry model-backed heavy search, broad Newclid theorem coverage, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3 completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. Current positive claims include the prior geometry x Lean v0.3 fixture-level release acceptance, the T-005 real Newclid-compatible symbolic-closure smoke path, the T-006 GenesisGeo-compatible external diagnostic engine-run path, and the T-007 TongGeometry-compatible external diagnostic engine-run path only within their recorded smoke-scope evidence. T-006/T-007 full provider smoke runs are mixed fixture/real and do not support whole-provider real-integration claims.
+Current v0.3A task: `T-009 — Add real-vs-fixture integration tests`.
+
+Current claim ceiling: do not claim full LeanGeo theorem-corpus build, GenesisGeo model-backed construction proposal, TongGeometry model-backed heavy search, broad Newclid theorem coverage, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3 completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. Current positive claims include the prior geometry x Lean v0.3 fixture-level release acceptance, the T-005 real Newclid-compatible symbolic-closure smoke path, the T-006 GenesisGeo-compatible external diagnostic engine-run path, the T-007 TongGeometry-compatible external diagnostic engine-run path, and the T-008 limited `LeanGeoSubsetV1.RealSmokeCorpus` manifest/checks only within their recorded smoke-scope evidence. T-006/T-007 full provider smoke runs are mixed fixture/real and do not support whole-provider real-integration claims.
 
 ## Evidence Directory
 

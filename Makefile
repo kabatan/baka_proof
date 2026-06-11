@@ -1,6 +1,8 @@
 .PHONY: fmt lint typecheck test test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-geometry-trace smoke-geometry-construction smoke-geometry-final-verify
 
 PYTHON ?= python
+ELAN_LAKE := $(USERPROFILE)/.elan/bin/lake.exe
+LAKE ?= $(if $(wildcard $(ELAN_LAKE)),$(ELAN_LAKE),lake)
 
 fmt:
 	$(PYTHON) -m compileall -q src plugins scripts tests
@@ -21,7 +23,7 @@ test-mutation:
 	$(PYTHON) -m unittest tests.unit.test_geometry_extraction tests.unit.test_target_subset tests.unit.test_trace_compiler tests.unit.test_geotrace_rule_registry tests.unit.test_construction_compiler tests.unit.test_geometry_bridge tests.unit.test_final_verify tests.unit.test_geometry_standard_loop tests.unit.test_proof_state_dag
 
 test-regression:
-	$(PYTHON) -m unittest tests.unit.test_domain_contamination tests.unit.test_schema_validation tests.unit.test_target_library_status tests.unit.test_resource_governor tests.unit.test_composite_provider tests.unit.test_geometry_extraction tests.unit.test_trace_compiler tests.unit.test_geotrace_rule_registry tests.unit.test_construction_compiler tests.unit.test_geometry_bridge tests.unit.test_final_verify tests.unit.test_model_provider_set tests.unit.test_geometry_standard_loop tests.unit.test_proof_state_dag tests.unit.test_run_trace tests.unit.test_evaluation_matrix
+	$(PYTHON) -m unittest tests.unit.test_domain_contamination tests.unit.test_schema_validation tests.unit.test_target_library_status tests.unit.test_resource_governor tests.unit.test_composite_provider tests.unit.test_geometry_extraction tests.unit.test_real_smoke_corpus tests.unit.test_trace_compiler tests.unit.test_geotrace_rule_registry tests.unit.test_construction_compiler tests.unit.test_geometry_bridge tests.unit.test_final_verify tests.unit.test_model_provider_set tests.unit.test_geometry_standard_loop tests.unit.test_proof_state_dag tests.unit.test_run_trace tests.unit.test_evaluation_matrix
 	$(PYTHON) scripts/check_domain_contamination.py
 	$(PYTHON) scripts/check_no_loose_options.py
 
@@ -38,7 +40,7 @@ smoke-model-provider-set:
 	$(PYTHON) scripts/smoke_model_provider_set.py
 
 lean-build:
-	lake build
+	"$(LAKE)" build
 
 lean-no-sorry:
 	$(PYTHON) scripts/check_lean_no_sorry.py

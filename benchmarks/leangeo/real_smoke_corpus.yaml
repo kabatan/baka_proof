@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "corpus_id": "LeanGeoSubsetV1.RealSmokeCorpus:1.0.0",
+  "target_library": "LeanGeoSubsetV1:1.0.0",
+  "claim_ceiling": "limited_real_smoke_corpus_not_arbitrary_leangeo_support",
+  "entries": [
+    {
+      "entry_id": "real_smoke:fixture_collinear",
+      "theorem_file_path": "benchmarks/leangeo/RealSmokeCorpus.lean",
+      "theorem_name": "MathAutoResearch.RealSmokeCorpus.fixture_collinear",
+      "target_library": "LeanGeoSubsetV1:1.0.0",
+      "theorem_statement": "MathAutoResearch.RealSmokeCorpus.fixture_collinear (A B C : Point) (h : Coll A B C) : Coll A B C",
+      "theorem_statement_hash": "sha256:0b6f7735d9b57d81010fdf57fec9b83e4273fe457b32ccfb50d432c09d1615ba",
+      "expected_extraction_class": "collinear",
+      "expected_supported_predicates": ["Coll"],
+      "expected_construction_coverage": [],
+      "expected_rule_coverage": ["identity_hypothesis"],
+      "expected_final_verification_status": "lean_file_elaborates",
+      "acceptance_eligible": true,
+      "source_goal_ref": "lean-check:MathAutoResearch.RealSmokeCorpus.fixture_collinear"
+    }
+  ],
+  "negative_checks": [
+    {
+      "check_id": "statement_mutation_hash_mismatch",
+      "mutation": "replace_target_with_parallel",
+      "expected_status": "blocked"
+    },
+    {
+      "check_id": "toy_library_substitution_forbidden",
+      "forbidden_target_library": "ToyGeometry:1.0.0",
+      "expected_status": "blocked"
+    },
+    {
+      "check_id": "unsupported_expression_safe_reject",
+      "expression": "Nat.succ n = n + 1",
+      "expected_status": "safe_rejected"
+    }
+  ]
+}

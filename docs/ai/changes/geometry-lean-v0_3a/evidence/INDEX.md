@@ -15,6 +15,7 @@ Authority: Navigation only. Individual evidence files and reviewer records retai
 - T-006 GenesisGeo-compatible construction diagnostic: `t006_genesisgeo_construction_diagnostic.md`
 - T-007 TongGeometry-compatible heavy-search diagnostic: `t007_tonggeometry_heavy_search_diagnostic.md`
 - RC-003A-3 Guardian boundary review: `rc003a_3_guardian_boundary_review.md`
+- T-008 LeanGeoSubsetV1.RealSmokeCorpus: `t008_real_smoke_corpus.md`
 
 ## Planned Review Evidence
 
