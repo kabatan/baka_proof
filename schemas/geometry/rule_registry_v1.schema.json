@@ -1,0 +1,60 @@
+{
+  "$id": "geometry.rule_registry_v1.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "registry_id",
+    "target_library",
+    "rules",
+    "supported_rule_families",
+    "release_blockers"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "registry_id": {"type": "string", "pattern": "^RuleRegistryV1:.*"},
+    "target_library": {"type": "string", "enum": ["LeanGeoSubsetV1:1.0.0"]},
+    "supported_rule_families": {"type": "array", "items": {"type": "string"}},
+    "release_blockers": {"type": "array", "items": {"type": "string"}},
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "schema_version",
+          "rule_id",
+          "rule_family",
+          "lean_lemma_or_template",
+          "premise_pattern",
+          "conclusion_pattern",
+          "required_side_conditions",
+          "generated_obligations",
+          "unsupported_variants",
+          "fixtures"
+        ],
+        "properties": {
+          "schema_version": {"type": "string", "enum": ["1.0.0"]},
+          "rule_id": {"type": "string"},
+          "rule_family": {"type": "string"},
+          "lean_lemma_or_template": {"type": "string"},
+          "premise_pattern": {"type": "array", "items": {"type": "string"}},
+          "conclusion_pattern": {"type": "string"},
+          "required_side_conditions": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+          "generated_obligations": {"type": "array", "items": {"type": "string"}},
+          "unsupported_variants": {"type": "array", "items": {"type": "string"}},
+          "fixtures": {
+            "type": "object",
+            "required": ["positive", "negative", "ambiguous"],
+            "properties": {
+              "positive": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+              "negative": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+              "ambiguous": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

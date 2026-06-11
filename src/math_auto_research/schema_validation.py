@@ -92,6 +92,12 @@ def resolve_schema_path(artifact_path: Path, explicit_schema: Path | None = None
         return Path("schemas/geometry/geometry_execution_plan.schema.json")
     if artifact_path.name == "provider_run_manifest.json":
         return Path("schemas/geometry/provider_run_manifest.schema.json")
+    if artifact_path.name == "geotrace_v1.json":
+        return Path("schemas/geometry/geotrace_v1.schema.json")
+    if artifact_path.name == "rule_registry_v1.json":
+        return Path("schemas/geometry/rule_registry_v1.schema.json")
+    if artifact_path.name == "side_condition_report.json":
+        return Path("schemas/geometry/side_condition_report.schema.json")
     raise SchemaValidationError(f"no schema mapping for {artifact_path}")
 
 

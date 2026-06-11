@@ -1,0 +1,21 @@
+{
+  "$id": "geometry.side_condition_report.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "condition_id",
+    "status",
+    "generated_obligation_ids",
+    "blockers"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "report_id": {"type": "string", "pattern": "^side_condition:.*"},
+    "condition_id": {"type": "string"},
+    "status": {"type": "string", "enum": ["discharged", "generated_obligation", "blocked", "unsupported"]},
+    "generated_obligation_ids": {"type": "array", "items": {"type": "string"}},
+    "blockers": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

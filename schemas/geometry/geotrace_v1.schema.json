@@ -1,0 +1,37 @@
+{
+  "$id": "geometry.geotrace_v1.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "trace_id",
+    "claim_spec_ref",
+    "steps",
+    "rule_refs",
+    "side_condition_refs",
+    "proof_use_status"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "trace_id": {"type": "string"},
+    "claim_spec_ref": {"type": "string"},
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step_id", "rule_id", "premises", "conclusion", "side_condition_refs"],
+        "properties": {
+          "step_id": {"type": "string"},
+          "rule_id": {"type": "string"},
+          "premises": {"type": "array", "items": {"type": "string"}},
+          "conclusion": {"type": "string"},
+          "side_condition_refs": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "rule_refs": {"type": "array", "items": {"type": "string"}},
+    "side_condition_refs": {"type": "array", "items": {"type": "string"}},
+    "proof_use_status": {"type": "string", "enum": ["not_allowed", "lean_patch_candidate"]}
+  },
+  "additionalProperties": false
+}
