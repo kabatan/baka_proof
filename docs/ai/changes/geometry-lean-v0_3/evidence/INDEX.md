@@ -23,5 +23,6 @@ Authority: Navigation only. Individual evidence files and reviewer records retai
 - Final spec verifier review: `final_spec_verifier_review.md`
 - Final quality review: `final_quality_review.md`
 - Final Guardian boundary review: `final_guardian_boundary_review.md`
+- v0.3 completion blocker report: `v03_completion_blocker_report.md`
 - Closure document: `../CLOSURE.md`
 - Claim ceiling: fixture-level release acceptance and final review pass only; no v0.3 completion or real-integration claim.

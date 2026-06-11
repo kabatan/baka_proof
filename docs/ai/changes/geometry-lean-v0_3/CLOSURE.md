@@ -48,6 +48,7 @@ Review artifacts:
 - `evidence/final_spec_verifier_review.md`
 - `evidence/final_quality_review.md`
 - `evidence/final_guardian_boundary_review.md`
+- `evidence/v03_completion_blocker_report.md`
 
 ## Claim Ceiling
 
