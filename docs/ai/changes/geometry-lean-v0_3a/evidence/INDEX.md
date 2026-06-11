@@ -18,6 +18,9 @@ Authority: Navigation only. Individual evidence files and reviewer records retai
 - T-008 LeanGeoSubsetV1.RealSmokeCorpus: `t008_real_smoke_corpus.md`
 - T-009 real-vs-fixture integration tests: `t009_real_vs_fixture_integration_tests.md`
 - RC-003A-4 Guardian boundary review: `rc003a_4_guardian_boundary_review.md`
+- T-010 release acceptance: `t010_release_acceptance.md`
+- v0.3A release acceptance report: `v03a_release_acceptance_report.json`
+- v0.3A closure candidate: `../CLOSURE.md`
 
 ## Planned Review Evidence
 
@@ -25,7 +28,9 @@ Authority: Navigation only. Individual evidence files and reviewer records retai
 - RC-003A-1 review: `rc003a_1_guardian_boundary_review.md`
 - RC-003A-2 review: `rc003a_2_guardian_boundary_review.md`
 - RC-003A-3 review: `rc003a_3_guardian_boundary_review.md`
-- RC-003A-5 final closure review: pending T-010.
+- Spec verifier final review: pending T-010 review packet.
+- Quality reviewer final review: pending spec review pass.
+- RC-003A-5 final closure review: pending final review packet.
 
 ## Claim Ceiling
 

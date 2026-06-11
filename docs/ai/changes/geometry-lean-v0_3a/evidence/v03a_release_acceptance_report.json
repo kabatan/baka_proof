@@ -1,0 +1,211 @@
+{
+  "checks": [
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\guardian_boundary_review.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\guardian_boundary_review.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\rc003a_1_guardian_boundary_review.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\rc003a_1_guardian_boundary_review.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\rc003a_2_guardian_boundary_review.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\rc003a_2_guardian_boundary_review.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\rc003a_3_guardian_boundary_review.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\rc003a_3_guardian_boundary_review.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\rc003a_4_guardian_boundary_review.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\rc003a_4_guardian_boundary_review.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t001_fixture_preservation.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t001_fixture_preservation.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t002_dependency_bootstrap.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t002_dependency_bootstrap.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t003_resource_governor_enforcement.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t003_resource_governor_enforcement.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t004_composite_provider_v1.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t004_composite_provider_v1.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t005_real_newclid_symbolic_closure.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t005_real_newclid_symbolic_closure.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t006_genesisgeo_construction_diagnostic.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t006_genesisgeo_construction_diagnostic.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t007_tonggeometry_heavy_search_diagnostic.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t007_tonggeometry_heavy_search_diagnostic.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t008_real_smoke_corpus.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t008_real_smoke_corpus.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t009_real_vs_fixture_integration_tests.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3a\\evidence\\t009_real_vs_fixture_integration_tests.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:configs\\local_resource_profile.yaml",
+      "details": {
+        "path": "configs\\local_resource_profile.yaml"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:docs\\ai\\evidence\\dependency_resolution.md",
+      "details": {
+        "path": "docs\\ai\\evidence\\dependency_resolution.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:runs\\v03a_t002_apply_latest\\dependency_probe.json",
+      "details": {
+        "path": "runs\\v03a_t002_apply_latest\\dependency_probe.json"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "file:runs\\v03a_t002_apply_latest\\dependency_resolution_report.json",
+      "details": {
+        "path": "runs\\v03a_t002_apply_latest\\dependency_resolution_report.json"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "engine:newclid_compatible",
+      "details": {
+        "matching_runs": 1,
+        "path": "runs\\v03a_t005_newclid_latest\\real_newclid_provider_smoke.json"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "engine:genesisgeo_compatible",
+      "details": {
+        "claim_boundary": "diagnostic_engine_run_only_mixed_provider_manifest",
+        "matching_runs": 1,
+        "path": "runs\\v03a_t006_genesisgeo_latest\\construction_smoke.json"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "engine:tonggeometry_compatible",
+      "details": {
+        "claim_boundary": "diagnostic_engine_run_only_mixed_provider_manifest",
+        "matching_runs": 1,
+        "path": "runs\\v03a_t007_tonggeometry_latest\\heavy_search_smoke.json"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "corpus:LeanGeoSubsetV1.RealSmokeCorpus",
+      "details": {
+        "entries": [
+          {
+            "entry_id": "real_smoke:fixture_collinear",
+            "expected_final_verification_status": "lean_file_elaborates",
+            "observed_final_verification_status": "passed",
+            "theorem_file_path": "benchmarks/leangeo/RealSmokeCorpus.lean"
+          }
+        ],
+        "path": "runs\\v03a_t008_real_smoke_corpus_latest\\corpus_check.json"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "claim_ceiling:active_context",
+      "details": {
+        "missing_phrases": []
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "command:real_smoke_corpus",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_real_smoke_corpus.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"entries\": [\n    {\n      \"entry_id\": \"real_smoke:fixture_collinear\",\n      \"expected_final_verification_status\": \"lean_file_elaborates\",\n      \"observed_final_verification_status\": \"passed\",\n      \"theorem_file_path\": \"benchmarks/leangeo/RealSmokeCorpus.lean\"\n    }\n  ],\n  \"errors\": [],\n  \"manifest\": \"benchmarks\\\\leangeo\\\\real_smoke_corpus.yaml\",\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "command:v03a_boundary_tests",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "-m",
+          "unittest",
+          "tests.unit.test_v03a_real_vs_fixture_integration"
+        ],
+        "returncode": 0,
+        "stderr_tail": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.002s\n\nOK\n",
+        "stdout_tail": ""
+      },
+      "status": "passed"
+    }
+  ],
+  "current_claim_ceiling": "The track has fixture-level release acceptance only. Real Newclid / GenesisGeo / TongGeometry integration remains unverified. Real LeanGeo corpus support remains unverified. Real Level 2 advantage remains unverified and out of scope for this recovery target.",
+  "post_final_review_maximum_claim": "If final reviews pass, real-integration evidence for selected provider roles and the limited LeanGeoSubsetV1.RealSmokeCorpus under the recorded trust boundary; no real Level 2 advantage, arbitrary LeanGeo support, production safety, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or R-ID VERIFIED claim",
+  "report_id": "v03a_release_acceptance:1781210136",
+  "schema_version": "1.0.0",
+  "status": "passed"
+}
