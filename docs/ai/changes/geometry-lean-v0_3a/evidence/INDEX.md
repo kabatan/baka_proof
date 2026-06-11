@@ -11,6 +11,7 @@ Authority: Navigation only. Individual evidence files and reviewer records retai
 - T-003 ResourceGovernor enforcement: `t003_resource_governor_enforcement.md`
 - T-004 CompositeSyntheticGeometryProviderV1: `t004_composite_provider_v1.md`
 - RC-003A-2 Guardian boundary review: `rc003a_2_guardian_boundary_review.md`
+- T-005 real Newclid-compatible symbolic closure: `t005_real_newclid_symbolic_closure.md`
 
 ## Planned Review Evidence
 

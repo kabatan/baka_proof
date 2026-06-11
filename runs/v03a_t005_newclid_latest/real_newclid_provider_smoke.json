@@ -1,0 +1,87 @@
+{
+  "manifest": {
+    "adapter_versions": {
+      "construction_proposer": "genesisgeo-compatible-fixture:0.1",
+      "heavy_search": "tonggeometry-compatible-fixture:0.1",
+      "symbolic_closure": "newclid-compatible-fixture:0.1"
+    },
+    "engine_runs": [
+      {
+        "adapter_commit": "dummy-adapter-local",
+        "adapter_version": "newclid-compatible-fixture:0.1",
+        "checkpoint_hash": "not_applicable",
+        "config_hash": "2fcdc1126e0c246a",
+        "engine_family": "newclid_compatible",
+        "engine_role": "symbolic_closure",
+        "engine_version": "newclid==3.0.1;py-yuclid==3.0.0;yuclid==dc40a72767c15a90",
+        "fixture_flag": false,
+        "normalized_output_hash": "36b478c7b9d669c4",
+        "normalized_output_ref": "geotrace:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:newclid_real",
+        "raw_log_artifact_hash": "565b8cb9fd76dc6a",
+        "raw_output_hash": "565b8cb9fd76dc6a",
+        "real_integration_flag": true,
+        "resource_usage_ref": "resource_usage:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:ad1101ad2192e32f",
+        "seed": 0,
+        "status": "trace_candidate"
+      }
+    ],
+    "fixture_flag": false,
+    "manifest_id": "provider_run_manifest:c60dbcf184ac09cd",
+    "normalized_output_refs": [
+      "geotrace:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:newclid_real"
+    ],
+    "provider_class": "CompositeSyntheticGeometryProviderV1",
+    "provider_id": "geometry_solver_provider:composite_synthetic:v1",
+    "provider_version": "v1",
+    "raw_output_hashes": [
+      "565b8cb9fd76dc6a"
+    ],
+    "real_integration_flag": true,
+    "request_id": "geometry_request:smoke:symbolic_closure:medium",
+    "resource_usage_refs": [
+      "resource_usage:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:ad1101ad2192e32f"
+    ],
+    "schema_version": "1.0.0",
+    "side_condition_loss_count": 0,
+    "unsupported_rule_count": 0
+  },
+  "resource_usage_reports": [
+    {
+      "admission_status": "admitted",
+      "budget": "medium",
+      "component": "geometry_solver_provider",
+      "cpu_time_sec": 0,
+      "ended_at": "1781206822.5992057",
+      "engine_role": "symbolic_closure",
+      "exit_status": "completed",
+      "gpu_vram_peak_mb": null,
+      "hard_kill_executed": false,
+      "heartbeat_count": 67,
+      "logs_ref": "external_newclid_stdout",
+      "orphan_check_passed": true,
+      "peak_rss_mb": 0,
+      "process_id": "24544",
+      "queue_wait_sec": 0,
+      "report_id": "resource_usage:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:ad1101ad2192e32f",
+      "role": "symbolic_closure",
+      "run_id": "geometry_request:smoke:symbolic_closure:medium",
+      "schema_version": "1.0.0",
+      "started_at": "1781206819.19637",
+      "timeout_status": "none",
+      "wall_time_sec": 3.406
+    }
+  ],
+  "result": {
+    "construction_candidate_refs": [],
+    "diagnostic_refs": [
+      "diagnostic:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:newclid_real"
+    ],
+    "geotrace_ref": "geotrace:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:newclid_real",
+    "proof_use_status": "not_allowed",
+    "provider_run_manifest_ref": "provider_run_manifest:c60dbcf184ac09cd",
+    "request_id": "geometry_request:smoke:symbolic_closure:medium",
+    "result_id": "provider_result:geometry_request:smoke:symbolic_closure:medium",
+    "schema_version": "1.0.0",
+    "status": "partial"
+  }
+}

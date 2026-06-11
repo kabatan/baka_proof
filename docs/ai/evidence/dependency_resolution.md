@@ -51,9 +51,28 @@ Result: passed.
 ## Pinned State
 
 - `pyproject.toml` declares optional `geometry-engines` pins for `newclid[yuclid]==3.0.1` and `py-yuclid==3.0.0`.
+- `configs/dependencies/geometry_engines.json` records `libboost==1.88.0` from conda-forge as the Windows runtime required by `yuclid.exe`.
+- `scripts/repair_yuclid_windows_runtime.py` records the local Windows DLL alias repair for `yuclid.exe` Boost imports.
 - `.gitmodules` pins external source locations for GenesisGeo and TongGeometry as submodules.
 - `configs/dependencies/geometry_engines.json` records the dependency set and observed commits.
 - `configs/local_resource_profile.yaml` records the local resource profile required by BASE-003A.
+
+## T-005 Newclid Runtime Update
+
+The first real Newclid smoke attempt reached `newclid==3.0.1` but failed when `yuclid.exe` exited with Windows code `3221225781` / `-1073741515`.
+
+Resolution performed on 2026-06-12:
+
+```text
+conda install -y -c conda-forge libboost=1.88.0
+python scripts\repair_yuclid_windows_runtime.py
+```
+
+After this repair:
+
+- `yuclid --help` passed;
+- `newclid --output-dir runs\newclid_probe_coll --saturate --seed 0 --log-level ERROR jgex --problem "a b = segment a b; c = on_line c a b ? coll a b c"` passed;
+- `python scripts\probe_geometry_dependencies.py --engine newclid_compatible --json` reported `newclid` and `yuclid` command checks as available.
 
 ## Run Artifacts
 
@@ -62,15 +81,17 @@ Result: passed.
 - `runs/v03a_t002_apply_latest/dependency_probe.json`
 - `runs/v03a_t002_apply_latest/dependency_resolution_report.json`
 - `runs/v03a_t002_probe_latest/dependency_probe.json`
+- `runs/v03a_t005_newclid_latest/dependency_probe.json`
+- `runs/v03a_t005_newclid_latest/real_newclid_provider_smoke.json`
 
 ## Claim Ceiling
 
-This evidence records dependency bootstrap and source availability only.
+This evidence records dependency bootstrap, source availability, and the T-005 Newclid runtime repair.
 
-It does not establish:
+The T-005 Newclid smoke evidence is limited to the explicitly recorded smoke `GeometryClaimSpec` shape and does not establish:
 
-- real provider behavior;
-- real Newclid / GenesisGeo / TongGeometry integration;
+- broad real provider behavior;
+- real GenesisGeo / TongGeometry integration;
 - arbitrary LeanGeo theorem support;
 - real Level 2 advantage;
 - v0.3 completion.

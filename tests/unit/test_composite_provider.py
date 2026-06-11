@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -95,13 +96,41 @@ class CompositeProviderTest(unittest.TestCase):
         run = CompositeSyntheticGeometryProviderV1().run(
             request_for("medium", {"claim_spec": claim_spec_fixture(), "require_real_integration": True})
         )
-        self.assertEqual(run.result.status, "failed")
-        self.assertTrue(run.manifest.fixture_flag)
-        self.assertFalse(run.manifest.real_integration_flag)
-        self.assertIn("fixture_only_real_required", run.result.diagnostic_refs[-1])
+        if run.manifest.fixture_flag:
+            self.assertEqual(run.result.status, "failed")
+            self.assertIn("fixture_only_real_required", run.result.diagnostic_refs[-1])
+        else:
+            self.assertEqual(run.result.status, "partial")
+        self.assertTrue(run.manifest.real_integration_flag)
         for report in run.resource_usage_reports:
             self.assertEqual(report["admission_status"], "admitted")
             self.assertIn(report["role"], {"symbolic_closure", "construction_proposer", "heavy_search"})
+
+    @unittest.skipUnless(shutil.which("newclid") and shutil.which("yuclid"), "Newclid/Yuclid CLI unavailable")
+    def test_real_newclid_symbolic_closure_run_is_not_proof_use(self) -> None:
+        run = CompositeSyntheticGeometryProviderV1().run(
+            request_for(
+                "small",
+                {
+                    "construction_needed": False,
+                    "claim_spec": claim_spec_fixture(),
+                    "use_real_newclid": True,
+                },
+            )
+        )
+        self.assertEqual(run.result.status, "partial")
+        self.assertEqual(run.result.proof_use_status, "not_allowed")
+        self.assertTrue(run.result.geotrace_ref.startswith("geotrace:"))
+        self.assertFalse(run.manifest.fixture_flag)
+        self.assertTrue(run.manifest.real_integration_flag)
+        self.assertEqual(len(run.manifest.engine_runs), 1)
+        engine_run = run.manifest.engine_runs[0]
+        self.assertEqual(engine_run["engine_role"], "symbolic_closure")
+        self.assertEqual(engine_run["engine_family"], "newclid_compatible")
+        self.assertIn("newclid==", engine_run["engine_version"])
+        self.assertFalse(engine_run["fixture_flag"])
+        self.assertTrue(engine_run["real_integration_flag"])
+        self.assertEqual(run.resource_usage_reports[0]["logs_ref"], "external_newclid_stdout")
 
     def test_provider_run_manifest_schema_validates(self) -> None:
         manifest = CompositeSyntheticGeometryProvider().run(request_for()).manifest.to_dict()

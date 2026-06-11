@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.metadata
 import json
 import sys
 import threading
 import time
 from dataclasses import asdict, dataclass
+from pathlib import Path
 from typing import Any
 
 from math_auto_research.base.resources.resource_budget import ResourceRejected
@@ -66,6 +68,10 @@ class EngineAdapterResult:
     diagnostic_ref: str
     unsupported_rule_count: int = 0
     side_condition_loss_count: int = 0
+    engine_family: str | None = None
+    engine_version: str | None = None
+    fixture_flag: bool | None = None
+    real_integration_flag: bool | None = None
 
 
 class DummyEngineAdapter:
@@ -100,6 +106,9 @@ class DummyEngineAdapter:
 class NewclidCompatibleSymbolicClosureAdapter(DummyEngineAdapter):
     def __init__(self) -> None:
         super().__init__(ENGINE_SYMBOLIC_CLOSURE, "newclid-compatible-fixture:0.1", "newclid_compatible")
+
+    def should_use_real_engine(self, request: GeometrySolveRequest) -> bool:
+        return bool(request.constraints.get("use_real_newclid") or request.constraints.get("require_real_integration"))
 
     def run(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> EngineAdapterResult:
         claim_spec = request.constraints.get("claim_spec")
@@ -144,6 +153,36 @@ class NewclidCompatibleSymbolicClosureAdapter(DummyEngineAdapter):
             ),
             diagnostic_ref=f"diagnostic:{request.request_id}:symbolic_closure:newclid_fixture",
         )
+
+    def external_command(
+        self,
+        request: GeometrySolveRequest,
+        step: GeometryExecutionStep,
+        output_dir: Path,
+    ) -> tuple[list[str], dict[str, Any]]:
+        claim_spec = request.constraints.get("claim_spec")
+        if not isinstance(claim_spec, dict):
+            raise ValueError("missing_claim_spec")
+        engine_input = convert_claim_spec_to_newclid_jgex(claim_spec)
+        if engine_input["status"] != "supported":
+            raise ValueError(str(engine_input["reason"]))
+        seed = int(request.constraints.get("newclid_seed", self.seed))
+        command = [
+            sys.executable,
+            "-m",
+            "newclid",
+            "--output-dir",
+            str(output_dir),
+            "--saturate",
+            "--seed",
+            str(seed),
+            "--log-level",
+            "ERROR",
+            "jgex",
+            "--problem",
+            engine_input["jgex_problem"],
+        ]
+        return command, engine_input
 
 
 class GenesisGeoCompatibleConstructionProposerAdapter(DummyEngineAdapter):
@@ -277,28 +316,12 @@ class CompositeSyntheticGeometryProviderV1:
             engine_results.append(adapter_result)
             resource_usage_reports.append(usage)
             engine_runs.append(
-                {
-                    "engine_role": step.engine_role,
-                    "engine_family": adapter.engine_family,
-                    "engine_version": adapter.version,
-                    "adapter_version": adapter.version,
-                    "adapter_commit": adapter.commit,
-                    "config_hash": adapter.config_hash,
-                    "checkpoint_hash": adapter.checkpoint_hash,
-                    "seed": adapter.seed,
-                    "fixture_flag": "fixture" in adapter.version,
-                    "real_integration_flag": "fixture" not in adapter.version,
-                    "status": adapter_result.status,
-                    "raw_output_hash": _hash_text(adapter_result.raw_output),
-                    "raw_log_artifact_hash": _hash_text(adapter_result.raw_output),
-                    "normalized_output_ref": adapter_result.normalized_output_ref,
-                    "normalized_output_hash": (
-                        _hash_text(adapter_result.normalized_output_ref)
-                        if adapter_result.normalized_output_ref
-                        else None
-                    ),
-                    "resource_usage_ref": usage["report_id"],
-                }
+                _engine_run_record(
+                    adapter=adapter,
+                    adapter_result=adapter_result,
+                    step=step,
+                    usage=usage,
+                )
             )
 
         manifest = _manifest(
@@ -415,6 +438,44 @@ def _resource_usage_report(
     }
 
 
+def _engine_run_record(
+    adapter: DummyEngineAdapter,
+    adapter_result: EngineAdapterResult,
+    step: GeometryExecutionStep,
+    usage: dict[str, Any],
+) -> dict[str, Any]:
+    engine_family = adapter_result.engine_family or adapter.engine_family
+    engine_version = adapter_result.engine_version or adapter.version
+    fixture_flag = adapter_result.fixture_flag
+    if fixture_flag is None:
+        fixture_flag = "fixture" in engine_version
+    real_integration_flag = adapter_result.real_integration_flag
+    if real_integration_flag is None:
+        real_integration_flag = not fixture_flag
+    return {
+        "engine_role": step.engine_role,
+        "engine_family": engine_family,
+        "engine_version": engine_version,
+        "adapter_version": adapter.version,
+        "adapter_commit": adapter.commit,
+        "config_hash": adapter.config_hash,
+        "checkpoint_hash": adapter.checkpoint_hash,
+        "seed": adapter.seed,
+        "fixture_flag": fixture_flag,
+        "real_integration_flag": real_integration_flag,
+        "status": adapter_result.status,
+        "raw_output_hash": _hash_text(adapter_result.raw_output),
+        "raw_log_artifact_hash": _hash_text(adapter_result.raw_output),
+        "normalized_output_ref": adapter_result.normalized_output_ref,
+        "normalized_output_hash": (
+            _hash_text(adapter_result.normalized_output_ref)
+            if adapter_result.normalized_output_ref
+            else None
+        ),
+        "resource_usage_ref": usage["report_id"],
+    }
+
+
 def _hash_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
 
@@ -427,6 +488,8 @@ def _run_adapter_with_timeout(
     request: GeometrySolveRequest,
     step: GeometryExecutionStep,
 ) -> tuple[EngineAdapterResult, dict[str, Any]]:
+    if isinstance(adapter, NewclidCompatibleSymbolicClosureAdapter) and adapter.should_use_real_engine(request):
+        return _run_external_newclid_adapter(adapter, request, step)
     if isinstance(adapter, TongGeometryCompatibleHeavySearchAdapter):
         return _run_external_heavy_adapter(adapter, request, step)
 
@@ -459,6 +522,90 @@ def _run_adapter_with_timeout(
             {"timed_out": True, "timeout_status": "thread_timeout", "heartbeat_count": 1},
         )
     return holder["result"], {"timed_out": False, "timeout_status": "none", "heartbeat_count": 1}
+
+
+def _run_external_newclid_adapter(
+    adapter: NewclidCompatibleSymbolicClosureAdapter,
+    request: GeometrySolveRequest,
+    step: GeometryExecutionStep,
+) -> tuple[EngineAdapterResult, dict[str, Any]]:
+    output_dir = Path("runs") / "provider_newclid" / _safe_artifact_name(request.request_id)
+    try:
+        command, engine_input = adapter.external_command(request, step, output_dir)
+    except ValueError as exc:
+        raw_output = json.dumps(
+            {
+                "engine_family": adapter.engine_family,
+                "request_id": request.request_id,
+                "status": "diagnostic_only",
+                "reason": str(exc),
+            },
+            sort_keys=True,
+        )
+        return (
+            EngineAdapterResult(
+                engine_role=adapter.engine_role,
+                status="diagnostic_only",
+                raw_output=raw_output,
+                normalized_output_ref=None,
+                diagnostic_ref=f"diagnostic:{request.request_id}:symbolic_closure:newclid_translation_unsupported",
+            ),
+            {"timed_out": False, "timeout_status": "none", "heartbeat_count": 1},
+        )
+
+    soft_timeout = step.resource_request.timeout_sec
+    hard_timeout = float(request.constraints.get("symbolic_closure_hard_timeout_sec", 1.0))
+    process_report = run_process_group(command, timeout_sec=soft_timeout, hard_timeout_sec=hard_timeout)
+    if process_report["timed_out"]:
+        raw_output = _newclid_raw_output(
+            request=request,
+            engine_input=engine_input,
+            output_dir=output_dir,
+            process_report=process_report,
+            status="timeout_killed",
+        )
+        return (
+            EngineAdapterResult(
+                engine_role=adapter.engine_role,
+                status="timeout",
+                raw_output=raw_output,
+                normalized_output_ref=None,
+                diagnostic_ref=f"diagnostic:{request.request_id}:symbolic_closure:newclid_timeout",
+                engine_family=adapter.engine_family,
+                engine_version=_newclid_engine_version(),
+                fixture_flag=False,
+                real_integration_flag=True,
+            ),
+            _external_process_state(process_report, "external_newclid_partial"),
+        )
+
+    run_infos = _read_json_file(output_dir / "run_infos.json")
+    success = bool(run_infos.get("success")) if isinstance(run_infos, dict) else False
+    raw_output = _newclid_raw_output(
+        request=request,
+        engine_input=engine_input,
+        output_dir=output_dir,
+        process_report=process_report,
+        status="trace_candidate" if success else "diagnostic_only",
+    )
+    return (
+        EngineAdapterResult(
+            engine_role=adapter.engine_role,
+            status="trace_candidate" if success else "diagnostic_only",
+            raw_output=raw_output,
+            normalized_output_ref=(
+                f"geotrace:{request.request_id}:symbolic_closure:newclid_real"
+                if success
+                else None
+            ),
+            diagnostic_ref=f"diagnostic:{request.request_id}:symbolic_closure:newclid_real",
+            engine_family=adapter.engine_family,
+            engine_version=_newclid_engine_version(),
+            fixture_flag=False,
+            real_integration_flag=True,
+        ),
+        _external_process_state(process_report, "external_newclid_stdout"),
+    )
 
 
 def _run_external_heavy_adapter(
@@ -505,12 +652,7 @@ def _run_external_heavy_adapter(
     return (
         _result_from_heavy_raw_output(request, adapter.engine_role, raw_output),
         {
-            "timed_out": False,
-            "timeout_status": "none",
-            "heartbeat_count": process_report["heartbeat_count"],
-            "pid": process_report["pid"],
-            "orphan_check_passed": process_report["orphan_check_passed"],
-            "logs_ref": "external_process_stdout",
+            **_external_process_state(process_report, "external_process_stdout"),
         },
     )
 
@@ -525,6 +667,95 @@ def _result_from_heavy_raw_output(request: GeometrySolveRequest, engine_role: st
         normalized_output_ref=None,
         diagnostic_ref=f"diagnostic:{request.request_id}:heavy_search:tong_fixture",
     )
+
+
+def _external_process_state(process_report: dict[str, Any], logs_ref: str) -> dict[str, Any]:
+    return {
+        "timed_out": process_report["timed_out"],
+        "timeout_status": process_report["timeout_status"],
+        "hard_kill_executed": process_report["hard_kill_executed"],
+        "heartbeat_count": process_report["heartbeat_count"],
+        "pid": process_report["pid"],
+        "orphan_check_passed": process_report["orphan_check_passed"],
+        "logs_ref": logs_ref,
+    }
+
+
+def _newclid_raw_output(
+    request: GeometrySolveRequest,
+    engine_input: dict[str, Any],
+    output_dir: Path,
+    process_report: dict[str, Any],
+    status: str,
+) -> str:
+    proof_text = _read_text_file(output_dir / "proof.txt")
+    run_infos = _read_json_file(output_dir / "run_infos.json")
+    payload = {
+        "engine_family": "newclid_compatible",
+        "request_id": request.request_id,
+        "status": status,
+        "engine_input": engine_input,
+        "returncode": process_report["returncode"],
+        "stdout_tail": process_report["stdout"][-2000:],
+        "stderr_tail": process_report["stderr"][-2000:],
+        "run_infos": run_infos,
+        "proof_excerpt": proof_text[:2000],
+        "output_dir": str(output_dir),
+        "proof_use_status": "not_allowed",
+    }
+    return json.dumps(payload, sort_keys=True)
+
+
+def _read_json_file(path: Path) -> Any:
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
+
+
+def _read_text_file(path: Path) -> str:
+    if not path.exists():
+        return ""
+    return path.read_text(encoding="utf-8")
+
+
+def _newclid_engine_version() -> str:
+    return "newclid=={newclid};py-yuclid=={py_yuclid};yuclid=={yuclid_hash}".format(
+        newclid=_package_version("newclid"),
+        py_yuclid=_package_version("py-yuclid"),
+        yuclid_hash=_yuclid_executable_hash(),
+    )
+
+
+def _package_version(name: str) -> str:
+    try:
+        return importlib.metadata.version(name)
+    except importlib.metadata.PackageNotFoundError:
+        return "unavailable"
+
+
+def _yuclid_executable_hash() -> str:
+    for directory in [Path(sys.executable).parent, Path(sys.executable).parent / "Scripts"]:
+        candidate = directory / ("yuclid.exe" if sys.platform == "win32" else "yuclid")
+        if candidate.exists():
+            return _hash_bytes(candidate.read_bytes())
+    return "unavailable"
+
+
+def _hash_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()[:16]
+
+
+def _safe_artifact_name(value: str) -> str:
+    safe = "".join(char if char.isalnum() or char in {"-", "_"} else "_" for char in value)
+    return safe[:80] + "_" + _hash_text(value)
+
+
+def _jgex_name(name: str) -> str:
+    cleaned = "".join(char for char in name.lower() if char.isalnum())
+    return cleaned or "p"
 
 
 def _apply_timeout_override(request: GeometrySolveRequest, step: GeometryExecutionStep) -> None:
@@ -546,6 +777,35 @@ def convert_claim_spec_to_newclid_fixture(claim_spec: dict[str, Any]) -> dict[st
         "target_raw": target.get("raw"),
         "nondegeneracy_assumptions": list(claim_spec.get("nondegeneracy_assumptions", [])),
         "orientation_assumptions": list(claim_spec.get("orientation_assumptions", [])),
+    }
+
+
+def convert_claim_spec_to_newclid_jgex(claim_spec: dict[str, Any]) -> dict[str, Any]:
+    objects = list(claim_spec.get("objects", []))
+    point_names = [item.split(":", 1)[0] for item in objects if item.endswith(":Point")]
+    target = claim_spec.get("target", {})
+    target_form = str(target.get("form", "")).lower()
+    target_raw = str(target.get("raw", ""))
+    if target_form == "collinear" and len(point_names) >= 3:
+        a, b, c = [_jgex_name(name) for name in point_names[:3]]
+        return {
+            "status": "supported",
+            "translation_kind": "collinear_on_line_smoke",
+            "jgex_problem": f"{a} {b} = segment {a} {b}; {c} = on_line {c} {a} {b} ? coll {a} {b} {c}",
+            "target_raw": target_raw,
+        }
+    if target_form == "congruent" and len(point_names) >= 2:
+        a, b = [_jgex_name(name) for name in point_names[:2]]
+        return {
+            "status": "supported",
+            "translation_kind": "reflexive_congruence_smoke",
+            "jgex_problem": f"{a} {b} = segment {a} {b} ? cong {a} {b} {a} {b}",
+            "target_raw": target_raw,
+        }
+    return {
+        "status": "unsupported",
+        "reason": f"unsupported_newclid_claim:{target_form or 'missing_target'}",
+        "target_raw": target_raw,
     }
 
 

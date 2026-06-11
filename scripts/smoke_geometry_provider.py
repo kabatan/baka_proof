@@ -43,6 +43,8 @@ def main() -> int:
             constraints["heavy_search_hard_timeout_sec"] = float(os.environ["HEAVY_SEARCH_HARD_TIMEOUT_SEC"])
     elif requested_role == "symbolic_closure":
         constraints["construction_needed"] = False
+    if os.environ.get("USE_REAL_NEWCLID") == "1":
+        constraints["use_real_newclid"] = True
 
     request = GeometrySolveRequest(
         schema_version="1.0.0",

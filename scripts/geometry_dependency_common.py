@@ -18,7 +18,8 @@ ROOT = Path(__file__).resolve().parents[1]
 ENGINE_SPECS = {
     "newclid_compatible": {
         "role": "symbolic_closure",
-        "commands": ["newclid"],
+        "commands": ["newclid", "yuclid"],
+        "command_args": {"newclid": ["-h"], "yuclid": ["--help"]},
         "python_imports": ["newclid"],
         "install_plan": "python -m pip install 'newclid[yuclid]'",
         "source_url": "https://github.com/Newclid/Newclid",
@@ -184,7 +185,10 @@ def build_dependency_probe(run_id: str, bootstrap_mode: str = "probe") -> dict[s
     engines = []
     unresolved = []
     for family, spec in ENGINE_SPECS.items():
-        command_checks = [command_version(command) for command in spec["commands"]]
+        command_checks = [
+            command_version(command, spec.get("command_args", {}).get(command))
+            for command in spec["commands"]
+        ]
         import_checks = [python_import_status(module) for module in spec["python_imports"]]
         vendor_path = ROOT / "vendor" / _vendor_name(family)
         vendor_commit = git_head(vendor_path)

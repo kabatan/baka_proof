@@ -19,6 +19,22 @@
       "role": "symbolic_closure"
     }
   ],
+  "runtime_packages": [
+    {
+      "name": "libboost",
+      "version": "1.88.0",
+      "source": "conda-forge",
+      "role": "symbolic_closure",
+      "purpose": "Windows runtime DLLs required by py-yuclid's yuclid.exe"
+    }
+  ],
+  "runtime_repairs": [
+    {
+      "script": "scripts/repair_yuclid_windows_runtime.py",
+      "role": "symbolic_closure",
+      "purpose": "Copy conda Boost DLLs to the vc143 names imported by yuclid.exe on Windows."
+    }
+  ],
   "submodules": [
     {
       "name": "GenesisGeo",
