@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
 version: v0.3-admission-candidate
-status: T07_COMPLETE_PENDING_RC1
+status: RC1_COMPLETE
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -32,9 +32,9 @@ Implementation remains limited to the reviewed Base Spec and Plan. Git initializ
 
 ## Current Task Pointer
 
-Current gate: `T07 — Plugin registry and manifest loading` complete; RC-1 review pending.
+Current gate: `RC-1 — Base/plugin boundary and schemas` complete.
 
-Next task: `RC-1 — Base/plugin boundary and schemas`.
+Next task: `T08 — ModelProviderSet and model-consuming plugin contracts`.
 
 ## Evidence Directory
 
