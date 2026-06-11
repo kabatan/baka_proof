@@ -48,7 +48,11 @@ Completed task: `T23 — Standard geometry proof loop`.
 
 Completed task: `T24 — RunTrace, ProviderRunManifest, ResourceUsageReport, contribution tracking`.
 
-Current task: `T25 — Regression and mutation suite`.
+Completed task: `T25 — Regression and mutation suite`.
+
+Current gate: `RC-5 — standard loop and regression/mutation checkpoint`.
+
+Next task: run `guardian_boundary_reviewer` for RC-5. Do not claim RC-5 PASS until reviewer accepts the evidence.
 
 Claim ceiling from RC-2 remains active: do not claim full LeanGeo theorem-corpus build, solver/compiler integration, final theorem support, v0.3 completion, R-ID VERIFIED status, or evidence beyond the LeanGeo.Abbre elaborated `#check` fixture path.
 

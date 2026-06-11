@@ -5,11 +5,11 @@ if "%1"=="test-unit" (
   exit /b %ERRORLEVEL%
 )
 if "%1"=="test-mutation" (
-  python -m unittest tests.unit.test_geometry_extraction tests.unit.test_target_subset
+  python -m unittest tests.unit.test_geometry_extraction tests.unit.test_target_subset tests.unit.test_trace_compiler tests.unit.test_geotrace_rule_registry tests.unit.test_construction_compiler tests.unit.test_geometry_bridge tests.unit.test_final_verify
   exit /b %ERRORLEVEL%
 )
 if "%1"=="test-regression" (
-  python -m unittest tests.unit.test_composite_provider
+  python -m unittest tests.unit.test_domain_contamination tests.unit.test_schema_validation tests.unit.test_target_library_status tests.unit.test_resource_governor tests.unit.test_composite_provider tests.unit.test_geometry_extraction tests.unit.test_trace_compiler tests.unit.test_geotrace_rule_registry tests.unit.test_construction_compiler tests.unit.test_geometry_bridge tests.unit.test_final_verify tests.unit.test_model_provider_set tests.unit.test_geometry_standard_loop tests.unit.test_run_trace
   if errorlevel 1 exit /b %ERRORLEVEL%
   python scripts\check_domain_contamination.py
   if errorlevel 1 exit /b %ERRORLEVEL%
