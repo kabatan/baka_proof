@@ -39,9 +39,10 @@
             "required_side_condition_ids",
             "proof_use_status",
             "final_verify_ref",
-            "protected_theorem_hash_unchanged"
+            "protected_theorem_hash_unchanged",
+            "final_verify_report"
           ],
-          "provenance_fields": ["conclusion_obligation_id", "evidence_refs", "required_side_condition_ids", "final_verify_ref"],
+          "provenance_fields": ["conclusion_obligation_id", "evidence_refs", "required_side_condition_ids", "final_verify_ref", "final_verify_report"],
           "status_fields": ["proof_use_status"],
           "proof_use_fields": ["proof_use_status"],
           "allowed_values": {
@@ -57,9 +58,10 @@
             "required_side_condition_ids",
             "proof_use_status",
             "final_verify_ref",
-            "protected_theorem_hash_unchanged"
+            "protected_theorem_hash_unchanged",
+            "final_verify_report"
           ],
-          "provenance_fields": ["conclusion_obligation_id", "evidence_refs", "required_side_condition_ids", "final_verify_ref"],
+          "provenance_fields": ["conclusion_obligation_id", "evidence_refs", "required_side_condition_ids", "final_verify_ref", "final_verify_report"],
           "status_fields": ["proof_use_status"],
           "proof_use_fields": ["proof_use_status"],
           "allowed_values": {

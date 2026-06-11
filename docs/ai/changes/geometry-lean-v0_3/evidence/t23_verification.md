@@ -20,10 +20,11 @@ Supports R-IDs: `R-EXTRACT-001`, `R-SOLVER-003`, `R-TRACE-001`, `R-AUX-002`, `R-
   - Lean compile -> GoalAnchor -> ProofStateDAG target obligation.
   - ActionPlan and WorkOrder generation.
   - accepted geometry extraction and provider trace candidate handoff.
-  - TraceCompiler -> BridgeGate -> WorkerResult -> FinalVerifyGate.
-  - DAGWriter final GraphPatch closure only after valid `FinalVerifyReport`.
+  - TraceCompiler -> BridgeGate -> worker-applied target proof patch -> WorkerResult -> FinalVerifyGate.
+  - DAGWriter final GraphPatch closure only after validated `FinalVerifyReport` payload.
   - unsupported trace blocker path.
   - worker `success_claimed` without final verification does not close the obligation.
+  - final verification without worker patch application does not close the obligation.
 - Updated the Newclid-compatible symbolic fixture adapter to emit a normalized `geotrace:` ref only when `emit_trace_candidate` is explicitly requested and symbolic closure finds the target. Provider output remains `proof_use_status = not_allowed`.
 
 ## Verification Commands
@@ -44,6 +45,7 @@ Result: passed. The smoke output included:
 - provider `geotrace_ref` with `geotrace:` prefix;
 - `trace_compilation = compiled`;
 - `bridge_gate = lean_patch_candidate`;
+- `worker_patch_application = applied`;
 - `final_verify = passed`;
 - DAG `closed_obligation_ids = ["obligation:sample_target"]`.
 
@@ -80,6 +82,6 @@ Result: passed.
 ## Claim Ceiling
 
 - The standard loop is fixture-level integration evidence, not broad geometry automation.
-- The fixture demonstrates one specific Lean theorem fixture passed `FinalVerifyGate`.
+- The fixture demonstrates one specific worker-applied Lean theorem candidate passed `FinalVerifyGate`.
 - Provider trace candidates, compiler outputs, bridge reports, controller rationale, and worker results do not close obligations by themselves.
 - This task does not claim arbitrary LeanGeo theorem support, end-to-end open-problem solving, v0.3 completion, or any R-ID as VERIFIED.

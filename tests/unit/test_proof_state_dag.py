@@ -38,13 +38,39 @@ class ProofStateDAGTest(unittest.TestCase):
                         "final_verify_gate",
                         ("e:final",),
                         proof_use_status="final_theorem",
-                        final_verify_ref="sha256:final_verify",
+                        final_verify_ref="final_verify:ok",
                         protected_theorem_hash_unchanged=True,
+                        final_verify_report=_final_report("final_verify:ok", "o:target"),
                     ),
                 ),
             )
         )
         self.assertTrue(StateReader(dag).is_closed("o:target"))
+
+    def test_forged_final_verify_ref_is_rejected(self) -> None:
+        dag = ProofStateDAG()
+        writer = DAGWriter(dag)
+        with self.assertRaises(DAGValidationError):
+            writer.commit(
+                GraphPatch(
+                    patch_id="p1",
+                    obligations=(Obligation("o:target", "sha256:target"),),
+                    evidence_refs=(
+                        EvidenceRef("e:final", "sha256:artifact", "used_in_final_proof", "application/json", "sha256:c"),
+                    ),
+                    derivations=(
+                        Derivation(
+                            "d:final",
+                            "o:target",
+                            "final_verify_gate",
+                            ("e:final",),
+                            proof_use_status="final_theorem",
+                            final_verify_ref="sha256:forged",
+                            protected_theorem_hash_unchanged=True,
+                        ),
+                    ),
+                )
+            )
 
     def test_raw_or_diagnostic_derivation_cannot_close(self) -> None:
         dag = ProofStateDAG()
@@ -100,8 +126,9 @@ class ProofStateDAGTest(unittest.TestCase):
                         ("e:final",),
                         required_side_condition_ids=("o:side",),
                         proof_use_status="final_theorem",
-                        final_verify_ref="sha256:final_verify",
+                        final_verify_ref="final_verify:side",
                         protected_theorem_hash_unchanged=True,
+                        final_verify_report=_final_report("final_verify:side", "o:target"),
                     ),
                 ),
             )
@@ -135,8 +162,9 @@ class ProofStateDAGTest(unittest.TestCase):
                             ("e:1",),
                             required_side_condition_ids=("o:b",),
                             proof_use_status="final_theorem",
-                            final_verify_ref="sha256:final_a",
+                            final_verify_ref="final_verify:a",
                             protected_theorem_hash_unchanged=True,
+                            final_verify_report=_final_report("final_verify:a", "o:a"),
                         ),
                         Derivation(
                             "d:b",
@@ -145,8 +173,9 @@ class ProofStateDAGTest(unittest.TestCase):
                             ("e:1",),
                             required_side_condition_ids=("o:a",),
                             proof_use_status="final_theorem",
-                            final_verify_ref="sha256:final_b",
+                            final_verify_ref="final_verify:b",
                             protected_theorem_hash_unchanged=True,
+                            final_verify_report=_final_report("final_verify:b", "o:b"),
                         ),
                     ),
                 )
@@ -169,8 +198,9 @@ class ProofStateDAGTest(unittest.TestCase):
                         "final_verify_gate",
                         ("e:1",),
                         proof_use_status="final_theorem",
-                        final_verify_ref="sha256:final",
+                        final_verify_ref="final_verify:target",
                         protected_theorem_hash_unchanged=True,
+                        final_verify_report=_final_report("final_verify:target", "o:target"),
                     ),
                 ),
             )
@@ -179,6 +209,20 @@ class ProofStateDAGTest(unittest.TestCase):
         summary = StateReader(dag).summary()
         self.assertEqual(summary["closed_obligation_ids"], [])
         self.assertEqual(summary["open_obligation_ids"], ["o:target"])
+
+
+def _final_report(report_id: str, target_obligation_id: str) -> dict[str, object]:
+    return {
+        "schema_version": "1.0.0",
+        "report_id": report_id,
+        "target_obligation_id": target_obligation_id,
+        "theorem_statement_hash": "sha256:target",
+        "protected_theorem_hash_unchanged": True,
+        "lean_status": "passed",
+        "forbidden_axiom_status": "clean",
+        "sorry_status": "clean",
+        "proof_use_status": "final_theorem",
+    }
 
 
 if __name__ == "__main__":

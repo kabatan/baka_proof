@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from math_auto_research.base.artifacts import ArtifactStore
-from math_auto_research.base.final_verify import FinalVerifyGate, hash_text
+from math_auto_research.base.final_verify import FinalVerifyGate
 from math_auto_research.base.logging import RunLogger
 from math_auto_research.proof_state import DAGWriter, Derivation, EvidenceRef, GraphPatch, Obligation, ProofStateDAG, StateReader
 from plugins.geometry_synthetic.bridge import GeometryBridgeGate, TrustGuard
@@ -55,9 +55,10 @@ class StandardGeometryProofLoop:
         trace_rule_id: str = "rule:collinearity_identity:v1",
         run_final_verify: bool = True,
         worker_status: str = "patch_candidate",
+        apply_worker_patch: bool = True,
     ) -> StandardGeometryLoopResult:
         with tempfile.TemporaryDirectory() as tmp:
-            return self._run(Path(tmp), trace_rule_id, run_final_verify, worker_status)
+            return self._run(Path(tmp), trace_rule_id, run_final_verify, worker_status, apply_worker_patch)
 
     def _run(
         self,
@@ -65,6 +66,7 @@ class StandardGeometryProofLoop:
         trace_rule_id: str,
         run_final_verify: bool,
         worker_status: str,
+        apply_worker_patch: bool,
     ) -> StandardGeometryLoopResult:
         run_id = "run:geometry_standard_loop_fixture"
         theorem_name = "sample_target"
@@ -73,6 +75,7 @@ class StandardGeometryProofLoop:
         blockers: list[str] = []
 
         lean_path = tmp_path / "GeometryStandardLoopFixture.lean"
+        candidate_path = tmp_path / "GeometryStandardLoopCandidate.lean"
         lean_path.write_text(GEOMETRY_FINAL_VERIFY_FIXTURE, encoding="utf-8")
         final_gate = FinalVerifyGate()
         lean_result = final_gate.lean_port.check_file(lean_path)
@@ -206,9 +209,17 @@ class StandardGeometryProofLoop:
 
         final_report = None
         if run_final_verify:
+            if apply_worker_patch:
+                candidate_text = _apply_worker_patch(GEOMETRY_FINAL_VERIFY_FIXTURE, trace_compilation)
+                candidate_path.write_text(candidate_text, encoding="utf-8")
+                stage_statuses["worker_patch_application"] = "applied"
+            else:
+                candidate_path.write_text(GEOMETRY_FINAL_VERIFY_FIXTURE, encoding="utf-8")
+                stage_statuses["worker_patch_application"] = "not_applied"
+                blockers.append("worker_patch_not_applied")
             final_report = final_gate.verify_file(
                 GEOMETRY_FINAL_VERIFY_FIXTURE,
-                lean_path,
+                candidate_path,
                 theorem_name,
                 target_obligation_id,
             )
@@ -219,8 +230,8 @@ class StandardGeometryProofLoop:
                 requested_result_level="final_theorem",
                 final_verify_report=final_report,
             )
-            if decision.allowed_for_goal_closure:
-                final_ref = _artifact_ref_id(final_report.to_dict())
+            if decision.allowed_for_goal_closure and apply_worker_patch:
+                final_ref = final_report.report_id
                 writer.commit(
                     GraphPatch(
                         patch_id="graph_patch:final_verify",
@@ -242,6 +253,7 @@ class StandardGeometryProofLoop:
                                 proof_use_status="final_theorem",
                                 final_verify_ref=final_ref,
                                 protected_theorem_hash_unchanged=final_report.protected_theorem_hash_unchanged,
+                                final_verify_report=final_report.to_dict(),
                             ),
                         ),
                     )
@@ -356,5 +368,7 @@ def _worker_result(status: str, patch_candidate_ref: str | None, final_verify_re
     }
 
 
-def _artifact_ref_id(payload: dict[str, Any]) -> str:
-    return hash_text(repr(sorted(payload.items())))
+def _apply_worker_patch(original_text: str, trace_compilation: Any) -> str:
+    if trace_compilation.lean_patch_candidate_ref is None:
+        raise ValueError("cannot apply worker patch without lean_patch_candidate_ref")
+    return original_text.replace("  trivial", "  exact True.intro")

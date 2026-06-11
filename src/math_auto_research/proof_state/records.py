@@ -55,6 +55,7 @@ class Derivation:
     proof_use_status: ProofUseStatus = "not_allowed"
     final_verify_ref: str | None = None
     protected_theorem_hash_unchanged: bool = False
+    final_verify_report: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

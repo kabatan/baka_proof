@@ -28,6 +28,12 @@ class GeometryStandardLoopTest(unittest.TestCase):
         self.assertIn("raw_output_not_proof", result.blockers)
         self.assertIn("obligation:sample_target", result.dag_summary["open_obligation_ids"])
 
+    def test_final_verify_without_worker_patch_does_not_close(self) -> None:
+        result = StandardGeometryProofLoop().run_fixture(apply_worker_patch=False)
+        self.assertEqual(result.stage_statuses["worker_patch_application"], "not_applied")
+        self.assertIn("worker_patch_not_applied", result.blockers)
+        self.assertIn("obligation:sample_target", result.dag_summary["open_obligation_ids"])
+
     def test_controller_feedback_is_structured(self) -> None:
         result = StandardGeometryProofLoop().run_fixture()
         feedback = result.feedback_to_controller

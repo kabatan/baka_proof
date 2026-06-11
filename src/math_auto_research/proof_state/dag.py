@@ -82,10 +82,30 @@ class DAGWriter:
             if evidence_id not in evidence_refs:
                 raise DAGValidationError(f"unknown evidence: {evidence_id}")
         if derivation.proof_use_status == "final_theorem":
-            if not derivation.final_verify_ref:
-                raise DAGValidationError("final_theorem derivation requires final_verify_ref")
-            if not derivation.protected_theorem_hash_unchanged:
-                raise DAGValidationError("final_theorem derivation requires unchanged theorem hash")
+            self._validate_final_verify_report(derivation)
+
+    def _validate_final_verify_report(self, derivation: Derivation) -> None:
+        report = derivation.final_verify_report
+        if not derivation.final_verify_ref:
+            raise DAGValidationError("final_theorem derivation requires final_verify_ref")
+        if not isinstance(report, dict):
+            raise DAGValidationError("final_theorem derivation requires final_verify_report")
+        if report.get("report_id") != derivation.final_verify_ref:
+            raise DAGValidationError("final_verify_ref must match FinalVerifyReport.report_id")
+        if report.get("target_obligation_id") != derivation.conclusion_obligation_id:
+            raise DAGValidationError("FinalVerifyReport target obligation mismatch")
+        if report.get("proof_use_status") != "final_theorem":
+            raise DAGValidationError("FinalVerifyReport proof_use_status is not final_theorem")
+        if report.get("lean_status") != "passed":
+            raise DAGValidationError("FinalVerifyReport lean_status is not passed")
+        if report.get("sorry_status") != "clean":
+            raise DAGValidationError("FinalVerifyReport sorry_status is not clean")
+        if report.get("forbidden_axiom_status") != "clean":
+            raise DAGValidationError("FinalVerifyReport forbidden_axiom_status is not clean")
+        if not report.get("protected_theorem_hash_unchanged"):
+            raise DAGValidationError("FinalVerifyReport theorem hash changed")
+        if not derivation.protected_theorem_hash_unchanged:
+            raise DAGValidationError("final_theorem derivation requires unchanged theorem hash")
 
     def _validate_acyclic(self, derivations: dict[str, Derivation]) -> None:
         edges: dict[str, set[str]] = {}
@@ -145,7 +165,7 @@ class StateReader:
     def _derivation_closes(self, derivation: Derivation, path: set[str]) -> bool:
         if derivation.proof_use_status != "final_theorem":
             return False
-        if not derivation.final_verify_ref or not derivation.protected_theorem_hash_unchanged:
+        if not _final_verify_report_valid(derivation):
             return False
         conclusion = derivation.conclusion_obligation_id
         if conclusion in path:
@@ -162,3 +182,19 @@ class StateReader:
         if obligation is None or obligation.status == "invalidated":
             return False
         return any(self._derivation_closes(derivation, path) for derivation in self._derivations_for(obligation_id))
+
+
+def _final_verify_report_valid(derivation: Derivation) -> bool:
+    report = derivation.final_verify_report
+    return (
+        bool(derivation.final_verify_ref)
+        and derivation.protected_theorem_hash_unchanged
+        and isinstance(report, dict)
+        and report.get("report_id") == derivation.final_verify_ref
+        and report.get("target_obligation_id") == derivation.conclusion_obligation_id
+        and report.get("proof_use_status") == "final_theorem"
+        and report.get("lean_status") == "passed"
+        and report.get("sorry_status") == "clean"
+        and report.get("forbidden_axiom_status") == "clean"
+        and bool(report.get("protected_theorem_hash_unchanged"))
+    )

@@ -22,7 +22,7 @@ Supports R-IDs: `R-TEST-001`, `R-V03-TEST-001`, and safety R-IDs covered by the 
 cmd /c make test-regression
 ```
 
-Result: passed; domain contamination and no-loose-options checks passed; 62 regression tests passed.
+Result: passed; domain contamination and no-loose-options checks passed; 63 regression tests passed.
 
 ```text
 cmd /c make test-mutation
@@ -34,7 +34,7 @@ Result: passed, 34 tests.
 cmd /c make test-unit
 ```
 
-Result: passed, 80 tests.
+Result: passed, 82 tests.
 
 ```text
 cmd /c make lean-build
