@@ -74,6 +74,17 @@ After this repair:
 - `newclid --output-dir runs\newclid_probe_coll --saturate --seed 0 --log-level ERROR jgex --problem "a b = segment a b; c = on_line c a b ? coll a b c"` passed;
 - `python scripts\probe_geometry_dependencies.py --engine newclid_compatible --json` reported `newclid` and `yuclid` command checks as available.
 
+## T-006 GenesisGeo Runtime Update
+
+GenesisGeo source is vendored at `vendor/GenesisGeo` and pinned to commit `e8c4337e782548a4d54e6839558a32965a5a764e`.
+
+The T-006 provider diagnostic run recorded:
+
+- GenesisGeo `pyproject.toml` requires Python `==3.10.*`;
+- current Python is `3.12.11`;
+- no `GENESISGEO_MODEL_PATH` / `GENESISGEO_CHECKPOINT` is configured;
+- provider output remains Diagnostic-only and `proof_use_status = not_allowed`.
+
 ## Run Artifacts
 
 - `runs/v03a_t002_dry_run_latest/dependency_probe.json`
@@ -83,6 +94,8 @@ After this repair:
 - `runs/v03a_t002_probe_latest/dependency_probe.json`
 - `runs/v03a_t005_newclid_latest/dependency_probe.json`
 - `runs/v03a_t005_newclid_latest/real_newclid_provider_smoke.json`
+- `runs/v03a_t006_genesisgeo_latest/dependency_probe.json`
+- `runs/v03a_t006_genesisgeo_latest/construction_smoke.json`
 
 ## Claim Ceiling
 
@@ -91,7 +104,8 @@ This evidence records dependency bootstrap, source availability, and the T-005 N
 The T-005 Newclid smoke evidence is limited to the explicitly recorded smoke `GeometryClaimSpec` shape and does not establish:
 
 - broad real provider behavior;
-- real GenesisGeo / TongGeometry integration;
+- GenesisGeo model-backed construction proposal;
+- real TongGeometry integration;
 - arbitrary LeanGeo theorem support;
 - real Level 2 advantage;
 - v0.3 completion.

@@ -189,6 +189,22 @@ class GenesisGeoCompatibleConstructionProposerAdapter(DummyEngineAdapter):
     def __init__(self) -> None:
         super().__init__(ENGINE_CONSTRUCTION_PROPOSER, "genesisgeo-compatible-fixture:0.1", "genesisgeo_compatible")
 
+    def should_use_real_engine(self, request: GeometrySolveRequest) -> bool:
+        return bool(request.constraints.get("use_real_genesisgeo"))
+
+    def external_command(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> list[str]:
+        claim_spec = request.constraints.get("claim_spec")
+        if not isinstance(claim_spec, dict):
+            claim_spec = {}
+        return [
+            sys.executable,
+            "scripts/run_genesisgeo_probe.py",
+            "--request-id",
+            request.request_id,
+            "--claim-spec-json",
+            json.dumps(claim_spec, sort_keys=True),
+        ]
+
     def run(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> EngineAdapterResult:
         claim_spec = request.constraints.get("claim_spec")
         if not isinstance(claim_spec, dict):
@@ -490,6 +506,8 @@ def _run_adapter_with_timeout(
 ) -> tuple[EngineAdapterResult, dict[str, Any]]:
     if isinstance(adapter, NewclidCompatibleSymbolicClosureAdapter) and adapter.should_use_real_engine(request):
         return _run_external_newclid_adapter(adapter, request, step)
+    if isinstance(adapter, GenesisGeoCompatibleConstructionProposerAdapter) and adapter.should_use_real_engine(request):
+        return _run_external_genesisgeo_adapter(adapter, request, step)
     if isinstance(adapter, TongGeometryCompatibleHeavySearchAdapter):
         return _run_external_heavy_adapter(adapter, request, step)
 
@@ -608,6 +626,63 @@ def _run_external_newclid_adapter(
     )
 
 
+def _run_external_genesisgeo_adapter(
+    adapter: GenesisGeoCompatibleConstructionProposerAdapter,
+    request: GeometrySolveRequest,
+    step: GeometryExecutionStep,
+) -> tuple[EngineAdapterResult, dict[str, Any]]:
+    command = adapter.external_command(request, step)
+    soft_timeout = step.resource_request.timeout_sec
+    hard_timeout = float(request.constraints.get("construction_proposer_hard_timeout_sec", 1.0))
+    process_report = run_process_group(command, timeout_sec=soft_timeout, hard_timeout_sec=hard_timeout)
+    if process_report["timed_out"]:
+        raw_output = json.dumps(
+            {
+                "engine_family": adapter.engine_family,
+                "request_id": request.request_id,
+                "status": "timeout_killed",
+                "stdout_tail": process_report["stdout"][-500:],
+                "stderr_tail": process_report["stderr"][-500:],
+                "proof_use_status": "not_allowed",
+            },
+            sort_keys=True,
+        )
+        return (
+            EngineAdapterResult(
+                engine_role=adapter.engine_role,
+                status="timeout",
+                raw_output=raw_output,
+                normalized_output_ref=None,
+                diagnostic_ref=f"diagnostic:{request.request_id}:construction_proposer:genesisgeo_timeout",
+                engine_family=adapter.engine_family,
+                engine_version=_genesisgeo_engine_version(),
+                fixture_flag=False,
+                real_integration_flag=True,
+            ),
+            _external_process_state(process_report, "external_genesisgeo_partial"),
+        )
+
+    raw_output = process_report["stdout"].strip() or process_report["stderr"].strip()
+    parsed = _parse_json_or_empty(raw_output)
+    candidate = parsed.get("candidate") if isinstance(parsed, dict) else None
+    normalized_ref = candidate.get("candidate_id") if isinstance(candidate, dict) else None
+    status = "auxiliary_construction_candidate" if normalized_ref else "diagnostic_only"
+    return (
+        EngineAdapterResult(
+            engine_role=adapter.engine_role,
+            status=status,
+            raw_output=raw_output,
+            normalized_output_ref=normalized_ref,
+            diagnostic_ref=f"diagnostic:{request.request_id}:construction_proposer:genesisgeo_real",
+            engine_family=adapter.engine_family,
+            engine_version=_genesisgeo_engine_version(),
+            fixture_flag=False,
+            real_integration_flag=True,
+        ),
+        _external_process_state(process_report, "external_genesisgeo_stdout"),
+    )
+
+
 def _run_external_heavy_adapter(
     adapter: TongGeometryCompatibleHeavySearchAdapter,
     request: GeometrySolveRequest,
@@ -721,12 +796,51 @@ def _read_text_file(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def _parse_json_or_empty(raw_output: str) -> dict[str, Any]:
+    try:
+        parsed = json.loads(raw_output)
+    except json.JSONDecodeError:
+        return {}
+    return parsed if isinstance(parsed, dict) else {}
+
+
 def _newclid_engine_version() -> str:
     return "newclid=={newclid};py-yuclid=={py_yuclid};yuclid=={yuclid_hash}".format(
         newclid=_package_version("newclid"),
         py_yuclid=_package_version("py-yuclid"),
         yuclid_hash=_yuclid_executable_hash(),
     )
+
+
+def _genesisgeo_engine_version() -> str:
+    genesis_root = Path("vendor") / "GenesisGeo"
+    commit = _git_head(genesis_root)
+    return f"GenesisGeo@{commit or 'unavailable'}"
+
+
+def _git_head(path: Path) -> str | None:
+    if not path.exists():
+        return None
+    head = path / ".git"
+    if head.is_file():
+        text = head.read_text(encoding="utf-8").strip()
+        if text.startswith("gitdir:"):
+            git_dir = (path / text.split(":", 1)[1].strip()).resolve()
+            head_file = git_dir / "HEAD"
+            if head_file.exists():
+                head_text = head_file.read_text(encoding="utf-8").strip()
+                if head_text.startswith("ref:"):
+                    ref_file = git_dir / head_text.split(":", 1)[1].strip()
+                    return ref_file.read_text(encoding="utf-8").strip() if ref_file.exists() else None
+                return head_text
+    git_head = path / ".git" / "HEAD"
+    if git_head.exists():
+        head_text = git_head.read_text(encoding="utf-8").strip()
+        if head_text.startswith("ref:"):
+            ref_file = path / ".git" / head_text.split(":", 1)[1].strip()
+            return ref_file.read_text(encoding="utf-8").strip() if ref_file.exists() else None
+        return head_text
+    return None
 
 
 def _package_version(name: str) -> str:

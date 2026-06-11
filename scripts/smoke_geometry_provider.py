@@ -45,6 +45,8 @@ def main() -> int:
         constraints["construction_needed"] = False
     if os.environ.get("USE_REAL_NEWCLID") == "1":
         constraints["use_real_newclid"] = True
+    if os.environ.get("USE_REAL_GENESISGEO") == "1":
+        constraints["use_real_genesisgeo"] = True
 
     request = GeometrySolveRequest(
         schema_version="1.0.0",

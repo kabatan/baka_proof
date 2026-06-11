@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3A
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003A
 version: v0.3A-recovery-admitted
-status: READY_TO_START_V03A_T006
+status: READY_TO_START_V03A_T007
 created: 2026-06-11
 last_updated: 2026-06-12
 base_spec: MARP-GEOLEAN-BASE-003A
@@ -78,9 +78,11 @@ Completed v0.3A gate: `RC-003A-2 — provider/resource boundary`.
 
 Completed v0.3A task: `T-005 — Newclid-compatible symbolic closure integration`.
 
-Current v0.3A task: `T-006 — GenesisGeo-compatible construction proposer integration`.
+Completed v0.3A task: `T-006 — GenesisGeo-compatible construction proposer integration`.
 
-Current claim ceiling: do not claim full LeanGeo theorem-corpus build, real GenesisGeo/TongGeometry integration, broad Newclid theorem coverage, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3 completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. Current positive claims include the prior geometry x Lean v0.3 fixture-level release acceptance and the T-005 real Newclid-compatible symbolic-closure smoke path only within its recorded smoke-scope evidence.
+Current v0.3A task: `T-007 — TongGeometry-compatible heavy-search integration`.
+
+Current claim ceiling: do not claim full LeanGeo theorem-corpus build, GenesisGeo model-backed construction proposal, real TongGeometry integration, broad Newclid theorem coverage, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3 completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. Current positive claims include the prior geometry x Lean v0.3 fixture-level release acceptance, the T-005 real Newclid-compatible symbolic-closure smoke path, and the T-006 GenesisGeo-compatible external diagnostic path only within their recorded smoke-scope evidence.
 
 ## Evidence Directory
 

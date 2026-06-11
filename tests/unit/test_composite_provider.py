@@ -132,6 +132,37 @@ class CompositeProviderTest(unittest.TestCase):
         self.assertTrue(engine_run["real_integration_flag"])
         self.assertEqual(run.resource_usage_reports[0]["logs_ref"], "external_newclid_stdout")
 
+    def test_real_genesisgeo_diagnostic_run_is_not_proof_use(self) -> None:
+        run = CompositeSyntheticGeometryProviderV1().run(
+            request_for(
+                "medium",
+                {
+                    "construction_needed": True,
+                    "claim_spec": claim_spec_fixture(),
+                    "use_real_genesisgeo": True,
+                },
+            )
+        )
+        genesis_runs = [
+            engine_run
+            for engine_run in run.manifest.engine_runs
+            if engine_run["engine_role"] == "construction_proposer"
+        ]
+        self.assertEqual(len(genesis_runs), 1)
+        genesis_run = genesis_runs[0]
+        self.assertEqual(genesis_run["engine_family"], "genesisgeo_compatible")
+        self.assertIn("GenesisGeo@", genesis_run["engine_version"])
+        self.assertFalse(genesis_run["fixture_flag"])
+        self.assertTrue(genesis_run["real_integration_flag"])
+        self.assertEqual(run.result.proof_use_status, "not_allowed")
+        self.assertTrue(any("genesisgeo_real" in ref for ref in run.result.diagnostic_refs))
+        genesis_reports = [
+            report
+            for report in run.resource_usage_reports
+            if report["engine_role"] == "construction_proposer"
+        ]
+        self.assertEqual(genesis_reports[0]["logs_ref"], "external_genesisgeo_stdout")
+
     def test_provider_run_manifest_schema_validates(self) -> None:
         manifest = CompositeSyntheticGeometryProvider().run(request_for()).manifest.to_dict()
         with tempfile.TemporaryDirectory() as tmp:
