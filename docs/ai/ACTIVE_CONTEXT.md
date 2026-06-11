@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
 version: v0.3-admission-candidate
-status: T26_READY_AFTER_RC5_PASS
+status: T27_READY_AFTER_LEVEL2_MATRIX
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -54,7 +54,9 @@ Current gate: `RC-5 — standard loop and regression/mutation checkpoint`.
 
 Completed gate: `RC-5 — standard loop and regression/mutation checkpoint` passed Guardian boundary review.
 
-Current task: `T26 — EvaluationFunnel and Level 2 matrix`.
+Completed task: `T26 — EvaluationFunnel and Level 2 matrix`.
+
+Current task: `T27 — Release acceptance and closure`.
 
 Claim ceiling from RC-2 remains active: do not claim full LeanGeo theorem-corpus build, solver/compiler integration, final theorem support, v0.3 completion, R-ID VERIFIED status, or evidence beyond the LeanGeo.Abbre elaborated `#check` fixture path.
 

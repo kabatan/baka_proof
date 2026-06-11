@@ -91,29 +91,36 @@ def build_fixture_run(run_dir: Path) -> ReproducibilityReport:
 
 
 def build_reproducibility_report(run_dir: Path) -> ReproducibilityReport:
-    required = (
+    required = [
         "standard_loop_result.json",
         "provider_run_manifest.json",
         "controller_strategy_log.json",
         "research_contribution_records.json",
         "metrics_report.json",
         "evaluation_funnel.json",
-    )
+    ]
+    matrix_report = read_json(run_dir / "level2_matrix_report.json") if (run_dir / "level2_matrix_report.json").exists() else None
+    if matrix_report is not None:
+        required.append("level2_matrix_report.json")
+        required.extend(f"metrics_{baseline['baseline']['baseline_id']}.json" for baseline in matrix_report["baselines"])
     missing = tuple(name for name in required if not (run_dir / name).exists())
     artifact_refs = tuple(_artifact_ref(run_dir / name) for name in required if (run_dir / name).exists())
     loop = read_json(run_dir / "standard_loop_result.json") if (run_dir / "standard_loop_result.json").exists() else {}
+    run_id = str(matrix_report["run_id"]) if matrix_report is not None else str(loop.get("run_id", "missing"))
     restored = [
         "selected_implementations",
         "provider_manifest",
         "controller_strategy_log",
         "final_verification_state",
     ]
+    if matrix_report is not None:
+        restored.extend(["evaluation_funnel", "level2_run_matrix"])
     if missing:
         restored = [item for item in restored if item != "final_verification_state"]
     return ReproducibilityReport(
         schema_version="1.0.0",
-        report_id=f"reproducibility_report:{loop.get('run_id', 'missing')}",
-        run_id=str(loop.get("run_id", "missing")),
+        report_id=f"reproducibility_report:{run_id}",
+        run_id=run_id,
         selected_implementations_ref="selected_implementations:geometry_default",
         artifact_refs=artifact_refs,
         replay_status="restored" if not missing else "partial",
