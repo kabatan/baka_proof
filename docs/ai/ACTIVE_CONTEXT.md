@@ -42,7 +42,9 @@ Completed task: `T21 — AuxiliaryConstructionCandidateV1 and ConstructionCompil
 
 Completed gate: `RC-4 — compiler and construction path` passed Guardian boundary review.
 
-Current task: `T22 — BridgeGate, TrustGuard, and proof-use classification`.
+Completed task: `T22 — BridgeGate, TrustGuard, and proof-use classification`.
+
+Current task: `T23 — Standard geometry proof loop`.
 
 Claim ceiling from RC-2 remains active: do not claim full LeanGeo theorem-corpus build, solver/compiler integration, final theorem support, v0.3 completion, R-ID VERIFIED status, or evidence beyond the LeanGeo.Abbre elaborated `#check` fixture path.
 

@@ -206,10 +206,10 @@
           }
         },
         "GeometryBridgeReport": {
-          "required_fields": ["schema_version", "report_id", "source_result_ref", "bridge_status", "proof_use_status", "blockers"],
-          "provenance_fields": ["source_result_ref"],
-          "status_fields": ["bridge_status", "proof_use_status"],
-          "proof_use_fields": ["proof_use_status"],
+          "required_fields": ["schema_version", "report_id", "source_result_ref", "target_goal", "source_claim", "relation_to_goal", "semantic_status", "bridge_status", "proof_use_status", "proof_use_at_goal_level", "missing_links", "blockers"],
+          "provenance_fields": ["source_result_ref", "target_goal", "source_claim"],
+          "status_fields": ["relation_to_goal", "semantic_status", "bridge_status", "proof_use_status"],
+          "proof_use_fields": ["proof_use_status", "proof_use_at_goal_level"],
           "allowed_values": {
             "bridge_status": ["diagnostic_only", "search_only", "lean_patch_candidate", "blocked"],
             "proof_use_status": ["not_allowed", "diagnostic_only", "search_only", "lean_patch_candidate"]

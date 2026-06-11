@@ -1,0 +1,83 @@
+{
+  "$id": "geometry.bridge_report.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "source_result_ref",
+    "target_goal",
+    "source_claim",
+    "relation_to_goal",
+    "semantic_status",
+    "bridge_status",
+    "proof_use_status",
+    "proof_use_at_goal_level",
+    "missing_links",
+    "blockers"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "report_id": {"type": "string"},
+    "source_result_ref": {"type": "string"},
+    "target_goal": {
+      "type": "object",
+      "required": ["theorem_name", "goal_hash", "protected_statement_hash"],
+      "properties": {
+        "theorem_name": {"type": "string"},
+        "goal_hash": {"type": "string"},
+        "protected_statement_hash": {"type": "string"}
+      }
+    },
+    "source_claim": {
+      "type": "object",
+      "required": ["geometry_claim_spec_hash", "extraction_report_hash"],
+      "properties": {
+        "geometry_claim_spec_hash": {},
+        "extraction_report_hash": {"type": "string"}
+      }
+    },
+    "relation_to_goal": {
+      "type": "object",
+      "required": ["kind", "direction_needed", "direction_available"],
+      "properties": {
+        "kind": {"type": "string", "enum": ["exact", "sufficient", "related", "none"]},
+        "direction_needed": {},
+        "direction_available": {}
+      }
+    },
+    "semantic_status": {
+      "type": "object",
+      "required": [
+        "target_library",
+        "predicate_mapping_status",
+        "construction_mapping_status",
+        "rule_registry_status",
+        "side_condition_status",
+        "trace_compilation_status",
+        "construction_compilation_status",
+        "lean_final_status"
+      ],
+      "properties": {
+        "target_library": {"type": "string"},
+        "predicate_mapping_status": {"type": "string", "enum": ["defined", "blocked"]},
+        "construction_mapping_status": {"type": "string", "enum": ["defined", "blocked"]},
+        "rule_registry_status": {"type": "string", "enum": ["defined", "blocked"]},
+        "side_condition_status": {"type": "string", "enum": ["passed", "generated_obligations", "blocked"]},
+        "trace_compilation_status": {
+          "type": "string",
+          "enum": ["lean_patch_candidate", "blocked", "rejected", "not_applicable"]
+        },
+        "construction_compilation_status": {
+          "type": "string",
+          "enum": ["lean_patch_candidate", "blocked", "rejected", "not_applicable"]
+        },
+        "lean_final_status": {"type": "string", "enum": ["passed", "failed", "not_run"]}
+      }
+    },
+    "bridge_status": {"type": "string", "enum": ["diagnostic_only", "search_only", "lean_patch_candidate", "blocked"]},
+    "proof_use_status": {"type": "string", "enum": ["not_allowed", "diagnostic_only", "search_only", "lean_patch_candidate"]},
+    "proof_use_at_goal_level": {"type": "boolean"},
+    "missing_links": {"type": "array", "items": {"type": "string"}},
+    "blockers": {"type": "array", "items": {"type": "string"}}
+  }
+}
