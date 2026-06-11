@@ -17,7 +17,7 @@ if "%1"=="test-regression" (
   exit /b %ERRORLEVEL%
 )
 if "%1"=="test-integration" (
-  python -m unittest tests.unit.test_composite_provider
+  python -m unittest tests.unit.test_composite_provider tests.unit.test_geometry_standard_loop
   exit /b %ERRORLEVEL%
 )
 if "%1"=="smoke-env-bootstrap" (
@@ -70,6 +70,10 @@ if "%1"=="smoke-geometry-trace" (
 )
 if "%1"=="smoke-geometry-construction" (
   python scripts\smoke_geometry_construction.py
+  exit /b %ERRORLEVEL%
+)
+if "%1"=="smoke-geometry-final-verify" (
+  python scripts\smoke_geometry_final_verify.py
   exit /b %ERRORLEVEL%
 )
 echo unsupported target: %1

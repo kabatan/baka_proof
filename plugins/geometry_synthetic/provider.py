@@ -120,20 +120,25 @@ class NewclidCompatibleSymbolicClosureAdapter(DummyEngineAdapter):
 
         engine_input = convert_claim_spec_to_newclid_fixture(claim_spec)
         closure_found = engine_input["target"] in engine_input["known_predicates"]
+        emit_trace_candidate = bool(request.constraints.get("emit_trace_candidate"))
         raw_output = json.dumps(
             {
                 "engine_family": "newclid_compatible_symbolic_closure",
                 "engine_input": engine_input,
                 "closure_found": closure_found,
-                "status": "diagnostic_only",
+                "status": "trace_candidate" if closure_found and emit_trace_candidate else "diagnostic_only",
             },
             sort_keys=True,
         )
         return EngineAdapterResult(
             engine_role=self.engine_role,
-            status="diagnostic_only",
+            status="trace_candidate" if closure_found and emit_trace_candidate else "diagnostic_only",
             raw_output=raw_output,
-            normalized_output_ref=None,
+            normalized_output_ref=(
+                f"geotrace:{request.request_id}:symbolic_closure"
+                if closure_found and emit_trace_candidate
+                else None
+            ),
             diagnostic_ref=f"diagnostic:{request.request_id}:symbolic_closure:newclid_fixture",
         )
 

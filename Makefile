@@ -1,4 +1,4 @@
-.PHONY: test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-geometry-trace smoke-geometry-construction
+.PHONY: test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-geometry-trace smoke-geometry-construction smoke-geometry-final-verify
 
 PYTHON ?= python
 
@@ -14,7 +14,7 @@ test-regression:
 	$(PYTHON) scripts/check_no_loose_options.py
 
 test-integration:
-	$(PYTHON) -m unittest tests.unit.test_composite_provider
+	$(PYTHON) -m unittest tests.unit.test_composite_provider tests.unit.test_geometry_standard_loop
 
 smoke-env-bootstrap:
 	$(PYTHON) scripts/probe_dependencies.py --json
@@ -54,3 +54,6 @@ smoke-geometry-trace:
 
 smoke-geometry-construction:
 	$(PYTHON) scripts/smoke_geometry_construction.py
+
+smoke-geometry-final-verify:
+	$(PYTHON) scripts/smoke_geometry_final_verify.py
