@@ -1,0 +1,8 @@
+schema_version: "1.0.0"
+plugin_id: "geometry_synthetic"
+manifest_version: "v1"
+plugin_kind: "domain_solver"
+capability_id: "geometry.solve"
+capability_kind: "solver_provider"
+contract_version: "v0.3"
+schema_root: "schemas/geometry"

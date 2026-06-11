@@ -1,0 +1,24 @@
+{
+  "$id": "base.plugin_manifest.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "plugin_id",
+    "manifest_version",
+    "plugin_kind",
+    "capability_id",
+    "capability_kind",
+    "contract_version"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "plugin_id": {"type": "string"},
+    "manifest_version": {"type": "string"},
+    "plugin_kind": {"type": "string"},
+    "capability_id": {"type": "string"},
+    "capability_kind": {"type": "string"},
+    "contract_version": {"type": "string"},
+    "schema_root": {"type": "string"}
+  }
+}
