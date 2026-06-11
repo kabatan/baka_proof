@@ -1,4 +1,4 @@
-.PHONY: test-unit smoke-env-bootstrap smoke-resource-governor
+.PHONY: test-unit smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set
 
 PYTHON ?= python
 
@@ -10,3 +10,6 @@ smoke-env-bootstrap:
 
 smoke-resource-governor:
 	$(PYTHON) scripts/probe_local_resources.py --json
+
+smoke-model-provider-set:
+	$(PYTHON) scripts/smoke_model_provider_set.py

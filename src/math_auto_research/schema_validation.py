@@ -74,6 +74,8 @@ def resolve_schema_path(artifact_path: Path, explicit_schema: Path | None = None
         return Path("schemas/resources/dependency_resolution_report.schema.json")
     if artifact_path.name in {"local_resource_profile.json", "resource_profile.json"}:
         return Path("schemas/resources/local_resource_profile.schema.json")
+    if artifact_path.name == "default.example.yaml" and "model_provider_sets" in artifact_path.parts:
+        return Path("schemas/model_api/model_provider_set_manifest.schema.json")
     raise SchemaValidationError(f"no schema mapping for {artifact_path}")
 
 

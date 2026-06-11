@@ -1,0 +1,24 @@
+{
+  "$id": "model_api.model_invocation_record.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "invocation_id",
+    "request_id",
+    "slot_id",
+    "status",
+    "input_hash",
+    "output_artifact_ref",
+    "proof_use_status"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "invocation_id": {"type": "string"},
+    "request_id": {"type": "string"},
+    "slot_id": {"type": "string"},
+    "status": {"type": "string", "enum": ["completed", "failed", "timeout", "resource_rejected"]},
+    "input_hash": {"type": "string"},
+    "output_artifact_ref": {"type": "string"},
+    "proof_use_status": {"type": "string", "enum": ["not_allowed"]}
+  }
+}

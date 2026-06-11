@@ -1,0 +1,18 @@
+schema_version: "1.0.0"
+provider_set_id: "model_provider_set:geometry_default:v1"
+version: "v1"
+logging_required: true
+raw_model_output_proof_use: false
+slots:
+  strategist:
+    provider: "fixture_provider"
+    model_ref: "fixture:strategist:v1"
+    capabilities: "long_context_reasoning,strategy_generation"
+  proof_worker:
+    provider: "fixture_provider"
+    model_ref: "fixture:proof_worker:v1"
+    capabilities: "repo_editing,lean_error_repair"
+  critic:
+    provider: "fixture_provider"
+    model_ref: "fixture:critic:v1"
+    capabilities: "proof_plan_review"

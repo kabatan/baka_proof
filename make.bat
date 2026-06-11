@@ -11,5 +11,9 @@ if "%1"=="smoke-resource-governor" (
   python scripts\probe_local_resources.py --json
   exit /b %ERRORLEVEL%
 )
+if "%1"=="smoke-model-provider-set" (
+  python scripts\smoke_model_provider_set.py
+  exit /b %ERRORLEVEL%
+)
 echo unsupported target: %1
 exit /b 2
