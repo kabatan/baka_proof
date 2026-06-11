@@ -1,0 +1,28 @@
+{
+  "$id": "base.final_verify_report.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "target_obligation_id",
+    "theorem_statement_hash",
+    "protected_theorem_hash_unchanged",
+    "lean_status",
+    "forbidden_axiom_status",
+    "sorry_status",
+    "proof_use_status"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "report_id": {"type": "string"},
+    "target_obligation_id": {"type": "string"},
+    "theorem_statement_hash": {"type": "string"},
+    "protected_theorem_hash_unchanged": {"type": "boolean"},
+    "lean_status": {"type": "string", "enum": ["passed", "failed", "blocked"]},
+    "forbidden_axiom_status": {"type": "string", "enum": ["clean", "failed", "not_checked"]},
+    "sorry_status": {"type": "string", "enum": ["clean", "failed", "not_checked"]},
+    "proof_use_status": {"type": "string", "enum": ["final_theorem", "not_allowed"]},
+    "lean_artifact_ref": {},
+    "proof_artifact_ref": {}
+  }
+}

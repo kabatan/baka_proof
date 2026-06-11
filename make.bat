@@ -15,5 +15,13 @@ if "%1"=="smoke-model-provider-set" (
   python scripts\smoke_model_provider_set.py
   exit /b %ERRORLEVEL%
 )
+if "%1"=="lean-build" (
+  lake build
+  exit /b %ERRORLEVEL%
+)
+if "%1"=="lean-no-sorry" (
+  python scripts\check_lean_no_sorry.py
+  exit /b %ERRORLEVEL%
+)
 echo unsupported target: %1
 exit /b 2

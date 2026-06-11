@@ -1,4 +1,4 @@
-.PHONY: test-unit smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set
+.PHONY: test-unit smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry
 
 PYTHON ?= python
 
@@ -13,3 +13,9 @@ smoke-resource-governor:
 
 smoke-model-provider-set:
 	$(PYTHON) scripts/smoke_model_provider_set.py
+
+lean-build:
+	lake build
+
+lean-no-sorry:
+	$(PYTHON) scripts/check_lean_no_sorry.py
