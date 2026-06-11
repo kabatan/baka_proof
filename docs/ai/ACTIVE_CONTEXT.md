@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
 version: v0.3-admission-candidate
-status: T12_COMPLETE
+status: T13_COMPLETE_PENDING_RC2
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -32,9 +32,9 @@ Implementation remains limited to the reviewed Base Spec and Plan. Git initializ
 
 ## Current Task Pointer
 
-Current gate: `T12 — LeanGeoSubsetV1 theorem grammar` complete.
+Current gate: `T13 — GeometryExtractionContract` complete; RC-2 review pending.
 
-Next task: `T13 — GeometryExtractionContract`.
+Next task: `RC-2 — target subset and extraction`.
 
 ## Evidence Directory
 

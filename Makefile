@@ -1,4 +1,4 @@
-.PHONY: test-unit smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status
+.PHONY: test-unit smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction
 
 PYTHON ?= python
 
@@ -22,3 +22,6 @@ lean-no-sorry:
 
 smoke-target-library-status:
 	$(PYTHON) -m math_auto_research.cli.report_target_library_status
+
+smoke-geometry-extraction:
+	$(PYTHON) scripts/smoke_geometry_extraction.py

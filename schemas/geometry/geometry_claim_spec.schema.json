@@ -1,0 +1,26 @@
+{
+  "$id": "geometry.claim_spec.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "claim_id",
+    "target_library",
+    "objects",
+    "hypotheses",
+    "target",
+    "nondegeneracy_assumptions",
+    "orientation_assumptions",
+    "source_goal_ref"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "claim_id": {"type": "string"},
+    "target_library": {"type": "string", "pattern": "LeanGeoSubsetV1:.+"},
+    "objects": {"type": "array"},
+    "hypotheses": {"type": "array"},
+    "target": {"type": "object"},
+    "nondegeneracy_assumptions": {"type": "array"},
+    "orientation_assumptions": {"type": "array"},
+    "source_goal_ref": {"type": "string"}
+  }
+}

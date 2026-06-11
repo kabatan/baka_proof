@@ -27,5 +27,9 @@ if "%1"=="smoke-target-library-status" (
   python -m math_auto_research.cli.report_target_library_status
   exit /b %ERRORLEVEL%
 )
+if "%1"=="smoke-geometry-extraction" (
+  python scripts\smoke_geometry_extraction.py
+  exit /b %ERRORLEVEL%
+)
 echo unsupported target: %1
 exit /b 2

@@ -84,6 +84,10 @@ def resolve_schema_path(artifact_path: Path, explicit_schema: Path | None = None
         return Path("schemas/geometry/leangeo_subset_v1_grammar.schema.json")
     if artifact_path.name == "fixtures.json" and "geometry_synthetic" in artifact_path.parts:
         return Path("schemas/geometry/grammar_fixture_set.schema.json")
+    if artifact_path.name == "geometry_extraction_report.json":
+        return Path("schemas/geometry/geometry_extraction_report.schema.json")
+    if artifact_path.name == "geometry_claim_spec.json":
+        return Path("schemas/geometry/geometry_claim_spec.schema.json")
     raise SchemaValidationError(f"no schema mapping for {artifact_path}")
 
 
