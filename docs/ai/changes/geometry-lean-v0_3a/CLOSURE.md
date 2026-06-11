@@ -1,11 +1,11 @@
 ---
 title: Closure — geometry x Lean v0.3A real integration recovery
-version: v0.3A-release-candidate
-status: FINAL_REVIEWS_PENDING
+version: v0.3A-final-reviewed
+status: FINAL_REVIEW_PASSED_LIMITED_REAL_INTEGRATION
 created: 2026-06-12
 base_spec: MARP-GEOLEAN-BASE-003A
 plan: MARP-GEOLEAN-PLAN-003A
-authority: Evidence-bound closure candidate; final claim requires final spec, quality, and Guardian boundary review.
+authority: Evidence-bound closure; final reviews passed only within the limited real-integration claim ceiling.
 ---
 
 # Closure — geometry x Lean v0.3A
@@ -14,7 +14,7 @@ authority: Evidence-bound closure candidate; final claim requires final spec, qu
 
 Recovery target: `V0.3A_REAL_INTEGRATION_RECOVERY`.
 
-This closure candidate covers the admitted v0.3A recovery tasks T-001 through T-010 and the recorded RC-003A review gates.
+This closure covers the admitted v0.3A recovery tasks T-001 through T-010 and the recorded RC-003A review gates.
 
 This closure does not mark any R-ID `VERIFIED`.
 
@@ -41,6 +41,9 @@ Review artifacts:
 - `evidence/rc003a_2_guardian_boundary_review.md`
 - `evidence/rc003a_3_guardian_boundary_review.md`
 - `evidence/rc003a_4_guardian_boundary_review.md`
+- `evidence/final_spec_verifier_review.md`
+- `evidence/final_quality_review.md`
+- `evidence/rc003a_5_guardian_boundary_review.md`
 
 Run artifacts:
 
@@ -65,9 +68,9 @@ The inherited v0.3 release acceptance command also passed:
 python scripts\check_release_acceptance.py --config configs\benchmark_runs\geometry_level2_smoke.yaml
 ```
 
-## Current Pre-Final Claim Ceiling
+## Pre-Final Claim Ceiling
 
-Until final reviews pass, this closure candidate says:
+Before final reviews passed, this closure candidate said:
 
 ```text
 The track has fixture-level release acceptance only.
@@ -78,7 +81,7 @@ Real Level 2 advantage remains unverified and out of scope for this recovery tar
 
 ## Supported Claim After Final Review
 
-If final reviews pass, the maximum supported claim is:
+Final reviews passed. The maximum supported claim is:
 
 ```text
 The geometry x Lean pipeline has real-integration evidence for the selected provider roles and limited LeanGeoSubsetV1.RealSmokeCorpus under the recorded trust boundary.
@@ -110,4 +113,4 @@ This closure does not support:
 
 ## Closure Statement
 
-This is a release-candidate closure pending final reviews. It becomes the v0.3A final closure only if spec verifier, quality reviewer, and Guardian boundary final review pass under the claim ceiling above.
+Final Guardian/spec/quality reviews passed for this closure within the limited real-integration claim ceiling above. This closure does not support production safety, source-faithful, acceptance-complete, real Level 2 advantage, arbitrary LeanGeo support, or any R-ID `VERIFIED` claim.

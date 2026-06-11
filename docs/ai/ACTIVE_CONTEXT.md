@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3A
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003A
 version: v0.3A-recovery-admitted
-status: READY_FOR_V03A_T010_FINAL_REVIEWS
+status: V03A_FINAL_REVIEW_PASSED_LIMITED_REAL_INTEGRATION
 created: 2026-06-11
 last_updated: 2026-06-12
 base_spec: MARP-GEOLEAN-BASE-003A
@@ -92,9 +92,9 @@ Completed v0.3A gate: `RC-003A-4 — corpus and real-vs-fixture tests` passed Gu
 
 Completed v0.3A task: `T-010 — Re-run release acceptance commands and prepare closure candidate`.
 
-Current v0.3A gate: final spec verifier, quality reviewer, and `RC-003A-5 — final closure claim`.
+Completed v0.3A gate: final spec verifier, quality reviewer, and `RC-003A-5 — final closure claim` passed.
 
-Current claim ceiling until final reviews pass: the track has fixture-level release acceptance only. Real Newclid / GenesisGeo / TongGeometry integration remains unverified. Real LeanGeo corpus support remains unverified. Real Level 2 advantage remains unverified and out of scope for this recovery target. Do not claim full LeanGeo theorem-corpus build, GenesisGeo model-backed construction proposal, TongGeometry model-backed heavy search, broad Newclid theorem coverage, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3A completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE.
+Current claim ceiling after final reviews: the geometry x Lean pipeline has real-integration evidence for the selected provider roles and limited `LeanGeoSubsetV1.RealSmokeCorpus` under the recorded trust boundary. Do not claim full LeanGeo theorem-corpus build, GenesisGeo model-backed construction proposal, TongGeometry model-backed heavy search, broad Newclid theorem coverage, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. GenesisGeo and TongGeometry evidence remains diagnostic engine-run only, and mixed fixture/real runs do not support whole-provider real-integration claims.
 
 ## Evidence Directory
 

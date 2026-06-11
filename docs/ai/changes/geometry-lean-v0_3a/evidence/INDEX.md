@@ -22,7 +22,8 @@ Authority: Navigation only. Individual evidence files and reviewer records retai
 - v0.3A release acceptance report: `v03a_release_acceptance_report.json`
 - Final spec verifier review: `final_spec_verifier_review.md`
 - Final quality review: `final_quality_review.md`
-- v0.3A closure candidate: `../CLOSURE.md`
+- RC-003A-5 Guardian boundary final review: `rc003a_5_guardian_boundary_review.md`
+- v0.3A final closure: `../CLOSURE.md`
 
 ## Planned Review Evidence
 
@@ -32,8 +33,8 @@ Authority: Navigation only. Individual evidence files and reviewer records retai
 - RC-003A-3 review: `rc003a_3_guardian_boundary_review.md`
 - Spec verifier final review: `final_spec_verifier_review.md`
 - Quality reviewer final review: `final_quality_review.md`
-- RC-003A-5 final closure review: pending final review packet.
+- RC-003A-5 final closure review: `rc003a_5_guardian_boundary_review.md`
 
 ## Claim Ceiling
 
-Until v0.3A acceptance and final reviews pass, claims remain limited to the prior fixture-level v0.3 closure.
+After final review, the admitted claim is limited real-integration evidence for selected provider roles and the limited `LeanGeoSubsetV1.RealSmokeCorpus` under the recorded trust boundary.
