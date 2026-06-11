@@ -33,6 +33,19 @@ class ResourceGovernorTest(unittest.TestCase):
         self.assertGreaterEqual(profile["cpu_logical_cores"], 1)
         self.assertIn("heavy_search", profile["provider_engine_availability"])
 
+    def test_heavy_search_is_exclusive_but_lean_is_not_starved(self) -> None:
+        governor = ResourceGovernor()
+        heavy = ResourceRequest(component="provider_engine", engine_role="heavy_search", budget="heavy")
+        second_heavy = ResourceRequest(component="provider_engine", engine_role="heavy_search", budget="heavy")
+        lean = ResourceRequest(component="final_verify", engine_role="lean", budget="tiny")
+
+        with governor.admit(heavy):
+            with self.assertRaises(ResourceRejected):
+                with governor.admit(second_heavy):
+                    pass
+            with governor.admit(lean) as admitted:
+                self.assertEqual(admitted.engine_role, "lean")
+
 
 if __name__ == "__main__":
     unittest.main()

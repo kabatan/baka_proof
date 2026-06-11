@@ -369,6 +369,7 @@ def _resource_usage_report(
         "peak_rss_mb": 0,
         "gpu_vram_peak_mb": None,
         "timeout_status": run_state.get("timeout_status", "none"),
+        "hard_kill_executed": run_state.get("hard_kill_executed", False),
         "heartbeat_count": run_state.get("heartbeat_count", 0),
         "process_id": str(run_state.get("pid", "")),
         "orphan_check_passed": run_state.get("orphan_check_passed", True),
@@ -443,12 +444,21 @@ def _run_external_heavy_adapter(
         time.sleep(min(0.05, max(0.001, deadline - time.monotonic())))
     if process.poll() is None:
         _terminate_process_tree(process)
+        hard_kill_executed = False
         try:
             stdout, stderr = process.communicate(timeout=hard_timeout)
         except subprocess.TimeoutExpired:
             _kill_process_tree(process)
+            hard_kill_executed = True
             stdout, stderr = process.communicate(timeout=hard_timeout)
         orphan_check_passed = process.poll() is not None and not _pid_is_running(process.pid)
+        timeout_status = (
+            "hard_killed"
+            if hard_kill_executed and orphan_check_passed
+            else "soft_terminated_no_orphan"
+            if orphan_check_passed
+            else "kill_incomplete"
+        )
         raw_output = json.dumps(
             {
                 "engine_role": step.engine_role,
@@ -469,7 +479,8 @@ def _run_external_heavy_adapter(
             ),
             {
                 "timed_out": True,
-                "timeout_status": "hard_killed" if orphan_check_passed else "kill_incomplete",
+                "timeout_status": timeout_status,
+                "hard_kill_executed": hard_kill_executed,
                 "heartbeat_count": heartbeat_count,
                 "pid": process.pid,
                 "orphan_check_passed": orphan_check_passed,

@@ -127,6 +127,12 @@ class CompositeProviderTest(unittest.TestCase):
         self.assertEqual(run.resource_usage_reports[-1]["admission_status"], "timeout")
         self.assertEqual(run.resource_usage_reports[-1]["exit_status"], "killed")
         self.assertTrue(run.resource_usage_reports[-1]["orphan_check_passed"])
+        self.assertIn(
+            run.resource_usage_reports[-1]["timeout_status"],
+            {"soft_terminated_no_orphan", "hard_killed"},
+        )
+        if run.resource_usage_reports[-1]["timeout_status"] == "hard_killed":
+            self.assertTrue(run.resource_usage_reports[-1]["hard_kill_executed"])
         self.assertGreaterEqual(run.resource_usage_reports[-1]["heartbeat_count"], 1)
         self.assertEqual(run.result.proof_use_status, "not_allowed")
 
