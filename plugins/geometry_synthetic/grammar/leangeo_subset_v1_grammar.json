@@ -50,7 +50,11 @@
   },
   "relation_mappings": {
     "exact": {"goal_level_allowed": true},
-    "sufficient": {"goal_level_allowed": true, "requires_direction_check": true},
+    "sufficient": {
+      "goal_level_allowed": true,
+      "requires_direction_check": true,
+      "allowed_directions": ["forward", "reverse"]
+    },
     "related": {"goal_level_allowed": false},
     "none": {"goal_level_allowed": false}
   },

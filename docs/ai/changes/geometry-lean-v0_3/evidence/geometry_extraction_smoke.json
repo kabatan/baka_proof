@@ -21,10 +21,13 @@
   },
   "report": {
     "claim_spec_ref": "geometry_claim:a0f9dd7f2bfab4cd",
+    "direction_available": null,
+    "direction_needed": null,
     "goal_anchor_ref": "goal:smoke",
-    "proof_use_status": "lean_patch_candidate",
+    "proof_use_status": "not_allowed",
     "relation": "exact",
     "report_id": "geometry_extraction:a0f9dd7f2bfab4cd",
+    "result_level": "extracted_claim",
     "safe_reject_reason": null,
     "schema_version": "1.0.0",
     "status": "accepted"

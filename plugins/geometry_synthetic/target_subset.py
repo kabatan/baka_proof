@@ -37,6 +37,14 @@ def validate_target_subset(grammar_path: Path | str, fixtures_path: Path | str) 
     for key in REQUIRED_FIXTURE_CATEGORIES:
         if not fixtures.get(key):
             raise ValueError(f"missing fixture category: {key}")
+    covered_positive_forms = {fixture["form"] for fixture in fixtures["positive_fixtures"]}
+    required_positive_forms = set(grammar["object_declarations"])
+    required_positive_forms.update(grammar["hypothesis_forms"])
+    required_positive_forms.update(grammar["target_forms"])
+    required_positive_forms.update(grammar["construction_mappings"])
+    missing_positive = sorted(required_positive_forms - covered_positive_forms)
+    if missing_positive:
+        raise ValueError(f"missing positive fixtures for grammar entries: {missing_positive}")
     rejected_forms = set(grammar["rejected_forms"])
     for key in ["negative_fixtures", "ambiguous_fixtures", "safe_reject_fixtures", "mutation_fixtures"]:
         for fixture in fixtures[key]:
@@ -45,6 +53,12 @@ def validate_target_subset(grammar_path: Path | str, fixtures_path: Path | str) 
             if fixture["expected"] != "safe_rejected":
                 raise ValueError(f"unsafe expected status: {fixture['fixture_id']}")
     fixture_count = sum(len(fixtures[key]) for key in REQUIRED_FIXTURE_CATEGORIES)
+    relation_mappings = grammar["relation_mappings"]
+    sufficient = relation_mappings.get("sufficient", {})
+    if sufficient.get("requires_direction_check") is not True:
+        raise ValueError("sufficient relation must require direction check")
+    if not sufficient.get("allowed_directions"):
+        raise ValueError("sufficient relation must declare allowed directions")
     return TargetSubsetValidationResult(
         accepted_forms=tuple(sorted(set(grammar["hypothesis_forms"]) | set(grammar["target_forms"]))),
         rejected_forms=tuple(sorted(rejected_forms)),

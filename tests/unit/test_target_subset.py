@@ -12,8 +12,12 @@ class TargetSubsetTest(unittest.TestCase):
             "plugins/geometry_synthetic/grammar/fixtures.json",
         )
         self.assertIn("collinear", result.accepted_forms)
+        self.assertIn("parallel", result.accepted_forms)
+        self.assertIn("perpendicular", result.accepted_forms)
+        self.assertIn("concyclic", result.accepted_forms)
+        self.assertIn("equal_angle_supported_pattern", result.accepted_forms)
         self.assertIn("unsupported_local_notation", result.rejected_forms)
-        self.assertGreaterEqual(result.fixture_count, 5)
+        self.assertGreaterEqual(result.fixture_count, 15)
 
     def test_relation_to_goal_blocks_related_and_none(self) -> None:
         import json

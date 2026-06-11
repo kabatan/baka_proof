@@ -73,14 +73,15 @@
           "proof_use_fields": []
         },
         "GeometryExtractionReport": {
-          "required_fields": ["schema_version", "report_id", "goal_anchor_ref", "relation", "status", "safe_reject_reason", "claim_spec_ref", "proof_use_status"],
+          "required_fields": ["schema_version", "report_id", "goal_anchor_ref", "relation", "result_level", "status", "safe_reject_reason", "claim_spec_ref", "proof_use_status", "direction_needed", "direction_available"],
           "provenance_fields": ["goal_anchor_ref", "claim_spec_ref"],
-          "status_fields": ["relation", "status", "proof_use_status"],
+          "status_fields": ["relation", "result_level", "status", "proof_use_status"],
           "proof_use_fields": ["proof_use_status"],
           "allowed_values": {
             "relation": ["exact", "sufficient", "related", "none"],
             "status": ["accepted", "safe_rejected", "blocked"],
-            "proof_use_status": ["not_allowed", "lean_patch_candidate"]
+            "result_level": ["extracted_claim", "diagnostic_only"],
+            "proof_use_status": ["not_allowed"]
           }
         },
         "GeometryClaimSpec": {

@@ -6,19 +6,25 @@
     "report_id",
     "goal_anchor_ref",
     "relation",
+    "result_level",
     "status",
     "safe_reject_reason",
     "claim_spec_ref",
-    "proof_use_status"
+    "proof_use_status",
+    "direction_needed",
+    "direction_available"
   ],
   "properties": {
     "schema_version": {"type": "string", "enum": ["1.0.0"]},
     "report_id": {"type": "string"},
     "goal_anchor_ref": {"type": "string"},
     "relation": {"type": "string", "enum": ["exact", "sufficient", "related", "none"]},
+    "result_level": {"type": "string", "enum": ["extracted_claim", "diagnostic_only"]},
     "status": {"type": "string", "enum": ["accepted", "safe_rejected", "blocked"]},
     "safe_reject_reason": {},
     "claim_spec_ref": {},
-    "proof_use_status": {"type": "string", "enum": ["not_allowed", "lean_patch_candidate"]}
+    "proof_use_status": {"type": "string", "enum": ["not_allowed"]},
+    "direction_needed": {},
+    "direction_available": {}
   }
 }
