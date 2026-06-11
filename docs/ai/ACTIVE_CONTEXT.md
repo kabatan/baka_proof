@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
 version: v0.3-admission-candidate
-status: T09_COMPLETE
+status: T10_COMPLETE
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -32,9 +32,9 @@ Implementation remains limited to the reviewed Base Spec and Plan. Git initializ
 
 ## Current Task Pointer
 
-Current gate: `T09 — Lean integration and FinalVerifyGate skeleton` complete.
+Current gate: `T10 — geometry_synthetic plugin scaffold` complete.
 
-Next task: `T10 — geometry_synthetic plugin scaffold`.
+Next task: `T11 — LeanGeo dependency discovery and TargetLibraryManifest`.
 
 ## Evidence Directory
 

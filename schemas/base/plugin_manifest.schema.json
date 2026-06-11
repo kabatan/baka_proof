@@ -19,6 +19,8 @@
     "capability_id": {"type": "string"},
     "capability_kind": {"type": "string"},
     "contract_version": {"type": "string"},
-    "schema_root": {"type": "string"}
+    "schema_root": {"type": "string"},
+    "capability_card": {"type": "string"},
+    "components": {"type": "object"}
   }
 }

@@ -6,3 +6,6 @@ capability_id: "geometry.solve"
 capability_kind: "solver_provider"
 contract_version: "v0.3"
 schema_root: "schemas/geometry"
+capability_card: "plugins/geometry_synthetic/capability_card.yaml"
+components:
+  provider: "plugins.geometry_synthetic.facade:GeometrySolveFacade"
