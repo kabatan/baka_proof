@@ -1,9 +1,220 @@
 {
   "$id": "geometry.v03_contract_index.v1",
   "type": "object",
-  "required": ["schema_version", "contracts"],
+  "required": ["schema_version", "contract_schemas"],
   "properties": {
-    "schema_version": {"type": "string"},
-    "contracts": {"type": "array", "items": {"type": "string"}}
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "contract_schemas": {
+      "type": "object",
+      "required": [
+        "LeanGeoSubsetV1TheoremGrammar",
+        "GrammarFixtureSet",
+        "PredicateMapping",
+        "ConstructionMapping",
+        "RelationMapping",
+        "GeometryExtractionContract",
+        "GeometryExtractionReport",
+        "GeometryClaimSpec",
+        "GeometrySolverProvider",
+        "GeometrySolveRequest",
+        "GeometrySolverPolicy",
+        "GeometryExecutionPlan",
+        "ProviderRunManifest",
+        "ProviderResult",
+        "GeoTraceV1",
+        "TraceCheckerResult",
+        "RuleRegistryV1",
+        "GeometryRuleContract",
+        "SideConditionReport",
+        "TraceCompilationResult",
+        "AuxiliaryConstructionCandidateV1",
+        "ConstructionCheckResult",
+        "ConstructionCompilationResult",
+        "GeometryBridgeReport"
+      ],
+      "properties": {
+        "LeanGeoSubsetV1TheoremGrammar": {
+          "required_fields": ["schema_version", "grammar_id", "target_library", "object_declarations", "allowed_hypothesis_forms", "rejected_hypothesis_forms", "allowed_target_forms", "rejected_target_forms", "safe_reject_policy"],
+          "provenance_fields": ["target_library"],
+          "status_fields": [],
+          "proof_use_fields": []
+        },
+        "GrammarFixtureSet": {
+          "required_fields": ["schema_version", "fixture_set_id", "positive_fixtures", "negative_fixtures", "ambiguous_fixtures", "mutation_fixtures"],
+          "provenance_fields": ["positive_fixtures", "negative_fixtures", "ambiguous_fixtures", "mutation_fixtures"],
+          "status_fields": [],
+          "proof_use_fields": []
+        },
+        "PredicateMapping": {
+          "required_fields": ["schema_version", "mapping_id", "predicate_name", "lean_pattern", "side_conditions", "unsupported_variants"],
+          "provenance_fields": ["lean_pattern"],
+          "status_fields": [],
+          "proof_use_fields": []
+        },
+        "ConstructionMapping": {
+          "required_fields": ["schema_version", "mapping_id", "construction_kind", "lean_pattern", "side_conditions", "unsupported_variants"],
+          "provenance_fields": ["lean_pattern"],
+          "status_fields": ["construction_kind"],
+          "proof_use_fields": [],
+          "allowed_values": {
+            "construction_kind": ["line_through_two_distinct_points", "intersection_of_two_nonparallel_lines", "foot_of_perpendicular", "midpoint", "circle_with_center_through_point"]
+          }
+        },
+        "RelationMapping": {
+          "required_fields": ["schema_version", "mapping_id", "relation_name", "lean_pattern", "relation_to_goal_policy", "side_conditions"],
+          "provenance_fields": ["lean_pattern"],
+          "status_fields": ["relation_to_goal_policy"],
+          "proof_use_fields": ["relation_to_goal_policy"]
+        },
+        "GeometryExtractionContract": {
+          "required_fields": ["schema_version", "contract_id", "target_library", "grammar_ref", "safe_reject_policy", "supported_relations"],
+          "provenance_fields": ["grammar_ref"],
+          "status_fields": [],
+          "proof_use_fields": []
+        },
+        "GeometryExtractionReport": {
+          "required_fields": ["schema_version", "report_id", "goal_anchor_ref", "relation", "status", "safe_reject_reason", "claim_spec_ref", "proof_use_status"],
+          "provenance_fields": ["goal_anchor_ref", "claim_spec_ref"],
+          "status_fields": ["relation", "status", "proof_use_status"],
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {
+            "relation": ["exact", "sufficient", "related", "none"],
+            "status": ["accepted", "safe_rejected", "blocked"],
+            "proof_use_status": ["not_allowed", "lean_patch_candidate"]
+          }
+        },
+        "GeometryClaimSpec": {
+          "required_fields": ["schema_version", "claim_id", "target_library", "objects", "hypotheses", "target", "nondegeneracy_assumptions", "orientation_assumptions", "source_goal_ref"],
+          "provenance_fields": ["source_goal_ref"],
+          "status_fields": [],
+          "proof_use_fields": []
+        },
+        "GeometrySolverProvider": {
+          "required_fields": ["schema_version", "provider_id", "capability_id", "contract_version", "engine_roles"],
+          "provenance_fields": [],
+          "status_fields": ["engine_roles"],
+          "proof_use_fields": []
+        },
+        "GeometrySolveRequest": {
+          "required_fields": ["schema_version", "request_id", "claim_spec_ref", "intent", "trust_target", "budget", "constraints", "resource_budget_ref"],
+          "provenance_fields": ["claim_spec_ref", "resource_budget_ref"],
+          "status_fields": ["intent", "trust_target", "budget"],
+          "proof_use_fields": ["trust_target"],
+          "allowed_values": {
+            "intent": ["prove_or_diagnose", "search_construction", "trace_closure"],
+            "trust_target": ["diagnostic_only", "lean_patch_candidate", "final_theorem"],
+            "budget": ["tiny", "small", "medium", "heavy", "extreme"]
+          }
+        },
+        "GeometrySolverPolicy": {
+          "required_fields": ["schema_version", "policy_id", "routing_table", "budget_rules", "reason_codes", "resource_roles"],
+          "provenance_fields": [],
+          "status_fields": ["reason_codes"],
+          "proof_use_fields": []
+        },
+        "GeometryExecutionPlan": {
+          "required_fields": ["schema_version", "plan_id", "request_id", "steps", "budget", "reason_codes", "semaphore_requests"],
+          "provenance_fields": ["request_id"],
+          "status_fields": ["budget", "reason_codes"],
+          "proof_use_fields": []
+        },
+        "ProviderRunManifest": {
+          "required_fields": ["schema_version", "manifest_id", "request_id", "provider_id", "adapter_versions", "raw_output_hashes", "normalized_output_refs", "resource_usage_refs", "unsupported_rule_count", "side_condition_loss_count"],
+          "provenance_fields": ["request_id", "raw_output_hashes", "normalized_output_refs", "resource_usage_refs"],
+          "status_fields": [],
+          "proof_use_fields": []
+        },
+        "ProviderResult": {
+          "required_fields": ["schema_version", "result_id", "request_id", "status", "proof_use_status", "geotrace_ref", "construction_candidate_refs", "diagnostic_refs", "provider_run_manifest_ref"],
+          "provenance_fields": ["request_id", "geotrace_ref", "construction_candidate_refs", "diagnostic_refs", "provider_run_manifest_ref"],
+          "status_fields": ["status", "proof_use_status"],
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {
+            "status": ["success", "partial", "unsupported", "timeout", "failed"],
+            "proof_use_status": ["not_allowed"]
+          }
+        },
+        "GeoTraceV1": {
+          "required_fields": ["schema_version", "trace_id", "claim_spec_ref", "steps", "rule_refs", "side_condition_refs", "proof_use_status"],
+          "provenance_fields": ["claim_spec_ref", "rule_refs", "side_condition_refs"],
+          "status_fields": ["proof_use_status"],
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {"proof_use_status": ["not_allowed", "lean_patch_candidate"]}
+        },
+        "TraceCheckerResult": {
+          "required_fields": ["schema_version", "result_id", "trace_id", "status", "unsupported_rule_count", "side_condition_loss_count"],
+          "provenance_fields": ["trace_id"],
+          "status_fields": ["status"],
+          "proof_use_fields": [],
+          "allowed_values": {"status": ["accepted", "blocked", "rejected"]}
+        },
+        "RuleRegistryV1": {
+          "required_fields": ["schema_version", "registry_id", "target_library", "rules", "supported_rule_families", "release_blockers"],
+          "provenance_fields": ["target_library"],
+          "status_fields": ["supported_rule_families"],
+          "proof_use_fields": []
+        },
+        "GeometryRuleContract": {
+          "required_fields": ["schema_version", "rule_id", "rule_family", "lean_lemma_or_template", "premise_pattern", "conclusion_pattern", "required_side_conditions", "generated_obligations", "unsupported_variants", "fixtures"],
+          "provenance_fields": ["lean_lemma_or_template", "fixtures"],
+          "status_fields": ["rule_family"],
+          "proof_use_fields": []
+        },
+        "SideConditionReport": {
+          "required_fields": ["schema_version", "report_id", "condition_id", "status", "generated_obligation_ids", "blockers"],
+          "provenance_fields": ["generated_obligation_ids"],
+          "status_fields": ["status"],
+          "proof_use_fields": [],
+          "allowed_values": {"status": ["discharged", "generated_obligation", "blocked", "unsupported"]}
+        },
+        "TraceCompilationResult": {
+          "required_fields": ["schema_version", "result_id", "trace_id", "status", "lean_patch_candidate_ref", "side_condition_report_refs", "proof_use_status"],
+          "provenance_fields": ["trace_id", "lean_patch_candidate_ref", "side_condition_report_refs"],
+          "status_fields": ["status", "proof_use_status"],
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {
+            "status": ["compiled", "blocked", "rejected"],
+            "proof_use_status": ["lean_patch_candidate"]
+          }
+        },
+        "AuxiliaryConstructionCandidateV1": {
+          "required_fields": ["schema_version", "candidate_id", "construction_kind", "source_provenance", "introduced_objects", "dependencies", "intended_use", "side_conditions", "proof_use_status"],
+          "provenance_fields": ["source_provenance", "dependencies"],
+          "status_fields": ["construction_kind", "proof_use_status"],
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {
+            "construction_kind": ["line_through_two_distinct_points", "intersection_of_two_nonparallel_lines", "foot_of_perpendicular", "midpoint", "circle_with_center_through_point"],
+            "proof_use_status": ["not_allowed", "lean_patch_candidate"]
+          }
+        },
+        "ConstructionCheckResult": {
+          "required_fields": ["schema_version", "result_id", "candidate_id", "status", "generated_obligations", "blockers"],
+          "provenance_fields": ["candidate_id", "generated_obligations"],
+          "status_fields": ["status"],
+          "proof_use_fields": [],
+          "allowed_values": {"status": ["accepted", "blocked", "rejected"]}
+        },
+        "ConstructionCompilationResult": {
+          "required_fields": ["schema_version", "result_id", "candidate_id", "status", "introduction_plan", "lean_patch_candidate_ref", "generated_obligations", "proof_use_status"],
+          "provenance_fields": ["candidate_id", "lean_patch_candidate_ref", "generated_obligations"],
+          "status_fields": ["status", "proof_use_status"],
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {
+            "status": ["compiled", "blocked", "rejected"],
+            "proof_use_status": ["lean_patch_candidate"]
+          }
+        },
+        "GeometryBridgeReport": {
+          "required_fields": ["schema_version", "report_id", "source_result_ref", "bridge_status", "proof_use_status", "blockers"],
+          "provenance_fields": ["source_result_ref"],
+          "status_fields": ["bridge_status", "proof_use_status"],
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {
+            "bridge_status": ["diagnostic_only", "search_only", "lean_patch_candidate", "blocked"],
+            "proof_use_status": ["not_allowed", "diagnostic_only", "search_only", "lean_patch_candidate"]
+          }
+        }
+      }
+    }
   }
 }

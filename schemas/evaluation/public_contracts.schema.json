@@ -1,9 +1,44 @@
 {
   "$id": "evaluation.public_contracts.v1",
   "type": "object",
-  "required": ["schema_version", "record_type"],
+  "required": ["schema_version", "contract_schemas"],
   "properties": {
-    "schema_version": {"type": "string"},
-    "record_type": {"type": "string"}
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "contract_schemas": {
+      "type": "object",
+      "required": ["ResearchContributionRecord", "EvaluationFunnel", "ReproducibilityReport", "MetricsReport"],
+      "properties": {
+        "ResearchContributionRecord": {
+          "required_fields": ["schema_version", "record_id", "run_id", "item_ref", "contribution_status", "proof_use_note"],
+          "provenance_fields": ["run_id", "item_ref"],
+          "status_fields": ["contribution_status"],
+          "proof_use_fields": ["proof_use_note"],
+          "allowed_values": {
+            "contribution_status": ["used_in_search", "used_in_final_proof", "diagnostic_only", "abandoned", "refuted_key_branch"]
+          }
+        },
+        "EvaluationFunnel": {
+          "required_fields": ["schema_version", "funnel_id", "baseline_id", "run_matrix_ref", "metrics_report_refs", "status"],
+          "provenance_fields": ["run_matrix_ref", "metrics_report_refs"],
+          "status_fields": ["status"],
+          "proof_use_fields": [],
+          "allowed_values": {"status": ["configured", "running", "completed", "blocked"]}
+        },
+        "ReproducibilityReport": {
+          "required_fields": ["schema_version", "report_id", "run_id", "selected_implementations_ref", "artifact_refs", "replay_status"],
+          "provenance_fields": ["run_id", "selected_implementations_ref", "artifact_refs"],
+          "status_fields": ["replay_status"],
+          "proof_use_fields": [],
+          "allowed_values": {"replay_status": ["restored", "partial", "failed", "blocked"]}
+        },
+        "MetricsReport": {
+          "required_fields": ["schema_version", "report_id", "run_id", "metric_values", "claim_ceiling", "status"],
+          "provenance_fields": ["run_id"],
+          "status_fields": ["status", "claim_ceiling"],
+          "proof_use_fields": [],
+          "allowed_values": {"status": ["computed", "partial", "blocked"]}
+        }
+      }
+    }
   }
 }

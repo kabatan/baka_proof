@@ -1,9 +1,102 @@
 {
   "$id": "base.public_contracts.v1",
   "type": "object",
-  "required": ["schema_version", "record_type"],
+  "required": ["schema_version", "contract_schemas"],
   "properties": {
-    "schema_version": {"type": "string"},
-    "record_type": {"type": "string"}
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "contract_schemas": {
+      "type": "object",
+      "required": [
+        "ArtifactRef",
+        "RunRecord",
+        "TrustReport",
+        "DiagnosticBundle",
+        "PluginManifest",
+        "FinalVerifyReport"
+      ],
+      "properties": {
+        "ArtifactRef": {
+          "required_fields": ["artifact_id", "path", "sha256", "media_type"],
+          "provenance_fields": ["sha256"],
+          "status_fields": [],
+          "proof_use_fields": []
+        },
+        "RunRecord": {
+          "required_fields": [
+            "schema_version",
+            "run_id",
+            "created_at",
+            "target_library",
+            "selected_implementations_ref",
+            "trust_boundary",
+            "artifact_refs"
+          ],
+          "provenance_fields": [
+            "selected_implementations_ref",
+            "dependency_profile_ref",
+            "resource_profile_ref",
+            "artifact_refs"
+          ],
+          "status_fields": [],
+          "proof_use_fields": []
+        },
+        "TrustReport": {
+          "required_fields": ["schema_version", "result_level", "proof_use_status", "reason"],
+          "provenance_fields": ["final_verify_ref"],
+          "status_fields": ["result_level", "proof_use_status"],
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {
+            "result_level": ["diagnostic_only", "search_only", "lean_patch_candidate", "final_theorem"],
+            "proof_use_status": ["not_allowed", "diagnostic_only", "search_only", "lean_patch_candidate", "final_theorem"]
+          }
+        },
+        "DiagnosticBundle": {
+          "required_fields": ["schema_version", "kind", "origin", "suggested_action", "status"],
+          "provenance_fields": [],
+          "status_fields": ["kind", "status"],
+          "proof_use_fields": [],
+          "allowed_values": {
+            "kind": ["resource_rejected", "solver_timeout", "unsupported_contract", "verification_failed", "dependency_unavailable"],
+            "status": ["open", "blocked", "resolved", "diagnostic_only"]
+          }
+        },
+        "PluginManifest": {
+          "required_fields": [
+            "schema_version",
+            "plugin_id",
+            "manifest_version",
+            "plugin_kind",
+            "capability_id",
+            "capability_kind",
+            "contract_version"
+          ],
+          "provenance_fields": ["schema_root"],
+          "status_fields": [],
+          "proof_use_fields": []
+        },
+        "FinalVerifyReport": {
+          "required_fields": [
+            "schema_version",
+            "report_id",
+            "target_obligation_id",
+            "theorem_statement_hash",
+            "protected_theorem_hash_unchanged",
+            "lean_status",
+            "forbidden_axiom_status",
+            "sorry_status",
+            "proof_use_status"
+          ],
+          "provenance_fields": ["lean_artifact_ref", "proof_artifact_ref"],
+          "status_fields": ["lean_status", "forbidden_axiom_status", "sorry_status", "proof_use_status"],
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {
+            "lean_status": ["passed", "failed", "blocked"],
+            "forbidden_axiom_status": ["clean", "failed", "not_checked"],
+            "sorry_status": ["clean", "failed", "not_checked"],
+            "proof_use_status": ["final_theorem"]
+          }
+        }
+      }
+    }
   }
 }

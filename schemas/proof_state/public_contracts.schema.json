@@ -1,9 +1,94 @@
 {
   "$id": "proof_state.public_contracts.v1",
   "type": "object",
-  "required": ["schema_version", "record_type"],
+  "required": ["schema_version", "contract_schemas"],
   "properties": {
-    "schema_version": {"type": "string"},
-    "record_type": {"type": "string"}
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "contract_schemas": {
+      "type": "object",
+      "required": [
+        "Obligation",
+        "ObligationNode",
+        "Derivation",
+        "DerivationNode",
+        "EvidenceRef",
+        "GraphPatch",
+        "GraphPatchCommitResult"
+      ],
+      "properties": {
+        "Obligation": {
+          "required_fields": ["obligation_id", "statement_hash", "status", "parent_obligation_ids", "blocker_refs"],
+          "provenance_fields": ["statement_hash", "blocker_refs"],
+          "status_fields": ["status"],
+          "proof_use_fields": [],
+          "allowed_values": {"status": ["open", "blocked", "closed", "invalidated"]}
+        },
+        "ObligationNode": {
+          "required_fields": ["obligation_id", "statement_hash", "status", "parent_obligation_ids", "blocker_refs"],
+          "provenance_fields": ["statement_hash", "blocker_refs"],
+          "status_fields": ["status"],
+          "proof_use_fields": [],
+          "allowed_values": {"status": ["open", "blocked", "closed", "invalidated"]}
+        },
+        "Derivation": {
+          "required_fields": [
+            "derivation_id",
+            "conclusion_obligation_id",
+            "rule_id",
+            "evidence_refs",
+            "required_side_condition_ids",
+            "proof_use_status",
+            "final_verify_ref",
+            "protected_theorem_hash_unchanged"
+          ],
+          "provenance_fields": ["conclusion_obligation_id", "evidence_refs", "required_side_condition_ids", "final_verify_ref"],
+          "status_fields": ["proof_use_status"],
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {
+            "proof_use_status": ["not_allowed", "diagnostic_only", "search_only", "lean_patch_candidate", "final_theorem"]
+          }
+        },
+        "DerivationNode": {
+          "required_fields": [
+            "derivation_id",
+            "conclusion_obligation_id",
+            "rule_id",
+            "evidence_refs",
+            "required_side_condition_ids",
+            "proof_use_status",
+            "final_verify_ref",
+            "protected_theorem_hash_unchanged"
+          ],
+          "provenance_fields": ["conclusion_obligation_id", "evidence_refs", "required_side_condition_ids", "final_verify_ref"],
+          "status_fields": ["proof_use_status"],
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {
+            "proof_use_status": ["not_allowed", "diagnostic_only", "search_only", "lean_patch_candidate", "final_theorem"]
+          }
+        },
+        "EvidenceRef": {
+          "required_fields": ["evidence_id", "artifact_ref", "evidence_status", "media_type", "content_hash"],
+          "provenance_fields": ["artifact_ref", "content_hash"],
+          "status_fields": ["evidence_status"],
+          "proof_use_fields": [],
+          "allowed_values": {
+            "evidence_status": ["used_in_search", "used_in_final_proof", "diagnostic_only", "abandoned", "refuted_key_branch"]
+          }
+        },
+        "GraphPatch": {
+          "required_fields": ["patch_id", "schema_id", "obligations", "evidence_refs", "derivations", "invalidate_obligation_ids"],
+          "provenance_fields": ["patch_id"],
+          "status_fields": ["schema_id"],
+          "proof_use_fields": []
+        },
+        "GraphPatchCommitResult": {
+          "required_fields": ["schema_version", "patch_id", "status", "committed_obligation_ids", "closed_obligation_ids", "blocker_summary"],
+          "provenance_fields": ["patch_id", "committed_obligation_ids", "closed_obligation_ids"],
+          "status_fields": ["status"],
+          "proof_use_fields": [],
+          "allowed_values": {"status": ["committed", "rejected"]}
+        }
+      }
+    }
   }
 }
