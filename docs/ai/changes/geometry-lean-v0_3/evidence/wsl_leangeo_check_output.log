@@ -1,1 +1,3 @@
+warning: ././.lake/packages/lib/lakefile.lean:6:2: warning: unknown 'PackageConfig' field 'supportInterpreter'
+
 MathAutoResearch.GeometryFixture.fixture_collinear (A B C : Point) (h : Coll A B C) : Coll A B C

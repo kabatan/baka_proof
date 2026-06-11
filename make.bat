@@ -33,7 +33,11 @@ if "%1"=="smoke-target-library-status" (
   exit /b %ERRORLEVEL%
 )
 if "%1"=="smoke-geometry-extraction" (
-  python scripts\smoke_geometry_extraction.py
+  python scripts\smoke_leangeo_extraction.py
+  exit /b %ERRORLEVEL%
+)
+if "%1"=="smoke-geometry-context-fixture" (
+  python scripts\smoke_geometry_context_fixture.py
   exit /b %ERRORLEVEL%
 )
 if "%1"=="smoke-leangeo-fixture" (

@@ -16,7 +16,7 @@ cmd /c make smoke-leangeo-fixture
 cmd /c make smoke-leangeo-extraction
 cmd /c make test-unit
 cmd /c make test-mutation TEST_FILTER=extraction
-cmd /c make smoke-geometry-extraction > docs\ai\changes\geometry-lean-v0_3\evidence\geometry_extraction_smoke.json
+cmd /c make smoke-geometry-extraction
 cmd /c make lean-build
 cmd /c make lean-no-sorry
 python scripts/check_domain_contamination.py
@@ -29,7 +29,7 @@ python scripts/check_domain_contamination.py
 - LeanGeo extraction smoke: WSL `lake env lean` emitted a `#check` signature, and extraction produced `GeometryClaimSpec` from that Lean output with `proof_use_status = not_allowed`.
 - Full unit suite: `Ran 42 tests ... OK`.
 - Mutation target: `Ran 12 tests ... OK`.
-- Geometry extraction smoke: passed and regenerated `geometry_extraction_smoke.json`.
+- Geometry extraction smoke: `make smoke-geometry-extraction` now runs the LeanGeo `#check` output path and regenerates `leangeo_extraction_smoke.json`.
 - Lean root build: `Build completed successfully`; warnings only from transitive package metadata/local dependency cache state.
 - Lean no-sorry check: passed.
 - Domain contamination check: passed.

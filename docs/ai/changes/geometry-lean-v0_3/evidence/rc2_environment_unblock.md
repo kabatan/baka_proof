@@ -26,8 +26,7 @@ The user explicitly authorized environment changes, including Lean install/updat
 - `wsl_lake_build_leangeo_target.log`: full `lake build LeanGeo` progressed through `SystemE` and `LeanGeo.Abbre` before the long build was stopped; no RC-2 claim depends on full LeanGeo theorem corpus build.
 - `wsl_leangeo_fixture_check.log`: `lake env lean .tmp/LeanGeoFixture.lean` passed for a minimal fixture importing `LeanGeo.Abbre` and elaborating `Point`, `Line`, `Coll`, `MidPoint`, `Cyclic`, and line intersection negation.
 - `wsl_leangeo_check_output.log`: WSL `lake env lean` emitted a real Lean `#check` signature for a LeanGeo.Abbre theorem fixture.
-- `leangeo_extraction_smoke.json`: extraction produced `GeometryClaimSpec` from the real Lean `#check` signature, not from a manually populated context.
-- `geometry_extraction_smoke.json`: extraction smoke accepts only an elaborated-context claim and marks proof use as `not_allowed`.
+- `leangeo_extraction_smoke.json`: `make smoke-geometry-extraction` produced `GeometryClaimSpec` from the real Lean `#check` signature, not from a manually populated context.
 
 ## Native Windows Limitation
 

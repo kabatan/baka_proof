@@ -19,7 +19,7 @@
     },
     "target_library": "LeanGeoSubsetV1:1.0.0"
   },
-  "lean_output": "MathAutoResearch.GeometryFixture.fixture_collinear (A B C : Point) (h : Coll A B C) : Coll A B C\n",
+  "lean_output": "warning: ././.lake/packages/lib/lakefile.lean:6:2: warning: unknown 'PackageConfig' field 'supportInterpreter'\n\nMathAutoResearch.GeometryFixture.fixture_collinear (A B C : Point) (h : Coll A B C) : Coll A B C\n",
   "report": {
     "claim_spec_ref": "geometry_claim:559bf0946ddb4531",
     "direction_available": null,

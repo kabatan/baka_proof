@@ -1,4 +1,4 @@
-.PHONY: test-unit test-mutation smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-leangeo-fixture smoke-leangeo-extraction
+.PHONY: test-unit test-mutation smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction
 
 PYTHON ?= python
 
@@ -27,7 +27,10 @@ smoke-target-library-status:
 	$(PYTHON) -m math_auto_research.cli.report_target_library_status
 
 smoke-geometry-extraction:
-	$(PYTHON) scripts/smoke_geometry_extraction.py
+	$(PYTHON) scripts/smoke_leangeo_extraction.py
+
+smoke-geometry-context-fixture:
+	$(PYTHON) scripts/smoke_geometry_context_fixture.py
 
 smoke-leangeo-fixture:
 	$(PYTHON) scripts/check_leangeo_wsl_fixture.py
