@@ -16,6 +16,7 @@ authority: Evidence record only; does not override Base Spec, Plan, or reviewer 
 - Budget rules for `tiny`, `small`, `medium`, `heavy`, and `extreme`.
 - Reason codes for routing, construction fallback, symbolic retry, heavy search admission, and heavy search rejection.
 - Resource semaphore requests per engine role using `ResourceRequest`.
+- Execution plans include `policy_ref` and deterministic `policy_hash`.
 - Heavy search is only planned under `heavy | extreme` budgets with explicit escalation/heavy request; lower budgets record a rejection reason instead of bypassing `ResourceGovernor`.
 
 ## Verification

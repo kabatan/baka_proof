@@ -40,6 +40,8 @@ class GeometrySolverPolicyTest(unittest.TestCase):
         )
         self.assertNotIn(ENGINE_HEAVY_SEARCH, roles)
         self.assertEqual(len(plan.semaphore_requests), len(plan.steps))
+        self.assertEqual(plan.policy_ref, default_geometry_solver_policy().policy_id)
+        self.assertEqual(plan.policy_hash, default_geometry_solver_policy().policy_hash())
 
     def test_heavy_search_requires_heavy_budget_and_escalation(self) -> None:
         medium = default_geometry_solver_policy().build_execution_plan(

@@ -1,58 +1,60 @@
 {
   "manifest": {
     "adapter_versions": {
-      "construction_proposer": "dummy-construction:0.1",
-      "heavy_search": "dummy-heavy:0.1",
-      "symbolic_closure": "dummy-symbolic:0.1"
+      "construction_proposer": "genesisgeo-compatible-fixture:0.1",
+      "heavy_search": "tonggeometry-compatible-fixture:0.1",
+      "symbolic_closure": "newclid-compatible-fixture:0.1"
     },
     "engine_runs": [
       {
         "adapter_commit": "dummy-adapter-local",
-        "adapter_version": "dummy-symbolic:0.1",
+        "adapter_version": "newclid-compatible-fixture:0.1",
         "checkpoint_hash": "not_applicable",
-        "config_hash": "36cf4f4fd691b213",
+        "config_hash": "2fcdc1126e0c246a",
         "engine_family": "symbolic_closure",
         "engine_role": "symbolic_closure",
         "normalized_output_ref": null,
-        "raw_output_hash": "fb57d1da30fb8d59",
+        "raw_output_hash": "9cb446b7e294ea9b",
         "resource_usage_ref": "resource_usage:geometry_request:smoke:default:medium:symbolic_closure:32691b52f950b047",
         "seed": 0,
         "status": "diagnostic_only"
       },
       {
         "adapter_commit": "dummy-adapter-local",
-        "adapter_version": "dummy-construction:0.1",
+        "adapter_version": "genesisgeo-compatible-fixture:0.1",
         "checkpoint_hash": "not_applicable",
-        "config_hash": "57c4da00c71e106e",
+        "config_hash": "04356b4064beb16b",
         "engine_family": "construction_proposer",
         "engine_role": "construction_proposer",
-        "normalized_output_ref": null,
-        "raw_output_hash": "0d040804bca10755",
+        "normalized_output_ref": "aux_construction_candidate:geometry_request:smoke:default:medium:construction_proposer",
+        "raw_output_hash": "5c35a0dcb2720e82",
         "resource_usage_ref": "resource_usage:geometry_request:smoke:default:medium:construction_proposer:5501a0ac61137f17",
         "seed": 0,
-        "status": "diagnostic_only"
+        "status": "auxiliary_construction_candidate"
       },
       {
         "adapter_commit": "dummy-adapter-local",
-        "adapter_version": "dummy-symbolic:0.1",
+        "adapter_version": "newclid-compatible-fixture:0.1",
         "checkpoint_hash": "not_applicable",
-        "config_hash": "36cf4f4fd691b213",
+        "config_hash": "2fcdc1126e0c246a",
         "engine_family": "symbolic_closure",
         "engine_role": "symbolic_closure",
         "normalized_output_ref": null,
-        "raw_output_hash": "7546e55cfd26824a",
+        "raw_output_hash": "9cb446b7e294ea9b",
         "resource_usage_ref": "resource_usage:geometry_request:smoke:default:medium:symbolic_closure:8f00e012d404fcff",
         "seed": 0,
         "status": "diagnostic_only"
       }
     ],
-    "manifest_id": "provider_run_manifest:2cf6a11c9e98c618",
-    "normalized_output_refs": [],
+    "manifest_id": "provider_run_manifest:0cc7d502ba41926c",
+    "normalized_output_refs": [
+      "aux_construction_candidate:geometry_request:smoke:default:medium:construction_proposer"
+    ],
     "provider_id": "geometry_solver_provider:composite_synthetic:v1",
     "raw_output_hashes": [
-      "fb57d1da30fb8d59",
-      "0d040804bca10755",
-      "7546e55cfd26824a"
+      "9cb446b7e294ea9b",
+      "5c35a0dcb2720e82",
+      "9cb446b7e294ea9b"
     ],
     "request_id": "geometry_request:smoke:default:medium",
     "resource_usage_refs": [
@@ -70,7 +72,8 @@
       "budget": "medium",
       "component": "geometry_solver_provider",
       "cpu_time_sec": 0,
-      "ended_at": "1781189167.3996134",
+      "ended_at": "1781189991.2440536",
+      "engine_role": "symbolic_closure",
       "exit_status": "completed",
       "gpu_vram_peak_mb": null,
       "logs_ref": "inline_dummy_adapter",
@@ -80,7 +83,7 @@
       "role": "symbolic_closure",
       "run_id": "geometry_request:smoke:default:medium",
       "schema_version": "1.0.0",
-      "started_at": "1781189167.3986127",
+      "started_at": "1781189991.2440536",
       "wall_time_sec": 0.0
     },
     {
@@ -88,7 +91,8 @@
       "budget": "medium",
       "component": "geometry_solver_provider",
       "cpu_time_sec": 0,
-      "ended_at": "1781189167.3996134",
+      "ended_at": "1781189991.2440536",
+      "engine_role": "construction_proposer",
       "exit_status": "completed",
       "gpu_vram_peak_mb": null,
       "logs_ref": "inline_dummy_adapter",
@@ -98,7 +102,7 @@
       "role": "construction_proposer",
       "run_id": "geometry_request:smoke:default:medium",
       "schema_version": "1.0.0",
-      "started_at": "1781189167.3996134",
+      "started_at": "1781189991.2440536",
       "wall_time_sec": 0.0
     },
     {
@@ -106,7 +110,8 @@
       "budget": "medium",
       "component": "geometry_solver_provider",
       "cpu_time_sec": 0,
-      "ended_at": "1781189167.3996134",
+      "ended_at": "1781189991.2440536",
+      "engine_role": "symbolic_closure",
       "exit_status": "completed",
       "gpu_vram_peak_mb": null,
       "logs_ref": "inline_dummy_adapter",
@@ -116,23 +121,25 @@
       "role": "symbolic_closure",
       "run_id": "geometry_request:smoke:default:medium",
       "schema_version": "1.0.0",
-      "started_at": "1781189167.3996134",
+      "started_at": "1781189991.2440536",
       "wall_time_sec": 0.0
     }
   ],
   "result": {
-    "construction_candidate_refs": [],
+    "construction_candidate_refs": [
+      "aux_construction_candidate:geometry_request:smoke:default:medium:construction_proposer"
+    ],
     "diagnostic_refs": [
-      "diagnostic:geometry_request:smoke:default:medium:symbolic_closure:dummy_adapter",
-      "diagnostic:geometry_request:smoke:default:medium:construction_proposer:dummy_adapter",
-      "diagnostic:geometry_request:smoke:default:medium:symbolic_closure:dummy_adapter"
+      "diagnostic:geometry_request:smoke:default:medium:symbolic_closure:newclid_fixture",
+      "diagnostic:geometry_request:smoke:default:medium:construction_proposer:genesis_fixture",
+      "diagnostic:geometry_request:smoke:default:medium:symbolic_closure:newclid_fixture"
     ],
     "geotrace_ref": null,
     "proof_use_status": "not_allowed",
-    "provider_run_manifest_ref": "provider_run_manifest:2cf6a11c9e98c618",
+    "provider_run_manifest_ref": "provider_run_manifest:0cc7d502ba41926c",
     "request_id": "geometry_request:smoke:default:medium",
     "result_id": "provider_result:geometry_request:smoke:default:medium",
     "schema_version": "1.0.0",
-    "status": "unsupported"
+    "status": "partial"
   }
 }

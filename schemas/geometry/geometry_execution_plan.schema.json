@@ -8,13 +8,17 @@
     "steps",
     "budget",
     "reason_codes",
-    "semaphore_requests"
+    "semaphore_requests",
+    "policy_ref",
+    "policy_hash"
   ],
   "properties": {
     "schema_version": {"type": "string", "enum": ["1.0.0"]},
     "plan_id": {"type": "string", "pattern": "^geometry_execution_plan:.*"},
     "request_id": {"type": "string"},
     "budget": {"type": "string", "enum": ["tiny", "small", "medium", "heavy", "extreme"]},
+    "policy_ref": {"type": "string", "pattern": "^geometry_solver_policy:.*"},
+    "policy_hash": {"type": "string"},
     "reason_codes": {
       "type": "array",
       "items": {"type": "string"},

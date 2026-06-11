@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import time
 import tempfile
 import unittest
 from pathlib import Path
@@ -9,6 +10,8 @@ from math_auto_research.schema_validation import validate_artifact
 from plugins.geometry_synthetic.facade import GeometrySolveRequest
 from plugins.geometry_synthetic.provider import (
     CompositeSyntheticGeometryProvider,
+    EngineAdapterResult,
+    TongGeometryCompatibleHeavySearchAdapter,
     convert_claim_spec_to_newclid_fixture,
     propose_auxiliary_construction_candidate,
 )
@@ -108,6 +111,29 @@ class CompositeProviderTest(unittest.TestCase):
         self.assertIn("tonggeometry-compatible-fixture", heavy.manifest.adapter_versions["heavy_search"])
         self.assertEqual(heavy.result.proof_use_status, "not_allowed")
         self.assertIsNone(heavy.result.geotrace_ref)
+
+    def test_heavy_search_timeout_records_killed_without_output_promotion(self) -> None:
+        class SlowHeavyAdapter(TongGeometryCompatibleHeavySearchAdapter):
+            def run(self, request: GeometrySolveRequest, step) -> EngineAdapterResult:  # type: ignore[no-untyped-def]
+                time.sleep(0.05)
+                return super().run(request, step)
+
+        provider = CompositeSyntheticGeometryProvider()
+        provider.adapters["heavy_search"] = SlowHeavyAdapter()
+        request = request_for(
+            "heavy",
+            {
+                "explicit_escalation": True,
+                "heavy_search_requested": True,
+                "claim_spec": claim_spec_fixture(),
+                "heavy_search_timeout_sec": 0.001,
+            },
+        )
+        run = provider.run(request)
+        self.assertEqual(run.resource_usage_reports[-1]["engine_role"], "heavy_search")
+        self.assertEqual(run.resource_usage_reports[-1]["admission_status"], "timeout")
+        self.assertEqual(run.resource_usage_reports[-1]["exit_status"], "killed")
+        self.assertEqual(run.result.proof_use_status, "not_allowed")
 
     def test_base_source_does_not_branch_on_internal_engine_names(self) -> None:
         base_files = list(Path("src/math_auto_research/base").rglob("*.py"))

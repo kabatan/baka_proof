@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import threading
 import time
 from dataclasses import asdict, dataclass
 from typing import Any
@@ -228,10 +229,11 @@ class CompositeSyntheticGeometryProvider:
             started_at = time.time()
             start_monotonic = time.monotonic()
             try:
+                _apply_timeout_override(request, step)
                 with self.governor.admit(step.resource_request):
-                    adapter_result = adapter.run(request, step)
-                admission_status = "admitted"
-                exit_status = "completed"
+                    adapter_result, timed_out = _run_adapter_with_timeout(adapter, request, step)
+                admission_status = "timeout" if timed_out else "admitted"
+                exit_status = "killed" if timed_out else "completed"
             except ResourceRejected as exc:
                 adapter_result = EngineAdapterResult(
                     engine_role=step.engine_role,
@@ -342,6 +344,7 @@ def _resource_usage_report(
         "report_id": f"resource_usage:{request.request_id}:{step.engine_role}:{_hash_text(step.step_id)}",
         "run_id": request.request_id,
         "role": step.engine_role,
+        "engine_role": step.engine_role,
         "admission_status": admission_status,
         "started_at": str(started_at),
         "ended_at": str(ended_at),
@@ -359,6 +362,52 @@ def _resource_usage_report(
 
 def _hash_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def _run_adapter_with_timeout(
+    adapter: DummyEngineAdapter,
+    request: GeometrySolveRequest,
+    step: GeometryExecutionStep,
+) -> tuple[EngineAdapterResult, bool]:
+    holder: dict[str, EngineAdapterResult] = {}
+
+    def target() -> None:
+        holder["result"] = adapter.run(request, step)
+
+    thread = threading.Thread(target=target, daemon=True)
+    thread.start()
+    thread.join(step.resource_request.timeout_sec)
+    if thread.is_alive():
+        raw_output = json.dumps(
+            {
+                "engine_role": step.engine_role,
+                "request_id": request.request_id,
+                "status": "timeout_killed",
+                "timeout_sec": step.resource_request.timeout_sec,
+            },
+            sort_keys=True,
+        )
+        return (
+            EngineAdapterResult(
+                engine_role=step.engine_role,
+                status="timeout",
+                raw_output=raw_output,
+                normalized_output_ref=None,
+                diagnostic_ref=f"diagnostic:{request.request_id}:{step.engine_role}:timeout_killed",
+            ),
+            True,
+        )
+    return holder["result"], False
+
+
+def _apply_timeout_override(request: GeometrySolveRequest, step: GeometryExecutionStep) -> None:
+    key = f"{step.engine_role}_timeout_sec"
+    if key not in request.constraints:
+        return
+    override = float(request.constraints[key])
+    if override <= 0:
+        return
+    object.__setattr__(step.resource_request, "timeout_sec", override)
 
 
 def convert_claim_spec_to_newclid_fixture(claim_spec: dict[str, Any]) -> dict[str, Any]:

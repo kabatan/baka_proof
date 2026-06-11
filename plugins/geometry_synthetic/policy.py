@@ -44,6 +44,8 @@ class GeometryExecutionPlan:
     budget: str
     reason_codes: tuple[str, ...]
     semaphore_requests: tuple[dict[str, Any], ...]
+    policy_ref: str
+    policy_hash: str
 
     def to_dict(self) -> dict[str, Any]:
         payload = asdict(self)
@@ -120,6 +122,7 @@ class GeometrySolverPolicy:
         elif request.constraints.get("explicit_escalation") or request.constraints.get("heavy_search_requested"):
             reason_codes.append(REASON_HEAVY_REJECTED)
 
+        policy_hash = self.policy_hash()
         return GeometryExecutionPlan(
             schema_version="1.0.0",
             plan_id=f"geometry_execution_plan:{_digest(request.request_id, reason_codes)}",
@@ -128,7 +131,13 @@ class GeometrySolverPolicy:
             budget=request.budget,
             reason_codes=tuple(reason_codes),
             semaphore_requests=tuple(_semaphore_request(step) for step in steps),
+            policy_ref=self.policy_id,
+            policy_hash=policy_hash,
         )
+
+    def policy_hash(self) -> str:
+        payload = self.to_dict()
+        return _hash_json(payload)
 
 
 def default_geometry_solver_policy() -> GeometrySolverPolicy:
@@ -216,4 +225,9 @@ def _semaphore_request(step: GeometryExecutionStep) -> dict[str, Any]:
 
 def _digest(request_id: str, reason_codes: list[str]) -> str:
     encoded = json.dumps({"request_id": request_id, "reason_codes": reason_codes}, sort_keys=True)
+    return hashlib.sha256(encoded.encode("utf-8")).hexdigest()[:16]
+
+
+def _hash_json(payload: dict[str, Any]) -> str:
+    encoded = json.dumps(payload, sort_keys=True)
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()[:16]
