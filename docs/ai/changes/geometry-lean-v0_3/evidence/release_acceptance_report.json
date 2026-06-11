@@ -1,4 +1,36 @@
 {
+  "blocked_real_integrations": [
+    {
+      "check_id": "real_engine_newclid_compatible",
+      "details": {
+        "component": "newclid_compatible",
+        "consequence": "blocks_real_final_theorem",
+        "evidence": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\dependency_probe.json",
+        "fixture_fallback": "Newclid-compatible symbolic fixture adapter only"
+      },
+      "status": "blocked"
+    },
+    {
+      "check_id": "real_engine_genesisgeo_compatible",
+      "details": {
+        "component": "genesisgeo_compatible",
+        "consequence": "blocks_real_final_theorem",
+        "evidence": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\dependency_probe.json",
+        "fixture_fallback": "GenesisGeo-compatible construction fixture adapter only"
+      },
+      "status": "blocked"
+    },
+    {
+      "check_id": "real_engine_tonggeometry_compatible",
+      "details": {
+        "component": "tonggeometry_compatible",
+        "consequence": "blocks_heavy_search",
+        "evidence": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\dependency_probe.json",
+        "fixture_fallback": "TongGeometry-compatible heavy-search fixture adapter only"
+      },
+      "status": "blocked"
+    }
+  ],
   "checks": [
     {
       "check_id": "benchmark_config",
@@ -92,8 +124,83 @@
           "tests.unit.test_schema_validation"
         ],
         "returncode": 0,
-        "stderr_tail": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.014s\n\nOK\n",
+        "stderr_tail": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.013s\n\nOK\n",
         "stdout_tail": ""
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "gate:make_test",
+      "details": {
+        "command": [
+          "cmd",
+          "/c",
+          "make",
+          "test"
+        ],
+        "returncode": 0,
+        "stderr_tail": "....................................................................................\n----------------------------------------------------------------------\nRan 84 tests in 11.518s\n\nOK\n.....................................................................\n----------------------------------------------------------------------\nRan 69 tests in 6.240s\n\nOK\n.............................................\n----------------------------------------------------------------------\nRan 45 tests in 2.403s\n\nOK\n............\n----------------------------------------------------------------------\nRan 12 tests in 3.616s\n\nOK\n",
+        "stdout_tail": "domain contamination check passed\nno loose options check passed\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "gate:make_test_regression",
+      "details": {
+        "command": [
+          "cmd",
+          "/c",
+          "make",
+          "test-regression"
+        ],
+        "returncode": 0,
+        "stderr_tail": ".....................................................................\n----------------------------------------------------------------------\nRan 69 tests in 6.169s\n\nOK\n",
+        "stdout_tail": "domain contamination check passed\nno loose options check passed\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "gate:make_test_mutation",
+      "details": {
+        "command": [
+          "cmd",
+          "/c",
+          "make",
+          "test-mutation"
+        ],
+        "returncode": 0,
+        "stderr_tail": ".............................................\n----------------------------------------------------------------------\nRan 45 tests in 2.408s\n\nOK\n",
+        "stdout_tail": ""
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "gate:make_lean_build",
+      "details": {
+        "command": [
+          "cmd",
+          "/c",
+          "make",
+          "lean-build"
+        ],
+        "returncode": 0,
+        "stderr_tail": "warning: UnicodeBasic: repository '.\\.\\.lake/packages\\UnicodeBasic' has local changes\nwarning: batteries: repository '.\\.\\.lake/packages\\batteries' has local changes\n",
+        "stdout_tail": "Build completed successfully.\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "gate:make_lean_no_sorry",
+      "details": {
+        "command": [
+          "cmd",
+          "/c",
+          "make",
+          "lean-no-sorry"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "lean no-sorry check passed\n"
       },
       "status": "passed"
     },
@@ -109,7 +216,191 @@
   ],
   "claim_ceiling": "fixture_level_release_acceptance_not_v0_3_completion_claim",
   "config_ref": "configs\\benchmark_runs\\geometry_level2_smoke.yaml",
-  "report_id": "release_acceptance:1781194435",
+  "release_blocker_accounting": [
+    {
+      "check_id": "release_blocker_01_base_domain_contamination",
+      "details": {
+        "evidence": "scripts/check_domain_contamination.py"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_02_no_agent_cd_core_modes",
+      "details": {
+        "evidence": "scripts/check_no_loose_options.py"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_03_single_target_library",
+      "details": {
+        "evidence": "tests.unit.test_target_library_status"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_04_no_real_final_claim_without_dependency",
+      "details": {
+        "evidence": "claim ceiling and release report"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_05_model_injection_boundary",
+      "details": {
+        "evidence": "tests.unit.test_model_provider_set"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_06_no_provider_names_in_base",
+      "details": {
+        "evidence": "tests.unit.test_composite_provider"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_07_resource_governor_for_provider",
+      "details": {
+        "evidence": "tests.unit.test_resource_governor"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_08_heavy_search_budget_guard",
+      "details": {
+        "evidence": "tests.unit.test_composite_provider"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_09_raw_output_cannot_close",
+      "details": {
+        "evidence": "tests.unit.test_geometry_bridge"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_10_raw_dsl_no_goal_proof_use",
+      "details": {
+        "evidence": "tests.unit.test_geometry_bridge"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_11_rule_registry_side_conditions",
+      "details": {
+        "evidence": "tests.unit.test_geotrace_rule_registry"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_12_missing_side_condition_blocks",
+      "details": {
+        "evidence": "tests.unit.test_trace_compiler"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_13_protected_statement_guard",
+      "details": {
+        "evidence": "tests.unit.test_final_verify"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_14_run_dependency_reports_present",
+      "details": {
+        "evidence": "release evidence files"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_15_fresh_evidence_backing",
+      "details": {
+        "evidence": "t27_verification and release_acceptance_report"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_16_v03_source_fidelity_accounted",
+      "details": {
+        "evidence": "rc reviews and source-fidelity evidence"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_17_public_contract_schema_metadata",
+      "details": {
+        "evidence": "tests.unit.test_schema_validation"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_18_repository_anatomy_indexed",
+      "details": {
+        "evidence": "docs/ai/INDEX.md and evidence/INDEX.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_19_evaluation_replay_counts",
+      "details": {
+        "evidence": "tests.unit.test_evaluation_matrix"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "release_blocker_20_extensions_do_not_change_semantics",
+      "details": {
+        "evidence": "claim ceiling and source map"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "final_check_target_subset_contract",
+      "details": {
+        "evidence": "tests.unit.test_geometry_extraction"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "final_check_model_boundaries",
+      "details": {
+        "evidence": "tests.unit.test_model_provider_set"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "final_check_solver_provider",
+      "details": {
+        "evidence": "tests.unit.test_composite_provider"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "final_check_compiler_contract",
+      "details": {
+        "evidence": "tests.unit.test_trace_compiler"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "final_check_proof_state_trust",
+      "details": {
+        "evidence": "tests.unit.test_proof_state_dag"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "final_check_evaluation_replay",
+      "details": {
+        "evidence": "tests.unit.test_run_trace and tests.unit.test_evaluation_matrix"
+      },
+      "status": "passed"
+    }
+  ],
+  "report_id": "release_acceptance:1781194817",
   "schema_version": "1.0.0",
   "status": "passed"
 }

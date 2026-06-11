@@ -61,10 +61,13 @@ Disallowed or unproven claims:
 - Do not claim real Level 2 advantage beyond fixture counts.
 - Do not claim `SOURCE_FAITHFUL`, `ACCEPTANCE_COMPLETE`, `PRODUCTION_SAFE`, v0.3 completion, or any R-ID as VERIFIED until final required reviews pass.
 
-Blocked items:
+Blocked items for real integration:
 
-- None recorded for fixture-level release acceptance at this point.
+- `newclid_compatible`: unavailable in `evidence/dependency_probe.json`; blocks real final theorem support beyond the Newclid-compatible symbolic fixture adapter.
+- `genesisgeo_compatible`: unavailable in `evidence/dependency_probe.json`; blocks real final theorem support beyond the GenesisGeo-compatible construction fixture adapter.
+- `tonggeometry_compatible`: unavailable in `evidence/dependency_probe.json`; blocks real heavy-search support beyond the TongGeometry-compatible fixture adapter.
+- Full LeanGeo theorem-corpus support remains outside the current evidence ceiling; current Lean evidence is limited to LeanGeo.Abbre extraction fixtures and the local worker-applied final-verification fixture.
 
 ## Closure Statement
 
-This is a review-pending closure draft. It is valid only within the claim ceiling above and must be superseded by final Guardian/spec/quality review evidence before any completion claim.
+This is a review-pending closure draft. It is valid only within the fixture-level claim ceiling above and must be superseded by final Guardian/spec/quality review evidence before any completion claim.

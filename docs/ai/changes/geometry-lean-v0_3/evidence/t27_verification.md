@@ -65,11 +65,15 @@ Result: passed.
 python scripts/check_release_acceptance.py --config configs/benchmark_runs/geometry_level2_smoke.yaml
 ```
 
-Result: passed. The generated release acceptance report records:
+Result: passed after spec-verifier blocker remediation. The generated release acceptance report records:
 
 - `status = passed`;
 - all required review evidence files present through RC-5;
+- release blocker and final checklist accounting present;
+- real Newclid/GenesisGeo/TongGeometry integrations explicitly marked blocked with dependency evidence;
 - domain contamination, no-loose-options, and schema validation checks passed;
+- required release gate commands recorded;
+- T27 gate commands rerun inside release acceptance: `make test`, `make test-regression`, `make test-mutation`, `make lean-build`, and `make lean-no-sorry`;
 - Level 2 matrix check passed with six baselines;
 - claim ceiling `fixture_level_release_acceptance_not_v0_3_completion_claim`.
 

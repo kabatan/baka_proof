@@ -60,7 +60,7 @@ Completed task: `T27 — Release acceptance and closure`.
 
 Current gate: `Final closure review — spec verifier, quality reviewer, and Guardian boundary reviewer`.
 
-Claim ceiling from RC-2 remains active: do not claim full LeanGeo theorem-corpus build, solver/compiler integration, final theorem support, v0.3 completion, R-ID VERIFIED status, or evidence beyond the LeanGeo.Abbre elaborated `#check` fixture path.
+Current claim ceiling: do not claim full LeanGeo theorem-corpus build, real Newclid/GenesisGeo/TongGeometry integration, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3 completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. Current positive claims are limited to the recorded fixture-level implementation evidence, including LeanGeo.Abbre extraction fixtures, the worker-applied local final-verification fixture, run trace/replay fixtures, and the Level 2 smoke matrix fixture.
 
 ## Evidence Directory
 
