@@ -1,0 +1,24 @@
+{
+  "$id": "base.run_record.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "run_id",
+    "created_at",
+    "target_library",
+    "selected_implementations_ref",
+    "trust_boundary",
+    "artifact_refs"
+  ],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "run_id": {"type": "string"},
+    "created_at": {"type": "string"},
+    "target_library": {"type": "string"},
+    "selected_implementations_ref": {"type": "string"},
+    "trust_boundary": {"type": "string"},
+    "artifact_refs": {"type": "array", "items": {"type": "string"}},
+    "dependency_profile_ref": {},
+    "resource_profile_ref": {}
+  }
+}
