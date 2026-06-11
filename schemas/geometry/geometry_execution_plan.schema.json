@@ -1,0 +1,82 @@
+{
+  "$id": "geometry.geometry_execution_plan.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "plan_id",
+    "request_id",
+    "steps",
+    "budget",
+    "reason_codes",
+    "semaphore_requests"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "plan_id": {"type": "string", "pattern": "^geometry_execution_plan:.*"},
+    "request_id": {"type": "string"},
+    "budget": {"type": "string", "enum": ["tiny", "small", "medium", "heavy", "extreme"]},
+    "reason_codes": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "step_id",
+          "engine_role",
+          "action",
+          "reason_code",
+          "resource_request",
+          "fallback_on_failure"
+        ],
+        "properties": {
+          "step_id": {"type": "string"},
+          "engine_role": {
+            "type": "string",
+            "enum": ["symbolic_closure", "construction_proposer", "heavy_search"]
+          },
+          "action": {"type": "string"},
+          "reason_code": {"type": "string"},
+          "resource_request": {
+            "type": "object",
+            "required": ["component", "engine_role", "budget", "timeout_sec"],
+            "properties": {
+              "component": {"type": "string", "enum": ["geometry_solver_provider"]},
+              "engine_role": {
+                "type": "string",
+                "enum": ["symbolic_closure", "construction_proposer", "heavy_search"]
+              },
+              "budget": {"type": "string", "enum": ["tiny", "small", "medium", "heavy", "extreme"]},
+              "timeout_sec": {"type": "number", "exclusiveMinimum": 0}
+            },
+            "additionalProperties": false
+          },
+          "fallback_on_failure": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "semaphore_requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step_id", "engine_role", "budget", "timeout_sec"],
+        "properties": {
+          "step_id": {"type": "string"},
+          "engine_role": {
+            "type": "string",
+            "enum": ["symbolic_closure", "construction_proposer", "heavy_search"]
+          },
+          "budget": {"type": "string", "enum": ["tiny", "small", "medium", "heavy", "extreme"]},
+          "timeout_sec": {"type": "number", "exclusiveMinimum": 0}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

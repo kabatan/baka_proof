@@ -39,6 +39,11 @@ class GeometrySolveFacade:
     capability_id = "geometry.solve"
     target_library = "LeanGeoSubsetV1:1.0.0"
 
+    def plan(self, request: GeometrySolveRequest) -> dict[str, Any]:
+        from plugins.geometry_synthetic.policy import default_geometry_solver_policy
+
+        return default_geometry_solver_policy().build_execution_plan(request).to_dict()
+
     def solve(self, request: GeometrySolveRequest) -> ProviderResult:
         return ProviderResult(
             schema_version="1.0.0",
