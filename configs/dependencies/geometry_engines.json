@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "dependency_set_id": "geometry_engines:v03a_t002",
+  "claim_ceiling": "dependency_bootstrap_only_not_real_provider_run",
+  "python_packages": [
+    {
+      "name": "newclid",
+      "version": "3.0.1",
+      "extras": [
+        "yuclid"
+      ],
+      "source": "pypi",
+      "role": "symbolic_closure"
+    },
+    {
+      "name": "py-yuclid",
+      "version": "3.0.0",
+      "source": "pypi",
+      "role": "symbolic_closure"
+    }
+  ],
+  "submodules": [
+    {
+      "name": "GenesisGeo",
+      "path": "vendor/GenesisGeo",
+      "url": "https://github.com/ZJUVAI/GenesisGeo.git",
+      "commit": "e8c4337e782548a4d54e6839558a32965a5a764e",
+      "role": "construction_proposer"
+    },
+    {
+      "name": "tong-geometry",
+      "path": "vendor/tong-geometry",
+      "url": "https://github.com/bigai-ai/tong-geometry.git",
+      "commit": "d00925f07dc3174f91326386cb8e785e539a91a1",
+      "role": "heavy_search"
+    }
+  ]
+}

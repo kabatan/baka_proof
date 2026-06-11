@@ -1,0 +1,54 @@
+cpu:
+  logical_cores: 24
+  reserved_for_lean_and_os: 2
+  max_provider_workers: 22
+memory:
+  total_gb: 31.119
+  reserve_gb: 4
+  max_provider_memory_gb: 27
+gpu:
+  available: false
+  device_count: 0
+  vram_gb: null
+  allow_genesisgeo_gpu: true
+  allow_tonggeometry_gpu: false
+disk:
+  artifact_cache_limit_gb: 7
+  checkpoint_cache_limit_gb: 14
+  raw_log_limit_gb: 2
+process_policy:
+  use_process_groups: true
+  kill_on_timeout: true
+  heartbeat_interval_sec: 30
+budget_profiles:
+  tiny:
+    timeout_sec: 30
+    max_parallel_engines: 1
+    allowed_roles:
+      - "symbolic_closure"
+  small:
+    timeout_sec: 120
+    max_parallel_engines: 1
+    allowed_roles:
+      - "symbolic_closure"
+  medium:
+    timeout_sec: 600
+    max_parallel_engines: 2
+    allowed_roles:
+      - "symbolic_closure"
+      - "construction_proposer"
+  heavy:
+    timeout_sec: 3600
+    max_parallel_engines: 2
+    allowed_roles:
+      - "symbolic_closure"
+      - "construction_proposer"
+      - "heavy_search"
+    heavy_search_exclusive: true
+  extreme:
+    timeout_sec: 14400
+    max_parallel_engines: 1
+    allowed_roles:
+      - "heavy_search"
+    heavy_search_exclusive: true
+    requires_explicit_run_label: true

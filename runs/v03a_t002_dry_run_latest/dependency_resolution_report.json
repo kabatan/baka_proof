@@ -1,0 +1,124 @@
+{
+  "actions": [
+    {
+      "action_id": "python_package_newclid",
+      "command": [
+        "python",
+        "-m",
+        "pip",
+        "install",
+        "newclid[yuclid]"
+      ],
+      "component": "newclid_compatible",
+      "kind": "pip_install",
+      "source_url": "https://github.com/Newclid/Newclid",
+      "status": "planned_not_executed"
+    },
+    {
+      "action_id": "vendor_genesisgeo",
+      "command": [
+        "git",
+        "clone",
+        "https://github.com/ZJUVAI/GenesisGeo.git",
+        "vendor/GenesisGeo"
+      ],
+      "component": "genesisgeo_compatible",
+      "kind": "git_clone",
+      "source_url": "https://github.com/ZJUVAI/GenesisGeo",
+      "status": "planned_not_executed"
+    },
+    {
+      "action_id": "vendor_tonggeometry",
+      "command": [
+        "git",
+        "clone",
+        "https://github.com/bigai-ai/tong-geometry.git",
+        "vendor/tong-geometry"
+      ],
+      "component": "tonggeometry_compatible",
+      "kind": "git_clone",
+      "source_url": "https://github.com/bigai-ai/tong-geometry",
+      "status": "planned_not_executed"
+    }
+  ],
+  "bootstrap_mode": "dry_run",
+  "claim_ceiling": "fixture_level_until_real_provider_runs_and_final_reviews_pass",
+  "dependency_probe_ref": "runs\\v03a_t002_dry_run_latest\\dependency_probe.json",
+  "engines": [
+    {
+      "checkpoint_hash": null,
+      "command_checks": [
+        {
+          "command": "newclid",
+          "path": "C:\\Users\\bakat\\miniforge3\\Scripts\\newclid.EXE",
+          "status": "failed",
+          "version": "usage: newclid [-h] [--output-dir OUTPUT_DIR] [--saturate]"
+        }
+      ],
+      "family": "newclid_compatible",
+      "install_plan": "python -m pip install 'newclid[yuclid]'",
+      "install_status": "installed",
+      "python_import_checks": [
+        {
+          "module": "newclid",
+          "origin": "C:\\Users\\bakat\\miniforge3\\Lib\\site-packages\\newclid\\__init__.py",
+          "status": "available",
+          "version": "3.0.1"
+        }
+      ],
+      "role": "symbolic_closure",
+      "source_url": "https://github.com/Newclid/Newclid",
+      "vendor_path": "vendor\\Newclid",
+      "version_or_commit": "newclid==3.0.1"
+    },
+    {
+      "checkpoint_hash": null,
+      "command_checks": [
+        {
+          "command": "genesisgeo",
+          "path": null,
+          "status": "unavailable",
+          "version": "unavailable"
+        }
+      ],
+      "family": "genesisgeo_compatible",
+      "install_plan": "git clone https://github.com/ZJUVAI/GenesisGeo.git vendor/GenesisGeo",
+      "install_status": "installed",
+      "python_import_checks": [],
+      "role": "construction_proposer",
+      "source_url": "https://github.com/ZJUVAI/GenesisGeo",
+      "vendor_path": "vendor\\GenesisGeo",
+      "version_or_commit": "e8c4337e782548a4d54e6839558a32965a5a764e"
+    },
+    {
+      "checkpoint_hash": null,
+      "command_checks": [
+        {
+          "command": "tonggeometry",
+          "path": null,
+          "status": "unavailable",
+          "version": "unavailable"
+        },
+        {
+          "command": "tong-geometry",
+          "path": null,
+          "status": "unavailable",
+          "version": "unavailable"
+        }
+      ],
+      "family": "tonggeometry_compatible",
+      "install_plan": "git clone https://github.com/bigai-ai/tong-geometry.git vendor/tong-geometry",
+      "install_status": "installed",
+      "python_import_checks": [],
+      "role": "heavy_search",
+      "source_url": "https://github.com/bigai-ai/tong-geometry",
+      "vendor_path": "vendor\\tong-geometry",
+      "version_or_commit": "d00925f07dc3174f91326386cb8e785e539a91a1"
+    }
+  ],
+  "local_resource_profile_ref": "configs/local_resource_profile.yaml",
+  "report_id": "dependency_resolution:v03a_t002_dry_run_latest",
+  "run_id": "v03a_t002_dry_run_latest",
+  "schema_version": "1.0.0",
+  "unresolved": []
+}

@@ -4,6 +4,12 @@ version = "0.0.0"
 description = "Geometry x Lean mathematical auto-research pipeline scaffold."
 requires-python = ">=3.11"
 
+[project.optional-dependencies]
+geometry-engines = [
+  "newclid[yuclid]==3.0.1",
+  "py-yuclid==3.0.0",
+]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]

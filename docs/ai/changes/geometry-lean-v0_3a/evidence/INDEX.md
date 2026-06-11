@@ -6,10 +6,13 @@ Authority: Navigation only. Individual evidence files and reviewer records retai
 
 - User recovery instruction summary: `user_recovery_instruction.md`
 - T-001 fixture preservation: `t001_fixture_preservation.md`
+- T-002 dependency bootstrap: `t002_dependency_bootstrap.md`
+- RC-003A-1 Guardian boundary review: `rc003a_1_guardian_boundary_review.md`
 
 ## Planned Review Evidence
 
 - Guardian boundary review for BASE-003A/PLAN-003A: `guardian_boundary_review.md`
+- RC-003A-1 review: `rc003a_1_guardian_boundary_review.md`
 
 ## Claim Ceiling
 

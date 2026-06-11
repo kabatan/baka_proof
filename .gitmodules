@@ -1,0 +1,6 @@
+[submodule "vendor/tong-geometry"]
+	path = vendor/tong-geometry
+	url = https://github.com/bigai-ai/tong-geometry.git
+[submodule "vendor/GenesisGeo"]
+	path = vendor/GenesisGeo
+	url = https://github.com/ZJUVAI/GenesisGeo.git
