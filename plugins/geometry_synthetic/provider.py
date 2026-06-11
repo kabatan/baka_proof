@@ -27,6 +27,10 @@ class ProviderRunManifest:
     manifest_id: str
     request_id: str
     provider_id: str
+    provider_class: str
+    provider_version: str
+    fixture_flag: bool
+    real_integration_flag: bool
     adapter_versions: dict[str, str]
     raw_output_hashes: tuple[str, ...]
     normalized_output_refs: tuple[str, ...]
@@ -65,8 +69,9 @@ class EngineAdapterResult:
 
 
 class DummyEngineAdapter:
-    def __init__(self, engine_role: str, version: str) -> None:
+    def __init__(self, engine_role: str, version: str, engine_family: str | None = None) -> None:
         self.engine_role = engine_role
+        self.engine_family = engine_family or engine_role
         self.version = version
         self.commit = "dummy-adapter-local"
         self.config_hash = _hash_text(f"{engine_role}:{version}:config")
@@ -94,7 +99,7 @@ class DummyEngineAdapter:
 
 class NewclidCompatibleSymbolicClosureAdapter(DummyEngineAdapter):
     def __init__(self) -> None:
-        super().__init__(ENGINE_SYMBOLIC_CLOSURE, "newclid-compatible-fixture:0.1")
+        super().__init__(ENGINE_SYMBOLIC_CLOSURE, "newclid-compatible-fixture:0.1", "newclid_compatible")
 
     def run(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> EngineAdapterResult:
         claim_spec = request.constraints.get("claim_spec")
@@ -143,7 +148,7 @@ class NewclidCompatibleSymbolicClosureAdapter(DummyEngineAdapter):
 
 class GenesisGeoCompatibleConstructionProposerAdapter(DummyEngineAdapter):
     def __init__(self) -> None:
-        super().__init__(ENGINE_CONSTRUCTION_PROPOSER, "genesisgeo-compatible-fixture:0.1")
+        super().__init__(ENGINE_CONSTRUCTION_PROPOSER, "genesisgeo-compatible-fixture:0.1", "genesisgeo_compatible")
 
     def run(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> EngineAdapterResult:
         claim_spec = request.constraints.get("claim_spec")
@@ -186,7 +191,7 @@ class GenesisGeoCompatibleConstructionProposerAdapter(DummyEngineAdapter):
 
 class TongGeometryCompatibleHeavySearchAdapter(DummyEngineAdapter):
     def __init__(self) -> None:
-        super().__init__(ENGINE_HEAVY_SEARCH, "tonggeometry-compatible-fixture:0.1")
+        super().__init__(ENGINE_HEAVY_SEARCH, "tonggeometry-compatible-fixture:0.1", "tonggeometry_compatible")
 
     def run(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> EngineAdapterResult:
         return _result_from_heavy_raw_output(request, self.engine_role, self.external_command(request, step))
@@ -214,8 +219,10 @@ class TongGeometryCompatibleHeavySearchAdapter(DummyEngineAdapter):
         return [sys.executable, "-c", code]
 
 
-class CompositeSyntheticGeometryProvider:
+class CompositeSyntheticGeometryProviderV1:
     provider_id = "geometry_solver_provider:composite_synthetic:v1"
+    provider_class = "CompositeSyntheticGeometryProviderV1"
+    provider_version = "v1"
 
     def __init__(
         self,
@@ -272,21 +279,43 @@ class CompositeSyntheticGeometryProvider:
             engine_runs.append(
                 {
                     "engine_role": step.engine_role,
-                    "engine_family": step.engine_role,
+                    "engine_family": adapter.engine_family,
+                    "engine_version": adapter.version,
                     "adapter_version": adapter.version,
                     "adapter_commit": adapter.commit,
                     "config_hash": adapter.config_hash,
                     "checkpoint_hash": adapter.checkpoint_hash,
                     "seed": adapter.seed,
+                    "fixture_flag": "fixture" in adapter.version,
+                    "real_integration_flag": "fixture" not in adapter.version,
                     "status": adapter_result.status,
                     "raw_output_hash": _hash_text(adapter_result.raw_output),
+                    "raw_log_artifact_hash": _hash_text(adapter_result.raw_output),
                     "normalized_output_ref": adapter_result.normalized_output_ref,
+                    "normalized_output_hash": (
+                        _hash_text(adapter_result.normalized_output_ref)
+                        if adapter_result.normalized_output_ref
+                        else None
+                    ),
                     "resource_usage_ref": usage["report_id"],
                 }
             )
 
-        manifest = _manifest(request, self.provider_id, self.adapters, engine_results, resource_usage_reports, engine_runs)
+        manifest = _manifest(
+            request,
+            self.provider_id,
+            self.provider_class,
+            self.provider_version,
+            self.adapters,
+            engine_results,
+            resource_usage_reports,
+            engine_runs,
+        )
         status = "unsupported" if all(result.status == "diagnostic_only" for result in engine_results) else "partial"
+        diagnostic_refs = tuple(result.diagnostic_ref for result in engine_results)
+        if request.constraints.get("require_real_integration") and manifest.fixture_flag:
+            status = "failed"
+            diagnostic_refs = diagnostic_refs + (f"diagnostic:{request.request_id}:provider:fixture_only_real_required",)
         result = ProviderResult(
             schema_version="1.0.0",
             result_id=f"provider_result:{request.request_id}",
@@ -307,7 +336,7 @@ class CompositeSyntheticGeometryProvider:
                 if result.normalized_output_ref
                 and result.normalized_output_ref.startswith("aux_construction_candidate:")
             ),
-            diagnostic_refs=tuple(result.diagnostic_ref for result in engine_results),
+            diagnostic_refs=diagnostic_refs,
             provider_run_manifest_ref=manifest.manifest_id,
         )
         return CompositeProviderRun(result=result, manifest=manifest, resource_usage_reports=tuple(resource_usage_reports))
@@ -316,6 +345,8 @@ class CompositeSyntheticGeometryProvider:
 def _manifest(
     request: GeometrySolveRequest,
     provider_id: str,
+    provider_class: str,
+    provider_version: str,
     adapters: dict[str, DummyEngineAdapter],
     engine_results: list[EngineAdapterResult],
     resource_usage_reports: list[dict[str, Any]],
@@ -333,6 +364,10 @@ def _manifest(
         manifest_id=f"provider_run_manifest:{_hash_text(manifest_material)}",
         request_id=request.request_id,
         provider_id=provider_id,
+        provider_class=provider_class,
+        provider_version=provider_version,
+        fixture_flag=any(run["fixture_flag"] for run in engine_runs),
+        real_integration_flag=any(run["real_integration_flag"] for run in engine_runs),
         adapter_versions={role: adapter.version for role, adapter in sorted(adapters.items())},
         raw_output_hashes=raw_hashes,
         normalized_output_refs=normalized_refs,
@@ -382,6 +417,9 @@ def _resource_usage_report(
 
 def _hash_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+CompositeSyntheticGeometryProvider = CompositeSyntheticGeometryProviderV1
 
 
 def _run_adapter_with_timeout(

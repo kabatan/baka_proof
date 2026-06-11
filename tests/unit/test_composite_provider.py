@@ -9,6 +9,7 @@ from math_auto_research.schema_validation import validate_artifact
 from plugins.geometry_synthetic.facade import GeometrySolveRequest
 from plugins.geometry_synthetic.provider import (
     CompositeSyntheticGeometryProvider,
+    CompositeSyntheticGeometryProviderV1,
     convert_claim_spec_to_newclid_fixture,
     propose_auxiliary_construction_candidate,
 )
@@ -67,14 +68,37 @@ class CompositeProviderTest(unittest.TestCase):
         self.assertEqual(run.result.proof_use_status, "not_allowed")
         self.assertEqual(run.result.provider_run_manifest_ref, run.manifest.manifest_id)
         self.assertEqual(run.manifest.provider_id, "geometry_solver_provider:composite_synthetic:v1")
+        self.assertEqual(run.manifest.provider_class, "CompositeSyntheticGeometryProviderV1")
+        self.assertTrue(run.manifest.fixture_flag)
+        self.assertFalse(run.manifest.real_integration_flag)
         self.assertIn("newclid-compatible-fixture", run.manifest.adapter_versions["symbolic_closure"])
         self.assertGreaterEqual(len(run.manifest.resource_usage_refs), 1)
         self.assertEqual(len(run.manifest.resource_usage_refs), len(run.resource_usage_reports))
         for engine_run in run.manifest.engine_runs:
+            self.assertIn(
+                engine_run["engine_family"],
+                {"newclid_compatible", "genesisgeo_compatible", "tonggeometry_compatible"},
+            )
             self.assertIn("adapter_commit", engine_run)
             self.assertIn("config_hash", engine_run)
             self.assertIn("checkpoint_hash", engine_run)
+            self.assertTrue(engine_run["fixture_flag"])
+            self.assertFalse(engine_run["real_integration_flag"])
+            self.assertIn("raw_log_artifact_hash", engine_run)
+            self.assertIn("normalized_output_hash", engine_run)
             self.assertIn("seed", engine_run)
+
+    def test_v1_provider_boundary_alias_is_explicit(self) -> None:
+        self.assertIs(CompositeSyntheticGeometryProvider, CompositeSyntheticGeometryProviderV1)
+
+    def test_real_integration_claim_blocks_fixture_only_configuration(self) -> None:
+        run = CompositeSyntheticGeometryProviderV1().run(
+            request_for("medium", {"claim_spec": claim_spec_fixture(), "require_real_integration": True})
+        )
+        self.assertEqual(run.result.status, "failed")
+        self.assertTrue(run.manifest.fixture_flag)
+        self.assertFalse(run.manifest.real_integration_flag)
+        self.assertIn("fixture_only_real_required", run.result.diagnostic_refs[-1])
         for report in run.resource_usage_reports:
             self.assertEqual(report["admission_status"], "admitted")
             self.assertIn(report["role"], {"symbolic_closure", "construction_proposer", "heavy_search"})

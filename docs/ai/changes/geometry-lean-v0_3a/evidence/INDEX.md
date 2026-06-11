@@ -9,11 +9,14 @@ Authority: Navigation only. Individual evidence files and reviewer records retai
 - T-002 dependency bootstrap: `t002_dependency_bootstrap.md`
 - RC-003A-1 Guardian boundary review: `rc003a_1_guardian_boundary_review.md`
 - T-003 ResourceGovernor enforcement: `t003_resource_governor_enforcement.md`
+- T-004 CompositeSyntheticGeometryProviderV1: `t004_composite_provider_v1.md`
+- RC-003A-2 Guardian boundary review: `rc003a_2_guardian_boundary_review.md`
 
 ## Planned Review Evidence
 
 - Guardian boundary review for BASE-003A/PLAN-003A: `guardian_boundary_review.md`
 - RC-003A-1 review: `rc003a_1_guardian_boundary_review.md`
+- RC-003A-2 review: `rc003a_2_guardian_boundary_review.md`
 
 ## Claim Ceiling
 

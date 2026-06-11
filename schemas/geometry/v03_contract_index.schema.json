@@ -120,7 +120,7 @@
           "proof_use_fields": []
         },
         "ProviderRunManifest": {
-          "required_fields": ["schema_version", "manifest_id", "request_id", "provider_id", "adapter_versions", "raw_output_hashes", "normalized_output_refs", "resource_usage_refs", "unsupported_rule_count", "side_condition_loss_count"],
+          "required_fields": ["schema_version", "manifest_id", "request_id", "provider_id", "provider_class", "provider_version", "fixture_flag", "real_integration_flag", "adapter_versions", "raw_output_hashes", "normalized_output_refs", "resource_usage_refs", "engine_runs", "unsupported_rule_count", "side_condition_loss_count"],
           "provenance_fields": ["request_id", "raw_output_hashes", "normalized_output_refs", "resource_usage_refs"],
           "status_fields": [],
           "proof_use_fields": []
