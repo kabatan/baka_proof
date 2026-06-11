@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
 version: v0.3-admission-candidate
-status: IMPLEMENTATION_APPROVED_T00_COMPLETE
+status: T01_COMPLETE
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -32,9 +32,9 @@ Implementation remains limited to the reviewed Base Spec and Plan. Git initializ
 
 ## Current Task Pointer
 
-Current gate: `T00 — Guardian setup and implementation approval gate` complete.
+Current gate: `T01 — Repository AI docs and scaffolding` complete.
 
-Next task: `T01 — Repository AI docs and scaffolding`.
+Next task after T01 closure: `T02 — Stable schemas and SelectedImplementations`.
 
 ## Evidence Directory
 
