@@ -16,7 +16,7 @@ authority: Evidence record only; does not override Base Spec, Plan, or reviewer 
 - Heavy search resource usage records include timeout budget and completion status.
 - Heavy-search adapter execution is wrapped in a timeout boundary; timeout records `admission_status = timeout` and `exit_status = killed`, with no normalized proof output.
 - Timeout/no-orphan smoke records `timeout_status = hard_killed` and `orphan_check_passed = true` for the heavy-search external process.
-- Resource regression covers heavy-search exclusivity while allowing a `lean` semaphore admission during an admitted heavy-search run, providing scheduler non-starvation evidence for Lean verification.
+- Resource regression covers heavy-search exclusivity, concurrent `lean` admission while heavy-search is held, and queued scheduler ordering where `lean` is ordered ahead of construction and heavy-search requests.
 - Raw heavy-search trace is recorded only as raw output hash and diagnostic; it is not proof evidence.
 - ProviderResult remains `proof_use_status = not_allowed`.
 
@@ -27,6 +27,7 @@ cmd /c "set ENGINE_ROLE=heavy_search&& set BUDGET=heavy&& make smoke-geometry-pr
 cmd /c "set ENGINE_ROLE=heavy_search&& set BUDGET=heavy&& set HEAVY_SEARCH_SLEEP_SEC=5&& set HEAVY_SEARCH_TIMEOUT_SEC=0.001&& set HEAVY_SEARCH_HARD_TIMEOUT_SEC=1&& make smoke-geometry-provider" > docs\ai\changes\geometry-lean-v0_3\evidence\heavy_search_no_orphans_smoke.json
 cmd /c make test-regression TEST_FILTER=heavy_search_budget_gate
 cmd /c make test-regression TEST_FILTER=heavy_search_no_orphans
+cmd /c make test-regression TEST_FILTER=scheduler_priority
 python -m unittest tests.unit.test_composite_provider tests.unit.test_geometry_solver_policy tests.unit.test_resource_governor
 cmd /c make test-unit
 cmd /c make test-mutation TEST_FILTER=extraction
@@ -41,8 +42,8 @@ Results:
 Tong adapter smoke: PASS
 Heavy-search no-orphan smoke: PASS
 Regression targets: passed
-Focused provider/resource tests: Ran 15 tests OK
-Full unit suite: Ran 54 tests OK
+Focused provider/resource tests: Ran 16 tests OK
+Full unit suite: Ran 55 tests OK
 Mutation target: Ran 12 tests OK
 Lean root build: Build completed successfully
 Lean no-sorry: passed

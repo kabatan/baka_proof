@@ -46,6 +46,16 @@ class ResourceGovernorTest(unittest.TestCase):
             with governor.admit(lean) as admitted:
                 self.assertEqual(admitted.engine_role, "lean")
 
+    def test_scheduler_prioritizes_lean_ahead_of_queued_heavy_search(self) -> None:
+        governor = ResourceGovernor()
+        queued = [
+            ResourceRequest(component="provider_engine", engine_role="heavy_search", budget="heavy"),
+            ResourceRequest(component="final_verify", engine_role="lean", budget="tiny"),
+            ResourceRequest(component="provider_engine", engine_role="construction_proposer", budget="medium"),
+        ]
+        ordered = governor.priority_order(queued)
+        self.assertEqual([request.engine_role for request in ordered], ["lean", "construction_proposer", "heavy_search"])
+
 
 if __name__ == "__main__":
     unittest.main()

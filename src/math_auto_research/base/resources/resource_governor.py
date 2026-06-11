@@ -7,6 +7,16 @@ from typing import Iterator
 from math_auto_research.base.resources.resource_budget import ResourceRejected, ResourceRequest
 
 
+ROLE_PRIORITIES = {
+    "lean": 10,
+    "proof_worker": 20,
+    "symbolic_closure": 30,
+    "construction_proposer": 40,
+    "heavy_search": 50,
+    "none": 60,
+}
+
+
 class ResourceGovernor:
     def __init__(self) -> None:
         self._semaphores = {
@@ -29,3 +39,15 @@ class ResourceGovernor:
             yield request
         finally:
             semaphore.release()
+
+    def priority_order(self, requests: list[ResourceRequest]) -> list[ResourceRequest]:
+        for request in requests:
+            request.validate()
+        return sorted(
+            requests,
+            key=lambda request: (
+                ROLE_PRIORITIES.get(request.engine_role, ROLE_PRIORITIES["none"]),
+                request.engine_role,
+                request.component,
+            ),
+        )

@@ -167,9 +167,9 @@ def default_geometry_solver_policy() -> GeometrySolverPolicy:
             REASON_HEAVY_REJECTED: "Record requested heavy search that the resource policy did not admit.",
         },
         resource_roles={
-            ENGINE_SYMBOLIC_CLOSURE: {"semaphore": ENGINE_SYMBOLIC_CLOSURE, "priority": 3, "timeout_sec": 30.0},
-            ENGINE_CONSTRUCTION_PROPOSER: {"semaphore": ENGINE_CONSTRUCTION_PROPOSER, "priority": 4, "timeout_sec": 60.0},
-            ENGINE_HEAVY_SEARCH: {"semaphore": ENGINE_HEAVY_SEARCH, "priority": 5, "timeout_sec": 180.0},
+            ENGINE_SYMBOLIC_CLOSURE: {"semaphore": ENGINE_SYMBOLIC_CLOSURE, "priority": 30, "timeout_sec": 30.0},
+            ENGINE_CONSTRUCTION_PROPOSER: {"semaphore": ENGINE_CONSTRUCTION_PROPOSER, "priority": 40, "timeout_sec": 60.0},
+            ENGINE_HEAVY_SEARCH: {"semaphore": ENGINE_HEAVY_SEARCH, "priority": 50, "timeout_sec": 180.0},
         },
     )
 
