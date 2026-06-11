@@ -2,9 +2,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
-import signal
-import subprocess
 import sys
 import threading
 import time
@@ -12,6 +9,7 @@ from dataclasses import asdict, dataclass
 from typing import Any
 
 from math_auto_research.base.resources.resource_budget import ResourceRejected
+from math_auto_research.base.resources.process_runner import run_process_group
 from math_auto_research.base.resources.resource_governor import ResourceGovernor
 from plugins.geometry_synthetic.facade import GeometrySolveRequest, ProviderResult
 from plugins.geometry_synthetic.policy import (
@@ -431,46 +429,17 @@ def _run_external_heavy_adapter(
     step: GeometryExecutionStep,
 ) -> tuple[EngineAdapterResult, dict[str, Any]]:
     command = adapter.external_command(request, step)
-    creationflags = subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
-    process = subprocess.Popen(
-        command,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-        creationflags=creationflags,
-        start_new_session=(os.name != "nt"),
-    )
     soft_timeout = step.resource_request.timeout_sec
     hard_timeout = float(request.constraints.get("heavy_search_hard_timeout_sec", 1.0))
-    heartbeat_count = 0
-    deadline = time.monotonic() + soft_timeout
-    while process.poll() is None and time.monotonic() < deadline:
-        heartbeat_count += 1
-        time.sleep(min(0.05, max(0.001, deadline - time.monotonic())))
-    if process.poll() is None:
-        _terminate_process_tree(process)
-        hard_kill_executed = False
-        try:
-            stdout, stderr = process.communicate(timeout=hard_timeout)
-        except subprocess.TimeoutExpired:
-            _kill_process_tree(process)
-            hard_kill_executed = True
-            stdout, stderr = process.communicate(timeout=hard_timeout)
-        orphan_check_passed = process.poll() is not None and not _pid_is_running(process.pid)
-        timeout_status = (
-            "hard_killed"
-            if hard_kill_executed and orphan_check_passed
-            else "soft_terminated_no_orphan"
-            if orphan_check_passed
-            else "kill_incomplete"
-        )
+    process_report = run_process_group(command, timeout_sec=soft_timeout, hard_timeout_sec=hard_timeout)
+    if process_report["timed_out"]:
         raw_output = json.dumps(
             {
                 "engine_role": step.engine_role,
                 "request_id": request.request_id,
                 "status": "timeout_killed",
-                "stdout_prefix": stdout[:200],
-                "stderr_prefix": stderr[:200],
+                "stdout_prefix": process_report["stdout"][:200],
+                "stderr_prefix": process_report["stderr"][:200],
             },
             sort_keys=True,
         )
@@ -484,24 +453,25 @@ def _run_external_heavy_adapter(
             ),
             {
                 "timed_out": True,
-                "timeout_status": timeout_status,
-                "hard_kill_executed": hard_kill_executed,
-                "heartbeat_count": heartbeat_count,
-                "pid": process.pid,
-                "orphan_check_passed": orphan_check_passed,
+                "timeout_status": process_report["timeout_status"],
+                "hard_kill_executed": process_report["hard_kill_executed"],
+                "heartbeat_count": process_report["heartbeat_count"],
+                "pid": process_report["pid"],
+                "orphan_check_passed": process_report["orphan_check_passed"],
                 "logs_ref": "external_process_partial",
             },
         )
-    stdout, stderr = process.communicate(timeout=hard_timeout)
+    stdout = process_report["stdout"]
+    stderr = process_report["stderr"]
     raw_output = stdout.strip() or stderr.strip()
     return (
         _result_from_heavy_raw_output(request, adapter.engine_role, raw_output),
         {
             "timed_out": False,
             "timeout_status": "none",
-            "heartbeat_count": max(heartbeat_count, 1),
-            "pid": process.pid,
-            "orphan_check_passed": process.poll() is not None,
+            "heartbeat_count": process_report["heartbeat_count"],
+            "pid": process_report["pid"],
+            "orphan_check_passed": process_report["orphan_check_passed"],
             "logs_ref": "external_process_stdout",
         },
     )
@@ -517,36 +487,6 @@ def _result_from_heavy_raw_output(request: GeometrySolveRequest, engine_role: st
         normalized_output_ref=None,
         diagnostic_ref=f"diagnostic:{request.request_id}:heavy_search:tong_fixture",
     )
-
-
-def _terminate_process_tree(process: subprocess.Popen[str]) -> None:
-    if os.name == "nt":
-        subprocess.run(["taskkill", "/PID", str(process.pid), "/T"], capture_output=True, text=True, check=False)
-    else:
-        os.killpg(process.pid, signal.SIGTERM)
-
-
-def _kill_process_tree(process: subprocess.Popen[str]) -> None:
-    if os.name == "nt":
-        subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"], capture_output=True, text=True, check=False)
-    else:
-        os.killpg(process.pid, signal.SIGKILL)
-
-
-def _pid_is_running(pid: int) -> bool:
-    if os.name == "nt":
-        completed = subprocess.run(
-            ["powershell", "-NoProfile", "-Command", f"Get-Process -Id {pid} -ErrorAction SilentlyContinue"],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        return completed.returncode == 0 and bool(completed.stdout.strip())
-    try:
-        os.kill(pid, 0)
-    except OSError:
-        return False
-    return True
 
 
 def _apply_timeout_override(request: GeometrySolveRequest, step: GeometryExecutionStep) -> None:

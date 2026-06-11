@@ -24,8 +24,26 @@ class ResourceGovernorTest(unittest.TestCase):
         self.assertEqual(report["role"], "checker")
         self.assertEqual(report["admission_status"], "admitted")
         self.assertEqual(report["exit_status"], "completed")
+        self.assertEqual(report["timeout_status"], "none")
+        self.assertGreaterEqual(report["heartbeat_count"], 1)
         self.assertIn("started_at", report)
         self.assertIn("ended_at", report)
+
+    def test_guarded_process_reports_failure(self) -> None:
+        governor = ResourceGovernor()
+        request = ResourceRequest(component="checker", engine_role="none", budget="tiny", timeout_sec=10)
+        report = run_guarded_process([sys.executable, "-c", "import sys; sys.exit(7)"], request, governor)
+        self.assertEqual(report["exit_status"], "failed")
+        self.assertEqual(report["timeout_status"], "none")
+
+    def test_guarded_process_timeout_kills_process_group(self) -> None:
+        governor = ResourceGovernor()
+        request = ResourceRequest(component="checker", engine_role="none", budget="tiny", timeout_sec=0.05)
+        report = run_guarded_process([sys.executable, "-c", "import time; time.sleep(5)"], request, governor)
+        self.assertEqual(report["exit_status"], "killed")
+        self.assertIn(report["timeout_status"], {"soft_terminated_no_orphan", "hard_killed"})
+        self.assertTrue(report["orphan_check_passed"])
+        self.assertGreaterEqual(report["heartbeat_count"], 1)
 
     def test_probe_local_resources(self) -> None:
         profile = probe_local_resources()

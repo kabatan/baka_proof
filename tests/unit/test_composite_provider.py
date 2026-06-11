@@ -143,6 +143,11 @@ class CompositeProviderTest(unittest.TestCase):
         self.assertNotIn("GenesisGeo", text)
         self.assertNotIn("TongGeometry", text)
 
+    def test_provider_does_not_directly_launch_external_processes(self) -> None:
+        text = Path("plugins/geometry_synthetic/provider.py").read_text(encoding="utf-8")
+        self.assertNotIn("subprocess.Popen", text)
+        self.assertNotIn("subprocess.run", text)
+
 
 if __name__ == "__main__":
     unittest.main()
