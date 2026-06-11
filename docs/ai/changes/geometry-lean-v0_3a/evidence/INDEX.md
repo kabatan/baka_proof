@@ -5,6 +5,7 @@ Authority: Navigation only. Individual evidence files and reviewer records retai
 ## Preparation Evidence
 
 - User recovery instruction summary: `user_recovery_instruction.md`
+- T-001 fixture preservation: `t001_fixture_preservation.md`
 
 ## Planned Review Evidence
 

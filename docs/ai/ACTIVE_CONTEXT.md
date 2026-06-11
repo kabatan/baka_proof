@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3A
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003A
 version: v0.3A-recovery-admitted
-status: READY_TO_START_V03A_T001
+status: READY_TO_START_V03A_T002
 created: 2026-06-11
 last_updated: 2026-06-12
 base_spec: MARP-GEOLEAN-BASE-003A
@@ -64,7 +64,9 @@ Completed gate: v0.3 final closure review passed within the fixture-level claim 
 
 Completed v0.3A gate: `BASE-003A / PLAN-003A Guardian boundary admission`.
 
-Current v0.3A task pointer: `T-001 — Preserve current fixture-level evidence`.
+Completed v0.3A task: `T-001 — Preserve current fixture-level evidence`.
+
+Current v0.3A task pointer: `T-002 — Implement dependency bootstrap and probe`.
 
 Current claim ceiling: do not claim full LeanGeo theorem-corpus build, real Newclid/GenesisGeo/TongGeometry integration, broad solver/compiler automation, arbitrary final theorem support, real Level 2 advantage, v0.3 completion, R-ID VERIFIED status, SOURCE_FAITHFUL, ACCEPTANCE_COMPLETE, or PRODUCTION_SAFE. Current positive claims remain limited to the geometry x Lean v0.3 Guardian track passing fixture-level release acceptance and final reviews for the recorded fixture scope.
 
