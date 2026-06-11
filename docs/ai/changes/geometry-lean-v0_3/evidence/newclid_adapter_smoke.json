@@ -1,8 +1,8 @@
 {
   "manifest": {
     "adapter_versions": {
-      "construction_proposer": "dummy-construction:0.1",
-      "heavy_search": "dummy-heavy:0.1",
+      "construction_proposer": "genesisgeo-compatible-fixture:0.1",
+      "heavy_search": "tonggeometry-compatible-fixture:0.1",
       "symbolic_closure": "newclid-compatible-fixture:0.1"
     },
     "engine_runs": [
@@ -40,17 +40,22 @@
       "budget": "medium",
       "component": "geometry_solver_provider",
       "cpu_time_sec": 0,
-      "ended_at": "1781189354.2455187",
+      "ended_at": "1781190389.7364795",
+      "engine_role": "symbolic_closure",
       "exit_status": "completed",
       "gpu_vram_peak_mb": null,
+      "heartbeat_count": 1,
       "logs_ref": "inline_dummy_adapter",
+      "orphan_check_passed": true,
       "peak_rss_mb": 0,
+      "process_id": "",
       "queue_wait_sec": 0,
       "report_id": "resource_usage:geometry_request:smoke:symbolic_closure:medium:symbolic_closure:ad1101ad2192e32f",
       "role": "symbolic_closure",
       "run_id": "geometry_request:smoke:symbolic_closure:medium",
       "schema_version": "1.0.0",
-      "started_at": "1781189354.2455187",
+      "started_at": "1781190389.7364795",
+      "timeout_status": "none",
       "wall_time_sec": 0.0
     }
   ],

@@ -9,6 +9,8 @@ if "%1"=="test-mutation" (
   exit /b %ERRORLEVEL%
 )
 if "%1"=="test-regression" (
+  python -m unittest tests.unit.test_composite_provider
+  if errorlevel 1 exit /b %ERRORLEVEL%
   python scripts\check_domain_contamination.py
   if errorlevel 1 exit /b %ERRORLEVEL%
   python scripts\check_no_loose_options.py

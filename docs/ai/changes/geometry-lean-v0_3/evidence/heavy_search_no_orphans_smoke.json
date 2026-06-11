@@ -53,13 +53,13 @@
         "engine_family": "heavy_search",
         "engine_role": "heavy_search",
         "normalized_output_ref": null,
-        "raw_output_hash": "8f75532f8cb58b9f",
+        "raw_output_hash": "f2133a9174f289bc",
         "resource_usage_ref": "resource_usage:geometry_request:smoke:heavy_search:heavy:heavy_search:2aff1b11c1277e81",
         "seed": 0,
-        "status": "diagnostic_only"
+        "status": "timeout"
       }
     ],
-    "manifest_id": "provider_run_manifest:6b29d017135e046f",
+    "manifest_id": "provider_run_manifest:5e952e53dd5db89c",
     "normalized_output_refs": [
       "aux_construction_candidate:geometry_request:smoke:heavy_search:heavy:construction_proposer"
     ],
@@ -68,7 +68,7 @@
       "9cb446b7e294ea9b",
       "70df8abe4c4008a2",
       "9cb446b7e294ea9b",
-      "8f75532f8cb58b9f"
+      "f2133a9174f289bc"
     ],
     "request_id": "geometry_request:smoke:heavy_search:heavy",
     "resource_usage_refs": [
@@ -87,7 +87,7 @@
       "budget": "heavy",
       "component": "geometry_solver_provider",
       "cpu_time_sec": 0,
-      "ended_at": "1781190389.7364795",
+      "ended_at": "1781190389.7531621",
       "engine_role": "symbolic_closure",
       "exit_status": "completed",
       "gpu_vram_peak_mb": null,
@@ -101,7 +101,7 @@
       "role": "symbolic_closure",
       "run_id": "geometry_request:smoke:heavy_search:heavy",
       "schema_version": "1.0.0",
-      "started_at": "1781190389.7364795",
+      "started_at": "1781190389.7531621",
       "timeout_status": "none",
       "wall_time_sec": 0.0
     },
@@ -110,7 +110,7 @@
       "budget": "heavy",
       "component": "geometry_solver_provider",
       "cpu_time_sec": 0,
-      "ended_at": "1781190389.752595",
+      "ended_at": "1781190389.7531621",
       "engine_role": "construction_proposer",
       "exit_status": "completed",
       "gpu_vram_peak_mb": null,
@@ -124,9 +124,9 @@
       "role": "construction_proposer",
       "run_id": "geometry_request:smoke:heavy_search:heavy",
       "schema_version": "1.0.0",
-      "started_at": "1781190389.7364795",
+      "started_at": "1781190389.7531621",
       "timeout_status": "none",
-      "wall_time_sec": 0.016
+      "wall_time_sec": 0.0
     },
     {
       "admission_status": "admitted",
@@ -147,32 +147,32 @@
       "role": "symbolic_closure",
       "run_id": "geometry_request:smoke:heavy_search:heavy",
       "schema_version": "1.0.0",
-      "started_at": "1781190389.752595",
+      "started_at": "1781190389.7531621",
       "timeout_status": "none",
       "wall_time_sec": 0.0
     },
     {
-      "admission_status": "admitted",
+      "admission_status": "timeout",
       "budget": "heavy",
       "component": "geometry_solver_provider",
       "cpu_time_sec": 0,
-      "ended_at": "1781190389.8607678",
+      "ended_at": "1781190391.3272114",
       "engine_role": "heavy_search",
-      "exit_status": "completed",
+      "exit_status": "killed",
       "gpu_vram_peak_mb": null,
       "heartbeat_count": 2,
-      "logs_ref": "external_process_stdout",
+      "logs_ref": "external_process_partial",
       "orphan_check_passed": true,
       "peak_rss_mb": 0,
-      "process_id": "8",
+      "process_id": "13664",
       "queue_wait_sec": 0,
       "report_id": "resource_usage:geometry_request:smoke:heavy_search:heavy:heavy_search:2aff1b11c1277e81",
       "role": "heavy_search",
       "run_id": "geometry_request:smoke:heavy_search:heavy",
       "schema_version": "1.0.0",
       "started_at": "1781190389.7531621",
-      "timeout_status": "none",
-      "wall_time_sec": 0.109
+      "timeout_status": "hard_killed",
+      "wall_time_sec": 1.578
     }
   ],
   "result": {
@@ -183,11 +183,11 @@
       "diagnostic:geometry_request:smoke:heavy_search:heavy:symbolic_closure:newclid_fixture",
       "diagnostic:geometry_request:smoke:heavy_search:heavy:construction_proposer:genesis_fixture",
       "diagnostic:geometry_request:smoke:heavy_search:heavy:symbolic_closure:newclid_fixture",
-      "diagnostic:geometry_request:smoke:heavy_search:heavy:heavy_search:tong_fixture"
+      "diagnostic:geometry_request:smoke:heavy_search:heavy:heavy_search:timeout_killed"
     ],
     "geotrace_ref": null,
     "proof_use_status": "not_allowed",
-    "provider_run_manifest_ref": "provider_run_manifest:6b29d017135e046f",
+    "provider_run_manifest_ref": "provider_run_manifest:5e952e53dd5db89c",
     "request_id": "geometry_request:smoke:heavy_search:heavy",
     "result_id": "provider_result:geometry_request:smoke:heavy_search:heavy",
     "schema_version": "1.0.0",

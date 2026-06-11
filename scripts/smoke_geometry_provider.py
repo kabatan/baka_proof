@@ -35,6 +35,12 @@ def main() -> int:
     }
     if requested_role == "heavy_search":
         constraints.update({"explicit_escalation": True, "heavy_search_requested": True})
+        if os.environ.get("HEAVY_SEARCH_SLEEP_SEC"):
+            constraints["heavy_search_sleep_sec"] = float(os.environ["HEAVY_SEARCH_SLEEP_SEC"])
+        if os.environ.get("HEAVY_SEARCH_TIMEOUT_SEC"):
+            constraints["heavy_search_timeout_sec"] = float(os.environ["HEAVY_SEARCH_TIMEOUT_SEC"])
+        if os.environ.get("HEAVY_SEARCH_HARD_TIMEOUT_SEC"):
+            constraints["heavy_search_hard_timeout_sec"] = float(os.environ["HEAVY_SEARCH_HARD_TIMEOUT_SEC"])
     elif requested_role == "symbolic_closure":
         constraints["construction_needed"] = False
 

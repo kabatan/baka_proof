@@ -2,6 +2,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+import signal
+import subprocess
+import sys
 import threading
 import time
 from dataclasses import asdict, dataclass
@@ -182,25 +186,29 @@ class TongGeometryCompatibleHeavySearchAdapter(DummyEngineAdapter):
         super().__init__(ENGINE_HEAVY_SEARCH, "tonggeometry-compatible-fixture:0.1")
 
     def run(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> EngineAdapterResult:
+        return _result_from_heavy_raw_output(request, self.engine_role, self.external_command(request, step))
+
+    def external_command(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> list[str]:
+        target = {}
         claim_spec = request.constraints.get("claim_spec")
-        raw_trace = {
+        if isinstance(claim_spec, dict):
+            target = claim_spec.get("target", {})
+        sleep_sec = float(request.constraints.get("heavy_search_sleep_sec", 0))
+        payload = {
             "engine_family": "tonggeometry_compatible_heavy_search",
             "request_id": request.request_id,
             "budget": request.budget,
             "timeout_sec": step.resource_request.timeout_sec,
             "raw_trace_status": "search_hint_only",
             "proof_use_status": "not_allowed",
+            "target": target,
         }
-        if isinstance(claim_spec, dict):
-            raw_trace["target"] = claim_spec.get("target", {})
-        raw_output = json.dumps(raw_trace, sort_keys=True)
-        return EngineAdapterResult(
-            engine_role=self.engine_role,
-            status="diagnostic_only",
-            raw_output=raw_output,
-            normalized_output_ref=None,
-            diagnostic_ref=f"diagnostic:{request.request_id}:heavy_search:tong_fixture",
+        code = (
+            "import json, time; "
+            f"time.sleep({sleep_sec!r}); "
+            f"print(json.dumps({payload!r}, sort_keys=True))"
         )
+        return [sys.executable, "-c", code]
 
 
 class CompositeSyntheticGeometryProvider:
@@ -231,9 +239,9 @@ class CompositeSyntheticGeometryProvider:
             try:
                 _apply_timeout_override(request, step)
                 with self.governor.admit(step.resource_request):
-                    adapter_result, timed_out = _run_adapter_with_timeout(adapter, request, step)
-                admission_status = "timeout" if timed_out else "admitted"
-                exit_status = "killed" if timed_out else "completed"
+                    adapter_result, run_state = _run_adapter_with_timeout(adapter, request, step)
+                admission_status = "timeout" if run_state["timed_out"] else "admitted"
+                exit_status = "killed" if run_state["timed_out"] else "completed"
             except ResourceRejected as exc:
                 adapter_result = EngineAdapterResult(
                     engine_role=step.engine_role,
@@ -244,6 +252,7 @@ class CompositeSyntheticGeometryProvider:
                 )
                 admission_status = "rejected"
                 exit_status = "not_started"
+                run_state = {}
             ended_at = time.time()
             usage = _resource_usage_report(
                 request,
@@ -253,6 +262,7 @@ class CompositeSyntheticGeometryProvider:
                 time.monotonic() - start_monotonic,
                 admission_status,
                 exit_status,
+                run_state,
             )
             engine_results.append(adapter_result)
             resource_usage_reports.append(usage)
@@ -338,7 +348,9 @@ def _resource_usage_report(
     wall_time_sec: float,
     admission_status: str,
     exit_status: str,
+    run_state: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    run_state = run_state or {}
     return {
         "schema_version": "1.0.0",
         "report_id": f"resource_usage:{request.request_id}:{step.engine_role}:{_hash_text(step.step_id)}",
@@ -356,7 +368,11 @@ def _resource_usage_report(
         "cpu_time_sec": 0,
         "peak_rss_mb": 0,
         "gpu_vram_peak_mb": None,
-        "logs_ref": "inline_dummy_adapter",
+        "timeout_status": run_state.get("timeout_status", "none"),
+        "heartbeat_count": run_state.get("heartbeat_count", 0),
+        "process_id": str(run_state.get("pid", "")),
+        "orphan_check_passed": run_state.get("orphan_check_passed", True),
+        "logs_ref": run_state.get("logs_ref", "inline_dummy_adapter"),
     }
 
 
@@ -368,7 +384,10 @@ def _run_adapter_with_timeout(
     adapter: DummyEngineAdapter,
     request: GeometrySolveRequest,
     step: GeometryExecutionStep,
-) -> tuple[EngineAdapterResult, bool]:
+) -> tuple[EngineAdapterResult, dict[str, Any]]:
+    if isinstance(adapter, TongGeometryCompatibleHeavySearchAdapter):
+        return _run_external_heavy_adapter(adapter, request, step)
+
     holder: dict[str, EngineAdapterResult] = {}
 
     def target() -> None:
@@ -395,9 +414,123 @@ def _run_adapter_with_timeout(
                 normalized_output_ref=None,
                 diagnostic_ref=f"diagnostic:{request.request_id}:{step.engine_role}:timeout_killed",
             ),
-            True,
+            {"timed_out": True, "timeout_status": "thread_timeout", "heartbeat_count": 1},
         )
-    return holder["result"], False
+    return holder["result"], {"timed_out": False, "timeout_status": "none", "heartbeat_count": 1}
+
+
+def _run_external_heavy_adapter(
+    adapter: TongGeometryCompatibleHeavySearchAdapter,
+    request: GeometrySolveRequest,
+    step: GeometryExecutionStep,
+) -> tuple[EngineAdapterResult, dict[str, Any]]:
+    command = adapter.external_command(request, step)
+    creationflags = subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        creationflags=creationflags,
+        start_new_session=(os.name != "nt"),
+    )
+    soft_timeout = step.resource_request.timeout_sec
+    hard_timeout = float(request.constraints.get("heavy_search_hard_timeout_sec", 1.0))
+    heartbeat_count = 0
+    deadline = time.monotonic() + soft_timeout
+    while process.poll() is None and time.monotonic() < deadline:
+        heartbeat_count += 1
+        time.sleep(min(0.05, max(0.001, deadline - time.monotonic())))
+    if process.poll() is None:
+        _terminate_process_tree(process)
+        try:
+            stdout, stderr = process.communicate(timeout=hard_timeout)
+        except subprocess.TimeoutExpired:
+            _kill_process_tree(process)
+            stdout, stderr = process.communicate(timeout=hard_timeout)
+        orphan_check_passed = process.poll() is not None and not _pid_is_running(process.pid)
+        raw_output = json.dumps(
+            {
+                "engine_role": step.engine_role,
+                "request_id": request.request_id,
+                "status": "timeout_killed",
+                "stdout_prefix": stdout[:200],
+                "stderr_prefix": stderr[:200],
+            },
+            sort_keys=True,
+        )
+        return (
+            EngineAdapterResult(
+                engine_role=step.engine_role,
+                status="timeout",
+                raw_output=raw_output,
+                normalized_output_ref=None,
+                diagnostic_ref=f"diagnostic:{request.request_id}:{step.engine_role}:timeout_killed",
+            ),
+            {
+                "timed_out": True,
+                "timeout_status": "hard_killed" if orphan_check_passed else "kill_incomplete",
+                "heartbeat_count": heartbeat_count,
+                "pid": process.pid,
+                "orphan_check_passed": orphan_check_passed,
+                "logs_ref": "external_process_partial",
+            },
+        )
+    stdout, stderr = process.communicate(timeout=hard_timeout)
+    raw_output = stdout.strip() or stderr.strip()
+    return (
+        _result_from_heavy_raw_output(request, adapter.engine_role, raw_output),
+        {
+            "timed_out": False,
+            "timeout_status": "none",
+            "heartbeat_count": max(heartbeat_count, 1),
+            "pid": process.pid,
+            "orphan_check_passed": process.poll() is not None,
+            "logs_ref": "external_process_stdout",
+        },
+    )
+
+
+def _result_from_heavy_raw_output(request: GeometrySolveRequest, engine_role: str, raw_output: Any) -> EngineAdapterResult:
+    if not isinstance(raw_output, str):
+        raw_output = json.dumps(raw_output, sort_keys=True)
+    return EngineAdapterResult(
+        engine_role=engine_role,
+        status="diagnostic_only",
+        raw_output=raw_output,
+        normalized_output_ref=None,
+        diagnostic_ref=f"diagnostic:{request.request_id}:heavy_search:tong_fixture",
+    )
+
+
+def _terminate_process_tree(process: subprocess.Popen[str]) -> None:
+    if os.name == "nt":
+        subprocess.run(["taskkill", "/PID", str(process.pid), "/T"], capture_output=True, text=True, check=False)
+    else:
+        os.killpg(process.pid, signal.SIGTERM)
+
+
+def _kill_process_tree(process: subprocess.Popen[str]) -> None:
+    if os.name == "nt":
+        subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"], capture_output=True, text=True, check=False)
+    else:
+        os.killpg(process.pid, signal.SIGKILL)
+
+
+def _pid_is_running(pid: int) -> bool:
+    if os.name == "nt":
+        completed = subprocess.run(
+            ["powershell", "-NoProfile", "-Command", f"Get-Process -Id {pid} -ErrorAction SilentlyContinue"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        return completed.returncode == 0 and bool(completed.stdout.strip())
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return False
+    return True
 
 
 def _apply_timeout_override(request: GeometrySolveRequest, step: GeometryExecutionStep) -> None:

@@ -9,6 +9,7 @@ test-mutation:
 	$(PYTHON) -m unittest tests.unit.test_geometry_extraction tests.unit.test_target_subset
 
 test-regression:
+	$(PYTHON) -m unittest tests.unit.test_composite_provider
 	$(PYTHON) scripts/check_domain_contamination.py
 	$(PYTHON) scripts/check_no_loose_options.py
 
