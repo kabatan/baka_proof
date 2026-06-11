@@ -44,8 +44,8 @@ cmd /c make test
 
 Result: passed:
 
-- 84 unit tests;
-- 69 regression tests plus domain/no-loose checks;
+- 87 unit tests;
+- 71 regression tests plus domain/no-loose checks;
 - 45 mutation tests;
 - 12 integration tests.
 
@@ -76,6 +76,13 @@ Result: passed after spec-verifier blocker remediation. The generated release ac
 - T27 gate commands rerun inside release acceptance: `make test`, `make test-regression`, `make test-mutation`, `make lean-build`, and `make lean-no-sorry`;
 - Level 2 matrix check passed with six baselines;
 - claim ceiling `fixture_level_release_acceptance_not_v0_3_completion_claim`.
+
+## Quality Review Blocker Remediation
+
+- `scripts/check_release_acceptance.py` now derives blocked real integrations from `dependency_probe.json` instead of static literals.
+- Release blocker/final checklist entries now validate backing files, commands, blocked dependency evidence, and named test modules.
+- Added regression coverage for missing dependency probes, contradictory dependency probes, and bogus checklist test evidence.
+- `test-regression` now explicitly includes `tests.unit.test_evaluation_matrix`, matching the release checklist evidence for replay counts.
 
 ## Claim Ceiling
 

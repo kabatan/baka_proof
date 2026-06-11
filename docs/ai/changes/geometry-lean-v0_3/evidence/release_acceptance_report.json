@@ -124,7 +124,7 @@
           "tests.unit.test_schema_validation"
         ],
         "returncode": 0,
-        "stderr_tail": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.013s\n\nOK\n",
+        "stderr_tail": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.014s\n\nOK\n",
         "stdout_tail": ""
       },
       "status": "passed"
@@ -139,7 +139,7 @@
           "test"
         ],
         "returncode": 0,
-        "stderr_tail": "....................................................................................\n----------------------------------------------------------------------\nRan 84 tests in 11.518s\n\nOK\n.....................................................................\n----------------------------------------------------------------------\nRan 69 tests in 6.240s\n\nOK\n.............................................\n----------------------------------------------------------------------\nRan 45 tests in 2.403s\n\nOK\n............\n----------------------------------------------------------------------\nRan 12 tests in 3.616s\n\nOK\n",
+        "stderr_tail": ".......................................................................................\n----------------------------------------------------------------------\nRan 87 tests in 10.555s\n\nOK\n.......................................................................\n----------------------------------------------------------------------\nRan 71 tests in 8.007s\n\nOK\n.............................................\n----------------------------------------------------------------------\nRan 45 tests in 2.656s\n\nOK\n............\n----------------------------------------------------------------------\nRan 12 tests in 3.937s\n\nOK\n",
         "stdout_tail": "domain contamination check passed\nno loose options check passed\n"
       },
       "status": "passed"
@@ -154,7 +154,7 @@
           "test-regression"
         ],
         "returncode": 0,
-        "stderr_tail": ".....................................................................\n----------------------------------------------------------------------\nRan 69 tests in 6.169s\n\nOK\n",
+        "stderr_tail": ".......................................................................\n----------------------------------------------------------------------\nRan 71 tests in 10.023s\n\nOK\n",
         "stdout_tail": "domain contamination check passed\nno loose options check passed\n"
       },
       "status": "passed"
@@ -169,7 +169,7 @@
           "test-mutation"
         ],
         "returncode": 0,
-        "stderr_tail": ".............................................\n----------------------------------------------------------------------\nRan 45 tests in 2.408s\n\nOK\n",
+        "stderr_tail": ".............................................\n----------------------------------------------------------------------\nRan 45 tests in 2.576s\n\nOK\n",
         "stdout_tail": ""
       },
       "status": "passed"
@@ -220,187 +220,195 @@
     {
       "check_id": "release_blocker_01_base_domain_contamination",
       "details": {
-        "evidence": "scripts/check_domain_contamination.py"
+        "validated_by": "domain_contamination"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_02_no_agent_cd_core_modes",
       "details": {
-        "evidence": "scripts/check_no_loose_options.py"
+        "validated_by": "no_loose_options"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_03_single_target_library",
       "details": {
-        "evidence": "tests.unit.test_target_library_status"
+        "validated_by": "tests.unit.test_target_library_status"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_04_no_real_final_claim_without_dependency",
       "details": {
-        "evidence": "claim ceiling and release report"
+        "validated_by": "real_engine_newclid_compatible"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_05_model_injection_boundary",
       "details": {
-        "evidence": "tests.unit.test_model_provider_set"
+        "validated_by": "tests.unit.test_model_provider_set"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_06_no_provider_names_in_base",
       "details": {
-        "evidence": "tests.unit.test_composite_provider"
+        "validated_by": "tests.unit.test_composite_provider"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_07_resource_governor_for_provider",
       "details": {
-        "evidence": "tests.unit.test_resource_governor"
+        "validated_by": "tests.unit.test_resource_governor"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_08_heavy_search_budget_guard",
       "details": {
-        "evidence": "tests.unit.test_composite_provider"
+        "validated_by": "tests.unit.test_composite_provider"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_09_raw_output_cannot_close",
       "details": {
-        "evidence": "tests.unit.test_geometry_bridge"
+        "validated_by": "tests.unit.test_geometry_bridge"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_10_raw_dsl_no_goal_proof_use",
       "details": {
-        "evidence": "tests.unit.test_geometry_bridge"
+        "validated_by": "tests.unit.test_geometry_bridge"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_11_rule_registry_side_conditions",
       "details": {
-        "evidence": "tests.unit.test_geotrace_rule_registry"
+        "validated_by": "tests.unit.test_geotrace_rule_registry"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_12_missing_side_condition_blocks",
       "details": {
-        "evidence": "tests.unit.test_trace_compiler"
+        "validated_by": "tests.unit.test_trace_compiler"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_13_protected_statement_guard",
       "details": {
-        "evidence": "tests.unit.test_final_verify"
+        "validated_by": "tests.unit.test_final_verify"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_14_run_dependency_reports_present",
       "details": {
-        "evidence": "release evidence files"
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\dependency_probe.json"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_15_fresh_evidence_backing",
       "details": {
-        "evidence": "t27_verification and release_acceptance_report"
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\t27_verification.md"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_16_v03_source_fidelity_accounted",
       "details": {
-        "evidence": "rc reviews and source-fidelity evidence"
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\source_fidelity_review.md"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_17_public_contract_schema_metadata",
       "details": {
-        "evidence": "tests.unit.test_schema_validation"
+        "validated_by": "schema_validation"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_18_repository_anatomy_indexed",
       "details": {
-        "evidence": "docs/ai/INDEX.md and evidence/INDEX.md"
+        "missing": [],
+        "paths": [
+          "docs\\ai\\INDEX.md",
+          "docs\\ai\\changes\\geometry-lean-v0_3\\evidence\\INDEX.md"
+        ]
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_19_evaluation_replay_counts",
       "details": {
-        "evidence": "tests.unit.test_evaluation_matrix"
+        "validated_by": "tests.unit.test_evaluation_matrix"
       },
       "status": "passed"
     },
     {
       "check_id": "release_blocker_20_extensions_do_not_change_semantics",
       "details": {
-        "evidence": "claim ceiling and source map"
+        "path": "docs\\ai\\changes\\geometry-lean-v0_3\\source_map.md"
       },
       "status": "passed"
     },
     {
       "check_id": "final_check_target_subset_contract",
       "details": {
-        "evidence": "tests.unit.test_geometry_extraction"
+        "validated_by": "tests.unit.test_geometry_extraction"
       },
       "status": "passed"
     },
     {
       "check_id": "final_check_model_boundaries",
       "details": {
-        "evidence": "tests.unit.test_model_provider_set"
+        "validated_by": "tests.unit.test_model_provider_set"
       },
       "status": "passed"
     },
     {
       "check_id": "final_check_solver_provider",
       "details": {
-        "evidence": "tests.unit.test_composite_provider"
+        "validated_by": "tests.unit.test_composite_provider"
       },
       "status": "passed"
     },
     {
       "check_id": "final_check_compiler_contract",
       "details": {
-        "evidence": "tests.unit.test_trace_compiler"
+        "validated_by": "tests.unit.test_trace_compiler"
       },
       "status": "passed"
     },
     {
       "check_id": "final_check_proof_state_trust",
       "details": {
-        "evidence": "tests.unit.test_proof_state_dag"
+        "validated_by": "tests.unit.test_proof_state_dag"
       },
       "status": "passed"
     },
     {
       "check_id": "final_check_evaluation_replay",
       "details": {
-        "evidence": "tests.unit.test_run_trace and tests.unit.test_evaluation_matrix"
+        "missing": [],
+        "validated_by": [
+          "tests.unit.test_run_trace",
+          "tests.unit.test_evaluation_matrix"
+        ]
       },
       "status": "passed"
     }
   ],
-  "report_id": "release_acceptance:1781194817",
+  "report_id": "release_acceptance:1781195555",
   "schema_version": "1.0.0",
   "status": "passed"
 }
