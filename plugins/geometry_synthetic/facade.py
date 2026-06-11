@@ -45,14 +45,6 @@ class GeometrySolveFacade:
         return default_geometry_solver_policy().build_execution_plan(request).to_dict()
 
     def solve(self, request: GeometrySolveRequest) -> ProviderResult:
-        return ProviderResult(
-            schema_version="1.0.0",
-            result_id=f"provider_result:{request.request_id}",
-            request_id=request.request_id,
-            status="unsupported",
-            proof_use_status="not_allowed",
-            geotrace_ref=None,
-            construction_candidate_refs=(),
-            diagnostic_refs=("diagnostic:geometry_plugin_scaffold_only",),
-            provider_run_manifest_ref=None,
-        )
+        from plugins.geometry_synthetic.provider import CompositeSyntheticGeometryProvider
+
+        return CompositeSyntheticGeometryProvider().run(request).result

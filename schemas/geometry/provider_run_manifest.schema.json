@@ -1,0 +1,66 @@
+{
+  "$id": "geometry.provider_run_manifest.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "request_id",
+    "provider_id",
+    "adapter_versions",
+    "raw_output_hashes",
+    "normalized_output_refs",
+    "resource_usage_refs",
+    "unsupported_rule_count",
+    "side_condition_loss_count",
+    "engine_runs"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "manifest_id": {"type": "string", "pattern": "^provider_run_manifest:.*"},
+    "request_id": {"type": "string"},
+    "provider_id": {"type": "string", "enum": ["geometry_solver_provider:composite_synthetic:v1"]},
+    "adapter_versions": {"type": "object"},
+    "raw_output_hashes": {"type": "array", "items": {"type": "string"}},
+    "normalized_output_refs": {"type": "array", "items": {"type": "string"}},
+    "resource_usage_refs": {"type": "array", "items": {"type": "string"}},
+    "unsupported_rule_count": {},
+    "side_condition_loss_count": {},
+    "engine_runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "engine_role",
+          "engine_family",
+          "adapter_version",
+          "adapter_commit",
+          "config_hash",
+          "checkpoint_hash",
+          "seed",
+          "status",
+          "raw_output_hash",
+          "normalized_output_ref",
+          "resource_usage_ref"
+        ],
+        "properties": {
+          "engine_role": {
+            "type": "string",
+            "enum": ["symbolic_closure", "construction_proposer", "heavy_search"]
+          },
+          "engine_family": {"type": "string"},
+          "adapter_version": {"type": "string"},
+          "adapter_commit": {"type": "string"},
+          "config_hash": {"type": "string"},
+          "checkpoint_hash": {"type": "string"},
+          "seed": {},
+          "status": {"type": "string"},
+          "raw_output_hash": {"type": "string"},
+          "normalized_output_ref": {"type": ["string", "null"]},
+          "resource_usage_ref": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

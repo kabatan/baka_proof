@@ -90,6 +90,8 @@ def resolve_schema_path(artifact_path: Path, explicit_schema: Path | None = None
         return Path("schemas/geometry/geometry_claim_spec.schema.json")
     if artifact_path.name == "geometry_execution_plan.json":
         return Path("schemas/geometry/geometry_execution_plan.schema.json")
+    if artifact_path.name == "provider_run_manifest.json":
+        return Path("schemas/geometry/provider_run_manifest.schema.json")
     raise SchemaValidationError(f"no schema mapping for {artifact_path}")
 
 

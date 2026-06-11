@@ -1,4 +1,4 @@
-.PHONY: test-unit test-mutation smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction
+.PHONY: test-unit test-mutation test-regression smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider
 
 PYTHON ?= python
 
@@ -7,6 +7,10 @@ test-unit:
 
 test-mutation:
 	$(PYTHON) -m unittest tests.unit.test_geometry_extraction tests.unit.test_target_subset
+
+test-regression:
+	$(PYTHON) scripts/check_domain_contamination.py
+	$(PYTHON) scripts/check_no_loose_options.py
 
 smoke-env-bootstrap:
 	$(PYTHON) scripts/probe_dependencies.py --json
@@ -37,3 +41,6 @@ smoke-leangeo-fixture:
 
 smoke-leangeo-extraction:
 	$(PYTHON) scripts/smoke_leangeo_extraction.py
+
+smoke-geometry-provider:
+	$(PYTHON) scripts/smoke_geometry_provider.py

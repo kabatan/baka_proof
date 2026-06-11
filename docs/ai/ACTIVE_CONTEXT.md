@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
 version: v0.3-admission-candidate
-status: T15_READY_AFTER_T14_POLICY_PLAN
+status: T16_READY_AFTER_T15_PROVIDER_SHELL
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -34,9 +34,9 @@ Implementation remains limited to the reviewed Base Spec and Plan. Git initializ
 
 Completed gate: `RC-2 — target subset and extraction` passed Guardian boundary review.
 
-Completed task: `T14 — GeometrySolverPolicy and resource-aware ExecutionPlan`.
+Completed task: `T15 — Composite GeometrySolverProvider shell`.
 
-Current task: `T15 — Composite GeometrySolverProvider shell`.
+Current task: `T16 — Newclid-compatible symbolic closure adapter`.
 
 Claim ceiling from RC-2 remains active: do not claim full LeanGeo theorem-corpus build, solver/compiler integration, final theorem support, v0.3 completion, R-ID VERIFIED status, or evidence beyond the LeanGeo.Abbre elaborated `#check` fixture path.
 

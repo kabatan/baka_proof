@@ -8,6 +8,12 @@ if "%1"=="test-mutation" (
   python -m unittest tests.unit.test_geometry_extraction tests.unit.test_target_subset
   exit /b %ERRORLEVEL%
 )
+if "%1"=="test-regression" (
+  python scripts\check_domain_contamination.py
+  if errorlevel 1 exit /b %ERRORLEVEL%
+  python scripts\check_no_loose_options.py
+  exit /b %ERRORLEVEL%
+)
 if "%1"=="smoke-env-bootstrap" (
   python scripts\probe_dependencies.py --json
   exit /b %ERRORLEVEL%
@@ -46,6 +52,10 @@ if "%1"=="smoke-leangeo-fixture" (
 )
 if "%1"=="smoke-leangeo-extraction" (
   python scripts\smoke_leangeo_extraction.py
+  exit /b %ERRORLEVEL%
+)
+if "%1"=="smoke-geometry-provider" (
+  python scripts\smoke_geometry_provider.py
   exit /b %ERRORLEVEL%
 )
 echo unsupported target: %1

@@ -28,6 +28,7 @@ class GeometryPluginScaffoldTest(unittest.TestCase):
         self.assertEqual(result.status, "unsupported")
         self.assertEqual(result.proof_use_status, "not_allowed")
         self.assertIsNone(result.geotrace_ref)
+        self.assertIsNotNone(result.provider_run_manifest_ref)
 
 
 if __name__ == "__main__":

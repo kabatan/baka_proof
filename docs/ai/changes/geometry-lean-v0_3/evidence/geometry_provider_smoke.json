@@ -1,0 +1,138 @@
+{
+  "manifest": {
+    "adapter_versions": {
+      "construction_proposer": "dummy-construction:0.1",
+      "heavy_search": "dummy-heavy:0.1",
+      "symbolic_closure": "dummy-symbolic:0.1"
+    },
+    "engine_runs": [
+      {
+        "adapter_commit": "dummy-adapter-local",
+        "adapter_version": "dummy-symbolic:0.1",
+        "checkpoint_hash": "not_applicable",
+        "config_hash": "36cf4f4fd691b213",
+        "engine_family": "symbolic_closure",
+        "engine_role": "symbolic_closure",
+        "normalized_output_ref": null,
+        "raw_output_hash": "fb57d1da30fb8d59",
+        "resource_usage_ref": "resource_usage:geometry_request:smoke:default:medium:symbolic_closure:32691b52f950b047",
+        "seed": 0,
+        "status": "diagnostic_only"
+      },
+      {
+        "adapter_commit": "dummy-adapter-local",
+        "adapter_version": "dummy-construction:0.1",
+        "checkpoint_hash": "not_applicable",
+        "config_hash": "57c4da00c71e106e",
+        "engine_family": "construction_proposer",
+        "engine_role": "construction_proposer",
+        "normalized_output_ref": null,
+        "raw_output_hash": "0d040804bca10755",
+        "resource_usage_ref": "resource_usage:geometry_request:smoke:default:medium:construction_proposer:5501a0ac61137f17",
+        "seed": 0,
+        "status": "diagnostic_only"
+      },
+      {
+        "adapter_commit": "dummy-adapter-local",
+        "adapter_version": "dummy-symbolic:0.1",
+        "checkpoint_hash": "not_applicable",
+        "config_hash": "36cf4f4fd691b213",
+        "engine_family": "symbolic_closure",
+        "engine_role": "symbolic_closure",
+        "normalized_output_ref": null,
+        "raw_output_hash": "7546e55cfd26824a",
+        "resource_usage_ref": "resource_usage:geometry_request:smoke:default:medium:symbolic_closure:8f00e012d404fcff",
+        "seed": 0,
+        "status": "diagnostic_only"
+      }
+    ],
+    "manifest_id": "provider_run_manifest:2cf6a11c9e98c618",
+    "normalized_output_refs": [],
+    "provider_id": "geometry_solver_provider:composite_synthetic:v1",
+    "raw_output_hashes": [
+      "fb57d1da30fb8d59",
+      "0d040804bca10755",
+      "7546e55cfd26824a"
+    ],
+    "request_id": "geometry_request:smoke:default:medium",
+    "resource_usage_refs": [
+      "resource_usage:geometry_request:smoke:default:medium:symbolic_closure:32691b52f950b047",
+      "resource_usage:geometry_request:smoke:default:medium:construction_proposer:5501a0ac61137f17",
+      "resource_usage:geometry_request:smoke:default:medium:symbolic_closure:8f00e012d404fcff"
+    ],
+    "schema_version": "1.0.0",
+    "side_condition_loss_count": 0,
+    "unsupported_rule_count": 0
+  },
+  "resource_usage_reports": [
+    {
+      "admission_status": "admitted",
+      "budget": "medium",
+      "component": "geometry_solver_provider",
+      "cpu_time_sec": 0,
+      "ended_at": "1781189167.3996134",
+      "exit_status": "completed",
+      "gpu_vram_peak_mb": null,
+      "logs_ref": "inline_dummy_adapter",
+      "peak_rss_mb": 0,
+      "queue_wait_sec": 0,
+      "report_id": "resource_usage:geometry_request:smoke:default:medium:symbolic_closure:32691b52f950b047",
+      "role": "symbolic_closure",
+      "run_id": "geometry_request:smoke:default:medium",
+      "schema_version": "1.0.0",
+      "started_at": "1781189167.3986127",
+      "wall_time_sec": 0.0
+    },
+    {
+      "admission_status": "admitted",
+      "budget": "medium",
+      "component": "geometry_solver_provider",
+      "cpu_time_sec": 0,
+      "ended_at": "1781189167.3996134",
+      "exit_status": "completed",
+      "gpu_vram_peak_mb": null,
+      "logs_ref": "inline_dummy_adapter",
+      "peak_rss_mb": 0,
+      "queue_wait_sec": 0,
+      "report_id": "resource_usage:geometry_request:smoke:default:medium:construction_proposer:5501a0ac61137f17",
+      "role": "construction_proposer",
+      "run_id": "geometry_request:smoke:default:medium",
+      "schema_version": "1.0.0",
+      "started_at": "1781189167.3996134",
+      "wall_time_sec": 0.0
+    },
+    {
+      "admission_status": "admitted",
+      "budget": "medium",
+      "component": "geometry_solver_provider",
+      "cpu_time_sec": 0,
+      "ended_at": "1781189167.3996134",
+      "exit_status": "completed",
+      "gpu_vram_peak_mb": null,
+      "logs_ref": "inline_dummy_adapter",
+      "peak_rss_mb": 0,
+      "queue_wait_sec": 0,
+      "report_id": "resource_usage:geometry_request:smoke:default:medium:symbolic_closure:8f00e012d404fcff",
+      "role": "symbolic_closure",
+      "run_id": "geometry_request:smoke:default:medium",
+      "schema_version": "1.0.0",
+      "started_at": "1781189167.3996134",
+      "wall_time_sec": 0.0
+    }
+  ],
+  "result": {
+    "construction_candidate_refs": [],
+    "diagnostic_refs": [
+      "diagnostic:geometry_request:smoke:default:medium:symbolic_closure:dummy_adapter",
+      "diagnostic:geometry_request:smoke:default:medium:construction_proposer:dummy_adapter",
+      "diagnostic:geometry_request:smoke:default:medium:symbolic_closure:dummy_adapter"
+    ],
+    "geotrace_ref": null,
+    "proof_use_status": "not_allowed",
+    "provider_run_manifest_ref": "provider_run_manifest:2cf6a11c9e98c618",
+    "request_id": "geometry_request:smoke:default:medium",
+    "result_id": "provider_result:geometry_request:smoke:default:medium",
+    "schema_version": "1.0.0",
+    "status": "unsupported"
+  }
+}
