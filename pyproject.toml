@@ -1,0 +1,9 @@
+[project]
+name = "math-auto-research"
+version = "0.0.0"
+description = "Geometry x Lean mathematical auto-research pipeline scaffold."
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

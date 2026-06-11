@@ -1,0 +1,9 @@
+{
+  "$id": "geometry.v03_contract_index.v1",
+  "type": "object",
+  "required": ["schema_version", "contracts"],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "contracts": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$id": "base.selected_implementations.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "target_library",
+    "model_provider_set",
+    "research_controller_plugin",
+    "proof_worker_plugin",
+    "geometry_solver_provider",
+    "geometry_solver_policy",
+    "rule_registry",
+    "resource_policy",
+    "trust_boundary"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "target_library": {"type": "string", "pattern": "LeanGeoSubsetV1:.+"},
+    "model_provider_set": {"type": "string", "pattern": "model_provider_set:.+:.+"},
+    "research_controller_plugin": {"type": "string", "pattern": "research_controller:.+:.+"},
+    "proof_worker_plugin": {"type": "string", "pattern": "proof_worker:.+:.+"},
+    "geometry_solver_provider": {"type": "string", "pattern": "geometry_solver_provider:.+:.+"},
+    "geometry_solver_policy": {"type": "string", "pattern": "geometry_solver_policy:.+:.+"},
+    "rule_registry": {"type": "string", "pattern": "RuleRegistryV1:.+"},
+    "resource_policy": {"type": "string", "pattern": "ResourcePolicy:.+:.+"},
+    "trust_boundary": {"type": "string", "pattern": "strict_lean:.+"}
+  }
+}
