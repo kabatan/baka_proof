@@ -40,5 +40,9 @@ if "%1"=="smoke-leangeo-fixture" (
   python scripts\check_leangeo_wsl_fixture.py
   exit /b %ERRORLEVEL%
 )
+if "%1"=="smoke-leangeo-extraction" (
+  python scripts\smoke_leangeo_extraction.py
+  exit /b %ERRORLEVEL%
+)
 echo unsupported target: %1
 exit /b 2

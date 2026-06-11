@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import os
+import shutil
 import subprocess
 import time
 from pathlib import Path
@@ -10,7 +12,33 @@ from math_auto_research.schema_validation import load_artifact
 
 
 def lean_version() -> str:
-    completed = subprocess.run(["lean", "--version"], capture_output=True, text=True, check=False)
+    lean_cmd = "lean"
+    elan_lean = Path(os.environ.get("USERPROFILE", "")) / ".elan" / "bin" / "lean.exe"
+    if elan_lean.exists():
+        lean_cmd = str(elan_lean)
+    completed = subprocess.run([lean_cmd, "--version"], capture_output=True, text=True, check=False)
+    if completed.returncode != 0:
+        return "unavailable"
+    return completed.stdout.strip()
+
+
+def wsl_lean_version() -> str:
+    if shutil.which("wsl") is None:
+        return "unavailable"
+    completed = subprocess.run(
+        [
+            "wsl",
+            "-d",
+            "Ubuntu-24.04",
+            "--",
+            "bash",
+            "-lc",
+            'export PATH="$HOME/.elan/bin:$PATH" && lean --version',
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
     if completed.returncode != 0:
         return "unavailable"
     return completed.stdout.strip()
@@ -19,8 +47,10 @@ def lean_version() -> str:
 def build_target_library_status(manifest_path: Path) -> dict[str, Any]:
     manifest = load_artifact(manifest_path)
     local_lean = lean_version()
+    wsl_lean = wsl_lean_version()
     expected = str(manifest["expected_lean_version"])
     compatible = expected in local_lean
+    wsl_compatible = expected in wsl_lean
     blockers: list[str] = []
     if not compatible:
         blockers.append(f"LeanGeo README requirement is Lean {expected}; local Lean is {local_lean}")
@@ -38,7 +68,12 @@ def build_target_library_status(manifest_path: Path) -> dict[str, Any]:
         "source_url": manifest["source_url"],
         "expected_lean_version": expected,
         "local_lean_version": local_lean,
+        "wsl_lean_version": wsl_lean,
         "install_status": "available" if compatible else "blocked",
+        "native_windows_install_status": "available" if compatible else "blocked",
+        "wsl_install_status": "available" if wsl_compatible else "blocked",
+        "native_windows_full_corpus_status": "blocked_by_leancvc5_windows_archive",
+        "wsl_subset_elaboration_status": "available" if wsl_compatible else "blocked",
         "namespace_discovery_status": "subset_fixture_elaborated" if compatible else "blocked",
         "theorem_discovery_status": "subset_fixture_elaborated" if compatible else "blocked",
         "blockers": blockers,

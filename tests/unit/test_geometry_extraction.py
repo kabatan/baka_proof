@@ -32,6 +32,25 @@ class GeometryExtractionTest(unittest.TestCase):
         self.assertEqual(claim.target["form"], "collinear")
         self.assertIn("A != B", claim.nondegeneracy_assumptions)
 
+    def test_extracts_from_lean_check_output(self) -> None:
+        output = (
+            "MathAutoResearch.GeometryFixture.fixture_collinear "
+            "(A B C : Point) (h : Coll A B C) : Coll A B C\n"
+        )
+        report, claim = GeometryExtractor().extract_lean_check_output(
+            output,
+            source_goal_ref="lean-check:fixture_collinear",
+            elaboration_report_ref="docs/ai/changes/geometry-lean-v0_3/evidence/wsl_leangeo_check_output.log",
+        )
+        self.assertEqual(report.status, "accepted")
+        self.assertEqual(report.proof_use_status, "not_allowed")
+        self.assertIsNotNone(claim)
+        assert claim is not None
+        self.assertEqual(claim.objects, ("A:Point", "B:Point", "C:Point"))
+        self.assertEqual(claim.hypotheses, ("collinear",))
+        self.assertEqual(claim.target["form"], "collinear")
+        self.assertEqual(claim.target["raw"], "Coll A B C")
+
     def test_safe_rejects_unsupported_goal(self) -> None:
         report, claim = GeometryExtractor().extract("target arbitrary_mathlib_expression", "goal:2")
         self.assertEqual(report.status, "safe_rejected")

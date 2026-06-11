@@ -13,6 +13,7 @@ authority: Evidence record only; reviewers decide RC-2 status.
 ```powershell
 python -m unittest tests.unit.test_geometry_extraction tests.unit.test_target_subset tests.unit.test_schema_validation tests.unit.test_target_library_status
 cmd /c make smoke-leangeo-fixture
+cmd /c make smoke-leangeo-extraction
 cmd /c make test-unit
 cmd /c make test-mutation TEST_FILTER=extraction
 cmd /c make smoke-geometry-extraction > docs\ai\changes\geometry-lean-v0_3\evidence\geometry_extraction_smoke.json
@@ -25,8 +26,9 @@ python scripts/check_domain_contamination.py
 
 - Focused RC-2 unit set: `Ran 17 tests ... OK`.
 - LeanGeo fixture: `PASS: LeanGeo.Abbre fixture elaborated with lake env lean`; warning only for unknown upstream `supportInterpreter` package field.
-- Full unit suite: `Ran 41 tests ... OK`.
-- Mutation target: `Ran 11 tests ... OK`.
+- LeanGeo extraction smoke: WSL `lake env lean` emitted a `#check` signature, and extraction produced `GeometryClaimSpec` from that Lean output with `proof_use_status = not_allowed`.
+- Full unit suite: `Ran 42 tests ... OK`.
+- Mutation target: `Ran 12 tests ... OK`.
 - Geometry extraction smoke: passed and regenerated `geometry_extraction_smoke.json`.
 - Lean root build: `Build completed successfully`; warnings only from transitive package metadata/local dependency cache state.
 - Lean no-sorry check: passed.

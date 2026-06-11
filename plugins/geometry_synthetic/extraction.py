@@ -120,6 +120,35 @@ class GeometryExtractor:
             claim,
         )
 
+    def extract_lean_check_output(
+        self,
+        lean_check_output: str,
+        source_goal_ref: str,
+        elaboration_report_ref: str,
+        relation_evidence: RelationEvidence | None = None,
+    ) -> tuple[GeometryExtractionReport, GeometryClaimSpec | None]:
+        signature = _first_lean_check_signature(lean_check_output)
+        if signature is None:
+            return _reject(source_goal_ref, lean_check_output, "missing_lean_check_signature")
+        parsed = _parse_lean_check_signature(signature)
+        target_form = _classify_lean_atom(parsed["target_raw"])
+        if target_form is None:
+            return _reject(source_goal_ref, parsed["target_raw"], "unsupported_expression")
+        return self.extract_context(
+            LeanGoalContext(
+                source_goal_ref=source_goal_ref,
+                elaboration_status="passed",
+                elaboration_report_ref=elaboration_report_ref,
+                objects=tuple(parsed["objects"]),
+                hypotheses=tuple(parsed["hypotheses"]),
+                target_form=target_form,
+                target_raw=parsed["target_raw"],
+                nondegeneracy_assumptions=tuple(parsed["nondegeneracy_assumptions"]),
+                orientation_assumptions=tuple(parsed["orientation_assumptions"]),
+            ),
+            relation_evidence,
+        )
+
     def extract(
         self,
         lean_goal_text: str,
@@ -342,6 +371,51 @@ def _extract_declarations(text: str) -> list[tuple[str, str]]:
         for name in names_raw.split():
             declarations.append((name.strip(), sort))
     return declarations
+
+
+def _first_lean_check_signature(output: str) -> str | None:
+    for line in output.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("warning:") or stripped.startswith("note:"):
+            continue
+        if " : " in stripped and "(" in stripped:
+            return stripped
+    return None
+
+
+def _parse_lean_check_signature(signature: str) -> dict[str, Any]:
+    body = signature.split(maxsplit=1)[1] if " " in signature else signature
+    declarations = _extract_declarations(body)
+    hypothesis_atoms = _extract_binder_hypotheses(body)
+    hypotheses = [_classify_lean_atom(atom) for atom in hypothesis_atoms]
+    target_raw = _extract_signature_target(body)
+    nondegeneracy = [atom for atom, form in zip(hypothesis_atoms, hypotheses) if form == "distinct"]
+    orientation = [atom for atom in hypothesis_atoms if "sameSide" in atom or "opposingSides" in atom]
+    return {
+        "objects": [f"{name}:{sort}" for name, sort in declarations],
+        "hypotheses": [form for form in hypotheses if form is not None],
+        "target_raw": target_raw,
+        "nondegeneracy_assumptions": nondegeneracy,
+        "orientation_assumptions": orientation,
+    }
+
+
+def _extract_binder_hypotheses(text: str) -> list[str]:
+    hypotheses: list[str] = []
+    for _, binder_type in re.findall(r"\(([^():]+)\s*:\s*([^)]+)\)", text):
+        cleaned = binder_type.strip()
+        if cleaned not in {"Point", "Line", "Circle"}:
+            hypotheses.append(cleaned)
+    return hypotheses
+
+
+def _extract_signature_target(text: str) -> str:
+    rest = re.sub(r"\([^()]*\)", "", text).strip()
+    if rest.startswith(":"):
+        return rest[1:].strip()
+    if " : " in rest:
+        return rest.rsplit(" : ", 1)[1].strip()
+    return rest
 
 
 def _strip_quantifiers(text: str) -> str:

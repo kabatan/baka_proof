@@ -1,0 +1,1 @@
+MathAutoResearch.GeometryFixture.fixture_collinear (A B C : Point) (h : Coll A B C) : Coll A B C

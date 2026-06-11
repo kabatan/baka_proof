@@ -1,15 +1,18 @@
 {
-  "blockers": [
-    "LeanGeo README requirement is Lean 4.15; local Lean is Lean (version 4.30.0, x86_64-w64-windows-gnu, commit d024af099ca4bf2c86f649261ebf59565dc8c622, Release)"
-  ],
-  "claim_ceiling": "fixture_or_scaffold_only_until_LeanGeo_dependency_resolves",
+  "blockers": [],
+  "claim_ceiling": "leangeo_subset_fixture_elaboration_only_until_reviewer_accepts_rc2",
   "expected_lean_version": "4.15",
-  "install_status": "blocked",
-  "local_lean_version": "Lean (version 4.30.0, x86_64-w64-windows-gnu, commit d024af099ca4bf2c86f649261ebf59565dc8c622, Release)",
-  "namespace_discovery_status": "blocked",
-  "report_id": "target_library_status:1781186309515978800",
+  "install_status": "available",
+  "local_lean_version": "Lean (version 4.15.0, x86_64-w64-windows-gnu, commit 11651562caae, Release)",
+  "namespace_discovery_status": "subset_fixture_elaborated",
+  "native_windows_full_corpus_status": "blocked_by_leancvc5_windows_archive",
+  "native_windows_install_status": "available",
+  "report_id": "target_library_status:1781187506576382200",
   "schema_version": "1.0.0",
   "source_url": "https://github.com/project-numina/LeanGeo",
   "target_library_id": "LeanGeoSubsetV1:1.0.0",
-  "theorem_discovery_status": "blocked"
+  "theorem_discovery_status": "subset_fixture_elaborated",
+  "wsl_install_status": "available",
+  "wsl_lean_version": "Lean (version 4.15.0, x86_64-unknown-linux-gnu, commit 11651562caae, Release)",
+  "wsl_subset_elaboration_status": "available"
 }
