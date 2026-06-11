@@ -1,0 +1,32 @@
+{
+  "$id": "resources.local_resource_profile.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "profile_id",
+    "created_at",
+    "os",
+    "cpu_physical_cores",
+    "cpu_logical_cores",
+    "total_ram_mb",
+    "available_ram_mb_at_probe",
+    "gpu_devices",
+    "disk_free_mb",
+    "lean_build_parallelism_default",
+    "provider_engine_availability"
+  ],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "profile_id": {"type": "string"},
+    "created_at": {"type": "string"},
+    "os": {"type": "string"},
+    "cpu_physical_cores": {},
+    "cpu_logical_cores": {},
+    "total_ram_mb": {},
+    "available_ram_mb_at_probe": {},
+    "gpu_devices": {"type": "array"},
+    "disk_free_mb": {"type": "object"},
+    "lean_build_parallelism_default": {},
+    "provider_engine_availability": {"type": "object"}
+  }
+}

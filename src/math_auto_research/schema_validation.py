@@ -72,6 +72,8 @@ def resolve_schema_path(artifact_path: Path, explicit_schema: Path | None = None
         return Path("schemas/base/selected_implementations.schema.json")
     if artifact_path.name in {"dependency_probe.json", "dependency_resolution.json"}:
         return Path("schemas/resources/dependency_resolution_report.schema.json")
+    if artifact_path.name in {"local_resource_profile.json", "resource_profile.json"}:
+        return Path("schemas/resources/local_resource_profile.schema.json")
     raise SchemaValidationError(f"no schema mapping for {artifact_path}")
 
 

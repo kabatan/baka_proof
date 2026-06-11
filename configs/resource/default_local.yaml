@@ -1,0 +1,8 @@
+schema_version: "1.0.0"
+policy_id: "ResourcePolicy:geometry_local_default:v1"
+reserve_cpu_percent: "15"
+reserve_ram_percent: "20"
+reserve_ram_min_mb: "4096"
+reserve_disk_percent: "10"
+heavy_search_parallelism: "1"
+heavy_search_exclusive_by_default: "true"

@@ -1,0 +1,21 @@
+{
+  "available_ram_mb_at_probe": 31865,
+  "cpu_logical_cores": 24,
+  "cpu_physical_cores": 12,
+  "created_at": "2026-06-11T09:06:37.624617+00:00",
+  "disk_free_mb": {
+    "artifact_root": 161177,
+    "temp_root": 161177
+  },
+  "gpu_devices": [],
+  "lean_build_parallelism_default": 21,
+  "os": "Windows-11-10.0.26200-SP0",
+  "profile_id": "sha256:c42e3ed55c12654c4948533a296a69566fc2d6a68f83d43848af9837d4ad798e",
+  "provider_engine_availability": {
+    "construction_proposer": "unavailable",
+    "heavy_search": "unavailable",
+    "symbolic_closure": "unavailable"
+  },
+  "schema_version": "1.0.0",
+  "total_ram_mb": 31865
+}

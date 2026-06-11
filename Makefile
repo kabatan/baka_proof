@@ -1,4 +1,4 @@
-.PHONY: test-unit smoke-env-bootstrap
+.PHONY: test-unit smoke-env-bootstrap smoke-resource-governor
 
 PYTHON ?= python
 
@@ -7,3 +7,6 @@ test-unit:
 
 smoke-env-bootstrap:
 	$(PYTHON) scripts/probe_dependencies.py --json
+
+smoke-resource-governor:
+	$(PYTHON) scripts/probe_local_resources.py --json

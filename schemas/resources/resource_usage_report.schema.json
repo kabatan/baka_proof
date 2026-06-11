@@ -1,0 +1,35 @@
+{
+  "$id": "resources.resource_usage_report.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "run_id",
+    "component",
+    "engine_role",
+    "budget",
+    "admitted",
+    "queue_wait_sec",
+    "wall_time_sec",
+    "cpu_time_sec",
+    "peak_rss_mb",
+    "exit_status",
+    "logs_ref"
+  ],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "report_id": {"type": "string"},
+    "run_id": {"type": "string"},
+    "component": {"type": "string"},
+    "engine_role": {"type": "string"},
+    "budget": {"type": "string"},
+    "admitted": {"type": "boolean"},
+    "queue_wait_sec": {},
+    "wall_time_sec": {},
+    "cpu_time_sec": {},
+    "peak_rss_mb": {},
+    "gpu_vram_peak_mb": {},
+    "exit_status": {"type": "string"},
+    "logs_ref": {"type": "string"}
+  }
+}

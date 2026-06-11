@@ -7,5 +7,9 @@ if "%1"=="smoke-env-bootstrap" (
   python scripts\probe_dependencies.py --json
   exit /b %ERRORLEVEL%
 )
+if "%1"=="smoke-resource-governor" (
+  python scripts\probe_local_resources.py --json
+  exit /b %ERRORLEVEL%
+)
 echo unsupported target: %1
 exit /b 2
