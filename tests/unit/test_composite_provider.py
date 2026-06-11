@@ -94,10 +94,20 @@ class CompositeProviderTest(unittest.TestCase):
         self.assertNotIn("heavy_search", [run["engine_role"] for run in medium.manifest.engine_runs])
 
         heavy = CompositeSyntheticGeometryProvider().run(
-            request_for("heavy", {"explicit_escalation": True, "heavy_search_requested": True})
+            request_for(
+                "heavy",
+                {
+                    "explicit_escalation": True,
+                    "heavy_search_requested": True,
+                    "claim_spec": claim_spec_fixture(),
+                },
+            )
         )
         self.assertEqual(heavy.manifest.engine_runs[-1]["engine_role"], "heavy_search")
         self.assertEqual(heavy.resource_usage_reports[-1]["role"], "heavy_search")
+        self.assertIn("tonggeometry-compatible-fixture", heavy.manifest.adapter_versions["heavy_search"])
+        self.assertEqual(heavy.result.proof_use_status, "not_allowed")
+        self.assertIsNone(heavy.result.geotrace_ref)
 
     def test_base_source_does_not_branch_on_internal_engine_names(self) -> None:
         base_files = list(Path("src/math_auto_research/base").rglob("*.py"))

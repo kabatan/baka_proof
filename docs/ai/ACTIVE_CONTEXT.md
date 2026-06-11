@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry × Lean v0.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-003
 version: v0.3-admission-candidate
-status: T18_READY_AFTER_T17_CONSTRUCTION_ADAPTER
+status: RC3_PENDING_REVIEW_AFTER_PROVIDER_RESOURCE_INTEGRATION
 created: 2026-06-11
 base_spec: MARP-GEOLEAN-BASE-003
 plan: MARP-GEOLEAN-PLAN-003
@@ -34,9 +34,11 @@ Implementation remains limited to the reviewed Base Spec and Plan. Git initializ
 
 Completed gate: `RC-2 — target subset and extraction` passed Guardian boundary review.
 
-Completed task: `T17 — GenesisGeo-compatible construction proposer adapter`.
+Completed task: `T18 — TongGeometry-compatible heavy-search adapter`.
 
-Current task: `T18 — TongGeometry-compatible heavy-search adapter`.
+Current gate: `RC-3 — provider/resource integration`.
+
+Next task: run `guardian_boundary_reviewer` for RC-3. Do not claim RC-3 PASS until reviewer accepts the evidence.
 
 Claim ceiling from RC-2 remains active: do not claim full LeanGeo theorem-corpus build, solver/compiler integration, final theorem support, v0.3 completion, R-ID VERIFIED status, or evidence beyond the LeanGeo.Abbre elaborated `#check` fixture path.
 

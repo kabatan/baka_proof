@@ -176,6 +176,32 @@ class GenesisGeoCompatibleConstructionProposerAdapter(DummyEngineAdapter):
         )
 
 
+class TongGeometryCompatibleHeavySearchAdapter(DummyEngineAdapter):
+    def __init__(self) -> None:
+        super().__init__(ENGINE_HEAVY_SEARCH, "tonggeometry-compatible-fixture:0.1")
+
+    def run(self, request: GeometrySolveRequest, step: GeometryExecutionStep) -> EngineAdapterResult:
+        claim_spec = request.constraints.get("claim_spec")
+        raw_trace = {
+            "engine_family": "tonggeometry_compatible_heavy_search",
+            "request_id": request.request_id,
+            "budget": request.budget,
+            "timeout_sec": step.resource_request.timeout_sec,
+            "raw_trace_status": "search_hint_only",
+            "proof_use_status": "not_allowed",
+        }
+        if isinstance(claim_spec, dict):
+            raw_trace["target"] = claim_spec.get("target", {})
+        raw_output = json.dumps(raw_trace, sort_keys=True)
+        return EngineAdapterResult(
+            engine_role=self.engine_role,
+            status="diagnostic_only",
+            raw_output=raw_output,
+            normalized_output_ref=None,
+            diagnostic_ref=f"diagnostic:{request.request_id}:heavy_search:tong_fixture",
+        )
+
+
 class CompositeSyntheticGeometryProvider:
     provider_id = "geometry_solver_provider:composite_synthetic:v1"
 
@@ -188,7 +214,7 @@ class CompositeSyntheticGeometryProvider:
         self.adapters = adapters or {
             ENGINE_SYMBOLIC_CLOSURE: NewclidCompatibleSymbolicClosureAdapter(),
             ENGINE_CONSTRUCTION_PROPOSER: GenesisGeoCompatibleConstructionProposerAdapter(),
-            ENGINE_HEAVY_SEARCH: DummyEngineAdapter(ENGINE_HEAVY_SEARCH, "dummy-heavy:0.1"),
+            ENGINE_HEAVY_SEARCH: TongGeometryCompatibleHeavySearchAdapter(),
         }
 
     def run(self, request: GeometrySolveRequest) -> CompositeProviderRun:
