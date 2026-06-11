@@ -27,11 +27,11 @@ def main() -> int:
                 "rule:collinearity_identity:v1",
                 ("Coll A B C",),
                 "Coll A B C",
-                ("side_condition:points_declared:A:B:C",),
+                ("points_declared:A:B:C",),
             ),
         ),
         rule_refs=("rule:collinearity_identity:v1",),
-        side_condition_refs=("side_condition:points_declared:A:B:C",),
+        side_condition_refs=("points_declared:A:B:C",),
     )
     result = TraceCompiler().compile(trace)
     if result.lean_patch is None:

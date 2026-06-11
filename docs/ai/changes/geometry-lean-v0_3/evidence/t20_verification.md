@@ -14,6 +14,7 @@ authority: Evidence record only; does not override Base Spec, Plan, or reviewer 
 - `TraceCompilationResult` dataclass and JSON Schema.
 - Unsupported rules return blockers.
 - Malformed/empty traces and missing side-condition refs are rejected fail-safe.
+- TraceCompiler checks each step against the matched rule's required side conditions; partially conditioned steps are blocked.
 - Supported trace fixture compiles to a Lean patch candidate with `proof_use_status = lean_patch_candidate`.
 - Lean compile fixture checks generated patch syntax with `lean`; it does not claim final theorem support.
 
@@ -32,10 +33,10 @@ python scripts/check_domain_contamination.py
 Results:
 
 ```text
-T20 focused tests: Ran 6 tests OK
+T20 focused tests: Ran 7 tests OK
 Trace compiler smoke: PASS
 Mutation target: Ran 12 tests OK
-Full unit suite: Ran 61 tests OK
+Full unit suite: Ran 65 tests OK
 Lean root build: Build completed successfully
 Lean no-sorry: passed
 Domain contamination: passed

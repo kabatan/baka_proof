@@ -29,7 +29,7 @@ class TraceCompiler:
         errors = validate_rule_registry(self.registry)
         if errors:
             raise ValueError(f"invalid rule registry: {errors}")
-        self.rule_ids = {rule.rule_id for rule in self.registry.rules}
+        self.rules_by_id = {rule.rule_id: rule for rule in self.registry.rules}
 
     def compile(self, trace: GeoTraceV1) -> TraceCompilationResult:
         blockers: list[str] = []
@@ -37,12 +37,14 @@ class TraceCompiler:
             blockers.append("invalid_trace_proof_use_status")
         if not trace.steps:
             blockers.append("malformed_trace_empty_steps")
-        unsupported = sorted({step.rule_id for step in trace.steps if step.rule_id not in self.rule_ids})
+        unsupported = sorted({step.rule_id for step in trace.steps if step.rule_id not in self.rules_by_id})
         blockers.extend(f"unsupported_rule:{rule_id}" for rule_id in unsupported)
-        missing_side_conditions = [
-            step.step_id for step in trace.steps if not step.side_condition_refs
-        ]
-        blockers.extend(f"missing_side_conditions:{step_id}" for step_id in missing_side_conditions)
+        for step in trace.steps:
+            rule = self.rules_by_id.get(step.rule_id)
+            if rule is None:
+                continue
+            missing = sorted(set(rule.required_side_conditions) - set(step.side_condition_refs))
+            blockers.extend(f"missing_side_condition:{step.step_id}:{condition}" for condition in missing)
         if blockers:
             return TraceCompilationResult(
                 "1.0.0",

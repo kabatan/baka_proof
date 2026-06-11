@@ -21,11 +21,11 @@ def supported_trace() -> GeoTraceV1:
                 rule_id="rule:collinearity_identity:v1",
                 premises=("Coll A B C",),
                 conclusion="Coll A B C",
-                side_condition_refs=("side_condition:points_declared:A:B:C",),
+                side_condition_refs=("points_declared:A:B:C",),
             ),
         ),
         rule_refs=("rule:collinearity_identity:v1",),
-        side_condition_refs=("side_condition:points_declared:A:B:C",),
+        side_condition_refs=("points_declared:A:B:C",),
     )
 
 
@@ -64,7 +64,27 @@ class TraceCompilerTest(unittest.TestCase):
         trace = GeoTraceV1(trace.schema_version, "geotrace:missing-side", trace.claim_spec_ref, (step,), trace.rule_refs, ())
         result = TraceCompiler().compile(trace)
         self.assertEqual(result.status, "blocked")
-        self.assertIn("missing_side_conditions:step:missing-side", result.blockers)
+        self.assertIn("missing_side_condition:step:missing-side:points_declared:A:B:C", result.blockers)
+
+    def test_rule_specific_side_conditions_are_required(self) -> None:
+        step = GeoTraceStep(
+            "step:midpoint",
+            "rule:midpoint_collinearity_basic:v1",
+            ("MidPoint A P B",),
+            "Coll A P B",
+            ("points_declared:A:P:B",),
+        )
+        trace = GeoTraceV1(
+            "1.0.0",
+            "geotrace:midpoint-missing-distinct",
+            "geometry_claim:fixture",
+            (step,),
+            ("rule:midpoint_collinearity_basic:v1",),
+            ("points_declared:A:P:B",),
+        )
+        result = TraceCompiler().compile(trace)
+        self.assertEqual(result.status, "blocked")
+        self.assertIn("missing_side_condition:step:midpoint:endpoints_distinct:A:B", result.blockers)
 
 
 if __name__ == "__main__":

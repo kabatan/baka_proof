@@ -14,7 +14,12 @@ authority: Evidence record only; does not override Base Spec, Plan, or reviewer 
 - `RuleRegistryV1`, `GeometryRuleContract`, and `SideConditionReport` dataclasses and JSON Schemas.
 - Initial LeanGeoSubsetV1 supported rule subset:
   - `collinearity_propagation`;
-  - `midpoint_basic_consequences`.
+  - `parallel_perpendicular_transfer`;
+  - `midpoint_basic_consequences`;
+  - `concyclicity_basic_consequences`;
+  - `equal_length_transfer`;
+  - `angle_transfer`;
+  - `construction_introduction`.
 - Rule registry validator fails missing side conditions, missing fixtures, duplicate rule IDs, missing Lean template, and wrong target library.
 - Side-condition calculus turns missing side conditions into generated obligations, not silent assumptions.
 

@@ -28,11 +28,11 @@ class GeoTraceRuleRegistryTest(unittest.TestCase):
                     rule_id="rule:collinearity_identity:v1",
                     premises=("Coll A B C",),
                     conclusion="Coll A B C",
-                    side_condition_refs=("side_condition:points_declared:A:B:C",),
+                    side_condition_refs=("points_declared:A:B:C",),
                 ),
             ),
             rule_refs=("rule:collinearity_identity:v1",),
-            side_condition_refs=("side_condition:points_declared:A:B:C",),
+            side_condition_refs=("points_declared:A:B:C",),
         )
         self.assertEqual(trace.proof_use_status, "not_allowed")
         with tempfile.TemporaryDirectory() as tmp:
@@ -44,6 +44,17 @@ class GeoTraceRuleRegistryTest(unittest.TestCase):
     def test_rule_registry_validates_side_conditions_and_fixtures(self) -> None:
         registry = default_rule_registry()
         self.assertEqual(validate_rule_registry(registry), [])
+        self.assertTrue(
+            {
+                "collinearity_propagation",
+                "parallel_perpendicular_transfer",
+                "midpoint_basic_consequences",
+                "concyclicity_basic_consequences",
+                "equal_length_transfer",
+                "angle_transfer",
+                "construction_introduction",
+            }.issubset(set(registry.supported_rule_families))
+        )
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "rule_registry_v1.json"
             path.write_text(json.dumps(registry.to_dict()), encoding="utf-8")
