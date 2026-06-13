@@ -209,6 +209,35 @@ DEPENDENCY_GRAPH_COUNT_BEFORE=7
 DEPENDENCY_GRAPH_COUNT_AFTER=7.
 ```
 
+## Blocked closure synchronization
+
+```text
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/release_acceptance.json
+status: synchronized with release_acceptance_report.json
+observed: both reports now show status=blocked, open_blockers=[release_blocker_11_real_provider_smoke_evidence],
+and model_backed_errors=[missing_model_checkpoint:tonggeometry_compatible].
+
+docs/ai/changes/geometry-lean-v0_3-full-rebase/CLOSURE.md
+status: updated
+observed: closure claim remains BLOCKED_FOR_V0_3_FULL_IMPLEMENTED_EXPERIMENT_READY
+with exact blocker missing_model_checkpoint:tonggeometry_compatible.
+
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v03_full_completion_blocker_report.md
+status: added
+observed: report lists blocking R-IDs/Plan tasks, current machine evidence,
+implemented TongGeometry hash/smoke support, and required artifacts to unblock.
+
+make test-unit TEST_FILTER=release_acceptance
+status: passed
+observed: 8 tests OK.
+
+python -m compileall -q scripts plugins src tests
+status: passed
+
+git diff --check
+status: passed
+```
+
 ## TongGeometry model-backed probe hardening
 
 ```text

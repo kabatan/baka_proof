@@ -1,6 +1,6 @@
 # Closure — geometry x Lean v0.3 full rebase
 
-Status: BLOCKED_AFTER_RC8
+Status: BLOCKED_FOR_V0_3_FULL_IMPLEMENTED_EXPERIMENT_READY
 
 ## Authority
 
@@ -32,19 +32,43 @@ experiment readiness while TongGeometry model artifacts remain unavailable.
 
 ## Open Blockers
 
-Release blocker 11 remains blocked:
+Release blocker 11 remains blocked. The latest release acceptance report lists
+one model-backed error:
 
 ```text
-TongGeometry-compatible heavy search is not model-backed in this environment
-because tokenizer/lm_s/lm_l/cls model paths are missing.
+missing_model_checkpoint:tonggeometry_compatible
 ```
 
-Release acceptance must not pass while these blockers remain.
+Blocking R-IDs / clauses:
+
+```text
+R-SOLVER-005
+R-TEST-003
+Base Spec Section 20 release blocker 11
+Plan T25 / T36 / T37 closure gate
+```
+
+The implementation now supports TongGeometry checkpoint hashing and optional
+model-load smoke when the following paths are supplied:
+
+```text
+TONGGEOMETRY_TOKENIZER
+TONGGEOMETRY_LM_S
+TONGGEOMETRY_LM_L
+TONGGEOMETRY_CLS
+```
+
+Those artifacts are not present in the current environment and were not found
+in the public TongGeometry GitHub release/tree or Hugging Face searches
+recorded in evidence. Release acceptance must not pass while this blocker
+remains.
 
 ## Required Before Full Closure
 
 ```text
 Provide and verify admitted TongGeometry model path/runtime evidence.
+Confirm dependency probe reports a non-null tonggeometry_compatible checkpoint_hash.
+Confirm TongGeometry probe reports model_inference_status=available.
 Rerun real provider smokes.
 Rerun Level2 pilot and ablation matrices.
 Rerun release acceptance.
