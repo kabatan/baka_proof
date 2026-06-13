@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 import unittest
 
 from math_auto_research.base.plugins import PluginLoader
@@ -12,6 +13,21 @@ class GeometryPluginScaffoldTest(unittest.TestCase):
         manifest = loader.load_manifest("plugins/geometry_synthetic/plugin.yaml")
         self.assertEqual(manifest.plugin_id, "geometry_synthetic")
         self.assertEqual(manifest.capability.capability_id, "geometry.solve")
+
+    def test_plan_scaffold_paths_exist(self) -> None:
+        root = Path("plugins/geometry_synthetic")
+        for relative in (
+            "plugin.yaml",
+            "README.md",
+            "solver_policy",
+            "providers",
+            "target_subset",
+            "extraction",
+            "trace",
+            "construction",
+            "bridge",
+        ):
+            self.assertTrue((root / relative).exists(), relative)
 
     def test_geometry_solve_facade_is_diagnostic_only_scaffold(self) -> None:
         request = GeometrySolveRequest(

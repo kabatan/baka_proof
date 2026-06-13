@@ -81,14 +81,14 @@ class StandardGeometryProofLoop:
         lean_result = final_gate.lean_port.check_file(lean_path)
         stage_statuses["lean_initial_compile"] = lean_result.status
         goal_anchor = final_gate.goal_anchor(GEOMETRY_FINAL_VERIFY_FIXTURE, theorem_name)
-        goal_anchor_ref = f"goal_anchor:{theorem_name}:{goal_anchor.theorem_statement_hash}"
+        goal_anchor_ref = f"goal_anchor:{theorem_name}:{goal_anchor.protected_statement_hash}"
 
         dag = ProofStateDAG()
         writer = DAGWriter(dag)
         writer.commit(
             GraphPatch(
                 patch_id="graph_patch:target_obligation",
-                obligations=(Obligation(target_obligation_id, goal_anchor.theorem_statement_hash),),
+                obligations=(Obligation(target_obligation_id, goal_anchor.protected_statement_hash),),
             )
         )
         stage_statuses["proof_state_target_obligation"] = "recorded"
@@ -195,8 +195,8 @@ class StandardGeometryProofLoop:
         bridge_report = GeometryBridgeGate().evaluate(
             target_goal={
                 "theorem_name": theorem_name,
-                "goal_hash": goal_anchor.theorem_statement_hash,
-                "protected_statement_hash": goal_anchor.theorem_statement_hash,
+                "goal_hash": goal_anchor.protected_statement_hash,
+                "protected_statement_hash": goal_anchor.protected_statement_hash,
             },
             extraction_report=extraction_report,
             claim_spec=claim_spec,
@@ -222,6 +222,12 @@ class StandardGeometryProofLoop:
                 candidate_path,
                 theorem_name,
                 target_obligation_id,
+                proof_use_provenance={
+                    "geometry_extraction_report_ref": extraction_report.report_id,
+                    "goal_anchor_ref": goal_anchor_ref,
+                    "protected_statement_hash": goal_anchor.protected_statement_hash,
+                    "target_library_manifest_hash": "target_library_manifest:fixture",
+                },
             )
             stage_statuses["final_verify"] = final_report.lean_status
             worker_result = _worker_result(worker_status, trace_compilation.lean_patch_candidate_ref, final_report.report_id)
