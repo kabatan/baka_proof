@@ -60,10 +60,23 @@ class GeometryCorpusManifestTest(unittest.TestCase):
         counts: dict[str, int] = {}
         for entry in entries:
             counts[str(entry["task_category"])] = counts.get(str(entry["task_category"]), 0) + 1
-        self.assertGreaterEqual(counts.get("simple_symbolic_closure", 0), 10)
+        self.assertGreaterEqual(counts.get("nonidentity_symbolic_closure", 0), 10)
         self.assertGreaterEqual(counts.get("auxiliary_construction", 0), 5)
         self.assertGreaterEqual(counts.get("proof_worker_only_baseline", 0), 5)
-        self.assertGreaterEqual(counts.get("safe_reject_blocker", 0), 5)
+        self.assertGreaterEqual(counts.get("safe_reject_or_blocker", 0), 5)
+
+    def test_level2_pilot_v03a_nontrivial_fields_present(self) -> None:
+        entries = _read_jsonl(Path("benchmarks/geometry/geometry_level2_pilot.jsonl"))
+        identity_count = sum(1 for entry in entries if entry["is_identity_hypothesis"])
+        self.assertLessEqual(identity_count, 5)
+        signatures: dict[str, int] = {}
+        for entry in entries:
+            self.assertEqual(entry["source_lean_mode"], "real_leangeo_dependency")
+            self.assertIsInstance(entry["is_identity_hypothesis"], bool)
+            self.assertTrue(entry["expected_required_stages"])
+            signature = str(entry["normalized_goal_signature"])
+            signatures[signature] = signatures.get(signature, 0) + 1
+        self.assertLessEqual(max(signatures.values()), 3)
 
 
 def _read_jsonl(path: Path) -> list[dict[str, object]]:

@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A-patch
-status: V03A_PATCH_T42_READY
+status: V03A_PATCH_T43_READY
 created: 2026-06-13
 last_updated: 2026-06-13
 base_spec: MARP-GEOLEAN-BASE-004
@@ -60,7 +60,7 @@ The user approved importing the v0.3A patch bundle on 2026-06-13. Patch import e
 
 The repo has a partially implemented full-rebase track, but v0.3A deviation audit shows it is not sufficient for `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
 
-The next implementation pass must continue the v0.3A hardening tasks, starting with nontrivial LeanGeoSubsetV1 corpus replacement in T42.
+The next implementation pass must continue the v0.3A hardening tasks, starting with the real-task standard geometry loop in T43.
 
 ## Current Task Pointer
 
@@ -382,20 +382,28 @@ Completed task:
 T41 — TongGeometry claim-profile smoke hardening
 ```
 
-Current task:
+Completed task:
 
 ```text
 T42 — Nontrivial LeanGeoSubsetV1 corpus replacement
 ```
 
-Current task files changed in T41:
+Current task:
 
 ```text
-scripts/run_tonggeometry_probe.py
-scripts/smoke_real_tonggeometry.py
-docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/tonggeometry_smoke.json
-docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/tonggeometry_model_backed_status.json
-docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t41_tonggeometry_claim_profile_smoke.md
+T43 — Real task standard geometry loop
+```
+
+Current task files changed in T42:
+
+```text
+benchmarks/leangeo/RealSmokeCorpus.lean
+benchmarks/geometry/leangeo_real_smoke.jsonl
+benchmarks/geometry/geometry_level2_pilot.jsonl
+benchmarks/geometry/rejected_by_extraction.jsonl
+scripts/check_level2_corpus_nontrivial.py
+tests/unit/test_geometry_corpus_manifests.py
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t42_level2_corpus_nontrivial.md
 docs/ai/ACTIVE_CONTEXT.md
 ```
 
@@ -425,7 +433,7 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
 Allowed:
 
 ```text
-BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T41 TongGeometry claim-profile smoke hardening is complete. T42 is ready to implement.
+BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T42 nontrivial corpus hardening is complete. T43 is ready to implement.
 No v0.3A completion claim is admitted, and no R-ID is VERIFIED.
 ```
 

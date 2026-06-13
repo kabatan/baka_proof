@@ -49,7 +49,7 @@ Primary documents:
 
 Purpose: Guardian-managed full v0.3 experiment-ready rebase track targeting `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
 
-Status: Base Spec/Plan Guardian-admitted and user-approved. v0.3A patch is installed and user-approved. T41 TongGeometry claim-profile smoke hardening is complete; T42 is ready.
+Status: Base Spec/Plan Guardian-admitted and user-approved. v0.3A patch is installed and user-approved. T42 nontrivial corpus hardening is complete; T43 is ready.
 
 Primary documents:
 
