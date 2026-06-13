@@ -109,3 +109,30 @@ lake build: Build completed successfully
 lean no-sorry check passed
 domain contamination check passed
 ```
+
+Second follow-up fixes:
+
+```text
+configs/target_libraries/leangeo_subset_v1.yaml was synchronized with the
+active TargetLibraryManifest identity and current hash refs.
+target_library_status.json was refreshed from the synchronized manifest.
+```
+
+Second follow-up commands run:
+
+```text
+python -m math_auto_research.cli.validate_schema configs\target_libraries\leangeo_subset_v1.yaml
+python -m math_auto_research.cli.validate_schema plugins\geometry_synthetic\target_subset\leangeo_subset_v1.yaml
+python -m math_auto_research.cli.report_target_library_status --output docs\ai\changes\geometry-lean-v0_3-full-rebase\evidence\target_library_status.json
+make test-unit TEST_FILTER=target_subset
+python -m compileall -q src plugins tests scripts
+```
+
+Second follow-up observed results:
+
+```text
+both TargetLibraryManifest files validate against geometry.target_library_manifest.v1
+target_library_status.json refreshed with target_library_id=LeanGeoSubsetV1
+target_subset unit tests: 4 tests OK
+compileall passed
+```
