@@ -838,6 +838,13 @@ def _newclid_raw_output(
 def _browser_suppressed_env() -> dict[str, str]:
     env = os.environ.copy()
     env["BROWSER"] = f"{sys.executable} -c \"import sys; sys.exit(0)\""
+    no_browser_path = str((Path("scripts") / "no_browser_sitecustomize").resolve())
+    existing_pythonpath = env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = (
+        no_browser_path
+        if not existing_pythonpath
+        else os.pathsep.join([no_browser_path, existing_pythonpath])
+    )
     env["PYTHONWARNINGS"] = env.get("PYTHONWARNINGS", "")
     return env
 

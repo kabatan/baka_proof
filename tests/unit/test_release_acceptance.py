@@ -5,10 +5,20 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from math_auto_research.workflow.release_acceptance import blocked_real_integrations, validate_checklist_item
+from math_auto_research.workflow.release_acceptance import (
+    _browser_suppressed_env,
+    blocked_real_integrations,
+    evaluate_release_acceptance,
+    validate_checklist_item,
+)
 
 
 class ReleaseAcceptanceTest(unittest.TestCase):
+    def test_release_commands_inject_no_browser_sitecustomize(self) -> None:
+        env = _browser_suppressed_env()
+        self.assertIn("no_browser_sitecustomize", env["PYTHONPATH"])
+        self.assertIn("sys.exit(0)", env["BROWSER"])
+
     def test_missing_dependency_probe_fails_blocked_integration_accounting(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             result = blocked_real_integrations(Path(tmp) / "missing.json")
@@ -40,6 +50,30 @@ class ReleaseAcceptanceTest(unittest.TestCase):
             [],
         )
         self.assertEqual(result["status"], "failed")
+
+    def test_release_acceptance_static_mode_blocks_commands_disabled(self) -> None:
+        report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)
+        self.assertEqual(len(report["checked_blockers"]), 25)
+        self.assertIn("release_blocker_24_level2_matrix_run_replay", report["open_blockers"])
+
+    def test_release_acceptance_blocks_missing_model_backed_provider_evidence(self) -> None:
+        report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)
+        check = next(
+            item
+            for item in report["checks"]
+            if item["check_id"] == "release_blocker_11_real_provider_smoke_evidence"
+        )
+        self.assertEqual(check["status"], "blocked")
+        self.assertTrue(check["details"]["model_backed_errors"])
+
+    def test_closure_not_allowed_section_does_not_trigger_overclaim(self) -> None:
+        report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)
+        check = next(
+            item
+            for item in report["checks"]
+            if item["check_id"] == "release_blocker_25_closure_claims_do_not_exceed_evidence"
+        )
+        self.assertEqual(check["status"], "passed")
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ import unittest
 
 from plugins.geometry_synthetic.facade import GeometrySolveRequest
 from plugins.geometry_synthetic.provider import CompositeSyntheticGeometryProviderV1
+from plugins.geometry_synthetic.provider import _browser_suppressed_env
 from plugins.geometry_synthetic.providers.newclid_adapter import (
     NewclidCompatibleSymbolicClosureAdapter,
     convert_claim_spec_to_newclid_fixture,
@@ -58,6 +59,11 @@ class NewclidAdapterTest(unittest.TestCase):
         )
         self.assertIn("scripts/run_newclid_no_browser.py", command)
         self.assertNotIn("-m", command)
+
+    def test_real_newclid_env_injects_no_browser_sitecustomize(self) -> None:
+        env = _browser_suppressed_env()
+        self.assertIn("no_browser_sitecustomize", env["PYTHONPATH"])
+        self.assertIn("sys.exit(0)", env["BROWSER"])
 
     def test_unsupported_claim_returns_blocker_diagnostic(self) -> None:
         unsupported = claim_spec_fixture()

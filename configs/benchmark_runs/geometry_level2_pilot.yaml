@@ -3,7 +3,14 @@
   "matrix_id": "geometry_level2_pilot",
   "run_id": "geometry_level2_pilot",
   "benchmark_pool_id": "benchmark_pool:geometry_level2_pilot:v1",
-  "benchmark_pool": ["sample_target_pilot"],
+  "benchmark_corpus_path": "benchmarks/geometry/geometry_level2_pilot.jsonl",
+  "benchmark_pool": [
+    "level2_pilot:01", "level2_pilot:02", "level2_pilot:03", "level2_pilot:04", "level2_pilot:05",
+    "level2_pilot:06", "level2_pilot:07", "level2_pilot:08", "level2_pilot:09", "level2_pilot:10",
+    "level2_pilot:11", "level2_pilot:12", "level2_pilot:13", "level2_pilot:14", "level2_pilot:15",
+    "level2_pilot:16", "level2_pilot:17", "level2_pilot:18", "level2_pilot:19", "level2_pilot:20",
+    "level2_pilot:21", "level2_pilot:22", "level2_pilot:23", "level2_pilot:24", "level2_pilot:25"
+  ],
   "resource_budget": "tiny",
   "baselines": [
     {"baseline_id": "B0", "label": "proof_worker_only", "uses_controller": false, "uses_geometry_solve": false, "model_tier": "baseline"},

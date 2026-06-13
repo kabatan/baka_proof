@@ -11,6 +11,7 @@ class PluginRegistryTest(unittest.TestCase):
         capability_registry = CapabilityRegistry()
         schema_registry = SchemaRegistry()
         loader = PluginLoader(capability_registry, schema_registry)
+        before_modules = set(sys.modules)
 
         manifest = loader.load_manifest("plugins/geometry_synthetic/plugin.yaml")
 
@@ -18,7 +19,8 @@ class PluginRegistryTest(unittest.TestCase):
         self.assertEqual(capability_registry.ids(), ["geometry.solve"])
         self.assertIn("geometry.v03_contract_index.v1", schema_registry.ids())
         self.assertIn("provider", manifest.components or {})
-        self.assertNotIn("plugins.geometry_synthetic.facade", sys.modules)
+        imported_by_loader = set(sys.modules) - before_modules
+        self.assertNotIn("plugins.geometry_synthetic.facade", imported_by_loader)
 
     def test_duplicate_capability_is_rejected(self) -> None:
         registry = CapabilityRegistry()

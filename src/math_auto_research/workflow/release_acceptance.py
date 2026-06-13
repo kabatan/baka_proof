@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -104,7 +105,14 @@ def _command_check(check_id: str, blocker_id: str, command: list[str], run_comma
         return ReleaseCheck(check_id, blocker_id, "blocked", {"command": command, "reason": "commands_disabled"})
     resolved_command = _resolve_command(command)
     try:
-        completed = subprocess.run(resolved_command, cwd=Path.cwd(), capture_output=True, text=True, check=False)
+        completed = subprocess.run(
+            resolved_command,
+            cwd=Path.cwd(),
+            capture_output=True,
+            text=True,
+            check=False,
+            env=_browser_suppressed_env(),
+        )
     except FileNotFoundError as exc:
         return ReleaseCheck(check_id, blocker_id, "failed", {"command": command, "error": str(exc)})
     return ReleaseCheck(
@@ -131,6 +139,19 @@ def _resolve_command(command: list[str]) -> list[str]:
     return command
 
 
+def _browser_suppressed_env() -> dict[str, str]:
+    env = os.environ.copy()
+    env["BROWSER"] = f"{sys.executable} -c \"import sys; sys.exit(0)\""
+    no_browser_path = str((Path("scripts") / "no_browser_sitecustomize").resolve())
+    existing_pythonpath = env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = (
+        no_browser_path
+        if not existing_pythonpath
+        else os.pathsep.join([no_browser_path, existing_pythonpath])
+    )
+    return env
+
+
 def _real_smoke_check(run_commands: bool) -> ReleaseCheck:
     commands = [
         ["make", "smoke-real-newclid"],
@@ -144,17 +165,51 @@ def _real_smoke_check(run_commands: bool) -> ReleaseCheck:
     ]
     missing_evidence = [str(path) for path in evidence if not path.exists()]
     command_results = [_command_check(f"real_smoke_command_{index}", "11", command, run_commands) for index, command in enumerate(commands, start=1)]
-    failed = missing_evidence or any(item.status != "passed" for item in command_results)
+    model_backed_errors = _model_backed_integration_errors(EVIDENCE_DIR / "dependency_resolution.json", evidence[1:])
+    failed = missing_evidence or any(item.status == "failed" for item in command_results)
+    blocked = any(item.status == "blocked" for item in command_results) or bool(model_backed_errors)
+    status = "failed" if failed else ("blocked" if blocked else "passed")
     return ReleaseCheck(
         "release_blocker_11_real_provider_smoke_evidence",
         "11",
-        "failed" if failed else "passed",
+        status,
         {
             "evidence": [str(path) for path in evidence],
             "missing_evidence": missing_evidence,
+            "model_backed_errors": model_backed_errors,
             "commands": [item.to_dict() for item in command_results],
         },
     )
+
+
+def _model_backed_integration_errors(dependency_report: Path, evidence_paths: list[Path]) -> list[str]:
+    errors: list[str] = []
+    if dependency_report.exists():
+        report = _json_file(dependency_report)
+        engines = {item.get("family"): item for item in report.get("engines", []) if isinstance(item, dict)}
+        for family in ("genesisgeo_compatible", "tonggeometry_compatible"):
+            engine = engines.get(family)
+            if not isinstance(engine, dict):
+                errors.append(f"missing_dependency_engine:{family}")
+                continue
+            if engine.get("checkpoint_hash") in {None, "", "not_applicable"}:
+                errors.append(f"missing_model_checkpoint:{family}")
+    else:
+        errors.append(f"missing_dependency_report:{dependency_report}")
+
+    blocker_tokens = {
+        "does not establish model-backed",
+        "missing_genesisgeo_model_checkpoint",
+        "missing_tonggeometry_model_paths",
+    }
+    for path in evidence_paths:
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8").lower()
+        for token in blocker_tokens:
+            if token in text:
+                errors.append(f"model_backed_evidence_blocker:{path.name}:{token}")
+    return sorted(set(errors))
 
 
 def _run_artifact_check(config_path: Path, run_commands: bool) -> ReleaseCheck:
@@ -194,7 +249,33 @@ def _corpus_check(config_path: Path) -> ReleaseCheck:
         for token in ("fixture", "dummy", "toygeometry"):
             if token in text:
                 fixture_terms.append(f"{path}:{token}")
-    return ReleaseCheck("release_blocker_23_level2_pilot_corpus_not_fixture_only", "23", "failed" if missing or fixture_terms else "passed", {"paths": [str(p) for p in paths], "missing": missing, "fixture_terms": fixture_terms})
+    corpus_entries = _jsonl_entries(paths[0]) if paths[0].exists() else []
+    config = _json_file(config_path) if config_path.exists() else {}
+    benchmark_pool = config.get("benchmark_pool", [])
+    selected_ids = set(benchmark_pool if isinstance(benchmark_pool, list) else [])
+    corpus_ids = {entry.get("entry_id") for entry in corpus_entries}
+    missing_pool_entries = sorted(str(item) for item in selected_ids - corpus_ids)
+    corpus_errors: list[str] = []
+    if len(corpus_entries) < 25:
+        corpus_errors.append("corpus_has_fewer_than_25_entries")
+    if len(selected_ids) < 25:
+        corpus_errors.append("benchmark_pool_has_fewer_than_25_entries")
+    if missing_pool_entries:
+        corpus_errors.append("benchmark_pool_entries_missing_from_corpus")
+    return ReleaseCheck(
+        "release_blocker_23_level2_pilot_corpus_not_fixture_only",
+        "23",
+        "failed" if missing or fixture_terms or corpus_errors else "passed",
+        {
+            "paths": [str(p) for p in paths],
+            "missing": missing,
+            "fixture_terms": fixture_terms,
+            "corpus_entry_count": len(corpus_entries),
+            "benchmark_pool_count": len(selected_ids),
+            "missing_pool_entries": missing_pool_entries,
+            "corpus_errors": corpus_errors,
+        },
+    )
 
 
 def _matrix_replay_check(config_path: Path, run_commands: bool) -> ReleaseCheck:
@@ -202,8 +283,25 @@ def _matrix_replay_check(config_path: Path, run_commands: bool) -> ReleaseCheck:
         return ReleaseCheck("release_blocker_24_level2_matrix_run_replay", "24", "blocked", {"reason": "commands_disabled"})
     run_matrix = _command_check("level2_matrix_run", "24", ["python", "scripts/run_geometry_level2_matrix.py", "--config", str(config_path)], True)
     repro = _command_check("level2_matrix_replay", "24", ["python", "scripts/generate_repro_report.py", "--run-dir", str(Path("runs") / _config_run_id(config_path))], True)
-    status = "passed" if run_matrix.status == "passed" and repro.status == "passed" else "failed"
-    return ReleaseCheck("release_blocker_24_level2_matrix_run_replay", "24", status, {"matrix": run_matrix.to_dict(), "replay": repro.to_dict()})
+    run_dir = Path("runs") / _config_run_id(config_path)
+    matrix_report = _json_file(run_dir / "level2_matrix_report.json") if (run_dir / "level2_matrix_report.json").exists() else {}
+    repro_report = _json_file(run_dir / "reproducibility_report.json") if (run_dir / "reproducibility_report.json").exists() else {}
+    metric_errors = _metric_errors(run_dir, matrix_report)
+    matrix_errors: list[str] = []
+    if "fixture" in str(matrix_report.get("claim_ceiling", "")).lower():
+        matrix_errors.append("fixture_level_matrix_claim_ceiling")
+    if int(matrix_report.get("benchmark_count", 0) or 0) < 25:
+        matrix_errors.append("matrix_has_fewer_than_25_benchmarks")
+    if repro_report.get("replay_status") != "restored":
+        matrix_errors.append("replay_not_restored")
+    matrix_errors.extend(metric_errors)
+    status = "passed" if run_matrix.status == "passed" and repro.status == "passed" and not matrix_errors else "failed"
+    return ReleaseCheck(
+        "release_blocker_24_level2_matrix_run_replay",
+        "24",
+        status,
+        {"matrix": run_matrix.to_dict(), "replay": repro.to_dict(), "matrix_errors": matrix_errors},
+    )
 
 
 def _closure_claim_check() -> ReleaseCheck:
@@ -213,14 +311,57 @@ def _closure_claim_check() -> ReleaseCheck:
         if not path.exists():
             continue
         text = path.read_text(encoding="utf-8")
-        if "V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY" in text and "Not allowed yet" not in text:
+        if "V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY" in text and "not allowed yet" not in text.lower():
             excessive.append(str(path))
     return ReleaseCheck("release_blocker_25_closure_claims_do_not_exceed_evidence", "25", "failed" if excessive else "passed", {"scanned": [str(p) for p in paths], "excessive_claim_paths": excessive})
 
 
 def _config_run_id(config_path: Path) -> str:
-    payload = json.loads(Path(config_path).read_text(encoding="utf-8"))
+    payload = _json_file(Path(config_path))
     return str(payload["run_id"])
+
+
+def _json_file(path: Path) -> dict[str, Any]:
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def _jsonl_entries(path: Path) -> list[dict[str, Any]]:
+    return [json.loads(line) for line in Path(path).read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def _metric_errors(run_dir: Path, matrix_report: dict[str, Any]) -> list[str]:
+    required = {
+        "final_theorem_rate",
+        "lean_compile_success_rate",
+        "proof_repair_success_rate",
+        "geometry_solve_request_count",
+        "provider_success_rate_by_role",
+        "trace_compile_success_rate",
+        "construction_candidate_accepted_count",
+        "side_condition_blocker_count",
+        "resource_usage_by_role",
+        "timeout_count",
+        "diagnostic_kind_counts",
+        "replay_success_rate",
+    }
+    errors: list[str] = []
+    baselines = matrix_report.get("baselines", [])
+    if not isinstance(baselines, list) or len(baselines) != 6:
+        return ["missing_b0_through_b5_metrics"]
+    for entry in baselines:
+        baseline = entry.get("baseline", {})
+        baseline_id = baseline.get("baseline_id")
+        path = run_dir / f"metrics_{baseline_id}.json"
+        if not path.exists():
+            errors.append(f"missing_metrics:{baseline_id}")
+            continue
+        metric_values = _json_file(path).get("metric_values", {})
+        missing = sorted(required - set(metric_values))
+        if missing:
+            errors.append(f"missing_required_metrics:{baseline_id}:{','.join(missing)}")
+        if int(metric_values.get("benchmark_count", 0) or 0) < 25:
+            errors.append(f"metric_benchmark_count_lt_25:{baseline_id}")
+    return errors
 
 
 def blocked_real_integrations(probe_path: Path) -> list[dict[str, Any]]:

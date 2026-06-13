@@ -56,6 +56,7 @@ Observed results:
 
 ```text
 release_acceptance unit tests: 4 tests OK.
+post-RC8 release_acceptance unit tests: 8 tests OK.
 check_no_fixture_release passed.
 ablation matrix ran and replay_status=restored.
 compileall passed.
@@ -64,8 +65,16 @@ resource_governor unit tests: 8 tests OK.
 newclid_adapter unit tests: 4 tests OK.
 smoke-real-newclid passed.
 dependency_graph.html was not regenerated for the real Newclid smoke run.
-release acceptance report status: passed.
+post-RC8 release acceptance command returned nonzero as expected because
+release blocker 11 remains blocked.
+release acceptance report status: blocked.
 checked blockers: 25.
-open blockers: [].
-claim ceiling: release_acceptance_checks_passed_not_final_guardian_review.
+open blockers: [release_blocker_11_real_provider_smoke_evidence].
+claim ceiling: release_acceptance_blocked_no_v0_3_completion_claim.
+model_backed_errors:
+- missing_model_checkpoint:genesisgeo_compatible
+- missing_model_checkpoint:tonggeometry_compatible
+- model_backed_evidence_blocker:t24_genesisgeo_adapter.md:missing_genesisgeo_model_checkpoint
+- model_backed_evidence_blocker:t25_tonggeometry_adapter.md:does not establish model-backed
+- model_backed_evidence_blocker:t25_tonggeometry_adapter.md:missing_tonggeometry_model_paths
 ```
