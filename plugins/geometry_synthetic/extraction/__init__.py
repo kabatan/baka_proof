@@ -92,6 +92,8 @@ class GeometryExtractor:
             return _reject(context.source_goal_ref, context.target_raw, "missing_elaboration_report")
         if context.target_form not in self.accepted_forms:
             return _reject(context.source_goal_ref, context.target_raw, "unsupported_expression")
+        if _requires_nondegeneracy(context.target_form) and not context.nondegeneracy_assumptions:
+            return _reject(context.source_goal_ref, context.target_raw, "missing_nondegeneracy")
         relation_evidence = relation_evidence or RelationEvidence("exact")
         gated = _relation_reject(context.source_goal_ref, context.target_raw, relation_evidence)
         if gated is not None:
@@ -324,6 +326,15 @@ class GeometryExtractor:
 
 def _digest(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def _requires_nondegeneracy(form: str) -> bool:
+    return form in {
+        "line_through_two_distinct_points",
+        "intersection_of_two_nonparallel_lines",
+        "midpoint",
+        "circle_with_center_through_point",
+    }
 
 
 def _reject(goal_anchor_ref: str, text: str, reason: str) -> tuple[GeometryExtractionReport, None]:
