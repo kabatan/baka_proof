@@ -83,8 +83,11 @@ class DAGWriter:
                 raise DAGValidationError(f"unknown evidence: {evidence_id}")
         if derivation.proof_use_status == "final_theorem":
             self._validate_final_verify_report(derivation)
+            self._validate_final_evidence(derivation, evidence_refs)
 
     def _validate_final_verify_report(self, derivation: Derivation) -> None:
+        if derivation.rule_id != "final_verify_gate":
+            raise DAGValidationError("final_theorem derivation requires final_verify_gate rule")
         report = derivation.final_verify_report
         if not derivation.final_verify_ref:
             raise DAGValidationError("final_theorem derivation requires final_verify_ref")
@@ -106,6 +109,18 @@ class DAGWriter:
             raise DAGValidationError("FinalVerifyReport theorem hash changed")
         if not derivation.protected_theorem_hash_unchanged:
             raise DAGValidationError("final_theorem derivation requires unchanged theorem hash")
+
+    def _validate_final_evidence(
+        self,
+        derivation: Derivation,
+        evidence_refs: dict[str, EvidenceRef],
+    ) -> None:
+        for evidence_id in derivation.evidence_refs:
+            evidence = evidence_refs[evidence_id]
+            if evidence.evidence_status != "used_in_final_proof":
+                raise DAGValidationError("final_theorem derivation requires final-proof evidence")
+            if evidence.artifact_kind in {"raw_log", "raw_model_output", "raw_provider_output", "raw_dsl"}:
+                raise DAGValidationError("raw output cannot be used as final proof evidence")
 
     def _validate_acyclic(self, derivations: dict[str, Derivation]) -> None:
         edges: dict[str, set[str]] = {}
@@ -187,7 +202,8 @@ class StateReader:
 def _final_verify_report_valid(derivation: Derivation) -> bool:
     report = derivation.final_verify_report
     return (
-        bool(derivation.final_verify_ref)
+        derivation.rule_id == "final_verify_gate"
+        and bool(derivation.final_verify_ref)
         and derivation.protected_theorem_hash_unchanged
         and isinstance(report, dict)
         and report.get("report_id") == derivation.final_verify_ref

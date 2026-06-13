@@ -58,7 +58,7 @@ class SelectedImplementations(SchemaRecord):
     schema_id: ClassVar[str] = "base.selected_implementations.v1"
     schema_path: ClassVar[Path] = SCHEMA_ROOT / "base" / "selected_implementations.schema.json"
 
-    target_library: str = Field(pattern=r"^LeanGeoSubsetV1:.+$")
+    target_library: str = Field(pattern=r"^[^:\s]+:.+$")
     model_provider_set: str = Field(pattern=r"^model_provider_set:.+:.+$")
     research_controller_plugin: str = Field(pattern=r"^research_controller:.+:.+$")
     proof_worker_plugin: str = Field(pattern=r"^proof_worker:.+:.+$")

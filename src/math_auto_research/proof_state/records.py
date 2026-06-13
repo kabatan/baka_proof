@@ -7,9 +7,9 @@ from typing import Any, Literal
 ObligationStatus = Literal["open", "blocked", "closed", "invalidated"]
 ProofUseStatus = Literal[
     "not_allowed",
-    "diagnostic_only",
     "search_only",
-    "lean_patch_candidate",
+    "claim_level_only",
+    "goal_level_allowed",
     "final_theorem",
 ]
 EvidenceStatus = Literal[
@@ -40,6 +40,7 @@ class EvidenceRef:
     evidence_status: EvidenceStatus
     media_type: str
     content_hash: str
+    artifact_kind: str = "proof_artifact"
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

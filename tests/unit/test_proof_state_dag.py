@@ -93,7 +93,7 @@ class ProofStateDAGTest(unittest.TestCase):
                         "o:target",
                         "provider_result",
                         ("e:diagnostic",),
-                        proof_use_status="diagnostic_only",
+                        proof_use_status="not_allowed",
                     ),
                 ),
             )
@@ -209,6 +209,39 @@ class ProofStateDAGTest(unittest.TestCase):
         summary = StateReader(dag).summary()
         self.assertEqual(summary["closed_obligation_ids"], [])
         self.assertEqual(summary["open_obligation_ids"], ["o:target"])
+
+    def test_final_theorem_rejects_raw_log_evidence(self) -> None:
+        dag = ProofStateDAG()
+        writer = DAGWriter(dag)
+        with self.assertRaises(DAGValidationError):
+            writer.commit(
+                GraphPatch(
+                    patch_id="p1",
+                    obligations=(Obligation("o:target", "sha256:target"),),
+                    evidence_refs=(
+                        EvidenceRef(
+                            "e:raw",
+                            "sha256:raw",
+                            "used_in_final_proof",
+                            "text/plain",
+                            "sha256:raw",
+                            artifact_kind="raw_log",
+                        ),
+                    ),
+                    derivations=(
+                        Derivation(
+                            "d:final",
+                            "o:target",
+                            "final_verify_gate",
+                            ("e:raw",),
+                            proof_use_status="final_theorem",
+                            final_verify_ref="final_verify:target",
+                            protected_theorem_hash_unchanged=True,
+                            final_verify_report=_final_report("final_verify:target", "o:target"),
+                        ),
+                    ),
+                )
+            )
 
 
 def _final_report(report_id: str, target_obligation_id: str) -> dict[str, object]:
