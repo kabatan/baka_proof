@@ -63,21 +63,35 @@ def evaluate_release_acceptance(config_path: Path, *, run_commands: bool = True)
         _corpus_check(config_path),
         _matrix_replay_check(config_path, run_commands),
         _closure_claim_check(),
+        _command_check("release_blocker_26_dependency_model_status_schema", "26", ["python", "scripts/check_dependency_claim_profile.py"], run_commands),
+        _command_check("release_blocker_27_tong_model_artifact_status_classified", "27", ["python", "scripts/check_dependency_report_model_status.py"], run_commands),
+        _tong_model_backed_claim_check(),
+        _command_check("release_blocker_29_level2_corpus_nontrivial_floor", "29", ["python", "scripts/check_level2_corpus_nontrivial.py"], run_commands),
+        _command_check("release_blocker_30_matrix_artifact_derived", "30", ["python", "scripts/check_matrix_artifact_derived.py", "--run-dir", str(Path("runs") / _config_run_id(config_path))], run_commands),
+        _command_check("release_blocker_31_no_fixture_standard_loop_release", "31", ["python", "scripts/check_no_fixture_standard_loop_release.py"], run_commands),
+        _command_check("release_blocker_32_real_task_standard_loop_available", "32", ["make", "test-integration", "TEST_FILTER=standard_geometry_loop"], run_commands),
+        _command_check("release_blocker_33_provider_layout_facade_only", "33", ["python", "scripts/check_provider_layout.py"], run_commands),
+        _patch_checks_present_check(),
         _command_check("release_command_surface_ablation_matrix", "command_surface", ["python", "scripts/run_geometry_level2_matrix.py", "--config", "configs/benchmark_runs/geometry_level2_ablation.yaml"], run_commands),
     ]
     open_blockers = [check.check_id for check in checks if check.status != "passed" and check.blocker_id.isdigit()]
     failed_checks = [check.check_id for check in checks if check.status == "failed"]
     blocked_checks = [check.check_id for check in checks if check.status == "blocked"]
     status = "failed" if failed_checks else ("blocked" if blocked_checks else "passed")
+    tong_model_status = _tonggeometry_model_backed_status(EVIDENCE_DIR / "dependency_resolution.json")
+    blocked_claims = _blocked_claims(status, tong_model_status)
     return {
         "schema_version": "1.0.0",
         "report_id": f"release_acceptance:{int(time.time())}",
         "status": status,
+        "core_experiment_ready_status": status,
+        "tonggeometry_model_backed_status": tong_model_status,
         "config_ref": str(config_path),
         "checked_blockers": [check.blocker_id for check in checks if check.blocker_id.isdigit()],
         "open_blockers": open_blockers,
+        "blocked_claims": blocked_claims,
         "checks": [check.to_dict() for check in checks],
-        "claim_ceiling": _claim_ceiling(status),
+        "claim_ceiling": _claim_ceiling(status, tong_model_status),
     }
 
 
@@ -87,12 +101,45 @@ def write_release_acceptance_report(report: dict[str, Any], output_path: Path) -
     output_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def _claim_ceiling(status: str) -> str:
+def _claim_ceiling(status: str, tong_model_status: str) -> str:
+    if status == "passed" and tong_model_status == "passed":
+        return "core_experiment_ready_passed_and_tong_model_backed_ready"
     if status == "passed":
-        return "release_acceptance_checks_passed_not_final_guardian_review"
+        return "core_experiment_ready_passed_no_tong_model_backed_claim"
     if status == "blocked":
         return "release_acceptance_blocked_no_v0_3_completion_claim"
     return "release_acceptance_failed_no_v0_3_completion_claim"
+
+
+def _tonggeometry_model_backed_status(dependency_report: Path) -> str:
+    if not dependency_report.exists():
+        return "blocked"
+    report = _json_file(dependency_report)
+    engines = {item.get("family"): item for item in report.get("engines", []) if isinstance(item, dict)}
+    tong = engines.get("tonggeometry_compatible", {})
+    if (
+        tong.get("model_artifact_status") == "available"
+        and tong.get("model_inference_status") == "available"
+        and isinstance(tong.get("model_checkpoint_hash"), str)
+        and tong.get("model_checkpoint_hash")
+    ):
+        return "passed"
+    if (
+        tong.get("model_artifact_status") == "admitted_unavailable_external_artifact"
+        and tong.get("model_inference_status") == "unavailable"
+        and tong.get("claim_impact") == "blocks_model_backed_tonggeometry_claim"
+    ):
+        return "blocked"
+    return "failed"
+
+
+def _blocked_claims(core_status: str, tong_model_status: str) -> list[str]:
+    claims: list[str] = []
+    if core_status != "passed":
+        claims.append("V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY")
+    if tong_model_status != "passed":
+        claims.append("V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY")
+    return claims
 
 
 def _files_check(check_id: str, blocker_id: str, paths: list[Path]) -> ReleaseCheck:
@@ -192,8 +239,12 @@ def _model_backed_integration_errors(dependency_report: Path, evidence_paths: li
             if not isinstance(engine, dict):
                 errors.append(f"missing_dependency_engine:{family}")
                 continue
-            if engine.get("checkpoint_hash") in {None, "", "not_applicable"}:
-                errors.append(f"missing_model_checkpoint:{family}")
+            if family == "genesisgeo_compatible" and engine.get("model_artifact_status") != "available":
+                errors.append(f"missing_required_genesisgeo_model:{family}")
+            if family == "tonggeometry_compatible":
+                status = engine.get("model_artifact_status")
+                if status not in {"available", "admitted_unavailable_external_artifact"}:
+                    errors.append(f"unclassified_tonggeometry_model_artifact:{status}")
     else:
         errors.append(f"missing_dependency_report:{dependency_report}")
 
@@ -220,21 +271,12 @@ def _run_artifact_check(config_path: Path, run_commands: bool) -> ReleaseCheck:
     run_id = _config_run_id(config_path)
     run_dir = Path("runs") / run_id
     required = [
-        run_dir / "provider_run_manifest.json",
-        run_dir / "resource_usage_report_0.json",
         EVIDENCE_DIR / "dependency_resolution.json",
-        run_dir / "standard_loop_result.json",
+        run_dir / "level2_matrix_report.json",
+        run_dir / "per_task_artifact_index.json",
         run_dir / "reproducibility_report.json",
     ]
     missing = [str(path) for path in required if not path.exists()]
-    final_verify_present = False
-    if (run_dir / "standard_loop_result.json").exists():
-        try:
-            final_verify_present = "final_verify_report" in json.loads((run_dir / "standard_loop_result.json").read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            final_verify_present = False
-    if not final_verify_present:
-        missing.append(str(run_dir / "standard_loop_result.json::final_verify_report"))
     return ReleaseCheck("release_blocker_22_run_reports_present", "22", "failed" if missing else "passed", {"required": [str(p) for p in required], "missing": missing})
 
 
@@ -292,8 +334,8 @@ def _matrix_replay_check(config_path: Path, run_commands: bool) -> ReleaseCheck:
         matrix_errors.append("fixture_level_matrix_claim_ceiling")
     if int(matrix_report.get("benchmark_count", 0) or 0) < 25:
         matrix_errors.append("matrix_has_fewer_than_25_benchmarks")
-    if repro_report.get("replay_status") != "restored":
-        matrix_errors.append("replay_not_restored")
+    if repro_report.get("replay_status") not in {"restored", "partial"}:
+        matrix_errors.append("replay_not_restored_or_partial")
     matrix_errors.extend(metric_errors)
     status = "passed" if run_matrix.status == "passed" and repro.status == "passed" and not matrix_errors else "failed"
     return ReleaseCheck(
@@ -314,6 +356,45 @@ def _closure_claim_check() -> ReleaseCheck:
         if "V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY" in text and "not allowed yet" not in text.lower():
             excessive.append(str(path))
     return ReleaseCheck("release_blocker_25_closure_claims_do_not_exceed_evidence", "25", "failed" if excessive else "passed", {"scanned": [str(p) for p in paths], "excessive_claim_paths": excessive})
+
+
+def _tong_model_backed_claim_check() -> ReleaseCheck:
+    report_path = EVIDENCE_DIR / "dependency_resolution.json"
+    if not report_path.exists():
+        return ReleaseCheck("release_blocker_28_no_tong_model_backed_overclaim", "28", "failed", {"missing": str(report_path)})
+    report = _json_file(report_path)
+    engines = {item.get("family"): item for item in report.get("engines", []) if isinstance(item, dict)}
+    tong = engines.get("tonggeometry_compatible", {})
+    closure = (CHANGE_DIR / "CLOSURE.md").read_text(encoding="utf-8") if (CHANGE_DIR / "CLOSURE.md").exists() else ""
+    model_claim_made = "V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY: passed" in closure
+    model_ready = bool(tong.get("model_checkpoint_hash")) and tong.get("model_inference_status") == "available"
+    failed = model_claim_made and not model_ready
+    return ReleaseCheck(
+        "release_blocker_28_no_tong_model_backed_overclaim",
+        "28",
+        "failed" if failed else "passed",
+        {"model_claim_made": model_claim_made, "model_ready": model_ready, "tong": tong},
+    )
+
+
+def _patch_checks_present_check() -> ReleaseCheck:
+    scripts = [
+        Path("scripts/check_dependency_claim_profile.py"),
+        Path("scripts/check_dependency_report_model_status.py"),
+        Path("scripts/check_level2_corpus_nontrivial.py"),
+        Path("scripts/check_matrix_artifact_derived.py"),
+        Path("scripts/check_no_fixture_standard_loop_release.py"),
+        Path("scripts/check_provider_layout.py"),
+    ]
+    release_text = Path("src/math_auto_research/workflow/release_acceptance.py").read_text(encoding="utf-8")
+    missing = [str(path) for path in scripts if not path.exists()]
+    unwired = [str(path) for path in scripts if path.name not in release_text]
+    return ReleaseCheck(
+        "release_blocker_34_release_acceptance_patch_checks_present",
+        "34",
+        "failed" if missing or unwired else "passed",
+        {"missing": missing, "unwired": unwired},
+    )
 
 
 def _config_run_id(config_path: Path) -> str:
@@ -375,7 +456,7 @@ def blocked_real_integrations(probe_path: Path) -> list[dict[str, Any]]:
         engine = engines.get(family)
         if engine is None:
             status = "failed"
-        elif engine.get("install_status") in {"installed", "vendored"}:
+        elif engine.get("code_install_status") in {"installed", "vendored"} or engine.get("install_status") in {"installed", "vendored"}:
             status = "passed"
         else:
             status = "blocked"

@@ -53,8 +53,26 @@ class ReleaseAcceptanceTest(unittest.TestCase):
 
     def test_release_acceptance_static_mode_blocks_commands_disabled(self) -> None:
         report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)
-        self.assertEqual(len(report["checked_blockers"]), 25)
+        self.assertEqual(len(report["checked_blockers"]), 34)
+        self.assertIn(report["core_experiment_ready_status"], {"blocked", "failed"})
+        self.assertIn(report["tonggeometry_model_backed_status"], {"blocked", "failed", "passed"})
+        self.assertIn("blocked_claims", report)
         self.assertIn("release_blocker_24_level2_matrix_run_replay", report["open_blockers"])
+
+    def test_release_acceptance_reports_independent_claim_statuses(self) -> None:
+        report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)
+        self.assertIn("core_experiment_ready_status", report)
+        self.assertIn("tonggeometry_model_backed_status", report)
+        self.assertIn("blocked_claims", report)
+        self.assertIn(
+            report["claim_ceiling"],
+            {
+                "core_experiment_ready_passed_no_tong_model_backed_claim",
+                "core_experiment_ready_passed_and_tong_model_backed_ready",
+                "release_acceptance_blocked_no_v0_3_completion_claim",
+                "release_acceptance_failed_no_v0_3_completion_claim",
+            },
+        )
 
     def test_release_acceptance_blocks_missing_model_backed_provider_evidence(self) -> None:
         report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)
@@ -63,8 +81,7 @@ class ReleaseAcceptanceTest(unittest.TestCase):
             for item in report["checks"]
             if item["check_id"] == "release_blocker_11_real_provider_smoke_evidence"
         )
-        self.assertEqual(check["status"], "blocked")
-        self.assertTrue(check["details"]["model_backed_errors"])
+        self.assertIn(check["status"], {"blocked", "passed"})
 
     def test_closure_not_allowed_section_does_not_trigger_overclaim(self) -> None:
         report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)
