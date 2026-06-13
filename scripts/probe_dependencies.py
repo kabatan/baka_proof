@@ -12,11 +12,11 @@ from pathlib import Path
 from typing import Any
 
 
-ENGINE_ROLES = [
-    ("symbolic_closure", "newclid_compatible", "newclid"),
-    ("construction_proposer", "genesisgeo_compatible", "genesisgeo"),
-    ("heavy_search", "tonggeometry_compatible", "tonggeometry"),
-]
+ENGINE_ROLES = {
+    "symbolic_closure": ("newclid_compatible", "newclid"),
+    "construction_proposer": ("genesisgeo_compatible", "genesisgeo"),
+    "heavy_search": ("tonggeometry_compatible", "tonggeometry"),
+}
 
 
 def command_version(command: str, args: list[str]) -> tuple[str | None, str]:
@@ -45,6 +45,28 @@ def file_hash(path: Path) -> str:
     return "sha256:" + digest.hexdigest()
 
 
+def git_commit(path: Path) -> str | None:
+    if not path.exists():
+        return None
+    completed = subprocess.run(
+        ["git", "-C", str(path), "rev-parse", "HEAD"],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=10,
+    )
+    if completed.returncode != 0:
+        return None
+    return completed.stdout.strip()
+
+
+def dependency_config() -> dict[str, Any]:
+    path = Path("configs/dependencies/geometry_engines.json")
+    if not path.exists():
+        return {"submodules": []}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
 def build_report() -> dict[str, Any]:
     lean_path, lean_version = command_version("lean", ["--version"])
     lake_path, lake_version = command_version("lake", ["--version"])
@@ -59,21 +81,30 @@ def build_report() -> dict[str, Any]:
                     "lock_ref": file_hash(path),
                 }
             )
+    config = dependency_config()
+    submodules_by_role = {item["role"]: item for item in config.get("submodules", [])}
     engines = []
     unresolved = []
-    for role, family, command in ENGINE_ROLES:
+    for role, (family, command) in ENGINE_ROLES.items():
         executable = shutil.which(command)
-        install_status = "installed" if executable else "unavailable"
+        submodule = submodules_by_role.get(role)
+        vendored_commit = None
+        expected_commit = None
+        if submodule is not None:
+            expected_commit = submodule.get("commit")
+            vendored_commit = git_commit(Path(submodule["path"]))
+        install_status = "installed" if executable else "vendored" if vendored_commit else "unavailable"
         engines.append(
             {
                 "role": role,
                 "family": family,
                 "install_status": install_status,
-                "version_or_commit": executable or "unavailable",
+                "version_or_commit": executable or vendored_commit or "unavailable",
+                "expected_commit": expected_commit,
                 "checkpoint_hash": None,
             }
         )
-        if install_status != "installed":
+        if install_status == "unavailable":
             consequence = "blocks_heavy_search" if role == "heavy_search" else "blocks_real_final_theorem"
             unresolved.append({"component": family, "consequence": consequence})
     if lean_path is None or lake_path is None:

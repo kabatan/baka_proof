@@ -174,10 +174,16 @@ class DependencyResolutionReport(SchemaRecord):
     schema_id: ClassVar[str] = "resources.dependency_resolution_report.v1"
     schema_path: ClassVar[Path] = SCHEMA_ROOT / "resources" / "dependency_resolution_report.schema.json"
 
-    status: Literal["resolved", "blocked", "partial"]
-    dependencies: list[dict[str, Any]] = Field(default_factory=list)
-    commands: list[str] = Field(default_factory=list)
-    blockers: list[str] = Field(default_factory=list)
+    report_id: str
+    created_at: str
+    os: str
+    python_version: str
+    lean_version: str
+    lake_version: str
+    packages: list[dict[str, Any]] = Field(default_factory=list)
+    engines: list[dict[str, Any]] = Field(default_factory=list)
+    unresolved: list[dict[str, Any]] = Field(default_factory=list)
+    evidence_refs: list[str] = Field(default_factory=list)
 
 
 class LocalResourceProfile(SchemaRecord):

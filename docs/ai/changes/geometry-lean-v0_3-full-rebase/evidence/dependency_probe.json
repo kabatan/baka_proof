@@ -1,0 +1,53 @@
+{
+  "created_at": "2026-06-13T07:57:01.470053+00:00",
+  "engines": [
+    {
+      "checkpoint_hash": null,
+      "expected_commit": null,
+      "family": "newclid_compatible",
+      "install_status": "installed",
+      "role": "symbolic_closure",
+      "version_or_commit": "C:\\Users\\bakat\\miniforge3\\Scripts\\newclid.EXE"
+    },
+    {
+      "checkpoint_hash": null,
+      "expected_commit": "e8c4337e782548a4d54e6839558a32965a5a764e",
+      "family": "genesisgeo_compatible",
+      "install_status": "vendored",
+      "role": "construction_proposer",
+      "version_or_commit": "e8c4337e782548a4d54e6839558a32965a5a764e"
+    },
+    {
+      "checkpoint_hash": null,
+      "expected_commit": "d00925f07dc3174f91326386cb8e785e539a91a1",
+      "family": "tonggeometry_compatible",
+      "install_status": "vendored",
+      "role": "heavy_search",
+      "version_or_commit": "d00925f07dc3174f91326386cb8e785e539a91a1"
+    }
+  ],
+  "evidence_refs": [
+    "sha256:ffc109e3e22bc4bb2cfe3b4107d82f8f940790cc74b49ce3899ae28bb40e6dc7"
+  ],
+  "lake_version": "Lake version 5.0.0-1165156 (Lean version 4.15.0)",
+  "lean_version": "Lean (version 4.15.0, x86_64-w64-windows-gnu, commit 11651562caae, Release)",
+  "os": "Windows-11-10.0.26200-SP0",
+  "packages": [
+    {
+      "lock_ref": "sha256:d66310b4e2144b62886842f50e2dcaa12f51f61e32b486748647054148ba9cad",
+      "name": "pyproject.toml",
+      "source": "local",
+      "version_or_commit": "workspace"
+    },
+    {
+      "lock_ref": "sha256:6aaab023828cd945394970b9c439a4e395dccc616d17dab1c2dab8719cfaaa61",
+      "name": "lakefile.lean",
+      "source": "local",
+      "version_or_commit": "workspace"
+    }
+  ],
+  "python_version": "3.12.11",
+  "report_id": "dependency_resolution:20260613T075701Z",
+  "schema_version": "1.0.0",
+  "unresolved": []
+}
