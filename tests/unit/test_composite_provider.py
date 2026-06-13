@@ -67,7 +67,7 @@ class CompositeProviderTest(unittest.TestCase):
     def test_genesisgeo_compatible_candidate_remains_not_proof(self) -> None:
         candidate = propose_auxiliary_construction_candidate(claim_spec_fixture(), request_for())
         self.assertEqual(candidate["construction_kind"], "line_through_two_distinct_points")
-        self.assertEqual(candidate["proof_use_status"], "not_allowed")
+        self.assertEqual(candidate["proof_use_status"], "not_allowed_until_final_verify")
 
         run = CompositeSyntheticGeometryProvider().run(
             request_for("medium", {"construction_needed": True, "claim_spec": claim_spec_fixture()})

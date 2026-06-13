@@ -11,6 +11,8 @@ SUPPORTED_CONSTRUCTION_KINDS = {
     "foot_of_perpendicular",
     "midpoint",
     "circle_with_center_through_point",
+    "circle_through_center_and_point",
+    "plugin_supported",
 }
 
 
@@ -24,10 +26,31 @@ class AuxiliaryConstructionCandidateV1:
     dependencies: tuple[str, ...]
     intended_use: str
     side_conditions: tuple[str, ...]
-    proof_use_status: str = "not_allowed"
+    proof_use_status: str = "not_allowed_until_final_verify"
+    construction_id: str = ""
+    source_provider_result: str = "sha256:unknown_provider_result"
+    dependency_refs: dict[str, tuple[str, ...]] | None = None
+    required_side_conditions: dict[str, tuple[str, ...]] | None = None
+    lean_introduction_plan: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        payload = asdict(self)
+        payload.pop("dependency_refs", None)
+        payload["construction_id"] = self.construction_id or self.candidate_id
+        payload["dependencies"] = self.dependency_refs or {"objects": self.dependencies}
+        payload["required_side_conditions"] = self.required_side_conditions or {
+            "nondegeneracy": self.side_conditions,
+            "incidence": (),
+            "existence": (),
+            "uniqueness_if_needed": (),
+            "orientation": (),
+            "diagram_cases": (),
+        }
+        payload["lean_introduction_plan"] = self.lean_introduction_plan or {
+            "theorem_template_id": f"lean_template:{self.construction_kind}:v1",
+            "generated_obligations": tuple(f"obligation:{condition}" for condition in self.side_conditions),
+        }
+        return payload
 
 
 @dataclass(frozen=True)
@@ -112,16 +135,50 @@ class ConstructionCompiler:
 
 
 def candidate_from_dict(payload: dict[str, Any]) -> AuxiliaryConstructionCandidateV1:
+    dependencies_payload = payload.get("dependencies", ())
+    if isinstance(dependencies_payload, dict):
+        flat_dependencies = tuple(
+            item
+            for values in dependencies_payload.values()
+            if isinstance(values, (list, tuple))
+            for item in values
+        )
+        dependency_refs = {str(key): tuple(values) for key, values in dependencies_payload.items() if isinstance(values, (list, tuple))}
+    else:
+        flat_dependencies = tuple(dependencies_payload)
+        dependency_refs = None
+    required_side_conditions_payload = payload.get("required_side_conditions")
+    required_side_conditions = None
+    side_conditions = tuple(payload.get("side_conditions", ()))
+    if isinstance(required_side_conditions_payload, dict):
+        required_side_conditions = {
+            str(key): tuple(values)
+            for key, values in required_side_conditions_payload.items()
+            if isinstance(values, (list, tuple))
+        }
+        side_conditions = tuple(
+            item
+            for values in required_side_conditions.values()
+            for item in values
+        )
+    proof_use_status = str(payload.get("proof_use_status", "not_allowed_until_final_verify"))
+    if proof_use_status == "not_allowed":
+        proof_use_status = "not_allowed_until_final_verify"
     return AuxiliaryConstructionCandidateV1(
         schema_version=str(payload["schema_version"]),
         candidate_id=str(payload.get("candidate_id") or payload.get("construction_id")),
         construction_kind=str(payload["construction_kind"]),
-        source_provenance=str(payload["source_provenance"]),
+        source_provenance=str(payload.get("source_provenance") or payload.get("source_provider_result")),
         introduced_objects=tuple(payload.get("introduced_objects", ())),
-        dependencies=tuple(payload.get("dependencies", ())),
-        intended_use=str(payload["intended_use"]),
-        side_conditions=tuple(payload.get("side_conditions", ())),
-        proof_use_status=str(payload.get("proof_use_status", "not_allowed")),
+        dependencies=flat_dependencies,
+        intended_use=str(payload.get("intended_use", "search_hint_for_symbolic_retry")),
+        side_conditions=side_conditions,
+        proof_use_status=proof_use_status,
+        construction_id=str(payload.get("construction_id") or payload.get("candidate_id")),
+        source_provider_result=str(payload.get("source_provider_result", "sha256:unknown_provider_result")),
+        dependency_refs=dependency_refs,
+        required_side_conditions=required_side_conditions,
+        lean_introduction_plan=payload.get("lean_introduction_plan") if isinstance(payload.get("lean_introduction_plan"), dict) else None,
     )
 
 

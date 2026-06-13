@@ -73,7 +73,21 @@ def _minimal_candidate(request_id: str, claim_spec: dict[str, Any]) -> dict[str,
         "dependencies": dependencies,
         "intended_use": "search_hint_for_symbolic_retry",
         "side_conditions": [f"{dependencies[0]} != {dependencies[1]}"],
-        "proof_use_status": "not_allowed",
+        "proof_use_status": "not_allowed_until_final_verify",
+        "construction_id": f"aux_construction_candidate:{request_id}:construction_proposer:genesisgeo_real",
+        "source_provider_result": f"sha256:provider_run:{request_id}:genesisgeo_real",
+        "required_side_conditions": {
+            "nondegeneracy": [f"{dependencies[0]} != {dependencies[1]}"],
+            "incidence": [],
+            "existence": [],
+            "uniqueness_if_needed": [],
+            "orientation": [],
+            "diagram_cases": [],
+        },
+        "lean_introduction_plan": {
+            "theorem_template_id": "lean_template:line_through_two_distinct_points:v1",
+            "generated_obligations": [f"obligation:{dependencies[0]} != {dependencies[1]}"],
+        },
     }
 
 

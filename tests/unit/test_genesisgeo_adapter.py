@@ -54,7 +54,7 @@ class GenesisGeoAdapterTest(unittest.TestCase):
         candidate = normalize_genesisgeo_candidate(report["candidate"])
         self.assertEqual(candidate.schema_version, "1.0.0")
         self.assertTrue(candidate.candidate_id.startswith("aux_construction_candidate:"))
-        self.assertEqual(candidate.proof_use_status, "not_allowed")
+        self.assertEqual(candidate.proof_use_status, "not_allowed_until_final_verify")
 
     def test_real_genesisgeo_diagnostic_or_candidate_is_not_proof_use(self) -> None:
         run = CompositeSyntheticGeometryProviderV1().run(

@@ -996,5 +996,19 @@ def propose_auxiliary_construction_candidate(
         "dependencies": dependencies,
         "intended_use": "search_hint_for_symbolic_retry",
         "side_conditions": [f"{dependencies[0]} != {dependencies[1]}"] if len(dependencies) >= 2 else [],
-        "proof_use_status": "not_allowed",
+        "proof_use_status": "not_allowed_until_final_verify",
+        "construction_id": f"aux_construction_candidate:{request.request_id}:construction_proposer",
+        "source_provider_result": f"sha256:provider_run:{request.request_id}:genesisgeo_fixture",
+        "required_side_conditions": {
+            "nondegeneracy": [f"{dependencies[0]} != {dependencies[1]}"] if len(dependencies) >= 2 else [],
+            "incidence": [],
+            "existence": [],
+            "uniqueness_if_needed": [],
+            "orientation": [],
+            "diagram_cases": [],
+        },
+        "lean_introduction_plan": {
+            "theorem_template_id": "lean_template:line_through_two_distinct_points:v1",
+            "generated_obligations": [f"obligation:{dependencies[0]} != {dependencies[1]}"] if len(dependencies) >= 2 else [],
+        },
     }

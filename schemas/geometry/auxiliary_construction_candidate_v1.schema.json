@@ -3,18 +3,24 @@
   "type": "object",
   "required": [
     "schema_version",
+    "construction_id",
     "candidate_id",
+    "source_provider_result",
     "construction_kind",
     "source_provenance",
     "introduced_objects",
     "dependencies",
     "intended_use",
     "side_conditions",
+    "required_side_conditions",
+    "lean_introduction_plan",
     "proof_use_status"
   ],
   "properties": {
     "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "construction_id": {"type": "string", "pattern": "^aux_construction_candidate:.*"},
     "candidate_id": {"type": "string", "pattern": "^aux_construction_candidate:.*"},
+    "source_provider_result": {"type": "string"},
     "construction_kind": {
       "type": "string",
       "enum": [
@@ -22,15 +28,45 @@
         "intersection_of_two_nonparallel_lines",
         "foot_of_perpendicular",
         "midpoint",
-        "circle_with_center_through_point"
+        "circle_with_center_through_point",
+        "circle_through_center_and_point",
+        "plugin_supported"
       ]
     },
     "source_provenance": {"type": "string"},
     "introduced_objects": {"type": "array", "items": {"type": "string"}},
-    "dependencies": {"type": "array", "items": {"type": "string"}},
+    "dependencies": {
+      "type": "object",
+      "additionalProperties": {"type": "array", "items": {"type": "string"}}
+    },
     "intended_use": {"type": "string"},
     "side_conditions": {"type": "array", "items": {"type": "string"}},
-    "proof_use_status": {"type": "string", "enum": ["not_allowed", "lean_patch_candidate"]}
+    "required_side_conditions": {
+      "type": "object",
+      "required": ["nondegeneracy", "incidence", "existence", "uniqueness_if_needed", "orientation", "diagram_cases"],
+      "properties": {
+        "nondegeneracy": {"type": "array", "items": {"type": "string"}},
+        "incidence": {"type": "array", "items": {"type": "string"}},
+        "existence": {"type": "array", "items": {"type": "string"}},
+        "uniqueness_if_needed": {"type": "array", "items": {"type": "string"}},
+        "orientation": {"type": "array", "items": {"type": "string"}},
+        "diagram_cases": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "lean_introduction_plan": {
+      "type": "object",
+      "required": ["theorem_template_id", "generated_obligations"],
+      "properties": {
+        "theorem_template_id": {"type": "string"},
+        "generated_obligations": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "proof_use_status": {
+      "type": "string",
+      "enum": ["not_allowed_until_final_verify", "not_allowed", "lean_patch_candidate"]
+    }
   },
   "additionalProperties": false
 }
