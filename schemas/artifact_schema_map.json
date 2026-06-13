@@ -1,6 +1,6 @@
 {
-  "dependency_probe.json": "schemas/resources/dependency_resolution_report.schema.json",
-  "dependency_resolution.json": "schemas/resources/dependency_resolution_report.schema.json",
+  "dependency_probe.json": "schemas/base/dependency_resolution_report.schema.json",
+  "dependency_resolution.json": "schemas/base/dependency_resolution_report.schema.json",
   "local_resource_profile.json": "schemas/resources/local_resource_profile.schema.json",
   "resource_profile.json": "schemas/resources/local_resource_profile.schema.json",
   "geometry_default.yaml": "schemas/base/selected_implementations.schema.json",

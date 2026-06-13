@@ -1,33 +1,56 @@
 {
-  "created_at": "2026-06-13T11:41:53.745588+00:00",
+  "created_at": "2026-06-13T13:35:20.760210+00:00",
   "engines": [
     {
-      "checkpoint_hash": null,
+      "claim_impact": "none",
+      "code_install_status": "installed",
+      "code_source": "system_path",
+      "code_version_or_commit": "C:\\Users\\bakat\\miniforge3\\Scripts\\newclid.EXE",
+      "evidence_refs": [],
       "expected_commit": null,
       "family": "newclid_compatible",
-      "install_status": "installed",
-      "role": "symbolic_closure",
-      "version_or_commit": "C:\\Users\\bakat\\miniforge3\\Scripts\\newclid.EXE"
+      "model_artifact_expected": false,
+      "model_artifact_status": "not_applicable",
+      "model_checkpoint_hash": null,
+      "model_inference_status": "not_applicable",
+      "public_discovery_evidence_ref": null,
+      "role": "symbolic_closure"
     },
     {
-      "checkpoint_hash": "sha256:77406d21e84699b3d0d123653e40b7f48f3642beae10c0b608f58249223b8099",
+      "claim_impact": "none",
+      "code_install_status": "vendored",
+      "code_source": "local_vendor",
+      "code_version_or_commit": "e8c4337e782548a4d54e6839558a32965a5a764e",
+      "evidence_refs": [],
       "expected_commit": "e8c4337e782548a4d54e6839558a32965a5a764e",
       "family": "genesisgeo_compatible",
-      "install_status": "vendored",
-      "role": "construction_proposer",
-      "version_or_commit": "e8c4337e782548a4d54e6839558a32965a5a764e"
+      "model_artifact_expected": true,
+      "model_artifact_status": "available",
+      "model_checkpoint_hash": "sha256:77406d21e84699b3d0d123653e40b7f48f3642beae10c0b608f58249223b8099",
+      "model_inference_status": "available",
+      "public_discovery_evidence_ref": null,
+      "role": "construction_proposer"
     },
     {
-      "checkpoint_hash": null,
+      "claim_impact": "blocks_model_backed_tonggeometry_claim",
+      "code_install_status": "vendored",
+      "code_source": "local_vendor",
+      "code_version_or_commit": "d00925f07dc3174f91326386cb8e785e539a91a1",
+      "evidence_refs": [
+        "sha256:7d5ba2bb972a2a8fa03ec08ebc6b53eb275d88fa9613a7dedfdfed8f3f8995ba"
+      ],
       "expected_commit": "d00925f07dc3174f91326386cb8e785e539a91a1",
       "family": "tonggeometry_compatible",
-      "install_status": "vendored",
-      "role": "heavy_search",
-      "version_or_commit": "d00925f07dc3174f91326386cb8e785e539a91a1"
+      "model_artifact_expected": true,
+      "model_artifact_status": "admitted_unavailable_external_artifact",
+      "model_checkpoint_hash": null,
+      "model_inference_status": "unavailable",
+      "public_discovery_evidence_ref": "sha256:7d5ba2bb972a2a8fa03ec08ebc6b53eb275d88fa9613a7dedfdfed8f3f8995ba",
+      "role": "heavy_search"
     }
   ],
   "evidence_refs": [
-    "sha256:ccf5adc657a314fbcc6650aa7d1aa851e2e934fe0d69596250a49d7aee6f2adf"
+    "sha256:01721c1696137647ec8d6a01cb360b5c919521b7acfa8c4ffde34b8c289787ed"
   ],
   "lake_version": "Lake version 5.0.0-1165156 (Lean version 4.15.0)",
   "lean_version": "Lean (version 4.15.0, x86_64-w64-windows-gnu, commit 11651562caae, Release)",
@@ -47,7 +70,12 @@
     }
   ],
   "python_version": "3.12.11",
-  "report_id": "dependency_resolution:20260613T114153Z",
+  "report_id": "dependency_resolution:20260613T133520Z",
   "schema_version": "1.0.0",
-  "unresolved": []
+  "unresolved": [
+    {
+      "component": "tonggeometry_compatible",
+      "consequence": "blocks_model_backed_tonggeometry_claim"
+    }
+  ]
 }

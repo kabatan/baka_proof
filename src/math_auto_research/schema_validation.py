@@ -115,6 +115,20 @@ def validate_artifact(artifact_path: Path, schema_path: Path | None = None) -> V
 
 def _validate_object(value: Any, schema: dict[str, Any], path: str) -> None:
     expected_type = schema.get("type")
+    if isinstance(expected_type, list):
+        errors = []
+        for candidate_type in expected_type:
+            candidate_schema = {**schema, "type": candidate_type}
+            try:
+                _validate_object(value, candidate_schema, path)
+                return
+            except SchemaValidationError as exc:
+                errors.append(str(exc))
+        raise SchemaValidationError(f"{path}: expected one of {expected_type}; {'; '.join(errors)}")
+    if expected_type == "null":
+        if value is not None:
+            raise SchemaValidationError(f"{path}: expected null")
+        return
     if expected_type == "object":
         if not isinstance(value, dict):
             raise SchemaValidationError(f"{path}: expected object")

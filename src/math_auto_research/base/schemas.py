@@ -171,8 +171,8 @@ class DiagnosticBundle(SchemaRecord):
 
 
 class DependencyResolutionReport(SchemaRecord):
-    schema_id: ClassVar[str] = "resources.dependency_resolution_report.v1"
-    schema_path: ClassVar[Path] = SCHEMA_ROOT / "resources" / "dependency_resolution_report.schema.json"
+    schema_id: ClassVar[str] = "base.dependency_resolution_report.v1"
+    schema_path: ClassVar[Path] = SCHEMA_ROOT / "base" / "dependency_resolution_report.schema.json"
 
     report_id: str
     created_at: str

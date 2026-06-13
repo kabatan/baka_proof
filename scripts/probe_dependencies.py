@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 import platform
@@ -17,6 +18,16 @@ ENGINE_ROLES = {
     "symbolic_closure": ("newclid_compatible", "newclid"),
     "construction_proposer": ("genesisgeo_compatible", "genesisgeo"),
     "heavy_search": ("tonggeometry_compatible", "tonggeometry"),
+}
+
+MODEL_ENV_BY_ROLE = {
+    "construction_proposer": ["GENESISGEO_MODEL_PATH", "GENESISGEO_CHECKPOINT"],
+    "heavy_search": [
+        "TONGGEOMETRY_TOKENIZER",
+        "TONGGEOMETRY_LM_S",
+        "TONGGEOMETRY_LM_L",
+        "TONGGEOMETRY_CLS",
+    ],
 }
 
 
@@ -44,6 +55,10 @@ def file_hash(path: Path) -> str:
         for chunk in iter(lambda: handle.read(65536), b""):
             digest.update(chunk)
     return "sha256:" + digest.hexdigest()
+
+
+def artifact_ref(path: Path) -> str | None:
+    return file_hash(path) if path.exists() else None
 
 
 def optional_checkpoint_hash(role: str) -> str | None:
@@ -79,6 +94,60 @@ def optional_checkpoint_hash(role: str) -> str | None:
                 digest.update(file_hash(file).encode("utf-8"))
         return "sha256:" + digest.hexdigest()
     return None
+
+
+def model_artifact_status(role: str, checkpoint_hash: str | None) -> tuple[bool, str, str, str]:
+    if role == "symbolic_closure":
+        return False, "not_applicable", "not_applicable", "none"
+    if checkpoint_hash is not None:
+        return True, "available", "available", "none"
+    if role == "heavy_search":
+        report_path = Path(
+            "docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/"
+            "tonggeometry_model_discovery_report.md"
+        )
+        status = "admitted_unavailable_external_artifact" if report_path.exists() else "unavailable"
+        impact = "blocks_model_backed_tonggeometry_claim"
+        return True, status, "unavailable", impact
+    return True, "unavailable", "unavailable", "blocks_core_experiment_ready"
+
+
+def importable_module(module_name: str, extra_path: Path | None = None) -> bool:
+    added = False
+    if extra_path is not None and extra_path.exists():
+        sys.path.insert(0, str(extra_path))
+        added = True
+    try:
+        return importlib.util.find_spec(module_name) is not None
+    finally:
+        if added:
+            try:
+                sys.path.remove(str(extra_path))
+            except ValueError:  # pragma: no cover - defensive cleanup
+                pass
+
+
+def code_status(role: str, family: str, command: str, submodule: dict[str, Any] | None) -> tuple[str, str, str, str | None]:
+    executable = shutil.which(command)
+    if executable:
+        return "installed", executable, "system_path", submodule.get("commit") if submodule else None
+    if role == "symbolic_closure" and importable_module("newclid"):
+        return "installed", "python-import:newclid", "pypi", submodule.get("commit") if submodule else None
+    if role == "construction_proposer" and submodule is not None:
+        path = Path(submodule["path"])
+        commit = git_commit(path)
+        if commit and importable_module("geometry_gen", path):
+            return "vendored", commit, "local_vendor", submodule.get("commit")
+        if commit:
+            return "vendored", commit, "local_vendor", submodule.get("commit")
+    if role == "heavy_search" and submodule is not None:
+        path = Path(submodule["path"])
+        commit = git_commit(path)
+        if commit and importable_module("tonggeometry", path):
+            return "vendored", commit, "local_vendor", submodule.get("commit")
+        if commit:
+            return "vendored", commit, "local_vendor", submodule.get("commit")
+    return "unavailable", "unavailable", "unknown", submodule.get("commit") if submodule else None
 
 
 def git_commit(path: Path) -> str | None:
@@ -122,26 +191,39 @@ def build_report() -> dict[str, Any]:
     engines = []
     unresolved = []
     for role, (family, command) in ENGINE_ROLES.items():
-        executable = shutil.which(command)
         submodule = submodules_by_role.get(role)
-        vendored_commit = None
-        expected_commit = None
-        if submodule is not None:
-            expected_commit = submodule.get("commit")
-            vendored_commit = git_commit(Path(submodule["path"]))
-        install_status = "installed" if executable else "vendored" if vendored_commit else "unavailable"
+        code_install_status, code_version_or_commit, code_source, expected_commit = code_status(
+            role, family, command, submodule
+        )
+        checkpoint_hash = optional_checkpoint_hash(role)
+        expected, artifact_status, inference_status, claim_impact = model_artifact_status(role, checkpoint_hash)
+        discovery_report = Path(
+            "docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/"
+            "tonggeometry_model_discovery_report.md"
+        )
+        public_ref = artifact_ref(discovery_report) if role == "heavy_search" else None
         engines.append(
             {
                 "role": role,
                 "family": family,
-                "install_status": install_status,
-                "version_or_commit": executable or vendored_commit or "unavailable",
+                "code_install_status": code_install_status,
+                "code_version_or_commit": code_version_or_commit,
+                "code_source": code_source,
                 "expected_commit": expected_commit,
-                "checkpoint_hash": optional_checkpoint_hash(role),
+                "model_artifact_expected": expected,
+                "model_artifact_status": artifact_status,
+                "model_checkpoint_hash": checkpoint_hash,
+                "model_inference_status": inference_status,
+                "public_discovery_evidence_ref": public_ref,
+                "claim_impact": claim_impact,
+                "evidence_refs": [public_ref] if public_ref else [],
             }
         )
-        if install_status == "unavailable":
-            consequence = "blocks_heavy_search" if role == "heavy_search" else "blocks_real_final_theorem"
+        if code_install_status == "unavailable":
+            consequence = "blocks_provider_role"
+            unresolved.append({"component": family, "consequence": consequence})
+        elif claim_impact != "none":
+            consequence = claim_impact
             unresolved.append({"component": family, "consequence": consequence})
     if lean_path is None or lake_path is None:
         unresolved.append({"component": "lean_lake_toolchain", "consequence": "blocks_real_final_theorem"})

@@ -45,18 +45,54 @@
           "evidence_refs"
         ],
         "properties": {
-          "role": {"type": "string", "enum": ["symbolic_closure", "construction_proposer", "heavy_search"]},
-          "family": {"type": "string", "enum": ["newclid_compatible", "genesisgeo_compatible", "tonggeometry_compatible"]},
-          "code_install_status": {"type": "string", "enum": ["installed", "vendored", "unavailable", "failed"]},
+          "role": {
+            "type": "string",
+            "enum": ["symbolic_closure", "construction_proposer", "heavy_search"]
+          },
+          "family": {
+            "type": "string",
+            "enum": [
+              "newclid_compatible",
+              "genesisgeo_compatible",
+              "tonggeometry_compatible"
+            ]
+          },
+          "code_install_status": {
+            "type": "string",
+            "enum": ["installed", "vendored", "unavailable", "failed"]
+          },
           "code_version_or_commit": {"type": "string"},
-          "code_source": {"type": "string", "enum": ["pypi", "git", "local_vendor", "system_path", "release", "unknown"]},
+          "code_source": {
+            "type": "string",
+            "enum": ["pypi", "git", "local_vendor", "system_path", "release", "unknown"]
+          },
           "expected_commit": {"type": ["string", "null"]},
           "model_artifact_expected": {"type": "boolean"},
-          "model_artifact_status": {"type": "string", "enum": ["available", "admitted_unavailable_external_artifact", "unavailable", "failed", "not_applicable"]},
+          "model_artifact_status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "admitted_unavailable_external_artifact",
+              "unavailable",
+              "failed",
+              "not_applicable"
+            ]
+          },
           "model_checkpoint_hash": {"type": ["string", "null"]},
-          "model_inference_status": {"type": "string", "enum": ["available", "unavailable", "failed", "not_applicable"]},
+          "model_inference_status": {
+            "type": "string",
+            "enum": ["available", "unavailable", "failed", "not_applicable"]
+          },
           "public_discovery_evidence_ref": {"type": ["string", "null"]},
-          "claim_impact": {"type": "string", "enum": ["none", "blocks_core_experiment_ready", "blocks_model_backed_tonggeometry_claim", "blocks_provider_role"]},
+          "claim_impact": {
+            "type": "string",
+            "enum": [
+              "none",
+              "blocks_core_experiment_ready",
+              "blocks_model_backed_tonggeometry_claim",
+              "blocks_provider_role"
+            ]
+          },
           "evidence_refs": {"type": "array", "items": {"type": "string"}}
         }
       }
