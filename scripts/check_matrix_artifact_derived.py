@@ -65,10 +65,14 @@ def check_matrix(run_dir: Path) -> list[str]:
                 if not isinstance(run, dict):
                     continue
                 role = str(run.get("engine_role"))
+                if baseline_id == "B5" and role == "construction_proposer":
+                    errors.append(f"b5_construction_proposer_not_disabled:{task_result.get('task_entry_id')}")
                 counts = role_counts.setdefault(role, [0, 0])
                 counts[1] += 1
                 if run.get("status") in {"trace_candidate", "auxiliary_construction_candidate"}:
                     counts[0] += 1
+            if baseline_id == "B5" and "construction_candidate.json" in artifact_index:
+                errors.append(f"b5_construction_candidate_not_disabled:{task_result.get('task_entry_id')}")
             if baseline_id in {"B2", "B4"}:
                 if task_result.get("proof_use_status") == "final_theorem":
                     errors.append(f"provider_task_claimed_final_theorem_in_release:{baseline_id}:{task_result.get('task_entry_id')}")

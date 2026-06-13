@@ -22,6 +22,7 @@ This final command pass includes the post-review hardening that:
 2. prevents provider-backed geometry tasks from being counted as final theorem/proof repair success;
 3. keeps remaining B2/B4 final theorem counts limited to tasks where geometry_provider is not_required_for_task.
 4. derives provider_success_rate_by_role from normalized provider-output success statuses only; diagnostic_only, unsupported, timeout, and resource_rejected are not counted as provider success.
+5. propagates B5 construction_enabled=false into the standard loop and checks that B5 emits no construction_proposer runs or construction_candidate.json artifacts.
 ```
 
 ```text
@@ -111,6 +112,7 @@ release_blocker_30_matrix_artifact_derived=passed
 B2/B4 provider manifests contain no fixture adapter-version tokens
 B2/B4 tasks with provider_run_manifest.json do not claim proof_use_status=final_theorem
 provider_success_rate_by_role recomputed from provider manifest statuses for every provider-calling baseline and checked by release_blocker_30
+B5 construction-disabled invariant checked by release_blocker_30: no construction_proposer engine runs and no construction_candidate.json artifacts
 ```
 
 ## Claim impact

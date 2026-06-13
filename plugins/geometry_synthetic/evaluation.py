@@ -119,6 +119,7 @@ def _baseline_for_run(baseline: dict[str, Any], config: dict[str, Any]) -> dict[
         "use_real_genesisgeo": release_real_provider,
         "use_real_tonggeometry": release_real_provider,
         "require_real_integration": release_real_provider,
+        "construction_enabled": baseline.get("construction_enabled") is not False,
         "explicit_escalation": baseline_id == "B4",
         "heavy_search_requested": baseline_id == "B4",
     }
@@ -131,7 +132,6 @@ def _metrics_for_baseline(
     task_results: list[TaskRunResult],
 ) -> MetricsReport:
     uses_geometry = bool(baseline.get("uses_geometry_solve"))
-    construction_disabled = baseline.get("construction_enabled") is False
     benchmark_count = len(corpus)
     final_success = sum(1 for result in task_results if result.proof_use_status == "final_theorem")
     accepted_count = sum(1 for result in task_results if result.stage_statuses.get("geometry_extraction") == "accepted")

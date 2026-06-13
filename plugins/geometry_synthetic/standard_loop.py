@@ -113,6 +113,7 @@ class StandardGeometryProofLoop:
             for stage in ("symbolic_closure", "construction_proposer", "heavy_search")
         )
         if geometry_solve_enabled and claim_spec is not None and geometry_stage_required:
+            construction_enabled = bool(_field(baseline, "construction_enabled", True))
             request = GeometrySolveRequest(
                 schema_version="1.0.0",
                 request_id=f"geometry_solve_request:{baseline_id}:{entry_id}",
@@ -121,7 +122,7 @@ class StandardGeometryProofLoop:
                 trust_target="lean_patch_candidate",
                 budget=str(_field(baseline, "budget", "medium")),
                 constraints={
-                    "construction_needed": _field(task, "task_category") == "auxiliary_construction",
+                    "construction_needed": construction_enabled and _field(task, "task_category") == "auxiliary_construction",
                     "claim_spec": claim_spec.to_dict(),
                     "emit_trace_candidate": _field(task, "task_category") == "nonidentity_symbolic_closure",
                     "use_real_newclid": bool(_field(baseline, "use_real_newclid", False)),
