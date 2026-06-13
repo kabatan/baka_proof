@@ -14,6 +14,10 @@ from plugins.geometry_synthetic.provider import (
     convert_claim_spec_to_newclid_fixture,
     propose_auxiliary_construction_candidate,
 )
+from plugins.geometry_synthetic.providers.composite_provider import (
+    CompositeSyntheticGeometryProvider as PlanPathCompositeProvider,
+)
+from plugins.geometry_synthetic.providers.provider_run_manifest import ProviderRunManifest
 
 
 def request_for(budget: str = "medium", constraints: dict | None = None) -> GeometrySolveRequest:
@@ -44,6 +48,15 @@ def claim_spec_fixture() -> dict:
 
 
 class CompositeProviderTest(unittest.TestCase):
+    def test_plan_provider_paths_exist_and_expose_one_provider(self) -> None:
+        self.assertTrue(Path("plugins/geometry_synthetic/providers/provider_api.py").exists())
+        self.assertTrue(Path("plugins/geometry_synthetic/providers/composite_provider.py").exists())
+        self.assertTrue(Path("plugins/geometry_synthetic/providers/provider_run_manifest.py").exists())
+        self.assertIs(PlanPathCompositeProvider, CompositeSyntheticGeometryProvider)
+        run = PlanPathCompositeProvider().run(request_for())
+        self.assertIsInstance(run.manifest, ProviderRunManifest)
+        self.assertEqual(run.manifest.provider_id, "geometry_solver_provider:composite_synthetic:v1")
+
     def test_newclid_compatible_input_conversion(self) -> None:
         claim_spec = claim_spec_fixture()
         converted = convert_claim_spec_to_newclid_fixture(claim_spec)
