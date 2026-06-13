@@ -46,6 +46,7 @@ def build_report(request_id: str, claim_spec: dict[str, Any]) -> dict[str, Any]:
         "request_id": request_id,
         "status": "diagnostic_only",
         "proof_use_status": "not_allowed",
+        "raw_search_output": "TongGeometry-compatible heavy-search diagnostic; not proof evidence",
         "vendor_path": str(TONG_ROOT.relative_to(ROOT)),
         "vendor_commit": _git_head(TONG_ROOT),
         "python_import_status": "available" if spec is not None else "unavailable",
