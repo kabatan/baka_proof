@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "target_library": "LeanGeoSubsetV1:1.0.0",
+  "relation_classes": {
+    "exact": {"goal_level_allowed": true, "requires_direction_check": false},
+    "sufficient": {"goal_level_allowed": true, "requires_direction_check": true, "allowed_directions": ["forward", "reverse"]},
+    "related": {"goal_level_allowed": false, "requires_direction_check": false},
+    "none": {"goal_level_allowed": false, "requires_direction_check": false}
+  }
+}

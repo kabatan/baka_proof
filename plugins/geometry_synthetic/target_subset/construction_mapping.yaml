@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "target_library": "LeanGeoSubsetV1:1.0.0",
+  "mappings": {
+    "line_through_two_distinct_points": {"relation_class": "exact", "side_conditions": ["points_distinct"]},
+    "intersection_of_two_nonparallel_lines": {"relation_class": "exact", "side_conditions": ["lines_nonparallel"]},
+    "foot_of_perpendicular": {"relation_class": "sufficient", "side_conditions": ["point_declared", "line_declared"]},
+    "midpoint": {"relation_class": "exact", "side_conditions": ["endpoints_distinct"]},
+    "circle_with_center_through_point": {"relation_class": "exact", "side_conditions": ["center_point_distinct"]}
+  }
+}

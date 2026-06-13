@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "target_library": "LeanGeoSubsetV1:1.0.0",
+  "mappings": {
+    "collinear": {"relation_class": "exact", "side_conditions": ["points_declared"], "unsupported_variants": ["set_collinearity"]},
+    "parallel": {"relation_class": "exact", "side_conditions": ["lines_declared", "nondegenerate_lines"], "unsupported_variants": ["directed_parallel_orientation"]},
+    "perpendicular": {"relation_class": "exact", "side_conditions": ["lines_declared", "nondegenerate_lines"], "unsupported_variants": ["angle_encoded_perpendicular"]},
+    "midpoint": {"relation_class": "exact", "side_conditions": ["points_declared", "endpoints_distinct"], "unsupported_variants": ["segment_object_midpoint"]},
+    "concyclic": {"relation_class": "exact", "side_conditions": ["points_declared"], "unsupported_variants": ["oriented_circle_arc"]},
+    "equal_length": {"relation_class": "exact", "side_conditions": ["segments_declared"], "unsupported_variants": ["norm_expression"]},
+    "equal_angle_supported_pattern": {"relation_class": "sufficient", "side_conditions": ["registered_angle_pattern"], "unsupported_variants": ["arbitrary_oriented_angle"]}
+  }
+}
