@@ -8,6 +8,9 @@ from typing import Any
 from plugins.geometry_synthetic.target_subset import load_json
 
 
+TARGET_LIBRARY_MANIFEST_HASH = "sha256:6bbdbb66e041e5d1ebf7ab0588a54112e698ec90826710a17679e97d173530c2"
+
+
 @dataclass(frozen=True)
 class GeometryClaimSpec:
     schema_version: str
@@ -66,6 +69,8 @@ class LeanGoalContext:
     target_raw: str
     nondegeneracy_assumptions: tuple[str, ...] = ()
     orientation_assumptions: tuple[str, ...] = ()
+    protected_statement_hash: str | None = None
+    target_library_manifest_hash: str | None = None
 
 
 class GeometryExtractor:
@@ -90,6 +95,8 @@ class GeometryExtractor:
             return _reject(context.source_goal_ref, context.target_raw, "missing_goal_anchor")
         if not context.elaboration_report_ref:
             return _reject(context.source_goal_ref, context.target_raw, "missing_elaboration_report")
+        if context.target_form in self.rejected_forms:
+            return _reject(context.source_goal_ref, context.target_raw, context.target_form)
         if context.target_form not in self.accepted_forms:
             return _reject(context.source_goal_ref, context.target_raw, "unsupported_expression")
         if _requires_nondegeneracy(context.target_form) and not context.nondegeneracy_assumptions:
@@ -113,8 +120,8 @@ class GeometryExtractor:
             source_goal_ref=context.source_goal_ref,
             extraction_report_ref=report_id,
             goal_anchor_ref=context.source_goal_ref,
-            protected_statement_hash=context.source_goal_ref,
-            target_library_manifest_hash="target_library_manifest:LeanGeoSubsetV1:1.0.0",
+            protected_statement_hash=context.protected_statement_hash or _hash_ref(context.elaboration_report_ref + context.target_raw),
+            target_library_manifest_hash=context.target_library_manifest_hash or TARGET_LIBRARY_MANIFEST_HASH,
         )
         return (
             GeometryExtractionReport(
@@ -169,20 +176,8 @@ class GeometryExtractor:
         relation_evidence: RelationEvidence | None = None,
     ) -> tuple[GeometryExtractionReport, GeometryClaimSpec | None]:
         if not goal_anchor_ref:
-            return (
-                GeometryExtractionReport(
-                    "1.0.0",
-                    f"geometry_extraction:{_digest(lean_goal_text)}",
-                    goal_anchor_ref,
-                    "none",
-                    "diagnostic_only",
-                    "safe_rejected",
-                    "missing_goal_anchor",
-                    None,
-                    "not_allowed",
-                ),
-                None,
-            )
+            return _reject(goal_anchor_ref, lean_goal_text, "missing_goal_anchor")
+        return _reject(goal_anchor_ref, lean_goal_text, "non_elaborated_lean_goal_required")
         parsed = self._parse_lean_geometry_statement(lean_goal_text)
         form = parsed["target_form"]
         if form in self.rejected_forms or form is None:
@@ -215,8 +210,8 @@ class GeometryExtractor:
             source_goal_ref=goal_anchor_ref,
             extraction_report_ref=report_id,
             goal_anchor_ref=goal_anchor_ref,
-            protected_statement_hash=goal_anchor_ref,
-            target_library_manifest_hash="target_library_manifest:LeanGeoSubsetV1:1.0.0",
+            protected_statement_hash=_hash_ref(lean_goal_text),
+            target_library_manifest_hash=TARGET_LIBRARY_MANIFEST_HASH,
         )
         relation_evidence = relation_evidence or RelationEvidence("exact")
         relation = relation_evidence.relation
@@ -326,6 +321,10 @@ class GeometryExtractor:
 
 def _digest(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def _hash_ref(text: str) -> str:
+    return f"sha256:{hashlib.sha256(text.encode('utf-8')).hexdigest()}"
 
 
 def _requires_nondegeneracy(form: str) -> bool:

@@ -41,8 +41,8 @@ class GeometryExtractionTest(unittest.TestCase):
         self.assertIn("A != B", claim.nondegeneracy_assumptions)
         self.assertEqual(claim.extraction_report_ref, report.report_id)
         self.assertEqual(claim.goal_anchor_ref, "goal:1")
-        self.assertEqual(claim.protected_statement_hash, "goal:1")
-        self.assertEqual(claim.target_library_manifest_hash, "target_library_manifest:LeanGeoSubsetV1:1.0.0")
+        self.assertTrue(claim.protected_statement_hash.startswith("sha256:"))
+        self.assertTrue(claim.target_library_manifest_hash.startswith("sha256:"))
         self.assertEqual(claim.proof_use_status, "not_allowed")
 
     def test_extracts_from_lean_check_output(self) -> None:
@@ -111,6 +111,13 @@ class GeometryExtractionTest(unittest.TestCase):
         report, claim = GeometryExtractor().extract("raw dsl collinear A B C", "")
         self.assertEqual(report.status, "safe_rejected")
         self.assertEqual(report.goal_anchor_ref, "")
+        self.assertEqual(report.proof_use_status, "not_allowed")
+        self.assertIsNone(claim)
+
+    def test_raw_text_with_goal_anchor_does_not_get_goal_level_claim(self) -> None:
+        report, claim = GeometryExtractor().extract("Coll A B C", "goal:raw-text")
+        self.assertEqual(report.status, "safe_rejected")
+        self.assertEqual(report.safe_reject_reason, "non_elaborated_lean_goal_required")
         self.assertEqual(report.proof_use_status, "not_allowed")
         self.assertIsNone(claim)
 

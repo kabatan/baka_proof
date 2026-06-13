@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase
-status: V03_FULL_REBASE_RC4_READY_FOR_REVIEW
+status: V03_FULL_REBASE_RC4_FIX_READY_FOR_REVIEW
 created: 2026-06-13
 last_updated: 2026-06-13
 base_spec: MARP-GEOLEAN-BASE-004

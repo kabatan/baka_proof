@@ -1,62 +1,15 @@
-{
-  "schema_version": "1.0.0",
-  "grammar_id": "LeanGeoSubsetV1TheoremGrammar:1.0.0",
-  "target_library": "LeanGeoSubsetV1:1.0.0",
-  "object_declarations": [
-    "point",
-    "line",
-    "circle",
-    "line_through_two_distinct_points",
-    "circle_with_center_through_point"
-  ],
-  "allowed_hypothesis_forms": [
-    "distinct",
-    "collinear",
-    "parallel",
-    "perpendicular",
-    "midpoint",
-    "concyclic",
-    "equal_length",
-    "equal_angle_supported_pattern"
-  ],
-  "allowed_target_forms": [
-    "collinear",
-    "parallel",
-    "perpendicular",
-    "concyclic",
-    "equal_length",
-    "equal_angle_supported_pattern"
-  ],
-  "rejected_hypothesis_forms": [
-    "arbitrary_mathlib_expression",
-    "unsupported_local_notation",
-    "unsupported_quantifier_alternation",
-    "unsupported_orientation_semantics",
-    "unsupported_diagram_case_split"
-  ],
-  "rejected_target_forms": [
-    "arbitrary_mathlib_expression",
-    "unsupported_local_notation",
-    "unsupported_quantifier_alternation",
-    "unsupported_orientation_semantics",
-    "unsupported_diagram_case_split"
-  ],
-  "construction_mappings": {
-    "line_through_two_distinct_points": {"side_conditions": ["points_distinct"]},
-    "intersection_of_two_nonparallel_lines": {"side_conditions": ["lines_nonparallel"]},
-    "foot_of_perpendicular": {"side_conditions": ["point_declared", "line_declared"]},
-    "midpoint": {"side_conditions": ["endpoints_distinct"]},
-    "circle_with_center_through_point": {"side_conditions": ["center_point_distinct"]}
-  },
-  "relation_mappings": {
-    "exact": {"goal_level_allowed": true},
-    "sufficient": {
-      "goal_level_allowed": true,
-      "requires_direction_check": true,
-      "allowed_directions": ["forward", "reverse"]
-    },
-    "related": {"goal_level_allowed": false},
-    "none": {"goal_level_allowed": false}
-  },
-  "safe_reject_policy": "reject_unsupported_or_ambiguous_forms_before_proof_use"
-}
+schema_version: "1.0.0"
+target_library_id: "LeanGeoSubsetV1:1.0.0"
+target_family: "LeanGeoSubsetV1"
+source_dependency: "LeanGeo-compatible"
+source_url: "https://github.com/project-numina/LeanGeo.git"
+version_or_commit: "9212b89ef0cb08adb049b32f6332a1f2b9e551ab"
+expected_lean_version: "4"
+namespace_map_ref: "sha256:615d54fbd3dd034126f95f22b23e8f847766eb11e47298b55dc58c59e41dbba3"
+theorem_grammar_ref: "sha256:c6310eb2fb57bc20a4fe73540e2f8c0ee6c8b455cfbb20f212dd571d2bbb86ab"
+predicate_mapping_ref: "sha256:9385d738435fbbdd4dbc3a518a6443cb9cd5ae45556766785ba1f5a1def9c4e5"
+construction_mapping_ref: "sha256:cceaea4eab1aca00e881711fc2bb9072ab52c7828dc96832dfabccd375fbc2cb"
+relation_mapping_ref: "sha256:eb2619b6c4bbd932acb6e05117901da8423adc991391c42a0add5363b379d9a4"
+selected: true
+status: "available"
+blocker_reason: ""

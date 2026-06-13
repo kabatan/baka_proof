@@ -10,7 +10,12 @@
     "target",
     "nondegeneracy_assumptions",
     "orientation_assumptions",
-    "source_goal_ref"
+    "source_goal_ref",
+    "extraction_report_ref",
+    "goal_anchor_ref",
+    "protected_statement_hash",
+    "target_library_manifest_hash",
+    "proof_use_status"
   ],
   "properties": {
     "schema_version": {"type": "string", "enum": ["1.0.0"]},
@@ -21,6 +26,11 @@
     "target": {"type": "object"},
     "nondegeneracy_assumptions": {"type": "array"},
     "orientation_assumptions": {"type": "array"},
-    "source_goal_ref": {"type": "string"}
+    "source_goal_ref": {"type": "string"},
+    "extraction_report_ref": {"type": "string"},
+    "goal_anchor_ref": {"type": "string"},
+    "protected_statement_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "target_library_manifest_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "proof_use_status": {"type": "string", "enum": ["not_allowed"]}
   }
 }

@@ -14,7 +14,7 @@
     ],
     "orientation_assumptions": [],
     "proof_use_status": "not_allowed",
-    "protected_statement_hash": "lean-check:MathAutoResearch.GeometryFixture.fixture_collinear",
+    "protected_statement_hash": "sha256:f0b3e96764ce68a9123bec80f08b4a7396cbccd7201e4b1e7dc35c925bbf0aa4",
     "schema_version": "1.0.0",
     "source_goal_ref": "lean-check:MathAutoResearch.GeometryFixture.fixture_collinear",
     "target": {
@@ -22,7 +22,7 @@
       "raw": "Coll A B C"
     },
     "target_library": "LeanGeoSubsetV1:1.0.0",
-    "target_library_manifest_hash": "target_library_manifest:LeanGeoSubsetV1:1.0.0"
+    "target_library_manifest_hash": "sha256:6bbdbb66e041e5d1ebf7ab0588a54112e698ec90826710a17679e97d173530c2"
   },
   "lean_output": "warning: UnicodeBasic: repository '.\\.\\.lake/packages\\UnicodeBasic' has local changes\nwarning: batteries: repository '.\\.\\.lake/packages\\batteries' has local changes\nMathAutoResearch.GeometryFixture.fixture_collinear (A B C : Point) (h : Coll A B C) : Coll A B C\n",
   "report": {

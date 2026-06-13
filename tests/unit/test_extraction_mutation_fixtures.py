@@ -7,7 +7,17 @@ from plugins.geometry_synthetic.extraction import GeometryExtractor, LeanGoalCon
 
 class ExtractionMutationFixtureTest(unittest.TestCase):
     def test_local_notation_ambiguity_safe_rejects(self) -> None:
-        report, claim = GeometryExtractor().extract("target unsupported_local_notation", "goal:local-notation")
+        report, claim = GeometryExtractor().extract_context(
+            LeanGoalContext(
+                source_goal_ref="goal:local-notation",
+                elaboration_status="passed",
+                elaboration_report_ref="lean:local-notation",
+                objects=("A:Point", "B:Point", "C:Point"),
+                hypotheses=(),
+                target_form="unsupported_local_notation",
+                target_raw="local_notation A B C",
+            )
+        )
         self.assertEqual(report.status, "safe_rejected")
         self.assertEqual(report.safe_reject_reason, "unsupported_local_notation")
         self.assertIsNone(claim)
@@ -30,7 +40,17 @@ class ExtractionMutationFixtureTest(unittest.TestCase):
         self.assertIsNone(claim)
 
     def test_unsupported_orientation_safe_rejects(self) -> None:
-        report, claim = GeometryExtractor().extract("target unsupported_orientation_semantics", "goal:orientation")
+        report, claim = GeometryExtractor().extract_context(
+            LeanGoalContext(
+                source_goal_ref="goal:orientation",
+                elaboration_status="passed",
+                elaboration_report_ref="lean:orientation",
+                objects=("A:Point", "B:Point", "C:Point"),
+                hypotheses=(),
+                target_form="unsupported_orientation_semantics",
+                target_raw="oriented angle A B C",
+            )
+        )
         self.assertEqual(report.status, "safe_rejected")
         self.assertEqual(report.safe_reject_reason, "unsupported_orientation_semantics")
         self.assertIsNone(claim)
@@ -45,9 +65,9 @@ class ExtractionMutationFixtureTest(unittest.TestCase):
         self.assertIsNone(claim)
 
     def test_raw_dsl_claim_safe_rejects(self) -> None:
-        report, claim = GeometryExtractor().extract("raw_dsl_claim collinear A B C", "")
+        report, claim = GeometryExtractor().extract("raw_dsl_claim collinear A B C", "goal:raw-dsl")
         self.assertEqual(report.status, "safe_rejected")
-        self.assertEqual(report.safe_reject_reason, "missing_goal_anchor")
+        self.assertEqual(report.safe_reject_reason, "non_elaborated_lean_goal_required")
         self.assertEqual(report.proof_use_status, "not_allowed")
         self.assertIsNone(claim)
 

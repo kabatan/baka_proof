@@ -2,10 +2,10 @@
   "schema_version": "1.0.0",
   "target_library": "LeanGeoSubsetV1:1.0.0",
   "mappings": {
-    "line_through_two_distinct_points": {"relation_class": "exact", "side_conditions": ["points_distinct"]},
-    "intersection_of_two_nonparallel_lines": {"relation_class": "exact", "side_conditions": ["lines_nonparallel"]},
-    "foot_of_perpendicular": {"relation_class": "sufficient", "side_conditions": ["point_declared", "line_declared"]},
-    "midpoint": {"relation_class": "exact", "side_conditions": ["endpoints_distinct"]},
-    "circle_with_center_through_point": {"relation_class": "exact", "side_conditions": ["center_point_distinct"]}
+    "line_through_two_distinct_points": {"construction_id": "construction:line_through_two_distinct_points:v1", "lean_template_id": "lean_template:line_from_points:v1", "relation_class": "exact", "side_conditions": ["points_distinct"], "existence_conditions": ["two_distinct_points"], "uniqueness_requirements": ["line_unique_through_two_points"], "generated_obligations": ["points_distinct"]},
+    "intersection_of_two_nonparallel_lines": {"construction_id": "construction:intersection_of_two_nonparallel_lines:v1", "lean_template_id": "lean_template:intersection_lines:v1", "relation_class": "exact", "side_conditions": ["lines_nonparallel"], "existence_conditions": ["two_nonparallel_lines"], "uniqueness_requirements": ["intersection_unique"], "generated_obligations": ["lines_nonparallel"]},
+    "foot_of_perpendicular": {"construction_id": "construction:foot_of_perpendicular:v1", "lean_template_id": "lean_template:foot_of_perpendicular:v1", "relation_class": "sufficient", "side_conditions": ["point_declared", "line_declared"], "existence_conditions": ["point_and_line"], "uniqueness_requirements": ["perpendicular_foot_unique"], "generated_obligations": ["line_declared"]},
+    "midpoint": {"construction_id": "construction:midpoint:v1", "lean_template_id": "lean_template:midpoint:v1", "relation_class": "exact", "side_conditions": ["endpoints_distinct"], "existence_conditions": ["two_distinct_endpoints"], "uniqueness_requirements": ["midpoint_unique"], "generated_obligations": ["endpoints_distinct"]},
+    "circle_with_center_through_point": {"construction_id": "construction:circle_with_center_through_point:v1", "lean_template_id": "lean_template:circle_from_points:v1", "relation_class": "exact", "side_conditions": ["center_point_distinct"], "existence_conditions": ["center_and_distinct_point"], "uniqueness_requirements": ["circle_unique_center_radius"], "generated_obligations": ["center_point_distinct"]}
   }
 }

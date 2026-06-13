@@ -2,12 +2,12 @@
   "schema_version": "1.0.0",
   "target_library": "LeanGeoSubsetV1:1.0.0",
   "mappings": {
-    "collinear": {"relation_class": "exact", "side_conditions": ["points_declared"], "unsupported_variants": ["set_collinearity"]},
-    "parallel": {"relation_class": "exact", "side_conditions": ["lines_declared", "nondegenerate_lines"], "unsupported_variants": ["directed_parallel_orientation"]},
-    "perpendicular": {"relation_class": "exact", "side_conditions": ["lines_declared", "nondegenerate_lines"], "unsupported_variants": ["angle_encoded_perpendicular"]},
-    "midpoint": {"relation_class": "exact", "side_conditions": ["points_declared", "endpoints_distinct"], "unsupported_variants": ["segment_object_midpoint"]},
-    "concyclic": {"relation_class": "exact", "side_conditions": ["points_declared"], "unsupported_variants": ["oriented_circle_arc"]},
-    "equal_length": {"relation_class": "exact", "side_conditions": ["segments_declared"], "unsupported_variants": ["norm_expression"]},
-    "equal_angle_supported_pattern": {"relation_class": "sufficient", "side_conditions": ["registered_angle_pattern"], "unsupported_variants": ["arbitrary_oriented_angle"]}
+    "collinear": {"canonical_predicate": "collinear", "relation_class": "exact", "permutation_policy": "unordered_points", "side_conditions": ["points_declared"], "degeneracy_policy": "allow_if_goal_context_declares_points", "orientation_policy": "not_applicable", "unsupported_variants": ["set_collinearity"]},
+    "parallel": {"canonical_predicate": "parallel", "relation_class": "exact", "permutation_policy": "symmetric_lines", "side_conditions": ["lines_declared", "nondegenerate_lines"], "degeneracy_policy": "requires_noncoincident_lines", "orientation_policy": "reject_directed_parallel_orientation", "unsupported_variants": ["directed_parallel_orientation"]},
+    "perpendicular": {"canonical_predicate": "perpendicular", "relation_class": "exact", "permutation_policy": "symmetric_lines", "side_conditions": ["lines_declared", "nondegenerate_lines"], "degeneracy_policy": "requires_noncoincident_lines", "orientation_policy": "not_applicable", "unsupported_variants": ["angle_encoded_perpendicular"]},
+    "midpoint": {"canonical_predicate": "midpoint", "relation_class": "exact", "permutation_policy": "ordered_midpoint_endpoints_symmetric", "side_conditions": ["points_declared", "endpoints_distinct"], "degeneracy_policy": "requires_distinct_endpoints", "orientation_policy": "not_applicable", "unsupported_variants": ["segment_object_midpoint"]},
+    "concyclic": {"canonical_predicate": "concyclic", "relation_class": "exact", "permutation_policy": "cyclic_points", "side_conditions": ["points_declared"], "degeneracy_policy": "requires_circle_witness_when_needed", "orientation_policy": "reject_oriented_circle_arc", "unsupported_variants": ["oriented_circle_arc"]},
+    "equal_length": {"canonical_predicate": "equal_length", "relation_class": "exact", "permutation_policy": "segment_endpoint_symmetric", "side_conditions": ["segments_declared"], "degeneracy_policy": "allow_zero_only_if_goal_context_allows", "orientation_policy": "not_applicable", "unsupported_variants": ["norm_expression"]},
+    "equal_angle_supported_pattern": {"canonical_predicate": "equal_angle_supported_pattern", "relation_class": "sufficient", "permutation_policy": "registered_angle_pattern_only", "side_conditions": ["registered_angle_pattern"], "degeneracy_policy": "requires_nonzero_angle_rays", "orientation_policy": "reject_arbitrary_oriented_angle", "unsupported_variants": ["arbitrary_oriented_angle"]}
   }
 }

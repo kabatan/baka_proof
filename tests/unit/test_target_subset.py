@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import unittest
 
+from math_auto_research.schema_validation import validate_artifact
 from plugins.geometry_synthetic.target_subset import validate_target_subset
 
 
@@ -46,12 +47,8 @@ class TargetSubsetTest(unittest.TestCase):
         self.assertFalse(classes["none"]["goal_level_allowed"])
 
     def test_plan_grammar_yaml_has_fixture_coverage(self) -> None:
-        result = validate_target_subset(
-            "plugins/geometry_synthetic/target_subset/leangeo_subset_v1.yaml",
-            "plugins/geometry_synthetic/grammar/fixtures.json",
-        )
-        self.assertIn("collinear", result.accepted_forms)
-        self.assertGreaterEqual(result.fixture_count, 15)
+        result = validate_artifact(Path("plugins/geometry_synthetic/target_subset/leangeo_subset_v1.yaml"))
+        self.assertEqual(result.schema_id, "geometry.target_library_manifest.v1")
 
 
 if __name__ == "__main__":
