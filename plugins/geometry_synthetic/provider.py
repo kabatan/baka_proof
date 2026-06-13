@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import importlib.metadata
 import json
+import os
 import sys
 import threading
 import time
@@ -170,8 +171,7 @@ class NewclidCompatibleSymbolicClosureAdapter(DummyEngineAdapter):
         seed = int(request.constraints.get("newclid_seed", self.seed))
         command = [
             sys.executable,
-            "-m",
-            "newclid",
+            "scripts/run_newclid_no_browser.py",
             "--output-dir",
             str(output_dir),
             "--saturate",
@@ -595,7 +595,12 @@ def _run_external_newclid_adapter(
 
     soft_timeout = step.resource_request.timeout_sec
     hard_timeout = float(request.constraints.get("symbolic_closure_hard_timeout_sec", 1.0))
-    process_report = run_process_group(command, timeout_sec=soft_timeout, hard_timeout_sec=hard_timeout)
+    process_report = run_process_group(
+        command,
+        timeout_sec=soft_timeout,
+        hard_timeout_sec=hard_timeout,
+        env=_browser_suppressed_env(),
+    )
     if process_report["timed_out"]:
         raw_output = _newclid_raw_output(
             request=request,
@@ -828,6 +833,13 @@ def _newclid_raw_output(
         "proof_use_status": "not_allowed",
     }
     return json.dumps(payload, sort_keys=True)
+
+
+def _browser_suppressed_env() -> dict[str, str]:
+    env = os.environ.copy()
+    env["BROWSER"] = f"{sys.executable} -c \"import sys; sys.exit(0)\""
+    env["PYTHONWARNINGS"] = env.get("PYTHONWARNINGS", "")
+    return env
 
 
 def _read_json_file(path: Path) -> Any:

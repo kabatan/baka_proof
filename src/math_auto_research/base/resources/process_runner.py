@@ -53,6 +53,7 @@ def run_process_group(
     hard_timeout_sec: float = 1.0,
     heartbeat_interval_sec: float = 0.05,
     cwd: Path | None = None,
+    env: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     creationflags = subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
     process = subprocess.Popen(
@@ -63,6 +64,7 @@ def run_process_group(
         text=True,
         creationflags=creationflags,
         start_new_session=(os.name != "nt"),
+        env=env,
     )
     heartbeat_count = 0
     deadline = time.monotonic() + timeout_sec

@@ -36,6 +36,17 @@ class ResourceGovernorTest(unittest.TestCase):
         self.assertEqual(report["exit_status"], "failed")
         self.assertEqual(report["timeout_status"], "none")
 
+    def test_process_group_accepts_environment_override(self) -> None:
+        from math_auto_research.base.resources.process_runner import run_process_group
+
+        report = run_process_group(
+            [sys.executable, "-c", "import os; print(os.environ.get('BROWSER'))"],
+            timeout_sec=10,
+            env={"BROWSER": "disabled-browser"},
+        )
+        self.assertEqual(report["returncode"], 0)
+        self.assertIn("disabled-browser", report["stdout"])
+
     def test_guarded_process_timeout_kills_process_group(self) -> None:
         governor = ResourceGovernor()
         request = ResourceRequest(component="checker", engine_role="none", budget="tiny", timeout_sec=0.05)

@@ -1,0 +1,474 @@
+{
+  "checked_blockers": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25"
+  ],
+  "checks": [
+    {
+      "blocker_id": "1",
+      "check_id": "release_blocker_01_base_spec_plan_approved_installed",
+      "details": {
+        "missing": [],
+        "paths": [
+          "docs\\ai\\changes\\geometry-lean-v0_3-full-rebase\\BASE_SPEC.md",
+          "docs\\ai\\changes\\geometry-lean-v0_3-full-rebase\\PLAN.md",
+          "docs\\ai\\changes\\geometry-lean-v0_3-full-rebase\\evidence\\user_approval.md",
+          "docs\\ai\\changes\\geometry-lean-v0_3-full-rebase\\evidence\\guardian_boundary_review.md"
+        ]
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "2",
+      "check_id": "release_blocker_02_old_specs_removed",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_old_specs_removed.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "old spec cleanup check passed\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "3",
+      "check_id": "release_blocker_03_package_layout",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_package_layout.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "package layout check passed: C:\\Users\\bakat\\work\\AI_math_research\\src\\math_auto_research\\__init__.py\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "4",
+      "check_id": "release_blocker_04_base_domain_contamination",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_domain_contamination.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "domain contamination check passed\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "5",
+      "check_id": "release_blocker_05_no_agent_cd_core_modes",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_no_loose_options.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "no loose options check passed\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "6",
+      "check_id": "release_blocker_06_selected_implementations_scalar",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_no_loose_options.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "no loose options check passed\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "7",
+      "check_id": "release_blocker_07_model_slot_boundary",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_model_hardcode.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "model hardcode check passed\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "8",
+      "check_id": "release_blocker_08_dependency_bootstrap_not_skipped",
+      "details": {
+        "command": [
+          "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+          "smoke-env-bootstrap"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "python scripts/probe_dependencies.py --json\n{\n  \"created_at\": \"2026-06-13T11:06:45.650869+00:00\",\n  \"engines\": [\n    {\n      \"checkpoint_hash\": null,\n      \"expected_commit\": null,\n      \"family\": \"newclid_compatible\",\n      \"install_status\": \"installed\",\n      \"role\": \"symbolic_closure\",\n      \"version_or_commit\": \"C:\\\\Users\\\\bakat\\\\miniforge3\\\\Scripts\\\\newclid.EXE\"\n    },\n    {\n      \"checkpoint_hash\": null,\n      \"expected_commit\": \"e8c4337e782548a4d54e6839558a32965a5a764e\",\n      \"family\": \"genesisgeo_compatible\",\n      \"install_status\": \"vendored\",\n      \"role\": \"construction_proposer\",\n      \"version_or_commit\": \"e8c4337e782548a4d54e6839558a32965a5a764e\"\n    },\n    {\n      \"checkpoint_hash\": null,\n      \"expected_commit\": \"d00925f07dc3174f91326386cb8e785e539a91a1\",\n      \"family\": \"tonggeometry_compatible\",\n      \"install_status\": \"vendored\",\n      \"role\": \"heavy_search\",\n      \"version_or_commit\": \"d00925f07dc3174f91326386cb8e785e539a91a1\"\n    }\n  ],\n  \"evidence_refs\": [\n    \"sha256:ffc109e3e22bc4bb2cfe3b4107d82f8f940790cc74b49ce3899ae28bb40e6dc7\"\n  ],\n  \"lake_version\": \"Lake version 5.0.0-1165156 (Lean version 4.15.0)\",\n  \"lean_version\": \"Lean (version 4.15.0, x86_64-w64-windows-gnu, commit 11651562caae, Release)\",\n  \"os\": \"Windows-11-10.0.26200-SP0\",\n  \"packages\": [\n    {\n      \"lock_ref\": \"sha256:d66310b4e2144b62886842f50e2dcaa12f51f61e32b486748647054148ba9cad\",\n      \"name\": \"pyproject.toml\",\n      \"source\": \"local\",\n      \"version_or_commit\": \"workspace\"\n    },\n    {\n      \"lock_ref\": \"sha256:ea3f3c3819151a8a62ea882e38a5f1f5412e07318f1d1f7a527ae8568059d382\",\n      \"name\": \"lakefile.lean\",\n      \"source\": \"local\",\n      \"version_or_commit\": \"workspace\"\n    }\n  ],\n  \"python_version\": \"3.12.11\",\n  \"report_id\": \"dependency_resolution:20260613T110645Z\",\n  \"schema_version\": \"1.0.0\",\n  \"unresolved\": []\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "9",
+      "check_id": "release_blocker_09_dependency_resolution_report",
+      "details": {
+        "missing": [],
+        "paths": [
+          "docs\\ai\\changes\\geometry-lean-v0_3-full-rebase\\evidence\\dependency_resolution.json"
+        ]
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "10",
+      "check_id": "release_blocker_10_target_not_silently_replaced",
+      "details": {
+        "command": [
+          "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+          "smoke-target-library-status"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "python -m math_auto_research.cli.report_target_library_status\n{\n  \"blockers\": [],\n  \"claim_ceiling\": \"target_subset_fixture_elaboration_only_until_reviewer_accepts_rc2\",\n  \"construction_mapping_ref\": \"sha256:c7577247cc68b0288d7157cdab38649f6a9730a69a2d1e8b6507fa515f2a2468\",\n  \"expected_lean_version\": \"4.15\",\n  \"install_status\": \"available\",\n  \"local_lean_version\": \"Lean (version 4.15.0, x86_64-w64-windows-gnu, commit 11651562caae, Release)\",\n  \"namespace_discovery_status\": \"subset_fixture_elaborated\",\n  \"namespace_map_ref\": \"sha256:196f30dc41efa425c51630b9b3434c8d3002f04da962686b5e5bb232b4eb603a\",\n  \"native_windows_full_corpus_status\": \"blocked_by_windows_archive\",\n  \"native_windows_install_status\": \"available\",\n  \"predicate_mapping_ref\": \"sha256:5823fbb3f9a798f1da381b82b81207207ba5cd04d81c5626957512fdc9ee77a3\",\n  \"relation_mapping_ref\": \"sha256:eb2619b6c4bbd932acb6e05117901da8423adc991391c42a0add5363b379d9a4\",\n  \"report_id\": \"target_library_status:1781348812080295700\",\n  \"schema_version\": \"1.0.0\",\n  \"source_dependency\": \"LeanGeo-compatible\",\n  \"source_url\": \"https://github.com/project-numina/LeanGeo.git\",\n  \"target_library_id\": \"LeanGeoSubsetV1\",\n  \"theorem_discovery_status\": \"subset_fixture_elaborated\",\n  \"theorem_grammar_ref\": \"sha256:c6310eb2fb57bc20a4fe73540e2f8c0ee6c8b455cfbb20f212dd571d2bbb86ab\",\n  \"version_or_commit\": \"9212b89ef0cb08adb049b32f6332a1f2b9e551ab\",\n  \"wsl_install_status\": \"available\",\n  \"wsl_lean_version\": \"Lean (version 4.15.0, x86_64-unknown-linux-gnu, commit 11651562caae, Release)\",\n  \"wsl_subset_elaboration_status\": \"available\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "11",
+      "check_id": "release_blocker_11_real_provider_smoke_evidence",
+      "details": {
+        "commands": [
+          {
+            "blocker_id": "11",
+            "check_id": "real_smoke_command_1",
+            "details": {
+              "command": [
+                "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+                "smoke-real-newclid"
+              ],
+              "returncode": 0,
+              "stderr_tail": "",
+              "stdout_tail": " \"provider_class\": \"CompositeSyntheticGeometryProviderV1\",\n    \"provider_id\": \"geometry_solver_provider:composite_synthetic:v1\",\n    \"provider_version\": \"v1\",\n    \"raw_output_hashes\": [\n      \"91068d0e73959fc1\"\n    ],\n    \"real_integration_flag\": true,\n    \"request_id\": \"geometry_request:real_newclid_smoke\",\n    \"resource_usage_refs\": [\n      \"resource_usage:geometry_request:real_newclid_smoke:symbolic_closure:228f36267403a526\"\n    ],\n    \"schema_version\": \"1.0.0\",\n    \"side_condition_loss_count\": 0,\n    \"unsupported_rule_count\": 0\n  },\n  \"resource_usage_reports\": [\n    {\n      \"admission_status\": \"admitted\",\n      \"budget\": \"small\",\n      \"component\": \"geometry_solver_provider\",\n      \"cpu_time_sec\": 0,\n      \"ended_at\": \"1781348817.1302373\",\n      \"engine_role\": \"symbolic_closure\",\n      \"exit_status\": \"completed\",\n      \"gpu_vram_peak_mb\": null,\n      \"hard_kill_executed\": false,\n      \"heartbeat_count\": 93,\n      \"logs_ref\": \"external_newclid_stdout\",\n      \"orphan_check_passed\": true,\n      \"peak_rss_mb\": 0,\n      \"process_id\": \"45668\",\n      \"queue_wait_sec\": 0,\n      \"report_id\": \"resource_usage:geometry_request:real_newclid_smoke:symbolic_closure:228f36267403a526\",\n      \"role\": \"symbolic_closure\",\n      \"run_id\": \"geometry_request:real_newclid_smoke\",\n      \"schema_version\": \"1.0.0\",\n      \"started_at\": \"1781348812.4065762\",\n      \"timeout_status\": \"none\",\n      \"wall_time_sec\": 4.718\n    }\n  ],\n  \"result\": {\n    \"construction_candidate_refs\": [],\n    \"diagnostic_refs\": [\n      \"diagnostic:geometry_request:real_newclid_smoke:symbolic_closure:newclid_real\"\n    ],\n    \"geotrace_ref\": \"geotrace:geometry_request:real_newclid_smoke:symbolic_closure:newclid_real\",\n    \"proof_use_status\": \"not_allowed\",\n    \"provider_run_manifest_ref\": \"provider_run_manifest:6fade6ec46523c05\",\n    \"request_id\": \"geometry_request:real_newclid_smoke\",\n    \"result_id\": \"provider_result:geometry_request:real_newclid_smoke\",\n    \"schema_version\": \"1.0.0\",\n    \"status\": \"partial\"\n  }\n}\n"
+            },
+            "status": "passed"
+          },
+          {
+            "blocker_id": "11",
+            "check_id": "real_smoke_command_2",
+            "details": {
+              "command": [
+                "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+                "smoke-real-genesisgeo"
+              ],
+              "returncode": 0,
+              "stderr_tail": "",
+              "stdout_tail": "assed\": true,\n      \"peak_rss_mb\": 0,\n      \"process_id\": \"6936\",\n      \"queue_wait_sec\": 0,\n      \"report_id\": \"resource_usage:geometry_request:real_genesisgeo_smoke:construction_proposer:b54327b8852b561f\",\n      \"role\": \"construction_proposer\",\n      \"run_id\": \"geometry_request:real_genesisgeo_smoke\",\n      \"schema_version\": \"1.0.0\",\n      \"started_at\": \"1781348817.4223604\",\n      \"timeout_status\": \"none\",\n      \"wall_time_sec\": 0.203\n    },\n    {\n      \"admission_status\": \"admitted\",\n      \"budget\": \"medium\",\n      \"component\": \"geometry_solver_provider\",\n      \"cpu_time_sec\": 0,\n      \"ended_at\": \"1781348817.63717\",\n      \"engine_role\": \"symbolic_closure\",\n      \"exit_status\": \"completed\",\n      \"gpu_vram_peak_mb\": null,\n      \"hard_kill_executed\": false,\n      \"heartbeat_count\": 1,\n      \"logs_ref\": \"inline_dummy_adapter\",\n      \"orphan_check_passed\": true,\n      \"peak_rss_mb\": 0,\n      \"process_id\": \"\",\n      \"queue_wait_sec\": 0,\n      \"report_id\": \"resource_usage:geometry_request:real_genesisgeo_smoke:symbolic_closure:447e2586808a2f1c\",\n      \"role\": \"symbolic_closure\",\n      \"run_id\": \"geometry_request:real_genesisgeo_smoke\",\n      \"schema_version\": \"1.0.0\",\n      \"started_at\": \"1781348817.63717\",\n      \"timeout_status\": \"none\",\n      \"wall_time_sec\": 0.0\n    }\n  ],\n  \"result\": {\n    \"construction_candidate_refs\": [],\n    \"diagnostic_refs\": [\n      \"diagnostic:geometry_request:real_genesisgeo_smoke:symbolic_closure:newclid_fixture\",\n      \"diagnostic:geometry_request:real_genesisgeo_smoke:construction_proposer:genesisgeo_real\",\n      \"diagnostic:geometry_request:real_genesisgeo_smoke:symbolic_closure:newclid_fixture\"\n    ],\n    \"geotrace_ref\": null,\n    \"proof_use_status\": \"not_allowed\",\n    \"provider_run_manifest_ref\": \"provider_run_manifest:3300dbb2483be058\",\n    \"request_id\": \"geometry_request:real_genesisgeo_smoke\",\n    \"result_id\": \"provider_result:geometry_request:real_genesisgeo_smoke\",\n    \"schema_version\": \"1.0.0\",\n    \"status\": \"unsupported\"\n  }\n}\n"
+            },
+            "status": "passed"
+          },
+          {
+            "blocker_id": "11",
+            "check_id": "real_smoke_command_3",
+            "details": {
+              "command": [
+                "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+                "smoke-real-tonggeometry"
+              ],
+              "returncode": 0,
+              "stderr_tail": "",
+              "stdout_tail": "hetic:v1\",\n      \"provider_version\": \"v1\",\n      \"raw_output_hashes\": [\n        \"9cb446b7e294ea9b\"\n      ],\n      \"real_integration_flag\": false,\n      \"request_id\": \"geometry_request:real_tonggeometry_smoke:medium\",\n      \"resource_usage_refs\": [\n        \"resource_usage:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:fd22ad170dcb0dc4\"\n      ],\n      \"schema_version\": \"1.0.0\",\n      \"side_condition_loss_count\": 0,\n      \"unsupported_rule_count\": 0\n    },\n    \"resource_usage_reports\": [\n      {\n        \"admission_status\": \"admitted\",\n        \"budget\": \"medium\",\n        \"component\": \"geometry_solver_provider\",\n        \"cpu_time_sec\": 0,\n        \"ended_at\": \"1781348817.9065535\",\n        \"engine_role\": \"symbolic_closure\",\n        \"exit_status\": \"completed\",\n        \"gpu_vram_peak_mb\": null,\n        \"hard_kill_executed\": false,\n        \"heartbeat_count\": 1,\n        \"logs_ref\": \"inline_dummy_adapter\",\n        \"orphan_check_passed\": true,\n        \"peak_rss_mb\": 0,\n        \"process_id\": \"\",\n        \"queue_wait_sec\": 0,\n        \"report_id\": \"resource_usage:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:fd22ad170dcb0dc4\",\n        \"role\": \"symbolic_closure\",\n        \"run_id\": \"geometry_request:real_tonggeometry_smoke:medium\",\n        \"schema_version\": \"1.0.0\",\n        \"started_at\": \"1781348817.9065535\",\n        \"timeout_status\": \"none\",\n        \"wall_time_sec\": 0.0\n      }\n    ],\n    \"result\": {\n      \"construction_candidate_refs\": [],\n      \"diagnostic_refs\": [\n        \"diagnostic:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:newclid_fixture\"\n      ],\n      \"geotrace_ref\": null,\n      \"proof_use_status\": \"not_allowed\",\n      \"provider_run_manifest_ref\": \"provider_run_manifest:e29d483540941b63\",\n      \"request_id\": \"geometry_request:real_tonggeometry_smoke:medium\",\n      \"result_id\": \"provider_result:geometry_request:real_tonggeometry_smoke:medium\",\n      \"schema_version\": \"1.0.0\",\n      \"status\": \"unsupported\"\n    }\n  }\n}\n"
+            },
+            "status": "passed"
+          }
+        ],
+        "evidence": [
+          "docs\\ai\\changes\\geometry-lean-v0_3-full-rebase\\evidence\\t23_newclid_adapter.md",
+          "docs\\ai\\changes\\geometry-lean-v0_3-full-rebase\\evidence\\t24_genesisgeo_adapter.md",
+          "docs\\ai\\changes\\geometry-lean-v0_3-full-rebase\\evidence\\t25_tonggeometry_adapter.md"
+        ],
+        "missing_evidence": []
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "12",
+      "check_id": "release_blocker_12_no_fixture_release_config",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_no_fixture_release.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "no fixture release check passed\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "13",
+      "check_id": "release_blocker_13_resource_governance_for_provider",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts\\check_resource_bypass.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "resource bypass check passed\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "14",
+      "check_id": "release_blocker_14_heavy_search_budget_guard",
+      "details": {
+        "command": [
+          "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+          "test-unit",
+          "TEST_FILTER=composite_provider"
+        ],
+        "returncode": 0,
+        "stderr_tail": "..............\n----------------------------------------------------------------------\nRan 14 tests in 16.180s\n\nOK\n",
+        "stdout_tail": "python -m unittest discover -s tests/unit -p \"*composite_provider*.py\"\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "15",
+      "check_id": "release_blocker_15_raw_output_cannot_close",
+      "details": {
+        "command": [
+          "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+          "test-unit",
+          "TEST_FILTER=geometry_bridge"
+        ],
+        "returncode": 0,
+        "stderr_tail": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.001s\n\nOK\n",
+        "stdout_tail": "python -m unittest discover -s tests/unit -p \"*geometry_bridge*.py\"\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "16",
+      "check_id": "release_blocker_16_raw_dsl_no_goal_proof_use",
+      "details": {
+        "command": [
+          "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+          "test-unit",
+          "TEST_FILTER=geometry_extraction"
+        ],
+        "returncode": 0,
+        "stderr_tail": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.003s\n\nOK\n",
+        "stdout_tail": "python -m unittest discover -s tests/unit -p \"*geometry_extraction*.py\"\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "17",
+      "check_id": "release_blocker_17_rule_side_conditions",
+      "details": {
+        "command": [
+          "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+          "test-unit",
+          "TEST_FILTER=geotrace_rule_registry"
+        ],
+        "returncode": 0,
+        "stderr_tail": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.021s\n\nOK\n",
+        "stdout_tail": "python -m unittest discover -s tests/unit -p \"*geotrace_rule_registry*.py\"\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "18",
+      "check_id": "release_blocker_18_missing_side_condition_blocks",
+      "details": {
+        "command": [
+          "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+          "test-unit",
+          "TEST_FILTER=trace_compiler"
+        ],
+        "returncode": 0,
+        "stderr_tail": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.017s\n\nOK\n",
+        "stdout_tail": "python -m unittest discover -s tests/unit -p \"*trace_compiler*.py\"\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "19",
+      "check_id": "release_blocker_19_unsupported_trace_not_success",
+      "details": {
+        "command": [
+          "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+          "test-unit",
+          "TEST_FILTER=trace_compiler"
+        ],
+        "returncode": 0,
+        "stderr_tail": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.008s\n\nOK\n",
+        "stdout_tail": "python -m unittest discover -s tests/unit -p \"*trace_compiler*.py\"\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "20",
+      "check_id": "release_blocker_20_construction_rationale_not_proof",
+      "details": {
+        "command": [
+          "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+          "test-unit",
+          "TEST_FILTER=construction_compiler"
+        ],
+        "returncode": 0,
+        "stderr_tail": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.028s\n\nOK\n",
+        "stdout_tail": "python -m unittest discover -s tests/unit -p \"*construction_compiler*.py\"\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "21",
+      "check_id": "release_blocker_21_protected_theorem_guard",
+      "details": {
+        "command": [
+          "C:\\msys64\\ucrt64\\bin\\mingw32-make.EXE",
+          "test-unit",
+          "TEST_FILTER=final_verify"
+        ],
+        "returncode": 0,
+        "stderr_tail": "........\n----------------------------------------------------------------------\nRan 8 tests in 1.906s\n\nOK\n",
+        "stdout_tail": "python -m unittest discover -s tests/unit -p \"*final_verify*.py\"\n"
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "22",
+      "check_id": "release_blocker_22_run_reports_present",
+      "details": {
+        "missing": [],
+        "required": [
+          "runs\\geometry_level2_pilot\\provider_run_manifest.json",
+          "runs\\geometry_level2_pilot\\resource_usage_report_0.json",
+          "docs\\ai\\changes\\geometry-lean-v0_3-full-rebase\\evidence\\dependency_resolution.json",
+          "runs\\geometry_level2_pilot\\standard_loop_result.json",
+          "runs\\geometry_level2_pilot\\reproducibility_report.json"
+        ]
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "23",
+      "check_id": "release_blocker_23_level2_pilot_corpus_not_fixture_only",
+      "details": {
+        "fixture_terms": [],
+        "missing": [],
+        "paths": [
+          "benchmarks\\geometry\\geometry_level2_pilot.jsonl",
+          "configs\\benchmark_runs\\geometry_level2_pilot.yaml"
+        ]
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "24",
+      "check_id": "release_blocker_24_level2_matrix_run_replay",
+      "details": {
+        "matrix": {
+          "blocker_id": "24",
+          "check_id": "level2_matrix_run",
+          "details": {
+            "command": [
+              "C:\\Users\\bakat\\miniforge3\\python.exe",
+              "scripts/run_geometry_level2_matrix.py",
+              "--config",
+              "configs\\benchmark_runs\\geometry_level2_pilot.yaml"
+            ],
+            "returncode": 0,
+            "stderr_tail": "",
+            "stdout_tail": "claim_ceiling\": \"fixture_level_matrix_not_level2_advantage_claim\",\n    \"comparison\": {\n      \"claim\": \"fixture_count_only\",\n      \"geometry_enabled_minus_controller_no_geometry_final_count\": 1\n    },\n    \"matrix_id\": \"geometry_level2_pilot\",\n    \"run_id\": \"geometry_level2_pilot\",\n    \"schema_version\": \"1.0.0\",\n    \"status\": \"completed\"\n  },\n  \"reproducibility_report\": {\n    \"artifact_refs\": [\n      \"sha256:14fe7f3058f4f70241aefb9a5c854b3f49af5ff595aa2d8c65bc6082099e58f0\",\n      \"sha256:9ddc4429118bcd8dd5dd5a769a261a94b0dccf8728c3b37cd4dc37419ade4118\",\n      \"sha256:1eb7bb224b3fbb5b4fab11c012fa43cf379c8bb29d2d1eb15fa0bec41515634a\",\n      \"sha256:6815449775ef62d8d3ecd26865e84f299bcb5e3283fb9f12abad1adce1532221\",\n      \"sha256:fcbd208d3955d3f5d4ab67c1e45293d776c51c4dcfaf4a987ae49d418e57ab56\",\n      \"sha256:6257149e59df695f7073500e017cf9f62efffb959e5498abc881ff8d48c404ec\",\n      \"sha256:2bdb9b2285c2dcb2e2cf5a4da7579414cc8b5a8dbb403328048eca72a67c44f9\",\n      \"sha256:f8dba231a00540b83abeea8672602a76b14f5ff1990c120139dafebabb6c85ad\",\n      \"sha256:adf9b558e1288620926d37c11cd7452522b3a62a3837ab40f2bf1c76c881169d\",\n      \"sha256:1e872de25ba39552f4fed5214296d63de612a73861df2a753f10e927fb677d6d\",\n      \"sha256:2ee4fbfb2b86b8976447ba4d48a4c615ab3d80185eb55ac89a82b53be008270e\",\n      \"sha256:93f12811205db924cc2afcf53db53fb3b748bfe1911e258178203497240d39ba\",\n      \"sha256:5aef22fe678c48abc33b78f82da03f766c64e5c95b6befea08b09e45a14f919c\"\n    ],\n    \"missing_components\": [],\n    \"replay_status\": \"restored\",\n    \"report_id\": \"reproducibility_report:geometry_level2_pilot\",\n    \"restored_components\": [\n      \"selected_implementations\",\n      \"provider_manifest\",\n      \"controller_strategy_log\",\n      \"final_verification_state\",\n      \"evaluation_funnel\",\n      \"level2_run_matrix\"\n    ],\n    \"run_id\": \"geometry_level2_pilot\",\n    \"schema_version\": \"1.0.0\",\n    \"selected_implementations_ref\": \"selected_implementations:geometry_default\"\n  },\n  \"run_dir\": \"runs\\\\geometry_level2_pilot\"\n}\n"
+          },
+          "status": "passed"
+        },
+        "replay": {
+          "blocker_id": "24",
+          "check_id": "level2_matrix_replay",
+          "details": {
+            "command": [
+              "C:\\Users\\bakat\\miniforge3\\python.exe",
+              "scripts/generate_repro_report.py",
+              "--run-dir",
+              "runs\\geometry_level2_pilot"
+            ],
+            "returncode": 0,
+            "stderr_tail": "",
+            "stdout_tail": "{\n  \"artifact_refs\": [\n    \"sha256:14fe7f3058f4f70241aefb9a5c854b3f49af5ff595aa2d8c65bc6082099e58f0\",\n    \"sha256:9ddc4429118bcd8dd5dd5a769a261a94b0dccf8728c3b37cd4dc37419ade4118\",\n    \"sha256:1eb7bb224b3fbb5b4fab11c012fa43cf379c8bb29d2d1eb15fa0bec41515634a\",\n    \"sha256:6815449775ef62d8d3ecd26865e84f299bcb5e3283fb9f12abad1adce1532221\",\n    \"sha256:fcbd208d3955d3f5d4ab67c1e45293d776c51c4dcfaf4a987ae49d418e57ab56\",\n    \"sha256:6257149e59df695f7073500e017cf9f62efffb959e5498abc881ff8d48c404ec\",\n    \"sha256:2bdb9b2285c2dcb2e2cf5a4da7579414cc8b5a8dbb403328048eca72a67c44f9\",\n    \"sha256:f8dba231a00540b83abeea8672602a76b14f5ff1990c120139dafebabb6c85ad\",\n    \"sha256:adf9b558e1288620926d37c11cd7452522b3a62a3837ab40f2bf1c76c881169d\",\n    \"sha256:1e872de25ba39552f4fed5214296d63de612a73861df2a753f10e927fb677d6d\",\n    \"sha256:2ee4fbfb2b86b8976447ba4d48a4c615ab3d80185eb55ac89a82b53be008270e\",\n    \"sha256:93f12811205db924cc2afcf53db53fb3b748bfe1911e258178203497240d39ba\",\n    \"sha256:5aef22fe678c48abc33b78f82da03f766c64e5c95b6befea08b09e45a14f919c\"\n  ],\n  \"missing_components\": [],\n  \"replay_status\": \"restored\",\n  \"report_id\": \"reproducibility_report:geometry_level2_pilot\",\n  \"restored_components\": [\n    \"selected_implementations\",\n    \"provider_manifest\",\n    \"controller_strategy_log\",\n    \"final_verification_state\",\n    \"evaluation_funnel\",\n    \"level2_run_matrix\"\n  ],\n  \"run_id\": \"geometry_level2_pilot\",\n  \"schema_version\": \"1.0.0\",\n  \"selected_implementations_ref\": \"selected_implementations:geometry_default\"\n}\n"
+          },
+          "status": "passed"
+        }
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "25",
+      "check_id": "release_blocker_25_closure_claims_do_not_exceed_evidence",
+      "details": {
+        "excessive_claim_paths": [],
+        "scanned": [
+          "docs\\ai\\ACTIVE_CONTEXT.md",
+          "docs\\ai\\changes\\geometry-lean-v0_3-full-rebase\\CLOSURE.md"
+        ]
+      },
+      "status": "passed"
+    },
+    {
+      "blocker_id": "command_surface",
+      "check_id": "release_command_surface_ablation_matrix",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/run_geometry_level2_matrix.py",
+          "--config",
+          "configs/benchmark_runs/geometry_level2_ablation.yaml"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": " \"fixture_level_matrix_not_level2_advantage_claim\",\n    \"comparison\": {\n      \"claim\": \"fixture_count_only\",\n      \"geometry_enabled_minus_controller_no_geometry_final_count\": 1\n    },\n    \"matrix_id\": \"geometry_level2_ablation\",\n    \"run_id\": \"geometry_level2_ablation\",\n    \"schema_version\": \"1.0.0\",\n    \"status\": \"completed\"\n  },\n  \"reproducibility_report\": {\n    \"artifact_refs\": [\n      \"sha256:b2967c4a4bf6be6146d8cdf33de5d5b8d5c5a8fb0aaafaefb0156d73f75bc015\",\n      \"sha256:9ddc4429118bcd8dd5dd5a769a261a94b0dccf8728c3b37cd4dc37419ade4118\",\n      \"sha256:bf749f8732f69645433174ed3f46904f0211227275ff33bd908946e554f39686\",\n      \"sha256:8d5a3e425dd3e1bf62360fe5d7d31b9208f45f1b9e808eac6a5a99f7cdf60edb\",\n      \"sha256:fcbd208d3955d3f5d4ab67c1e45293d776c51c4dcfaf4a987ae49d418e57ab56\",\n      \"sha256:f51319bef723ee8cc524e6fa661a5eab3de58779f4699261d9c099bdc0414fe5\",\n      \"sha256:f0acfdcbd3c1c10d371f3c5ca12d7044ac9542d0c332133cea9c7658a0b5096a\",\n      \"sha256:a7af0635e945af976a7eccd11e78ac6872a3c051f873b320bd0f3d54a8ac3947\",\n      \"sha256:daf77a9177cacc96ac2b733bc5c99d978eb501a54f04d81e88a0296a067962df\",\n      \"sha256:2ef49e9f1de74dac1913defebdea3bbaea5682c0b772b7e1af3ee9b1264c734f\",\n      \"sha256:3c0bb70accfd397f3c880a327f3d61099875d655d60d1b330bac95c453408ead\",\n      \"sha256:bd792e57e67e568acbcffe11d34fa567f56a5ea5df900663be461ec8f1ed4083\",\n      \"sha256:46af3b22a8601c4c9f058d4560d65c4ba860391b8e63e3bb22c88f4aca4577fe\"\n    ],\n    \"missing_components\": [],\n    \"replay_status\": \"restored\",\n    \"report_id\": \"reproducibility_report:geometry_level2_ablation\",\n    \"restored_components\": [\n      \"selected_implementations\",\n      \"provider_manifest\",\n      \"controller_strategy_log\",\n      \"final_verification_state\",\n      \"evaluation_funnel\",\n      \"level2_run_matrix\"\n    ],\n    \"run_id\": \"geometry_level2_ablation\",\n    \"schema_version\": \"1.0.0\",\n    \"selected_implementations_ref\": \"selected_implementations:geometry_default\"\n  },\n  \"run_dir\": \"runs\\\\geometry_level2_ablation\"\n}\n"
+      },
+      "status": "passed"
+    }
+  ],
+  "claim_ceiling": "release_acceptance_checks_passed_not_final_guardian_review",
+  "config_ref": "configs\\benchmark_runs\\geometry_level2_pilot.yaml",
+  "open_blockers": [],
+  "report_id": "release_acceptance:1781348844",
+  "schema_version": "1.0.0",
+  "status": "passed"
+}

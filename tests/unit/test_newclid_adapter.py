@@ -49,6 +49,16 @@ class NewclidAdapterTest(unittest.TestCase):
         self.assertEqual(real_input["status"], "supported")
         self.assertIn("coll", real_input["jgex_problem"])
 
+    def test_real_newclid_command_uses_no_browser_wrapper(self) -> None:
+        adapter = NewclidCompatibleSymbolicClosureAdapter()
+        command, _ = adapter.external_command(
+            request_for({"construction_needed": False, "claim_spec": claim_spec_fixture()}),
+            None,  # type: ignore[arg-type]
+            __import__("pathlib").Path("runs/newclid_no_browser_test"),
+        )
+        self.assertIn("scripts/run_newclid_no_browser.py", command)
+        self.assertNotIn("-m", command)
+
     def test_unsupported_claim_returns_blocker_diagnostic(self) -> None:
         unsupported = claim_spec_fixture()
         unsupported["target"] = {"form": "parallel", "raw": "Parallel l m"}
