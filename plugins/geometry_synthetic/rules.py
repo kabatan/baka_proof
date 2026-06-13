@@ -11,6 +11,7 @@ class GeoTraceStep:
     premises: tuple[str, ...]
     conclusion: str
     side_condition_refs: tuple[str, ...]
+    source_raw_ref: str = "sha256:unknown_raw_trace"
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -25,6 +26,9 @@ class GeoTraceV1:
     rule_refs: tuple[str, ...]
     side_condition_refs: tuple[str, ...]
     proof_use_status: str = "not_allowed"
+    source_provider_result: str = "sha256:unknown_provider_result"
+    target_library: str = "LeanGeoSubsetV1"
+    unsupported_steps: tuple[dict[str, Any], ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         payload = asdict(self)
@@ -44,9 +48,15 @@ class GeometryRuleContract:
     generated_obligations: tuple[str, ...]
     unsupported_variants: tuple[str, ...]
     fixtures: dict[str, tuple[str, ...]]
+    provider_trace_patterns: tuple[str, ...] = ()
+    lean_template_id: str = ""
+    auto_discharge_policy: str = "blocker"
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        payload = asdict(self)
+        if not payload["lean_template_id"]:
+            payload["lean_template_id"] = self.lean_lemma_or_template
+        return payload
 
 
 @dataclass(frozen=True)
@@ -93,7 +103,11 @@ def default_rule_registry() -> RuleRegistryV1:
                 "positive": ("Coll A B C -> Coll A B C",),
                 "negative": ("arbitrary_mathlib_expression",),
                 "ambiguous": ("Collinear? A B C",),
+                "mutation": ("Coll A B C -> Perp A B C",),
             },
+            provider_trace_patterns=("coll", "collinear"),
+            lean_template_id="LeanGeo.Abbre.Coll",
+            auto_discharge_policy="context_lookup",
         ),
         GeometryRuleContract(
             schema_version="1.0.0",
@@ -109,7 +123,11 @@ def default_rule_registry() -> RuleRegistryV1:
                 "positive": ("MidPoint A P B -> Coll A P B",),
                 "negative": ("MidPoint segment_object",),
                 "ambiguous": ("midpoint without endpoint distinctness",),
+                "mutation": ("MidPoint A P B -> parallel A P",),
             },
+            provider_trace_patterns=("midpoint",),
+            lean_template_id="LeanGeo.Abbre.MidPoint",
+            auto_discharge_policy="proof_worker",
         ),
         GeometryRuleContract(
             schema_version="1.0.0",
@@ -125,7 +143,11 @@ def default_rule_registry() -> RuleRegistryV1:
                 "positive": ("parallel L M and perpendicular L N -> perpendicular M N",),
                 "negative": ("directed parallel orientation",),
                 "ambiguous": ("parallel transfer without line declarations",),
+                "mutation": ("parallel L M -> cyclic L M",),
             },
+            provider_trace_patterns=("parallel", "perpendicular"),
+            lean_template_id="LeanGeo.Abbre.parallel_transfer_fixture",
+            auto_discharge_policy="blocker",
         ),
         GeometryRuleContract(
             schema_version="1.0.0",
@@ -141,7 +163,11 @@ def default_rule_registry() -> RuleRegistryV1:
                 "positive": ("Cyclic A B C D -> registered equal angle",),
                 "negative": ("oriented arc angle",),
                 "ambiguous": ("cyclic without declared points",),
+                "mutation": ("Cyclic A B C D -> MidPoint A B C",),
             },
+            provider_trace_patterns=("cyclic", "concyclic"),
+            lean_template_id="LeanGeo.Abbre.Cyclic",
+            auto_discharge_policy="proof_worker",
         ),
         GeometryRuleContract(
             schema_version="1.0.0",
@@ -157,7 +183,11 @@ def default_rule_registry() -> RuleRegistryV1:
                 "positive": ("MidPoint A P B -> |A-P| = |P-B|",),
                 "negative": ("arbitrary norm expression",),
                 "ambiguous": ("equal length without midpoint orientation",),
+                "mutation": ("MidPoint A P B -> perpendicular A P",),
             },
+            provider_trace_patterns=("midpoint", "equal_length"),
+            lean_template_id="LeanGeo.Abbre.MidPoint",
+            auto_discharge_policy="proof_worker",
         ),
         GeometryRuleContract(
             schema_version="1.0.0",
@@ -173,7 +203,11 @@ def default_rule_registry() -> RuleRegistryV1:
                 "positive": ("parallel L M with registered pattern -> equal angle",),
                 "negative": ("arbitrary oriented angle",),
                 "ambiguous": ("angle transfer without registered pattern",),
+                "mutation": ("parallel L M -> equal_length L M",),
             },
+            provider_trace_patterns=("parallel", "angle"),
+            lean_template_id="LeanGeo.Abbre.angle_transfer_fixture",
+            auto_discharge_policy="blocker",
         ),
         GeometryRuleContract(
             schema_version="1.0.0",
@@ -189,13 +223,17 @@ def default_rule_registry() -> RuleRegistryV1:
                 "positive": ("distinct A B -> line_from_points A B",),
                 "negative": ("arbitrary free point",),
                 "ambiguous": ("line construction without distinct points",),
+                "mutation": ("distinct A B -> circle_from_points A B",),
             },
+            provider_trace_patterns=("line_through_two_distinct_points",),
+            lean_template_id="LeanGeo.Abbre.line_from_points",
+            auto_discharge_policy="proof_worker",
         ),
     )
     return RuleRegistryV1(
         schema_version="1.0.0",
-        registry_id="RuleRegistryV1:LeanGeoSubsetV1:1.0.0",
-        target_library="LeanGeoSubsetV1:1.0.0",
+        registry_id="RuleRegistryV1:LeanGeoSubsetV1:v1",
+        target_library="LeanGeoSubsetV1",
         rules=rules,
         supported_rule_families=tuple(rule.rule_family for rule in rules),
         release_blockers=(),
@@ -204,7 +242,7 @@ def default_rule_registry() -> RuleRegistryV1:
 
 def validate_rule_registry(registry: RuleRegistryV1) -> list[str]:
     errors: list[str] = []
-    if registry.target_library != "LeanGeoSubsetV1:1.0.0":
+    if registry.target_library != "LeanGeoSubsetV1":
         errors.append("target_library_not_LeanGeoSubsetV1")
     seen: set[str] = set()
     for rule in registry.rules:
@@ -213,11 +251,17 @@ def validate_rule_registry(registry: RuleRegistryV1) -> list[str]:
         seen.add(rule.rule_id)
         if not rule.required_side_conditions:
             errors.append(f"missing_side_conditions:{rule.rule_id}")
-        for fixture_kind in ("positive", "negative", "ambiguous"):
+        for fixture_kind in ("positive", "negative", "ambiguous", "mutation"):
             if not rule.fixtures.get(fixture_kind):
                 errors.append(f"missing_{fixture_kind}_fixtures:{rule.rule_id}")
         if not rule.lean_lemma_or_template:
             errors.append(f"missing_lean_template:{rule.rule_id}")
+        if not rule.to_dict()["lean_template_id"]:
+            errors.append(f"missing_lean_template_id:{rule.rule_id}")
+        if not rule.provider_trace_patterns:
+            errors.append(f"missing_provider_trace_patterns:{rule.rule_id}")
+        if rule.auto_discharge_policy not in {"context_lookup", "simple_tactic", "proof_worker", "blocker"}:
+            errors.append(f"invalid_auto_discharge_policy:{rule.rule_id}")
     return errors
 
 

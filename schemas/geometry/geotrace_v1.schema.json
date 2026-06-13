@@ -4,34 +4,41 @@
   "required": [
     "schema_version",
     "trace_id",
+    "source_provider_result",
+    "target_library",
     "claim_spec_ref",
     "steps",
     "rule_refs",
     "side_condition_refs",
-    "proof_use_status"
+    "proof_use_status",
+    "unsupported_steps"
   ],
   "properties": {
     "schema_version": {"type": "string", "enum": ["1.0.0"]},
     "trace_id": {"type": "string"},
+    "source_provider_result": {"type": "string"},
+    "target_library": {"type": "string", "enum": ["LeanGeoSubsetV1"]},
     "claim_spec_ref": {"type": "string"},
     "steps": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["step_id", "rule_id", "premises", "conclusion", "side_condition_refs"],
+        "required": ["step_id", "rule_id", "premises", "conclusion", "side_condition_refs", "source_raw_ref"],
         "properties": {
           "step_id": {"type": "string"},
           "rule_id": {"type": "string"},
           "premises": {"type": "array", "items": {"type": "string"}},
           "conclusion": {"type": "string"},
-          "side_condition_refs": {"type": "array", "items": {"type": "string"}}
+          "side_condition_refs": {"type": "array", "items": {"type": "string"}},
+          "source_raw_ref": {"type": "string"}
         },
         "additionalProperties": false
       }
     },
     "rule_refs": {"type": "array", "items": {"type": "string"}},
     "side_condition_refs": {"type": "array", "items": {"type": "string"}},
-    "proof_use_status": {"type": "string", "enum": ["not_allowed", "lean_patch_candidate"]}
+    "proof_use_status": {"type": "string", "enum": ["not_allowed", "lean_patch_candidate"]},
+    "unsupported_steps": {"type": "array", "items": {"type": "object"}}
   },
   "additionalProperties": false
 }

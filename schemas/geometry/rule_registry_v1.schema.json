@@ -12,7 +12,7 @@
   "properties": {
     "schema_version": {"type": "string", "enum": ["1.0.0"]},
     "registry_id": {"type": "string", "pattern": "^RuleRegistryV1:.*"},
-    "target_library": {"type": "string", "enum": ["LeanGeoSubsetV1:1.0.0"]},
+    "target_library": {"type": "string", "enum": ["LeanGeoSubsetV1"]},
     "supported_rule_families": {"type": "array", "items": {"type": "string"}},
     "release_blockers": {"type": "array", "items": {"type": "string"}},
     "rules": {
@@ -23,11 +23,14 @@
           "schema_version",
           "rule_id",
           "rule_family",
+          "provider_trace_patterns",
+          "lean_template_id",
           "lean_lemma_or_template",
           "premise_pattern",
           "conclusion_pattern",
           "required_side_conditions",
           "generated_obligations",
+          "auto_discharge_policy",
           "unsupported_variants",
           "fixtures"
         ],
@@ -35,19 +38,26 @@
           "schema_version": {"type": "string", "enum": ["1.0.0"]},
           "rule_id": {"type": "string"},
           "rule_family": {"type": "string"},
+          "provider_trace_patterns": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+          "lean_template_id": {"type": "string", "minLength": 1},
           "lean_lemma_or_template": {"type": "string"},
           "premise_pattern": {"type": "array", "items": {"type": "string"}},
           "conclusion_pattern": {"type": "string"},
           "required_side_conditions": {"type": "array", "items": {"type": "string"}, "minItems": 1},
           "generated_obligations": {"type": "array", "items": {"type": "string"}},
+          "auto_discharge_policy": {
+            "type": "string",
+            "enum": ["context_lookup", "simple_tactic", "proof_worker", "blocker"]
+          },
           "unsupported_variants": {"type": "array", "items": {"type": "string"}},
           "fixtures": {
             "type": "object",
-            "required": ["positive", "negative", "ambiguous"],
+            "required": ["positive", "negative", "ambiguous", "mutation"],
             "properties": {
               "positive": {"type": "array", "items": {"type": "string"}, "minItems": 1},
               "negative": {"type": "array", "items": {"type": "string"}, "minItems": 1},
-              "ambiguous": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+              "ambiguous": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+              "mutation": {"type": "array", "items": {"type": "string"}, "minItems": 1}
             },
             "additionalProperties": false
           }
