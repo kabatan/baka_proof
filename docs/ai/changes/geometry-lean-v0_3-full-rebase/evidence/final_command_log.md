@@ -141,3 +141,28 @@ AFTER_COUNT=7
 The command returned nonzero because the report is intentionally blocked until
 model-backed GenesisGeo and TongGeometry evidence is provided.
 ```
+
+## GenesisGeo model-backed smoke remediation
+
+```text
+python -c "from huggingface_hub import snapshot_download; snapshot_download('ZJUVAI/GenesisGeo', local_dir='models/GenesisGeo', local_dir_use_symlinks=False)"
+status: passed
+observed: models/GenesisGeo/model.safetensors downloaded with sha256:77406d21e84699b3d0d123653e40b7f48f3642beae10c0b608f58249223b8099.
+
+conda create -y -n geolean-py310 python=3.10
+status: passed
+observed: C:\Users\bakat\miniforge3\envs\geolean-py310\python.exe reports Python 3.10.20.
+
+C:\Users\bakat\miniforge3\envs\geolean-py310\python.exe scripts/run_genesisgeo_probe.py --request-id probe --claim-spec-json "{}"
+status: passed
+observed: blocker_reasons=[], model_checkpoint_status=available, model_inference_status=available, architecture=Qwen3ForCausalLM, model_type=qwen3.
+
+make smoke-real-genesisgeo
+status: passed
+observed: construction_candidate_refs includes aux_construction_candidate:geometry_request:real_genesisgeo_smoke:construction_proposer:genesisgeo_real.
+
+python scripts/check_release_acceptance.py --config configs/benchmark_runs/geometry_level2_pilot.yaml
+post-Genesis remediation status: blocked
+observed: GenesisGeo removed from model_backed_errors; remaining errors are missing_model_checkpoint:tonggeometry_compatible and TongGeometry evidence blockers.
+dependency_graph.html inventory remained unchanged: BEFORE_COUNT=7, AFTER_COUNT=7.
+```

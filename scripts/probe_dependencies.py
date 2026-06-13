@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import platform
 import shutil
 import subprocess
@@ -43,6 +44,41 @@ def file_hash(path: Path) -> str:
         for chunk in iter(lambda: handle.read(65536), b""):
             digest.update(chunk)
     return "sha256:" + digest.hexdigest()
+
+
+def optional_checkpoint_hash(role: str) -> str | None:
+    if role == "construction_proposer":
+        model_path = os.environ.get("GENESISGEO_MODEL_PATH") or os.environ.get("GENESISGEO_CHECKPOINT")
+        if not model_path and Path("models/GenesisGeo").exists():
+            model_path = "models/GenesisGeo"
+        if not model_path:
+            return None
+        candidate = Path(model_path)
+        if candidate.is_dir():
+            candidate = candidate / "model.safetensors"
+        return file_hash(candidate) if candidate.exists() else None
+    if role == "heavy_search":
+        paths = [
+            os.environ.get("TONGGEOMETRY_TOKENIZER"),
+            os.environ.get("TONGGEOMETRY_LM_S"),
+            os.environ.get("TONGGEOMETRY_LM_L"),
+            os.environ.get("TONGGEOMETRY_CLS"),
+        ]
+        if not all(paths):
+            return None
+        digest = hashlib.sha256()
+        for item in paths:
+            path = Path(str(item))
+            if not path.exists():
+                return None
+            if path.is_dir():
+                files = sorted(file for file in path.rglob("*") if file.is_file())
+            else:
+                files = [path]
+            for file in files:
+                digest.update(file_hash(file).encode("utf-8"))
+        return "sha256:" + digest.hexdigest()
+    return None
 
 
 def git_commit(path: Path) -> str | None:
@@ -101,7 +137,7 @@ def build_report() -> dict[str, Any]:
                 "install_status": install_status,
                 "version_or_commit": executable or vendored_commit or "unavailable",
                 "expected_commit": expected_commit,
-                "checkpoint_hash": None,
+                "checkpoint_hash": optional_checkpoint_hash(role),
             }
         )
         if install_status == "unavailable":

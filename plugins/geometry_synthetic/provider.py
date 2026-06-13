@@ -24,6 +24,8 @@ from plugins.geometry_synthetic.policy import (
     default_geometry_solver_policy,
 )
 
+_CHECKPOINT_HASH_CACHE: dict[str, str] = {}
+
 
 @dataclass(frozen=True)
 class ProviderRunManifest:
@@ -189,6 +191,7 @@ class NewclidCompatibleSymbolicClosureAdapter(DummyEngineAdapter):
 class GenesisGeoCompatibleConstructionProposerAdapter(DummyEngineAdapter):
     def __init__(self) -> None:
         super().__init__(ENGINE_CONSTRUCTION_PROPOSER, "genesisgeo-compatible-fixture:0.1", "genesisgeo_compatible")
+        self.checkpoint_hash = _genesisgeo_checkpoint_hash() or "unavailable"
 
     def should_use_real_engine(self, request: GeometrySolveRequest) -> bool:
         return bool(request.constraints.get("use_real_genesisgeo"))
@@ -198,7 +201,7 @@ class GenesisGeoCompatibleConstructionProposerAdapter(DummyEngineAdapter):
         if not isinstance(claim_spec, dict):
             claim_spec = {}
         return [
-            sys.executable,
+            _genesisgeo_python(),
             "scripts/run_genesisgeo_probe.py",
             "--request-id",
             request.request_id,
@@ -849,6 +852,24 @@ def _browser_suppressed_env() -> dict[str, str]:
     return env
 
 
+def _genesisgeo_python() -> str:
+    configured = os.environ.get("GENESISGEO_PYTHON")
+    if configured:
+        return configured
+    conda_prefix = os.environ.get("CONDA_PREFIX")
+    env_root = None
+    if conda_prefix:
+        env_root = Path(conda_prefix).parent / "geolean-py310"
+    candidates = []
+    if env_root is not None:
+        candidates.append(env_root / "python.exe")
+    candidates.append(Path.home() / "miniforge3" / "envs" / "geolean-py310" / "python.exe")
+    for candidate in candidates:
+        if candidate.exists():
+            return str(candidate)
+    return sys.executable
+
+
 def _read_json_file(path: Path) -> Any:
     if not path.exists():
         return None
@@ -884,6 +905,29 @@ def _genesisgeo_engine_version() -> str:
     genesis_root = Path("vendor") / "GenesisGeo"
     commit = _git_head(genesis_root)
     return f"GenesisGeo@{commit or 'unavailable'}"
+
+
+def _genesisgeo_checkpoint_hash() -> str | None:
+    model_path = os.environ.get("GENESISGEO_MODEL_PATH") or os.environ.get("GENESISGEO_CHECKPOINT")
+    if not model_path and (Path("models") / "GenesisGeo").exists():
+        model_path = str(Path("models") / "GenesisGeo")
+    if not model_path:
+        return None
+    path = Path(model_path)
+    if path.is_dir():
+        path = path / "model.safetensors"
+    if not path.exists():
+        return None
+    cache_key = str(path.resolve())
+    if cache_key in _CHECKPOINT_HASH_CACHE:
+        return _CHECKPOINT_HASH_CACHE[cache_key]
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    value = "sha256:" + digest.hexdigest()
+    _CHECKPOINT_HASH_CACHE[cache_key] = value
+    return value
 
 
 def _tonggeometry_engine_version() -> str:

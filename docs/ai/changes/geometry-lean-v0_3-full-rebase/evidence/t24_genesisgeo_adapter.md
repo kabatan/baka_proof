@@ -36,12 +36,15 @@ Environment diagnostic:
 
 ```text
 Vendored GenesisGeo source is present at vendor/GenesisGeo commit
-e8c4337e782548a4d54e6839558a32965a5a764e. In this environment,
-scripts/run_genesisgeo_probe.py reports diagnostic blockers:
-python_runtime_required:==3.10.*:actual:3.12.11 and
-missing_genesisgeo_model_checkpoint. Therefore the smoke establishes a real
-external diagnostic path and candidate-normalization code path, but does not
-establish model-backed GenesisGeo construction inference.
+e8c4337e782548a4d54e6839558a32965a5a764e. A dedicated conda environment
+geolean-py310 provides Python 3.10.20 for the GenesisGeo-compatible probe.
+The public Hugging Face checkpoint ZJUVAI/GenesisGeo was downloaded to
+models/GenesisGeo and is intentionally excluded from git by /models/.
+The local model.safetensors hash is
+sha256:77406d21e84699b3d0d123653e40b7f48f3642beae10c0b608f58249223b8099.
+scripts/run_genesisgeo_probe.py invokes scripts/run_genesisgeo_model_smoke.py,
+which loads the local Qwen3 checkpoint and tokenizer with transformers and runs
+a one-token generate smoke before emitting an auxiliary construction candidate.
 ```
 
 Commands run:
@@ -51,18 +54,25 @@ make smoke-real-genesisgeo
 make test-integration TEST_FILTER=genesisgeo_adapter
 make test-regression TEST_FILTER=genesis_output_not_proof
 python -m compileall -q plugins tests scripts
+C:\Users\bakat\miniforge3\envs\geolean-py310\python.exe scripts/run_genesisgeo_probe.py --request-id probe --claim-spec-json "{}"
 ```
 
 Observed results:
 
 ```text
-smoke-real-genesisgeo passed. It emitted a construction_proposer engine run
+smoke-real-genesisgeo passed after model/runtime provisioning. It emitted a
+construction_proposer engine run
 with engine_family=genesisgeo_compatible, engine_version
 GenesisGeo@e8c4337e782548a4d54e6839558a32965a5a764e, fixture_flag=false,
-real_integration_flag=true, and ResourceUsageReport.logs_ref=external_genesisgeo_stdout.
+real_integration_flag=true, status=auxiliary_construction_candidate,
+normalized_output_ref=aux_construction_candidate:geometry_request:real_genesisgeo_smoke:construction_proposer:genesisgeo_real,
+and ResourceUsageReport.logs_ref=external_genesisgeo_stdout.
 The provider result remained proof_use_status=not_allowed and geotrace_ref=null.
-genesisgeo_adapter integration tests: 3 tests OK, skipped=1 because the current
-runtime/checkpoint environment returns diagnostic blockers instead of a candidate.
+The probe reported python_version=3.10.20, model_checkpoint_status=available,
+model_inference_status=available, architecture=Qwen3ForCausalLM, model_type=qwen3,
+and blocker_reasons=[].
+genesisgeo_adapter integration tests: 3 tests OK, skipped=1 for the temporary
+checkpoint unit path that intentionally does not contain a real model.
 genesis_output_not_proof regression: 1 test OK; domain/no-loose checks passed.
 compileall passed.
 ```

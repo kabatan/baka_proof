@@ -72,9 +72,12 @@ checked blockers: 25.
 open blockers: [release_blocker_11_real_provider_smoke_evidence].
 claim ceiling: release_acceptance_blocked_no_v0_3_completion_claim.
 model_backed_errors:
-- missing_model_checkpoint:genesisgeo_compatible
 - missing_model_checkpoint:tonggeometry_compatible
-- model_backed_evidence_blocker:t24_genesisgeo_adapter.md:missing_genesisgeo_model_checkpoint
 - model_backed_evidence_blocker:t25_tonggeometry_adapter.md:does not establish model-backed
 - model_backed_evidence_blocker:t25_tonggeometry_adapter.md:missing_tonggeometry_model_paths
+
+After provisioning the public ZJUVAI/GenesisGeo checkpoint and geolean-py310
+runtime, release acceptance was rerun. GenesisGeo no longer appears in
+model_backed_errors. The remaining blocker is TongGeometry model artifact
+availability.
 ```

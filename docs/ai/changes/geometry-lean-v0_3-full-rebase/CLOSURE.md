@@ -25,19 +25,16 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/user_approval.md
 ## Current Evidence Ceiling
 
 The implementation has runnable pipeline components, real Newclid-compatible
-smoke coverage, Level2 pilot-matrix machinery, replay reporting, and release
+smoke coverage, model-smoked GenesisGeo-compatible construction-proposer
+coverage, Level2 pilot-matrix machinery, replay reporting, and release
 acceptance checks. RC8 review found that this is not enough to claim v0.3 full
-experiment readiness.
+experiment readiness while TongGeometry model artifacts remain unavailable.
 
 ## Open Blockers
 
 Release blocker 11 remains blocked:
 
 ```text
-GenesisGeo-compatible construction inference is not model-backed in this
-environment because the required Python 3.10 runtime/checkpoint evidence is
-missing.
-
 TongGeometry-compatible heavy search is not model-backed in this environment
 because tokenizer/lm_s/lm_l/cls model paths are missing.
 ```
@@ -47,7 +44,6 @@ Release acceptance must not pass while these blockers remain.
 ## Required Before Full Closure
 
 ```text
-Provide and verify admitted GenesisGeo model checkpoint/runtime evidence.
 Provide and verify admitted TongGeometry model path/runtime evidence.
 Rerun real provider smokes.
 Rerun Level2 pilot and ablation matrices.
@@ -61,7 +57,10 @@ Record the final commit hash.
 ```text
 BASE-004 / PLAN-004 implementation work has progressed through T36.
 Release acceptance is blocked, not passed, because model-backed
-GenesisGeo/TongGeometry evidence is missing.
+TongGeometry evidence is missing.
+GenesisGeo-compatible smoke now uses a Python 3.10 runtime, a local
+ZJUVAI/GenesisGeo checkpoint, and a one-token local model generate smoke before
+emitting an auxiliary construction candidate.
 The Level2 pilot matrix tooling runs against a 25-entry corpus, subject to the
 current blocked provider-evidence ceiling.
 ```

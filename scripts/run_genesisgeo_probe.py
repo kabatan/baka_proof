@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import subprocess
@@ -11,6 +12,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 GENESIS_ROOT = ROOT / "vendor" / "GenesisGeo"
+DEFAULT_MODEL_PATH = ROOT / "models" / "GenesisGeo"
 
 
 def main() -> int:
@@ -30,13 +32,19 @@ def build_report(request_id: str, claim_spec: dict[str, Any]) -> dict[str, Any]:
     pyproject = (GENESIS_ROOT / "pyproject.toml").read_text(encoding="utf-8") if (GENESIS_ROOT / "pyproject.toml").exists() else ""
     python_requirement = _extract_requires_python(pyproject)
     model_path = os.environ.get("GENESISGEO_MODEL_PATH") or os.environ.get("GENESISGEO_CHECKPOINT")
+    if not model_path and DEFAULT_MODEL_PATH.exists():
+        model_path = str(DEFAULT_MODEL_PATH)
     model_status = "available" if model_path and Path(model_path).exists() else "unavailable"
+    checkpoint_hash = _checkpoint_hash(Path(model_path)) if model_status == "available" else None
+    model_inference = _model_inference_smoke(Path(model_path)) if model_status == "available" else None
     runtime_status = "compatible" if python_requirement != "==3.10.*" or sys.version_info[:2] == (3, 10) else "incompatible"
     blocker_reasons = []
     if runtime_status == "incompatible":
         blocker_reasons.append(f"python_runtime_required:{python_requirement}:actual:{sys.version.split()[0]}")
     if model_status == "unavailable":
         blocker_reasons.append("missing_genesisgeo_model_checkpoint")
+    if model_status == "available" and not model_inference:
+        blocker_reasons.append("genesisgeo_model_generate_smoke_failed")
 
     candidate = None
     if not blocker_reasons:
@@ -54,10 +62,60 @@ def build_report(request_id: str, claim_spec: dict[str, Any]) -> dict[str, Any]:
         "python_requirement": python_requirement,
         "python_version": sys.version.split()[0],
         "model_checkpoint_status": model_status,
+        "model_checkpoint_path": None if not model_path else str(Path(model_path).resolve()),
+        "model_checkpoint_hash": checkpoint_hash,
+        "model_inference_status": "available" if model_inference else "unavailable",
+        "model_inference_report": model_inference,
         "blocker_reasons": blocker_reasons,
         "claim_target": claim_spec.get("target"),
         "candidate": candidate,
     }
+
+
+def _checkpoint_hash(path: Path) -> str | None:
+    candidate = path / "model.safetensors" if path.is_dir() else path
+    if not candidate.exists():
+        return None
+    digest = hashlib.sha256()
+    try:
+        with candidate.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+    except OSError:
+        return None
+    return "sha256:" + digest.hexdigest()
+
+
+def _model_inference_smoke(model_path: Path) -> dict[str, Any] | None:
+    model_python = os.environ.get("GENESISGEO_MODEL_PYTHON")
+    if not model_python:
+        default_python = Path.home() / "miniforge3" / "python.exe"
+        model_python = str(default_python if default_python.exists() else Path(sys.executable))
+    completed = subprocess.run(
+        [
+            model_python,
+            "scripts/run_genesisgeo_model_smoke.py",
+            "--model-path",
+            str(model_path),
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=180,
+    )
+    if completed.returncode != 0:
+        return {
+            "status": "failed",
+            "returncode": completed.returncode,
+            "stdout_tail": completed.stdout[-500:],
+            "stderr_tail": completed.stderr[-500:],
+        }
+    try:
+        parsed = json.loads(completed.stdout.strip().splitlines()[-1])
+    except (json.JSONDecodeError, IndexError):
+        return None
+    return parsed if isinstance(parsed, dict) else None
 
 
 def _minimal_candidate(request_id: str, claim_spec: dict[str, Any]) -> dict[str, Any]:

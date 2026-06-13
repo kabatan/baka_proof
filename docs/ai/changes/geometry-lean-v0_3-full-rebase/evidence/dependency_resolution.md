@@ -34,6 +34,22 @@ commit e8c4337e782548a4d54e6839558a32965a5a764e
 remote https://github.com/ZJUVAI/GenesisGeo.git
 ```
 
+- Provisioned the public GenesisGeo model checkpoint without opening a browser:
+
+```text
+source: https://huggingface.co/ZJUVAI/GenesisGeo
+local path: models/GenesisGeo
+model.safetensors sha256: 77406d21e84699b3d0d123653e40b7f48f3642beae10c0b608f58249223b8099
+git status: excluded by /models/
+```
+
+- Created a dedicated GenesisGeo-compatible Python runtime:
+
+```text
+conda env: geolean-py310
+python: 3.10.20
+```
+
 - Confirmed vendored TongGeometry repository:
 
 ```text
@@ -85,7 +101,8 @@ The generated report currently records:
 
 - Lean/lake available at Lean 4.15.0.
 - Newclid-compatible role installed through `newclid.EXE`.
-- GenesisGeo-compatible role vendored at the pinned commit.
+- GenesisGeo-compatible role vendored at the pinned commit with checkpoint_hash
+  `sha256:77406d21e84699b3d0d123653e40b7f48f3642beae10c0b608f58249223b8099`.
 - TongGeometry-compatible role vendored at the pinned commit.
 - No unresolved entries in the T10 dependency-resolution report.
 

@@ -39,6 +39,11 @@ scripts/run_tonggeometry_probe.py reports python_import_status=available but
 diagnostic blocker missing_tonggeometry_model_paths:tokenizer,lm_s,lm_l,cls.
 Therefore the smoke establishes a real external diagnostic path and policy
 gating, but does not establish model-backed TongGeometry heavy search.
+Additional resolution attempts are recorded in
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/tonggeometry_model_resolution_attempt.md:
+Hugging Face API search did not find public TongGeometry checkpoints, the
+bigai-ai/tong-geometry GitHub pre-release has no assets, and the vendored README
+still contains an empty checkpoint link.
 ```
 
 Commands run:
