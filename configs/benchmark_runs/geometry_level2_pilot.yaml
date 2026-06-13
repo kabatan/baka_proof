@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "matrix_id": "geometry_level2_pilot",
+  "run_id": "geometry_level2_pilot",
+  "benchmark_pool_id": "benchmark_pool:geometry_level2_pilot:v1",
+  "benchmark_pool": ["sample_target_pilot"],
+  "resource_budget": "tiny",
+  "baselines": [
+    {"baseline_id": "B0", "label": "proof_worker_only", "uses_controller": false, "uses_geometry_solve": false, "model_tier": "baseline"},
+    {"baseline_id": "B1", "label": "controller_worker_no_geometry", "uses_controller": true, "uses_geometry_solve": false, "model_tier": "baseline"},
+    {"baseline_id": "B2", "label": "full_geometry_enabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "baseline", "provider_config_ref": "configs/selected_implementations/geometry_default.yaml"},
+    {"baseline_id": "B3", "label": "strong_model_no_geometry", "uses_controller": true, "uses_geometry_solve": false, "model_tier": "strong"},
+    {"baseline_id": "B4", "label": "lower_model_geometry_enabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "lower"},
+    {"baseline_id": "B5", "label": "geometry_construction_disabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "baseline", "construction_enabled": false, "construction_disabled_scope": "evaluation_config_only"}
+  ]
+}

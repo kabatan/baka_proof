@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +13,8 @@ def run_level2_matrix(config_path: Path, runs_root: Path = Path("runs")) -> dict
     config = json.loads(config_path.read_text(encoding="utf-8"))
     _validate_config(config)
     run_dir = runs_root / str(config["run_id"])
+    if run_dir.exists():
+        shutil.rmtree(run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
     build_fixture_run(run_dir)
 

@@ -1,4 +1,4 @@
-.PHONY: fmt lint typecheck test test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-real-newclid smoke-real-genesisgeo smoke-real-tonggeometry smoke-geometry-trace smoke-geometry-construction smoke-geometry-final-verify
+.PHONY: fmt lint typecheck test test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-real-newclid smoke-real-genesisgeo smoke-real-tonggeometry smoke-geometry-trace smoke-geometry-construction smoke-geometry-final-verify smoke-level2-pilot
 
 PYTHON ?= python
 ELAN_LAKE := $(USERPROFILE)/.elan/bin/lake.exe
@@ -80,3 +80,6 @@ smoke-geometry-construction:
 
 smoke-geometry-final-verify:
 	$(PYTHON) scripts/smoke_geometry_final_verify.py
+
+smoke-level2-pilot:
+	$(PYTHON) scripts/run_geometry_level2_matrix.py --config configs/benchmark_runs/geometry_level2_pilot.yaml
