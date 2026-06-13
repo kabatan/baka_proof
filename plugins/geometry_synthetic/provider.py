@@ -583,6 +583,11 @@ def _run_external_newclid_adapter(
                 raw_output=raw_output,
                 normalized_output_ref=None,
                 diagnostic_ref=f"diagnostic:{request.request_id}:symbolic_closure:newclid_translation_unsupported",
+                unsupported_rule_count=1,
+                engine_family=adapter.engine_family,
+                engine_version=_newclid_engine_version(),
+                fixture_flag=False,
+                real_integration_flag=True,
             ),
             {"timed_out": False, "timeout_status": "none", "heartbeat_count": 1},
         )

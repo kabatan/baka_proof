@@ -1,4 +1,4 @@
-.PHONY: fmt lint typecheck test test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-geometry-trace smoke-geometry-construction smoke-geometry-final-verify
+.PHONY: fmt lint typecheck test test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-real-newclid smoke-geometry-trace smoke-geometry-construction smoke-geometry-final-verify
 
 PYTHON ?= python
 ELAN_LAKE := $(USERPROFILE)/.elan/bin/lake.exe
@@ -28,7 +28,7 @@ test-regression:
 	$(PYTHON) scripts/check_no_loose_options.py
 
 test-integration:
-	$(PYTHON) -m unittest tests.unit.test_composite_provider tests.unit.test_geometry_standard_loop
+	$(if $(TEST_FILTER),$(PYTHON) -m unittest discover -s tests/unit -p "*$(TEST_FILTER)*.py",$(PYTHON) -m unittest tests.unit.test_composite_provider tests.unit.test_geometry_standard_loop tests.unit.test_newclid_adapter)
 
 smoke-env-bootstrap:
 	$(PYTHON) scripts/probe_dependencies.py --json
@@ -62,6 +62,9 @@ smoke-leangeo-extraction:
 
 smoke-geometry-provider:
 	$(PYTHON) scripts/smoke_geometry_provider.py
+
+smoke-real-newclid:
+	$(PYTHON) scripts/smoke_real_newclid.py
 
 smoke-geometry-trace:
 	$(PYTHON) scripts/smoke_geometry_trace.py
