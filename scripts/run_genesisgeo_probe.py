@@ -48,6 +48,7 @@ def build_report(request_id: str, claim_spec: dict[str, Any]) -> dict[str, Any]:
         "request_id": request_id,
         "status": "auxiliary_construction_candidate" if candidate else "diagnostic_only",
         "proof_use_status": "not_allowed",
+        "raw_rationale": "GenesisGeo-compatible construction proposal or diagnostic; not proof evidence",
         "vendor_path": str(GENESIS_ROOT.relative_to(ROOT)),
         "vendor_commit": commit,
         "python_requirement": python_requirement,

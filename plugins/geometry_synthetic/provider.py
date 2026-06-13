@@ -13,6 +13,7 @@ from typing import Any
 from math_auto_research.base.resources.resource_budget import ResourceRejected
 from math_auto_research.base.resources.process_runner import run_process_group
 from math_auto_research.base.resources.resource_governor import ResourceGovernor
+from plugins.geometry_synthetic.construction import candidate_from_dict
 from plugins.geometry_synthetic.facade import GeometrySolveRequest, ProviderResult
 from plugins.geometry_synthetic.policy import (
     ENGINE_CONSTRUCTION_PROPOSER,
@@ -686,7 +687,8 @@ def _run_external_genesisgeo_adapter(
     raw_output = process_report["stdout"].strip() or process_report["stderr"].strip()
     parsed = _parse_json_or_empty(raw_output)
     candidate = parsed.get("candidate") if isinstance(parsed, dict) else None
-    normalized_ref = candidate.get("candidate_id") if isinstance(candidate, dict) else None
+    normalized_candidate = candidate_from_dict(candidate) if isinstance(candidate, dict) else None
+    normalized_ref = normalized_candidate.candidate_id if normalized_candidate is not None else None
     status = "auxiliary_construction_candidate" if normalized_ref else "diagnostic_only"
     return (
         EngineAdapterResult(
