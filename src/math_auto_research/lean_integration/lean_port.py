@@ -1,0 +1,61 @@
+from __future__ import annotations
+
+import shutil
+from dataclasses import dataclass
+from pathlib import Path
+
+from math_auto_research.base.resources.process_runner import run_guarded_process
+from math_auto_research.base.resources.resource_budget import ResourceRequest
+from math_auto_research.base.resources.resource_governor import ResourceGovernor
+from math_auto_research.lean_integration.goal_anchor import GoalAnchor, goal_anchor_for_text
+from math_auto_research.lean_integration.lean_error_summary import LeanErrorSummary
+
+
+@dataclass(frozen=True)
+class LeanCompileResult:
+    status: str
+    stdout: str
+    stderr: str
+    returncode: int
+    resource_usage_report: dict
+
+
+class LeanPort:
+    def __init__(
+        self,
+        lean_executable: str = "lean",
+        lake_executable: str = "lake",
+        governor: ResourceGovernor | None = None,
+    ) -> None:
+        self.lean_executable = shutil.which(lean_executable) or lean_executable
+        self.lake_executable = shutil.which(lake_executable) or lake_executable
+        self.governor = governor or ResourceGovernor()
+
+    def compile_file(self, path: Path, budget: ResourceRequest | None = None) -> LeanCompileResult:
+        request = budget or ResourceRequest(component="lean_file", engine_role="lean_build", budget="tiny", timeout_sec=30)
+        report = run_guarded_process([self.lean_executable, str(path)], request, self.governor)
+        return self._compile_result(report)
+
+    def check_file(self, path: Path) -> LeanCompileResult:
+        return self.compile_file(path)
+
+    def build_project(self, budget: ResourceRequest | None = None) -> LeanCompileResult:
+        request = budget or ResourceRequest(component="lean_build", engine_role="lean_build", budget="small", timeout_sec=120)
+        report = run_guarded_process([self.lake_executable, "build"], request, self.governor)
+        return self._compile_result(report)
+
+    def extract_goals(self, path: Path, theorem_name: str) -> list[GoalAnchor]:
+        text = path.read_text(encoding="utf-8")
+        return [goal_anchor_for_text(text, theorem_name, path)]
+
+    def summarize_errors(self, result: LeanCompileResult) -> LeanErrorSummary:
+        return LeanErrorSummary(status=result.status, stderr_tail=result.stderr[-2000:], stdout_tail=result.stdout[-2000:])
+
+    def _compile_result(self, report: dict) -> LeanCompileResult:
+        return LeanCompileResult(
+            status="passed" if report["exit_status"] == "completed" else "failed",
+            stdout=report.get("stdout_tail", ""),
+            stderr=report.get("stderr_tail", ""),
+            returncode=0 if report["exit_status"] == "completed" else 1,
+            resource_usage_report=report,
+        )
