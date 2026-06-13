@@ -3,6 +3,11 @@
 PYTHON ?= python
 ELAN_LAKE := $(USERPROFILE)/.elan/bin/lake.exe
 LAKE ?= $(if $(wildcard $(ELAN_LAKE)),$(ELAN_LAKE),lake)
+NO_BROWSER_SITE := $(CURDIR)/scripts/no_browser_sitecustomize
+PATH_SEP := ;
+
+export BROWSER := $(PYTHON) -c "import sys; sys.exit(0)"
+export PYTHONPATH := $(NO_BROWSER_SITE)$(if $(PYTHONPATH),$(PATH_SEP)$(PYTHONPATH),)
 
 fmt:
 	$(PYTHON) -m compileall -q src plugins scripts tests

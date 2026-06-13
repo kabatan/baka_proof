@@ -166,3 +166,45 @@ post-Genesis remediation status: blocked
 observed: GenesisGeo removed from model_backed_errors; remaining errors are missing_model_checkpoint:tonggeometry_compatible and TongGeometry evidence blockers.
 dependency_graph.html inventory remained unchanged: BEFORE_COUNT=7, AFTER_COUNT=7.
 ```
+
+## Browser suppression follow-up
+
+```text
+The first browser suppression pass did not cover direct make-target execution
+or pyvis.Network.show. Additional hardening was applied:
+
+- Makefile exports BROWSER as a no-op Python command for all targets.
+- Makefile prepends scripts/no_browser_sitecustomize to PYTHONPATH for all targets.
+- scripts/no_browser_sitecustomize/sitecustomize.py patches webbrowser,
+  os.startfile, and pyvis.Network.show.
+- scripts/run_newclid_no_browser.py imports the no-browser sitecustomize before
+  importing Newclid and also patches pyvis.Network.show directly.
+
+Verification:
+
+$env:PYTHONPATH = (Resolve-Path scripts\no_browser_sitecustomize).Path; python -
+status: passed
+observed: pyvis.network.Network.show resolves to _show_without_browser and calls
+write_html(..., open_browser=False).
+
+make test-unit TEST_FILTER=newclid_adapter
+status: passed
+observed: 5 tests OK.
+
+python -m compileall -q scripts plugins src tests
+status: passed
+
+make smoke-real-newclid
+status: passed
+observed: dependency_graph.html inventory remained unchanged:
+DEPENDENCY_GRAPH_COUNT_BEFORE=7
+DEPENDENCY_GRAPH_COUNT_AFTER=7.
+
+python scripts/check_release_acceptance.py --config configs/benchmark_runs/geometry_level2_pilot.yaml
+status: blocked
+observed: only open blocker remains release_blocker_11_real_provider_smoke_evidence
+for missing TongGeometry model-backed checkpoint/evidence. Browser suppression
+held during the full command:
+DEPENDENCY_GRAPH_COUNT_BEFORE=7
+DEPENDENCY_GRAPH_COUNT_AFTER=7.
+```
