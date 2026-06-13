@@ -35,6 +35,7 @@ def check_matrix(run_dir: Path) -> list[str]:
     if not matrix_task_runs.exists():
         errors.append("missing_matrix_task_runs_dir")
     task_results_by_baseline: dict[str, list[dict]] = {}
+    provider_success_by_baseline: dict[str, dict[str, list[int]]] = {}
     for ref in index.values():
         task_result_path = Path(ref)
         if not task_result_path.exists():
@@ -75,6 +76,15 @@ def check_matrix(run_dir: Path) -> list[str]:
             fixture_versions = [value for value in version_values if "fixture" in str(value).lower()]
             if fixture_versions:
                 errors.append(f"fixture_adapter_version_in_release:{baseline_id}:{task_result.get('task_entry_id')}:{fixture_versions[0]}")
+            role_counts = provider_success_by_baseline.setdefault(baseline_id, {})
+            for run in manifest.get("engine_runs", []):
+                if not isinstance(run, dict):
+                    continue
+                role = str(run.get("engine_role"))
+                counts = role_counts.setdefault(role, [0, 0])
+                counts[1] += 1
+                if run.get("status") in {"trace_candidate", "auxiliary_construction_candidate"}:
+                    counts[0] += 1
     for baseline_id, task_results in task_results_by_baseline.items():
         metrics_path = run_dir / f"metrics_{baseline_id}.json"
         if not metrics_path.exists():
@@ -87,6 +97,13 @@ def check_matrix(run_dir: Path) -> list[str]:
             errors.append(f"metric_final_theorem_count_not_artifact_derived:{baseline_id}")
         if metric_values.get("geometry_solve_request_count") != expected_provider_calls:
             errors.append(f"metric_provider_call_count_not_artifact_derived:{baseline_id}")
+        expected_provider_success = {
+            role: counts[0] / counts[1]
+            for role, counts in provider_success_by_baseline.get(baseline_id, {}).items()
+            if counts[1]
+        }
+        if expected_provider_success and metric_values.get("provider_success_rate_by_role") != expected_provider_success:
+            errors.append(f"metric_provider_success_rate_not_artifact_derived:{baseline_id}")
     return errors
 
 

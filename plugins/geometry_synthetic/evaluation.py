@@ -191,7 +191,7 @@ def _provider_success_by_role(task_results: list[TaskRunResult]) -> dict[str, fl
         for run in artifact.get("engine_runs", []) if isinstance(artifact, dict) else []:
             role = str(run.get("engine_role"))
             totals[role] = totals.get(role, 0) + 1
-            if run.get("status") not in {"resource_rejected", "timeout"}:
+            if run.get("status") in {"trace_candidate", "auxiliary_construction_candidate"}:
                 successes[role] = successes.get(role, 0) + 1
     return {role: successes.get(role, 0) / total for role, total in totals.items()}
 
