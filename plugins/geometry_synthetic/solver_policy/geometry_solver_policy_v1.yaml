@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "policy_id": "geometry_solver_policy:geometry_synthetic_v1:v1",
+  "routing_table": {
+    "default": ["symbolic_closure", "construction_proposer", "symbolic_closure", "heavy_search"]
+  },
+  "budget_rules": {
+    "tiny": {"construction_proposer": false, "heavy_search": false},
+    "small": {"construction_proposer": true, "heavy_search": false},
+    "medium": {"construction_proposer": true, "heavy_search": false},
+    "heavy": {"construction_proposer": true, "heavy_search": "escalation_required"},
+    "extreme": {"construction_proposer": true, "heavy_search": "escalation_required"}
+  }
+}

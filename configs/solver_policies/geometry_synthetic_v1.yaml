@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0.0",
+  "policy_ref": "plugins/geometry_synthetic/solver_policy/geometry_solver_policy_v1.yaml",
+  "selected_policy_id": "geometry_solver_policy:geometry_synthetic_v1:v1",
+  "target_library_id": "LeanGeoSubsetV1",
+  "release_fixture_policy": "fixtures_not_selected"
+}

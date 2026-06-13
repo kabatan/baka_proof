@@ -15,6 +15,10 @@ from plugins.geometry_synthetic.policy import (
     REASON_HEAVY_REJECTED,
     default_geometry_solver_policy,
 )
+from plugins.geometry_synthetic.solver_policy.geometry_solver_policy import (
+    GeometryExecutionPlan,
+    GeometrySolverPolicy,
+)
 
 
 def request_for(budget: str, constraints: dict | None = None) -> GeometrySolveRequest:
@@ -31,8 +35,16 @@ def request_for(budget: str, constraints: dict | None = None) -> GeometrySolveRe
 
 
 class GeometrySolverPolicyTest(unittest.TestCase):
+    def test_plan_solver_policy_paths_exist(self) -> None:
+        self.assertTrue(Path("plugins/geometry_synthetic/solver_policy/geometry_solver_policy.py").exists())
+        self.assertTrue(Path("plugins/geometry_synthetic/solver_policy/geometry_solver_policy_v1.yaml").exists())
+        self.assertTrue(Path("plugins/geometry_synthetic/solver_policy/execution_plan.py").exists())
+        self.assertTrue(Path("configs/solver_policies/geometry_synthetic_v1.yaml").exists())
+        self.assertIsInstance(default_geometry_solver_policy(), GeometrySolverPolicy)
+
     def test_default_routing_tries_symbolic_then_construction_then_retry(self) -> None:
         plan = default_geometry_solver_policy().build_execution_plan(request_for("medium"))
+        self.assertIsInstance(plan, GeometryExecutionPlan)
         roles = [step.engine_role for step in plan.steps]
         self.assertEqual(
             roles,
