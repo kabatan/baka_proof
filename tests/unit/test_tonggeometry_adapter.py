@@ -1,10 +1,17 @@
 from __future__ import annotations
 
 import json
+import os
+import tempfile
 import unittest
+from unittest.mock import patch
 
 from plugins.geometry_synthetic.facade import GeometrySolveRequest
-from plugins.geometry_synthetic.provider import CompositeSyntheticGeometryProvider, CompositeSyntheticGeometryProviderV1
+from plugins.geometry_synthetic.provider import (
+    CompositeSyntheticGeometryProvider,
+    CompositeSyntheticGeometryProviderV1,
+    TongGeometryCompatibleHeavySearchAdapter as ProviderTongGeometryAdapter,
+)
 from plugins.geometry_synthetic.providers.tonggeometry_adapter import (
     TongGeometryCompatibleHeavySearchAdapter,
     normalize_tonggeometry_output,
@@ -97,6 +104,52 @@ class TongGeometryAdapterTest(unittest.TestCase):
         self.assertIn("raw_search_output", report)
         self.assertEqual(report["proof_use_status"], "not_allowed")
         self.assertNotIn('"proof_use_status": "final_theorem"', raw)
+        self.assertEqual(report["model_inference_status"], "unavailable")
+        self.assertIsNone(report["model_checkpoint_hash"])
+
+    def test_tonggeometry_probe_hashes_and_smokes_configured_model_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.abspath(tmp)
+            paths = {}
+            for name in ("tokenizer", "lm_s", "lm_l", "cls"):
+                directory = os.path.join(root, name)
+                os.mkdir(directory)
+                with open(os.path.join(directory, f"{name}.bin"), "w", encoding="utf-8") as handle:
+                    handle.write(name)
+                paths[name] = directory
+            env = {
+                "TONGGEOMETRY_TOKENIZER": paths["tokenizer"],
+                "TONGGEOMETRY_LM_S": paths["lm_s"],
+                "TONGGEOMETRY_LM_L": paths["lm_l"],
+                "TONGGEOMETRY_CLS": paths["cls"],
+            }
+            with patch.dict(os.environ, env, clear=False), patch(
+                "scripts.run_tonggeometry_probe._run_model_smoke",
+                return_value={"schema_version": "1.0.0", "status": "passed"},
+            ):
+                report = build_report("geometry_request:tong_model_smoke", claim_spec_fixture())
+        self.assertTrue(str(report["model_checkpoint_hash"]).startswith("sha256:"))
+        self.assertEqual(report["model_inference_status"], "available")
+        self.assertEqual(report["model_inference_report"]["status"], "passed")
+        self.assertFalse(any(str(reason).startswith("missing_tonggeometry_model_paths") for reason in report["blocker_reasons"]))
+
+    def test_tonggeometry_adapter_manifest_reports_configured_checkpoint_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.abspath(tmp)
+            env = {}
+            for name, variable in (
+                ("tokenizer", "TONGGEOMETRY_TOKENIZER"),
+                ("lm_s", "TONGGEOMETRY_LM_S"),
+                ("lm_l", "TONGGEOMETRY_LM_L"),
+                ("cls", "TONGGEOMETRY_CLS"),
+            ):
+                path = os.path.join(root, f"{name}.txt")
+                with open(path, "w", encoding="utf-8") as handle:
+                    handle.write(name)
+                env[variable] = path
+            with patch.dict(os.environ, env, clear=False):
+                adapter = ProviderTongGeometryAdapter()
+        self.assertTrue(adapter.checkpoint_hash.startswith("sha256:"))
 
 
 if __name__ == "__main__":

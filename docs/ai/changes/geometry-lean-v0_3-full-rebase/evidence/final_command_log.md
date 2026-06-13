@@ -208,3 +208,59 @@ held during the full command:
 DEPENDENCY_GRAPH_COUNT_BEFORE=7
 DEPENDENCY_GRAPH_COUNT_AFTER=7.
 ```
+
+## TongGeometry model-backed probe hardening
+
+```text
+gh release list --repo bigai-ai/tong-geometry --limit 10
+gh api repos/bigai-ai/tong-geometry/releases --jq '.[] | {tag_name,name,assets:[.assets[].name]}'
+status: passed
+observed: release tag public / name 1.0 exists, assets=[].
+
+gh api repos/bigai-ai/tong-geometry/git/trees/public?recursive=1 --jq ...
+status: passed
+observed: no checkpoint-like paths for checkpoint, ckpt, safetensors,
+pytorch_model, model.bin, LM_FT, CLS, or tokenizer.
+
+python scripts/run_tonggeometry_probe.py --request-id probe --claim-spec-json "{}"
+status: passed
+observed: model_checkpoint_hash=null, model_inference_status=unavailable,
+blocker_reasons=[missing_tonggeometry_model_paths:tokenizer,lm_s,lm_l,cls].
+
+make test-unit TEST_FILTER=tonggeometry_adapter
+status: passed
+observed: 6 tests OK.
+
+python -m compileall -q scripts plugins src tests
+status: passed
+
+make smoke-real-tonggeometry
+status: passed
+observed: heavy_search engine_family=tonggeometry_compatible,
+checkpoint_hash=unavailable, logs_ref=external_tonggeometry_stdout, and
+proof_use_status=not_allowed.
+
+make test-unit TEST_FILTER=release_acceptance
+status: passed
+observed: 8 tests OK.
+
+make test-integration TEST_FILTER=tonggeometry_adapter
+status: passed
+observed: 6 tests OK.
+
+make test-regression TEST_FILTER=heavy_search_budget_gate
+status: passed
+observed: 1 test OK; domain/no-loose checks passed.
+
+make test-regression TEST_FILTER=heavy_search_no_orphans
+status: passed
+observed: 1 test OK; domain/no-loose checks passed.
+
+python scripts/check_release_acceptance.py --config configs/benchmark_runs/geometry_level2_pilot.yaml
+status: blocked
+observed: only open blocker remains release_blocker_11_real_provider_smoke_evidence.
+Remaining model_backed_errors: missing_model_checkpoint:tonggeometry_compatible.
+Browser suppression held:
+DEPENDENCY_GRAPH_COUNT_BEFORE=7
+DEPENDENCY_GRAPH_COUNT_AFTER=7.
+```

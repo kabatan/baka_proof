@@ -251,6 +251,7 @@ class GenesisGeoCompatibleConstructionProposerAdapter(DummyEngineAdapter):
 class TongGeometryCompatibleHeavySearchAdapter(DummyEngineAdapter):
     def __init__(self) -> None:
         super().__init__(ENGINE_HEAVY_SEARCH, "tonggeometry-compatible-fixture:0.1", "tonggeometry_compatible")
+        self.checkpoint_hash = _tonggeometry_checkpoint_hash() or "unavailable"
 
     def should_use_real_engine(self, request: GeometrySolveRequest) -> bool:
         return bool(request.constraints.get("use_real_tonggeometry"))
@@ -928,6 +929,44 @@ def _genesisgeo_checkpoint_hash() -> str | None:
     value = "sha256:" + digest.hexdigest()
     _CHECKPOINT_HASH_CACHE[cache_key] = value
     return value
+
+
+def _tonggeometry_checkpoint_hash() -> str | None:
+    paths = {
+        "tokenizer": os.environ.get("TONGGEOMETRY_TOKENIZER"),
+        "lm_s": os.environ.get("TONGGEOMETRY_LM_S"),
+        "lm_l": os.environ.get("TONGGEOMETRY_LM_L"),
+        "cls": os.environ.get("TONGGEOMETRY_CLS"),
+    }
+    if not all(paths.values()):
+        return None
+    cache_key = json.dumps(paths, sort_keys=True)
+    if cache_key in _CHECKPOINT_HASH_CACHE:
+        return _CHECKPOINT_HASH_CACHE[cache_key]
+    digest = hashlib.sha256()
+    for name in ("tokenizer", "lm_s", "lm_l", "cls"):
+        path = Path(str(paths[name]))
+        if not path.exists():
+            return None
+        digest.update(name.encode("utf-8"))
+        if path.is_dir():
+            for file in sorted(item for item in path.rglob("*") if item.is_file()):
+                digest.update(str(file.relative_to(path)).replace("\\", "/").encode("utf-8"))
+                digest.update(_file_sha256(file).encode("utf-8"))
+        else:
+            digest.update(path.name.encode("utf-8"))
+            digest.update(_file_sha256(path).encode("utf-8"))
+    value = "sha256:" + digest.hexdigest()
+    _CHECKPOINT_HASH_CACHE[cache_key] = value
+    return value
+
+
+def _file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return "sha256:" + digest.hexdigest()
 
 
 def _tonggeometry_engine_version() -> str:
