@@ -40,11 +40,11 @@
           "proof_use_fields": []
         },
         "ModelInvocationRecord": {
-          "required_fields": ["schema_version", "invocation_id", "request_id", "slot_id", "status", "input_hash", "output_artifact_ref"],
-          "provenance_fields": ["input_hash", "output_artifact_ref"],
+          "required_fields": ["schema_version", "invocation_id", "request_id", "slot_id", "status", "provider_set_hash", "input_hash", "request_hash", "response_hash", "output_artifact_ref", "proof_use_status"],
+          "provenance_fields": ["provider_set_hash", "input_hash", "request_hash", "response_hash", "output_artifact_ref", "redacted_transcript_artifact_ref", "usage_metadata"],
           "status_fields": ["status"],
-          "proof_use_fields": [],
-          "allowed_values": {"status": ["completed", "failed", "timeout", "resource_rejected"]}
+          "proof_use_fields": ["proof_use_status"],
+          "allowed_values": {"status": ["completed", "failed", "timeout", "resource_rejected"], "proof_use_status": ["not_allowed"]}
         },
         "ResearchControllerPlugin": {
           "required_fields": ["schema_version", "plugin_id", "declared_model_slots", "capabilities", "manifest_ref"],

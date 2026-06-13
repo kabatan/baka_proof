@@ -1,9 +1,15 @@
 from __future__ import annotations
 
+import inspect
 import unittest
+from typing import get_type_hints
 
+from math_auto_research.base.model_provider_set import ModelProviderSet
+from math_auto_research.base.resources.resource_governor import ResourceGovernor
+from math_auto_research.lean_integration.lean_port import LeanPort
 from math_auto_research.model_api.proof_worker import WorkerResult
 from math_auto_research.model_api.proof_worker import DummyProofWorker
+from math_auto_research.model_api.work_order import WorkOrder
 
 
 class ProofWorkerPluginContractTest(unittest.TestCase):
@@ -21,7 +27,14 @@ class ProofWorkerPluginContractTest(unittest.TestCase):
             )
 
     def test_worker_exposes_base_signature(self) -> None:
-        self.assertTrue(hasattr(DummyProofWorker, "execute_work_order"))
+        signature = inspect.signature(DummyProofWorker.execute_work_order)
+        hints = get_type_hints(DummyProofWorker.execute_work_order)
+        self.assertEqual(tuple(signature.parameters), ("self", "work_order", "models", "lean_port", "resource_governor"))
+        self.assertIs(hints["work_order"], WorkOrder)
+        self.assertIs(hints["models"], ModelProviderSet)
+        self.assertIs(hints["lean_port"], LeanPort)
+        self.assertIs(hints["resource_governor"], ResourceGovernor)
+        self.assertIs(hints["return"], WorkerResult)
 
 
 if __name__ == "__main__":

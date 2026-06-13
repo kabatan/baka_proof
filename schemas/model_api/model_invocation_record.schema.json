@@ -7,7 +7,10 @@
     "request_id",
     "slot_id",
     "status",
+    "provider_set_hash",
     "input_hash",
+    "request_hash",
+    "response_hash",
     "output_artifact_ref",
     "proof_use_status"
   ],
@@ -17,8 +20,13 @@
     "request_id": {"type": "string"},
     "slot_id": {"type": "string"},
     "status": {"type": "string", "enum": ["completed", "failed", "timeout", "resource_rejected"]},
-    "input_hash": {"type": "string"},
-    "output_artifact_ref": {"type": "string"},
+    "provider_set_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "input_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "request_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "response_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "output_artifact_ref": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "redacted_transcript_artifact_ref": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "usage_metadata": {"type": "object"},
     "proof_use_status": {"type": "string", "enum": ["not_allowed"]}
   }
 }

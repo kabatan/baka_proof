@@ -114,7 +114,7 @@ def contains_local_toy_target(text: str) -> bool:
 
 def proof_use_provenance_valid(provenance: dict[str, Any] | None) -> bool:
     if provenance is None:
-        return True
+        return False
     required = {
         "geometry_extraction_report_ref",
         "goal_anchor_ref",

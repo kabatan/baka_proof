@@ -5,6 +5,7 @@ from typing import Any
 
 from math_auto_research.base.model_provider_set import ModelProviderSet
 from math_auto_research.model_api.action_plan import ActionPlan
+from math_auto_research.model_api.state_pack import ResearchStatePack
 
 
 @dataclass(frozen=True)
@@ -22,16 +23,16 @@ class DummyResearchController:
 
     def plan_next_actions(
         self,
-        state: dict[str, Any],
+        state: ResearchStatePack,
         models: ModelProviderSet,
-        context: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
+        context: dict[str, Any],
+    ) -> ActionPlan:
         output, record, output_ref = models.invoke_slot(
             self.manifest.declared_model_slots[0],
-            prompt=str({"state": state, "context": context or {}}),
-            request_id=str(state.get("state_id", "research_state:fixture")),
+            prompt=str({"state": state.to_dict(), "context": context}),
+            request_id=state.state_id,
         )
-        plan = ActionPlan(
+        return ActionPlan(
             schema_version="1.0.0",
             plan_id="action_plan:fixture",
             task_kinds=("diagnose",),
@@ -42,10 +43,16 @@ class DummyResearchController:
             proof_use_note="controller rationale is diagnostic only",
             controller_output=output,
         )
-        return plan.to_dict()
 
     def plan(self, provider_set: ModelProviderSet, state_pack: dict[str, Any]) -> dict[str, Any]:
-        return self.plan_next_actions(state_pack, provider_set, {})
+        state = ResearchStatePack(
+            schema_version=str(state_pack.get("schema_version", "1.0.0")),
+            state_id=str(state_pack.get("state_id", "research_state:fixture")),
+            proof_state_summary_ref=str(state_pack.get("proof_state_summary_ref", "sha256:fixture")),
+            selected_implementations_ref=str(state_pack.get("selected_implementations_ref", "sha256:fixture")),
+            artifact_refs=tuple(state_pack.get("artifact_refs", ())),
+        )
+        return self.plan_next_actions(state, provider_set, {}).to_dict()
 
 
 def controller_manifest_to_dict(manifest: ResearchControllerPluginManifest) -> dict[str, Any]:

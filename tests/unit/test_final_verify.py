@@ -14,12 +14,26 @@ LEAN_TEMPLATE = """theorem sample_target : True := by
 """
 
 
+PROOF_USE_PROVENANCE = {
+    "geometry_extraction_report_ref": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "goal_anchor_ref": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+    "protected_statement_hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+    "target_library_manifest_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+}
+
+
 class FinalVerifyGateTest(unittest.TestCase):
     def test_final_verify_accepts_clean_lean_file(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "Sample.lean"
             path.write_text(LEAN_TEMPLATE, encoding="utf-8")
-            report = FinalVerifyGate().verify_file(LEAN_TEMPLATE, path, "sample_target", "o:sample")
+            report = FinalVerifyGate().verify_file(
+                LEAN_TEMPLATE,
+                path,
+                "sample_target",
+                "o:sample",
+                proof_use_provenance=PROOF_USE_PROVENANCE,
+            )
             self.assertEqual(report.lean_status, "passed")
             self.assertTrue(report.protected_theorem_hash_unchanged)
             self.assertEqual(report.sorry_status, "clean")
@@ -30,7 +44,13 @@ class FinalVerifyGateTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "Sample.lean"
             path.write_text(changed, encoding="utf-8")
-            report = FinalVerifyGate().verify_file(LEAN_TEMPLATE, path, "sample_target", "o:sample")
+            report = FinalVerifyGate().verify_file(
+                LEAN_TEMPLATE,
+                path,
+                "sample_target",
+                "o:sample",
+                proof_use_provenance=PROOF_USE_PROVENANCE,
+            )
             self.assertFalse(report.protected_theorem_hash_unchanged)
             self.assertEqual(report.proof_use_status, "not_allowed")
 
@@ -46,7 +66,13 @@ class FinalVerifyGateTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "Sample.lean"
             path.write_text(candidate, encoding="utf-8")
-            report = FinalVerifyGate().verify_file(LEAN_TEMPLATE, path, "sample_target", "o:sample")
+            report = FinalVerifyGate().verify_file(
+                LEAN_TEMPLATE,
+                path,
+                "sample_target",
+                "o:sample",
+                proof_use_provenance=PROOF_USE_PROVENANCE,
+            )
             self.assertEqual(report.proof_use_status, "not_allowed")
 
     def test_toy_target_is_rejected(self) -> None:
@@ -54,6 +80,19 @@ class FinalVerifyGateTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "Sample.lean"
             path.write_text(candidate, encoding="utf-8")
+            report = FinalVerifyGate().verify_file(
+                LEAN_TEMPLATE,
+                path,
+                "sample_target",
+                "o:sample",
+                proof_use_provenance=PROOF_USE_PROVENANCE,
+            )
+            self.assertEqual(report.proof_use_status, "not_allowed")
+
+    def test_missing_proof_use_provenance_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "Sample.lean"
+            path.write_text(LEAN_TEMPLATE, encoding="utf-8")
             report = FinalVerifyGate().verify_file(LEAN_TEMPLATE, path, "sample_target", "o:sample")
             self.assertEqual(report.proof_use_status, "not_allowed")
 

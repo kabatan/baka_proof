@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import inspect
 import unittest
+from typing import get_type_hints
 
 from math_auto_research.model_api.action_plan import ActionPlan
 from math_auto_research.model_api.research_controller import DummyResearchController
+from math_auto_research.model_api.state_pack import ResearchStatePack
 
 
 class ControllerPluginContractTest(unittest.TestCase):
@@ -21,7 +24,11 @@ class ControllerPluginContractTest(unittest.TestCase):
             )
 
     def test_controller_exposes_base_signature(self) -> None:
-        self.assertTrue(hasattr(DummyResearchController, "plan_next_actions"))
+        signature = inspect.signature(DummyResearchController.plan_next_actions)
+        hints = get_type_hints(DummyResearchController.plan_next_actions)
+        self.assertEqual(tuple(signature.parameters), ("self", "state", "models", "context"))
+        self.assertIs(hints["state"], ResearchStatePack)
+        self.assertIs(hints["return"], ActionPlan)
 
 
 if __name__ == "__main__":
