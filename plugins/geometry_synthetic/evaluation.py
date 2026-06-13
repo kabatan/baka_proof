@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from math_auto_research.base.logging.run_trace import EvaluationFunnel, MetricsReport, write_json
-from plugins.geometry_synthetic.run_trace import build_fixture_run, build_reproducibility_report
+from plugins.geometry_synthetic.run_trace import build_reproducibility_report
 
 
 def run_level2_matrix(config_path: Path, runs_root: Path = Path("runs")) -> dict[str, Any]:
@@ -17,7 +17,6 @@ def run_level2_matrix(config_path: Path, runs_root: Path = Path("runs")) -> dict
     if run_dir.exists():
         shutil.rmtree(run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
-    build_fixture_run(run_dir)
 
     metrics_refs: list[str] = []
     baseline_results: list[dict[str, Any]] = []

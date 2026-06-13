@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import unittest
+import json
+import tempfile
+from pathlib import Path
 
 from math_auto_research.workflow.standard_geometry_loop import StandardGeometryLoopContract
 from plugins.geometry_synthetic.standard_loop import StandardGeometryProofLoop
@@ -47,6 +50,26 @@ class GeometryStandardLoopTest(unittest.TestCase):
         self.assertEqual(feedback["status"], "closed")
         self.assertIn("stage_statuses", feedback)
         self.assertIn("proof_use_note", feedback)
+
+    def test_run_task_uses_real_benchmark_task_and_writes_artifacts(self) -> None:
+        task = json.loads(Path("benchmarks/geometry/geometry_level2_pilot.jsonl").read_text(encoding="utf-8").splitlines()[0])
+        baseline = {
+            "baseline_id": "B0",
+            "geometry_solve_enabled": True,
+            "final_verify_enabled": True,
+            "budget": "medium",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            result = StandardGeometryProofLoop().run_task(task, baseline, {"selected": "test"}, Path(tmp))
+            run_dir = Path(tmp) / "B0" / "level2_pilot_01"
+            self.assertTrue((run_dir / "task_result.json").exists())
+            self.assertTrue((run_dir / "artifact_index.json").exists())
+            self.assertTrue((run_dir / "extraction_report.json").exists())
+            self.assertTrue((run_dir / "provider_run_manifest.json").exists())
+            self.assertTrue((run_dir / "final_verify_report.json").exists())
+        self.assertEqual(result.theorem_file_path, task["theorem_file_path"])
+        self.assertEqual(result.theorem_name, task["theorem_name"])
+        self.assertIn(result.status, {"verified", "blocked", "safe_rejected"})
 
 
 if __name__ == "__main__":

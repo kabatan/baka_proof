@@ -10,8 +10,9 @@ from math_auto_research.base.final_verify import FinalVerifyGate
 from math_auto_research.base.logging import RunLogger
 from math_auto_research.proof_state import DAGWriter, Derivation, EvidenceRef, GraphPatch, Obligation, ProofStateDAG, StateReader
 from plugins.geometry_synthetic.bridge import GeometryBridgeGate, TrustGuard
-from plugins.geometry_synthetic.extraction import GeometryExtractor, LeanGoalContext
+from plugins.geometry_synthetic.extraction import GeometryExtractor, LeanGoalContext, TARGET_LIBRARY_MANIFEST_HASH
 from plugins.geometry_synthetic.facade import GeometrySolveFacade, GeometrySolveRequest
+from plugins.geometry_synthetic.provider import CompositeSyntheticGeometryProvider
 from plugins.geometry_synthetic.rules import GeoTraceStep, GeoTraceV1
 from plugins.geometry_synthetic.trace_compiler import TraceCompiler
 
@@ -48,7 +49,155 @@ class StandardGeometryLoopResult:
         return asdict(self)
 
 
+@dataclass(frozen=True)
+class TaskRunResult:
+    schema_version: str
+    run_id: str
+    task_entry_id: str
+    baseline_id: str
+    status: str
+    theorem_file_path: str
+    theorem_name: str
+    stage_statuses: dict[str, str]
+    artifact_index: dict[str, str]
+    blockers: tuple[str, ...]
+    proof_use_status: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
 class StandardGeometryProofLoop:
+    def run_task(
+        self,
+        task: Any,
+        baseline: Any,
+        selected: Any,
+        run_root: Path,
+    ) -> TaskRunResult:
+        entry_id = str(_field(task, "entry_id"))
+        baseline_id = str(_field(baseline, "baseline_id", _field(baseline, "id", "B0")))
+        theorem_path = Path(str(_field(task, "theorem_file_path")))
+        theorem_name = str(_field(task, "theorem_name"))
+        local_theorem_name = theorem_name.rsplit(".", 1)[-1]
+        task_dir = run_root / _safe_path_part(baseline_id) / _safe_path_part(entry_id)
+        task_dir.mkdir(parents=True, exist_ok=True)
+
+        stage_statuses: dict[str, str] = {}
+        artifact_index: dict[str, str] = {}
+        blockers: list[str] = []
+        lean_text = theorem_path.read_text(encoding="utf-8")
+        final_gate = FinalVerifyGate()
+        lean_result = final_gate.lean_port.build_project()
+        stage_statuses["lean_initial_compile"] = lean_result.status
+        goal_anchor = final_gate.goal_anchor(lean_text, local_theorem_name, theorem_path)
+        goal_anchor_ref = f"goal_anchor:{theorem_name}:{goal_anchor.protected_statement_hash}"
+        stage_statuses["goal_anchor"] = "created"
+
+        extraction_report, claim_spec = GeometryExtractor().extract_lean_check_output(
+            str(_field(task, "theorem_statement")),
+            source_goal_ref=goal_anchor_ref,
+            elaboration_report_ref=f"lean_compile:{lean_result.status}",
+        )
+        stage_statuses["geometry_extraction"] = extraction_report.status
+        _write_json(task_dir, artifact_index, "extraction_report.json", extraction_report.to_dict())
+
+        provider_result = None
+        provider_run = None
+        geometry_solve_enabled = bool(_field(baseline, "geometry_solve_enabled", True))
+        if geometry_solve_enabled and claim_spec is not None:
+            request = GeometrySolveRequest(
+                schema_version="1.0.0",
+                request_id=f"geometry_solve_request:{baseline_id}:{entry_id}",
+                claim_spec_ref=claim_spec.claim_id,
+                intent="prove_or_diagnose",
+                trust_target="lean_patch_candidate",
+                budget=str(_field(baseline, "budget", "medium")),
+                constraints={
+                    "construction_needed": _field(task, "task_category") == "auxiliary_construction",
+                    "claim_spec": claim_spec.to_dict(),
+                    "emit_trace_candidate": _field(task, "task_category") == "nonidentity_symbolic_closure",
+                    "use_real_newclid": bool(_field(baseline, "use_real_newclid", False)),
+                    "use_real_genesisgeo": bool(_field(baseline, "use_real_genesisgeo", False)),
+                    "use_real_tonggeometry": bool(_field(baseline, "use_real_tonggeometry", False)),
+                    "explicit_escalation": bool(_field(baseline, "explicit_escalation", False)),
+                    "heavy_search_requested": bool(_field(baseline, "heavy_search_requested", False)),
+                },
+                resource_budget_ref=str(_field(baseline, "resource_budget_ref", "resource_budget:benchmark")),
+            )
+            provider_run = CompositeSyntheticGeometryProvider().run(request)
+            provider_result = provider_run.result
+            stage_statuses["geometry_provider"] = provider_result.status
+            _write_json(task_dir, artifact_index, "provider_run_manifest.json", provider_run.manifest.to_dict())
+            for index, usage in enumerate(provider_run.resource_usage_reports):
+                _write_json(task_dir, artifact_index, f"resource_usage_report_{index}.json", usage)
+        elif geometry_solve_enabled:
+            stage_statuses["geometry_provider"] = "skipped_after_extraction_reject"
+        else:
+            stage_statuses["geometry_provider"] = "disabled_by_baseline"
+
+        final_report = None
+        final_verify_enabled = bool(_field(baseline, "final_verify_enabled", True))
+        if final_verify_enabled and lean_result.status == "passed":
+            final_report = final_gate.verify_file(
+                lean_text,
+                theorem_path,
+                local_theorem_name,
+                f"obligation:{entry_id}",
+                proof_use_provenance={
+                    "geometry_extraction_report_ref": extraction_report.report_id,
+                    "goal_anchor_ref": goal_anchor_ref,
+                    "protected_statement_hash": goal_anchor.protected_statement_hash,
+                    "target_library_manifest_hash": TARGET_LIBRARY_MANIFEST_HASH,
+                },
+            )
+            stage_statuses["final_verify"] = final_report.lean_status
+            _write_json(task_dir, artifact_index, "final_verify_report.json", final_report.to_dict())
+        else:
+            stage_statuses["final_verify"] = "disabled_or_initial_compile_failed"
+            if lean_result.status != "passed":
+                blockers.append("lean_initial_compile_failed")
+
+        _write_json(task_dir, artifact_index, "selected_implementations.json", _selected_to_dict(selected))
+        if provider_result is not None:
+            _write_json(task_dir, artifact_index, "provider_result.json", provider_result.to_dict())
+        controller_strategy_log = {
+            "schema_version": "1.0.0",
+            "baseline_id": baseline_id,
+            "geometry_solve_enabled": geometry_solve_enabled,
+            "final_verify_enabled": final_verify_enabled,
+            "task_category": _field(task, "task_category", "unknown"),
+        }
+        _write_json(task_dir, artifact_index, "controller_strategy_log.json", controller_strategy_log)
+
+        proof_use_status = final_report.proof_use_status if final_report is not None else "not_allowed"
+        expected_reject = _field(task, "expected_extraction_status", "") == "safe_rejected"
+        if expected_reject and extraction_report.status == "safe_rejected":
+            status = "safe_rejected"
+        elif proof_use_status == "final_theorem":
+            status = "verified"
+        else:
+            status = "blocked"
+            if not blockers:
+                blockers.append("final_verify_not_final_theorem")
+
+        result = TaskRunResult(
+            schema_version="1.0.0",
+            run_id=f"task_run:{baseline_id}:{entry_id}",
+            task_entry_id=entry_id,
+            baseline_id=baseline_id,
+            status=status,
+            theorem_file_path=theorem_path.as_posix(),
+            theorem_name=theorem_name,
+            stage_statuses=stage_statuses,
+            artifact_index=artifact_index,
+            blockers=tuple(blockers),
+            proof_use_status=proof_use_status,
+        )
+        _write_json(task_dir, artifact_index, "task_result.json", result.to_dict())
+        _write_json(task_dir, artifact_index, "artifact_index.json", artifact_index)
+        return result
+
     def run_fixture(
         self,
         *,
@@ -378,3 +527,37 @@ def _apply_worker_patch(original_text: str, trace_compilation: Any) -> str:
     if trace_compilation.lean_patch_candidate_ref is None:
         raise ValueError("cannot apply worker patch without lean_patch_candidate_ref")
     return original_text.replace("  trivial", "  exact True.intro")
+
+
+def _field(value: Any, name: str, default: Any = None) -> Any:
+    if isinstance(value, dict):
+        return value.get(name, default)
+    return getattr(value, name, default)
+
+
+def _selected_to_dict(selected: Any) -> dict[str, Any]:
+    if selected is None:
+        return {"schema_version": "1.0.0", "selected_implementations_ref": "not_configured"}
+    if isinstance(selected, dict):
+        return selected
+    if hasattr(selected, "model_dump"):
+        return selected.model_dump(mode="json")
+    if hasattr(selected, "to_dict"):
+        return selected.to_dict()
+    return {"schema_version": "1.0.0", "selected_implementations_ref": str(selected)}
+
+
+def _write_json(directory: Path, index: dict[str, str], filename: str, payload: Any) -> None:
+    path = directory / filename
+    path.write_text(json_dumps(payload) + "\n", encoding="utf-8")
+    index[filename] = str(path)
+
+
+def json_dumps(payload: Any) -> str:
+    import json
+
+    return json.dumps(payload, indent=2, sort_keys=True)
+
+
+def _safe_path_part(value: str) -> str:
+    return "".join(char if char.isalnum() or char in {"-", "_"} else "_" for char in value)

@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A-patch
-status: V03A_PATCH_T43_READY
+status: V03A_PATCH_T44_READY
 created: 2026-06-13
 last_updated: 2026-06-13
 base_spec: MARP-GEOLEAN-BASE-004
@@ -60,7 +60,7 @@ The user approved importing the v0.3A patch bundle on 2026-06-13. Patch import e
 
 The repo has a partially implemented full-rebase track, but v0.3A deviation audit shows it is not sufficient for `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
 
-The next implementation pass must continue the v0.3A hardening tasks, starting with the real-task standard geometry loop in T43.
+The next implementation pass must continue the v0.3A hardening tasks, starting with artifact-derived Level2 matrix execution in T44.
 
 ## Current Task Pointer
 
@@ -388,22 +388,27 @@ Completed task:
 T42 — Nontrivial LeanGeoSubsetV1 corpus replacement
 ```
 
-Current task:
+Completed task:
 
 ```text
 T43 — Real task standard geometry loop
 ```
 
-Current task files changed in T42:
+Current task:
 
 ```text
-benchmarks/leangeo/RealSmokeCorpus.lean
-benchmarks/geometry/leangeo_real_smoke.jsonl
-benchmarks/geometry/geometry_level2_pilot.jsonl
-benchmarks/geometry/rejected_by_extraction.jsonl
-scripts/check_level2_corpus_nontrivial.py
-tests/unit/test_geometry_corpus_manifests.py
-docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t42_level2_corpus_nontrivial.md
+T44 — Artifact-derived Level2 matrix
+```
+
+Current task files changed in T43:
+
+```text
+plugins/geometry_synthetic/standard_loop.py
+plugins/geometry_synthetic/evaluation.py
+src/math_auto_research/lean_integration/lean_port.py
+scripts/check_no_fixture_standard_loop_release.py
+tests/unit/test_geometry_standard_loop.py
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t43_real_task_standard_loop.md
 docs/ai/ACTIVE_CONTEXT.md
 ```
 
@@ -433,7 +438,7 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
 Allowed:
 
 ```text
-BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T42 nontrivial corpus hardening is complete. T43 is ready to implement.
+BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T43 real-task standard loop is complete. T44 is ready to implement.
 No v0.3A completion claim is admitted, and no R-ID is VERIFIED.
 ```
 

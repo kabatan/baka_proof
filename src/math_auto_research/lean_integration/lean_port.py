@@ -32,8 +32,14 @@ class LeanPort:
         self.governor = governor or ResourceGovernor()
 
     def compile_file(self, path: Path, budget: ResourceRequest | None = None) -> LeanCompileResult:
-        request = budget or ResourceRequest(component="lean_file", engine_role="lean_build", budget="tiny", timeout_sec=30)
-        report = run_guarded_process([self.lean_executable, str(path)], request, self.governor)
+        request = budget or ResourceRequest(component="lean_file", engine_role="lean_build", budget="tiny", timeout_sec=120)
+        if Path("lakefile.lean").exists() and _is_within_workspace(path):
+            command = [self.lake_executable, "build"]
+        elif Path("lakefile.lean").exists():
+            command = [self.lake_executable, "env", "lean", str(path)]
+        else:
+            command = [self.lean_executable, str(path)]
+        report = run_guarded_process(command, request, self.governor)
         return self._compile_result(report)
 
     def check_file(self, path: Path) -> LeanCompileResult:
@@ -59,3 +65,11 @@ class LeanPort:
             returncode=0 if report["exit_status"] == "completed" else 1,
             resource_usage_report=report,
         )
+
+
+def _is_within_workspace(path: Path) -> bool:
+    try:
+        path.resolve().relative_to(Path.cwd().resolve())
+        return True
+    except ValueError:
+        return False
