@@ -8,6 +8,7 @@ from pathlib import Path
 from math_auto_research.schema_validation import validate_artifact
 from plugins.geometry_synthetic.rules import GeoTraceStep, GeoTraceV1
 from plugins.geometry_synthetic.trace_compiler import TraceCompiler
+from plugins.geometry_synthetic.trace.trace_compiler import TraceCompiler as PlanPathTraceCompiler
 
 
 def supported_trace() -> GeoTraceV1:
@@ -30,6 +31,9 @@ def supported_trace() -> GeoTraceV1:
 
 
 class TraceCompilerTest(unittest.TestCase):
+    def test_plan_path_trace_compiler_exports_compiler(self) -> None:
+        self.assertIs(PlanPathTraceCompiler, TraceCompiler)
+
     def test_supported_trace_compiles_to_lean_patch_candidate(self) -> None:
         result = TraceCompiler().compile(supported_trace())
         self.assertEqual(result.status, "compiled")
