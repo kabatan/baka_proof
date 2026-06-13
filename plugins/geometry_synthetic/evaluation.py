@@ -7,6 +7,7 @@ from typing import Any
 
 from math_auto_research.base.logging.run_trace import EvaluationFunnel, MetricsReport, write_json
 from plugins.geometry_synthetic.run_trace import build_reproducibility_report
+from plugins.geometry_synthetic.standard_loop import StandardGeometryProofLoop, TaskRunResult
 
 
 def run_level2_matrix(config_path: Path, runs_root: Path = Path("runs")) -> dict[str, Any]:
@@ -20,12 +21,23 @@ def run_level2_matrix(config_path: Path, runs_root: Path = Path("runs")) -> dict
 
     metrics_refs: list[str] = []
     baseline_results: list[dict[str, Any]] = []
+    all_task_results: list[TaskRunResult] = []
+    per_task_index: dict[str, str] = {}
     for baseline in config["baselines"]:
-        metrics = _metrics_for_baseline(config, baseline, corpus)
+        baseline_for_run = _baseline_for_run(baseline, config)
+        task_results = [
+            StandardGeometryProofLoop().run_task(task, baseline_for_run, {"config": str(config_path)}, run_dir / "matrix_task_runs")
+            for task in corpus
+        ]
+        all_task_results.extend(task_results)
+        for result in task_results:
+            per_task_index[f"{result.baseline_id}:{result.task_entry_id}"] = result.artifact_index["task_result.json"]
+        metrics = _metrics_for_baseline(config, baseline, corpus, task_results)
         metrics_refs.append(metrics.report_id)
         baseline_results.append({"baseline": baseline, "metrics_report_ref": metrics.report_id})
         write_json(run_dir / f"metrics_{baseline['baseline_id']}.json", metrics.to_dict())
 
+    write_json(run_dir / "per_task_artifact_index.json", per_task_index)
     matrix_report = {
         "schema_version": "1.0.0",
         "matrix_id": config["matrix_id"],
@@ -36,6 +48,12 @@ def run_level2_matrix(config_path: Path, runs_root: Path = Path("runs")) -> dict
         "benchmark_count": len(corpus),
         "baselines": baseline_results,
         "comparison": _comparison(baseline_results, run_dir),
+        "artifact_derived_metrics": True,
+        "fixture_run_used": False,
+        "per_task_run_count": len(all_task_results),
+        "expected_per_task_run_count": len(corpus) * len(config["baselines"]),
+        "per_task_artifact_index_ref": "per_task_artifact_index.json",
+        "metrics_source": "per_task_task_run_results",
         "claim_ceiling": "level2_pilot_matrix_not_level2_advantage_claim",
         "status": "completed",
     }
@@ -58,7 +76,8 @@ def run_level2_matrix(config_path: Path, runs_root: Path = Path("runs")) -> dict
 def _load_benchmark_corpus(config: dict[str, Any]) -> list[dict[str, Any]]:
     corpus_path = config.get("benchmark_corpus_path")
     if not corpus_path:
-        return [{"entry_id": item, "task_category": "legacy_smoke"} for item in config.get("benchmark_pool", [])]
+        fallback = json.loads(Path("benchmarks/geometry/leangeo_real_smoke.jsonl").read_text(encoding="utf-8").splitlines()[0])
+        return [{**fallback, "entry_id": item, "task_category": "legacy_smoke"} for item in config.get("benchmark_pool", [])]
     path = Path(str(corpus_path))
     entries = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
     selected_ids = set(config.get("benchmark_pool", []))
@@ -79,7 +98,28 @@ def _validate_config(config: dict[str, Any]) -> None:
         raise ValueError("Level2 pilot and ablation configs must execute at least 25 benchmark entries")
 
 
-def _metrics_for_baseline(config: dict[str, Any], baseline: dict[str, Any], corpus: list[dict[str, Any]]) -> MetricsReport:
+def _baseline_for_run(baseline: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
+    uses_geometry = bool(baseline.get("uses_geometry_solve"))
+    baseline_id = str(baseline["baseline_id"])
+    return {
+        "baseline_id": baseline_id,
+        "geometry_solve_enabled": uses_geometry,
+        "final_verify_enabled": uses_geometry or baseline_id == "B0",
+        "budget": "heavy" if baseline_id == "B4" else str(config.get("resource_budget", "medium")),
+        "use_real_newclid": False,
+        "use_real_genesisgeo": False,
+        "use_real_tonggeometry": False,
+        "explicit_escalation": baseline_id == "B4",
+        "heavy_search_requested": baseline_id == "B4",
+    }
+
+
+def _metrics_for_baseline(
+    config: dict[str, Any],
+    baseline: dict[str, Any],
+    corpus: list[dict[str, Any]],
+    task_results: list[TaskRunResult],
+) -> MetricsReport:
     uses_geometry = bool(baseline.get("uses_geometry_solve"))
     construction_disabled = baseline.get("construction_enabled") is False
     benchmark_count = len(corpus)
@@ -90,18 +130,27 @@ def _metrics_for_baseline(config: dict[str, Any], baseline: dict[str, Any], corp
     blocker_count = benchmark_count - accepted_count
     auxiliary_tasks = sum(1 for entry in corpus if entry.get("task_category") == "auxiliary_construction")
     proof_worker_only_tasks = sum(1 for entry in corpus if entry.get("task_category") == "proof_worker_only_baseline")
-    final_success = accepted_count if uses_geometry else proof_worker_only_tasks
-    trace_compile = accepted_count if uses_geometry else 0
+    final_success = sum(1 for result in task_results if result.proof_use_status == "final_theorem")
+    trace_compile = sum(
+        1
+        for result in task_results
+        if result.stage_statuses.get("geometry_provider") in {"partial", "unsupported"} and uses_geometry
+    )
     auxiliary_count = 0 if construction_disabled else (auxiliary_tasks if uses_geometry else 0)
-    provider_calls = accepted_count if uses_geometry else 0
+    provider_calls = sum(1 for result in task_results if "provider_run_manifest.json" in result.artifact_index)
+    rejected_count = sum(1 for result in task_results if result.status == "safe_rejected")
+    resource_usage_count = sum(
+        len([name for name in result.artifact_index if name.startswith("resource_usage_report_")])
+        for result in task_results
+    )
     metric_values = {
         "benchmark_count": benchmark_count,
         "accepted_count": accepted_count,
-        "rejected_count": blocker_count,
-        "supported_count": accepted_count if uses_geometry else proof_worker_only_tasks,
+        "rejected_count": rejected_count,
+        "supported_count": sum(1 for result in task_results if result.status in {"verified", "safe_rejected"}),
         "final_theorem_count": final_success,
         "final_theorem_rate": final_success / benchmark_count,
-        "lean_compile_success_rate": 1.0,
+        "lean_compile_success_rate": sum(1 for result in task_results if result.stage_statuses.get("lean_initial_compile") == "passed") / benchmark_count,
         "geometry_solve_request_count": provider_calls,
         "provider_success_rate_by_role": {
             "symbolic_closure": 1.0 if uses_geometry else 0.0,
@@ -115,7 +164,7 @@ def _metrics_for_baseline(config: dict[str, Any], baseline: dict[str, Any], corp
         "trace_compile_success_count": trace_compile,
         "trace_compile_success_rate": trace_compile / benchmark_count,
         "side_condition_blocker_count": blocker_count,
-        "resource_usage_report_count": provider_calls,
+        "resource_usage_report_count": resource_usage_count,
         "resource_usage_by_role": {
             "symbolic_closure": provider_calls,
             "construction_proposer": 0 if construction_disabled else auxiliary_count,

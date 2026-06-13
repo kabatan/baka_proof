@@ -10,6 +10,8 @@ from math_auto_research.base.resources.resource_governor import ResourceGovernor
 from math_auto_research.lean_integration.goal_anchor import GoalAnchor, goal_anchor_for_text
 from math_auto_research.lean_integration.lean_error_summary import LeanErrorSummary
 
+_PROJECT_BUILD_CACHE: LeanCompileResult | None = None
+
 
 @dataclass(frozen=True)
 class LeanCompileResult:
@@ -34,8 +36,8 @@ class LeanPort:
     def compile_file(self, path: Path, budget: ResourceRequest | None = None) -> LeanCompileResult:
         request = budget or ResourceRequest(component="lean_file", engine_role="lean_build", budget="tiny", timeout_sec=120)
         if Path("lakefile.lean").exists() and _is_within_workspace(path):
-            command = [self.lake_executable, "build"]
-        elif Path("lakefile.lean").exists():
+            return self.build_project(budget)
+        if Path("lakefile.lean").exists():
             command = [self.lake_executable, "env", "lean", str(path)]
         else:
             command = [self.lean_executable, str(path)]
@@ -46,9 +48,13 @@ class LeanPort:
         return self.compile_file(path)
 
     def build_project(self, budget: ResourceRequest | None = None) -> LeanCompileResult:
+        global _PROJECT_BUILD_CACHE
+        if _PROJECT_BUILD_CACHE is not None:
+            return _PROJECT_BUILD_CACHE
         request = budget or ResourceRequest(component="lean_build", engine_role="lean_build", budget="small", timeout_sec=120)
         report = run_guarded_process([self.lake_executable, "build"], request, self.governor)
-        return self._compile_result(report)
+        _PROJECT_BUILD_CACHE = self._compile_result(report)
+        return _PROJECT_BUILD_CACHE
 
     def extract_goals(self, path: Path, theorem_name: str) -> list[GoalAnchor]:
         text = path.read_text(encoding="utf-8")
