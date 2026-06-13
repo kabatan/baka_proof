@@ -7,6 +7,7 @@ from pathlib import Path
 
 from math_auto_research.schema_validation import validate_artifact
 from plugins.geometry_synthetic.construction import AuxiliaryConstructionCandidateV1, ConstructionCompiler
+from plugins.geometry_synthetic.construction.construction_compiler import ConstructionCompiler as PlanPathConstructionCompiler
 
 
 def candidate_fixture(kind: str = "line_through_two_distinct_points") -> AuxiliaryConstructionCandidateV1:
@@ -23,6 +24,9 @@ def candidate_fixture(kind: str = "line_through_two_distinct_points") -> Auxilia
 
 
 class ConstructionCompilerTest(unittest.TestCase):
+    def test_plan_path_construction_compiler_exports_compiler(self) -> None:
+        self.assertIs(PlanPathConstructionCompiler, ConstructionCompiler)
+
     def test_candidate_and_compilation_schemas_validate(self) -> None:
         candidate = candidate_fixture()
         result = ConstructionCompiler().compile(candidate)
@@ -58,6 +62,22 @@ class ConstructionCompilerTest(unittest.TestCase):
         result = ConstructionCompiler().compile(candidate)
         self.assertEqual(result.status, "blocked")
         self.assertIn("missing_side_conditions", result.blockers)
+        self.assertIn("missing_nondegeneracy_side_conditions", result.blockers)
+
+    def test_missing_dependency_refs_are_blocked(self) -> None:
+        candidate = AuxiliaryConstructionCandidateV1(
+            "1.0.0",
+            "aux_construction_candidate:missing-deps",
+            "line_through_two_distinct_points",
+            "provider_run:fixture",
+            ("l_aux:Line",),
+            (),
+            "search_hint_for_symbolic_retry",
+            ("A != B",),
+        )
+        result = ConstructionCompiler().compile(candidate)
+        self.assertEqual(result.status, "blocked")
+        self.assertIn("missing_dependency_refs", result.blockers)
 
 
 if __name__ == "__main__":

@@ -88,8 +88,13 @@ class ConstructionCompiler:
         blockers: list[str] = []
         if candidate.construction_kind not in SUPPORTED_CONSTRUCTION_KINDS:
             blockers.append(f"unsupported_construction_kind:{candidate.construction_kind}")
+        if not candidate.dependencies:
+            blockers.append("missing_dependency_refs")
         if not candidate.side_conditions:
             blockers.append("missing_side_conditions")
+        required = candidate.to_dict()["required_side_conditions"]
+        if not required["nondegeneracy"]:
+            blockers.append("missing_nondegeneracy_side_conditions")
         generated = tuple(f"obligation:{condition}" for condition in candidate.side_conditions)
         return ConstructionCheckResult(
             "1.0.0",
