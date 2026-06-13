@@ -72,9 +72,10 @@ class V03ARealVsFixtureIntegrationTest(unittest.TestCase):
         manifest = load_json("benchmarks/leangeo/real_smoke_corpus.yaml")
         self.assertEqual(manifest["claim_ceiling"], "limited_real_smoke_corpus_not_arbitrary_leangeo_support")
         active_context = (ROOT / "docs/ai/ACTIVE_CONTEXT.md").read_text(encoding="utf-8")
-        self.assertIn("fixture-level release acceptance only", active_context)
-        self.assertIn("Real Newclid / GenesisGeo / TongGeometry integration remains unverified", active_context)
-        self.assertIn("Do not claim full LeanGeo theorem-corpus build", active_context)
+        self.assertIn("No v0.3 completion claim is admitted", active_context)
+        self.assertIn("real GenesisGeo integration under BASE-004", active_context)
+        self.assertIn("real TongGeometry integration under BASE-004", active_context)
+        self.assertIn("arbitrary LeanGeo support", active_context)
 
 
 if __name__ == "__main__":

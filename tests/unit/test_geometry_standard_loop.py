@@ -2,13 +2,15 @@ from __future__ import annotations
 
 import unittest
 
+from math_auto_research.workflow.standard_geometry_loop import StandardGeometryLoopContract
 from plugins.geometry_synthetic.standard_loop import StandardGeometryProofLoop
-from math_auto_research.workflow.standard_geometry_loop import StandardGeometryProofLoop as WorkflowStandardGeometryProofLoop
 
 
 class GeometryStandardLoopTest(unittest.TestCase):
     def test_plan_path_standard_geometry_loop_exports_loop(self) -> None:
-        self.assertIs(WorkflowStandardGeometryProofLoop, StandardGeometryProofLoop)
+        contract = StandardGeometryLoopContract()
+        self.assertIn("final_verify_gate", contract.required_stages)
+        self.assertEqual(contract.final_closure_stage, "final_verify_gate")
 
     def test_standard_loop_closes_target_only_after_final_verify(self) -> None:
         result = StandardGeometryProofLoop().run_fixture()
