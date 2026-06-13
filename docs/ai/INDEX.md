@@ -49,12 +49,15 @@ Primary documents:
 
 Purpose: Guardian-managed full v0.3 experiment-ready rebase track targeting `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
 
-Status: Base Spec/Plan Guardian-admitted for full v0.3 implementation preparation; implementation permission is not yet recorded.
+Status: Base Spec/Plan Guardian-admitted and user-approved. v0.3A patch is installed and user-approved. T38 patch import/deviation audit is complete; T39 is ready.
 
 Primary documents:
 
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md` — candidate correctness authority for `MARP-GEOLEAN-BASE-004`.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/PLAN.md` — candidate execution contract for `MARP-GEOLEAN-PLAN-004`.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md` — correctness authority for `MARP-GEOLEAN-BASE-004`, amended by `MARP-GEOLEAN-BASE-004A`.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/PLAN.md` — execution contract for `MARP-GEOLEAN-PLAN-004`, amended by `MARP-GEOLEAN-PLAN-004A`.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3A.md` — active Base Spec patch `MARP-GEOLEAN-BASE-004A`.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3A.md` — active Plan patch `MARP-GEOLEAN-PLAN-004A`.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACCEPTANCE_PATCH_v0_3A.md` — active acceptance patch.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md` — source-to-requirement traceability aid.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md` — repository cleanup directive for the rebase.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/ACCEPTANCE_MATRIX.md` — final acceptance evidence and command matrix.

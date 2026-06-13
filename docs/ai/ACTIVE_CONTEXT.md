@@ -1,12 +1,15 @@
 ---
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
-version: v0.3-full-rebase
-status: V03_FULL_REBASE_T37_IN_PROGRESS
+version: v0.3-full-rebase+v0.3A-patch
+status: V03A_PATCH_T39_READY
 created: 2026-06-13
 last_updated: 2026-06-13
 base_spec: MARP-GEOLEAN-BASE-004
 plan: MARP-GEOLEAN-PLAN-004
+active_patches:
+  - MARP-GEOLEAN-BASE-004A
+  - MARP-GEOLEAN-PLAN-004A
 purpose: Minimal navigation state for the full v0.3 experiment-ready rebase track.
 authority: Navigation only; never overrides the Base Spec, Plan, Source Map, reviewer records, or user approval state.
 ---
@@ -15,7 +18,7 @@ authority: Navigation only; never overrides the Base Spec, Plan, Source Map, rev
 
 ## Status
 
-Guardian Lane is active for the geometry x Lean v0.3 full rebase preparation track.
+Guardian Lane is active for the geometry x Lean v0.3 full rebase track, now amended by the v0.3A patch.
 
 The previous v0.3A limited real-integration recovery remains recorded under:
 
@@ -24,7 +27,7 @@ The previous v0.3A limited real-integration recovery remains recorded under:
 Current mission:
 
 ```text
-Rebase kabatan/baka_proof from the fixture-level / limited-recovery implementation state to the full v0.3 experiment-ready implementation defined by MARP-GEOLEAN-BASE-004 and MARP-GEOLEAN-PLAN-004.
+Rebase kabatan/baka_proof from the fixture-level / limited-recovery implementation state to the full v0.3 experiment-ready implementation defined by MARP-GEOLEAN-BASE-004 / PLAN-004, as amended by MARP-GEOLEAN-BASE-004A / PLAN-004A.
 ```
 
 ## Implementation Permission
@@ -37,20 +40,27 @@ Implementation permission is recorded in:
 
 Codex may execute `MARP-GEOLEAN-PLAN-004` within the admitted `MARP-GEOLEAN-BASE-004` scope.
 
+The user approved importing the v0.3A patch bundle on 2026-06-13. Patch import evidence is recorded in:
+
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3a_patch_import.md`
+
 ## Read First
 
 1. `docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md`
 2. `docs/ai/changes/geometry-lean-v0_3-full-rebase/PLAN.md`
-3. `docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md`
-4. `docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md`
-5. Current Plan task and required R-IDs/MECHs.
-6. Files in the admitted ReadSet before editing.
+3. `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3A.md`
+4. `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3A.md`
+5. `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACCEPTANCE_PATCH_v0_3A.md`
+6. `docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md`
+7. `docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md`
+8. Current Plan task and required R-IDs/MECHs.
+9. Files in the admitted ReadSet before editing.
 
 ## Current Known Problem
 
-The repo currently contains historical root-level Guardian drafts and a fixture/limited-recovery implementation state. That state is not sufficient for `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
+The repo has a partially implemented full-rebase track, but v0.3A deviation audit shows it is not sufficient for `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
 
-The next implementation pass must delete or retire drifted guidance and implement the real v0.3 contracts under `BASE-004`.
+The next implementation pass must implement the v0.3A hardening tasks, starting with dependency claim-profile reporting in T39.
 
 ## Current Task Pointer
 
@@ -342,17 +352,35 @@ Completed task:
 T36 — Release acceptance script
 ```
 
-Current task:
+Completed task:
 
 ```text
 T37 — Final evidence, reviews, closure
 ```
 
-Current task files changed:
+Completed task:
 
 ```text
-docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
-docs/ai/changes/geometry-lean-v0_3-full-rebase/CLOSURE.md
+T38 — Install patch authority and record current deviation audit
+```
+
+Current task:
+
+```text
+T39 — Dependency claim-profile schema and probe update
+```
+
+Current task files changed in T38:
+
+```text
+docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/PLAN.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/README.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3a_patch_import.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3a_deviation_audit.md
+docs/ai/ACTIVE_CONTEXT.md
+docs/ai/INDEX.md
 ```
 
 ## Non-Negotiables
@@ -367,7 +395,8 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/CLOSURE.md
 - No external provider execution outside `ResourceGovernor`.
 - No theorem statement mutation.
 - No final theorem claim without `FinalVerifyGate`.
-- No v0.3 full completion claim without real Newclid, GenesisGeo, TongGeometry, LeanGeo corpus, and release acceptance evidence.
+- No v0.3 full completion claim without all original and v0.3A patch release blockers passing.
+- No TongGeometry model-backed claim without tokenizer/lm_s/lm_l/cls, aggregate checkpoint hash, and model_inference_status=available.
 
 ## Evidence Folder
 
@@ -380,16 +409,15 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
 Allowed:
 
 ```text
-BASE-004 / PLAN-004 are admitted and user-approved for implementation. T00, T01, T02, RC-0, T03, T04, T05, T06, T07, RC-1, T08, T09, T10, T11, T12, RC-2, T13, T14, T15, RC-3, T16, T17, T18, T19, T20, RC-4, T21, T22, T23, T24, T25, RC-5, T26, T27, T28, T29, RC-6, T30, T31, T32, T33, RC-7, T34, T35, and T36 are complete. T37 is in progress.
-No v0.3 completion claim is admitted, and no R-ID is VERIFIED.
+BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T38 patch authority install and deviation audit are complete. T39 is ready to implement.
+No v0.3A completion claim is admitted, and no R-ID is VERIFIED.
 ```
 
 Not allowed yet:
 
 ```text
 V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY
-real GenesisGeo integration under BASE-004
-real TongGeometry integration under BASE-004
+V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY
 real Level 2 advantage
 arbitrary LeanGeo support
 open-problem solving
@@ -414,3 +442,7 @@ Stop and request decision if any work requires:
 - bypassing `ResourceGovernor`;
 - mutating a protected theorem statement;
 - claiming completion without fresh evidence.
+- fabricating TongGeometry model checkpoint evidence;
+- satisfying corpus nontriviality by metadata labels only;
+- satisfying matrix acceptance without per-task artifacts;
+- weakening any v0.3A patch blocker.

@@ -1,6 +1,6 @@
 # Closure — geometry x Lean v0.3 full rebase
 
-Status: BLOCKED_FOR_V0_3_FULL_IMPLEMENTED_EXPERIMENT_READY
+Status: PRE_PATCH_BLOCKED_CLOSURE_SUPERSEDED_BY_V0_3A_REOPENED_WORK
 
 ## Authority
 
@@ -15,6 +15,18 @@ Approved Plan:
 ```text
 docs/ai/changes/geometry-lean-v0_3-full-rebase/PLAN.md
 ```
+
+Active amendments after this blocked closure:
+
+```text
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3A.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3A.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACCEPTANCE_PATCH_v0_3A.md
+```
+
+This file records the pre-v0.3A blocked closure state. Current implementation
+work has been reopened under the v0.3A patch, starting at T39. Do not treat this
+file as final closure for the active v0.3A track.
 
 Implementation permission:
 

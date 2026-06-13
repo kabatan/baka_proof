@@ -238,6 +238,71 @@ git diff --check
 status: passed
 ```
 
+## 2026-06-13 T38 final verification rerun after v0.3A patch import
+
+```text
+stale marker sweep
+status: passed
+observed: no active full-rebase docs matched the stale state marker set.
+
+make test-unit TEST_FILTER=release_acceptance
+status: passed
+observed: 8 tests passed.
+
+git diff --check
+status: passed
+observed: CRLF normalization warnings only.
+```
+
+## v0.3A patch import and T38 preparation
+
+```text
+C:/Users/bakat/Downloads/guardian_geometry_lean_v0_3A_patch_bundle.zip
+status: imported
+observed: patch bundle installed under
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/.
+
+Installed active patch documents:
+- patches/BASE_SPEC_PATCH_v0_3A.md
+- patches/PLAN_PATCH_v0_3A.md
+- patches/ACCEPTANCE_PATCH_v0_3A.md
+- patches/CODEX_HANDOFF_PATCH_v0_3A.md
+- patches/REPO_AUDIT_SUMMARY_v0_3A.md
+- patches/v0_3A_patch_source_sha256sums.txt
+
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3a_patch_import.md
+status: added
+observed: records user approval, source bundle hashes, installed paths, and
+reviewer status.
+
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3a_deviation_audit.md
+status: added
+observed: records current deviations for dependency claim profile, corpus
+nontriviality, matrix artifact derivation, standard-loop release path, provider
+layout, and missing patch checkers.
+
+docs/ai/ACTIVE_CONTEXT.md
+status: updated
+observed: T38 marked complete; current task is T39.
+
+T38 file presence check
+status: passed
+observed: BASE_SPEC_PATCH_v0_3A.md, PLAN_PATCH_v0_3A.md,
+ACCEPTANCE_PATCH_v0_3A.md, and v0_3a_deviation_audit.md exist.
+
+make test-unit TEST_FILTER=release_acceptance
+status: passed
+observed: 8 tests OK.
+
+rg stale draft/pending markers
+status: passed
+observed: no active full-rebase docs matched the stale draft/pending marker set
+recorded in the command.
+
+git diff --check
+status: passed
+```
+
 ## TongGeometry model-backed probe hardening
 
 ```text

@@ -1,8 +1,8 @@
 ---
 title: Change Index — geometry x Lean v0.3 full rebase
 change_id: geometry-lean-v0_3-full-rebase
-version: v0.3-full-rebase
-status: GUARDIAN_BOUNDARY_ADMITTED_PENDING_IMPLEMENTATION_APPROVAL
+version: v0.3-full-rebase+v0.3A-patch
+status: USER_APPROVED_V0_3A_PATCH_INSTALLED_T39_READY
 created: 2026-06-13
 purpose: Index the Guardian document set for the full v0.3 experiment-ready rebase track.
 authority: Navigation only; individual documents declare their own authority.
@@ -12,18 +12,21 @@ authority: Navigation only; individual documents declare their own authority.
 
 ## Purpose
 
-This change prepares a new Guardian track for:
+This change prepares and executes the Guardian track for:
 
 ```text
 V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY
 ```
 
-It supersedes the previous fixture-level and limited v0.3A recovery tracks only after Guardian admission and user implementation approval are recorded.
+It supersedes the previous fixture-level and limited v0.3A recovery tracks only after Guardian admission and user implementation approval are recorded. It is now amended by the v0.3A patch documents under `patches/`.
 
 ## Primary Documents
 
-- `BASE_SPEC.md` — candidate correctness authority for `MARP-GEOLEAN-BASE-004`.
-- `PLAN.md` — candidate execution contract for `MARP-GEOLEAN-PLAN-004`.
+- `BASE_SPEC.md` — correctness authority for `MARP-GEOLEAN-BASE-004`, amended by `patches/BASE_SPEC_PATCH_v0_3A.md`.
+- `PLAN.md` — execution contract for `MARP-GEOLEAN-PLAN-004`, amended by `patches/PLAN_PATCH_v0_3A.md`.
+- `patches/BASE_SPEC_PATCH_v0_3A.md` — active Base Spec amendment `MARP-GEOLEAN-BASE-004A`.
+- `patches/PLAN_PATCH_v0_3A.md` — active Plan amendment `MARP-GEOLEAN-PLAN-004A`.
+- `patches/ACCEPTANCE_PATCH_v0_3A.md` — active release acceptance amendment.
 - `SOURCE_MAP.md` — source-to-requirement traceability aid.
 - `REFACTOR_DIRECTIVE.md` — repository cleanup directive for T01/T02 and later implementation work.
 - `ACCEPTANCE_MATRIX.md` — concise evidence and command matrix for final acceptance.
@@ -33,9 +36,11 @@ It supersedes the previous fixture-level and limited v0.3A recovery tracks only 
 
 - `evidence/bundle_sha256sums.txt` — hashes supplied with the research-agent bundle.
 - `evidence/bundle_import_preparation.md` — local import and hash-verification record.
+- `evidence/v0_3a_patch_import.md` — user-approved v0.3A patch import record.
+- `evidence/v0_3a_deviation_audit.md` — current deviation audit for T38.
 
 ## Current Gate
 
-Current gate: explicit user implementation approval for `MARP-GEOLEAN-BASE-004` and `MARP-GEOLEAN-PLAN-004`.
+Current gate: T39 implementation under `MARP-GEOLEAN-BASE-004A` / `MARP-GEOLEAN-PLAN-004A`.
 
-Implementation code changes are blocked until explicit user implementation approval is recorded.
+The patch is installed and user-approved. The repo is not yet v0.3A complete.

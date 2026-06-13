@@ -3,7 +3,7 @@ title: "Repository Refactor Directive — geometry × Lean v0.3 full rebase"
 version: "v0.3-full-rebase"
 spec_id: "MARP-GEOLEAN-BASE-004"
 plan_id: "MARP-GEOLEAN-PLAN-004"
-status: "GUARDIAN_BOUNDARY_ADMITTED_PENDING_IMPLEMENTATION_APPROVAL"
+status: "USER_APPROVED_ACTIVE_WITH_V0_3A_PATCH"
 created: "2026-06-12"
 ---
 

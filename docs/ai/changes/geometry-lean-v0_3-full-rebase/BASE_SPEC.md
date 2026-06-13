@@ -2,7 +2,7 @@
 title: "Guardian Base Spec — geometry × Lean v0.3 full rebase implementation"
 spec_id: "MARP-GEOLEAN-BASE-004"
 version: "v0.3-full-rebase"
-status: "GUARDIAN_BOUNDARY_ADMITTED_PENDING_IMPLEMENTATION_APPROVAL"
+status: "USER_APPROVED_ACTIVE_WITH_V0_3A_PATCH"
 created: "2026-06-12"
 target_repo: "https://github.com/kabatan/baka_proof"
 supersedes:
@@ -11,6 +11,8 @@ supersedes:
   - "all root-level geometry_lean_guardian_* draft files in kabatan/baka_proof"
   - "all fixture-level completion claims for geometry × Lean v0.3"
 paired_plan: "MARP-GEOLEAN-PLAN-004"
+active_patches:
+  - "MARP-GEOLEAN-BASE-004A"
 lane: "Guardian Lane"
 ---
 
@@ -21,6 +23,8 @@ lane: "Guardian Lane"
 This Base Spec defines **what correctness means** for the next implementation pass in `kabatan/baka_proof`.
 
 This file is the implementation authority after user approval. The Plan, Active Context, Source Map, run notes, Codex memory, previous specs, root-level draft markdown, and implementation convenience choices must not weaken, reinterpret, or extend this Base Spec.
+
+This Base Spec is amended by `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3A.md`. The patch does not replace this file. It supersedes only the explicitly listed patched R-IDs, release blockers, and claim profiles; all other invariants in `MARP-GEOLEAN-BASE-004` remain in force.
 
 This Base Spec is intentionally detailed. Codex agents must implement the system by reading the R-IDs, MECHs, acceptance clauses, release blockers, and file-path requirements directly. If a Codex agent finds ambiguity, it must stop and report the ambiguity instead of inventing a simpler architecture.
 
