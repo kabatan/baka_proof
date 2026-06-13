@@ -7,6 +7,7 @@ from pathlib import Path
 
 from math_auto_research.workflow.release_acceptance import (
     _browser_suppressed_env,
+    _closure_claim_check,
     blocked_real_integrations,
     evaluate_release_acceptance,
     validate_checklist_item,
@@ -83,14 +84,18 @@ class ReleaseAcceptanceTest(unittest.TestCase):
         )
         self.assertIn(check["status"], {"blocked", "passed"})
 
-    def test_closure_not_allowed_section_does_not_trigger_overclaim(self) -> None:
+    def test_closure_claim_fails_when_current_blockers_are_open(self) -> None:
         report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)
         check = next(
             item
             for item in report["checks"]
             if item["check_id"] == "release_blocker_25_closure_claims_do_not_exceed_evidence"
         )
-        self.assertEqual(check["status"], "passed")
+        self.assertEqual(check["status"], "failed")
+
+    def test_closure_claim_passes_when_current_blockers_are_closed(self) -> None:
+        check = _closure_claim_check([])
+        self.assertEqual(check.status, "passed")
 
 
 if __name__ == "__main__":

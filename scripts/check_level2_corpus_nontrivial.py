@@ -65,6 +65,10 @@ def check_corpus(path: Path) -> list[str]:
     duplicates = [signature for signature, count in signatures.items() if count > 3]
     if duplicates:
         errors.append("duplicate_normalized_goal_signature:" + ",".join(sorted(duplicates)))
+    statement_shapes = Counter(_statement_shape(str(entry.get("theorem_statement", ""))) for entry in entries)
+    shape_duplicates = [shape for shape, count in statement_shapes.items() if shape and count > 3]
+    if shape_duplicates:
+        errors.append("duplicate_theorem_statement_shape:" + ",".join(sorted(shape_duplicates)))
 
     for entry in entries:
         label = str(entry.get("entry_id"))
@@ -94,6 +98,14 @@ def check_corpus(path: Path) -> list[str]:
             if snippet in lean_text:
                 errors.append(f"{label}:forbidden_toy_definition:{snippet}")
     return errors
+
+
+def _statement_shape(statement: str) -> str:
+    if " : " not in statement:
+        return statement.strip()
+    target = statement.rsplit(" : ", 1)[1].strip()
+    target = target.replace("level2_pilot_", "level2_pilot")
+    return " ".join(target.split())
 
 
 def main() -> int:

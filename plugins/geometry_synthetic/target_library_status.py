@@ -58,7 +58,7 @@ def build_target_library_status(manifest_path: Path) -> dict[str, Any]:
     if target_family != "LeanGeoSubsetV1":
         blockers.append("target_family is not LeanGeoSubsetV1")
     claim_ceiling = (
-        "target_subset_fixture_elaboration_only_until_reviewer_accepts_rc2"
+        "leangeo_subset_v1_available_not_arbitrary_leangeo_support"
         if compatible
         else "fixture_or_scaffold_only_until_target_dependency_resolves"
     )
@@ -82,8 +82,8 @@ def build_target_library_status(manifest_path: Path) -> dict[str, Any]:
         "wsl_install_status": "available" if wsl_compatible else "blocked",
         "native_windows_full_corpus_status": "blocked_by_windows_archive",
         "wsl_subset_elaboration_status": "available" if wsl_compatible else "blocked",
-        "namespace_discovery_status": "subset_fixture_elaborated" if compatible else "blocked",
-        "theorem_discovery_status": "subset_fixture_elaborated" if compatible else "blocked",
+        "namespace_discovery_status": "leangeo_subset_v1_available" if compatible else "blocked",
+        "theorem_discovery_status": "leangeo_subset_v1_available" if compatible else "blocked",
         "blockers": blockers,
         "claim_ceiling": claim_ceiling,
     }

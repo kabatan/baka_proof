@@ -1,115 +1,132 @@
+---
+title: "Closure — geometry x Lean v0.3 full rebase"
+status: "V0_3_CORE_EXPERIMENT_READY_PASSED_WITH_TONG_MODEL_BACKED_CLAIM_BLOCKED"
+created: "2026-06-13"
+base_spec: "MARP-GEOLEAN-BASE-004"
+plan: "MARP-GEOLEAN-PLAN-004"
+patches:
+  - "MARP-GEOLEAN-BASE-004A"
+  - "MARP-GEOLEAN-PLAN-004A"
+  - "MARP-GEOLEAN-ACCEPTANCE-004A"
+---
+
 # Closure — geometry x Lean v0.3 full rebase
 
-Status: PRE_PATCH_BLOCKED_CLOSURE_SUPERSEDED_BY_V0_3A_REOPENED_WORK
+## Final claim statuses
+
+```text
+V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: passed
+V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY: blocked
+```
+
+The core v0.3 experiment-ready implementation is complete under the approved Base Spec/Plan and v0.3A amendments. The separate TongGeometry model-backed heavy-search claim remains blocked because the tokenizer/lm_s/lm_l/cls checkpoint artifacts are not available and are classified as admitted unavailable external artifacts.
+
+This closure does not claim:
+
+```text
+real Level2 advantage observed
+arbitrary LeanGeo support
+open-problem solving
+PRODUCTION_SAFE
+R-ID VERIFIED
+```
 
 ## Authority
 
-Approved Base Spec:
+Approved authority documents:
 
 ```text
 docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md
-```
-
-Approved Plan:
-
-```text
 docs/ai/changes/geometry-lean-v0_3-full-rebase/PLAN.md
-```
-
-Active amendments after this blocked closure:
-
-```text
 docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3A.md
 docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3A.md
 docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACCEPTANCE_PATCH_v0_3A.md
 ```
 
-This file records the pre-v0.3A blocked closure state. Current implementation
-work has been reopened under the v0.3A patch, starting at T39. Do not treat this
-file as final closure for the active v0.3A track.
-
-Implementation permission:
+Implementation approval:
 
 ```text
 docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/user_approval.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3a_patch_import.md
 ```
 
-## Current Evidence Ceiling
+## Release acceptance
 
-The implementation has runnable pipeline components, real Newclid-compatible
-smoke coverage, model-smoked GenesisGeo-compatible construction-proposer
-coverage, Level2 pilot-matrix machinery, replay reporting, and release
-acceptance checks. RC8 review found that this is not enough to claim v0.3 full
-experiment readiness while TongGeometry model artifacts remain unavailable.
-
-## Open Blockers
-
-Release blocker 11 remains blocked. The latest release acceptance report lists
-one model-backed error:
+Latest release acceptance evidence:
 
 ```text
-missing_model_checkpoint:tonggeometry_compatible
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/release_acceptance_report.json
 ```
 
-Blocking R-IDs / clauses:
+Required Base Spec §21 evidence references:
 
 ```text
-R-SOLVER-005
-R-TEST-003
-Base Spec Section 20 release blocker 11
-Plan T25 / T36 / T37 closure gate
+repo audit:
+  docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/repo_audit.md
+dependency report:
+  docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/dependency_resolution.json
+resource profile:
+  docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/local_resource_profile.json
+selected implementations hash:
+  docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/selected_implementations_hash.txt
+real provider smokes:
+  docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t23_newclid_adapter.md
+  docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t24_genesisgeo_adapter.md
+  docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t25_tonggeometry_adapter.md
+target and corpus manifests:
+  docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/target_library_status.json
+  docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t18_real_corpus_manifests.md
+Level2 matrix report:
+  runs/geometry_level2_pilot/level2_matrix_report.json
+reproducibility report:
+  runs/geometry_level2_pilot/reproducibility_report.json
 ```
 
-The implementation now supports TongGeometry checkpoint hashing and optional
-model-load smoke when the following paths are supplied:
+Post-review hardening evidence:
 
 ```text
-TONGGEOMETRY_TOKENIZER
-TONGGEOMETRY_LM_S
-TONGGEOMETRY_LM_L
-TONGGEOMETRY_CLS
+release blocker 24: replay_status=restored, missing_components=[]
+release blocker 25: open_blockers_before_closure=[]
+release blocker 30: artifact-derived metrics checker passed, including no fixture adapter versions in B2/B4 provider manifests and no provider task claiming final theorem.
 ```
 
-Those artifacts are not present in the current environment and were not found
-in the public TongGeometry GitHub release/tree or Hugging Face searches
-recorded in evidence. Release acceptance must not pass while this blocker
-remains.
+Summary:
 
-## Required Before Full Closure
-
-```text
-Provide and verify admitted TongGeometry model path/runtime evidence.
-Confirm dependency probe reports a non-null tonggeometry_compatible checkpoint_hash.
-Confirm TongGeometry probe reports model_inference_status=available.
-Rerun real provider smokes.
-Rerun Level2 pilot and ablation matrices.
-Rerun release acceptance.
-Obtain final Guardian boundary/spec/quality review on fresh evidence.
-Record the final commit hash.
+```json
+{
+  "status": "passed",
+  "core_experiment_ready_status": "passed",
+  "tonggeometry_model_backed_status": "blocked",
+  "claim_ceiling": "core_experiment_ready_passed_no_tong_model_backed_claim",
+  "open_blockers": [],
+  "blocked_claims": [
+    "V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY"
+  ],
+  "checked_blockers": "1-34"
+}
 ```
 
-## Allowed Claims Now
+## Final verification
+
+Final command evidence:
 
 ```text
-BASE-004 / PLAN-004 implementation work has progressed through T36.
-Release acceptance is blocked, not passed, because model-backed
-TongGeometry evidence is missing.
-GenesisGeo-compatible smoke now uses a Python 3.10 runtime, a local
-ZJUVAI/GenesisGeo checkpoint, and a one-token local model generate smoke before
-emitting an auxiliary construction candidate.
-The Level2 pilot matrix tooling runs against a 25-entry corpus, subject to the
-current blocked provider-evidence ceiling.
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3a_final_command_log.md
 ```
 
-## Not Allowed Yet
+Commands passed:
 
 ```text
-V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY
-SOURCE_FAITHFUL final v0.3 completion
-release acceptance passed
-Level2 advantage observed
-arbitrary LeanGeo support
-open-problem solving
-raw provider/model output is proof
-raw DSL-originated problem can produce goal-level proof use
+make test
+make test-regression
+make test-mutation
+make lean-build
+make lean-no-sorry
+python scripts/check_release_acceptance.py --config configs/benchmark_runs/geometry_level2_pilot.yaml --output docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/release_acceptance_report.json
+```
+
+## Final commit
+
+```text
+T46_COMMIT_PENDING
 ```

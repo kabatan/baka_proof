@@ -18,6 +18,7 @@ class ReplayIntegrationTest(unittest.TestCase):
             report = generate_reproducibility_report(Path(result["run_dir"]))
             self.assertEqual(report.replay_status, "restored")
             self.assertIn("level2_run_matrix", report.restored_components)
+            self.assertIn("evaluation_funnel", report.restored_components)
             self.assertEqual(report.missing_components, ())
 
     def test_replay_reports_partial_when_artifact_is_missing(self) -> None:

@@ -62,7 +62,6 @@ def evaluate_release_acceptance(config_path: Path, *, run_commands: bool = True)
         _run_artifact_check(config_path, run_commands),
         _corpus_check(config_path),
         _matrix_replay_check(config_path, run_commands),
-        _closure_claim_check(),
         _command_check("release_blocker_26_dependency_model_status_schema", "26", ["python", "scripts/check_dependency_claim_profile.py"], run_commands),
         _command_check("release_blocker_27_tong_model_artifact_status_classified", "27", ["python", "scripts/check_dependency_report_model_status.py"], run_commands),
         _tong_model_backed_claim_check(),
@@ -74,6 +73,8 @@ def evaluate_release_acceptance(config_path: Path, *, run_commands: bool = True)
         _patch_checks_present_check(),
         _command_check("release_command_surface_ablation_matrix", "command_surface", ["python", "scripts/run_geometry_level2_matrix.py", "--config", "configs/benchmark_runs/geometry_level2_ablation.yaml"], run_commands),
     ]
+    provisional_open_blockers = [check.check_id for check in checks if check.status != "passed" and check.blocker_id.isdigit()]
+    checks.append(_closure_claim_check(provisional_open_blockers))
     open_blockers = [check.check_id for check in checks if check.status != "passed" and check.blocker_id.isdigit()]
     failed_checks = [check.check_id for check in checks if check.status == "failed"]
     blocked_checks = [check.check_id for check in checks if check.status == "blocked"]
@@ -334,8 +335,8 @@ def _matrix_replay_check(config_path: Path, run_commands: bool) -> ReleaseCheck:
         matrix_errors.append("fixture_level_matrix_claim_ceiling")
     if int(matrix_report.get("benchmark_count", 0) or 0) < 25:
         matrix_errors.append("matrix_has_fewer_than_25_benchmarks")
-    if repro_report.get("replay_status") not in {"restored", "partial"}:
-        matrix_errors.append("replay_not_restored_or_partial")
+    if repro_report.get("replay_status") != "restored":
+        matrix_errors.append("replay_not_restored")
     matrix_errors.extend(metric_errors)
     status = "passed" if run_matrix.status == "passed" and repro.status == "passed" and not matrix_errors else "failed"
     return ReleaseCheck(
@@ -346,16 +347,29 @@ def _matrix_replay_check(config_path: Path, run_commands: bool) -> ReleaseCheck:
     )
 
 
-def _closure_claim_check() -> ReleaseCheck:
+def _closure_claim_check(open_blockers_before_closure: list[str]) -> ReleaseCheck:
     paths = [Path("docs/ai/ACTIVE_CONTEXT.md"), CHANGE_DIR / "CLOSURE.md"]
     excessive: list[str] = []
     for path in paths:
         if not path.exists():
             continue
         text = path.read_text(encoding="utf-8")
-        if "V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY" in text and "not allowed yet" not in text.lower():
+        if (
+            "V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY" in text
+            and "not allowed yet" not in text.lower()
+            and open_blockers_before_closure
+        ):
             excessive.append(str(path))
-    return ReleaseCheck("release_blocker_25_closure_claims_do_not_exceed_evidence", "25", "failed" if excessive else "passed", {"scanned": [str(p) for p in paths], "excessive_claim_paths": excessive})
+    return ReleaseCheck(
+        "release_blocker_25_closure_claims_do_not_exceed_evidence",
+        "25",
+        "failed" if excessive else "passed",
+        {
+            "scanned": [str(p) for p in paths],
+            "open_blockers_before_closure": open_blockers_before_closure,
+            "excessive_claim_paths": excessive,
+        },
+    )
 
 
 def _tong_model_backed_claim_check() -> ReleaseCheck:

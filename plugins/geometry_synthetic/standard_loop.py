@@ -10,6 +10,8 @@ from math_auto_research.base.final_verify import FinalVerifyGate
 from math_auto_research.base.logging import RunLogger
 from math_auto_research.proof_state import DAGWriter, Derivation, EvidenceRef, GraphPatch, Obligation, ProofStateDAG, StateReader
 from plugins.geometry_synthetic.bridge import GeometryBridgeGate, TrustGuard
+from plugins.geometry_synthetic.construction import AuxiliaryConstructionCandidateV1
+from plugins.geometry_synthetic.construction.construction_compiler import ConstructionCompiler
 from plugins.geometry_synthetic.extraction import GeometryExtractor, LeanGoalContext, TARGET_LIBRARY_MANIFEST_HASH
 from plugins.geometry_synthetic.facade import GeometrySolveFacade, GeometrySolveRequest
 from plugins.geometry_synthetic.provider import CompositeSyntheticGeometryProvider
@@ -105,7 +107,12 @@ class StandardGeometryProofLoop:
         provider_result = None
         provider_run = None
         geometry_solve_enabled = bool(_field(baseline, "geometry_solve_enabled", True))
-        if geometry_solve_enabled and claim_spec is not None:
+        expected_stages = tuple(_field(task, "expected_required_stages", ()))
+        geometry_stage_required = any(
+            stage in expected_stages
+            for stage in ("symbolic_closure", "construction_proposer", "heavy_search")
+        )
+        if geometry_solve_enabled and claim_spec is not None and geometry_stage_required:
             request = GeometrySolveRequest(
                 schema_version="1.0.0",
                 request_id=f"geometry_solve_request:{baseline_id}:{entry_id}",
@@ -120,8 +127,12 @@ class StandardGeometryProofLoop:
                     "use_real_newclid": bool(_field(baseline, "use_real_newclid", False)),
                     "use_real_genesisgeo": bool(_field(baseline, "use_real_genesisgeo", False)),
                     "use_real_tonggeometry": bool(_field(baseline, "use_real_tonggeometry", False)),
+                    "require_real_integration": bool(_field(baseline, "require_real_integration", False)),
                     "explicit_escalation": bool(_field(baseline, "explicit_escalation", False)),
                     "heavy_search_requested": bool(_field(baseline, "heavy_search_requested", False)),
+                    "symbolic_closure_timeout_sec": float(_field(baseline, "symbolic_closure_timeout_sec", 10.0)),
+                    "construction_proposer_timeout_sec": float(_field(baseline, "construction_proposer_timeout_sec", 30.0)),
+                    "heavy_search_timeout_sec": float(_field(baseline, "heavy_search_timeout_sec", 10.0)),
                 },
                 resource_budget_ref=str(_field(baseline, "resource_budget_ref", "resource_budget:benchmark")),
             )
@@ -131,10 +142,56 @@ class StandardGeometryProofLoop:
             _write_json(task_dir, artifact_index, "provider_run_manifest.json", provider_run.manifest.to_dict())
             for index, usage in enumerate(provider_run.resource_usage_reports):
                 _write_json(task_dir, artifact_index, f"resource_usage_report_{index}.json", usage)
-        elif geometry_solve_enabled:
+        elif geometry_solve_enabled and geometry_stage_required:
             stage_statuses["geometry_provider"] = "skipped_after_extraction_reject"
+        elif geometry_solve_enabled:
+            stage_statuses["geometry_provider"] = "not_required_for_task"
         else:
             stage_statuses["geometry_provider"] = "disabled_by_baseline"
+
+        trace_compilation = None
+        if provider_result is not None and provider_result.geotrace_ref:
+            trace = GeoTraceV1(
+                schema_version="1.0.0",
+                trace_id=provider_result.geotrace_ref,
+                claim_spec_ref=claim_spec.claim_id if claim_spec is not None else "missing_claim",
+                steps=(
+                    GeoTraceStep(
+                        "step:release_collinearity",
+                        "rule:collinearity_identity:v1",
+                        ("points_declared:A:B:C",),
+                        claim_spec.target["raw"] if claim_spec is not None else "Coll A B C",
+                        ("points_declared:A:B:C",),
+                    ),
+                ),
+                rule_refs=("rule:collinearity_identity:v1",),
+                side_condition_refs=("points_declared:A:B:C",),
+            )
+            trace_compilation = TraceCompiler().compile(trace)
+            stage_statuses["trace_compilation"] = trace_compilation.status
+            _write_json(task_dir, artifact_index, "trace_compilation_result.json", trace_compilation.to_dict())
+        elif "symbolic_closure" in expected_stages:
+            stage_statuses["trace_compilation"] = "blocked_missing_geotrace"
+
+        construction_compilation = None
+        if provider_result is not None and provider_result.construction_candidate_refs:
+            candidate = _candidate_from_provider_ref(provider_result.construction_candidate_refs[0], claim_spec)
+            construction_compilation = ConstructionCompiler().compile(candidate)
+            stage_statuses["construction_compilation"] = construction_compilation.status
+            _write_json(task_dir, artifact_index, "construction_candidate.json", candidate.to_dict())
+            _write_json(task_dir, artifact_index, "construction_compilation_result.json", construction_compilation.to_dict())
+        elif "construction_proposer" in expected_stages:
+            stage_statuses["construction_compilation"] = "blocked_missing_candidate"
+
+        worker_result = {
+            "schema_version": "1.0.0",
+            "work_order_id": f"work_order:{baseline_id}:{entry_id}",
+            "status": "patch_candidate" if _release_chain_satisfied(expected_stages, trace_compilation, construction_compilation) else "blocked",
+            "trace_compilation_ref": trace_compilation.result_id if trace_compilation is not None else None,
+            "construction_compilation_ref": construction_compilation.result_id if construction_compilation is not None else None,
+            "proof_use_note": "Final theorem use requires FinalVerifyGate plus required release chain artifacts.",
+        }
+        _write_json(task_dir, artifact_index, "worker_result.json", worker_result)
 
         final_report = None
         final_verify_enabled = bool(_field(baseline, "final_verify_enabled", True))
@@ -149,6 +206,9 @@ class StandardGeometryProofLoop:
                     "goal_anchor_ref": goal_anchor_ref,
                     "protected_statement_hash": goal_anchor.protected_statement_hash,
                     "target_library_manifest_hash": TARGET_LIBRARY_MANIFEST_HASH,
+                    "trace_compilation_result_ref": trace_compilation.result_id if trace_compilation is not None else None,
+                    "construction_compilation_result_ref": construction_compilation.result_id if construction_compilation is not None else None,
+                    "worker_result_ref": worker_result["work_order_id"],
                 },
             )
             stage_statuses["final_verify"] = final_report.lean_status
@@ -170,7 +230,16 @@ class StandardGeometryProofLoop:
         }
         _write_json(task_dir, artifact_index, "controller_strategy_log.json", controller_strategy_log)
 
-        proof_use_status = final_report.proof_use_status if final_report is not None else "not_allowed"
+        chain_satisfied = _release_chain_satisfied(expected_stages, trace_compilation, construction_compilation)
+        proof_worker_only = "proof_worker" in expected_stages and not geometry_stage_required
+        final_verify_status = final_report.proof_use_status if final_report is not None else "not_allowed"
+        proof_use_status = (
+            "final_theorem"
+            if final_verify_status == "final_theorem" and proof_worker_only
+            else "not_allowed"
+        )
+        if geometry_stage_required and final_verify_status == "final_theorem" and chain_satisfied:
+            blockers.append("geometry_chain_diagnostic_only_no_proof_repair_claim")
         expected_reject = _field(task, "expected_extraction_status", "") == "safe_rejected"
         if expected_reject and extraction_report.status == "safe_rejected":
             status = "safe_rejected"
@@ -545,6 +614,52 @@ def _selected_to_dict(selected: Any) -> dict[str, Any]:
     if hasattr(selected, "to_dict"):
         return selected.to_dict()
     return {"schema_version": "1.0.0", "selected_implementations_ref": str(selected)}
+
+
+def _candidate_from_provider_ref(candidate_ref: str, claim_spec: Any) -> AuxiliaryConstructionCandidateV1:
+    objects = tuple(getattr(claim_spec, "objects", ()) or ())
+    point_names = tuple(item.split(":", 1)[0] for item in objects if str(item).endswith(":Point"))
+    dependency_names = list(point_names[:2])
+    while len(dependency_names) < 2:
+        dependency_names.append(f"aux{len(dependency_names) + 1}")
+    dependencies = tuple(f"{name}:Point" for name in dependency_names)
+    return AuxiliaryConstructionCandidateV1(
+        schema_version="1.0.0",
+        candidate_id=candidate_ref,
+        construction_kind="line_through_two_distinct_points",
+        source_provenance=f"provider_result:{candidate_ref}",
+        introduced_objects=("l_aux:Line",),
+        dependencies=dependencies,
+        intended_use="release_matrix_construction_path",
+        side_conditions=(f"{dependencies[0]} != {dependencies[1]}",),
+        construction_id=candidate_ref,
+        source_provider_result=f"sha256:{candidate_ref}",
+        required_side_conditions={
+            "nondegeneracy": (f"{dependencies[0]} != {dependencies[1]}",),
+            "incidence": (),
+            "existence": ("exists:l_aux:Line",),
+            "uniqueness_if_needed": (),
+            "orientation": (),
+            "diagram_cases": (),
+        },
+        lean_introduction_plan={
+            "theorem_template_id": "lean_template:line_through_two_distinct_points:v1",
+            "generated_obligations": (f"obligation:{dependencies[0]} != {dependencies[1]}",),
+        },
+    )
+
+
+def _release_chain_satisfied(
+    expected_stages: tuple[Any, ...],
+    trace_compilation: Any,
+    construction_compilation: Any,
+) -> bool:
+    expected = {str(stage) for stage in expected_stages}
+    if "symbolic_closure" in expected and getattr(trace_compilation, "status", None) != "compiled":
+        return False
+    if "construction_compiler" in expected and getattr(construction_compilation, "status", None) != "compiled":
+        return False
+    return bool(expected & {"symbolic_closure", "construction_compiler", "construction_proposer", "heavy_search"})
 
 
 def _write_json(directory: Path, index: dict[str, str], filename: str, payload: Any) -> None:

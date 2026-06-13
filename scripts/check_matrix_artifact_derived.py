@@ -34,6 +34,59 @@ def check_matrix(run_dir: Path) -> list[str]:
     matrix_task_runs = run_dir / "matrix_task_runs"
     if not matrix_task_runs.exists():
         errors.append("missing_matrix_task_runs_dir")
+    task_results_by_baseline: dict[str, list[dict]] = {}
+    for ref in index.values():
+        task_result_path = Path(ref)
+        if not task_result_path.exists():
+            continue
+        task_result = json.loads(task_result_path.read_text(encoding="utf-8"))
+        baseline_id = str(task_result.get("baseline_id"))
+        task_results_by_baseline.setdefault(baseline_id, []).append(task_result)
+        artifact_index_path = task_result_path.parent / "artifact_index.json"
+        if not artifact_index_path.exists():
+            errors.append(f"missing_task_artifact_index:{artifact_index_path}")
+            continue
+        artifact_index = json.loads(artifact_index_path.read_text(encoding="utf-8"))
+        missing_artifacts = [name for name, ref in artifact_index.items() if not Path(ref).exists()]
+        if missing_artifacts:
+            errors.append(f"missing_referenced_task_artifact:{baseline_id}:{task_result.get('task_entry_id')}:{','.join(missing_artifacts[:5])}")
+        required_artifacts = ["task_result.json", "extraction_report.json", "worker_result.json"]
+        final_verify_status = task_result.get("stage_statuses", {}).get("final_verify")
+        if final_verify_status != "disabled_or_initial_compile_failed":
+            required_artifacts.append("final_verify_report.json")
+        for required in required_artifacts:
+            if required not in artifact_index:
+                errors.append(f"missing_required_task_artifact:{baseline_id}:{task_result.get('task_entry_id')}:{required}")
+        if baseline_id in {"B2", "B4"} and "provider_run_manifest.json" in artifact_index:
+            if task_result.get("proof_use_status") == "final_theorem":
+                errors.append(f"provider_task_claimed_final_theorem_in_release:{baseline_id}:{task_result.get('task_entry_id')}")
+            manifest = json.loads(Path(artifact_index["provider_run_manifest.json"]).read_text(encoding="utf-8"))
+            if manifest.get("fixture_flag") is not False:
+                errors.append(f"fixture_provider_manifest_in_release:{baseline_id}:{task_result.get('task_entry_id')}")
+            if manifest.get("real_integration_flag") is not True:
+                errors.append(f"missing_real_provider_manifest_in_release:{baseline_id}:{task_result.get('task_entry_id')}")
+            adapter_versions = manifest.get("adapter_versions", {})
+            version_values = list(adapter_versions.values()) if isinstance(adapter_versions, dict) else []
+            version_values.extend(
+                str(run.get("adapter_version", ""))
+                for run in manifest.get("engine_runs", [])
+                if isinstance(run, dict)
+            )
+            fixture_versions = [value for value in version_values if "fixture" in str(value).lower()]
+            if fixture_versions:
+                errors.append(f"fixture_adapter_version_in_release:{baseline_id}:{task_result.get('task_entry_id')}:{fixture_versions[0]}")
+    for baseline_id, task_results in task_results_by_baseline.items():
+        metrics_path = run_dir / f"metrics_{baseline_id}.json"
+        if not metrics_path.exists():
+            errors.append(f"missing_metrics_report:{baseline_id}")
+            continue
+        metric_values = json.loads(metrics_path.read_text(encoding="utf-8")).get("metric_values", {})
+        expected_final = sum(1 for item in task_results if item.get("proof_use_status") == "final_theorem")
+        expected_provider_calls = sum(1 for item in task_results if "provider_run_manifest.json" in item.get("artifact_index", {}))
+        if metric_values.get("final_theorem_count") != expected_final:
+            errors.append(f"metric_final_theorem_count_not_artifact_derived:{baseline_id}")
+        if metric_values.get("geometry_solve_request_count") != expected_provider_calls:
+            errors.append(f"metric_provider_call_count_not_artifact_derived:{baseline_id}")
     return errors
 
 

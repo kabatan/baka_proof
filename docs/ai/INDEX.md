@@ -49,7 +49,7 @@ Primary documents:
 
 Purpose: Guardian-managed full v0.3 experiment-ready rebase track targeting `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
 
-Status: Base Spec/Plan Guardian-admitted and user-approved. v0.3A patch is installed and user-approved. T45 release acceptance hardening is complete; T46 final replay and closure is ready.
+Status: Base Spec/Plan Guardian-admitted and user-approved. v0.3A patch is installed and user-approved. T46 final replay and closure is complete. Core v0.3 experiment readiness passed; the separate TongGeometry model-backed heavy-search claim remains blocked by unavailable checkpoint artifacts.
 
 Primary documents:
 
@@ -61,6 +61,7 @@ Primary documents:
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md` — source-to-requirement traceability aid.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md` — repository cleanup directive for the rebase.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/ACCEPTANCE_MATRIX.md` — final acceptance evidence and command matrix.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/CLOSURE.md` — final closure for core v0.3 experiment readiness and the separate TongGeometry model-backed claim status.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/` — import, review, approval, and implementation evidence.
 
 Architecture documents:

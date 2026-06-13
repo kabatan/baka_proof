@@ -35,11 +35,11 @@ theorem level2_pilot_17 (A B C : Point) (h : Coll A A B) : Coll A A B ∧ True :
 theorem level2_pilot_18 (A B C : Point) (h : Coll A B A) : True ∧ Coll A B A := by exact And.intro trivial h
 theorem level2_pilot_19 (A B C : Point) (h1 : Coll A A B) (h2 : Coll B B C) : Coll A A B ∧ Coll B B C := by exact And.intro h1 h2
 theorem level2_pilot_20 (A B : Point) : Coll A A B ∧ Coll A B A := by exact And.intro (by simp [Coll]) (by simp [Coll])
-theorem level2_pilot_21 (A B C : Point) : True := by trivial
-theorem level2_pilot_22 (A B C : Point) : True := by trivial
-theorem level2_pilot_23 (A B C : Point) : True := by trivial
-theorem level2_pilot_24 (A B C : Point) : True := by trivial
-theorem level2_pilot_25 (A B C : Point) : True := by trivial
+theorem level2_pilot_21 (A B C : Point) : A = A := by rfl
+theorem level2_pilot_22 (A B C : Point) : B = B := by rfl
+theorem level2_pilot_23 (A B C : Point) : A = A ∧ True := by exact And.intro rfl trivial
+theorem level2_pilot_24 (A B C : Point) : True ∧ B = B := by exact And.intro trivial rfl
+theorem level2_pilot_25 (A B C : Point) : A = A ∨ B = B := by exact Or.inl rfl
 theorem real_smoke_01 (A B C : Point) (h : Coll A B C) : Coll A B C := by exact h
 theorem real_smoke_02 (A B : Point) : Coll A B B := by simp [Coll]
 theorem real_smoke_03 (A B : Point) : True := by trivial

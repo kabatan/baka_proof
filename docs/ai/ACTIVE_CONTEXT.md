@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A-patch
-status: V03A_PATCH_T46_READY
+status: V03_CORE_EXPERIMENT_READY_PASSED
 created: 2026-06-13
 last_updated: 2026-06-13
 base_spec: MARP-GEOLEAN-BASE-004
@@ -58,7 +58,7 @@ The user approved importing the v0.3A patch bundle on 2026-06-13. Patch import e
 
 ## Current Known Problem
 
-The repo has completed the v0.3A hardening implementation tasks through T45. Final T46 replay, closure, and review evidence still need to be completed before making the final strong claim.
+The repo has completed the v0.3A hardening implementation tasks through T46. Core v0.3 experiment readiness is closed as passed; the separate TongGeometry model-backed heavy-search claim remains blocked by unavailable checkpoint artifacts.
 
 ## Current Task Pointer
 
@@ -404,20 +404,22 @@ Completed task:
 T45 — Release acceptance hardening
 ```
 
-Current task:
+Completed task:
 
 ```text
 T46 — Replay and closure claim update
 ```
 
-Current task files changed in T45:
+Current task files changed in T46:
 
 ```text
-src/math_auto_research/workflow/release_acceptance.py
-tests/unit/test_release_acceptance.py
+docs/ai/changes/geometry-lean-v0_3-full-rebase/CLOSURE.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3a_final_command_log.md
 docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/release_acceptance_report.json
+src/math_auto_research/workflow/release_acceptance.py
+tests/unit/test_replay.py
+tests/unit/test_v03a_real_vs_fixture_integration.py
 docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/tonggeometry_smoke.json
-docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t45_release_acceptance_hardening.md
 docs/ai/ACTIVE_CONTEXT.md
 ```
 
@@ -447,14 +449,13 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
 Allowed:
 
 ```text
-BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T45 release acceptance hardening is complete: release blockers 1-34 pass, core_experiment_ready_status=passed, and tonggeometry_model_backed_status=blocked due admitted unavailable external checkpoint artifacts.
-No v0.3A completion claim is admitted, and no R-ID is VERIFIED.
+BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T46 final replay and closure are complete: release blockers 1-34 pass, core_experiment_ready_status=passed, and tonggeometry_model_backed_status=blocked due admitted unavailable external checkpoint artifacts.
+V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY is admitted for the core experiment-ready claim. No R-ID is VERIFIED.
 ```
 
 Not allowed yet:
 
 ```text
-V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY
 V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY
 real Level 2 advantage
 arbitrary LeanGeo support

@@ -20,7 +20,7 @@ def main() -> int:
     run_dir = Path(args.run_dir)
     report = generate_reproducibility_report(run_dir)
     print(json.dumps(report.to_dict(), indent=2, sort_keys=True))
-    return 0 if report.replay_status in {"restored", "partial"} else 1
+    return 0 if report.replay_status == "restored" else 1
 
 
 if __name__ == "__main__":

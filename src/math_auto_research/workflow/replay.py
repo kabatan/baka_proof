@@ -21,10 +21,10 @@ def generate_reproducibility_report(run_dir: Path, *, write_report: bool = True)
 
     run_dir = Path(run_dir)
     matrix_report = _read_optional_json(run_dir / "level2_matrix_report.json")
-    required = list(BASE_REQUIRED_ARTIFACTS)
     if matrix_report is not None:
-        required.append("level2_matrix_report.json")
-        required.extend(_matrix_metric_artifacts(matrix_report))
+        required = list(_matrix_required_artifacts(run_dir, matrix_report))
+    else:
+        required = list(BASE_REQUIRED_ARTIFACTS)
 
     missing = tuple(name for name in required if not (run_dir / name).exists())
     artifact_refs = tuple(_artifact_ref(run_dir / name) for name in required if (run_dir / name).exists())
@@ -57,6 +57,36 @@ def _matrix_metric_artifacts(matrix_report: dict) -> tuple[str, ...]:
         for entry in matrix_report.get("baselines", ())
         if "baseline" in entry and "baseline_id" in entry["baseline"]
     )
+
+
+def _matrix_required_artifacts(run_dir: Path, matrix_report: dict) -> tuple[str, ...]:
+    required = [
+        "level2_matrix_report.json",
+        "per_task_artifact_index.json",
+        "evaluation_funnel.json",
+        *_matrix_metric_artifacts(matrix_report),
+    ]
+    index_path = run_dir / "per_task_artifact_index.json"
+    if not index_path.exists():
+        return tuple(required)
+    per_task_index = read_json(index_path)
+    for task_result_ref in per_task_index.values():
+        task_result_path = Path(task_result_ref)
+        if not task_result_path.is_absolute():
+            task_result_path = Path.cwd() / task_result_path
+        relative_task_result = task_result_path.relative_to(run_dir.resolve())
+        required.append(str(relative_task_result))
+        task_artifact_index_path = task_result_path.parent / "artifact_index.json"
+        required.append(str(task_artifact_index_path.resolve().relative_to(run_dir.resolve())))
+        if not task_artifact_index_path.exists():
+            continue
+        task_artifact_index = read_json(task_artifact_index_path)
+        for artifact_ref in task_artifact_index.values():
+            artifact_path = Path(artifact_ref)
+            if not artifact_path.is_absolute():
+                artifact_path = Path.cwd() / artifact_path
+            required.append(str(artifact_path.resolve().relative_to(run_dir.resolve())))
+    return tuple(dict.fromkeys(required))
 
 
 def _run_id(run_dir: Path, matrix_report: dict | None) -> str:

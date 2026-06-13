@@ -2,8 +2,7 @@
   "heavy": {
     "manifest": {
       "adapter_versions": {
-        "construction_proposer": "genesisgeo-compatible-fixture:0.1",
-        "heavy_search": "tonggeometry-compatible-fixture:0.1",
+        "heavy_search": "tong-geometry@d00925f07dc3174f91326386cb8e785e539a91a1",
         "symbolic_closure": "newclid-compatible-fixture:0.1"
       },
       "engine_runs": [
@@ -27,7 +26,7 @@
         },
         {
           "adapter_commit": "dummy-adapter-local",
-          "adapter_version": "tonggeometry-compatible-fixture:0.1",
+          "adapter_version": "tong-geometry@d00925f07dc3174f91326386cb8e785e539a91a1",
           "checkpoint_hash": "unavailable",
           "config_hash": "0fceade64d1d6af8",
           "engine_family": "tonggeometry_compatible",
@@ -70,7 +69,7 @@
         "budget": "heavy",
         "component": "geometry_solver_provider",
         "cpu_time_sec": 0,
-        "ended_at": "1781360853.7447855",
+        "ended_at": "1781371610.1131346",
         "engine_role": "symbolic_closure",
         "exit_status": "completed",
         "gpu_vram_peak_mb": null,
@@ -85,7 +84,7 @@
         "role": "symbolic_closure",
         "run_id": "geometry_request:real_tonggeometry_smoke:heavy",
         "schema_version": "1.0.0",
-        "started_at": "1781360853.7427547",
+        "started_at": "1781371610.1131346",
         "timeout_status": "none",
         "wall_time_sec": 0.0
       },
@@ -94,24 +93,24 @@
         "budget": "heavy",
         "component": "geometry_solver_provider",
         "cpu_time_sec": 0,
-        "ended_at": "1781360855.4216735",
+        "ended_at": "1781371611.8394594",
         "engine_role": "heavy_search",
         "exit_status": "completed",
         "gpu_vram_peak_mb": null,
         "hard_kill_executed": false,
-        "heartbeat_count": 33,
+        "heartbeat_count": 34,
         "logs_ref": "external_tonggeometry_stdout",
         "orphan_check_passed": true,
         "peak_rss_mb": 0,
-        "process_id": "39260",
+        "process_id": "34584",
         "queue_wait_sec": 0,
         "report_id": "resource_usage:geometry_request:real_tonggeometry_smoke:heavy:heavy_search:3ae5d0b073da6aaa",
         "role": "heavy_search",
         "run_id": "geometry_request:real_tonggeometry_smoke:heavy",
         "schema_version": "1.0.0",
-        "started_at": "1781360853.7447855",
+        "started_at": "1781371610.1131346",
         "timeout_status": "none",
-        "wall_time_sec": 1.687
+        "wall_time_sec": 1.718
       }
     ],
     "result": {
@@ -132,8 +131,6 @@
   "medium": {
     "manifest": {
       "adapter_versions": {
-        "construction_proposer": "genesisgeo-compatible-fixture:0.1",
-        "heavy_search": "tonggeometry-compatible-fixture:0.1",
         "symbolic_closure": "newclid-compatible-fixture:0.1"
       },
       "engine_runs": [
@@ -180,7 +177,7 @@
         "budget": "medium",
         "component": "geometry_solver_provider",
         "cpu_time_sec": 0,
-        "ended_at": "1781360853.7427547",
+        "ended_at": "1781371610.1131346",
         "engine_role": "symbolic_closure",
         "exit_status": "completed",
         "gpu_vram_peak_mb": null,
@@ -195,7 +192,7 @@
         "role": "symbolic_closure",
         "run_id": "geometry_request:real_tonggeometry_smoke:medium",
         "schema_version": "1.0.0",
-        "started_at": "1781360853.7427547",
+        "started_at": "1781371610.1131346",
         "timeout_status": "none",
         "wall_time_sec": 0.0
       }

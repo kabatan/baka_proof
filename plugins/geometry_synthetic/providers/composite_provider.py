@@ -428,7 +428,10 @@ def _manifest(
         provider_version=provider_version,
         fixture_flag=any(run["fixture_flag"] for run in engine_runs),
         real_integration_flag=any(run["real_integration_flag"] for run in engine_runs),
-        adapter_versions={role: adapter.version for role, adapter in sorted(adapters.items())},
+        adapter_versions={
+            str(run["engine_role"]): str(run["adapter_version"])
+            for run in sorted(engine_runs, key=lambda item: str(item["engine_role"]))
+        },
         raw_output_hashes=raw_hashes,
         normalized_output_refs=normalized_refs,
         resource_usage_refs=resource_refs,
@@ -493,7 +496,7 @@ def _engine_run_record(
         "engine_role": step.engine_role,
         "engine_family": engine_family,
         "engine_version": engine_version,
-        "adapter_version": adapter.version,
+        "adapter_version": engine_version if real_integration_flag else adapter.version,
         "adapter_commit": adapter.commit,
         "config_hash": adapter.config_hash,
         "checkpoint_hash": adapter.checkpoint_hash,

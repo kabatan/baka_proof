@@ -77,7 +77,15 @@ def _load_benchmark_corpus(config: dict[str, Any]) -> list[dict[str, Any]]:
     corpus_path = config.get("benchmark_corpus_path")
     if not corpus_path:
         fallback = json.loads(Path("benchmarks/geometry/leangeo_real_smoke.jsonl").read_text(encoding="utf-8").splitlines()[0])
-        return [{**fallback, "entry_id": item, "task_category": "legacy_smoke"} for item in config.get("benchmark_pool", [])]
+        return [
+            {
+                **fallback,
+                "entry_id": item,
+                "task_category": "legacy_smoke",
+                "expected_required_stages": ["extraction", "symbolic_closure", "final_verify"],
+            }
+            for item in config.get("benchmark_pool", [])
+        ]
     path = Path(str(corpus_path))
     entries = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
     selected_ids = set(config.get("benchmark_pool", []))
@@ -101,14 +109,16 @@ def _validate_config(config: dict[str, Any]) -> None:
 def _baseline_for_run(baseline: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
     uses_geometry = bool(baseline.get("uses_geometry_solve"))
     baseline_id = str(baseline["baseline_id"])
+    release_real_provider = config.get("matrix_id") in {"geometry_level2_pilot", "geometry_level2_ablation"} and uses_geometry
     return {
         "baseline_id": baseline_id,
         "geometry_solve_enabled": uses_geometry,
         "final_verify_enabled": uses_geometry or baseline_id == "B0",
         "budget": "heavy" if baseline_id == "B4" else str(config.get("resource_budget", "medium")),
-        "use_real_newclid": False,
-        "use_real_genesisgeo": False,
-        "use_real_tonggeometry": False,
+        "use_real_newclid": release_real_provider,
+        "use_real_genesisgeo": release_real_provider,
+        "use_real_tonggeometry": release_real_provider,
+        "require_real_integration": release_real_provider,
         "explicit_escalation": baseline_id == "B4",
         "heavy_search_requested": baseline_id == "B4",
     }
@@ -123,26 +133,21 @@ def _metrics_for_baseline(
     uses_geometry = bool(baseline.get("uses_geometry_solve"))
     construction_disabled = baseline.get("construction_enabled") is False
     benchmark_count = len(corpus)
-    if all("acceptance_eligible" not in entry for entry in corpus):
-        accepted_count = benchmark_count
-    else:
-        accepted_count = sum(1 for entry in corpus if entry.get("acceptance_eligible") is True)
-    blocker_count = benchmark_count - accepted_count
-    auxiliary_tasks = sum(1 for entry in corpus if entry.get("task_category") == "auxiliary_construction")
-    proof_worker_only_tasks = sum(1 for entry in corpus if entry.get("task_category") == "proof_worker_only_baseline")
     final_success = sum(1 for result in task_results if result.proof_use_status == "final_theorem")
-    trace_compile = sum(
-        1
-        for result in task_results
-        if result.stage_statuses.get("geometry_provider") in {"partial", "unsupported"} and uses_geometry
-    )
-    auxiliary_count = 0 if construction_disabled else (auxiliary_tasks if uses_geometry else 0)
-    provider_calls = sum(1 for result in task_results if "provider_run_manifest.json" in result.artifact_index)
+    accepted_count = sum(1 for result in task_results if result.stage_statuses.get("geometry_extraction") == "accepted")
     rejected_count = sum(1 for result in task_results if result.status == "safe_rejected")
+    blocker_count = sum(1 for result in task_results if result.status == "blocked")
+    trace_compile = sum(1 for result in task_results if result.stage_statuses.get("trace_compilation") == "compiled")
+    auxiliary_count = sum(1 for result in task_results if result.stage_statuses.get("construction_compilation") == "compiled")
+    provider_calls = sum(1 for result in task_results if "provider_run_manifest.json" in result.artifact_index)
     resource_usage_count = sum(
         len([name for name in result.artifact_index if name.startswith("resource_usage_report_")])
         for result in task_results
     )
+    provider_success_by_role = _provider_success_by_role(task_results)
+    resource_usage_by_role = _resource_usage_by_role(task_results)
+    timeout_count = sum(_timeout_count(result) for result in task_results)
+    diagnostic_counts = _diagnostic_kind_counts(task_results)
     metric_values = {
         "benchmark_count": benchmark_count,
         "accepted_count": accepted_count,
@@ -152,11 +157,7 @@ def _metrics_for_baseline(
         "final_theorem_rate": final_success / benchmark_count,
         "lean_compile_success_rate": sum(1 for result in task_results if result.stage_statuses.get("lean_initial_compile") == "passed") / benchmark_count,
         "geometry_solve_request_count": provider_calls,
-        "provider_success_rate_by_role": {
-            "symbolic_closure": 1.0 if uses_geometry else 0.0,
-            "construction_proposer": 0.0 if construction_disabled else (1.0 if uses_geometry and auxiliary_tasks else 0.0),
-            "heavy_search": 1.0 if uses_geometry and baseline.get("baseline_id") == "B4" else 0.0,
-        },
+        "provider_success_rate_by_role": provider_success_by_role,
         "proof_repair_success_count": final_success,
         "proof_repair_success_rate": final_success / benchmark_count,
         "construction_candidate_accepted_count": auxiliary_count,
@@ -165,16 +166,9 @@ def _metrics_for_baseline(
         "trace_compile_success_rate": trace_compile / benchmark_count,
         "side_condition_blocker_count": blocker_count,
         "resource_usage_report_count": resource_usage_count,
-        "resource_usage_by_role": {
-            "symbolic_closure": provider_calls,
-            "construction_proposer": 0 if construction_disabled else auxiliary_count,
-            "heavy_search": accepted_count if baseline.get("baseline_id") == "B4" and uses_geometry else 0,
-        },
-        "timeout_count": 0,
-        "diagnostic_kind_counts": {
-            "accepted_extraction": accepted_count,
-            "safe_reject_or_blocker": blocker_count,
-        },
+        "resource_usage_by_role": resource_usage_by_role,
+        "timeout_count": timeout_count,
+        "diagnostic_kind_counts": diagnostic_counts,
         "replay_success_rate": 1.0,
         "controller_reasoning_count": benchmark_count if baseline.get("uses_controller") else 0,
         "provider_call_count": provider_calls,
@@ -187,6 +181,65 @@ def _metrics_for_baseline(
         claim_ceiling="level2_pilot_matrix_not_level2_advantage_claim",
         status="computed",
     )
+
+
+def _provider_success_by_role(task_results: list[TaskRunResult]) -> dict[str, float]:
+    totals: dict[str, int] = {}
+    successes: dict[str, int] = {}
+    for result in task_results:
+        artifact = _read_artifact(result, "provider_run_manifest.json")
+        for run in artifact.get("engine_runs", []) if isinstance(artifact, dict) else []:
+            role = str(run.get("engine_role"))
+            totals[role] = totals.get(role, 0) + 1
+            if run.get("status") not in {"resource_rejected", "timeout"}:
+                successes[role] = successes.get(role, 0) + 1
+    return {role: successes.get(role, 0) / total for role, total in totals.items()}
+
+
+def _resource_usage_by_role(task_results: list[TaskRunResult]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for result in task_results:
+        for name in result.artifact_index:
+            if not name.startswith("resource_usage_report_"):
+                continue
+            usage = _read_artifact(result, name)
+            role = str(usage.get("engine_role") or usage.get("role"))
+            counts[role] = counts.get(role, 0) + 1
+    return counts
+
+
+def _timeout_count(result: TaskRunResult) -> int:
+    count = 0
+    for name in result.artifact_index:
+        if not name.startswith("resource_usage_report_"):
+            continue
+        usage = _read_artifact(result, name)
+        if usage.get("timeout_status") not in {None, "none"}:
+            count += 1
+    return count
+
+
+def _diagnostic_kind_counts(task_results: list[TaskRunResult]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for result in task_results:
+        counts[result.status] = counts.get(result.status, 0) + 1
+        provider = _read_artifact(result, "provider_result.json")
+        if isinstance(provider, dict):
+            counts[f"provider:{provider.get('status')}"] = counts.get(f"provider:{provider.get('status')}", 0) + 1
+    return counts
+
+
+def _read_artifact(result: TaskRunResult, name: str) -> dict[str, Any]:
+    path = result.artifact_index.get(name)
+    if not path:
+        return {}
+    artifact_path = Path(path)
+    if not artifact_path.exists():
+        return {}
+    try:
+        return json.loads(artifact_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
 
 
 def _comparison(baseline_results: list[dict[str, Any]], run_dir: Path) -> dict[str, Any]:
