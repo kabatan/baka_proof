@@ -38,6 +38,7 @@ class RunTraceTest(unittest.TestCase):
     def test_generate_repro_report_script_restores_fixture(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = Path(tmp) / "fixture_run"
+            build_fixture_run(run_dir)
             completed = subprocess.run(
                 [sys.executable, "scripts/generate_repro_report.py", "--run-dir", str(run_dir)],
                 capture_output=True,

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 from pathlib import Path
 from typing import Any
 
@@ -10,9 +9,9 @@ from math_auto_research.base.logging.run_trace import (
     MetricsReport,
     ReproducibilityReport,
     ResearchContributionRecord,
-    read_json,
     write_json,
 )
+from math_auto_research.workflow.replay import generate_reproducibility_report
 from plugins.geometry_synthetic.facade import GeometrySolveRequest
 from plugins.geometry_synthetic.provider import CompositeSyntheticGeometryProvider
 from plugins.geometry_synthetic.standard_loop import StandardGeometryProofLoop
@@ -91,42 +90,7 @@ def build_fixture_run(run_dir: Path) -> ReproducibilityReport:
 
 
 def build_reproducibility_report(run_dir: Path) -> ReproducibilityReport:
-    required = [
-        "standard_loop_result.json",
-        "provider_run_manifest.json",
-        "controller_strategy_log.json",
-        "research_contribution_records.json",
-        "metrics_report.json",
-        "evaluation_funnel.json",
-    ]
-    matrix_report = read_json(run_dir / "level2_matrix_report.json") if (run_dir / "level2_matrix_report.json").exists() else None
-    if matrix_report is not None:
-        required.append("level2_matrix_report.json")
-        required.extend(f"metrics_{baseline['baseline']['baseline_id']}.json" for baseline in matrix_report["baselines"])
-    missing = tuple(name for name in required if not (run_dir / name).exists())
-    artifact_refs = tuple(_artifact_ref(run_dir / name) for name in required if (run_dir / name).exists())
-    loop = read_json(run_dir / "standard_loop_result.json") if (run_dir / "standard_loop_result.json").exists() else {}
-    run_id = str(matrix_report["run_id"]) if matrix_report is not None else str(loop.get("run_id", "missing"))
-    restored = [
-        "selected_implementations",
-        "provider_manifest",
-        "controller_strategy_log",
-        "final_verification_state",
-    ]
-    if matrix_report is not None:
-        restored.extend(["evaluation_funnel", "level2_run_matrix"])
-    if missing:
-        restored = [item for item in restored if item != "final_verification_state"]
-    return ReproducibilityReport(
-        schema_version="1.0.0",
-        report_id=f"reproducibility_report:{run_id}",
-        run_id=run_id,
-        selected_implementations_ref="selected_implementations:geometry_default",
-        artifact_refs=artifact_refs,
-        replay_status="restored" if not missing else "partial",
-        restored_components=tuple(restored),
-        missing_components=missing,
-    )
+    return generate_reproducibility_report(run_dir, write_report=False)
 
 
 def _provider_request() -> GeometrySolveRequest:
@@ -181,7 +145,3 @@ def _contribution_records(loop: dict[str, Any]) -> tuple[ResearchContributionRec
             "provider diagnostic is not proof evidence",
         ),
     )
-
-
-def _artifact_ref(path: Path) -> str:
-    return f"sha256:{hashlib.sha256(path.read_bytes()).hexdigest()}"
