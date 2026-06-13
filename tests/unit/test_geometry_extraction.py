@@ -3,6 +3,9 @@ from __future__ import annotations
 import unittest
 
 from plugins.geometry_synthetic.extraction import GeometryExtractor, LeanGoalContext, RelationEvidence
+from plugins.geometry_synthetic.extraction.claim_spec import GeometryClaimSpec
+from plugins.geometry_synthetic.extraction.extraction_contract import GeometryExtractionContract
+from plugins.geometry_synthetic.extraction.extraction_report import GeometryExtractionReport
 
 
 def context_for(form: str, raw: str, *, source_goal_ref: str | None = None) -> LeanGoalContext:
@@ -19,6 +22,11 @@ def context_for(form: str, raw: str, *, source_goal_ref: str | None = None) -> L
 
 
 class GeometryExtractionTest(unittest.TestCase):
+    def test_plan_contract_modules_export_types(self) -> None:
+        self.assertIs(GeometryExtractionContract, GeometryExtractor)
+        self.assertEqual(GeometryClaimSpec.__name__, "GeometryClaimSpec")
+        self.assertEqual(GeometryExtractionReport.__name__, "GeometryExtractionReport")
+
     def test_accepts_supported_goal_as_claim_spec(self) -> None:
         report, claim = GeometryExtractor().extract_context(context_for("collinear", "Coll A B C", source_goal_ref="goal:1"))
         self.assertEqual(report.status, "accepted")
@@ -31,6 +39,11 @@ class GeometryExtractionTest(unittest.TestCase):
         self.assertEqual(claim.hypotheses, ("distinct",))
         self.assertEqual(claim.target["form"], "collinear")
         self.assertIn("A != B", claim.nondegeneracy_assumptions)
+        self.assertEqual(claim.extraction_report_ref, report.report_id)
+        self.assertEqual(claim.goal_anchor_ref, "goal:1")
+        self.assertEqual(claim.protected_statement_hash, "goal:1")
+        self.assertEqual(claim.target_library_manifest_hash, "target_library_manifest:LeanGeoSubsetV1:1.0.0")
+        self.assertEqual(claim.proof_use_status, "not_allowed")
 
     def test_extracts_from_lean_check_output(self) -> None:
         output = (

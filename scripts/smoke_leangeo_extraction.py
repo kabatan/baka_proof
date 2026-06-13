@@ -38,12 +38,25 @@ def _wsl_workspace_path(path: Path) -> str:
 
 
 def _run_lean_check() -> tuple[int, str]:
-    if shutil.which("wsl") is None:
-        return 2, "wsl command not found; LeanGeo extraction smoke requires WSL.\n"
     tmp_dir = ROOT / ".tmp"
     tmp_dir.mkdir(exist_ok=True)
     fixture_path = tmp_dir / "LeanGeoExtractionSmoke.lean"
     fixture_path.write_text(LEAN_FIXTURE, encoding="utf-8")
+    local_lake = Path.home() / ".elan" / "bin" / ("lake.exe" if sys.platform == "win32" else "lake")
+    lake = local_lake if local_lake.exists() else Path("lake")
+    if shutil.which(str(lake)) is not None or local_lake.exists():
+        completed = subprocess.run(
+            [str(lake), "env", "lean", str(fixture_path.relative_to(ROOT))],
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            timeout=180,
+            check=False,
+        )
+        return completed.returncode, completed.stdout
+    if shutil.which("wsl") is None:
+        return 2, "wsl command not found; LeanGeo extraction smoke requires WSL.\n"
     workspace = _wsl_workspace_path(ROOT)
     command = (
         f"cd {workspace} && "
@@ -68,7 +81,7 @@ def _run_lean_check() -> tuple[int, str]:
 
 
 def main() -> int:
-    evidence_dir = ROOT / "docs" / "ai" / "changes" / "geometry-lean-v0_3" / "evidence"
+    evidence_dir = ROOT / "docs" / "ai" / "changes" / "geometry-lean-v0_3-full-rebase" / "evidence"
     evidence_dir.mkdir(parents=True, exist_ok=True)
     lean_log = evidence_dir / "wsl_leangeo_check_output.log"
     smoke_json = evidence_dir / "leangeo_extraction_smoke.json"

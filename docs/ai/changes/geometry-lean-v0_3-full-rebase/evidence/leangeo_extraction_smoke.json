@@ -1,0 +1,41 @@
+{
+  "claim": {
+    "claim_id": "geometry_claim:f0b3e96764ce68a9",
+    "extraction_report_ref": "geometry_extraction:f0b3e96764ce68a9",
+    "goal_anchor_ref": "lean-check:MathAutoResearch.GeometryFixture.fixture_collinear",
+    "hypotheses": [
+      "collinear"
+    ],
+    "nondegeneracy_assumptions": [],
+    "objects": [
+      "A:Point",
+      "B:Point",
+      "C:Point"
+    ],
+    "orientation_assumptions": [],
+    "proof_use_status": "not_allowed",
+    "protected_statement_hash": "lean-check:MathAutoResearch.GeometryFixture.fixture_collinear",
+    "schema_version": "1.0.0",
+    "source_goal_ref": "lean-check:MathAutoResearch.GeometryFixture.fixture_collinear",
+    "target": {
+      "form": "collinear",
+      "raw": "Coll A B C"
+    },
+    "target_library": "LeanGeoSubsetV1:1.0.0",
+    "target_library_manifest_hash": "target_library_manifest:LeanGeoSubsetV1:1.0.0"
+  },
+  "lean_output": "warning: UnicodeBasic: repository '.\\.\\.lake/packages\\UnicodeBasic' has local changes\nwarning: batteries: repository '.\\.\\.lake/packages\\batteries' has local changes\nMathAutoResearch.GeometryFixture.fixture_collinear (A B C : Point) (h : Coll A B C) : Coll A B C\n",
+  "report": {
+    "claim_spec_ref": "geometry_claim:f0b3e96764ce68a9",
+    "direction_available": null,
+    "direction_needed": null,
+    "goal_anchor_ref": "lean-check:MathAutoResearch.GeometryFixture.fixture_collinear",
+    "proof_use_status": "not_allowed",
+    "relation": "exact",
+    "report_id": "geometry_extraction:f0b3e96764ce68a9",
+    "result_level": "extracted_claim",
+    "safe_reject_reason": null,
+    "schema_version": "1.0.0",
+    "status": "accepted"
+  }
+}

@@ -19,6 +19,11 @@ class GeometryClaimSpec:
     nondegeneracy_assumptions: tuple[str, ...]
     orientation_assumptions: tuple[str, ...]
     source_goal_ref: str
+    extraction_report_ref: str
+    goal_anchor_ref: str
+    protected_statement_hash: str
+    target_library_manifest_hash: str
+    proof_use_status: str = "not_allowed"
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -91,7 +96,9 @@ class GeometryExtractor:
         gated = _relation_reject(context.source_goal_ref, context.target_raw, relation_evidence)
         if gated is not None:
             return gated
-        claim_id = f"geometry_claim:{_digest(context.elaboration_report_ref + context.target_raw)}"
+        digest_input = context.elaboration_report_ref + context.target_raw
+        claim_id = f"geometry_claim:{_digest(digest_input)}"
+        report_id = f"geometry_extraction:{_digest(digest_input)}"
         claim = GeometryClaimSpec(
             schema_version="1.0.0",
             claim_id=claim_id,
@@ -102,11 +109,15 @@ class GeometryExtractor:
             nondegeneracy_assumptions=context.nondegeneracy_assumptions,
             orientation_assumptions=context.orientation_assumptions,
             source_goal_ref=context.source_goal_ref,
+            extraction_report_ref=report_id,
+            goal_anchor_ref=context.source_goal_ref,
+            protected_statement_hash=context.source_goal_ref,
+            target_library_manifest_hash="target_library_manifest:LeanGeoSubsetV1:1.0.0",
         )
         return (
             GeometryExtractionReport(
                 "1.0.0",
-                f"geometry_extraction:{_digest(context.elaboration_report_ref + context.target_raw)}",
+                report_id,
                 context.source_goal_ref,
                 relation_evidence.relation,
                 "extracted_claim",
@@ -188,9 +199,11 @@ class GeometryExtractor:
                 ),
                 None,
             )
+        claim_id = f"geometry_claim:{_digest(lean_goal_text)}"
+        report_id = f"geometry_extraction:{_digest(lean_goal_text)}"
         claim = GeometryClaimSpec(
             schema_version="1.0.0",
-            claim_id=f"geometry_claim:{_digest(lean_goal_text)}",
+            claim_id=claim_id,
             target_library="LeanGeoSubsetV1:1.0.0",
             objects=tuple(parsed["objects"]),
             hypotheses=tuple(parsed["hypotheses"]),
@@ -198,6 +211,10 @@ class GeometryExtractor:
             nondegeneracy_assumptions=tuple(parsed["nondegeneracy_assumptions"]),
             orientation_assumptions=tuple(parsed["orientation_assumptions"]),
             source_goal_ref=goal_anchor_ref,
+            extraction_report_ref=report_id,
+            goal_anchor_ref=goal_anchor_ref,
+            protected_statement_hash=goal_anchor_ref,
+            target_library_manifest_hash="target_library_manifest:LeanGeoSubsetV1:1.0.0",
         )
         relation_evidence = relation_evidence or RelationEvidence("exact")
         relation = relation_evidence.relation
@@ -257,7 +274,7 @@ class GeometryExtractor:
         return (
             GeometryExtractionReport(
                 "1.0.0",
-                f"geometry_extraction:{_digest(lean_goal_text)}",
+                report_id,
                 goal_anchor_ref,
                 relation,
                 "extracted_claim",

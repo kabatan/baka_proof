@@ -166,6 +166,10 @@ def _claim_spec() -> GeometryClaimSpec:
         nondegeneracy_assumptions=(),
         orientation_assumptions=(),
         source_goal_ref="goal_anchor:sample",
+        extraction_report_ref="geometry_extraction:sample",
+        goal_anchor_ref="goal_anchor:sample",
+        protected_statement_hash="sha256:goal",
+        target_library_manifest_hash="target_library_manifest:LeanGeoSubsetV1:1.0.0",
     )
 
 
