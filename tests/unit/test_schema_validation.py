@@ -5,6 +5,7 @@ import unittest
 import json
 from pathlib import Path
 
+from math_auto_research.base.schemas import SelectedImplementations, export_registered_json_schemas
 from math_auto_research.schema_validation import SchemaValidationError, validate_artifact
 
 
@@ -35,6 +36,39 @@ class SelectedImplementationsSchemaTest(unittest.TestCase):
             )
             with self.assertRaises(SchemaValidationError):
                 validate_artifact(candidate, Path("schemas/base/selected_implementations.schema.json"))
+
+    def test_pydantic_record_rejects_unknown_fields_and_hashes_deterministically(self) -> None:
+        record = SelectedImplementations.model_validate(
+            {
+                "schema_version": "1.0.0",
+                "target_library": "LeanGeoSubsetV1:1.0.0",
+                "model_provider_set": "model_provider_set:geometry_default:v1",
+                "research_controller_plugin": "research_controller:dummy_controller:v1",
+                "proof_worker_plugin": "proof_worker:dummy_worker:v1",
+                "geometry_solver_provider": "geometry_solver_provider:composite_synthetic:v1",
+                "geometry_solver_policy": "geometry_solver_policy:geometry_synthetic_v1:v1",
+                "rule_registry": "RuleRegistryV1:1.0.0",
+                "resource_policy": "ResourcePolicy:geometry_local_default:v1",
+                "trust_boundary": "strict_lean:1.0.0",
+            }
+        )
+        self.assertEqual(record.deterministic_hash(), record.deterministic_hash())
+        self.assertTrue(record.schema_hash().startswith("sha256:"))
+        with self.assertRaises(Exception):
+            SelectedImplementations.model_validate(
+                {
+                    **record.model_dump(mode="json"),
+                    "unexpected": "forbidden",
+                }
+            )
+
+    def test_registered_json_schemas_export(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            written = export_registered_json_schemas(Path(tmp))
+            exported = {path.relative_to(Path(tmp)).as_posix() for path in written}
+            self.assertIn("base/selected_implementations.schema.json", exported)
+            selected_schema = json.loads((Path(tmp) / "base/selected_implementations.schema.json").read_text())
+            self.assertEqual(selected_schema["$id"], "base.selected_implementations.v1")
 
 
 class V03ContractInventoryTest(unittest.TestCase):

@@ -17,7 +17,7 @@ typecheck:
 test: test-unit test-regression test-mutation test-integration
 
 test-unit:
-	$(PYTHON) -m unittest discover -s tests/unit -p "test_*.py"
+	$(PYTHON) -m unittest discover -s tests/unit -p "$(if $(TEST_FILTER),*$(TEST_FILTER)*.py,test_*.py)"
 
 test-mutation:
 	$(PYTHON) -m unittest tests.unit.test_geometry_extraction tests.unit.test_target_subset tests.unit.test_trace_compiler tests.unit.test_geotrace_rule_registry tests.unit.test_construction_compiler tests.unit.test_geometry_bridge tests.unit.test_final_verify tests.unit.test_geometry_standard_loop tests.unit.test_proof_state_dag

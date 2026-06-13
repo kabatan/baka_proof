@@ -6,6 +6,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from math_auto_research.base.schemas import (
+    assert_scalar_selected_implementations,
+    schema_for_path,
+    validate_with_model,
+)
+
 
 class SchemaValidationError(ValueError):
     """Raised when an artifact does not satisfy the local schema subset."""
@@ -113,6 +119,15 @@ def validate_artifact(artifact_path: Path, schema_path: Path | None = None) -> V
     schema_path = resolve_schema_path(artifact_path, schema_path)
     schema = load_json(schema_path)
     artifact = load_artifact(artifact_path)
+    model = schema_for_path(schema_path)
+    if model is not None:
+        try:
+            if model.__name__ == "SelectedImplementations":
+                assert_scalar_selected_implementations(artifact)
+            validate_with_model(artifact, model)
+        except ValueError as exc:
+            raise SchemaValidationError(str(exc)) from exc
+        return ValidationResult(artifact_path=artifact_path, schema_path=schema_path, schema_id=schema["$id"])
     _validate_object(artifact, schema, path="$")
     return ValidationResult(artifact_path=artifact_path, schema_path=schema_path, schema_id=schema["$id"])
 
