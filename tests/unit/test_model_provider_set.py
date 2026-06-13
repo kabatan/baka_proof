@@ -68,7 +68,7 @@ class ModelProviderSetTest(unittest.TestCase):
                         Derivation(
                             "d:model",
                             "o:target",
-                            "model_output_claim",
+                            "provider_result",
                             ("e:model",),
                             proof_use_status="final_theorem",
                         ),
