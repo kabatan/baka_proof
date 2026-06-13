@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from plugins.geometry_synthetic.construction import AuxiliaryConstructionCandidateV1, candidate_from_dict
-from plugins.geometry_synthetic.provider import GenesisGeoCompatibleConstructionProposerAdapter
+from plugins.geometry_synthetic.providers.composite_provider import GenesisGeoCompatibleConstructionProposerAdapter
 
 
 def normalize_genesisgeo_candidate(payload: dict[str, Any]) -> AuxiliaryConstructionCandidateV1:

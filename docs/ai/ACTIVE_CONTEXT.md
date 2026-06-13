@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A-patch
-status: V03A_PATCH_T40_READY
+status: V03A_PATCH_T41_READY
 created: 2026-06-13
 last_updated: 2026-06-13
 base_spec: MARP-GEOLEAN-BASE-004
@@ -60,7 +60,7 @@ The user approved importing the v0.3A patch bundle on 2026-06-13. Patch import e
 
 The repo has a partially implemented full-rebase track, but v0.3A deviation audit shows it is not sufficient for `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
 
-The next implementation pass must continue the v0.3A hardening tasks, starting with provider module layout refactoring in T40.
+The next implementation pass must continue the v0.3A hardening tasks, starting with TongGeometry claim-profile smoke hardening in T41.
 
 ## Current Task Pointer
 
@@ -370,26 +370,30 @@ Completed task:
 T39 — Dependency claim-profile schema and probe update
 ```
 
-Current task:
+Completed task:
 
 ```text
 T40 — Provider module layout refactor
 ```
 
-Current task files changed in T39:
+Current task:
 
 ```text
-schemas/base/dependency_resolution_report.schema.json
-schemas/resources/dependency_resolution_report.schema.json
-schemas/artifact_schema_map.json
-src/math_auto_research/base/schemas.py
-src/math_auto_research/schema_validation.py
-scripts/probe_dependencies.py
-scripts/check_dependency_claim_profile.py
-scripts/check_dependency_report_model_status.py
-docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/dependency_resolution.json
-docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/tonggeometry_model_discovery_report.md
-docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t39_dependency_claim_profile.md
+T41 — TongGeometry claim-profile smoke hardening
+```
+
+Current task files changed in T40:
+
+```text
+plugins/geometry_synthetic/provider.py
+plugins/geometry_synthetic/providers/composite_provider.py
+plugins/geometry_synthetic/providers/provider_api.py
+plugins/geometry_synthetic/providers/provider_run_manifest.py
+plugins/geometry_synthetic/providers/newclid_adapter.py
+plugins/geometry_synthetic/providers/genesisgeo_adapter.py
+plugins/geometry_synthetic/providers/tonggeometry_adapter.py
+scripts/check_provider_layout.py
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t40_provider_layout.md
 docs/ai/ACTIVE_CONTEXT.md
 ```
 
@@ -419,7 +423,7 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
 Allowed:
 
 ```text
-BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T39 dependency claim-profile hardening is complete. T40 is ready to implement.
+BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T40 provider layout hardening is complete. T41 is ready to implement.
 No v0.3A completion claim is admitted, and no R-ID is VERIFIED.
 ```
 

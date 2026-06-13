@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from plugins.geometry_synthetic.provider import TongGeometryCompatibleHeavySearchAdapter
+from plugins.geometry_synthetic.providers.composite_provider import TongGeometryCompatibleHeavySearchAdapter
 
 
 def normalize_tonggeometry_output(payload: dict[str, Any]) -> str | None:
