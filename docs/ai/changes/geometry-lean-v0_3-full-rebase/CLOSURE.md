@@ -130,3 +130,9 @@ python scripts/check_release_acceptance.py --config configs/benchmark_runs/geome
 ```text
 implementation_closure_commit: e427015
 ```
+
+Git closure scope:
+
+```text
+All v0.3 full-rebase/v0.3A closure files are committed. The untracked top-level lib/ directory is outside this closure scope and was not staged or modified by this closure task.
+```
