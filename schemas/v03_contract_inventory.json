@@ -19,6 +19,8 @@
     "EvidenceRef": "schemas/proof_state/public_contracts.schema.json",
     "GraphPatch": "schemas/proof_state/public_contracts.schema.json",
     "GraphPatchCommitResult": "schemas/proof_state/public_contracts.schema.json",
+    "DAGSnapshot": "schemas/proof_state/public_contracts.schema.json",
+    "StateReaderSummary": "schemas/proof_state/public_contracts.schema.json",
     "ModelProviderSetManifest": "schemas/model_api/public_contracts.schema.json",
     "ModelSlot": "schemas/model_api/public_contracts.schema.json",
     "ModelInvocationRequest": "schemas/model_api/public_contracts.schema.json",

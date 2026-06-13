@@ -87,6 +87,8 @@ class V03ContractInventoryTest(unittest.TestCase):
             "EvidenceRef",
             "GraphPatch",
             "GraphPatchCommitResult",
+            "DAGSnapshot",
+            "StateReaderSummary",
             "ResearchControllerPlugin",
             "ProofWorkerPlugin",
             "ResearchStatePack",
@@ -151,12 +153,6 @@ class V03ContractInventoryTest(unittest.TestCase):
             proof_use_fields = definition.get("proof_use_fields", [])
             if "schema_version" not in required_fields and contract_name not in {
                 "ArtifactRef",
-                "Obligation",
-                "ObligationNode",
-                "Derivation",
-                "DerivationNode",
-                "EvidenceRef",
-                "GraphPatch",
             }:
                 weak_contracts.append(f"{contract_name}:missing schema_version")
             if contract_name not in {"ArtifactRef", "PluginManifest", "SelectedImplementations"}:
@@ -165,6 +161,24 @@ class V03ContractInventoryTest(unittest.TestCase):
 
         self.assertEqual(missing_contract_definitions, [])
         self.assertEqual(weak_contracts, [])
+
+    def test_proof_state_schema_inventory_matches_required_records(self) -> None:
+        proof_state = json.loads(Path("schemas/proof_state/public_contracts.schema.json").read_text(encoding="utf-8"))
+        contracts = proof_state["properties"]["contract_schemas"]["properties"]
+        required = {
+            "ObligationNode",
+            "DerivationNode",
+            "EvidenceRef",
+            "GraphPatch",
+            "GraphPatchCommitResult",
+            "DAGSnapshot",
+            "StateReaderSummary",
+        }
+        self.assertEqual(sorted(required - set(contracts)), [])
+        commit_fields = contracts["GraphPatchCommitResult"]["required_fields"]
+        self.assertIn("committed_derivation_ids", commit_fields)
+        self.assertIn("committed_evidence_ids", commit_fields)
+        self.assertNotIn("blocker_summary", commit_fields)
 
     def test_proof_use_status_enums_do_not_create_unverified_final_paths(self) -> None:
         geometry = json.loads(Path("schemas/geometry/v03_contract_index.schema.json").read_text(encoding="utf-8"))

@@ -13,18 +13,20 @@
         "DerivationNode",
         "EvidenceRef",
         "GraphPatch",
-        "GraphPatchCommitResult"
+        "GraphPatchCommitResult",
+        "DAGSnapshot",
+        "StateReaderSummary"
       ],
       "properties": {
         "Obligation": {
-          "required_fields": ["obligation_id", "statement_hash", "status", "parent_obligation_ids", "blocker_refs"],
+          "required_fields": ["schema_version", "obligation_id", "statement_hash", "status", "parent_obligation_ids", "blocker_refs"],
           "provenance_fields": ["statement_hash", "blocker_refs"],
           "status_fields": ["status"],
           "proof_use_fields": [],
           "allowed_values": {"status": ["open", "blocked", "closed", "invalidated"]}
         },
         "ObligationNode": {
-          "required_fields": ["obligation_id", "statement_hash", "status", "parent_obligation_ids", "blocker_refs"],
+          "required_fields": ["schema_version", "obligation_id", "statement_hash", "status", "parent_obligation_ids", "blocker_refs"],
           "provenance_fields": ["statement_hash", "blocker_refs"],
           "status_fields": ["status"],
           "proof_use_fields": [],
@@ -33,6 +35,7 @@
         "Derivation": {
           "required_fields": [
             "derivation_id",
+            "schema_version",
             "conclusion_obligation_id",
             "rule_id",
             "evidence_refs",
@@ -46,12 +49,13 @@
           "status_fields": ["proof_use_status"],
           "proof_use_fields": ["proof_use_status"],
           "allowed_values": {
-            "proof_use_status": ["not_allowed", "diagnostic_only", "search_only", "lean_patch_candidate", "final_theorem"]
+            "proof_use_status": ["not_allowed", "search_only", "claim_level_only", "goal_level_allowed", "final_theorem"]
           }
         },
         "DerivationNode": {
           "required_fields": [
             "derivation_id",
+            "schema_version",
             "conclusion_obligation_id",
             "rule_id",
             "evidence_refs",
@@ -65,12 +69,12 @@
           "status_fields": ["proof_use_status"],
           "proof_use_fields": ["proof_use_status"],
           "allowed_values": {
-            "proof_use_status": ["not_allowed", "diagnostic_only", "search_only", "lean_patch_candidate", "final_theorem"]
+            "proof_use_status": ["not_allowed", "search_only", "claim_level_only", "goal_level_allowed", "final_theorem"]
           }
         },
         "EvidenceRef": {
-          "required_fields": ["evidence_id", "artifact_ref", "evidence_status", "media_type", "content_hash"],
-          "provenance_fields": ["artifact_ref", "content_hash"],
+          "required_fields": ["schema_version", "evidence_id", "artifact_ref", "evidence_status", "media_type", "content_hash", "artifact_kind"],
+          "provenance_fields": ["artifact_ref", "content_hash", "artifact_kind"],
           "status_fields": ["evidence_status"],
           "proof_use_fields": [],
           "allowed_values": {
@@ -78,17 +82,48 @@
           }
         },
         "GraphPatch": {
-          "required_fields": ["patch_id", "schema_id", "obligations", "evidence_refs", "derivations", "invalidate_obligation_ids"],
+          "required_fields": ["schema_version", "patch_id", "schema_id", "obligations", "evidence_refs", "derivations", "invalidate_obligation_ids"],
           "provenance_fields": ["patch_id"],
           "status_fields": ["schema_id"],
           "proof_use_fields": []
         },
         "GraphPatchCommitResult": {
-          "required_fields": ["schema_version", "patch_id", "status", "committed_obligation_ids", "closed_obligation_ids", "blocker_summary"],
-          "provenance_fields": ["patch_id", "committed_obligation_ids", "closed_obligation_ids"],
+          "required_fields": [
+            "schema_version",
+            "patch_id",
+            "status",
+            "committed_obligation_ids",
+            "committed_derivation_ids",
+            "committed_evidence_ids"
+          ],
+          "provenance_fields": [
+            "patch_id",
+            "committed_obligation_ids",
+            "committed_derivation_ids",
+            "committed_evidence_ids"
+          ],
           "status_fields": ["status"],
           "proof_use_fields": [],
           "allowed_values": {"status": ["committed", "rejected"]}
+        },
+        "DAGSnapshot": {
+          "required_fields": ["schema_version", "obligation_ids", "derivation_ids", "evidence_ref_ids"],
+          "provenance_fields": ["obligation_ids", "derivation_ids", "evidence_ref_ids"],
+          "status_fields": [],
+          "proof_use_fields": []
+        },
+        "StateReaderSummary": {
+          "required_fields": [
+            "schema_version",
+            "obligation_count",
+            "derivation_count",
+            "evidence_ref_count",
+            "closed_obligation_ids",
+            "open_obligation_ids"
+          ],
+          "provenance_fields": ["closed_obligation_ids", "open_obligation_ids"],
+          "status_fields": ["closed_obligation_ids", "open_obligation_ids"],
+          "proof_use_fields": []
         }
       }
     }
