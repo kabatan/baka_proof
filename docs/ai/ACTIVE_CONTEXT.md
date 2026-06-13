@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase
-status: V03_FULL_REBASE_T01_COMPLETED_READY_FOR_T02
+status: V03_FULL_REBASE_T02_COMPLETED_READY_FOR_RC0
 created: 2026-06-13
 last_updated: 2026-06-13
 base_spec: MARP-GEOLEAN-BASE-004
@@ -72,10 +72,16 @@ Completed task:
 T01 — Current repo audit
 ```
 
-Current task:
+Completed task:
 
 ```text
 T02 — Cleanup superseded specs and ambiguous root guidance
+```
+
+Current gate:
+
+```text
+RC-0 — repo rebase and old-spec deletion
 ```
 
 ## Non-Negotiables

@@ -14,7 +14,7 @@ This file maps source decisions to the Base Spec and Plan.
 ## 1. Source hierarchy
 
 1. User decisions in the current conversation are EXACT.
-2. `geometry_lean_pipeline_plan_v0_3.md` is a source architecture document, not implementation authority.
+2. `docs/ai/changes/geometry-lean-v0_3-full-rebase/source/geometry_lean_pipeline_plan_v0_3.md` is a source architecture document, not implementation authority.
 3. `v03_completion_blocker_report.md` is a blocker/evidence-ceiling report.
 4. Guardian docs provide process style only; they do not define this project’s technical requirements.
 
@@ -81,7 +81,7 @@ After approval, the following may be cited only as historical source/evidence, n
 ```text
 geometry_lean_guardian_BASE_SPEC_draft_v0_2.md
 geometry_lean_guardian_PLAN_draft_v0_2.md
-geometry_lean_pipeline_plan_v0_3.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/source/geometry_lean_pipeline_plan_v0_3.md
 previous CLOSURE.md files
 previous fixture-level acceptance reports
 ```

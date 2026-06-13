@@ -3,6 +3,9 @@ title: 数学自動研究 pipeline — geometry × Lean 初期対象計画
 version: v0.3-geometry-lean-research-verified
 created: 2026-06-09
 status: draft; v0.2 と revised review を踏まえた再整理版
+authority: NON-AUTHORITATIVE SOURCE
+superseded_by: MARP-GEOLEAN-BASE-004
+guardian_note: Historical source architecture document retained for traceability only. Do not execute as implementation authority.
 intended_reader:
   - 実装者
   - 研究計画レビュー担当者
