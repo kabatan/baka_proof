@@ -55,24 +55,30 @@ class ResourceGovernorTest(unittest.TestCase):
         governor = ResourceGovernor()
         heavy = ResourceRequest(component="provider_engine", engine_role="heavy_search", budget="heavy")
         second_heavy = ResourceRequest(component="provider_engine", engine_role="heavy_search", budget="heavy")
-        lean = ResourceRequest(component="final_verify", engine_role="lean", budget="tiny")
+        lean = ResourceRequest(component="final_verify", engine_role="final_verify", budget="tiny")
 
         with governor.admit(heavy):
             with self.assertRaises(ResourceRejected):
                 with governor.admit(second_heavy):
                     pass
             with governor.admit(lean) as admitted:
-                self.assertEqual(admitted.engine_role, "lean")
+                self.assertEqual(admitted.engine_role, "final_verify")
 
     def test_scheduler_prioritizes_lean_ahead_of_queued_heavy_search(self) -> None:
         governor = ResourceGovernor()
         queued = [
             ResourceRequest(component="provider_engine", engine_role="heavy_search", budget="heavy"),
-            ResourceRequest(component="final_verify", engine_role="lean", budget="tiny"),
+            ResourceRequest(component="lean_build", engine_role="lean_build", budget="tiny"),
+            ResourceRequest(component="final_verify", engine_role="final_verify", budget="tiny"),
             ResourceRequest(component="provider_engine", engine_role="construction_proposer", budget="medium"),
+            ResourceRequest(component="worker", engine_role="proof_worker", budget="medium"),
+            ResourceRequest(component="closure", engine_role="symbolic_closure", budget="medium"),
         ]
         ordered = governor.priority_order(queued)
-        self.assertEqual([request.engine_role for request in ordered], ["lean", "construction_proposer", "heavy_search"])
+        self.assertEqual(
+            [request.engine_role for request in ordered],
+            ["final_verify", "lean_build", "proof_worker", "symbolic_closure", "construction_proposer", "heavy_search"],
+        )
 
 
 if __name__ == "__main__":

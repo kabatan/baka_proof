@@ -8,18 +8,22 @@ from math_auto_research.base.resources.resource_budget import ResourceRejected, 
 
 
 ROLE_PRIORITIES = {
-    "lean": 10,
-    "proof_worker": 20,
-    "symbolic_closure": 30,
-    "construction_proposer": 40,
-    "heavy_search": 50,
-    "none": 60,
+    "final_verify": 10,
+    "lean_build": 20,
+    "lean": 20,
+    "proof_worker": 30,
+    "symbolic_closure": 40,
+    "construction_proposer": 50,
+    "heavy_search": 60,
+    "none": 70,
 }
 
 
 class ResourceGovernor:
     def __init__(self) -> None:
         self._semaphores = {
+            "final_verify": threading.Semaphore(1),
+            "lean_build": threading.Semaphore(1),
             "lean": threading.Semaphore(1),
             "proof_worker": threading.Semaphore(1),
             "symbolic_closure": threading.Semaphore(1),
