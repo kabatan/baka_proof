@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase
-status: V03_FULL_REBASE_RC1_PASSED_READY_FOR_T08
+status: V03_FULL_REBASE_T08_COMPLETED_READY_FOR_T09
 created: 2026-06-13
 last_updated: 2026-06-13
 base_spec: MARP-GEOLEAN-BASE-004
@@ -120,10 +120,16 @@ Completed review checkpoint:
 RC-1 — Base schemas, package layout, and Base/plugin boundary
 ```
 
-Current task:
+Completed task:
 
 ```text
 T08 — Plugin registry and manifest loader
+```
+
+Current task:
+
+```text
+T09 — ResourceGovernor and ProcessRunner
 ```
 
 ## Non-Negotiables
@@ -151,7 +157,7 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
 Allowed:
 
 ```text
-BASE-004 / PLAN-004 are admitted and user-approved for implementation. T00, T01, T02, RC-0, T03, T04, T05, T06, T07, and RC-1 are complete.
+BASE-004 / PLAN-004 are admitted and user-approved for implementation. T00, T01, T02, RC-0, T03, T04, T05, T06, T07, RC-1, and T08 are complete.
 No v0.3 completion claim is admitted, and no R-ID is VERIFIED.
 ```
 

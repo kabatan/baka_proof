@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import unittest
+import sys
 
-from math_auto_research.base.plugins import CapabilityRegistry, PluginLoader, SchemaRegistry
+from math_auto_research.base.registry import CapabilityRegistry, PluginLoader, SchemaRegistry
 
 
 class PluginRegistryTest(unittest.TestCase):
@@ -16,6 +17,8 @@ class PluginRegistryTest(unittest.TestCase):
         self.assertEqual(manifest.plugin_id, "geometry_synthetic")
         self.assertEqual(capability_registry.ids(), ["geometry.solve"])
         self.assertIn("geometry.v03_contract_index.v1", schema_registry.ids())
+        self.assertIn("provider", manifest.components or {})
+        self.assertNotIn("plugins.geometry_synthetic.facade", sys.modules)
 
     def test_duplicate_capability_is_rejected(self) -> None:
         registry = CapabilityRegistry()
