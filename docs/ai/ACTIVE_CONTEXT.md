@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase
-status: BASE004_PLAN004_ADMITTED_PENDING_IMPLEMENTATION_APPROVAL
+status: BASE004_PLAN004_APPROVED_READY_FOR_T01
 created: 2026-06-13
 last_updated: 2026-06-13
 base_spec: MARP-GEOLEAN-BASE-004
@@ -31,13 +31,11 @@ Rebase kabatan/baka_proof from the fixture-level / limited-recovery implementati
 
 Guardian boundary admission is recorded for `BASE-004 / PLAN-004`.
 
-Implementation permission is not yet recorded.
+Implementation permission is recorded in:
 
-Codex may review and prepare Guardian documents. Codex must not modify implementation code for PLAN-004 tasks until all of the following exist:
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/user_approval.md`
 
-- Guardian boundary admission for `BASE_SPEC.md` and `PLAN.md`;
-- explicit user approval for implementing `MARP-GEOLEAN-BASE-004` and `MARP-GEOLEAN-PLAN-004`;
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/user_approval.md`.
+Codex may execute `MARP-GEOLEAN-PLAN-004` within the admitted `MARP-GEOLEAN-BASE-004` scope.
 
 ## Read First
 
@@ -62,18 +60,16 @@ Completed preparation gate:
 BASE-004 / PLAN-004 Guardian boundary review passed.
 ```
 
-Current preparation task:
-
-```text
-Record explicit user implementation approval for BASE-004 / PLAN-004 and prepare T00 approval gate.
-```
-
-After Guardian admission and explicit user implementation approval, proceed to:
+Completed task:
 
 ```text
 T00 — Approval gate
+```
+
+Current task:
+
+```text
 T01 — Current repo audit
-T02 — Cleanup superseded specs and ambiguous root guidance
 ```
 
 ## Non-Negotiables
@@ -101,8 +97,8 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
 Allowed:
 
 ```text
-BASE-004 / PLAN-004 are admitted as the next Guardian Base Spec / Plan candidate for full v0.3 implementation preparation.
-Implementation is not approved, no code changes are authorized, and no R-ID is VERIFIED.
+BASE-004 / PLAN-004 are admitted and user-approved for implementation. T00 approval gate is complete.
+No v0.3 completion claim is admitted, and no R-ID is VERIFIED.
 ```
 
 Not allowed yet:
