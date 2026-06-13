@@ -35,7 +35,7 @@ Primary documents:
 
 Purpose: Guardian-managed recovery track for resolving v0.3 completion blockers through real provider integration and a limited real LeanGeo corpus.
 
-Status: Base Spec/Plan amendment Guardian-admitted for recovery work; claims remain fixture-level until fresh v0.3A evidence and final reviews pass.
+Status: final reviews passed for limited real-integration evidence only. This does not claim full v0.3 completion, real Level 2 advantage, arbitrary LeanGeo support, production safety, source-faithfulness, acceptance-completeness, or R-ID VERIFIED status.
 
 Primary documents:
 
@@ -44,6 +44,21 @@ Primary documents:
 - `docs/ai/changes/geometry-lean-v0_3a/source_map.md` — source-to-R-ID traceability aid.
 - `docs/ai/changes/geometry-lean-v0_3a/README.md` — recovery change index.
 - `docs/ai/changes/geometry-lean-v0_3a/evidence/` — recovery evidence.
+
+### geometry-lean-v0_3-full-rebase
+
+Purpose: Guardian-managed full v0.3 experiment-ready rebase track targeting `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
+
+Status: Base Spec/Plan Guardian-admitted for full v0.3 implementation preparation; implementation permission is not yet recorded.
+
+Primary documents:
+
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md` — candidate correctness authority for `MARP-GEOLEAN-BASE-004`.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/PLAN.md` — candidate execution contract for `MARP-GEOLEAN-PLAN-004`.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md` — source-to-requirement traceability aid.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md` — repository cleanup directive for the rebase.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/ACCEPTANCE_MATRIX.md` — final acceptance evidence and command matrix.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/` — import, review, approval, and implementation evidence.
 
 Architecture documents:
 
