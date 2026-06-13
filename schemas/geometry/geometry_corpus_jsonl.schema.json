@@ -1,0 +1,39 @@
+{
+  "$id": "geometry.geometry_corpus_jsonl.v1",
+  "type": "object",
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "schema_version",
+          "entry_id",
+          "corpus_id",
+          "theorem_file_path",
+          "theorem_name",
+          "target_library",
+          "theorem_statement",
+          "theorem_statement_hash",
+          "expected_extraction_class",
+          "expected_extraction_status",
+          "acceptance_eligible"
+        ],
+        "properties": {
+          "schema_version": {"type": "string", "enum": ["1.0.0"]},
+          "entry_id": {"type": "string"},
+          "corpus_id": {"type": "string"},
+          "theorem_file_path": {"type": "string"},
+          "theorem_name": {"type": "string"},
+          "target_library": {"type": "string", "enum": ["LeanGeoSubsetV1:1.0.0"]},
+          "theorem_statement": {"type": "string"},
+          "theorem_statement_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+          "expected_extraction_class": {"type": "string"},
+          "expected_extraction_status": {"type": "string"},
+          "acceptance_eligible": {"type": "boolean"}
+        }
+      }
+    }
+  }
+}

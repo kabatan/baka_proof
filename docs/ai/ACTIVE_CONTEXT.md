@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase
-status: V03_FULL_REBASE_T18_IN_PROGRESS
+status: V03_FULL_REBASE_T19_IN_PROGRESS
 created: 2026-06-13
 last_updated: 2026-06-13
 base_spec: MARP-GEOLEAN-BASE-004
@@ -198,10 +198,16 @@ Completed task:
 T17 — LeanGeoSubsetV1 theorem grammar and mappings
 ```
 
-Current task:
+Completed task:
 
 ```text
 T18 — real corpus manifests
+```
+
+Current task:
+
+```text
+T19 — GeometryExtractionContract
 ```
 
 Current task files changed:
@@ -243,7 +249,7 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
 Allowed:
 
 ```text
-BASE-004 / PLAN-004 are admitted and user-approved for implementation. T00, T01, T02, RC-0, T03, T04, T05, T06, T07, RC-1, T08, T09, T10, T11, T12, RC-2, T13, T14, T15, RC-3, T16, and T17 are complete. T18 is in progress.
+BASE-004 / PLAN-004 are admitted and user-approved for implementation. T00, T01, T02, RC-0, T03, T04, T05, T06, T07, RC-1, T08, T09, T10, T11, T12, RC-2, T13, T14, T15, RC-3, T16, T17, and T18 are complete. T19 is in progress.
 No v0.3 completion claim is admitted, and no R-ID is VERIFIED.
 ```
 

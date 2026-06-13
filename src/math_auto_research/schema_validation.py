@@ -29,6 +29,18 @@ def load_json(path: Path) -> dict[str, Any]:
         return json.load(handle)
 
 
+def load_jsonl(path: Path) -> dict[str, Any]:
+    records = []
+    for line_number, raw_line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if not raw_line.strip():
+            continue
+        try:
+            records.append(json.loads(raw_line))
+        except json.JSONDecodeError as exc:
+            raise SchemaValidationError(f"{path}:{line_number}: invalid JSONL record") from exc
+    return {"records": records}
+
+
 def load_scalar_yaml(path: Path) -> dict[str, Any]:
     data: dict[str, Any] = {}
     stack: list[tuple[int, dict[str, Any]]] = [(-1, data)]
@@ -58,6 +70,8 @@ def load_artifact(path: Path) -> dict[str, Any]:
     suffix = path.suffix.lower()
     if suffix == ".json":
         return load_json(path)
+    if suffix == ".jsonl":
+        return load_jsonl(path)
     if suffix in {".yaml", ".yml"}:
         return load_scalar_yaml(path)
     raise SchemaValidationError(f"unsupported artifact extension: {path.suffix}")
