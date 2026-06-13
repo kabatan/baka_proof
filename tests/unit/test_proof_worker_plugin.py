@@ -3,6 +3,7 @@ from __future__ import annotations
 import unittest
 
 from math_auto_research.model_api.proof_worker import WorkerResult
+from math_auto_research.model_api.proof_worker import DummyProofWorker
 
 
 class ProofWorkerPluginContractTest(unittest.TestCase):
@@ -18,6 +19,9 @@ class ProofWorkerPluginContractTest(unittest.TestCase):
                 proof_use_note="bad",
                 proof_use_status="final_theorem",
             )
+
+    def test_worker_exposes_base_signature(self) -> None:
+        self.assertTrue(hasattr(DummyProofWorker, "execute_work_order"))
 
 
 if __name__ == "__main__":

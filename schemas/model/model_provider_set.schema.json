@@ -1,0 +1,21 @@
+{
+  "$id": "model.model_provider_set.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "provider_set_id",
+    "version",
+    "slots",
+    "logging_required",
+    "raw_model_output_proof_use"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "provider_set_id": {"type": "string", "pattern": "model_provider_set:.+:.+"},
+    "version": {"type": "string"},
+    "slots": {"type": "object"},
+    "logging_required": {"type": "boolean"},
+    "raw_model_output_proof_use": {"type": "boolean"}
+  }
+}

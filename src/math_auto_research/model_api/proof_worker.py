@@ -4,6 +4,8 @@ from dataclasses import asdict, dataclass, field
 from typing import Any
 
 from math_auto_research.base.model_provider_set import ModelProviderSet
+from math_auto_research.base.resources.resource_governor import ResourceGovernor
+from math_auto_research.lean_integration.lean_port import LeanPort
 
 
 @dataclass(frozen=True)
@@ -41,8 +43,15 @@ class DummyProofWorker:
     def __init__(self, manifest: ProofWorkerPluginManifest) -> None:
         self.manifest = manifest
 
-    def work(self, provider_set: ModelProviderSet, work_order: dict[str, Any]) -> dict[str, Any]:
-        output, record, output_ref = provider_set.invoke_slot(
+    def execute_work_order(
+        self,
+        work_order: dict[str, Any],
+        models: ModelProviderSet,
+        lean_port: LeanPort | None = None,
+        resource_governor: ResourceGovernor | None = None,
+    ) -> dict[str, Any]:
+        _ = (lean_port, resource_governor)
+        output, record, output_ref = models.invoke_slot(
             self.manifest.declared_model_slots[0],
             prompt=str(work_order),
             request_id=str(work_order.get("work_order_id", "work_order:fixture")),
@@ -59,6 +68,9 @@ class DummyProofWorker:
             worker_output=output,
         )
         return result.to_dict()
+
+    def work(self, provider_set: ModelProviderSet, work_order: dict[str, Any]) -> dict[str, Any]:
+        return self.execute_work_order(work_order, provider_set, None, None)
 
 
 def proof_worker_manifest_to_dict(manifest: ProofWorkerPluginManifest) -> dict[str, Any]:

@@ -41,6 +41,35 @@ class FinalVerifyGateTest(unittest.TestCase):
     def test_sorry_is_detected(self) -> None:
         self.assertTrue(contains_sorry("theorem bad : True := by\n  sorry\n"))
 
+    def test_unadmitted_import_is_rejected(self) -> None:
+        candidate = "import Other.Target\n" + LEAN_TEMPLATE
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "Sample.lean"
+            path.write_text(candidate, encoding="utf-8")
+            report = FinalVerifyGate().verify_file(LEAN_TEMPLATE, path, "sample_target", "o:sample")
+            self.assertEqual(report.proof_use_status, "not_allowed")
+
+    def test_toy_target_is_rejected(self) -> None:
+        candidate = LEAN_TEMPLATE + "\n-- ToyGeometry\n"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "Sample.lean"
+            path.write_text(candidate, encoding="utf-8")
+            report = FinalVerifyGate().verify_file(LEAN_TEMPLATE, path, "sample_target", "o:sample")
+            self.assertEqual(report.proof_use_status, "not_allowed")
+
+    def test_incomplete_proof_use_provenance_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "Sample.lean"
+            path.write_text(LEAN_TEMPLATE, encoding="utf-8")
+            report = FinalVerifyGate().verify_file(
+                LEAN_TEMPLATE,
+                path,
+                "sample_target",
+                "o:sample",
+                proof_use_provenance={"goal_anchor_ref": "sha256:goal"},
+            )
+            self.assertEqual(report.proof_use_status, "not_allowed")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -3,6 +3,7 @@ from __future__ import annotations
 import unittest
 
 from math_auto_research.model_api.action_plan import ActionPlan
+from math_auto_research.model_api.research_controller import DummyResearchController
 
 
 class ControllerPluginContractTest(unittest.TestCase):
@@ -18,6 +19,9 @@ class ControllerPluginContractTest(unittest.TestCase):
                 proof_use_note="bad",
                 proof_use_status="final_theorem",
             )
+
+    def test_controller_exposes_base_signature(self) -> None:
+        self.assertTrue(hasattr(DummyResearchController, "plan_next_actions"))
 
 
 if __name__ == "__main__":

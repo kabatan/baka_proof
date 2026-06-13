@@ -31,6 +31,11 @@ class ModelProviderSetTest(unittest.TestCase):
             self.assertEqual(output["proof_use_status"], "not_allowed")
             self.assertEqual(record.proof_use_status, "not_allowed")
             self.assertEqual(record.output_artifact_ref, output_ref.sha256)
+            self.assertEqual(record.request_hash, record.input_hash)
+            self.assertTrue(record.provider_set_hash.startswith("sha256:"))
+            self.assertTrue(record.response_hash.startswith("sha256:"))
+            self.assertIsNotNone(record.redacted_transcript_artifact_ref)
+            self.assertIn("provider", record.usage_metadata or {})
 
     def test_dummy_controller_and_worker_use_declared_slots(self) -> None:
         manifest = ModelProviderSetManifest.from_file("configs/model_provider_sets/default.example.yaml")

@@ -116,7 +116,7 @@ Early tasks may create commands incrementally, but final acceptance requires the
 RC-0: after T02, repo rebase and old-spec deletion.
 RC-1: after T07, Base schemas, package layout, and Base/plugin boundary.
 RC-2: after T12, resource governance and dependency bootstrap.
-RC-3: after T16, model provider and Lean verification boundary.
+RC-3: after T15, model provider and Lean verification boundary.
 RC-4: after T20, target subset and extraction.
 RC-5: after T25, real provider integration.
 RC-6: after T29, compiler and construction path.

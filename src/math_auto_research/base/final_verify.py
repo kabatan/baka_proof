@@ -2,7 +2,10 @@ from math_auto_research.lean_integration.final_verify_gate import (
     FinalVerifyGate,
     FinalVerifyReport,
     contains_forbidden_declaration,
+    contains_local_toy_target,
     contains_sorry,
+    imports_are_admitted,
+    proof_use_provenance_valid,
 )
 from math_auto_research.lean_integration.goal_anchor import GoalAnchor, extract_theorem_statement, hash_text
 from math_auto_research.lean_integration.proof_region_guard import ProofRegionGuard
@@ -13,7 +16,10 @@ __all__ = [
     "GoalAnchor",
     "ProofRegionGuard",
     "contains_forbidden_declaration",
+    "contains_local_toy_target",
     "contains_sorry",
     "extract_theorem_statement",
     "hash_text",
+    "imports_are_admitted",
+    "proof_use_provenance_valid",
 ]

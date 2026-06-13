@@ -20,11 +20,16 @@ class DummyResearchController:
     def __init__(self, manifest: ResearchControllerPluginManifest) -> None:
         self.manifest = manifest
 
-    def plan(self, provider_set: ModelProviderSet, state_pack: dict[str, Any]) -> dict[str, Any]:
-        output, record, output_ref = provider_set.invoke_slot(
+    def plan_next_actions(
+        self,
+        state: dict[str, Any],
+        models: ModelProviderSet,
+        context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        output, record, output_ref = models.invoke_slot(
             self.manifest.declared_model_slots[0],
-            prompt=str(state_pack),
-            request_id=str(state_pack.get("state_id", "research_state:fixture")),
+            prompt=str({"state": state, "context": context or {}}),
+            request_id=str(state.get("state_id", "research_state:fixture")),
         )
         plan = ActionPlan(
             schema_version="1.0.0",
@@ -38,6 +43,9 @@ class DummyResearchController:
             controller_output=output,
         )
         return plan.to_dict()
+
+    def plan(self, provider_set: ModelProviderSet, state_pack: dict[str, Any]) -> dict[str, Any]:
+        return self.plan_next_actions(state_pack, provider_set, {})
 
 
 def controller_manifest_to_dict(manifest: ResearchControllerPluginManifest) -> dict[str, Any]:

@@ -79,11 +79,16 @@ class ModelInvocationRecord:
     request_id: str
     slot_id: str
     status: str
+    provider_set_hash: str
     input_hash: str
+    request_hash: str
+    response_hash: str
     output_artifact_ref: str
+    redacted_transcript_artifact_ref: str | None = None
+    usage_metadata: dict[str, Any] | None = None
     proof_use_status: str = "not_allowed"
 
-    def to_dict(self) -> dict[str, str]:
+    def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 
 
@@ -116,13 +121,23 @@ class ModelProviderSet:
         output = self.fixture_provider.invoke(slot, prompt)
         output_ref = self.store.put_json("model_output", output)
         input_hash = f"sha256:{hashlib.sha256(prompt.encode('utf-8')).hexdigest()}"
+        response_hash = f"sha256:{hashlib.sha256(json.dumps(output, sort_keys=True).encode('utf-8')).hexdigest()}"
+        transcript_ref = self.store.put_json(
+            "model_transcript_redacted",
+            {"schema_version": "1.0.0", "slot_id": slot_id, "input_hash": input_hash, "response_hash": response_hash},
+        )
         record = ModelInvocationRecord(
             schema_version="1.0.0",
             invocation_id=f"model_invocation:{time.time_ns()}",
             request_id=request_id,
             slot_id=slot_id,
             status="completed",
+            provider_set_hash=self.manifest.hash_ref(),
             input_hash=input_hash,
+            request_hash=input_hash,
+            response_hash=response_hash,
             output_artifact_ref=output_ref.sha256,
+            redacted_transcript_artifact_ref=transcript_ref.sha256,
+            usage_metadata={"provider": slot.provider, "capability_count": len(slot.capabilities)},
         )
         return output, record, output_ref
