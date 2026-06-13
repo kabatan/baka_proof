@@ -74,44 +74,11 @@ def _parse_scalar(value: str) -> Any:
 def resolve_schema_path(artifact_path: Path, explicit_schema: Path | None = None) -> Path:
     if explicit_schema is not None:
         return explicit_schema
-    if artifact_path.name == "geometry_default.yaml":
-        return Path("schemas/base/selected_implementations.schema.json")
-    if artifact_path.name in {"dependency_probe.json", "dependency_resolution.json"}:
-        return Path("schemas/resources/dependency_resolution_report.schema.json")
-    if artifact_path.name in {"local_resource_profile.json", "resource_profile.json"}:
-        return Path("schemas/resources/local_resource_profile.schema.json")
-    if artifact_path.name == "default.example.yaml" and "model_provider_sets" in artifact_path.parts:
-        return Path("schemas/model_api/model_provider_set_manifest.schema.json")
-    if artifact_path.name == "leangeo_subset_v1.yaml":
-        return Path("schemas/geometry/target_library_manifest.schema.json")
-    if artifact_path.name in {"target_library_status.json", "leangeo_target_status.json"}:
-        return Path("schemas/geometry/target_library_status_report.schema.json")
-    if artifact_path.name == "leangeo_subset_v1_grammar.json":
-        return Path("schemas/geometry/leangeo_subset_v1_grammar.schema.json")
-    if artifact_path.name == "fixtures.json" and "geometry_synthetic" in artifact_path.parts:
-        return Path("schemas/geometry/grammar_fixture_set.schema.json")
-    if artifact_path.name == "geometry_extraction_report.json":
-        return Path("schemas/geometry/geometry_extraction_report.schema.json")
-    if artifact_path.name == "geometry_claim_spec.json":
-        return Path("schemas/geometry/geometry_claim_spec.schema.json")
-    if artifact_path.name == "geometry_execution_plan.json":
-        return Path("schemas/geometry/geometry_execution_plan.schema.json")
-    if artifact_path.name == "provider_run_manifest.json":
-        return Path("schemas/geometry/provider_run_manifest.schema.json")
-    if artifact_path.name == "geotrace_v1.json":
-        return Path("schemas/geometry/geotrace_v1.schema.json")
-    if artifact_path.name == "rule_registry_v1.json":
-        return Path("schemas/geometry/rule_registry_v1.schema.json")
-    if artifact_path.name == "side_condition_report.json":
-        return Path("schemas/geometry/side_condition_report.schema.json")
-    if artifact_path.name == "trace_compilation_result.json":
-        return Path("schemas/geometry/trace_compilation_result.schema.json")
-    if artifact_path.name == "auxiliary_construction_candidate_v1.json":
-        return Path("schemas/geometry/auxiliary_construction_candidate_v1.schema.json")
-    if artifact_path.name == "construction_check_result.json":
-        return Path("schemas/geometry/construction_check_result.schema.json")
-    if artifact_path.name == "construction_compilation_result.json":
-        return Path("schemas/geometry/construction_compilation_result.schema.json")
+    mapping = load_json(Path("schemas/artifact_schema_map.json"))
+    for key, schema_ref in mapping.items():
+        name, _, required_part = key.partition("|")
+        if artifact_path.name == name and (not required_part or required_part in artifact_path.parts):
+            return Path(schema_ref)
     raise SchemaValidationError(f"no schema mapping for {artifact_path}")
 
 

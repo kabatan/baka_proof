@@ -11,6 +11,8 @@ FORBIDDEN_TERMS = [
     "GenesisGeo",
     "TongGeometry",
     "LeanGeoSubsetV1",
+    "geometry_synthetic",
+    "plugins.geometry_synthetic",
     "collinear",
     "parallel",
     "perpendicular",
@@ -19,7 +21,7 @@ FORBIDDEN_TERMS = [
 
 
 def main() -> int:
-    roots = [Path("src/math_auto_research/base"), Path("src/math_auto_research/proof_state")]
+    roots = [Path("src/math_auto_research")]
     violations: list[str] = []
     for root in roots:
         for path in root.rglob("*.py"):

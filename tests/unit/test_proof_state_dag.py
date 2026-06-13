@@ -46,6 +46,7 @@ class ProofStateDAGTest(unittest.TestCase):
             )
         )
         self.assertTrue(StateReader(dag).is_closed("o:target"))
+        self.assertIn("o:target", StateReader(dag).snapshot().obligation_ids)
 
     def test_forged_final_verify_ref_is_rejected(self) -> None:
         dag = ProofStateDAG()
@@ -240,6 +241,62 @@ class ProofStateDAGTest(unittest.TestCase):
                             final_verify_report=_final_report("final_verify:target", "o:target"),
                         ),
                     ),
+                )
+            )
+
+    def test_unknown_rule_id_is_rejected(self) -> None:
+        dag = ProofStateDAG()
+        writer = DAGWriter(dag)
+        with self.assertRaises(DAGValidationError):
+            writer.commit(
+                GraphPatch(
+                    patch_id="p1",
+                    obligations=(Obligation("o:target", "sha256:target"),),
+                    evidence_refs=(
+                        EvidenceRef("e:1", "sha256:artifact", "diagnostic_only", "text/plain", "sha256:c"),
+                    ),
+                    derivations=(
+                        Derivation(
+                            "d:unknown",
+                            "o:target",
+                            "unadmitted_rule",
+                            ("e:1",),
+                            proof_use_status="not_allowed",
+                        ),
+                    ),
+                )
+            )
+
+    def test_evidence_status_must_match_rule(self) -> None:
+        dag = ProofStateDAG()
+        writer = DAGWriter(dag)
+        with self.assertRaises(DAGValidationError):
+            writer.commit(
+                GraphPatch(
+                    patch_id="p1",
+                    obligations=(Obligation("o:target", "sha256:target"),),
+                    evidence_refs=(
+                        EvidenceRef("e:1", "sha256:artifact", "used_in_final_proof", "text/plain", "sha256:c"),
+                    ),
+                    derivations=(
+                        Derivation(
+                            "d:bad-evidence",
+                            "o:target",
+                            "provider_result",
+                            ("e:1",),
+                            proof_use_status="not_allowed",
+                        ),
+                    ),
+                )
+            )
+
+    def test_base_owned_payload_mutation_flag_is_rejected(self) -> None:
+        dag = ProofStateDAG()
+        with self.assertRaises(DAGValidationError):
+            DAGWriter(dag).commit(
+                GraphPatch(
+                    patch_id="p1",
+                    metadata={"mutates_base_owned_payload": True},
                 )
             )
 

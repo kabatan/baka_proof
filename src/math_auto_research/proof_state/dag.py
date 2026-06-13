@@ -1,9 +1,16 @@
 from __future__ import annotations
 
-from dataclasses import replace
 from typing import Any
 
-from math_auto_research.proof_state.records import Derivation, EvidenceRef, GraphPatch, Obligation
+from math_auto_research.proof_state.records import (
+    DAGSnapshot,
+    Derivation,
+    EvidenceRef,
+    GraphPatch,
+    GraphPatchCommitResult,
+    Obligation,
+    StateReaderSummary,
+)
 
 
 class DAGValidationError(ValueError):
@@ -18,11 +25,18 @@ class ProofStateDAG:
 
 
 class DAGWriter:
-    def __init__(self, dag: ProofStateDAG) -> None:
+    def __init__(self, dag: ProofStateDAG, admitted_rule_ids: set[str] | None = None) -> None:
         self.dag = dag
+        self.admitted_rule_ids = admitted_rule_ids or {
+            "final_verify_gate",
+            "provider_result",
+            "diagnostic_record",
+            "search_context",
+        }
 
-    def commit(self, patch: GraphPatch) -> None:
+    def commit(self, patch: GraphPatch) -> GraphPatchCommitResult:
         self._validate_schema(patch)
+        self._validate_base_owned_payload_not_mutated(patch)
         self._validate_unique_patch_ids(patch)
         next_obligations = dict(self.dag.obligations)
         next_evidence = dict(self.dag.evidence_refs)
@@ -41,18 +55,29 @@ class DAGWriter:
         for derivation in patch.derivations:
             if derivation.derivation_id in next_derivations:
                 raise DAGValidationError(f"duplicate derivation: {derivation.derivation_id}")
+            self._validate_rule_id(derivation)
             self._validate_derivation_refs(derivation, next_obligations, next_evidence)
             next_derivations[derivation.derivation_id] = derivation
 
         for obligation_id in patch.invalidate_obligation_ids:
             if obligation_id not in next_obligations:
                 raise DAGValidationError(f"unknown invalidation obligation: {obligation_id}")
-            next_obligations[obligation_id] = replace(next_obligations[obligation_id], status="invalidated")
+            self._validate_status_transition(next_obligations[obligation_id].status, "invalidated")
+            next_obligations[obligation_id] = next_obligations[obligation_id].model_copy(
+                update={"status": "invalidated"}
+            )
 
         self._validate_acyclic(next_derivations)
         self.dag.obligations = next_obligations
         self.dag.evidence_refs = next_evidence
         self.dag.derivations = next_derivations
+        return GraphPatchCommitResult(
+            patch_id=patch.patch_id,
+            status="committed",
+            committed_obligation_ids=tuple(item.obligation_id for item in patch.obligations),
+            committed_derivation_ids=tuple(item.derivation_id for item in patch.derivations),
+            committed_evidence_ids=tuple(item.evidence_id for item in patch.evidence_refs),
+        )
 
     def _validate_schema(self, patch: GraphPatch) -> None:
         if patch.schema_id != "proof_state.graph_patch.v1":
@@ -66,6 +91,23 @@ class DAGWriter:
     def _assert_unique(self, label: str, values: list[str]) -> None:
         if len(values) != len(set(values)):
             raise DAGValidationError(f"duplicate {label} id in patch")
+
+    def _validate_base_owned_payload_not_mutated(self, patch: GraphPatch) -> None:
+        if patch.metadata.get("mutates_base_owned_payload"):
+            raise DAGValidationError("GraphPatch cannot mutate Base-owned payload directly")
+
+    def _validate_rule_id(self, derivation: Derivation) -> None:
+        if derivation.rule_id not in self.admitted_rule_ids:
+            raise DAGValidationError(f"unknown rule id: {derivation.rule_id}")
+
+    def _validate_status_transition(self, old_status: str, new_status: str) -> None:
+        allowed = {
+            ("open", "invalidated"),
+            ("blocked", "invalidated"),
+            ("closed", "invalidated"),
+        }
+        if (old_status, new_status) not in allowed:
+            raise DAGValidationError(f"invalid obligation status transition: {old_status}->{new_status}")
 
     def _validate_derivation_refs(
         self,
@@ -84,6 +126,8 @@ class DAGWriter:
         if derivation.proof_use_status == "final_theorem":
             self._validate_final_verify_report(derivation)
             self._validate_final_evidence(derivation, evidence_refs)
+        else:
+            self._validate_non_final_evidence(derivation, evidence_refs)
 
     def _validate_final_verify_report(self, derivation: Derivation) -> None:
         if derivation.rule_id != "final_verify_gate":
@@ -121,6 +165,26 @@ class DAGWriter:
                 raise DAGValidationError("final_theorem derivation requires final-proof evidence")
             if evidence.artifact_kind in {"raw_log", "raw_model_output", "raw_provider_output", "raw_dsl"}:
                 raise DAGValidationError("raw output cannot be used as final proof evidence")
+
+    def _validate_non_final_evidence(
+        self,
+        derivation: Derivation,
+        evidence_refs: dict[str, EvidenceRef],
+    ) -> None:
+        if derivation.rule_id == "final_verify_gate":
+            raise DAGValidationError("final_verify_gate derivations must use final_theorem proof status")
+        allowed_by_rule = {
+            "provider_result": {"diagnostic_only", "used_in_search", "abandoned", "refuted_key_branch"},
+            "diagnostic_record": {"diagnostic_only"},
+            "search_context": {"used_in_search", "diagnostic_only"},
+        }
+        allowed = allowed_by_rule.get(derivation.rule_id, set())
+        for evidence_id in derivation.evidence_refs:
+            evidence = evidence_refs[evidence_id]
+            if evidence.evidence_status not in allowed:
+                raise DAGValidationError(
+                    f"evidence status {evidence.evidence_status} not allowed by rule {derivation.rule_id}"
+                )
 
     def _validate_acyclic(self, derivations: dict[str, Derivation]) -> None:
         edges: dict[str, set[str]] = {}
@@ -162,13 +226,21 @@ class StateReader:
 
     def summary(self) -> dict[str, Any]:
         closed = [oid for oid in self.dag.obligations if self.is_closed(oid)]
-        return {
-            "obligation_count": len(self.dag.obligations),
-            "derivation_count": len(self.dag.derivations),
-            "evidence_ref_count": len(self.dag.evidence_refs),
-            "closed_obligation_ids": sorted(closed),
-            "open_obligation_ids": sorted(set(self.dag.obligations) - set(closed)),
-        }
+        summary = StateReaderSummary(
+            obligation_count=len(self.dag.obligations),
+            derivation_count=len(self.dag.derivations),
+            evidence_ref_count=len(self.dag.evidence_refs),
+            closed_obligation_ids=tuple(sorted(closed)),
+            open_obligation_ids=tuple(sorted(set(self.dag.obligations) - set(closed))),
+        )
+        return summary.model_dump(mode="json")
+
+    def snapshot(self) -> DAGSnapshot:
+        return DAGSnapshot(
+            obligation_ids=tuple(sorted(self.dag.obligations)),
+            derivation_ids=tuple(sorted(self.dag.derivations)),
+            evidence_ref_ids=tuple(sorted(self.dag.evidence_refs)),
+        )
 
     def _derivations_for(self, obligation_id: str) -> list[Derivation]:
         return [

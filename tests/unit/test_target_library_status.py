@@ -3,7 +3,7 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-from math_auto_research.target_library_status import build_target_library_status
+from plugins.geometry_synthetic.target_library_status import build_target_library_status
 
 
 class TargetLibraryStatusTest(unittest.TestCase):
