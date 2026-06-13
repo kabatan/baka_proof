@@ -1,0 +1,29 @@
+{
+  "$id": "evaluation.controller_strategy_log.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "log_id",
+    "run_id",
+    "controller_id",
+    "controller_manifest_hash",
+    "capability_flags",
+    "strategy_counts",
+    "status",
+    "artifact_refs",
+    "proof_use_note"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "log_id": {"type": "string", "pattern": "^controller_strategy_log:.*"},
+    "run_id": {"type": "string"},
+    "controller_id": {"type": "string"},
+    "controller_manifest_hash": {"type": "string"},
+    "capability_flags": {"type": "object", "additionalProperties": {"type": "boolean"}},
+    "strategy_counts": {"type": "object", "additionalProperties": {"type": "integer"}},
+    "status": {"type": "string"},
+    "artifact_refs": {"type": "array", "items": {"type": "string"}},
+    "proof_use_note": {"type": "string"}
+  },
+  "additionalProperties": false
+}

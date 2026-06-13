@@ -1,0 +1,17 @@
+{
+  "$id": "evaluation.research_contribution_record.v1",
+  "type": "object",
+  "required": ["schema_version", "record_id", "run_id", "item_ref", "contribution_status", "proof_use_note"],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["1.0.0"]},
+    "record_id": {"type": "string", "pattern": "^research_contribution:.*"},
+    "run_id": {"type": "string"},
+    "item_ref": {"type": "string"},
+    "contribution_status": {
+      "type": "string",
+      "enum": ["used_in_search", "used_in_final_proof", "diagnostic_only", "abandoned", "refuted_key_branch"]
+    },
+    "proof_use_note": {"type": "string"}
+  },
+  "additionalProperties": false
+}

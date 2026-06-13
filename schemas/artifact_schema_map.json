@@ -22,6 +22,8 @@
   "side_condition_report.json": "schemas/geometry/side_condition_report.schema.json",
   "trace_compilation_result.json": "schemas/geometry/trace_compilation_result.schema.json",
   "auxiliary_construction_candidate_v1.json": "schemas/geometry/auxiliary_construction_candidate_v1.schema.json",
+  "controller_strategy_log.json": "schemas/evaluation/controller_strategy_log.schema.json",
+  "research_contribution_record.json": "schemas/evaluation/research_contribution_record.schema.json",
   "construction_check_result.json": "schemas/geometry/construction_check_result.schema.json",
   "construction_compilation_result.json": "schemas/geometry/construction_compilation_result.schema.json"
 }
