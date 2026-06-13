@@ -58,24 +58,8 @@ def check_matrix(run_dir: Path) -> list[str]:
         for required in required_artifacts:
             if required not in artifact_index:
                 errors.append(f"missing_required_task_artifact:{baseline_id}:{task_result.get('task_entry_id')}:{required}")
-        if baseline_id in {"B2", "B4"} and "provider_run_manifest.json" in artifact_index:
-            if task_result.get("proof_use_status") == "final_theorem":
-                errors.append(f"provider_task_claimed_final_theorem_in_release:{baseline_id}:{task_result.get('task_entry_id')}")
+        if "provider_run_manifest.json" in artifact_index:
             manifest = json.loads(Path(artifact_index["provider_run_manifest.json"]).read_text(encoding="utf-8"))
-            if manifest.get("fixture_flag") is not False:
-                errors.append(f"fixture_provider_manifest_in_release:{baseline_id}:{task_result.get('task_entry_id')}")
-            if manifest.get("real_integration_flag") is not True:
-                errors.append(f"missing_real_provider_manifest_in_release:{baseline_id}:{task_result.get('task_entry_id')}")
-            adapter_versions = manifest.get("adapter_versions", {})
-            version_values = list(adapter_versions.values()) if isinstance(adapter_versions, dict) else []
-            version_values.extend(
-                str(run.get("adapter_version", ""))
-                for run in manifest.get("engine_runs", [])
-                if isinstance(run, dict)
-            )
-            fixture_versions = [value for value in version_values if "fixture" in str(value).lower()]
-            if fixture_versions:
-                errors.append(f"fixture_adapter_version_in_release:{baseline_id}:{task_result.get('task_entry_id')}:{fixture_versions[0]}")
             role_counts = provider_success_by_baseline.setdefault(baseline_id, {})
             for run in manifest.get("engine_runs", []):
                 if not isinstance(run, dict):
@@ -85,6 +69,23 @@ def check_matrix(run_dir: Path) -> list[str]:
                 counts[1] += 1
                 if run.get("status") in {"trace_candidate", "auxiliary_construction_candidate"}:
                     counts[0] += 1
+            if baseline_id in {"B2", "B4"}:
+                if task_result.get("proof_use_status") == "final_theorem":
+                    errors.append(f"provider_task_claimed_final_theorem_in_release:{baseline_id}:{task_result.get('task_entry_id')}")
+                if manifest.get("fixture_flag") is not False:
+                    errors.append(f"fixture_provider_manifest_in_release:{baseline_id}:{task_result.get('task_entry_id')}")
+                if manifest.get("real_integration_flag") is not True:
+                    errors.append(f"missing_real_provider_manifest_in_release:{baseline_id}:{task_result.get('task_entry_id')}")
+                adapter_versions = manifest.get("adapter_versions", {})
+                version_values = list(adapter_versions.values()) if isinstance(adapter_versions, dict) else []
+                version_values.extend(
+                    str(run.get("adapter_version", ""))
+                    for run in manifest.get("engine_runs", [])
+                    if isinstance(run, dict)
+                )
+                fixture_versions = [value for value in version_values if "fixture" in str(value).lower()]
+                if fixture_versions:
+                    errors.append(f"fixture_adapter_version_in_release:{baseline_id}:{task_result.get('task_entry_id')}:{fixture_versions[0]}")
     for baseline_id, task_results in task_results_by_baseline.items():
         metrics_path = run_dir / f"metrics_{baseline_id}.json"
         if not metrics_path.exists():

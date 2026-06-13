@@ -110,7 +110,7 @@ release_blocker_25_closure_claims_do_not_exceed_evidence=passed with open_blocke
 release_blocker_30_matrix_artifact_derived=passed
 B2/B4 provider manifests contain no fixture adapter-version tokens
 B2/B4 tasks with provider_run_manifest.json do not claim proof_use_status=final_theorem
-provider_success_rate_by_role recomputed from provider manifest statuses and checked by release_blocker_30
+provider_success_rate_by_role recomputed from provider manifest statuses for every provider-calling baseline and checked by release_blocker_30
 ```
 
 ## Claim impact
