@@ -19,10 +19,14 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--request-id", required=True)
     parser.add_argument("--claim-spec-json", required=True)
+    parser.add_argument("--output")
     args = parser.parse_args()
     claim_spec = json.loads(args.claim_spec_json)
     report = build_report(args.request_id, claim_spec)
-    print(json.dumps(report, sort_keys=True))
+    text = json.dumps(report, indent=2, sort_keys=True)
+    if args.output:
+        Path(args.output).write_text(text + "\n", encoding="utf-8")
+    print(text)
     return 0
 
 
@@ -45,9 +49,28 @@ def build_report(request_id: str, claim_spec: dict[str, Any]) -> dict[str, Any]:
     model_smoke = _run_model_smoke(model_env) if not missing else None
     if model_smoke is not None and model_smoke.get("status") != "passed":
         blocker_reasons.append("tonggeometry_model_smoke_failed")
+    model_status = (
+        "available"
+        if checkpoint_hash is not None and model_smoke is not None and model_smoke.get("status") == "passed"
+        else "admitted_unavailable_external_artifact"
+    )
+    inference_status = (
+        "unavailable"
+        if missing
+        else "available"
+        if model_smoke is not None and model_smoke.get("status") == "passed"
+        else "failed"
+    )
+    claim_impact = "none" if inference_status == "available" else "blocks_model_backed_tonggeometry_claim"
     return {
         "schema_version": "1.0.0",
         "engine_family": "tonggeometry_compatible",
+        "claim_profiles": {
+            "V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY": "eligible_if_code_backed_diagnostic_and_other_blockers_pass",
+            "V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY": (
+                "passed" if inference_status == "available" else "blocked"
+            ),
+        },
         "request_id": request_id,
         "status": "diagnostic_only",
         "proof_use_status": "not_allowed",
@@ -57,14 +80,10 @@ def build_report(request_id: str, claim_spec: dict[str, Any]) -> dict[str, Any]:
         "python_import_status": "available" if spec is not None else "unavailable",
         "python_import_origin": None if spec is None else spec.origin,
         "model_path_status": {key: "available" if value and Path(value).exists() else "unavailable" for key, value in model_env.items()},
+        "model_artifact_status": model_status,
         "model_checkpoint_hash": checkpoint_hash,
-        "model_inference_status": (
-            "unavailable"
-            if missing
-            else "available"
-            if model_smoke is not None and model_smoke.get("status") == "passed"
-            else "failed"
-        ),
+        "model_inference_status": inference_status,
+        "claim_impact": claim_impact,
         "model_inference_report": model_smoke,
         "blocker_reasons": blocker_reasons,
         "claim_target": claim_spec.get("target"),

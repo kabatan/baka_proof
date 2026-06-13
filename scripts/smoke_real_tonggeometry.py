@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sys
+import argparse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,10 +50,19 @@ def _request(budget: str) -> GeometrySolveRequest:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--output",
+        default="docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/tonggeometry_smoke.json",
+    )
+    args = parser.parse_args()
     provider = CompositeSyntheticGeometryProviderV1()
     medium = provider.run(_request("medium")).to_dict()
     heavy = provider.run(_request("heavy")).to_dict()
-    print(json.dumps({"medium": medium, "heavy": heavy}, indent=2, sort_keys=True))
+    report = {"schema_version": "1.0.0", "medium": medium, "heavy": heavy}
+    text = json.dumps(report, indent=2, sort_keys=True)
+    Path(args.output).write_text(text + "\n", encoding="utf-8")
+    print(text)
 
     if any(run["engine_role"] == "heavy_search" for run in medium["manifest"]["engine_runs"]):
         return 1

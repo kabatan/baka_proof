@@ -1,0 +1,218 @@
+{
+  "heavy": {
+    "manifest": {
+      "adapter_versions": {
+        "construction_proposer": "genesisgeo-compatible-fixture:0.1",
+        "heavy_search": "tonggeometry-compatible-fixture:0.1",
+        "symbolic_closure": "newclid-compatible-fixture:0.1"
+      },
+      "engine_runs": [
+        {
+          "adapter_commit": "dummy-adapter-local",
+          "adapter_version": "newclid-compatible-fixture:0.1",
+          "checkpoint_hash": "not_applicable",
+          "config_hash": "2fcdc1126e0c246a",
+          "engine_family": "newclid_compatible",
+          "engine_role": "symbolic_closure",
+          "engine_version": "newclid-compatible-fixture:0.1",
+          "fixture_flag": true,
+          "normalized_output_hash": null,
+          "normalized_output_ref": null,
+          "raw_log_artifact_hash": "9cb446b7e294ea9b",
+          "raw_output_hash": "9cb446b7e294ea9b",
+          "real_integration_flag": false,
+          "resource_usage_ref": "resource_usage:geometry_request:real_tonggeometry_smoke:heavy:symbolic_closure:6b61c7755c509233",
+          "seed": 0,
+          "status": "diagnostic_only"
+        },
+        {
+          "adapter_commit": "dummy-adapter-local",
+          "adapter_version": "tonggeometry-compatible-fixture:0.1",
+          "checkpoint_hash": "unavailable",
+          "config_hash": "0fceade64d1d6af8",
+          "engine_family": "tonggeometry_compatible",
+          "engine_role": "heavy_search",
+          "engine_version": "tong-geometry@d00925f07dc3174f91326386cb8e785e539a91a1",
+          "fixture_flag": false,
+          "normalized_output_hash": null,
+          "normalized_output_ref": null,
+          "raw_log_artifact_hash": "0cbd337ae34617d5",
+          "raw_output_hash": "0cbd337ae34617d5",
+          "real_integration_flag": true,
+          "resource_usage_ref": "resource_usage:geometry_request:real_tonggeometry_smoke:heavy:heavy_search:3ae5d0b073da6aaa",
+          "seed": 0,
+          "status": "diagnostic_only"
+        }
+      ],
+      "fixture_flag": true,
+      "manifest_id": "provider_run_manifest:51e622dd0f9b6795",
+      "normalized_output_refs": [],
+      "provider_class": "CompositeSyntheticGeometryProviderV1",
+      "provider_id": "geometry_solver_provider:composite_synthetic:v1",
+      "provider_version": "v1",
+      "raw_output_hashes": [
+        "9cb446b7e294ea9b",
+        "0cbd337ae34617d5"
+      ],
+      "real_integration_flag": true,
+      "request_id": "geometry_request:real_tonggeometry_smoke:heavy",
+      "resource_usage_refs": [
+        "resource_usage:geometry_request:real_tonggeometry_smoke:heavy:symbolic_closure:6b61c7755c509233",
+        "resource_usage:geometry_request:real_tonggeometry_smoke:heavy:heavy_search:3ae5d0b073da6aaa"
+      ],
+      "schema_version": "1.0.0",
+      "side_condition_loss_count": 0,
+      "unsupported_rule_count": 0
+    },
+    "resource_usage_reports": [
+      {
+        "admission_status": "admitted",
+        "budget": "heavy",
+        "component": "geometry_solver_provider",
+        "cpu_time_sec": 0,
+        "ended_at": "1781358073.5343797",
+        "engine_role": "symbolic_closure",
+        "exit_status": "completed",
+        "gpu_vram_peak_mb": null,
+        "hard_kill_executed": false,
+        "heartbeat_count": 1,
+        "logs_ref": "inline_dummy_adapter",
+        "orphan_check_passed": true,
+        "peak_rss_mb": 0,
+        "process_id": "",
+        "queue_wait_sec": 0,
+        "report_id": "resource_usage:geometry_request:real_tonggeometry_smoke:heavy:symbolic_closure:6b61c7755c509233",
+        "role": "symbolic_closure",
+        "run_id": "geometry_request:real_tonggeometry_smoke:heavy",
+        "schema_version": "1.0.0",
+        "started_at": "1781358073.5343797",
+        "timeout_status": "none",
+        "wall_time_sec": 0.0
+      },
+      {
+        "admission_status": "admitted",
+        "budget": "heavy",
+        "component": "geometry_solver_provider",
+        "cpu_time_sec": 0,
+        "ended_at": "1781358075.0640345",
+        "engine_role": "heavy_search",
+        "exit_status": "completed",
+        "gpu_vram_peak_mb": null,
+        "hard_kill_executed": false,
+        "heartbeat_count": 30,
+        "logs_ref": "external_tonggeometry_stdout",
+        "orphan_check_passed": true,
+        "peak_rss_mb": 0,
+        "process_id": "23284",
+        "queue_wait_sec": 0,
+        "report_id": "resource_usage:geometry_request:real_tonggeometry_smoke:heavy:heavy_search:3ae5d0b073da6aaa",
+        "role": "heavy_search",
+        "run_id": "geometry_request:real_tonggeometry_smoke:heavy",
+        "schema_version": "1.0.0",
+        "started_at": "1781358073.5343797",
+        "timeout_status": "none",
+        "wall_time_sec": 1.531
+      }
+    ],
+    "result": {
+      "construction_candidate_refs": [],
+      "diagnostic_refs": [
+        "diagnostic:geometry_request:real_tonggeometry_smoke:heavy:symbolic_closure:newclid_fixture",
+        "diagnostic:geometry_request:real_tonggeometry_smoke:heavy:heavy_search:tonggeometry_real"
+      ],
+      "geotrace_ref": null,
+      "proof_use_status": "not_allowed",
+      "provider_run_manifest_ref": "provider_run_manifest:51e622dd0f9b6795",
+      "request_id": "geometry_request:real_tonggeometry_smoke:heavy",
+      "result_id": "provider_result:geometry_request:real_tonggeometry_smoke:heavy",
+      "schema_version": "1.0.0",
+      "status": "unsupported"
+    }
+  },
+  "medium": {
+    "manifest": {
+      "adapter_versions": {
+        "construction_proposer": "genesisgeo-compatible-fixture:0.1",
+        "heavy_search": "tonggeometry-compatible-fixture:0.1",
+        "symbolic_closure": "newclid-compatible-fixture:0.1"
+      },
+      "engine_runs": [
+        {
+          "adapter_commit": "dummy-adapter-local",
+          "adapter_version": "newclid-compatible-fixture:0.1",
+          "checkpoint_hash": "not_applicable",
+          "config_hash": "2fcdc1126e0c246a",
+          "engine_family": "newclid_compatible",
+          "engine_role": "symbolic_closure",
+          "engine_version": "newclid-compatible-fixture:0.1",
+          "fixture_flag": true,
+          "normalized_output_hash": null,
+          "normalized_output_ref": null,
+          "raw_log_artifact_hash": "9cb446b7e294ea9b",
+          "raw_output_hash": "9cb446b7e294ea9b",
+          "real_integration_flag": false,
+          "resource_usage_ref": "resource_usage:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:fd22ad170dcb0dc4",
+          "seed": 0,
+          "status": "diagnostic_only"
+        }
+      ],
+      "fixture_flag": true,
+      "manifest_id": "provider_run_manifest:e29d483540941b63",
+      "normalized_output_refs": [],
+      "provider_class": "CompositeSyntheticGeometryProviderV1",
+      "provider_id": "geometry_solver_provider:composite_synthetic:v1",
+      "provider_version": "v1",
+      "raw_output_hashes": [
+        "9cb446b7e294ea9b"
+      ],
+      "real_integration_flag": false,
+      "request_id": "geometry_request:real_tonggeometry_smoke:medium",
+      "resource_usage_refs": [
+        "resource_usage:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:fd22ad170dcb0dc4"
+      ],
+      "schema_version": "1.0.0",
+      "side_condition_loss_count": 0,
+      "unsupported_rule_count": 0
+    },
+    "resource_usage_reports": [
+      {
+        "admission_status": "admitted",
+        "budget": "medium",
+        "component": "geometry_solver_provider",
+        "cpu_time_sec": 0,
+        "ended_at": "1781358073.5343797",
+        "engine_role": "symbolic_closure",
+        "exit_status": "completed",
+        "gpu_vram_peak_mb": null,
+        "hard_kill_executed": false,
+        "heartbeat_count": 1,
+        "logs_ref": "inline_dummy_adapter",
+        "orphan_check_passed": true,
+        "peak_rss_mb": 0,
+        "process_id": "",
+        "queue_wait_sec": 0,
+        "report_id": "resource_usage:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:fd22ad170dcb0dc4",
+        "role": "symbolic_closure",
+        "run_id": "geometry_request:real_tonggeometry_smoke:medium",
+        "schema_version": "1.0.0",
+        "started_at": "1781358073.5343797",
+        "timeout_status": "none",
+        "wall_time_sec": 0.0
+      }
+    ],
+    "result": {
+      "construction_candidate_refs": [],
+      "diagnostic_refs": [
+        "diagnostic:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:newclid_fixture"
+      ],
+      "geotrace_ref": null,
+      "proof_use_status": "not_allowed",
+      "provider_run_manifest_ref": "provider_run_manifest:e29d483540941b63",
+      "request_id": "geometry_request:real_tonggeometry_smoke:medium",
+      "result_id": "provider_result:geometry_request:real_tonggeometry_smoke:medium",
+      "schema_version": "1.0.0",
+      "status": "unsupported"
+    }
+  },
+  "schema_version": "1.0.0"
+}

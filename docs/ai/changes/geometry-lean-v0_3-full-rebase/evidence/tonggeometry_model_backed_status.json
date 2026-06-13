@@ -1,0 +1,35 @@
+{
+  "blocker_reasons": [
+    "missing_tonggeometry_model_paths:tokenizer,lm_s,lm_l,cls"
+  ],
+  "claim_impact": "blocks_model_backed_tonggeometry_claim",
+  "claim_profiles": {
+    "V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY": "eligible_if_code_backed_diagnostic_and_other_blockers_pass",
+    "V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY": "blocked"
+  },
+  "claim_target": {
+    "form": "collinear",
+    "raw": "Coll A B C"
+  },
+  "engine_family": "tonggeometry_compatible",
+  "model_artifact_status": "admitted_unavailable_external_artifact",
+  "model_checkpoint_hash": null,
+  "model_inference_report": null,
+  "model_inference_status": "unavailable",
+  "model_path_status": {
+    "cls": "unavailable",
+    "lm_l": "unavailable",
+    "lm_s": "unavailable",
+    "tokenizer": "unavailable"
+  },
+  "proof_use_status": "not_allowed",
+  "python_import_origin": null,
+  "python_import_status": "available",
+  "raw_search_output": "TongGeometry-compatible heavy-search diagnostic; not proof evidence",
+  "request_id": "geometry_request:t41_model_backed_status",
+  "schema_version": "1.0.0",
+  "search_result_ref": null,
+  "status": "diagnostic_only",
+  "vendor_commit": "d00925f07dc3174f91326386cb8e785e539a91a1",
+  "vendor_path": "vendor\\tong-geometry"
+}

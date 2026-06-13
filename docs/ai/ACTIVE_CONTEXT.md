@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A-patch
-status: V03A_PATCH_T41_READY
+status: V03A_PATCH_T42_READY
 created: 2026-06-13
 last_updated: 2026-06-13
 base_spec: MARP-GEOLEAN-BASE-004
@@ -60,7 +60,7 @@ The user approved importing the v0.3A patch bundle on 2026-06-13. Patch import e
 
 The repo has a partially implemented full-rebase track, but v0.3A deviation audit shows it is not sufficient for `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
 
-The next implementation pass must continue the v0.3A hardening tasks, starting with TongGeometry claim-profile smoke hardening in T41.
+The next implementation pass must continue the v0.3A hardening tasks, starting with nontrivial LeanGeoSubsetV1 corpus replacement in T42.
 
 ## Current Task Pointer
 
@@ -376,24 +376,26 @@ Completed task:
 T40 — Provider module layout refactor
 ```
 
-Current task:
+Completed task:
 
 ```text
 T41 — TongGeometry claim-profile smoke hardening
 ```
 
-Current task files changed in T40:
+Current task:
 
 ```text
-plugins/geometry_synthetic/provider.py
-plugins/geometry_synthetic/providers/composite_provider.py
-plugins/geometry_synthetic/providers/provider_api.py
-plugins/geometry_synthetic/providers/provider_run_manifest.py
-plugins/geometry_synthetic/providers/newclid_adapter.py
-plugins/geometry_synthetic/providers/genesisgeo_adapter.py
-plugins/geometry_synthetic/providers/tonggeometry_adapter.py
-scripts/check_provider_layout.py
-docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t40_provider_layout.md
+T42 — Nontrivial LeanGeoSubsetV1 corpus replacement
+```
+
+Current task files changed in T41:
+
+```text
+scripts/run_tonggeometry_probe.py
+scripts/smoke_real_tonggeometry.py
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/tonggeometry_smoke.json
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/tonggeometry_model_backed_status.json
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t41_tonggeometry_claim_profile_smoke.md
 docs/ai/ACTIVE_CONTEXT.md
 ```
 
@@ -423,7 +425,7 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
 Allowed:
 
 ```text
-BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T40 provider layout hardening is complete. T41 is ready to implement.
+BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T41 TongGeometry claim-profile smoke hardening is complete. T42 is ready to implement.
 No v0.3A completion claim is admitted, and no R-ID is VERIFIED.
 ```
 
