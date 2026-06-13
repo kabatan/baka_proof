@@ -17,7 +17,7 @@ def candidate_fixture(kind: str = "line_through_two_distinct_points") -> Auxilia
         construction_kind=kind,
         source_provenance="provider_run:fixture",
         introduced_objects=("l_aux:Line",),
-        dependencies=("A", "B"),
+        dependencies=("A:Point", "B:Point"),
         intended_use="search_hint_for_symbolic_retry",
         side_conditions=("A != B",),
     )
@@ -55,7 +55,7 @@ class ConstructionCompilerTest(unittest.TestCase):
             "line_through_two_distinct_points",
             "provider_run:fixture",
             ("l_aux:Line",),
-            ("A", "B"),
+            ("A:Point", "B:Point"),
             "search_hint_for_symbolic_retry",
             (),
         )
@@ -78,6 +78,44 @@ class ConstructionCompilerTest(unittest.TestCase):
         result = ConstructionCompiler().compile(candidate)
         self.assertEqual(result.status, "blocked")
         self.assertIn("missing_dependency_refs", result.blockers)
+
+    def test_invalid_dependency_refs_are_blocked(self) -> None:
+        candidate = AuxiliaryConstructionCandidateV1(
+            "1.0.0",
+            "aux_construction_candidate:bad-deps",
+            "line_through_two_distinct_points",
+            "provider_run:fixture",
+            ("l_aux:Line",),
+            ("A", "B"),
+            "search_hint_for_symbolic_retry",
+            ("A != B",),
+        )
+        result = ConstructionCompiler().compile(candidate)
+        self.assertEqual(result.status, "blocked")
+        self.assertIn("invalid_dependency_ref:A", result.blockers)
+
+    def test_missing_existence_side_conditions_are_blocked(self) -> None:
+        candidate = AuxiliaryConstructionCandidateV1(
+            "1.0.0",
+            "aux_construction_candidate:missing-existence",
+            "line_through_two_distinct_points",
+            "provider_run:fixture",
+            ("l_aux:Line",),
+            ("A:Point", "B:Point"),
+            "search_hint_for_symbolic_retry",
+            ("A != B",),
+            required_side_conditions={
+                "nondegeneracy": ("A != B",),
+                "incidence": (),
+                "existence": (),
+                "uniqueness_if_needed": (),
+                "orientation": (),
+                "diagram_cases": (),
+            },
+        )
+        result = ConstructionCompiler().compile(candidate)
+        self.assertEqual(result.status, "blocked")
+        self.assertIn("missing_existence_side_conditions", result.blockers)
 
 
 if __name__ == "__main__":

@@ -20,14 +20,14 @@ class AuxiliaryConstructionCandidateTest(unittest.TestCase):
             construction_kind="line_through_two_distinct_points",
             source_provenance="provider_run:fixture",
             introduced_objects=("l_aux:Line",),
-            dependencies=("A", "B"),
+            dependencies=("A:Point", "B:Point"),
             intended_use="search_hint_for_symbolic_retry",
             side_conditions=("A != B",),
         )
         payload = candidate.to_dict()
         self.assertEqual(payload["construction_id"], "aux_construction_candidate:fixture")
         self.assertIn("source_provider_result", payload)
-        self.assertEqual(payload["dependencies"], {"objects": ("A", "B")})
+        self.assertEqual(payload["dependencies"], {"objects": ("A:Point", "B:Point")})
         self.assertIn("required_side_conditions", payload)
         self.assertIn("lean_introduction_plan", payload)
         self.assertEqual(payload["proof_use_status"], "not_allowed_until_final_verify")

@@ -79,7 +79,7 @@ def _minimal_candidate(request_id: str, claim_spec: dict[str, Any]) -> dict[str,
         "required_side_conditions": {
             "nondegeneracy": [f"{dependencies[0]} != {dependencies[1]}"],
             "incidence": [],
-            "existence": [],
+            "existence": ["exists:l_aux:Line"],
             "uniqueness_if_needed": [],
             "orientation": [],
             "diagram_cases": [],

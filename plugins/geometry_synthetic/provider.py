@@ -1002,7 +1002,7 @@ def propose_auxiliary_construction_candidate(
         "required_side_conditions": {
             "nondegeneracy": [f"{dependencies[0]} != {dependencies[1]}"] if len(dependencies) >= 2 else [],
             "incidence": [],
-            "existence": [],
+            "existence": [f"exists:{introduced}:Line"] if construction_kind != "unsupported" else [],
             "uniqueness_if_needed": [],
             "orientation": [],
             "diagram_cases": [],

@@ -65,7 +65,7 @@
     },
     "proof_use_status": {
       "type": "string",
-      "enum": ["not_allowed_until_final_verify", "not_allowed", "lean_patch_candidate"]
+      "enum": ["not_allowed_until_final_verify"]
     }
   },
   "additionalProperties": false

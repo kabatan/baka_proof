@@ -41,7 +41,7 @@ class AuxiliaryConstructionCandidateV1:
         payload["required_side_conditions"] = self.required_side_conditions or {
             "nondegeneracy": self.side_conditions,
             "incidence": (),
-            "existence": (),
+            "existence": tuple(f"exists:{obj}" for obj in self.introduced_objects),
             "uniqueness_if_needed": (),
             "orientation": (),
             "diagram_cases": (),
@@ -90,11 +90,16 @@ class ConstructionCompiler:
             blockers.append(f"unsupported_construction_kind:{candidate.construction_kind}")
         if not candidate.dependencies:
             blockers.append("missing_dependency_refs")
+        for dependency in candidate.dependencies:
+            if ":" not in dependency:
+                blockers.append(f"invalid_dependency_ref:{dependency}")
         if not candidate.side_conditions:
             blockers.append("missing_side_conditions")
         required = candidate.to_dict()["required_side_conditions"]
         if not required["nondegeneracy"]:
             blockers.append("missing_nondegeneracy_side_conditions")
+        if not required["existence"]:
+            blockers.append("missing_existence_side_conditions")
         generated = tuple(f"obligation:{condition}" for condition in candidate.side_conditions)
         return ConstructionCheckResult(
             "1.0.0",

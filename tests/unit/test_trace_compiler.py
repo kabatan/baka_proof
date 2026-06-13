@@ -62,6 +62,55 @@ class TraceCompilerTest(unittest.TestCase):
         self.assertIn("unsupported_rule:rule:unsupported:v1", result.blockers)
         self.assertIsNone(result.lean_patch)
 
+    def test_unsupported_steps_are_blockers(self) -> None:
+        trace = GeoTraceV1(
+            "1.0.0",
+            "geotrace:unsupported-step",
+            "geometry_claim:fixture",
+            supported_trace().steps,
+            supported_trace().rule_refs,
+            supported_trace().side_condition_refs,
+            unsupported_steps=({"step_id": "raw-provider-step", "reason": "unsupported_rule"},),
+        )
+        result = TraceCompiler().compile(trace)
+        self.assertEqual(result.status, "blocked")
+        self.assertIn("unsupported_step:raw-provider-step", result.blockers)
+
+    def test_target_library_mismatch_is_blocker(self) -> None:
+        trace = GeoTraceV1(
+            "1.0.0",
+            "geotrace:wrong-target",
+            "geometry_claim:fixture",
+            supported_trace().steps,
+            supported_trace().rule_refs,
+            supported_trace().side_condition_refs,
+            target_library="OtherTarget",
+        )
+        result = TraceCompiler().compile(trace)
+        self.assertEqual(result.status, "blocked")
+        self.assertIn("target_library_mismatch:OtherTarget", result.blockers)
+
+    def test_unsupported_variant_and_orientation_mismatch_are_blockers(self) -> None:
+        step = GeoTraceStep(
+            "step:variant",
+            "rule:collinearity_identity:v1",
+            ("set_collinearity",),
+            "set_collinearity",
+            ("points_declared:A:B:C", "orientation_mismatch:clockwise"),
+        )
+        trace = GeoTraceV1(
+            "1.0.0",
+            "geotrace:variant",
+            "geometry_claim:fixture",
+            (step,),
+            ("rule:collinearity_identity:v1",),
+            ("points_declared:A:B:C",),
+        )
+        result = TraceCompiler().compile(trace)
+        self.assertEqual(result.status, "blocked")
+        self.assertIn("unsupported_variant:step:variant:set_collinearity", result.blockers)
+        self.assertIn("orientation_mismatch:step:variant", result.blockers)
+
     def test_missing_side_conditions_are_blockers(self) -> None:
         trace = supported_trace()
         step = GeoTraceStep("step:missing-side", "rule:collinearity_identity:v1", ("Coll A B C",), "Coll A B C", ())

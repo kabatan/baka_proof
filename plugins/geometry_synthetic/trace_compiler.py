@@ -35,14 +35,26 @@ class TraceCompiler:
         blockers: list[str] = []
         if trace.proof_use_status not in {"not_allowed", "lean_patch_candidate"}:
             blockers.append("invalid_trace_proof_use_status")
+        if trace.target_library != "LeanGeoSubsetV1":
+            blockers.append(f"target_library_mismatch:{trace.target_library}")
         if not trace.steps:
             blockers.append("malformed_trace_empty_steps")
+        if trace.unsupported_steps:
+            blockers.extend(
+                f"unsupported_step:{step.get('step_id', index)}"
+                for index, step in enumerate(trace.unsupported_steps)
+            )
         unsupported = sorted({step.rule_id for step in trace.steps if step.rule_id not in self.rules_by_id})
         blockers.extend(f"unsupported_rule:{rule_id}" for rule_id in unsupported)
         for step in trace.steps:
             rule = self.rules_by_id.get(step.rule_id)
             if rule is None:
                 continue
+            for variant in rule.unsupported_variants:
+                if variant and (variant in step.conclusion or any(variant in premise for premise in step.premises)):
+                    blockers.append(f"unsupported_variant:{step.step_id}:{variant}")
+            if any("orientation_mismatch" in ref for ref in step.side_condition_refs):
+                blockers.append(f"orientation_mismatch:{step.step_id}")
             missing = sorted(set(rule.required_side_conditions) - set(step.side_condition_refs))
             blockers.extend(f"missing_side_condition:{step.step_id}:{condition}" for condition in missing)
         if blockers:

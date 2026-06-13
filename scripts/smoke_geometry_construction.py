@@ -24,7 +24,7 @@ def main() -> int:
         construction_kind="line_through_two_distinct_points",
         source_provenance="provider_run:smoke",
         introduced_objects=("l_aux:Line",),
-        dependencies=("A", "B"),
+        dependencies=("A:Point", "B:Point"),
         intended_use="search_hint_for_symbolic_retry",
         side_conditions=("A != B",),
     )
