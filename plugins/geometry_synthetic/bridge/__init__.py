@@ -6,6 +6,7 @@ from typing import Any
 
 from math_auto_research.base.final_verify import FinalVerifyReport
 from plugins.geometry_synthetic.extraction import GeometryClaimSpec, GeometryExtractionReport
+from plugins.geometry_synthetic.bridge.relation_to_goal import relation_allows_goal_level_proof_use
 
 
 TRUST_LEVELS = (
@@ -93,7 +94,7 @@ class GeometryBridgeGate:
             missing_links.append("goal_anchor_ref")
 
         relation = extraction_report.relation
-        if relation not in {"exact", "sufficient"}:
+        if not relation_allows_goal_level_proof_use(relation, extraction_report.direction_available):
             blockers.append(f"relation_not_goal_level:{relation}")
         if relation == "sufficient" and extraction_report.direction_available in {None, "none"}:
             blockers.append("sufficient_relation_missing_direction_evidence")

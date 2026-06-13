@@ -11,9 +11,14 @@ RawSourceKind = Literal[
     "controller_rationale",
     "worker_text",
     "provider_output",
+    "raw_provider_output",
     "dsl_input",
+    "raw_dsl_input",
     "raw_log",
     "construction_rationale",
+    "unsupported_trace",
+    "fixture_provider_output",
+    "lean_compile_without_final_verify",
 ]
 
 

@@ -4,10 +4,17 @@ import unittest
 
 from math_auto_research.base.final_verify import FinalVerifyReport
 from plugins.geometry_synthetic.bridge import GeometryBridgeGate, TrustGuard
+from plugins.geometry_synthetic.bridge.geometry_bridge_report import GeometryBridgeGate as PlanPathBridgeGate
+from plugins.geometry_synthetic.bridge.relation_to_goal import relation_allows_goal_level_proof_use
 from plugins.geometry_synthetic.extraction import GeometryClaimSpec, GeometryExtractionReport
 
 
 class GeometryBridgeGateTest(unittest.TestCase):
+    def test_plan_path_bridge_gate_exports_gate(self) -> None:
+        self.assertIs(PlanPathBridgeGate, GeometryBridgeGate)
+        self.assertTrue(relation_allows_goal_level_proof_use("exact"))
+        self.assertFalse(relation_allows_goal_level_proof_use("sufficient", None))
+
     def test_accepted_extraction_and_patch_candidate_pass_bridge_as_nonfinal(self) -> None:
         report = GeometryBridgeGate().evaluate(
             target_goal=_target_goal(),
