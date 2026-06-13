@@ -129,5 +129,4 @@ python scripts/check_release_acceptance.py --config configs/benchmark_runs/geome
 
 ```text
 implementation_closure_commit: e427015
-commit_hash_record_commit: pending
 ```
