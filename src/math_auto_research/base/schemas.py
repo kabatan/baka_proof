@@ -51,6 +51,7 @@ class ArtifactRef(SchemaRecord):
     path: str
     sha256: str = Field(pattern=r"^sha256:[0-9a-f]{64}$")
     media_type: str
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
 
 class SelectedImplementations(SchemaRecord):
@@ -96,33 +97,77 @@ class TrustReport(SchemaRecord):
     schema_id: ClassVar[str] = "base.trust_report.v1"
     schema_path: ClassVar[Path] = SCHEMA_ROOT / "base" / "trust_report.schema.json"
 
-    result_level: Literal["diagnostic_only", "search_only", "lean_patch_candidate", "final_theorem"]
+    result_level: Literal[
+        "diagnostic_only",
+        "raw_candidate",
+        "checked_claim_artifact",
+        "lean_patch_candidate",
+        "lean_compiled_candidate",
+        "lean_theorem",
+    ]
     proof_use_status: Literal[
         "not_allowed",
-        "diagnostic_only",
         "search_only",
-        "lean_patch_candidate",
+        "claim_level_only",
+        "goal_level_allowed",
         "final_theorem",
     ]
     reason: str
     final_verify_ref: str | None = None
+
+    @field_validator("proof_use_status")
+    @classmethod
+    def _final_theorem_requires_lean_theorem(cls, value: str, info: Any) -> str:
+        if value == "final_theorem" and info.data.get("result_level") != "lean_theorem":
+            raise ValueError("final_theorem proof-use requires lean_theorem result_level")
+        return value
 
 
 class DiagnosticBundle(SchemaRecord):
     schema_id: ClassVar[str] = "base.diagnostic_bundle.v1"
     schema_path: ClassVar[Path] = SCHEMA_ROOT / "base" / "diagnostic_bundle.schema.json"
 
+    diagnostic_id: str
     kind: Literal[
-        "resource_rejected",
-        "solver_timeout",
-        "unsupported_contract",
-        "verification_failed",
+        "schema_error",
+        "unsupported_target",
         "dependency_unavailable",
+        "extraction_rejected",
+        "provider_failed",
+        "provider_timeout",
+        "unsupported_rule",
+        "missing_side_condition",
+        "construction_blocked",
+        "lean_failed",
+        "theorem_hash_changed",
+        "resource_rejected",
+        "release_blocker",
     ]
-    origin: str
-    suggested_action: str
-    status: Literal["open", "blocked", "resolved", "diagnostic_only"]
-    details: dict[str, Any] = Field(default_factory=dict)
+    blame_layer: Literal[
+        "base",
+        "model_provider",
+        "controller",
+        "worker",
+        "lean",
+        "geometry_plugin",
+        "provider",
+        "rule_registry",
+        "compiler",
+        "resource",
+        "dependency",
+        "unknown",
+    ]
+    severity: Literal[
+        "repairable",
+        "retry_with_budget",
+        "blocked_until_dependency",
+        "plugin_bug_suspected",
+        "terminal",
+    ]
+    reason_codes: list[str] = Field(default_factory=list)
+    repair_options: list[str] = Field(default_factory=list)
+    evidence_refs: list[str] = Field(default_factory=list)
+    status: Literal["open", "blocked", "resolved", "diagnostic_only"] = "open"
 
 
 class DependencyResolutionReport(SchemaRecord):

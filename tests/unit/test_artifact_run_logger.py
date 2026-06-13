@@ -16,6 +16,16 @@ class ArtifactRunLoggerTest(unittest.TestCase):
             ref = store.put_json("diagnostic", {"schema_version": "1.0.0", "kind": "test"})
             self.assertTrue(ref.sha256.startswith("sha256:"))
             self.assertTrue(store.verify(ref))
+            self.assertEqual(store.get(ref), b'{"kind":"test","schema_version":"1.0.0"}')
+
+    def test_artifact_store_hashes_and_verifies_bytes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            store = ArtifactStore(Path(tmp))
+            ref = store.put_bytes(b"abc", "raw_log", {"role": "unit"})
+            self.assertEqual(ref.media_type, "application/octet-stream")
+            self.assertEqual(ref.metadata["role"], "unit")
+            self.assertEqual(store.get(ref), b"abc")
+            self.assertTrue(store.verify(ref))
 
     def test_run_logger_links_profiles_and_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -36,14 +46,28 @@ class ArtifactRunLoggerTest(unittest.TestCase):
             self.assertEqual(record.artifact_refs, [diagnostic_ref.sha256])
 
     def test_diagnostic_and_trust_records_serialize(self) -> None:
-        diagnostic = DiagnosticBundle("1.0.0", "resource_rejected", "resource_policy", "retry", "blocked")
-        trust = TrustReport("1.0.0", "diagnostic_only", "not_allowed", "not_final_verified", None)
-        self.assertEqual(diagnostic.to_dict()["kind"], "resource_rejected")
-        self.assertIn("origin", diagnostic.to_dict())
-        self.assertIn("suggested_action", diagnostic.to_dict())
-        self.assertEqual(trust.to_dict()["result_level"], "diagnostic_only")
-        self.assertIn("reason", trust.to_dict())
-        self.assertIn("final_verify_ref", trust.to_dict())
+        diagnostic = DiagnosticBundle(
+            diagnostic_id="diag:test",
+            kind="resource_rejected",
+            blame_layer="resource",
+            severity="retry_with_budget",
+            reason_codes=["semaphore_unavailable"],
+            repair_options=["retry"],
+            evidence_refs=["sha256:evidence"],
+            status="blocked",
+        )
+        trust = TrustReport(
+            result_level="diagnostic_only",
+            proof_use_status="not_allowed",
+            reason="not_final_verified",
+            final_verify_ref=None,
+        )
+        self.assertEqual(diagnostic.model_dump()["kind"], "resource_rejected")
+        self.assertIn("blame_layer", diagnostic.model_dump())
+        self.assertIn("repair_options", diagnostic.model_dump())
+        self.assertEqual(trust.model_dump()["result_level"], "diagnostic_only")
+        self.assertIn("reason", trust.model_dump())
+        self.assertIn("final_verify_ref", trust.model_dump())
 
 
 if __name__ == "__main__":
