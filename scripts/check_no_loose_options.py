@@ -4,6 +4,9 @@ import json
 import sys
 from pathlib import Path
 
+from math_auto_research.base.schemas import SelectedImplementations, assert_scalar_selected_implementations
+from math_auto_research.schema_validation import SchemaValidationError, load_artifact, validate_artifact
+
 
 FORBIDDEN_CORE_TERMS = [
     "AgentC",
@@ -32,6 +35,7 @@ SCALAR_SELECTED_FIELDS = [
 def main() -> int:
     violations = _scan_forbidden_terms()
     violations.extend(_check_selected_implementations_schema())
+    violations.extend(_check_selected_implementations_configs())
     if violations:
         print("\n".join(violations))
         return 1
@@ -65,6 +69,23 @@ def _check_selected_implementations_schema() -> list[str]:
             continue
         if field_schema.get("type") == "array":
             violations.append(f"{schema_path}:{field} must be scalar, not array")
+    return violations
+
+
+def _check_selected_implementations_configs() -> list[str]:
+    violations: list[str] = []
+    config_root = Path("configs/selected_implementations")
+    for path in sorted(config_root.glob("*.yaml")):
+        try:
+            data = load_artifact(path)
+            assert_scalar_selected_implementations(data)
+            validate_artifact(path, Path("schemas/base/selected_implementations.schema.json"))
+            record = SelectedImplementations.model_validate(data)
+        except (SchemaValidationError, ValueError) as exc:
+            violations.append(f"{path}:{exc}")
+            continue
+        if record.target_library.split(":", 1)[0] != "LeanGeoSubsetV1":
+            violations.append(f"{path}:target_library must be LeanGeoSubsetV1")
     return violations
 
 
