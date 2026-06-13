@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from math_auto_research.base.schemas import SelectedImplementations, export_registered_json_schemas
+from math_auto_research.proof_state.records import PROOF_STATE_SCHEMA_MODELS
 from math_auto_research.schema_validation import SchemaValidationError, validate_artifact
 
 
@@ -82,8 +83,8 @@ class V03ContractInventoryTest(unittest.TestCase):
             "SelectedImplementations",
             "FinalVerifyReport",
             "ResearchContributionRecord",
-            "Obligation",
-            "Derivation",
+            "ObligationNode",
+            "DerivationNode",
             "EvidenceRef",
             "GraphPatch",
             "GraphPatchCommitResult",
@@ -179,6 +180,15 @@ class V03ContractInventoryTest(unittest.TestCase):
         self.assertIn("committed_derivation_ids", commit_fields)
         self.assertIn("committed_evidence_ids", commit_fields)
         self.assertNotIn("blocker_summary", commit_fields)
+
+    def test_proof_state_pydantic_models_have_existing_schema_files(self) -> None:
+        model_names = {model.__name__ for model in PROOF_STATE_SCHEMA_MODELS}
+        self.assertIn("ObligationNode", model_names)
+        self.assertIn("DerivationNode", model_names)
+        for model in PROOF_STATE_SCHEMA_MODELS:
+            self.assertTrue(model.schema_path.exists(), model.schema_path)
+            schema = json.loads(model.schema_path.read_text(encoding="utf-8"))
+            self.assertIn("$id", schema)
 
     def test_proof_use_status_enums_do_not_create_unverified_final_paths(self) -> None:
         geometry = json.loads(Path("schemas/geometry/v03_contract_index.schema.json").read_text(encoding="utf-8"))

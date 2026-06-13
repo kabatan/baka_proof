@@ -1,14 +1,257 @@
 {
+  "$defs": {
+    "Derivation": {
+      "additionalProperties": false,
+      "properties": {
+        "conclusion_obligation_id": {
+          "title": "Conclusion Obligation Id",
+          "type": "string"
+        },
+        "derivation_id": {
+          "title": "Derivation Id",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "final_verify_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Final Verify Ref"
+        },
+        "final_verify_report": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Final Verify Report"
+        },
+        "proof_use_status": {
+          "default": "not_allowed",
+          "enum": [
+            "not_allowed",
+            "search_only",
+            "claim_level_only",
+            "goal_level_allowed",
+            "final_theorem"
+          ],
+          "title": "Proof Use Status",
+          "type": "string"
+        },
+        "protected_theorem_hash_unchanged": {
+          "default": false,
+          "title": "Protected Theorem Hash Unchanged",
+          "type": "boolean"
+        },
+        "required_side_condition_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Side Condition Ids",
+          "type": "array"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "derivation_id",
+        "conclusion_obligation_id",
+        "rule_id",
+        "evidence_refs"
+      ],
+      "title": "Derivation",
+      "type": "object"
+    },
+    "EvidenceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_kind": {
+          "default": "proof_artifact",
+          "title": "Artifact Kind",
+          "type": "string"
+        },
+        "artifact_ref": {
+          "title": "Artifact Ref",
+          "type": "string"
+        },
+        "content_hash": {
+          "title": "Content Hash",
+          "type": "string"
+        },
+        "evidence_id": {
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "evidence_status": {
+          "enum": [
+            "used_in_search",
+            "used_in_final_proof",
+            "diagnostic_only",
+            "abandoned",
+            "refuted_key_branch"
+          ],
+          "title": "Evidence Status",
+          "type": "string"
+        },
+        "media_type": {
+          "title": "Media Type",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "artifact_ref",
+        "evidence_status",
+        "media_type",
+        "content_hash"
+      ],
+      "title": "EvidenceRef",
+      "type": "object"
+    },
+    "Obligation": {
+      "additionalProperties": false,
+      "properties": {
+        "blocker_refs": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Blocker Refs",
+          "type": "array"
+        },
+        "obligation_id": {
+          "title": "Obligation Id",
+          "type": "string"
+        },
+        "parent_obligation_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Parent Obligation Ids",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "statement_hash": {
+          "title": "Statement Hash",
+          "type": "string"
+        },
+        "status": {
+          "default": "open",
+          "enum": [
+            "open",
+            "blocked",
+            "closed",
+            "invalidated"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "obligation_id",
+        "statement_hash"
+      ],
+      "title": "Obligation",
+      "type": "object"
+    }
+  },
   "$id": "proof_state.graph_patch.v1",
-  "type": "object",
-  "required": ["patch_id", "schema_id"],
+  "additionalProperties": false,
   "properties": {
-    "patch_id": {"type": "string"},
-    "schema_id": {"const": "proof_state.graph_patch.v1"},
-    "obligations": {"type": "array"},
-    "evidence_refs": {"type": "array"},
-    "derivations": {"type": "array"},
-    "invalidate_obligation_ids": {"type": "array", "items": {"type": "string"}},
-    "metadata": {"type": "object"}
-  }
+    "derivations": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Derivation"
+      },
+      "title": "Derivations",
+      "type": "array"
+    },
+    "evidence_refs": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/EvidenceRef"
+      },
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "invalidate_obligation_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Invalidate Obligation Ids",
+      "type": "array"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "obligations": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Obligation"
+      },
+      "title": "Obligations",
+      "type": "array"
+    },
+    "patch_id": {
+      "title": "Patch Id",
+      "type": "string"
+    },
+    "schema_id": {
+      "default": "proof_state.graph_patch.v1",
+      "title": "Schema Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "patch_id"
+  ],
+  "title": "GraphPatch",
+  "type": "object"
 }

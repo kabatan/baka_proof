@@ -1,0 +1,47 @@
+{
+  "$id": "proof_state.state_reader_summary.v1",
+  "additionalProperties": false,
+  "properties": {
+    "closed_obligation_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Closed Obligation Ids",
+      "type": "array"
+    },
+    "derivation_count": {
+      "title": "Derivation Count",
+      "type": "integer"
+    },
+    "evidence_ref_count": {
+      "title": "Evidence Ref Count",
+      "type": "integer"
+    },
+    "obligation_count": {
+      "title": "Obligation Count",
+      "type": "integer"
+    },
+    "open_obligation_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Open Obligation Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "obligation_count",
+    "derivation_count",
+    "evidence_ref_count"
+  ],
+  "title": "StateReaderSummary",
+  "type": "object"
+}

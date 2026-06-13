@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any, ClassVar, Literal
 
 from pydantic import ConfigDict, Field
@@ -45,7 +46,7 @@ class _ProofStateRecord(SchemaRecord):
 
 class Obligation(_ProofStateRecord):
     schema_id: ClassVar[str] = "proof_state.obligation.v1"
-    schema_path: ClassVar[Any] = "schemas/proof_state/obligation.schema.json"
+    schema_path: ClassVar[Path] = Path("schemas/proof_state/obligation.schema.json")
     positional_fields: ClassVar[tuple[str, ...]] = ("obligation_id", "statement_hash", "status")
 
     obligation_id: str
@@ -57,7 +58,7 @@ class Obligation(_ProofStateRecord):
 
 class EvidenceRef(_ProofStateRecord):
     schema_id: ClassVar[str] = "proof_state.evidence_ref.v1"
-    schema_path: ClassVar[Any] = "schemas/proof_state/evidence_ref.schema.json"
+    schema_path: ClassVar[Path] = Path("schemas/proof_state/evidence_ref.schema.json")
     positional_fields: ClassVar[tuple[str, ...]] = (
         "evidence_id",
         "artifact_ref",
@@ -76,7 +77,7 @@ class EvidenceRef(_ProofStateRecord):
 
 class Derivation(_ProofStateRecord):
     schema_id: ClassVar[str] = "proof_state.derivation.v1"
-    schema_path: ClassVar[Any] = "schemas/proof_state/derivation.schema.json"
+    schema_path: ClassVar[Path] = Path("schemas/proof_state/derivation.schema.json")
     positional_fields: ClassVar[tuple[str, ...]] = (
         "derivation_id",
         "conclusion_obligation_id",
@@ -97,7 +98,7 @@ class Derivation(_ProofStateRecord):
 
 class GraphPatch(_ProofStateRecord):
     schema_id: ClassVar[str] = "proof_state.graph_patch.v1"
-    schema_path: ClassVar[Any] = "schemas/proof_state/graph_patch.schema.json"
+    schema_path: ClassVar[Path] = Path("schemas/proof_state/graph_patch.schema.json")
     positional_fields: ClassVar[tuple[str, ...]] = ("patch_id",)
 
     patch_id: str
@@ -111,7 +112,7 @@ class GraphPatch(_ProofStateRecord):
 
 class GraphPatchCommitResult(_ProofStateRecord):
     schema_id: ClassVar[str] = "proof_state.graph_patch_commit_result.v1"
-    schema_path: ClassVar[Any] = "schemas/proof_state/graph_patch_commit_result.schema.json"
+    schema_path: ClassVar[Path] = Path("schemas/proof_state/graph_patch_commit_result.schema.json")
 
     patch_id: str
     status: Literal["committed", "rejected"]
@@ -122,7 +123,7 @@ class GraphPatchCommitResult(_ProofStateRecord):
 
 class DAGSnapshot(_ProofStateRecord):
     schema_id: ClassVar[str] = "proof_state.dag_snapshot.v1"
-    schema_path: ClassVar[Any] = "schemas/proof_state/dag_snapshot.schema.json"
+    schema_path: ClassVar[Path] = Path("schemas/proof_state/dag_snapshot.schema.json")
 
     obligation_ids: tuple[str, ...]
     derivation_ids: tuple[str, ...]
@@ -131,10 +132,33 @@ class DAGSnapshot(_ProofStateRecord):
 
 class StateReaderSummary(_ProofStateRecord):
     schema_id: ClassVar[str] = "proof_state.state_reader_summary.v1"
-    schema_path: ClassVar[Any] = "schemas/proof_state/state_reader_summary.schema.json"
+    schema_path: ClassVar[Path] = Path("schemas/proof_state/state_reader_summary.schema.json")
 
     obligation_count: int
     derivation_count: int
     evidence_ref_count: int
     closed_obligation_ids: tuple[str, ...] = ()
     open_obligation_ids: tuple[str, ...] = ()
+
+
+class ObligationNode(Obligation):
+    schema_id: ClassVar[str] = "proof_state.obligation_node.v1"
+    schema_path: ClassVar[Path] = Path("schemas/proof_state/obligation_node.schema.json")
+
+
+class DerivationNode(Derivation):
+    schema_id: ClassVar[str] = "proof_state.derivation_node.v1"
+    schema_path: ClassVar[Path] = Path("schemas/proof_state/derivation_node.schema.json")
+
+
+PROOF_STATE_SCHEMA_MODELS: tuple[type[_ProofStateRecord], ...] = (
+    Obligation,
+    ObligationNode,
+    Derivation,
+    DerivationNode,
+    EvidenceRef,
+    GraphPatch,
+    GraphPatchCommitResult,
+    DAGSnapshot,
+    StateReaderSummary,
+)

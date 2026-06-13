@@ -1,0 +1,53 @@
+{
+  "$id": "proof_state.obligation_node.v1",
+  "additionalProperties": false,
+  "properties": {
+    "blocker_refs": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocker Refs",
+      "type": "array"
+    },
+    "obligation_id": {
+      "title": "Obligation Id",
+      "type": "string"
+    },
+    "parent_obligation_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Parent Obligation Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "statement_hash": {
+      "title": "Statement Hash",
+      "type": "string"
+    },
+    "status": {
+      "default": "open",
+      "enum": [
+        "open",
+        "blocked",
+        "closed",
+        "invalidated"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "obligation_id",
+    "statement_hash"
+  ],
+  "title": "ObligationNode",
+  "type": "object"
+}

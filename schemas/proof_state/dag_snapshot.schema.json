@@ -1,0 +1,40 @@
+{
+  "$id": "proof_state.dag_snapshot.v1",
+  "additionalProperties": false,
+  "properties": {
+    "derivation_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Derivation Ids",
+      "type": "array"
+    },
+    "evidence_ref_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Ref Ids",
+      "type": "array"
+    },
+    "obligation_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Obligation Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "obligation_ids",
+    "derivation_ids",
+    "evidence_ref_ids"
+  ],
+  "title": "DAGSnapshot",
+  "type": "object"
+}

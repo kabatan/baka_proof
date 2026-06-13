@@ -1,0 +1,53 @@
+{
+  "$id": "proof_state.evidence_ref.v1",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_kind": {
+      "default": "proof_artifact",
+      "title": "Artifact Kind",
+      "type": "string"
+    },
+    "artifact_ref": {
+      "title": "Artifact Ref",
+      "type": "string"
+    },
+    "content_hash": {
+      "title": "Content Hash",
+      "type": "string"
+    },
+    "evidence_id": {
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "evidence_status": {
+      "enum": [
+        "used_in_search",
+        "used_in_final_proof",
+        "diagnostic_only",
+        "abandoned",
+        "refuted_key_branch"
+      ],
+      "title": "Evidence Status",
+      "type": "string"
+    },
+    "media_type": {
+      "title": "Media Type",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "artifact_ref",
+    "evidence_status",
+    "media_type",
+    "content_hash"
+  ],
+  "title": "EvidenceRef",
+  "type": "object"
+}

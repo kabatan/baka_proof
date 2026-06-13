@@ -1,0 +1,89 @@
+{
+  "$id": "proof_state.derivation.v1",
+  "additionalProperties": false,
+  "properties": {
+    "conclusion_obligation_id": {
+      "title": "Conclusion Obligation Id",
+      "type": "string"
+    },
+    "derivation_id": {
+      "title": "Derivation Id",
+      "type": "string"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "final_verify_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Final Verify Ref"
+    },
+    "final_verify_report": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Final Verify Report"
+    },
+    "proof_use_status": {
+      "default": "not_allowed",
+      "enum": [
+        "not_allowed",
+        "search_only",
+        "claim_level_only",
+        "goal_level_allowed",
+        "final_theorem"
+      ],
+      "title": "Proof Use Status",
+      "type": "string"
+    },
+    "protected_theorem_hash_unchanged": {
+      "default": false,
+      "title": "Protected Theorem Hash Unchanged",
+      "type": "boolean"
+    },
+    "required_side_condition_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Required Side Condition Ids",
+      "type": "array"
+    },
+    "rule_id": {
+      "title": "Rule Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "derivation_id",
+    "conclusion_obligation_id",
+    "rule_id",
+    "evidence_refs"
+  ],
+  "title": "Derivation",
+  "type": "object"
+}

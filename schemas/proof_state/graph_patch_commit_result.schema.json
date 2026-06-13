@@ -1,0 +1,54 @@
+{
+  "$id": "proof_state.graph_patch_commit_result.v1",
+  "additionalProperties": false,
+  "properties": {
+    "committed_derivation_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Committed Derivation Ids",
+      "type": "array"
+    },
+    "committed_evidence_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Committed Evidence Ids",
+      "type": "array"
+    },
+    "committed_obligation_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Committed Obligation Ids",
+      "type": "array"
+    },
+    "patch_id": {
+      "title": "Patch Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "committed",
+        "rejected"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "patch_id",
+    "status"
+  ],
+  "title": "GraphPatchCommitResult",
+  "type": "object"
+}
