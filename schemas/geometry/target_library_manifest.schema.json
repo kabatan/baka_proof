@@ -21,7 +21,7 @@
   ],
   "properties": {
     "schema_version": {"type": "string", "enum": ["1.0.0"]},
-    "target_library_id": {"type": "string", "pattern": "LeanGeoSubsetV1:.+"},
+    "target_library_id": {"type": "string", "enum": ["LeanGeoSubsetV1"]},
     "target_family": {"type": "string", "enum": ["LeanGeoSubsetV1"]},
     "source_dependency": {"type": "string", "enum": ["LeanGeo-compatible"]},
     "source_url": {"type": "string"},

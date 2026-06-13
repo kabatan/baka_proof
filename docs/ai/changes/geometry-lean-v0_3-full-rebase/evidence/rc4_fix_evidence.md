@@ -22,6 +22,21 @@ Prior RC-4 findings addressed:
    non_elaborated_lean_goal_required.
 ```
 
+Follow-up fixes after RC-4 re-review:
+
+```text
+1. TargetLibraryManifest target_library_id now matches Base exactly:
+   LeanGeoSubsetV1.
+2. target_library_manifest.schema.json now requires that exact ID.
+3. namespace_map.json was added and namespace_map_ref now points to its
+   content hash.
+4. predicate_mapping_ref and construction_mapping_ref were refreshed after
+   mapping edits.
+5. GeometryLevel2Pilot task_category values now match Base R-EVAL-001:
+   simple_symbolic_closure, auxiliary_construction,
+   proof_worker_only_baseline, and safe_reject_blocker.
+```
+
 Commands run:
 
 ```text
@@ -63,4 +78,34 @@ Known warning:
 ```text
 Lean commands emitted existing .lake dependency local-change warnings for
 UnicodeBasic and batteries; builds and checks completed successfully.
+```
+
+Follow-up commands run:
+
+```text
+python -m math_auto_research.cli.validate_schema plugins\geometry_synthetic\target_subset\leangeo_subset_v1.yaml
+make test-unit TEST_FILTER=target_subset
+make test-unit TEST_FILTER=geometry_corpus
+python -m math_auto_research.cli.validate_artifact benchmarks\geometry\geometry_level2_pilot.jsonl
+python -m compileall -q src plugins tests scripts
+make test-unit TEST_FILTER=geometry_extraction
+make test-mutation TEST_FILTER=extraction
+make lean-build
+make lean-no-sorry
+python scripts\check_domain_contamination.py
+```
+
+Follow-up observed results:
+
+```text
+TargetLibraryManifest schema validation: ok
+target_subset unit tests: 4 tests OK
+geometry_corpus unit tests: 5 tests OK
+geometry_level2_pilot.jsonl validation: ok
+compileall passed
+geometry_extraction unit tests: 12 tests OK
+filtered extraction mutation tests: 17 tests OK
+lake build: Build completed successfully
+lean no-sorry check passed
+domain contamination check passed
 ```

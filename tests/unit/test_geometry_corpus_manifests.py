@@ -60,10 +60,10 @@ class GeometryCorpusManifestTest(unittest.TestCase):
         counts: dict[str, int] = {}
         for entry in entries:
             counts[str(entry["task_category"])] = counts.get(str(entry["task_category"]), 0) + 1
-        self.assertGreaterEqual(counts.get("accepted_extraction", 0), 10)
+        self.assertGreaterEqual(counts.get("simple_symbolic_closure", 0), 10)
         self.assertGreaterEqual(counts.get("auxiliary_construction", 0), 5)
-        self.assertGreaterEqual(counts.get("provider_trace", 0), 5)
-        self.assertGreaterEqual(counts.get("safe_reject_or_blocker", 0), 5)
+        self.assertGreaterEqual(counts.get("proof_worker_only_baseline", 0), 5)
+        self.assertGreaterEqual(counts.get("safe_reject_blocker", 0), 5)
 
 
 def _read_jsonl(path: Path) -> list[dict[str, object]]:
