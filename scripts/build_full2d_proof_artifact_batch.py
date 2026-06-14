@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import hashlib
 import json
 import sys
@@ -35,6 +36,7 @@ def main() -> int:
     parser.add_argument("--limit", type=int, default=3)
     parser.add_argument("--family", action="append", default=[])
     parser.add_argument("--family-limit", type=int, default=None)
+    parser.add_argument("--jobs", type=int, default=1)
     args = parser.parse_args()
     report = build_batch(
         ROOT / args.corpus_root,
@@ -42,6 +44,7 @@ def main() -> int:
         args.limit,
         families=tuple(args.family),
         family_limit=args.family_limit,
+        jobs=args.jobs,
     )
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["status"] == "passed" else 1
@@ -53,6 +56,7 @@ def build_batch(
     limit: int,
     families: tuple[str, ...] = (),
     family_limit: int | None = None,
+    jobs: int = 1,
 ) -> dict[str, Any]:
     manifest = load_manifest(corpus_root)
     if manifest is None:
@@ -69,8 +73,11 @@ def build_batch(
     existing_index = _load_existing_index(index_path)
     index: list[dict[str, Any]] = list(existing_index)
     errors: list[str] = []
+    pending: list[tuple[dict[str, Any], dict[str, str]]] = []
     for task in _positive_tasks(manifest):
         if not target_families and len(selected_results) >= effective_limit:
+            break
+        if not target_families and len(selected_results) + len(pending) >= effective_limit:
             break
         template = _template_for_task(task)
         if template is None:
@@ -83,10 +90,14 @@ def build_batch(
             continue
         if target_families:
             desired_family_count = family_limit if family_limit is not None else limit
-            if _family_count(selected_results, family) >= desired_family_count:
+            scheduled_family_count = sum(1 for pending_task, _template in pending if pending_task.get("theorem_family") == family)
+            if _family_count(selected_results, family) + scheduled_family_count >= desired_family_count:
                 continue
-        task_report = _build_task_artifacts(task, template, run_dir)
+        pending.append((task, template))
+
+    for task_report in _build_pending_artifacts(pending, run_dir, max(1, jobs)):
         if task_report["status"] == "passed":
+            task_id = str(task_report["task_id"])
             selected_results[task_id] = task_report["task_result"]
             index.append({key: value for key, value in task_report.items() if key not in {"task_result"}})
             _write_batch_outputs(result_path, index_path, _ordered_results(manifest, selected_results), index)
@@ -111,6 +122,28 @@ def build_batch(
         "task_results_path": result_path.relative_to(ROOT).as_posix(),
         "proof_artifact_index_path": index_path.relative_to(ROOT).as_posix(),
     }
+
+
+def _build_pending_artifacts(
+    pending: list[tuple[dict[str, Any], dict[str, str]]],
+    run_dir: Path,
+    jobs: int,
+) -> list[dict[str, Any]]:
+    if jobs == 1:
+        return [_build_task_artifacts(task, template, run_dir) for task, template in pending]
+    reports: list[dict[str, Any]] = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=jobs) as executor:
+        future_to_task = {
+            executor.submit(_build_task_artifacts, task, template, run_dir): str(task["task_id"])
+            for task, template in pending
+        }
+        for future in concurrent.futures.as_completed(future_to_task):
+            task_id = future_to_task[future]
+            try:
+                reports.append(future.result())
+            except Exception as exc:  # pragma: no cover - defensive batch error capture
+                reports.append({"status": "failed", "task_id": task_id, "errors": [type(exc).__name__, str(exc)]})
+    return sorted(reports, key=lambda report: str(report.get("task_id", "")))
 
 
 def _ordered_results(manifest: dict[str, Any], results_by_id: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
