@@ -135,4 +135,17 @@ def proof_use_provenance_valid(provenance: dict[str, Any] | None) -> bool:
         "protected_statement_hash",
         "target_library_manifest_hash",
     }
-    return required.issubset(provenance)
+    if not required.issubset(provenance):
+        return False
+    if not provenance.get("solver_backed_mode"):
+        return True
+    solver_backed_required = {
+        "provider_run_manifest_ref",
+        "normalized_solver_artifact_ref",
+        "compiler_result_ref",
+        "lean_patch_candidate_ref",
+        "worker_result_ref",
+        "proof_region_diff_hash",
+        "generated_candidate_file_ref",
+    }
+    return solver_backed_required.issubset(provenance)
