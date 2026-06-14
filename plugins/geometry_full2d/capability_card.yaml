@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0.0",
+  "capability_id": "geometry.full2d.solve",
+  "claim_target": "V0.4.2_GEOMETRY_FULL2D_FULL_PROVER_READY",
+  "proof_use": "not_allowed_without_FinalVerifyGate_and_SolverBackedProofCertificateFull2D",
+  "target_library": "GeometryFull2DTarget:1.0.0"
+}

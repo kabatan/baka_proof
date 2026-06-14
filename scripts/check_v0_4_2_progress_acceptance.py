@@ -81,37 +81,42 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     checks.append(_file_check("WP00-debt-ledger", DEBT_LEDGER))
     checks.append(_file_check("WP00-config", ROOT / config_path))
     checks.append(_directory_check("WP01-plugin-dir", ROOT / "plugins" / "geometry_full2d"))
+    checks.append(_command_check("WP01-plugin-boundary", [sys.executable, "scripts/check_v0_4_2_plugin_boundary.py"]))
     checks.append(_directory_check("WP02-lean-facade-dir", ROOT / "lean" / "MathAutoResearch" / "GeometryFull2D"))
     checks.append(_file_check("WP03-structured-extraction-script", ROOT / "scripts" / "check_structured_extraction_v0_4_2.py"))
     checks.append(_file_check("WP15-rule-registry-checker", ROOT / "scripts" / "check_full2d_rule_registry.py"))
     checks.append(_file_check("WP21-release-checker", ROOT / "scripts" / "check_release_acceptance_v0_4_2.py"))
 
-    if checks[-5]["status"] != "passed":
-        work_debt.append(_issue("WorkDebt", "WP-01", "plugins/geometry_full2d is not created yet.", checks[-5]))
-    if checks[-4]["status"] != "passed":
-        work_debt.append(_issue("WorkDebt", "WP-02", "GeometryFull2D Lean facade directory is not created yet.", checks[-4]))
-    if checks[-3]["status"] != "passed":
-        work_debt.append(_issue("WorkDebt", "WP-03", "Structured extraction checker is not implemented yet.", checks[-3]))
-    if checks[-2]["status"] != "passed":
-        work_debt.append(_issue("WorkDebt", "WP-15", "Full2D rule registry checker is not implemented yet.", checks[-2]))
-    if checks[-1]["status"] != "passed":
-        work_debt.append(_issue("WorkDebt", "WP-21", "Final v0.4.2 release checker is not implemented yet.", checks[-1]))
+    plugin_dir_check = checks[-6]
+    plugin_boundary_check = checks[-5]
+    lean_facade_check = checks[-4]
+    extraction_check = checks[-3]
+    rule_registry_check = checks[-2]
+    release_checker_check = checks[-1]
+    if plugin_dir_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-01", "plugins/geometry_full2d is not created yet.", plugin_dir_check))
+    if plugin_boundary_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-01", "v0.4.2 plugin boundary checker is not passing.", plugin_boundary_check))
+    if lean_facade_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-02", "GeometryFull2D Lean facade directory is not created yet.", lean_facade_check))
+    if extraction_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-03", "Structured extraction checker is not implemented yet.", extraction_check))
+    if rule_registry_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-15", "Full2D rule registry checker is not implemented yet.", rule_registry_check))
+    if release_checker_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-21", "Final v0.4.2 release checker is not implemented yet.", release_checker_check))
 
     release_blockers.extend(_release_blocker_scan())
 
     completed = ["WP-00:authority-docs-imported"]
     if not hard_blockers and checks[0]["status"] == "passed" and checks[1]["status"] == "passed":
         completed.append("WP-00:active-guardian-spec-checker-passed")
+    if plugin_dir_check["status"] == "passed" and plugin_boundary_check["status"] == "passed":
+        completed.append("WP-01:plugin-boundary-passed")
 
-    next_work = [
-        "WP-01",
-        "WP-02",
-        "WP-03",
-        "WP-04",
-        "WP-05",
-        "WP-15",
-        "WP-20",
-    ]
+    next_work = ["WP-02", "WP-03", "WP-04", "WP-05", "WP-15", "WP-20"]
+    if not ("WP-01:plugin-boundary-passed" in completed):
+        next_work.insert(0, "WP-01")
     status = "progress_blocked_hard" if hard_blockers else "progress_ok_with_debt"
     return {
         "schema_version": "1.0.0",

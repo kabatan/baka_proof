@@ -5,11 +5,6 @@
   "release_blockers": [
     {
       "kind": "ReleaseBlocker",
-      "ref": "B-001",
-      "summary": "plugins/geometry_full2d is required for release."
-    },
-    {
-      "kind": "ReleaseBlocker",
       "ref": "C-001",
       "summary": "MathAutoResearch.GeometryFull2D Lean namespace is required for release."
     },
@@ -17,68 +12,11 @@
       "kind": "ReleaseBlocker",
       "ref": "H-001",
       "summary": "GeometryFull2D release corpus is not created yet."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role synthetic_closure."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role construction_search."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role algebraic_geometry."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role metric_angle."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role transformation."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role order_case."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role inequality."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role lean_proof_search."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role portfolio_coordinator."
     }
   ],
   "schema_version": "1.0.0",
   "status": "not_run",
   "work_debt_open": [
-    {
-      "evidence": {
-        "check_id": "WP01-plugin-dir",
-        "details": {
-          "path": "plugins\\geometry_full2d"
-        },
-        "status": "failed"
-      },
-      "kind": "WorkDebt",
-      "ref": "WP-01",
-      "summary": "plugins/geometry_full2d is not created yet."
-    },
     {
       "evidence": {
         "check_id": "WP02-lean-facade-dir",

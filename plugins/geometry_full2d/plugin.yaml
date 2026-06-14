@@ -1,0 +1,11 @@
+schema_version: "1.0.0"
+plugin_id: "geometry_full2d"
+manifest_version: "v1"
+plugin_kind: "domain_solver"
+capability_id: "geometry.full2d.solve"
+capability_kind: "solver_provider"
+contract_version: "v0.4.2"
+schema_root: "schemas/geometry_full2d"
+capability_card: "plugins/geometry_full2d/capability_card.yaml"
+components:
+  provider: "plugins.geometry_full2d.provider:GeometryFull2DProvider"

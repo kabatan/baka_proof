@@ -2,7 +2,7 @@
 title: Guardian Active Context — GeometryFull2D v0.4.2
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-007
 version: v0.4.2-governed-full2d
-status: V04_2_WP00_PROGRESS_ACCEPTANCE_PASSED_WP01_READY
+status: V04_2_WP01_PLUGIN_BOUNDARY_PASSED_WP02_READY
 created: 2026-06-15
 last_updated: 2026-06-15
 base_spec: MARP-GEOLEAN-BASE-007
@@ -56,7 +56,7 @@ Before editing implementation code, read the current Plan task, required require
 Current task:
 
 ```text
-WP-01 — Refactor release plugin boundary
+WP-02 — GeometryFull2DTarget Lean facade
 ```
 
 Completed preparation:
@@ -68,6 +68,7 @@ Active context and index updated to point to v0.4.2.
 Debt ledger initialized.
 scripts/check_active_guardian_spec.py reports exactly one active geometry spec: MARP-GEOLEAN-BASE-007.
 Initial progress acceptance reports hard_blockers=[] and progress_ok_with_debt.
+WP-01 plugin boundary checker passed.
 ```
 
 Open ReleaseBlocker / WorkDebt items are recorded in:

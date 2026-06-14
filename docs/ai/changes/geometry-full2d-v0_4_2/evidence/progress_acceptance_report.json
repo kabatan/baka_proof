@@ -88,7 +88,20 @@
       "details": {
         "path": "plugins\\geometry_full2d"
       },
-      "status": "failed"
+      "status": "passed"
+    },
+    {
+      "check_id": "WP01-plugin-boundary",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_v0_4_2_plugin_boundary.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
     },
     {
       "check_id": "WP02-lean-facade-dir",
@@ -122,12 +135,12 @@
   "claim_ceiling": "implementation_in_progress_no_v0_4_2_completion_claim",
   "completed_work_packages": [
     "WP-00:authority-docs-imported",
-    "WP-00:active-guardian-spec-checker-passed"
+    "WP-00:active-guardian-spec-checker-passed",
+    "WP-01:plugin-boundary-passed"
   ],
   "config_ref": "configs\\benchmark_runs\\geometry_full2d_v0_4_2.yaml",
   "hard_blockers": [],
   "next_unblocked_work_packages": [
-    "WP-01",
     "WP-02",
     "WP-03",
     "WP-04",
@@ -138,11 +151,6 @@
   "release_blockers": [
     {
       "kind": "ReleaseBlocker",
-      "ref": "B-001",
-      "summary": "plugins/geometry_full2d is required for release."
-    },
-    {
-      "kind": "ReleaseBlocker",
       "ref": "C-001",
       "summary": "MathAutoResearch.GeometryFull2D Lean namespace is required for release."
     },
@@ -150,69 +158,12 @@
       "kind": "ReleaseBlocker",
       "ref": "H-001",
       "summary": "GeometryFull2D release corpus is not created yet."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role synthetic_closure."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role construction_search."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role algebraic_geometry."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role metric_angle."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role transformation."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role order_case."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role inequality."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role lean_proof_search."
-    },
-    {
-      "kind": "ReleaseBlocker",
-      "ref": "E-001",
-      "summary": "Missing engine implementation for role portfolio_coordinator."
     }
   ],
-  "report_id": "progress_acceptance_v0_4_2:1781459088",
+  "report_id": "progress_acceptance_v0_4_2:1781459286",
   "schema_version": "1.0.0",
   "status": "progress_ok_with_debt",
   "work_debt": [
-    {
-      "evidence": {
-        "check_id": "WP01-plugin-dir",
-        "details": {
-          "path": "plugins\\geometry_full2d"
-        },
-        "status": "failed"
-      },
-      "kind": "WorkDebt",
-      "ref": "WP-01",
-      "summary": "plugins/geometry_full2d is not created yet."
-    },
     {
       "evidence": {
         "check_id": "WP02-lean-facade-dir",
