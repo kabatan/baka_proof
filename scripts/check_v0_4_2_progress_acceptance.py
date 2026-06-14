@@ -90,6 +90,7 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     checks.append(_command_check("WP05-engine-contracts-checker", [sys.executable, "scripts/check_full2d_engine_contracts.py"]))
     checks.append(_command_check("WP06-synthetic-closure-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "synthetic_closure"]))
     checks.append(_command_check("WP07-construction-search-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "construction_search"]))
+    checks.append(_command_check("WP08-algebraic-geometry-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "algebraic_geometry"]))
     checks.append(_file_check("WP15-rule-registry-checker", ROOT / "scripts" / "check_full2d_rule_registry.py"))
     checks.append(_file_check("WP21-release-checker", ROOT / "scripts" / "check_release_acceptance_v0_4_2.py"))
 
@@ -104,6 +105,7 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     engine_contracts_check = check_by_id["WP05-engine-contracts-checker"]
     synthetic_closure_check = check_by_id["WP06-synthetic-closure-smoke"]
     construction_search_check = check_by_id["WP07-construction-search-smoke"]
+    algebraic_geometry_check = check_by_id["WP08-algebraic-geometry-smoke"]
     rule_registry_check = check_by_id["WP15-rule-registry-checker"]
     release_checker_check = check_by_id["WP21-release-checker"]
     if plugin_dir_check["status"] != "passed":
@@ -126,6 +128,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         work_debt.append(_issue("WorkDebt", "WP-06", "SyntheticClosureEngine smoke is not passing.", synthetic_closure_check))
     if construction_search_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-07", "ConstructionSearchEngine smoke is not passing.", construction_search_check))
+    if algebraic_geometry_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-08", "AlgebraicGeometryEngine smoke is not passing.", algebraic_geometry_check))
     if rule_registry_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-15", "Full2D rule registry checker is not implemented yet.", rule_registry_check))
     if release_checker_check["status"] != "passed":
@@ -150,6 +154,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         completed.append("WP-06:synthetic-closure-smoke-passed")
     if construction_search_check["status"] == "passed":
         completed.append("WP-07:construction-search-smoke-passed")
+    if algebraic_geometry_check["status"] == "passed":
+        completed.append("WP-08:algebraic-geometry-smoke-passed")
     if rule_registry_check["status"] == "passed":
         completed.append("WP-15:rule-registry-checker-passed")
 
@@ -184,6 +190,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         next_work = [item for item in next_work if item != "WP-06"]
     if "WP-07:construction-search-smoke-passed" in completed:
         next_work = [item for item in next_work if item != "WP-07"]
+    if "WP-08:algebraic-geometry-smoke-passed" in completed:
+        next_work = [item for item in next_work if item != "WP-08"]
     if "WP-15:rule-registry-checker-passed" in completed:
         next_work = [item for item in next_work if item != "WP-15"]
     status = "progress_blocked_hard" if hard_blockers else "progress_ok_with_debt"

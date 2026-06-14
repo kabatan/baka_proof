@@ -53,6 +53,17 @@ def run_smoke(engine: str) -> list[str]:
             errors.append("construction_search_missing_construction_ref")
         if not output.real_integration_flag:
             errors.append("construction_search_not_real_integration")
+    if engine == "algebraic_geometry":
+        if output.status != "normalized_success":
+            errors.append("algebraic_geometry_not_normalized_success")
+        if not output.normalized_output_ref:
+            errors.append("algebraic_geometry_missing_certificate_ref")
+        elif not str(output.normalized_output_ref).startswith("AlgebraicCertificateFull2D:sha256:"):
+            errors.append("algebraic_geometry_wrong_certificate_ref")
+        if not output.checker_or_compiler_ref:
+            errors.append("algebraic_geometry_missing_checker_ref")
+        if not output.real_integration_flag:
+            errors.append("algebraic_geometry_not_real_integration")
     return sorted(set(errors))
 
 
