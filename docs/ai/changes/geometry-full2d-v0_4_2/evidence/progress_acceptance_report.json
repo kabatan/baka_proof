@@ -386,7 +386,7 @@
         ],
         "returncode": 0,
         "stderr_tail": "",
-        "stdout_tail": "{\n  \"errors\": [],\n  \"generated_task_results\": 3,\n  \"proof_artifact_index_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_batch/proof_artifact_index.json\",\n  \"run_dir\": \"runs/geometry_full2d_v0_4_2/proof_artifact_batch\",\n  \"schema_version\": \"1.0.0\",\n  \"status\": \"passed\",\n  \"task_results_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_batch/task_results.jsonl\"\n}\n"
+        "stdout_tail": "{\n  \"errors\": [],\n  \"generated_task_results\": 30,\n  \"proof_artifact_index_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_batch/proof_artifact_index.json\",\n  \"run_dir\": \"runs/geometry_full2d_v0_4_2/proof_artifact_batch\",\n  \"schema_version\": \"1.0.0\",\n  \"status\": \"passed\",\n  \"task_results_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_batch/task_results.jsonl\"\n}\n"
       },
       "status": "passed"
     },
@@ -437,7 +437,7 @@
         ],
         "returncode": 1,
         "stderr_tail": "",
-        "stdout_tail": "{\n  \"errors\": [\n    \"I-family-rate-below-threshold:Algebraic250:0.0000<0.8500\",\n    \"I-family-rate-below-threshold:AngleCyclic450:0.0000<0.9000\",\n    \"I-family-rate-below-threshold:Construction450:0.0000<0.8500\",\n    \"I-family-rate-below-threshold:Full2DCore500:0.0030<0.9500\",\n    \"I-family-rate-below-threshold:HardHoldout50:0.0000<0.5000\",\n    \"I-family-rate-below-threshold:IncidenceParallelPerp350:0.0000<0.9200\",\n    \"I-family-rate-below-threshold:Inequality150:0.0000<0.7500\",\n    \"I-family-rate-below-threshold:MetricRatioArea350:0.0000<0.8500\",\n    \"I-family-rate-below-threshold:OlympiadStyle300:0.0000<0.7000\",\n    \"I-family-rate-below-threshold:OrderCase250:0.0000<0.8000\",\n    \"I-family-rate-below-threshold:Transformation250:0.0000<0.7500\",\n    \"I-overall-rate-below-threshold:0.0004<0.8500\"\n  ],\n  \"status\": \"failed\"\n}\n"
+        "stdout_tail": "{\n  \"errors\": [\n    \"I-family-rate-below-threshold:Algebraic250:0.0020<0.8500\",\n    \"I-family-rate-below-threshold:AngleCyclic450:0.0011<0.9000\",\n    \"I-family-rate-below-threshold:Construction450:0.0011<0.8500\",\n    \"I-family-rate-below-threshold:Full2DCore500:0.0200<0.9500\",\n    \"I-family-rate-below-threshold:HardHoldout50:0.0100<0.5000\",\n    \"I-family-rate-below-threshold:IncidenceParallelPerp350:0.0014<0.9200\",\n    \"I-family-rate-below-threshold:Inequality150:0.0033<0.7500\",\n    \"I-family-rate-below-threshold:MetricRatioArea350:0.0014<0.8500\",\n    \"I-family-rate-below-threshold:OlympiadStyle300:0.0017<0.7000\",\n    \"I-family-rate-below-threshold:OrderCase250:0.0020<0.8000\",\n    \"I-family-rate-below-threshold:Transformation250:0.0020<0.7500\",\n    \"I-overall-rate-below-threshold:0.0045<0.8500\"\n  ],\n  \"status\": \"failed\"\n}\n"
       },
       "status": "failed"
     },
@@ -493,7 +493,7 @@
     "WP-20"
   ],
   "release_blockers": [],
-  "report_id": "progress_acceptance_v0_4_2:1781473237",
+  "report_id": "progress_acceptance_v0_4_2:1781474021",
   "schema_version": "1.0.0",
   "status": "progress_ok_with_debt",
   "work_debt": [
@@ -509,7 +509,7 @@
           ],
           "returncode": 1,
           "stderr_tail": "",
-          "stdout_tail": "{\n  \"errors\": [\n    \"I-family-rate-below-threshold:Algebraic250:0.0000<0.8500\",\n    \"I-family-rate-below-threshold:AngleCyclic450:0.0000<0.9000\",\n    \"I-family-rate-below-threshold:Construction450:0.0000<0.8500\",\n    \"I-family-rate-below-threshold:Full2DCore500:0.0030<0.9500\",\n    \"I-family-rate-below-threshold:HardHoldout50:0.0000<0.5000\",\n    \"I-family-rate-below-threshold:IncidenceParallelPerp350:0.0000<0.9200\",\n    \"I-family-rate-below-threshold:Inequality150:0.0000<0.7500\",\n    \"I-family-rate-below-threshold:MetricRatioArea350:0.0000<0.8500\",\n    \"I-family-rate-below-threshold:OlympiadStyle300:0.0000<0.7000\",\n    \"I-family-rate-below-threshold:OrderCase250:0.0000<0.8000\",\n    \"I-family-rate-below-threshold:Transformation250:0.0000<0.7500\",\n    \"I-overall-rate-below-threshold:0.0004<0.8500\"\n  ],\n  \"status\": \"failed\"\n}\n"
+          "stdout_tail": "{\n  \"errors\": [\n    \"I-family-rate-below-threshold:Algebraic250:0.0020<0.8500\",\n    \"I-family-rate-below-threshold:AngleCyclic450:0.0011<0.9000\",\n    \"I-family-rate-below-threshold:Construction450:0.0011<0.8500\",\n    \"I-family-rate-below-threshold:Full2DCore500:0.0200<0.9500\",\n    \"I-family-rate-below-threshold:HardHoldout50:0.0100<0.5000\",\n    \"I-family-rate-below-threshold:IncidenceParallelPerp350:0.0014<0.9200\",\n    \"I-family-rate-below-threshold:Inequality150:0.0033<0.7500\",\n    \"I-family-rate-below-threshold:MetricRatioArea350:0.0014<0.8500\",\n    \"I-family-rate-below-threshold:OlympiadStyle300:0.0017<0.7000\",\n    \"I-family-rate-below-threshold:OrderCase250:0.0020<0.8000\",\n    \"I-family-rate-below-threshold:Transformation250:0.0020<0.7500\",\n    \"I-overall-rate-below-threshold:0.0045<0.8500\"\n  ],\n  \"status\": \"failed\"\n}\n"
         },
         "status": "failed"
       },

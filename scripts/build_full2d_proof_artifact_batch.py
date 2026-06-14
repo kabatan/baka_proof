@@ -33,13 +33,27 @@ def main() -> int:
     parser.add_argument("--corpus-root", default="benchmarks/geometry_full2d")
     parser.add_argument("--run-dir", default="runs/geometry_full2d_v0_4_2/proof_artifact_batch")
     parser.add_argument("--limit", type=int, default=3)
+    parser.add_argument("--family", action="append", default=[])
+    parser.add_argument("--family-limit", type=int, default=None)
     args = parser.parse_args()
-    report = build_batch(ROOT / args.corpus_root, ROOT / args.run_dir, args.limit)
+    report = build_batch(
+        ROOT / args.corpus_root,
+        ROOT / args.run_dir,
+        args.limit,
+        families=tuple(args.family),
+        family_limit=args.family_limit,
+    )
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["status"] == "passed" else 1
 
 
-def build_batch(corpus_root: Path, run_dir: Path, limit: int) -> dict[str, Any]:
+def build_batch(
+    corpus_root: Path,
+    run_dir: Path,
+    limit: int,
+    families: tuple[str, ...] = (),
+    family_limit: int | None = None,
+) -> dict[str, Any]:
     manifest = load_manifest(corpus_root)
     if manifest is None:
         return {"schema_version": "1.0.0", "status": "failed", "errors": ["missing_manifest"]}
@@ -49,30 +63,44 @@ def build_batch(corpus_root: Path, run_dir: Path, limit: int) -> dict[str, Any]:
     result_path = run_dir / "task_results.jsonl"
     index_path = run_dir / "proof_artifact_index.json"
     existing_results = _load_existing_results(result_path)
-    effective_limit = max(limit, len(existing_results))
+    selected_results = dict(existing_results)
+    target_families = set(families)
+    effective_limit = max(limit, len(existing_results)) if not target_families else limit
     existing_index = _load_existing_index(index_path)
-    task_results: list[dict[str, Any]] = []
     index: list[dict[str, Any]] = list(existing_index)
     errors: list[str] = []
     for task in _positive_tasks(manifest):
-        if len(task_results) >= effective_limit:
+        if not target_families and len(selected_results) >= effective_limit:
             break
         template = _template_for_task(task)
         if template is None:
             continue
         task_id = str(task["task_id"])
-        if task_id in existing_results:
-            task_results.append(existing_results[task_id])
+        if task_id in selected_results:
             continue
+        family = str(task.get("theorem_family"))
+        if target_families and family not in target_families:
+            continue
+        if target_families:
+            desired_family_count = family_limit if family_limit is not None else limit
+            if _family_count(selected_results, family) >= desired_family_count:
+                continue
         task_report = _build_task_artifacts(task, template, run_dir)
         if task_report["status"] == "passed":
-            task_results.append(task_report["task_result"])
+            selected_results[task_id] = task_report["task_result"]
             index.append({key: value for key, value in task_report.items() if key not in {"task_result"}})
-            _write_batch_outputs(result_path, index_path, task_results, index)
+            _write_batch_outputs(result_path, index_path, _ordered_results(manifest, selected_results), index)
         else:
             errors.append(f"{task.get('task_id')}:{','.join(task_report.get('errors', ())) }")
+    task_results = _ordered_results(manifest, selected_results)
     _write_batch_outputs(result_path, index_path, task_results, index)
-    if len(task_results) < effective_limit:
+    if target_families:
+        for family in sorted(target_families):
+            desired_family_count = family_limit if family_limit is not None else limit
+            actual = _family_count(selected_results, family)
+            if actual < desired_family_count:
+                errors.append(f"insufficient_supported_family_tasks:{family}:{actual}<{desired_family_count}")
+    elif len(task_results) < effective_limit:
         errors.append(f"insufficient_supported_tasks:{len(task_results)}<{effective_limit}")
     return {
         "schema_version": "1.0.0",
@@ -83,6 +111,22 @@ def build_batch(corpus_root: Path, run_dir: Path, limit: int) -> dict[str, Any]:
         "task_results_path": result_path.relative_to(ROOT).as_posix(),
         "proof_artifact_index_path": index_path.relative_to(ROOT).as_posix(),
     }
+
+
+def _ordered_results(manifest: dict[str, Any], results_by_id: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    ordered: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for task in _positive_tasks(manifest):
+        task_id = str(task["task_id"])
+        if task_id in results_by_id:
+            ordered.append(results_by_id[task_id])
+            seen.add(task_id)
+    ordered.extend(results_by_id[task_id] for task_id in sorted(set(results_by_id) - seen))
+    return ordered
+
+
+def _family_count(results_by_id: dict[str, dict[str, Any]], family: str) -> int:
+    return sum(1 for item in results_by_id.values() if item.get("theorem_family") == family)
 
 
 def _load_existing_results(result_path: Path) -> dict[str, dict[str, Any]]:
