@@ -2,7 +2,7 @@
 title: Change Index — GeometryFull2D v0.4.2
 change_id: geometry-full2d-v0_4_2
 version: v0.4.2-governed-full2d
-status: WP10_TRANSFORMATION_PASSED_WP11_READY
+status: WP11_ORDER_CASE_PASSED_WP12_READY
 created: 2026-06-15
 purpose: Index the Guardian document set for the GeometryFull2D v0.4.2 governed full implementation track.
 authority: Navigation only; individual Base Spec, Plan, Acceptance, and contract documents declare their own authority.
@@ -45,7 +45,7 @@ The track supersedes the previous v0.3, v0.3A, v0.3 full-rebase, v0.3A patch, an
 Current task:
 
 ```text
-WP-11 — OrderCaseEngine
+WP-12 — InequalityEngine
 ```
 
 WP-00 is complete for implementation flow:
@@ -64,6 +64,7 @@ WP-07 ConstructionSearchEngine smoke passed.
 WP-08 AlgebraicGeometryEngine smoke passed.
 WP-09 MetricAngleEngine smoke passed.
 WP-10 TransformationEngine smoke passed.
+WP-11 OrderCaseEngine smoke passed.
 WP-15 RuleRegistryFull2D floor checker passed.
 ```
 

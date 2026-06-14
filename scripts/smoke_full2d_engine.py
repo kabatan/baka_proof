@@ -86,6 +86,17 @@ def run_smoke(engine: str) -> list[str]:
             errors.append("transformation_missing_checker_ref")
         if not output.real_integration_flag:
             errors.append("transformation_not_real_integration")
+    if engine == "order_case":
+        if output.status != "normalized_success":
+            errors.append("order_case_not_normalized_success")
+        if not output.normalized_output_ref:
+            errors.append("order_case_missing_coverage_ref")
+        elif not str(output.normalized_output_ref).startswith("CoverageGateFull2D:sha256:"):
+            errors.append("order_case_wrong_coverage_ref")
+        if not output.checker_or_compiler_ref:
+            errors.append("order_case_missing_checker_ref")
+        if not output.real_integration_flag:
+            errors.append("order_case_not_real_integration")
     return sorted(set(errors))
 
 
