@@ -101,6 +101,9 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     checks.append(_command_check("WP14-portfolio-coordinator-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "portfolio_coordinator"]))
     checks.append(_command_check("WP14-portfolio-reason-codes", [sys.executable, "scripts/check_portfolio_reason_codes.py"]))
     checks.append(_command_check("WP20-corpus-manifest", [sys.executable, "scripts/check_full2d_corpus_manifest.py"]))
+    checks.append(_file_check("WP20-matrix-summary", ROOT / "runs" / "geometry_full2d_v0_4_2" / "matrix_summary.json"))
+    checks.append(_command_check("WP20-metrics", [sys.executable, "scripts/check_full2d_metrics.py", "--run-dir", "runs/geometry_full2d_v0_4_2"]))
+    checks.append(_file_check("WP20-repro-report", ROOT / "runs" / "geometry_full2d_v0_4_2" / "repro_report.json"))
     checks.append(_file_check("WP15-rule-registry-checker", ROOT / "scripts" / "check_full2d_rule_registry.py"))
     checks.append(_file_check("WP21-release-checker", ROOT / "scripts" / "check_release_acceptance_v0_4_2.py"))
 
@@ -124,6 +127,9 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     portfolio_coordinator_check = check_by_id["WP14-portfolio-coordinator-smoke"]
     portfolio_reason_codes_check = check_by_id["WP14-portfolio-reason-codes"]
     corpus_manifest_check = check_by_id["WP20-corpus-manifest"]
+    matrix_summary_check = check_by_id["WP20-matrix-summary"]
+    metrics_check = check_by_id["WP20-metrics"]
+    repro_report_check = check_by_id["WP20-repro-report"]
     rule_registry_check = check_by_id["WP15-rule-registry-checker"]
     release_checker_check = check_by_id["WP21-release-checker"]
     if plugin_dir_check["status"] != "passed":
@@ -164,6 +170,12 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         work_debt.append(_issue("WorkDebt", "WP-14", "PortfolioCoordinator reason code checker is not passing.", portfolio_reason_codes_check))
     if corpus_manifest_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-20", "GeometryFull2D release corpus manifest checker is not passing.", corpus_manifest_check))
+    if matrix_summary_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-20", "GeometryFull2D matrix summary is not present.", matrix_summary_check))
+    if metrics_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-20", "GeometryFull2D metrics checker is not passing.", metrics_check))
+    if repro_report_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-20", "GeometryFull2D reproducibility report is not present.", repro_report_check))
     if rule_registry_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-15", "Full2D rule registry checker is not implemented yet.", rule_registry_check))
     if release_checker_check["status"] != "passed":
@@ -250,7 +262,12 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         next_work = [item for item in next_work if item != "WP-13"]
     if "WP-14:portfolio-coordinator-smoke-passed" in completed:
         next_work = [item for item in next_work if item != "WP-14"]
-    if corpus_manifest_check["status"] == "passed":
+    if (
+        corpus_manifest_check["status"] == "passed"
+        and matrix_summary_check["status"] == "passed"
+        and metrics_check["status"] == "passed"
+        and repro_report_check["status"] == "passed"
+    ):
         completed.append("WP-20:corpus-manifest-checker-passed")
         next_work = [item for item in next_work if item != "WP-20"]
     if "WP-15:rule-registry-checker-passed" in completed:
@@ -294,6 +311,9 @@ def _release_blocker_scan() -> list[dict[str, Any]]:
             blockers.append(_simple_issue("ReleaseBlocker", ref, error))
         elif error.startswith("corpus_manifest_status_not_release_frozen"):
             blockers.append(_simple_issue("ReleaseBlocker", "H-008", error))
+    metrics_path = ROOT / "runs" / "geometry_full2d_v0_4_2" / "matrix_summary.json"
+    if not metrics_path.exists():
+        blockers.append(_simple_issue("ReleaseBlocker", "I-000", "GeometryFull2D matrix summary is not created yet."))
     for role in ENGINE_ROLES:
         expected = ROOT / "plugins" / "geometry_full2d" / "engines" / f"{role}.py"
         if not expected.exists():

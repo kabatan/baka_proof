@@ -1,0 +1,56 @@
+{
+  "corpus_manifest_hash": "sha256:df876567319a669aa97efd159ad9429aa3e02d941302a43a168208aaae536ea8",
+  "family_rates": {
+    "AngleCyclic450": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 450
+    },
+    "Construction450": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 450
+    },
+    "Full2DCore500": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 500
+    },
+    "IncidenceParallelPerp350": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 350
+    },
+    "Inequality200": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 200
+    },
+    "MetricRatioArea350": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 350
+    },
+    "MixedOlympiad250": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 250
+    },
+    "OrderCase200": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 200
+    },
+    "Transformation250": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 250
+    }
+  },
+  "final_theorem_count": 0,
+  "overall_final_theorem_rate": 0.0,
+  "positive_count": 3000,
+  "release_frozen": false,
+  "schema_version": "1.0.0",
+  "status": "completed"
+}
