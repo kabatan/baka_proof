@@ -1,8 +1,9 @@
 ---
 title: AI Documentation Index
-version: v0.1
+version: v0.2
 status: ACTIVE
 created: 2026-06-11
+last_updated: 2026-06-15
 purpose: Index active Guardian and AI-operation documents in this workspace.
 authority: Navigation and classification only; individual Base Spec and Plan files declare their own authority.
 ---
@@ -13,61 +14,68 @@ authority: Navigation and classification only; individual Base Spec and Plan fil
 
 - `docs/ai/ACTIVE_CONTEXT.md` — minimal navigation state. It is not an authority source.
 
-## Active Changes
+## Active Change
+
+### geometry-full2d-v0_4_2
+
+Purpose: Guardian-managed v0.4.2 governed full implementation track for a GeometryFull2D Lean automated prover.
+
+Status: v0.4.2 research-agent bundle imported, hash-verified, and installed as the active user-approved Guardian authority set. Implementation can begin at WP-00. No v0.4.2 completion claim is made.
+
+Primary documents:
+
+- `docs/ai/changes/geometry-full2d-v0_4_2/BASE_SPEC.md` — correctness authority for `MARP-GEOLEAN-BASE-007`.
+- `docs/ai/changes/geometry-full2d-v0_4_2/PLAN.md` — execution contract for `MARP-GEOLEAN-PLAN-007`.
+- `docs/ai/changes/geometry-full2d-v0_4_2/ACCEPTANCE.md` — acceptance authority for `MARP-GEOLEAN-ACCEPTANCE-007`.
+- `docs/ai/changes/geometry-full2d-v0_4_2/ENGINE_CONTRACTS.md` — required engine role contracts.
+- `docs/ai/changes/geometry-full2d-v0_4_2/BLOCKER_AND_DEBT_POLICY.md` — mandatory continue-on-debt and HardBlocker policy.
+- `docs/ai/changes/geometry-full2d-v0_4_2/REFACTOR_DIRECTIVE.md` — repository refactor directive.
+- `docs/ai/changes/geometry-full2d-v0_4_2/SOURCE_MAP.md` — traceability aid.
+- `docs/ai/changes/geometry-full2d-v0_4_2/README.md` — change-local index.
+- `docs/ai/changes/geometry-full2d-v0_4_2/evidence/` — import and implementation evidence.
+- `docs/ai/changes/geometry-full2d-v0_4_2/debt/debt_ledger.jsonl` — debt ledger.
+
+## Superseded Geometry Tracks
+
+These tracks are retained as historical evidence and safety background. They are not active release authority for new v0.4.2 work.
 
 ### geometry-lean-v0_3
 
-Purpose: Guardian-managed implementation track for the geometry × Lean v0.3 mathematical auto-research pipeline.
+Purpose: Original Guardian-managed implementation track for the geometry x Lean v0.3 mathematical auto-research pipeline.
 
-Status: fixture-level release acceptance and final reviews passed; full v0.3 completion is blocked by real-integration and corpus evidence ceilings.
+Status: superseded by `MARP-GEOLEAN-BASE-007`; retained for historical evidence only.
 
-Primary documents:
+Location:
 
-- `docs/ai/changes/geometry-lean-v0_3/BASE_SPEC.md` — correctness authority after admission and user approval.
-- `docs/ai/changes/geometry-lean-v0_3/PLAN.md` — execution contract after admission and user approval.
-- `docs/ai/changes/geometry-lean-v0_3/source_map.md` — source-to-R-ID traceability aid.
-- `docs/ai/changes/geometry-lean-v0_3/RESOURCE_POLICY.md` — companion local resource policy template.
-- `docs/ai/changes/geometry-lean-v0_3/REVIEW_PACKET.md` — review scope and evidence index for Guardian reviewers.
-- `docs/ai/changes/geometry-lean-v0_3/CLOSURE_TEMPLATE.md` — final closure template for future implementation work.
-- `docs/ai/changes/geometry-lean-v0_3/evidence/v03_completion_blocker_report.md` — blocker report for full v0.3 completion.
+- `docs/ai/changes/geometry-lean-v0_3/`
 
 ### geometry-lean-v0_3A
 
-Purpose: Guardian-managed recovery track for resolving v0.3 completion blockers through real provider integration and a limited real LeanGeo corpus.
+Purpose: v0.3A recovery track for real provider integration and limited real LeanGeo corpus evidence.
 
-Status: final reviews passed for limited real-integration evidence only. This does not claim full v0.3 completion, real Level 2 advantage, arbitrary LeanGeo support, production safety, source-faithfulness, acceptance-completeness, or R-ID VERIFIED status.
+Status: superseded by `MARP-GEOLEAN-BASE-007`; retained for historical evidence only.
 
-Primary documents:
+Locations:
 
-- `docs/ai/specs/MARP-GEOLEAN-BASE-003A.md` — candidate recovery correctness authority after admission.
-- `docs/ai/plans/MARP-GEOLEAN-PLAN-003A.md` — candidate recovery execution contract after admission.
-- `docs/ai/changes/geometry-lean-v0_3a/source_map.md` — source-to-R-ID traceability aid.
-- `docs/ai/changes/geometry-lean-v0_3a/README.md` — recovery change index.
-- `docs/ai/changes/geometry-lean-v0_3a/evidence/` — recovery evidence.
+- `docs/ai/specs/MARP-GEOLEAN-BASE-003A.md`
+- `docs/ai/plans/MARP-GEOLEAN-PLAN-003A.md`
+- `docs/ai/changes/geometry-lean-v0_3a/`
 
 ### geometry-lean-v0_3-full-rebase
 
-Purpose: Guardian-managed full v0.3 experiment-ready rebase track targeting `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
+Purpose: Full v0.3 experiment-ready rebase track, later amended by v0.3A and v0.3B patches.
 
-Status: Base Spec/Plan Guardian-admitted and user-approved. v0.3A patch is installed and user-approved. T46 final replay and closure is complete for the v0.3A harness-ready claim. v0.3B solver-backed proof-repair patch is installed and user-approved; implementation resumes at T48. TongGeometry model-backed heavy-search remains blocked by unavailable checkpoint artifacts.
+Status: v0.3B solver-backed readiness evidence is retained, but this track is superseded by `MARP-GEOLEAN-BASE-007` for new release work.
 
-Primary documents:
+Location:
 
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md` — correctness authority for `MARP-GEOLEAN-BASE-004`, amended by `MARP-GEOLEAN-BASE-004A` and `MARP-GEOLEAN-BASE-004B`.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/PLAN.md` — execution contract for `MARP-GEOLEAN-PLAN-004`, amended by `MARP-GEOLEAN-PLAN-004A` and `MARP-GEOLEAN-PLAN-004B`.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3A.md` — active Base Spec patch `MARP-GEOLEAN-BASE-004A`.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3A.md` — active Plan patch `MARP-GEOLEAN-PLAN-004A`.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACCEPTANCE_PATCH_v0_3A.md` — active acceptance patch.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3B.md` — active Base Spec patch `MARP-GEOLEAN-BASE-004B`.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3B.md` — active Plan patch `MARP-GEOLEAN-PLAN-004B`.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACCEPTANCE_PATCH_v0_3B.md` — active acceptance patch for solver-backed proof repair.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md` — source-to-requirement traceability aid.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md` — repository cleanup directive for the rebase.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/ACCEPTANCE_MATRIX.md` — final acceptance evidence and command matrix.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/CLOSURE.md` — v0.3A closure record plus v0.3B resume state; final solver-backed proof-repair closure is not yet complete.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/` — import, review, approval, and implementation evidence.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/`
 
-Architecture documents:
+## Archive Staging
+
+- `docs/ai/archive/geometry_pre_v0_4_2/` — reserved archive location for older geometry Guardian authority documents. Physical archival is WP-00 implementation work because current scripts and tests still reference older evidence paths.
+
+## Architecture Documents
 
 - `docs/architecture/geometry_lean_pipeline.md`
 - `docs/architecture/target_subset_contract.md`
@@ -77,20 +85,6 @@ Architecture documents:
 - `docs/architecture/proof_state_dag.md`
 - `docs/architecture/no_loose_options.md`
 
-Decision records:
-
-- `docs/decision_records/DR-GEO-001-target-leangeo-subset.md`
-- `docs/decision_records/DR-GEO-002-no-agent-cd-core.md`
-- `docs/decision_records/DR-GEO-003-extraction-first.md`
-- `docs/decision_records/DR-GEO-004-geotrace-not-proof.md`
-- `docs/decision_records/DR-GEO-005-aux-construction-contract.md`
-- `docs/decision_records/DR-GEO-006-run-attribution-logs.md`
-
-Evidence:
-
-- `docs/ai/changes/geometry-lean-v0_3/evidence/`
-- Current non-Git hash snapshot: `docs/ai/changes/geometry-lean-v0_3/evidence/source_hashes_after_source_fidelity_review.md`
-
 ## Source Mirrors
 
-- `docs/architecture/geometry_lean_pipeline.md` — mirror of the user-provided v0.3 project plan.
+- `docs/architecture/geometry_lean_pipeline.md` — mirror of the earlier user-provided v0.3 project plan. It is no longer the active v0.4.2 authority.
