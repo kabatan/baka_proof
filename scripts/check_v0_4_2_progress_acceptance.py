@@ -104,6 +104,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     checks.append(_command_check("WP17-proof-artifacts", [sys.executable, "scripts/check_full2d_proof_artifacts.py", "--run-dir", "runs/geometry_full2d_v0_4_2", "--self-test"]))
     checks.append(_command_check("WP17-final-verify-smoke", [sys.executable, "scripts/check_full2d_final_verify_smoke.py"]))
     checks.append(_command_check("WP17-final-verify-smoke-artifacts", [sys.executable, "scripts/check_full2d_proof_artifacts.py", "--run-dir", "runs/geometry_full2d_v0_4_2/proof_artifact_smoke", "--self-test"]))
+    checks.append(_command_check("WP17-release-batch-artifacts", [sys.executable, "scripts/build_full2d_proof_artifact_batch.py", "--limit", "2"]))
+    checks.append(_command_check("WP17-release-batch-artifact-check", [sys.executable, "scripts/check_full2d_proof_artifacts.py", "--run-dir", "runs/geometry_full2d_v0_4_2/proof_artifact_batch", "--self-test"]))
     checks.append(_command_check("WP20-corpus-manifest", [sys.executable, "scripts/check_full2d_corpus_manifest.py"]))
     checks.append(_file_check("WP20-matrix-summary", ROOT / "runs" / "geometry_full2d_v0_4_2" / "matrix_summary.json"))
     checks.append(_command_check("WP20-metrics", [sys.executable, "scripts/check_full2d_metrics.py", "--run-dir", "runs/geometry_full2d_v0_4_2"]))
@@ -134,6 +136,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     proof_artifact_check = check_by_id["WP17-proof-artifacts"]
     final_verify_smoke_check = check_by_id["WP17-final-verify-smoke"]
     final_verify_smoke_artifacts_check = check_by_id["WP17-final-verify-smoke-artifacts"]
+    release_batch_artifacts_check = check_by_id["WP17-release-batch-artifacts"]
+    release_batch_artifact_check = check_by_id["WP17-release-batch-artifact-check"]
     corpus_manifest_check = check_by_id["WP20-corpus-manifest"]
     matrix_summary_check = check_by_id["WP20-matrix-summary"]
     metrics_check = check_by_id["WP20-metrics"]
@@ -184,6 +188,10 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         work_debt.append(_issue("WorkDebt", "WP-17", "Full2D FinalVerifyGate smoke is not passing.", final_verify_smoke_check))
     if final_verify_smoke_artifacts_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-17", "Full2D FinalVerifyGate smoke artifacts are not passing validation.", final_verify_smoke_artifacts_check))
+    if release_batch_artifacts_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-17", "Full2D release proof artifact batch generation is not passing.", release_batch_artifacts_check))
+    if release_batch_artifact_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-17", "Full2D release proof artifact batch validation is not passing.", release_batch_artifact_check))
     if corpus_manifest_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-20", "GeometryFull2D release corpus manifest checker is not passing.", corpus_manifest_check))
     if matrix_summary_check["status"] != "passed":
@@ -236,6 +244,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         completed.append("WP-17:proof-artifact-checker-passed")
     if final_verify_smoke_check["status"] == "passed" and final_verify_smoke_artifacts_check["status"] == "passed":
         completed.append("WP-17:final-verify-smoke-passed")
+    if release_batch_artifacts_check["status"] == "passed" and release_batch_artifact_check["status"] == "passed":
+        completed.append("WP-17:release-proof-artifact-batch-passed")
     if rule_registry_check["status"] == "passed":
         completed.append("WP-15:rule-registry-checker-passed")
 

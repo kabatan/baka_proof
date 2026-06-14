@@ -22,6 +22,7 @@ Implemented in this checkpoint:
 - `scripts/check_full2d_solver_backed_certificate.py`
 - `scripts/check_full2d_proof_artifacts.py`
 - `scripts/check_full2d_final_verify_smoke.py`
+- `scripts/build_full2d_proof_artifact_batch.py`
 - `scripts/import_full2d_curated_corpus.py`
 - `plugins/geometry_full2d/proof.py`
 - curated corpus import schema at `benchmarks/geometry_full2d/metadata/CURATED_IMPORT_SCHEMA.md`
@@ -41,6 +42,8 @@ python scripts/check_full2d_solver_backed_certificate.py
 python scripts/check_full2d_proof_artifacts.py --run-dir runs/geometry_full2d_v0_4_2 --self-test
 python scripts/check_full2d_final_verify_smoke.py
 python scripts/check_full2d_proof_artifacts.py --run-dir runs/geometry_full2d_v0_4_2/proof_artifact_smoke --self-test
+python scripts/build_full2d_proof_artifact_batch.py --limit 2
+python scripts/check_full2d_proof_artifacts.py --run-dir runs/geometry_full2d_v0_4_2/proof_artifact_batch --self-test
 python -m py_compile scripts/import_full2d_curated_corpus.py scripts/run_full2d_matrix.py scripts/check_full2d_metrics.py scripts/generate_repro_report.py
 ```
 
@@ -73,6 +76,7 @@ Curated corpus import now has a gate that rejects synthetic relabeling and requi
 SolverBackedProofCertificateFull2D schema/checker exists and rejects raw solver output, failed FinalVerifyGate, and worker-level final theorem claims.
 Proof artifact checker exists and rejects final theorem results whose certificate, FinalVerify report, or checked candidate file is missing or mismatched.
 Full2D FinalVerify smoke applies a proof-region patch through ProofWorker, compiles the generated candidate through FinalVerifyGate, emits a SolverBackedProofCertificateFull2D, and validates the smoke task artifacts.
+Release corpus proof artifact batch generation currently produces and validates solver-backed artifacts for 2 release tasks without editing the frozen corpus manifest.
 ```
 
 Lean corpus compile note:

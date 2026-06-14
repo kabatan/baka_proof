@@ -378,6 +378,37 @@
       "status": "passed"
     },
     {
+      "check_id": "WP17-release-batch-artifacts",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/build_full2d_proof_artifact_batch.py",
+          "--limit",
+          "2"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"generated_task_results\": 2,\n  \"proof_artifact_index_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_batch/proof_artifact_index.json\",\n  \"run_dir\": \"runs/geometry_full2d_v0_4_2/proof_artifact_batch\",\n  \"schema_version\": \"1.0.0\",\n  \"status\": \"passed\",\n  \"task_results_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_batch/task_results.jsonl\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP17-release-batch-artifact-check",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_proof_artifacts.py",
+          "--run-dir",
+          "runs/geometry_full2d_v0_4_2/proof_artifact_batch",
+          "--self-test"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
       "check_id": "WP20-corpus-manifest",
       "details": {
         "command": [
@@ -442,7 +473,7 @@
   "measured_failure_summary": {},
   "metrics_summary": {},
   "release_blockers": [],
-  "report_id": "release_acceptance_v0_4_2:1781470656",
+  "report_id": "release_acceptance_v0_4_2:1781471403",
   "schema_version": "1.0.0",
   "status": "blocked",
   "used_rule_coverage_summary": {},
