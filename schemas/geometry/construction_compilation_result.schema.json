@@ -11,7 +11,8 @@
     "generated_obligations",
     "proof_use_status",
     "blockers",
-    "lean_patch"
+    "lean_patch",
+    "lean_patch_candidate"
   ],
   "properties": {
     "schema_version": {"type": "string", "enum": ["1.0.0"]},
@@ -23,7 +24,8 @@
     "generated_obligations": {"type": "array", "items": {"type": "string"}},
     "proof_use_status": {"type": "string", "enum": ["lean_patch_candidate"]},
     "blockers": {"type": "array", "items": {"type": "string"}},
-    "lean_patch": {"type": ["string", "null"]}
+    "lean_patch": {"type": ["string", "null"]},
+    "lean_patch_candidate": {"type": ["object", "null"]}
   },
   "additionalProperties": false
 }

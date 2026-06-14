@@ -229,6 +229,11 @@ class FinalVerifyReport(SchemaRecord):
     forbidden_axiom_status: Literal["clean", "failed", "not_checked"]
     sorry_status: Literal["clean", "failed", "not_checked"]
     proof_use_status: Literal["final_theorem"]
+    proof_use_provenance_status: Literal["passed", "failed"] = "failed"
+    solver_backed_proof_status: Literal["not_applicable", "passed", "failed"] = "not_applicable"
+    protected_statement_hash_source: Literal["source_problem", "original_file", "generated_file"] = "original_file"
+    checked_candidate_file_ref: str | None = None
+    proof_region_guard_status: Literal["passed", "failed"] = "failed"
 
 
 class ReleaseAcceptanceReport(SchemaRecord):

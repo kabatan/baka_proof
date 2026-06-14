@@ -169,8 +169,8 @@
           "allowed_values": {"status": ["discharged", "generated_obligation", "blocked", "unsupported"]}
         },
         "TraceCompilationResult": {
-          "required_fields": ["schema_version", "result_id", "trace_id", "status", "lean_patch_candidate_ref", "side_condition_report_refs", "proof_use_status"],
-          "provenance_fields": ["trace_id", "lean_patch_candidate_ref", "side_condition_report_refs"],
+          "required_fields": ["schema_version", "result_id", "trace_id", "status", "lean_patch_candidate_ref", "side_condition_report_refs", "proof_use_status", "lean_patch_candidate"],
+          "provenance_fields": ["trace_id", "lean_patch_candidate_ref", "lean_patch_candidate", "side_condition_report_refs"],
           "status_fields": ["status", "proof_use_status"],
           "proof_use_fields": ["proof_use_status"],
           "allowed_values": {
@@ -196,8 +196,8 @@
           "allowed_values": {"status": ["accepted", "blocked", "rejected"]}
         },
         "ConstructionCompilationResult": {
-          "required_fields": ["schema_version", "result_id", "candidate_id", "status", "introduction_plan", "lean_patch_candidate_ref", "generated_obligations", "proof_use_status"],
-          "provenance_fields": ["candidate_id", "lean_patch_candidate_ref", "generated_obligations"],
+          "required_fields": ["schema_version", "result_id", "candidate_id", "status", "introduction_plan", "lean_patch_candidate_ref", "generated_obligations", "proof_use_status", "lean_patch_candidate"],
+          "provenance_fields": ["candidate_id", "lean_patch_candidate_ref", "lean_patch_candidate", "generated_obligations"],
           "status_fields": ["status", "proof_use_status"],
           "proof_use_fields": ["proof_use_status"],
           "allowed_values": {

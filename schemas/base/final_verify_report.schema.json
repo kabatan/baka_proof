@@ -10,7 +10,12 @@
     "lean_status",
     "forbidden_axiom_status",
     "sorry_status",
-    "proof_use_status"
+    "proof_use_status",
+    "proof_use_provenance_status",
+    "solver_backed_proof_status",
+    "protected_statement_hash_source",
+    "checked_candidate_file_ref",
+    "proof_region_guard_status"
   ],
   "properties": {
     "schema_version": {"type": "string", "enum": ["1.0.0"]},
@@ -23,6 +28,11 @@
     "sorry_status": {"type": "string", "enum": ["clean", "failed", "not_checked"]},
     "proof_use_status": {"type": "string", "enum": ["final_theorem", "not_allowed"]},
     "lean_artifact_ref": {},
-    "proof_artifact_ref": {}
+    "proof_artifact_ref": {},
+    "proof_use_provenance_status": {"type": "string", "enum": ["passed", "failed"]},
+    "solver_backed_proof_status": {"type": "string", "enum": ["not_applicable", "passed", "failed"]},
+    "protected_statement_hash_source": {"type": "string", "enum": ["source_problem", "original_file", "generated_file"]},
+    "checked_candidate_file_ref": {"type": ["string", "null"]},
+    "proof_region_guard_status": {"type": "string", "enum": ["passed", "failed"]}
   }
 }

@@ -64,6 +64,14 @@ class TaskRunResult:
     artifact_index: dict[str, str]
     blockers: tuple[str, ...]
     proof_use_status: str
+    solver_backed_final_theorem: bool = False
+    solver_backed_proof_certificate_ref: str | None = None
+    proof_repair_patch_applied: bool = False
+    proof_region_diff_hash: str | None = None
+    generated_candidate_file_ref: str | None = None
+    solver_dependency_kind: str = "none"
+    original_problem_compile_status: str = "skipped_problem_source"
+    final_verify_report_ref: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -263,6 +271,14 @@ class StandardGeometryProofLoop:
             artifact_index=artifact_index,
             blockers=tuple(blockers),
             proof_use_status=proof_use_status,
+            solver_backed_final_theorem=False,
+            solver_backed_proof_certificate_ref=None,
+            proof_repair_patch_applied=False,
+            proof_region_diff_hash=None,
+            generated_candidate_file_ref=None,
+            solver_dependency_kind=_solver_dependency_kind(trace_compilation, construction_compilation),
+            original_problem_compile_status=lean_result.status,
+            final_verify_report_ref=final_report.report_id if final_report is not None else None,
         )
         _write_json(task_dir, artifact_index, "task_result.json", result.to_dict())
         _write_json(task_dir, artifact_index, "artifact_index.json", artifact_index)
@@ -661,6 +677,18 @@ def _release_chain_satisfied(
     if "construction_compiler" in expected and getattr(construction_compilation, "status", None) != "compiled":
         return False
     return bool(expected & {"symbolic_closure", "construction_compiler", "construction_proposer", "heavy_search"})
+
+
+def _solver_dependency_kind(trace_compilation: Any, construction_compilation: Any) -> str:
+    trace_ok = getattr(trace_compilation, "status", None) == "compiled"
+    construction_ok = getattr(construction_compilation, "status", None) == "compiled"
+    if trace_ok and construction_ok:
+        return "hybrid"
+    if trace_ok:
+        return "geotrace"
+    if construction_ok:
+        return "auxiliary_construction"
+    return "none"
 
 
 def _write_json(directory: Path, index: dict[str, str], filename: str, payload: Any) -> None:

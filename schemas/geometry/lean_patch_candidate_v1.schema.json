@@ -1,0 +1,153 @@
+{
+  "$id": "geometry.lean_patch_candidate_v1.v1",
+  "additionalProperties": false,
+  "properties": {
+    "allowed_edit_region": {
+      "additionalProperties": false,
+      "properties": {
+        "end_marker": {
+          "type": "string"
+        },
+        "region_id": {
+          "type": "string"
+        },
+        "start_marker": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "region_id",
+        "start_marker",
+        "end_marker"
+      ],
+      "type": "object"
+    },
+    "created_by": {
+      "enum": [
+        "TraceCompiler",
+        "ConstructionCompiler"
+      ],
+      "type": "string"
+    },
+    "helper_lemmas": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "proof_origin": {
+            "type": "string"
+          },
+          "text_ref": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "text_ref",
+          "proof_origin"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "patch_id": {
+      "pattern": "^lean_patch:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "patch_kind": {
+      "enum": [
+        "replace_proof_region",
+        "add_helper_lemma_and_replace_proof_region"
+      ],
+      "type": "string"
+    },
+    "proof_origin": {
+      "enum": [
+        "trace_compiler",
+        "construction_compiler",
+        "hybrid"
+      ],
+      "type": "string"
+    },
+    "proof_region_replacement": {
+      "additionalProperties": false,
+      "properties": {
+        "text_hash": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "text_ref": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text_ref",
+        "text_hash"
+      ],
+      "type": "object"
+    },
+    "proof_template_id": {
+      "type": "string"
+    },
+    "raw_provider_output_used_as_proof": {
+      "const": false,
+      "type": "boolean"
+    },
+    "required_imports": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "type": "string"
+    },
+    "solver_dependency_refs": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "source_task_run_id": {
+      "type": "string"
+    },
+    "target_file_path": {
+      "type": "string"
+    },
+    "target_protected_statement_hash": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "target_theorem_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "patch_id",
+    "source_task_run_id",
+    "target_theorem_name",
+    "target_file_path",
+    "target_protected_statement_hash",
+    "patch_kind",
+    "allowed_edit_region",
+    "required_imports",
+    "helper_lemmas",
+    "proof_region_replacement",
+    "solver_dependency_refs",
+    "proof_template_id",
+    "proof_origin",
+    "raw_provider_output_used_as_proof",
+    "created_by"
+  ],
+  "type": "object"
+}

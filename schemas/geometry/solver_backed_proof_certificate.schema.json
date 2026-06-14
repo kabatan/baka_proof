@@ -1,0 +1,161 @@
+{
+  "$id": "geometry.solver_backed_proof_certificate.v1",
+  "additionalProperties": false,
+  "properties": {
+    "baseline_id": {
+      "enum": [
+        "B2",
+        "B4",
+        "other"
+      ],
+      "type": "string"
+    },
+    "benchmark_entry_id": {
+      "type": "string"
+    },
+    "certificate_id": {
+      "pattern": "^solver_backed_proof:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "compiler_result_ref": {
+      "pattern": "^(trace_compilation|construction_compilation):.+$",
+      "type": "string"
+    },
+    "extraction_report_ref": {
+      "type": "string"
+    },
+    "failure_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "final_verify_report_ref": {
+      "type": "string"
+    },
+    "final_verify_status": {
+      "const": "final_theorem",
+      "type": "string"
+    },
+    "generated_candidate_file_ref": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "goal_anchor_ref": {
+      "type": "string"
+    },
+    "lean_patch_candidate_ref": {
+      "pattern": "^lean_patch:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "no_forbidden_axioms": {
+      "type": "boolean"
+    },
+    "no_sorry": {
+      "type": "boolean"
+    },
+    "normalized_solver_artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "geotrace",
+            "auxiliary_construction",
+            "hybrid"
+          ],
+          "type": "string"
+        },
+        "ref": {
+          "type": "string"
+        },
+        "source_engine_role": {
+          "enum": [
+            "symbolic_closure",
+            "construction_proposer",
+            "hybrid"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "ref",
+        "source_engine_role"
+      ],
+      "type": "object"
+    },
+    "proof_region_diff_hash": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "protected_statement_hash": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "provider_run_manifest_ref": {
+      "pattern": "^provider_run_manifest:.+$",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "type": "string"
+    },
+    "solver_dependency_status": {
+      "enum": [
+        "passed",
+        "failed"
+      ],
+      "type": "string"
+    },
+    "source_problem_ref": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "passed",
+        "failed"
+      ],
+      "type": "string"
+    },
+    "task_run_id": {
+      "type": "string"
+    },
+    "theorem_hash_unchanged": {
+      "type": "boolean"
+    },
+    "theorem_name": {
+      "type": "string"
+    },
+    "worker_result_ref": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "certificate_id",
+    "task_run_id",
+    "benchmark_entry_id",
+    "baseline_id",
+    "source_problem_ref",
+    "generated_candidate_file_ref",
+    "theorem_name",
+    "protected_statement_hash",
+    "extraction_report_ref",
+    "goal_anchor_ref",
+    "provider_run_manifest_ref",
+    "normalized_solver_artifact",
+    "compiler_result_ref",
+    "lean_patch_candidate_ref",
+    "worker_result_ref",
+    "final_verify_report_ref",
+    "proof_region_diff_hash",
+    "solver_dependency_status",
+    "theorem_hash_unchanged",
+    "no_sorry",
+    "no_forbidden_axioms",
+    "final_verify_status",
+    "status",
+    "failure_reason"
+  ],
+  "type": "object"
+}

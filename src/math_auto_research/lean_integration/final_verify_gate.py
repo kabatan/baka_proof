@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
@@ -25,6 +26,11 @@ class FinalVerifyReport:
     proof_use_status: str
     lean_artifact_ref: str | None = None
     proof_artifact_ref: str | None = None
+    proof_use_provenance_status: str = "failed"
+    solver_backed_proof_status: str = "not_applicable"
+    protected_statement_hash_source: str = "original_file"
+    checked_candidate_file_ref: str | None = None
+    proof_region_guard_status: str = "failed"
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -59,6 +65,7 @@ class FinalVerifyGate:
         admitted_imports_ok = imports_are_admitted(candidate_text, admitted_import_prefixes)
         toy_target_ok = not contains_local_toy_target(candidate_text)
         provenance_ok = proof_use_provenance_valid(proof_use_provenance)
+        solver_backed_mode = bool(proof_use_provenance and proof_use_provenance.get("solver_backed_mode"))
         passed = (
             theorem_hash_unchanged
             and region_ok
@@ -81,6 +88,13 @@ class FinalVerifyGate:
             proof_use_status="final_theorem" if passed else "not_allowed",
             lean_artifact_ref=str(candidate_path),
             proof_artifact_ref=str(candidate_path),
+            proof_use_provenance_status="passed" if provenance_ok else "failed",
+            solver_backed_proof_status=(
+                "passed" if solver_backed_mode and passed else "failed" if solver_backed_mode else "not_applicable"
+            ),
+            protected_statement_hash_source="source_problem" if solver_backed_mode else "original_file",
+            checked_candidate_file_ref=f"sha256:{hashlib.sha256(candidate_text.encode('utf-8')).hexdigest()}",
+            proof_region_guard_status="passed" if region_ok else "failed",
         )
 
 

@@ -31,6 +31,10 @@ class WorkerResult:
     worker_output: dict[str, Any] | None = None
     proof_use_status: str = "not_allowed"
     result_level: str = "lean_patch_candidate"
+    patch_applied: bool = False
+    generated_candidate_file_ref: str | None = None
+    proof_region_diff_hash: str | None = None
+    solver_dependency_refs: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if self.final_verify_ref is not None or self.proof_use_status == "final_theorem" or self.result_level == "lean_theorem":

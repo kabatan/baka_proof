@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A+v0.3B-patch
-status: V03B_PATCH_INSTALLED_T48_READY
+status: V03B_T49_SCHEMA_PATCH_COMPLETE_T50_READY
 created: 2026-06-13
 last_updated: 2026-06-14
 base_spec: MARP-GEOLEAN-BASE-004
@@ -431,10 +431,22 @@ Completed task:
 T47 — Install v0.3B authority docs
 ```
 
-Current task:
+Completed task:
 
 ```text
 T48 — Audit current proof-repair gap
+```
+
+Completed task:
+
+```text
+T49 — Schema patch
+```
+
+Current task:
+
+```text
+T50 — Problem-source format and proof-region guard
 ```
 
 Current task files changed in T46:
@@ -468,6 +480,31 @@ docs/ai/ACTIVE_CONTEXT.md
 docs/ai/changes/geometry-lean-v0_3-full-rebase/CLOSURE.md
 docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md
 docs/ai/changes/geometry-lean-v0_3-full-rebase/CODEX_HANDOFF_PROMPT.md
+```
+
+Current task files changed in T49:
+
+```text
+plugins/geometry_synthetic/patching/lean_patch_candidate_v1.py
+plugins/geometry_synthetic/proof/solver_backed_proof_certificate.py
+schemas/geometry/lean_patch_candidate_v1.schema.json
+schemas/geometry/solver_backed_proof_certificate.schema.json
+plugins/geometry_synthetic/trace_compiler.py
+plugins/geometry_synthetic/construction/__init__.py
+plugins/geometry_synthetic/standard_loop.py
+src/math_auto_research/lean_integration/final_verify_gate.py
+src/math_auto_research/base/schemas.py
+src/math_auto_research/model_api/proof_worker.py
+schemas/geometry/trace_compilation_result.schema.json
+schemas/geometry/construction_compilation_result.schema.json
+schemas/geometry/v03_contract_index.schema.json
+schemas/base/final_verify_report.schema.json
+schemas/base/public_contracts.schema.json
+schemas/model_api/public_contracts.schema.json
+scripts/check_solver_backed_patch_schema.py
+tests/unit/test_solver_backed_schema.py
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t49_solver_backed_schema.md
+docs/ai/ACTIVE_CONTEXT.md
 ```
 
 ## Non-Negotiables
@@ -506,7 +543,7 @@ T46 final replay and v0.3A closure are complete: release blockers 1-34 pass, cor
 After v0.3B patch installation, the intended complete v0.3 closure is not final until solver-backed proof repair also passes. Current allowed status is:
 
 ```text
-V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: v0.3A harness-ready passed, v0.3B solver-backed proof-repair pending
+V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: v0.3A harness-ready passed, v0.3B solver-backed proof-repair schema patch complete and proof-region/proof-repair flow pending
 V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY: not yet claimed
 V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY: blocked
 ```

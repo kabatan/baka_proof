@@ -84,16 +84,25 @@
             "lean_status",
             "forbidden_axiom_status",
             "sorry_status",
-            "proof_use_status"
+            "proof_use_status",
+            "proof_use_provenance_status",
+            "solver_backed_proof_status",
+            "protected_statement_hash_source",
+            "checked_candidate_file_ref",
+            "proof_region_guard_status"
           ],
-          "provenance_fields": ["lean_artifact_ref", "proof_artifact_ref"],
-          "status_fields": ["lean_status", "forbidden_axiom_status", "sorry_status", "proof_use_status"],
-          "proof_use_fields": ["proof_use_status"],
+          "provenance_fields": ["lean_artifact_ref", "proof_artifact_ref", "checked_candidate_file_ref"],
+          "status_fields": ["lean_status", "forbidden_axiom_status", "sorry_status", "proof_use_status", "proof_use_provenance_status", "solver_backed_proof_status", "proof_region_guard_status"],
+          "proof_use_fields": ["proof_use_status", "proof_use_provenance_status", "solver_backed_proof_status"],
           "allowed_values": {
             "lean_status": ["passed", "failed", "blocked"],
             "forbidden_axiom_status": ["clean", "failed", "not_checked"],
             "sorry_status": ["clean", "failed", "not_checked"],
-            "proof_use_status": ["final_theorem"]
+            "proof_use_status": ["final_theorem"],
+            "proof_use_provenance_status": ["passed", "failed"],
+            "solver_backed_proof_status": ["not_applicable", "passed", "failed"],
+            "protected_statement_hash_source": ["source_problem", "original_file", "generated_file"],
+            "proof_region_guard_status": ["passed", "failed"]
           }
         }
       }

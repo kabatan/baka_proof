@@ -4,6 +4,7 @@ import hashlib
 from dataclasses import asdict, dataclass
 from typing import Any
 
+from plugins.geometry_synthetic.patching import LeanPatchCandidateV1
 from plugins.geometry_synthetic.rules import GeoTraceV1, RuleRegistryV1, default_rule_registry, validate_rule_registry
 
 
@@ -18,6 +19,7 @@ class TraceCompilationResult:
     proof_use_status: str
     blockers: tuple[str, ...]
     lean_patch: str | None = None
+    lean_patch_candidate: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -70,17 +72,39 @@ class TraceCompiler:
                 None,
             )
         lean_patch = _lean_patch_for_trace(trace)
-        patch_ref = f"lean_patch_candidate:{_digest(lean_patch)}"
+        protected_hash = _sha256_ref(f"trace:{trace.claim_spec_ref}")
+        patch = LeanPatchCandidateV1.create(
+            source_task_run_id="task_run:trace_compiler",
+            target_theorem_name="compiled_trace_fixture",
+            target_file_path="<trace_compiler>",
+            target_protected_statement_hash=protected_hash,
+            patch_kind="replace_proof_region",
+            allowed_edit_region={
+                "region_id": "proof_region:compiled_trace_fixture",
+                "start_marker": "-- PROOF-REGION-START:compiled_trace_fixture",
+                "end_marker": "-- PROOF-REGION-END:compiled_trace_fixture",
+            },
+            proof_region_text=lean_patch,
+            solver_dependency_refs=(
+                "provider_run_manifest:trace_compiler_fixture",
+                trace.trace_id,
+                f"trace_compilation:{_digest(trace.trace_id)}",
+            ),
+            proof_template_id="proof_template:trace_fixture:v1",
+            proof_origin="trace_compiler",
+            created_by="TraceCompiler",
+        )
         return TraceCompilationResult(
             "1.0.0",
             f"trace_compilation:{_digest(trace.trace_id)}",
             trace.trace_id,
             "compiled",
-            patch_ref,
+            patch.patch_id,
             trace.side_condition_refs,
             "lean_patch_candidate",
             (),
             lean_patch,
+            patch.to_dict(),
         )
 
 
@@ -100,3 +124,7 @@ def _lean_patch_for_trace(trace: GeoTraceV1) -> str:
 
 def _digest(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def _sha256_ref(text: str) -> str:
+    return f"sha256:{hashlib.sha256(text.encode('utf-8')).hexdigest()}"

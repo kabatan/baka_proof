@@ -10,7 +10,8 @@
     "side_condition_report_refs",
     "proof_use_status",
     "blockers",
-    "lean_patch"
+    "lean_patch",
+    "lean_patch_candidate"
   ],
   "properties": {
     "schema_version": {"type": "string", "enum": ["1.0.0"]},
@@ -21,7 +22,8 @@
     "side_condition_report_refs": {"type": "array", "items": {"type": "string"}},
     "proof_use_status": {"type": "string", "enum": ["lean_patch_candidate"]},
     "blockers": {"type": "array", "items": {"type": "string"}},
-    "lean_patch": {"type": ["string", "null"]}
+    "lean_patch": {"type": ["string", "null"]},
+    "lean_patch_candidate": {"type": ["object", "null"]}
   },
   "additionalProperties": false
 }

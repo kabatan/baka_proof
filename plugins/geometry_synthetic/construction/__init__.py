@@ -4,6 +4,8 @@ import hashlib
 from dataclasses import asdict, dataclass
 from typing import Any
 
+from plugins.geometry_synthetic.patching import LeanPatchCandidateV1
+
 
 SUPPORTED_CONSTRUCTION_KINDS = {
     "line_through_two_distinct_points",
@@ -78,6 +80,7 @@ class ConstructionCompilationResult:
     proof_use_status: str
     blockers: tuple[str, ...]
     lean_patch: str | None = None
+    lean_patch_candidate: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -130,17 +133,40 @@ class ConstructionCompiler:
             f"from {candidate.construction_kind}",
         )
         lean_patch = _lean_patch_for_candidate(candidate)
+        protected_hash = _sha256_ref(f"construction:{candidate.candidate_id}")
+        patch = LeanPatchCandidateV1.create(
+            source_task_run_id="task_run:construction_compiler",
+            target_theorem_name="compiled_construction_fixture",
+            target_file_path="<construction_compiler>",
+            target_protected_statement_hash=protected_hash,
+            patch_kind="add_helper_lemma_and_replace_proof_region",
+            allowed_edit_region={
+                "region_id": "proof_region:compiled_construction_fixture",
+                "start_marker": "-- PROOF-REGION-START:compiled_construction_fixture",
+                "end_marker": "-- PROOF-REGION-END:compiled_construction_fixture",
+            },
+            proof_region_text=lean_patch,
+            solver_dependency_refs=(
+                "provider_run_manifest:construction_compiler_fixture",
+                candidate.candidate_id,
+                f"construction_compilation:{_digest(candidate.candidate_id)}",
+            ),
+            proof_template_id="proof_template:construction_fixture:v1",
+            proof_origin="construction_compiler",
+            created_by="ConstructionCompiler",
+        )
         return ConstructionCompilationResult(
             "1.0.0",
             f"construction_compilation:{_digest(candidate.candidate_id)}",
             candidate.candidate_id,
             "compiled",
             introduction_plan,
-            f"lean_patch_candidate:{_digest(lean_patch)}",
+            patch.patch_id,
             check.generated_obligations,
             "lean_patch_candidate",
             (),
             lean_patch,
+            patch.to_dict(),
         )
 
 
@@ -208,3 +234,7 @@ def _lean_patch_for_candidate(candidate: AuxiliaryConstructionCandidateV1) -> st
 
 def _digest(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def _sha256_ref(text: str) -> str:
+    return f"sha256:{hashlib.sha256(text.encode('utf-8')).hexdigest()}"

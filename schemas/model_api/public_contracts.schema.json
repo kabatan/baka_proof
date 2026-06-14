@@ -83,11 +83,11 @@
           "proof_use_fields": ["proof_use_note"]
         },
         "WorkerResult": {
-          "required_fields": ["schema_version", "worker_result_id", "work_order_id", "status", "patch_candidate_ref", "final_verify_ref", "proof_use_note"],
-          "provenance_fields": ["work_order_id", "patch_candidate_ref", "final_verify_ref"],
-          "status_fields": ["status"],
+          "required_fields": ["schema_version", "worker_result_id", "work_order_id", "status", "patch_candidate_ref", "final_verify_ref", "proof_use_note", "patch_applied", "generated_candidate_file_ref", "proof_region_diff_hash", "solver_dependency_refs"],
+          "provenance_fields": ["work_order_id", "patch_candidate_ref", "final_verify_ref", "generated_candidate_file_ref", "proof_region_diff_hash", "solver_dependency_refs"],
+          "status_fields": ["status", "patch_applied"],
           "proof_use_fields": ["proof_use_note"],
-          "allowed_values": {"status": ["success_claimed", "patch_candidate", "blocked", "failed"]}
+          "allowed_values": {"status": ["success_claimed", "patch_candidate", "patch_applied", "blocked", "failed"]}
         },
         "ControllerStrategyLog": {
           "required_fields": ["schema_version", "log_id", "run_id", "capability_flags", "strategy_counts", "status", "artifact_refs", "proof_use_note"],
