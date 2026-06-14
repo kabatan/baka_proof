@@ -44,6 +44,9 @@ python scripts/check_full2d_final_verify_smoke.py
 python scripts/check_full2d_proof_artifacts.py --run-dir runs/geometry_full2d_v0_4_2/proof_artifact_smoke --self-test
 python scripts/build_full2d_proof_artifact_batch.py --limit 2
 python scripts/check_full2d_proof_artifacts.py --run-dir runs/geometry_full2d_v0_4_2/proof_artifact_batch --self-test
+python scripts/run_full2d_matrix.py --config configs/benchmark_runs/geometry_full2d_v0_4_2.yaml --run-dir runs/geometry_full2d_v0_4_2
+python scripts/check_full2d_metrics.py --run-dir runs/geometry_full2d_v0_4_2
+python scripts/generate_repro_report.py --run-dir runs/geometry_full2d_v0_4_2
 python -m py_compile scripts/import_full2d_curated_corpus.py scripts/run_full2d_matrix.py scripts/check_full2d_metrics.py scripts/generate_repro_report.py
 ```
 
@@ -77,6 +80,8 @@ SolverBackedProofCertificateFull2D schema/checker exists and rejects raw solver 
 Proof artifact checker exists and rejects final theorem results whose certificate, FinalVerify report, or checked candidate file is missing or mismatched.
 Full2D FinalVerify smoke applies a proof-region patch through ProofWorker, compiles the generated candidate through FinalVerifyGate, emits a SolverBackedProofCertificateFull2D, and validates the smoke task artifacts.
 Release corpus proof artifact batch generation currently produces and validates solver-backed artifacts for 2 release tasks without editing the frozen corpus manifest.
+Matrix metrics now consume the validated proof artifact batch sidecar, so 2 Full2DCore500 positives are counted as artifact-derived final theorems.
+The current overall final theorem rate is 2/6700 = 0.00029850746268656717, which remains far below the required 0.85 overall threshold. No required family threshold passes.
 ```
 
 Lean corpus compile note:

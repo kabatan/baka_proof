@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -9,12 +10,17 @@ from typing import Any
 from check_full2d_corpus_manifest import canonical_manifest_hash, load_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.check_full2d_proof_artifacts import check_proof_artifacts  # noqa: E402
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
     parser.add_argument("--run-dir", default="runs/geometry_full2d_v0_4_2")
+    parser.add_argument("--proof-artifact-run-dir", default="runs/geometry_full2d_v0_4_2/proof_artifact_batch")
     args = parser.parse_args()
     config = json.loads(Path(args.config).read_text(encoding="utf-8"))
     corpus_root = ROOT / config["benchmark_corpus_root"]
@@ -25,6 +31,8 @@ def main() -> int:
     run_dir = ROOT / args.run_dir
     run_dir.mkdir(parents=True, exist_ok=True)
     results = _results_for_manifest(manifest)
+    proof_overlay = _load_validated_proof_overlay(ROOT / args.proof_artifact_run_dir, run_dir)
+    results = _apply_proof_overlay(results, proof_overlay)
     result_path = run_dir / "task_results.jsonl"
     result_path.write_text("\n".join(json.dumps(item, sort_keys=True) for item in results) + "\n", encoding="utf-8")
     summary = _summary(manifest, results)
@@ -90,9 +98,74 @@ def _proof_artifacts_for_task(task: dict[str, Any]) -> dict[str, str]:
     return {key: str(value) for key, value in required.items()}
 
 
+def _load_validated_proof_overlay(proof_run_dir: Path, matrix_run_dir: Path) -> dict[str, dict[str, Any]]:
+    if not proof_run_dir.exists():
+        return {}
+    errors = check_proof_artifacts(proof_run_dir)
+    if errors:
+        return {}
+    result_path = proof_run_dir / "task_results.jsonl"
+    if not result_path.exists():
+        return {}
+    overlay: dict[str, dict[str, Any]] = {}
+    for line in result_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        item = json.loads(line)
+        if item.get("final_theorem") and item.get("target_status") == "in_target_positive":
+            item = _rewrite_artifact_paths(item, proof_run_dir, matrix_run_dir)
+            overlay[str(item.get("task_id"))] = item
+    return overlay
+
+
+def _rewrite_artifact_paths(item: dict[str, Any], proof_run_dir: Path, matrix_run_dir: Path) -> dict[str, Any]:
+    rewritten = dict(item)
+    artifacts = dict(rewritten.get("proof_artifacts", {}))
+    try:
+        proof_prefix = proof_run_dir.resolve().relative_to(matrix_run_dir.resolve())
+    except ValueError:
+        proof_prefix = proof_run_dir.resolve()
+    for key in ("solver_backed_certificate_path", "final_verify_report_path", "checked_candidate_file_path"):
+        value = artifacts.get(key)
+        if isinstance(value, str) and value:
+            path = Path(value)
+            if not path.is_absolute():
+                artifacts[key] = (proof_prefix / path).as_posix()
+    rewritten["proof_artifacts"] = artifacts
+    return rewritten
+
+
+def _apply_proof_overlay(results: list[dict[str, Any]], overlay: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    if not overlay:
+        return results
+    merged: list[dict[str, Any]] = []
+    for item in results:
+        task_id = str(item.get("task_id"))
+        proven = overlay.get(task_id)
+        if proven is None:
+            merged.append(item)
+            continue
+        updated = dict(item)
+        updated.update(
+            {
+                "outcome": "final_theorem",
+                "final_theorem": True,
+                "measured_failure": False,
+                "proof_artifacts": proven.get("proof_artifacts", {}),
+                "proof_use_status": "final_theorem",
+                "source_theorem_preproved": bool(proven.get("source_theorem_preproved", False)),
+            }
+        )
+        merged.append(updated)
+    return merged
+
+
 def _summary(manifest: dict[str, Any], results: list[dict[str, Any]]) -> dict[str, Any]:
     positives = [item for item in results if item["target_status"] == "in_target_positive"]
     final_count = sum(1 for item in positives if item["final_theorem"])
+    artifact_final_count = sum(
+        1 for item in positives if item["final_theorem"] and item.get("proof_artifacts")
+    )
     family_counts = Counter(item["theorem_family"] for item in positives)
     family_success = Counter(item["theorem_family"] for item in positives if item["final_theorem"])
     return {
@@ -102,6 +175,7 @@ def _summary(manifest: dict[str, Any], results: list[dict[str, Any]]) -> dict[st
         "release_frozen": manifest.get("status") == "release_frozen",
         "positive_count": len(positives),
         "final_theorem_count": final_count,
+        "artifact_overlay_final_theorem_count": artifact_final_count,
         "overall_final_theorem_rate": final_count / len(positives) if positives else 0.0,
         "family_rates": {
             family: {
