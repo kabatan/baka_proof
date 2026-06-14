@@ -159,11 +159,28 @@ def proof_use_provenance_valid(provenance: dict[str, Any] | None) -> bool:
     if not solver_backed_required.issubset(provenance):
         return False
     return (
-        _matches_ref(provenance["provider_run_manifest_ref"], ("provider_run_manifest:",))
-        and _matches_ref(provenance["normalized_solver_artifact_ref"], ("geotrace:", "aux_construction_candidate:"))
-        and _matches_ref(provenance["compiler_result_ref"], ("trace_compilation:", "construction_compilation:"))
-        and _matches_ref(provenance["lean_patch_candidate_ref"], ("lean_patch:",))
-        and _matches_ref(provenance["worker_result_ref"], ("worker_result:",))
+        _matches_ref(provenance["provider_run_manifest_ref"], ("provider_run_manifest:", "ProviderRunManifestFull2D:"))
+        and _matches_ref(
+            provenance["normalized_solver_artifact_ref"],
+            (
+                "geotrace:",
+                "aux_construction_candidate:",
+                "SyntheticClosureTraceFull2D:",
+                "ConstructionTraceFull2D:",
+                "AlgebraicCertificateFull2D:",
+                "MetricAngleTraceFull2D:",
+                "TransformationTraceFull2D:",
+                "CoverageGateFull2D:",
+                "InequalityCertificateFull2D:",
+                "PortfolioDecisionFull2D:",
+            ),
+        )
+        and _matches_ref(
+            provenance["compiler_result_ref"],
+            ("trace_compilation:", "construction_compilation:", "CompilerResultFull2D:"),
+        )
+        and _matches_ref(provenance["lean_patch_candidate_ref"], ("lean_patch:", "LeanPatchCandidateFull2D:"))
+        and _matches_ref(provenance["worker_result_ref"], ("worker_result:", "ProofWorkerResultFull2D:"))
         and _matches_sha256(provenance["proof_region_diff_hash"])
         and _matches_sha256(provenance["generated_candidate_file_ref"])
     )

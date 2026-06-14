@@ -349,6 +349,35 @@
       "status": "passed"
     },
     {
+      "check_id": "WP17-final-verify-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_final_verify_smoke.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"checked_candidate_file_ref\": \"sha256:0e14be0c6ff6ed6a19dca259b00ecd323e246adf42cb5fcc5add49bf2ca0ddb4\",\n  \"errors\": [],\n  \"final_verify_ref\": \"FinalVerifyGateFull2D:993c266a40fae5f155924c57b1734dc18336dc3726077314da4bcffd3708144a\",\n  \"final_verify_report_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_smoke/final_verify_report.json\",\n  \"generated_candidate_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_smoke/worker/full2d_final_verify_smoke/full2d_smoke_worker/full2d_smoke_worker.lean\",\n  \"proof_region_diff_ref\": \"sha256:fa100d8ea26d73358f566fc6acf64ff167ebd91dd63ab23f5dcd65ce3def0d75\",\n  \"schema_version\": \"1.0.0\",\n  \"solver_backed_certificate_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_smoke/solver_backed_proof_certificate_full2d.json\",\n  \"solver_backed_certificate_ref\": \"SolverBackedProofCertificateFull2D:61844e0206dcffdf05c8271ad32426b35655bd91e4afb545391d039c8ba806b0\",\n  \"source_problem_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_smoke/Full2DProofWorkerSmoke.lean\",\n  \"status\": \"passed\",\n  \"task_results_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_smoke/task_results.jsonl\",\n  \"worker_result_path\": \"runs/geometry_full2d_v0_4_2/proof_artifact_smoke/proof_worker_result.json\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP17-final-verify-smoke-artifacts",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_proof_artifacts.py",
+          "--run-dir",
+          "runs/geometry_full2d_v0_4_2/proof_artifact_smoke",
+          "--self-test"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
       "check_id": "WP20-corpus-manifest",
       "details": {
         "command": [
@@ -413,7 +442,7 @@
   "measured_failure_summary": {},
   "metrics_summary": {},
   "release_blockers": [],
-  "report_id": "release_acceptance_v0_4_2:1781469982",
+  "report_id": "release_acceptance_v0_4_2:1781470656",
   "schema_version": "1.0.0",
   "status": "blocked",
   "used_rule_coverage_summary": {},
