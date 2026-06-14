@@ -1,0 +1,177 @@
+from __future__ import annotations
+
+import hashlib
+import json
+import time
+from dataclasses import asdict, dataclass
+from typing import Any, Literal
+
+from math_auto_research.base.resources.resource_budget import ResourceRequest
+
+
+ENGINE_ROLES: tuple[str, ...] = (
+    "synthetic_closure",
+    "construction_search",
+    "algebraic_geometry",
+    "metric_angle",
+    "transformation",
+    "order_case",
+    "inequality",
+    "lean_proof_search",
+    "portfolio_coordinator",
+)
+ENGINE_STATUS = Literal["normalized_success", "measured_failure", "diagnostic"]
+
+
+@dataclass(frozen=True)
+class ResourceBudget:
+    budget: str = "tiny"
+    timeout_sec: float = 5.0
+
+
+@dataclass(frozen=True)
+class RunContext:
+    run_id: str
+    request_id: str
+    resource_usage_ref: str
+    release_mode: bool = False
+
+
+@dataclass(frozen=True)
+class EngineInputFull2D:
+    schema_version: str
+    request_id: str
+    claim_spec_ref: str
+    target_library: str
+    claim_spec: dict[str, Any] | None = None
+
+    def input_ref(self) -> str:
+        return hash_ref(canonical_json(self.to_dict()))
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class EngineOutputFull2D:
+    schema_version: str
+    engine_role: str
+    backend_identity: str
+    real_integration_flag: bool
+    fixture_flag: bool
+    input_ref: str
+    raw_output_hash: str
+    normalized_output_ref: str | None
+    checker_or_compiler_ref: str | None
+    resource_usage_ref: str
+    status: ENGINE_STATUS
+    proof_use_status: Literal["not_allowed"] = "not_allowed"
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class ProviderRunManifestFull2D:
+    schema_version: str
+    manifest_id: str
+    request_id: str
+    provider_id: str
+    provider_class: str
+    target_library: str
+    engine_order: tuple[str, ...]
+    engine_record_refs: tuple[str, ...]
+    resource_usage_refs: tuple[str, ...]
+    fixture_flag: bool
+    real_integration_flag: bool
+    status: str
+    proof_use_status: Literal["not_allowed"] = "not_allowed"
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+def diagnostic_output(
+    engine_role: str,
+    engine_input: EngineInputFull2D,
+    budget: ResourceBudget,
+    context: RunContext,
+    *,
+    backend_identity: str | None = None,
+) -> EngineOutputFull2D:
+    backend_identity = backend_identity or f"geometry_full2d.{engine_role}:contract_skeleton"
+    payload = {
+        "engine_role": engine_role,
+        "request_id": engine_input.request_id,
+        "claim_spec_ref": engine_input.claim_spec_ref,
+        "budget": budget.budget,
+        "status": "diagnostic",
+        "proof_use_status": "not_allowed",
+    }
+    return EngineOutputFull2D(
+        schema_version="1.0.0",
+        engine_role=engine_role,
+        backend_identity=backend_identity,
+        real_integration_flag=False,
+        fixture_flag=detect_fixture_backend(backend_identity),
+        input_ref=engine_input.input_ref(),
+        raw_output_hash=hash_ref(canonical_json(payload)),
+        normalized_output_ref=None,
+        checker_or_compiler_ref=None,
+        resource_usage_ref=context.resource_usage_ref,
+        status="diagnostic",
+    )
+
+
+def resource_request_for(role: str, budget: ResourceBudget) -> ResourceRequest:
+    governor_role = {
+        "synthetic_closure": "symbolic_closure",
+        "construction_search": "construction_proposer",
+        "lean_proof_search": "lean",
+        "portfolio_coordinator": "none",
+    }.get(role, "none")
+    return ResourceRequest(component=f"geometry_full2d.{role}", engine_role=governor_role, budget=budget.budget, timeout_sec=budget.timeout_sec)
+
+
+def resource_usage_report(request_id: str, role: str, status: str, elapsed_seconds: float) -> dict[str, Any]:
+    report_id = f"resource_usage:{request_id}:{role}:{time.time_ns()}"
+    return {
+        "schema_version": "1.0.0",
+        "report_id": report_id,
+        "role": role,
+        "engine_role": role,
+        "status": status,
+        "elapsed_seconds": round(elapsed_seconds, 6),
+        "raw_log_ref": None,
+    }
+
+
+def validate_engine_output(output: EngineOutputFull2D) -> list[str]:
+    errors: list[str] = []
+    if output.schema_version != "1.0.0":
+        errors.append("schema_version_not_1_0_0")
+    if output.engine_role not in ENGINE_ROLES:
+        errors.append("unknown_engine_role")
+    if output.status not in {"normalized_success", "measured_failure", "diagnostic"}:
+        errors.append("invalid_status")
+    if output.proof_use_status != "not_allowed":
+        errors.append("engine_output_proof_use_not_allowed")
+    for key in ("input_ref", "raw_output_hash"):
+        if not str(getattr(output, key)).startswith("sha256:"):
+            errors.append(f"{key}_missing_sha256")
+    if output.fixture_flag and output.real_integration_flag:
+        errors.append("fixture_and_real_integration_both_true")
+    return errors
+
+
+def detect_fixture_backend(backend_identity: str) -> bool:
+    lowered = backend_identity.lower()
+    return any(token in lowered for token in ("fixture", "dummy", "hardcoded", "test-only"))
+
+
+def canonical_json(payload: Any) -> str:
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+
+
+def hash_ref(text: str) -> str:
+    return f"sha256:{hashlib.sha256(text.encode('utf-8')).hexdigest()}"

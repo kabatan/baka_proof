@@ -1,4 +1,5 @@
 {
+  "checker": "scripts/check_full2d_engine_contracts.py",
   "roles": {
     "algebraic_geometry": {
       "status": "present"
@@ -28,5 +29,6 @@
       "status": "present"
     }
   },
-  "schema_version": "1.0.0"
+  "schema_version": "1.0.0",
+  "status": "passed"
 }
