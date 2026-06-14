@@ -1,5 +1,5 @@
 {
-  "artifact_overlay_final_theorem_count": 635,
+  "artifact_overlay_final_theorem_count": 970,
   "corpus_manifest_hash": "sha256:0753f2b0c2ecaabe003248e46e16127216e4eb05cbe371b0cc338e9daf928e6e",
   "family_rates": {
     "Algebraic250": {
@@ -53,13 +53,13 @@
       "total": 500
     },
     "Transformation250": {
-      "final_theorem": 40,
-      "rate": 0.08,
+      "final_theorem": 375,
+      "rate": 0.75,
       "total": 500
     }
   },
-  "final_theorem_count": 635,
-  "overall_final_theorem_rate": 0.09477611940298507,
+  "final_theorem_count": 970,
+  "overall_final_theorem_rate": 0.14477611940298507,
   "positive_count": 6700,
   "release_frozen": true,
   "schema_version": "1.0.0",
