@@ -16,6 +16,10 @@ Implemented in this checkpoint:
 - `scripts/generate_full2d_synthetic_corpus.py`
 - `scripts/freeze_full2d_corpus.py`
 - synthetic draft corpus at `benchmarks/geometry_full2d`
+- `scripts/run_full2d_matrix.py`
+- `scripts/check_full2d_metrics.py`
+- `scripts/import_full2d_curated_corpus.py`
+- curated corpus import schema at `benchmarks/geometry_full2d/metadata/CURATED_IMPORT_SCHEMA.md`
 
 Verification commands:
 
@@ -26,6 +30,7 @@ python scripts/freeze_full2d_corpus.py
 lake env lean benchmarks/geometry_full2d/lean/SyntheticDraftCorpus.lean
 python scripts/check_v0_4_2_progress_acceptance.py --config configs/benchmark_runs/geometry_full2d_v0_4_2.yaml --output docs/ai/changes/geometry-full2d-v0_4_2/evidence/progress_acceptance_report.json
 python scripts/check_release_acceptance_v0_4_2.py --config configs/benchmark_runs/geometry_full2d_v0_4_2.yaml --output docs/ai/changes/geometry-full2d-v0_4_2/evidence/release_acceptance_report.json
+python -m py_compile scripts/import_full2d_curated_corpus.py scripts/run_full2d_matrix.py scripts/check_full2d_metrics.py scripts/generate_repro_report.py
 ```
 
 Observed status:
@@ -53,6 +58,8 @@ H-002 negative/target-outside/malformed task floor is represented in the draft m
 H-007 family/tier floors are represented in the draft manifest.
 The synthetic Lean corpus file compiles with `lake env lean`.
 The frozen manifest hash is now a sha256 ref.
+Matrix, metrics, and reproducibility report plumbing exists and fails release metrics honestly for the non-release-frozen draft corpus.
+Curated corpus import now has a gate that rejects synthetic relabeling and requires explicit source references.
 ```
 
 This evidence does not close v0.4.2. It prevents a false completion claim until the full governed corpus, external/human-curated share, matrix run, metrics, used-rule coverage, and final release acceptance are implemented.
