@@ -1,7 +1,7 @@
 {
   "artifacts": {
-    "matrix_summary.json": "sha256:0d1ac2b47406950f5367480a8309e804a2f73424ad97fd8c474c670a0390cc6d",
-    "task_results.jsonl": "sha256:4b3d0913e42e7ea2d66598ce094d8d10eed1f062445a6ed05dbea4567625233b"
+    "matrix_summary.json": "sha256:78e785b33a88159dd1368968acd84cd2c33d98c1f2ba7c2925b25a3d401f36c8",
+    "task_results.jsonl": "sha256:44f17c6db8204c0919aa969718dc00ed1c51b7e0111c0a1c690bf27019fd9eed"
   },
   "reproduction_command": "python scripts/run_full2d_matrix.py --config configs/benchmark_runs/geometry_full2d_v0_4_2.yaml --run-dir runs/geometry_full2d_v0_4_2",
   "run_dir": "runs/geometry_full2d_v0_4_2",

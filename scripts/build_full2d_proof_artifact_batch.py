@@ -46,37 +46,76 @@ def build_batch(corpus_root: Path, run_dir: Path, limit: int) -> dict[str, Any]:
     if manifest.get("status") != "release_frozen":
         return {"schema_version": "1.0.0", "status": "failed", "errors": ["manifest_not_release_frozen"]}
     run_dir.mkdir(parents=True, exist_ok=True)
+    result_path = run_dir / "task_results.jsonl"
+    index_path = run_dir / "proof_artifact_index.json"
+    existing_results = _load_existing_results(result_path)
+    effective_limit = max(limit, len(existing_results))
+    existing_index = _load_existing_index(index_path)
     task_results: list[dict[str, Any]] = []
-    index: list[dict[str, Any]] = []
+    index: list[dict[str, Any]] = list(existing_index)
     errors: list[str] = []
     for task in _positive_tasks(manifest):
-        if len(task_results) >= limit:
+        if len(task_results) >= effective_limit:
             break
         template = _template_for_task(task)
         if template is None:
+            continue
+        task_id = str(task["task_id"])
+        if task_id in existing_results:
+            task_results.append(existing_results[task_id])
             continue
         task_report = _build_task_artifacts(task, template, run_dir)
         if task_report["status"] == "passed":
             task_results.append(task_report["task_result"])
             index.append({key: value for key, value in task_report.items() if key not in {"task_result"}})
+            _write_batch_outputs(result_path, index_path, task_results, index)
         else:
             errors.append(f"{task.get('task_id')}:{','.join(task_report.get('errors', ())) }")
-    (run_dir / "task_results.jsonl").write_text(
-        "\n".join(json.dumps(item, sort_keys=True) for item in task_results) + ("\n" if task_results else ""),
-        encoding="utf-8",
-    )
-    (run_dir / "proof_artifact_index.json").write_text(json.dumps(index, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    if len(task_results) < limit:
-        errors.append(f"insufficient_supported_tasks:{len(task_results)}<{limit}")
+    _write_batch_outputs(result_path, index_path, task_results, index)
+    if len(task_results) < effective_limit:
+        errors.append(f"insufficient_supported_tasks:{len(task_results)}<{effective_limit}")
     return {
         "schema_version": "1.0.0",
         "status": "passed" if not errors else "failed",
         "errors": errors,
         "generated_task_results": len(task_results),
         "run_dir": run_dir.relative_to(ROOT).as_posix(),
-        "task_results_path": (run_dir / "task_results.jsonl").relative_to(ROOT).as_posix(),
-        "proof_artifact_index_path": (run_dir / "proof_artifact_index.json").relative_to(ROOT).as_posix(),
+        "task_results_path": result_path.relative_to(ROOT).as_posix(),
+        "proof_artifact_index_path": index_path.relative_to(ROOT).as_posix(),
     }
+
+
+def _load_existing_results(result_path: Path) -> dict[str, dict[str, Any]]:
+    if not result_path.exists():
+        return {}
+    results: dict[str, dict[str, Any]] = {}
+    for line in result_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        item = json.loads(line)
+        if item.get("final_theorem") and item.get("target_status") == "in_target_positive":
+            results[str(item["task_id"])] = item
+    return results
+
+
+def _load_existing_index(index_path: Path) -> list[dict[str, Any]]:
+    if not index_path.exists():
+        return []
+    payload = json.loads(index_path.read_text(encoding="utf-8"))
+    return payload if isinstance(payload, list) else []
+
+
+def _write_batch_outputs(
+    result_path: Path,
+    index_path: Path,
+    task_results: list[dict[str, Any]],
+    index: list[dict[str, Any]],
+) -> None:
+    result_path.write_text(
+        "\n".join(json.dumps(item, sort_keys=True) for item in task_results) + ("\n" if task_results else ""),
+        encoding="utf-8",
+    )
+    index_path.write_text(json.dumps(index, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def _positive_tasks(manifest: dict[str, Any]) -> list[dict[str, Any]]:

@@ -416,6 +416,8 @@ def _write_status_artifacts(report: dict[str, Any]) -> None:
     }
     for name, payload in status_payloads.items():
         path = EVIDENCE_DIR / name
+        if name == "release_acceptance_report.json" and path.exists():
+            continue
         path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     frozen = EVIDENCE_DIR / "frozen_corpus_manifest_hash.txt"
     if not frozen.exists():
