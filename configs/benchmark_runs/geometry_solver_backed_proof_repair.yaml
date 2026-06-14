@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "matrix_id": "geometry_solver_backed_proof_repair",
+  "run_id": "geometry_solver_backed_proof_repair",
+  "benchmark_pool_id": "benchmark_pool:geometry_solver_backed_proof_repair:v1",
+  "benchmark_corpus_path": "benchmarks/geometry/solver_backed_proof_repair.jsonl",
+  "benchmark_pool": [
+    "solver_backed:trace:01",
+    "solver_backed:trace:02",
+    "solver_backed:trace:03",
+    "solver_backed:trace:04",
+    "solver_backed:trace:05",
+    "solver_backed:trace:06",
+    "solver_backed:construction:01",
+    "solver_backed:construction:02",
+    "solver_backed:construction:03",
+    "solver_backed:hybrid:01"
+  ],
+  "resource_budget": "tiny",
+  "baselines": [
+    {"baseline_id": "B0", "label": "proof_worker_only", "uses_controller": false, "uses_geometry_solve": false, "model_tier": "baseline"},
+    {"baseline_id": "B1", "label": "controller_worker_no_geometry", "uses_controller": true, "uses_geometry_solve": false, "model_tier": "baseline"},
+    {"baseline_id": "B2", "label": "full_geometry_enabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "baseline"},
+    {"baseline_id": "B3", "label": "strong_model_no_geometry", "uses_controller": true, "uses_geometry_solve": false, "model_tier": "strong"},
+    {"baseline_id": "B4", "label": "lower_model_geometry_enabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "lower"},
+    {"baseline_id": "B5", "label": "geometry_construction_disabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "baseline", "construction_enabled": false}
+  ]
+}
