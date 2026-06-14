@@ -132,7 +132,20 @@ class ConstructionCompiler:
             f"introduce {', '.join(candidate.introduced_objects)}",
             f"from {candidate.construction_kind}",
         )
-        lean_patch = _lean_patch_for_candidate(candidate)
+        template_id, lean_patch = _lean_patch_for_candidate(candidate)
+        if template_id is None:
+            return ConstructionCompilationResult(
+                "1.0.0",
+                f"construction_compilation:{_digest(candidate.candidate_id + ':unsupported-template')}",
+                candidate.candidate_id,
+                "blocked",
+                (),
+                None,
+                check.generated_obligations,
+                "lean_patch_candidate",
+                ("unsupported_construction_to_lean_template",),
+                None,
+            )
         protected_hash = _sha256_ref(f"construction:{candidate.candidate_id}")
         patch = LeanPatchCandidateV1.create(
             source_task_run_id="task_run:construction_compiler",
@@ -147,11 +160,11 @@ class ConstructionCompiler:
             },
             proof_region_text=lean_patch,
             solver_dependency_refs=(
-                "provider_run_manifest:construction_compiler_fixture",
+                _provider_manifest_ref(candidate),
                 candidate.candidate_id,
                 f"construction_compilation:{_digest(candidate.candidate_id)}",
             ),
-            proof_template_id="proof_template:construction_fixture:v1",
+            proof_template_id=template_id,
             proof_origin="construction_compiler",
             created_by="ConstructionCompiler",
         )
@@ -218,18 +231,19 @@ def candidate_from_dict(payload: dict[str, Any]) -> AuxiliaryConstructionCandida
     )
 
 
-def _lean_patch_for_candidate(candidate: AuxiliaryConstructionCandidateV1) -> str:
-    return "\n".join(
-        [
-            "namespace MathAutoResearch.GeometryConstructionFixture",
-            "",
-            "theorem compiled_construction_fixture (p : Prop) (h : p) : p := by",
-            "  exact h",
-            "",
-            "end MathAutoResearch.GeometryConstructionFixture",
-            "",
-        ]
-    )
+def _lean_patch_for_candidate(candidate: AuxiliaryConstructionCandidateV1) -> tuple[str | None, str | None]:
+    plan = candidate.to_dict().get("lean_introduction_plan", {})
+    template_id = str(plan.get("theorem_template_id", ""))
+    target_shape = str(plan.get("target_shape", ""))
+    if template_id.endswith("exists_existing_line_witness.v1") or target_shape == "exists_existing_line_witness":
+        return "construction.exists_existing_line_witness.v1", "  exact ⟨L, h⟩"
+    if template_id.endswith("distinct_points_on_line_pack.v1") or target_shape == "distinct_points_on_line_pack":
+        return "construction.distinct_points_on_line_pack.v1", "  exact And.intro hA (And.intro hB hne)"
+    if template_id.endswith("exists_point_collinear_self.v1") or target_shape == "exists_point_collinear_self":
+        return "construction.exists_point_collinear_self.v1", "  exact ⟨A, by simp [Coll]⟩"
+    if candidate.construction_kind == "line_through_two_distinct_points":
+        return "construction.exists_existing_line_witness.v1", "  exact ⟨L, h⟩"
+    return None, None
 
 
 def _digest(text: str) -> str:
@@ -238,3 +252,9 @@ def _digest(text: str) -> str:
 
 def _sha256_ref(text: str) -> str:
     return f"sha256:{hashlib.sha256(text.encode('utf-8')).hexdigest()}"
+
+
+def _provider_manifest_ref(candidate: AuxiliaryConstructionCandidateV1) -> str:
+    if candidate.source_provider_result.startswith("provider_run_manifest:"):
+        return candidate.source_provider_result
+    return "provider_run_manifest:construction_compiler_fixture"

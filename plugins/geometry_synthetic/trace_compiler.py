@@ -71,7 +71,19 @@ class TraceCompiler:
                 tuple(blockers),
                 None,
             )
-        lean_patch = _lean_patch_for_trace(trace)
+        template_id, lean_patch = _lean_patch_for_trace(trace)
+        if template_id is None:
+            return TraceCompilationResult(
+                "1.0.0",
+                f"trace_compilation:{_digest(trace.trace_id + ':unsupported-template')}",
+                trace.trace_id,
+                "blocked",
+                None,
+                trace.side_condition_refs,
+                "lean_patch_candidate",
+                ("unsupported_trace_to_lean_template",),
+                None,
+            )
         protected_hash = _sha256_ref(f"trace:{trace.claim_spec_ref}")
         patch = LeanPatchCandidateV1.create(
             source_task_run_id="task_run:trace_compiler",
@@ -86,11 +98,11 @@ class TraceCompiler:
             },
             proof_region_text=lean_patch,
             solver_dependency_refs=(
-                "provider_run_manifest:trace_compiler_fixture",
+                _provider_manifest_ref(trace),
                 trace.trace_id,
                 f"trace_compilation:{_digest(trace.trace_id)}",
             ),
-            proof_template_id="proof_template:trace_fixture:v1",
+            proof_template_id=template_id,
             proof_origin="trace_compiler",
             created_by="TraceCompiler",
         )
@@ -108,18 +120,19 @@ class TraceCompiler:
         )
 
 
-def _lean_patch_for_trace(trace: GeoTraceV1) -> str:
-    return "\n".join(
-        [
-            "namespace MathAutoResearch.GeometryTraceFixture",
-            "",
-            "theorem compiled_trace_fixture (p : Prop) (h : p) : p := by",
-            "  exact h",
-            "",
-            "end MathAutoResearch.GeometryTraceFixture",
-            "",
-        ]
-    )
+def _lean_patch_for_trace(trace: GeoTraceV1) -> tuple[str | None, str | None]:
+    conclusion = trace.steps[-1].conclusion.strip()
+    if conclusion.startswith("Coll ") and _same_token(conclusion, 1, 2):
+        return "trace.coll_self_left.v1", "  simp [Coll]"
+    if conclusion.startswith("Coll ") and _same_token(conclusion, 2, 3):
+        return "trace.coll_self_right.v1", "  simp [Coll]"
+    if "∨" in conclusion or " or " in conclusion.lower():
+        return "trace.collinear_or_left.v1", "  exact Or.inl (by simp [Coll])"
+    if "∧" in conclusion or " and " in conclusion.lower():
+        return "trace.collinear_and_intro.v1", "  exact And.intro (by simp [Coll]) (by simp [Coll])"
+    if conclusion == "Coll A B C":
+        return "trace.legacy_collinearity_identity_fixture.v1", "  exact h"
+    return None, None
 
 
 def _digest(text: str) -> str:
@@ -128,3 +141,14 @@ def _digest(text: str) -> str:
 
 def _sha256_ref(text: str) -> str:
     return f"sha256:{hashlib.sha256(text.encode('utf-8')).hexdigest()}"
+
+
+def _same_token(text: str, left_index: int, right_index: int) -> bool:
+    parts = text.split()
+    return len(parts) > max(left_index, right_index) and parts[left_index] == parts[right_index]
+
+
+def _provider_manifest_ref(trace: GeoTraceV1) -> str:
+    if trace.source_provider_result.startswith("provider_run_manifest:"):
+        return trace.source_provider_result
+    return "provider_run_manifest:trace_compiler_fixture"

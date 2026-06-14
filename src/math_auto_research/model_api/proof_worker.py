@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
@@ -9,8 +10,6 @@ from math_auto_research.base.model_provider_set import ModelProviderSet
 from math_auto_research.base.resources.resource_governor import ResourceGovernor
 from math_auto_research.lean_integration.lean_port import LeanPort
 from math_auto_research.model_api.work_order import WorkOrder
-from plugins.geometry_synthetic.patching import LeanPatchCandidateV1
-from plugins.geometry_synthetic.patching.proof_region import SolverBackedProofRegionGuard
 
 
 @dataclass(frozen=True)
@@ -56,19 +55,35 @@ class WorkerResult:
 
 def apply_lean_patch_candidate(
     source_problem_path: Path,
-    patch_candidate: LeanPatchCandidateV1,
+    patch_candidate: Any,
     output_dir: Path,
     context: RunContext,
 ) -> WorkerResult:
-    guard = SolverBackedProofRegionGuard()
+    blockers: list[str] = []
+    source_text = source_problem_path.read_text(encoding="utf-8")
+    blockers.extend(_source_problem_blockers(source_text))
     candidate_dir = output_dir / _safe_path_part(context.run_id) / _safe_path_part(context.task_id)
-    output_path, check = guard.write_generated_candidate(
-        source_problem_path=source_problem_path,
-        patch_candidate=patch_candidate,
-        output_dir=candidate_dir,
-    )
-    patch_applied = check.passed and output_path is not None
-    generated_ref = _file_sha256(output_path) if output_path is not None and output_path.exists() else None
+    output_path: Path | None = None
+    diff_hash: str | None = None
+    if not blockers:
+        try:
+            candidate_text = _replace_between_markers(
+                source_text,
+                str(patch_candidate.allowed_edit_region["start_marker"]),
+                str(patch_candidate.allowed_edit_region["end_marker"]),
+                str(patch_candidate.proof_region_replacement_text),
+            )
+            blockers.extend(_candidate_blockers(candidate_text))
+            blockers.extend(_outside_edit_blockers(source_text, candidate_text, str(patch_candidate.target_theorem_name)))
+            diff_hash = _proof_region_diff_hash(source_text, candidate_text, str(patch_candidate.target_theorem_name))
+            if not blockers:
+                candidate_dir.mkdir(parents=True, exist_ok=True)
+                output_path = candidate_dir / f"{_safe_path_part(str(patch_candidate.target_theorem_name))}.lean"
+                output_path.write_text(candidate_text, encoding="utf-8")
+        except (KeyError, ValueError) as exc:
+            blockers.append(str(exc))
+    patch_applied = output_path is not None
+    generated_ref = _file_sha256(output_path) if output_path is not None else None
     status = "patch_applied" if patch_applied else "blocked"
     return WorkerResult(
         schema_version="1.0.0",
@@ -81,14 +96,14 @@ def apply_lean_patch_candidate(
         worker_output={
             "source_problem_path": source_problem_path.as_posix(),
             "generated_candidate_path": output_path.as_posix() if output_path is not None else None,
-            "blockers": check.blockers,
+            "blockers": tuple(blockers),
         },
         proof_use_status="not_allowed",
         result_level="lean_patch_candidate",
         patch_applied=patch_applied,
         generated_candidate_file_ref=generated_ref,
-        proof_region_diff_hash=check.proof_region_diff_hash,
-        solver_dependency_refs=patch_candidate.solver_dependency_refs,
+        proof_region_diff_hash=diff_hash,
+        solver_dependency_refs=tuple(patch_candidate.solver_dependency_refs),
     )
 
 
@@ -148,3 +163,104 @@ def _digest(*parts: str) -> str:
 
 def _safe_path_part(value: str) -> str:
     return "".join(char if char.isalnum() or char in {"-", "_"} else "_" for char in value)
+
+
+def _source_problem_blockers(text: str) -> tuple[str, ...]:
+    blockers: list[str] = []
+    regions = _regions(text, "-- MARP_PROOF_REGION_START:", "-- MARP_PROOF_REGION_END:", blockers)
+    if not regions:
+        blockers.append("missing_marp_proof_region")
+    for line_number, line in enumerate(text.splitlines(), start=1):
+        if re.search(r"\bsorry\b", line) and not any(start < line_number < end for start, end, _name in regions):
+            blockers.append(f"sorry_outside_marp_proof_region:{line_number}")
+    return tuple(blockers)
+
+
+def _candidate_blockers(text: str) -> tuple[str, ...]:
+    if re.search(r"\bsorry\b", text):
+        return ("generated_candidate_contains_sorry",)
+    return ()
+
+
+def _outside_edit_blockers(source_text: str, candidate_text: str, target_name: str) -> tuple[str, ...]:
+    blockers: list[str] = []
+    source_regions = _target_regions(source_text, target_name, blockers)
+    candidate_regions = _target_regions(candidate_text, target_name, blockers)
+    if _outside_regions(source_text, source_regions) != _outside_regions(candidate_text, candidate_regions):
+        blockers.append("edit_outside_admitted_regions")
+    return tuple(blockers)
+
+
+def _replace_between_markers(source_text: str, start_marker: str, end_marker: str, replacement: str) -> str:
+    lines = source_text.splitlines()
+    starts = [index for index, line in enumerate(lines) if line.strip() == start_marker]
+    ends = [index for index, line in enumerate(lines) if line.strip() == end_marker]
+    if len(starts) != 1 or len(ends) != 1:
+        raise ValueError("expected_exactly_one_marp_proof_region")
+    start = starts[0]
+    end = ends[0]
+    if start >= end:
+        raise ValueError("malformed_marp_proof_region")
+    candidate = lines[: start + 1] + replacement.splitlines() + lines[end:]
+    return "\n".join(candidate) + ("\n" if source_text.endswith("\n") else "")
+
+
+def _proof_region_diff_hash(source_text: str, candidate_text: str, target_name: str) -> str:
+    source_region = _single_region_text(source_text, target_name)
+    candidate_region = _single_region_text(candidate_text, target_name)
+    digest = hashlib.sha256(f"{source_region}\n---\n{candidate_region}".encode("utf-8")).hexdigest()
+    return f"sha256:{digest}"
+
+
+def _target_regions(text: str, target_name: str, blockers: list[str]) -> tuple[tuple[int, int, str], ...]:
+    proof = _regions(text, "-- MARP_PROOF_REGION_START:", "-- MARP_PROOF_REGION_END:", blockers)
+    helper = _regions(text, "-- MARP_HELPER_REGION_START:", "-- MARP_HELPER_REGION_END:", blockers)
+    target = tuple(region for region in proof + helper if region[2] == target_name)
+    if not any(region[2] == target_name for region in proof):
+        blockers.append(f"missing_target_marp_proof_region:{target_name}")
+    return target
+
+
+def _regions(text: str, start_prefix: str, end_prefix: str, blockers: list[str]) -> tuple[tuple[int, int, str], ...]:
+    regions: list[tuple[int, int, str]] = []
+    open_region: tuple[int, str] | None = None
+    for line_number, raw_line in enumerate(text.splitlines(), start=1):
+        line = raw_line.strip()
+        if line.startswith(start_prefix):
+            if open_region is not None:
+                blockers.append(f"nested_region:{line_number}")
+                continue
+            open_region = (line_number, line.removeprefix(start_prefix))
+            continue
+        if line.startswith(end_prefix):
+            if open_region is None:
+                blockers.append(f"unmatched_region_end:{line_number}")
+                continue
+            name = line.removeprefix(end_prefix)
+            start_line, start_name = open_region
+            if name != start_name:
+                blockers.append(f"mismatched_region:{start_name}:{name}")
+            else:
+                regions.append((start_line, line_number, name))
+            open_region = None
+    if open_region is not None:
+        blockers.append(f"unclosed_region:{open_region[1]}")
+    return tuple(regions)
+
+
+def _outside_regions(text: str, regions: tuple[tuple[int, int, str], ...]) -> str:
+    kept: list[str] = []
+    for line_number, line in enumerate(text.splitlines(), start=1):
+        if any(start < line_number < end for start, end, _name in regions):
+            continue
+        kept.append(line)
+    return "\n".join(kept)
+
+
+def _single_region_text(text: str, target_name: str) -> str:
+    blockers: list[str] = []
+    matching = [region for region in _regions(text, "-- MARP_PROOF_REGION_START:", "-- MARP_PROOF_REGION_END:", blockers) if region[2] == target_name]
+    if len(matching) != 1:
+        return ""
+    start, end, _name = matching[0]
+    return "\n".join(text.splitlines()[start:end - 1])

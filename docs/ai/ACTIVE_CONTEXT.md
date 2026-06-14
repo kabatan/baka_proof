@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A+v0.3B-patch
-status: V03B_RCB1_PASS_T51_READY
+status: V03B_RCB2_PASS_T54_READY
 created: 2026-06-13
 last_updated: 2026-06-14
 base_spec: MARP-GEOLEAN-BASE-004
@@ -455,10 +455,34 @@ Completed review checkpoint:
 RC-B1 — Schema and problem-source/proof-region guard checkpoint
 ```
 
-Current task:
+Completed task:
 
 ```text
 T51 — TraceCompiler emits concrete LeanPatchCandidateV1
+```
+
+Completed task:
+
+```text
+T52 — ConstructionCompiler emits concrete LeanPatchCandidateV1
+```
+
+Completed task:
+
+```text
+T53 — Compiler artifact tests
+```
+
+Completed review checkpoint:
+
+```text
+RC-B2 — Compiler patch candidate checkpoint
+```
+
+Current task:
+
+```text
+T54 — ProofWorker patch application
 ```
 
 Current task files changed in T46:
@@ -483,6 +507,22 @@ plugins/geometry_synthetic/patching/proof_region.py
 scripts/check_lean_no_sorry.py
 tests/unit/test_solver_backed_proof_region.py
 docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t50_solver_backed_proof_region.md
+docs/ai/ACTIVE_CONTEXT.md
+```
+
+Current task files changed in T51-T53:
+
+```text
+plugins/geometry_synthetic/trace_compiler.py
+plugins/geometry_synthetic/construction/__init__.py
+src/math_auto_research/model_api/proof_worker.py
+tests/unit/test_trace_compiler_solver_backed_patch.py
+tests/unit/test_trace_compiler_solver_backed_mutation.py
+tests/unit/test_construction_compiler_solver_backed_patch.py
+tests/unit/test_construction_compiler_solver_backed_mutation.py
+tests/unit/test_compiler_patch_candidate_not_final_proof.py
+tests/unit/test_raw_provider_output_not_patch_material.py
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t51_t52_t53_compiler_patch_candidates.md
 docs/ai/ACTIVE_CONTEXT.md
 ```
 
@@ -567,7 +607,7 @@ T46 final replay and v0.3A closure are complete: release blockers 1-34 pass, cor
 After v0.3B patch installation, the intended complete v0.3 closure is not final until solver-backed proof repair also passes. Current allowed status is:
 
 ```text
-V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: v0.3A harness-ready passed, v0.3B solver-backed schema and proof-region guard implemented; compiler/worker/final certificate/release flow pending
+V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: v0.3A harness-ready passed, v0.3B schema/proof-region guard implemented and compiler patch-candidate floor implemented; worker/final certificate/release flow pending
 V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY: not yet claimed
 V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY: blocked
 ```
