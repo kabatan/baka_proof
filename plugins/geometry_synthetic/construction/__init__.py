@@ -142,8 +142,8 @@ class ConstructionCompiler:
             patch_kind="add_helper_lemma_and_replace_proof_region",
             allowed_edit_region={
                 "region_id": "proof_region:compiled_construction_fixture",
-                "start_marker": "-- PROOF-REGION-START:compiled_construction_fixture",
-                "end_marker": "-- PROOF-REGION-END:compiled_construction_fixture",
+                "start_marker": "-- MARP_PROOF_REGION_START:compiled_construction_fixture",
+                "end_marker": "-- MARP_PROOF_REGION_END:compiled_construction_fixture",
             },
             proof_region_text=lean_patch,
             solver_dependency_refs=(

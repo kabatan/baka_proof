@@ -81,8 +81,8 @@ class TraceCompiler:
             patch_kind="replace_proof_region",
             allowed_edit_region={
                 "region_id": "proof_region:compiled_trace_fixture",
-                "start_marker": "-- PROOF-REGION-START:compiled_trace_fixture",
-                "end_marker": "-- PROOF-REGION-END:compiled_trace_fixture",
+                "start_marker": "-- MARP_PROOF_REGION_START:compiled_trace_fixture",
+                "end_marker": "-- MARP_PROOF_REGION_END:compiled_trace_fixture",
             },
             proof_region_text=lean_patch,
             solver_dependency_refs=(

@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from typing import Any
 
 
@@ -26,12 +26,12 @@ class LeanPatchCandidateV1:
     required_imports: tuple[str, ...]
     helper_lemmas: tuple[dict[str, str], ...]
     proof_region_replacement: dict[str, str]
+    proof_region_replacement_text: str
     solver_dependency_refs: tuple[str, ...]
     proof_template_id: str
     proof_origin: str
     raw_provider_output_used_as_proof: bool
     created_by: str
-    metadata: dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if self.schema_version != "1.0.0":
@@ -45,8 +45,8 @@ class LeanPatchCandidateV1:
         if self.raw_provider_output_used_as_proof:
             raise ValueError("raw provider output cannot be used as proof_region_replacement")
         _require_sha256("target_protected_statement_hash", self.target_protected_statement_hash)
-        _validate_allowed_edit_region(self.allowed_edit_region)
-        _validate_proof_region_replacement(self.proof_region_replacement)
+        _validate_allowed_edit_region(self.allowed_edit_region, self.target_theorem_name)
+        _validate_proof_region_replacement(self.proof_region_replacement, self.proof_region_replacement_text)
         _validate_solver_dependencies(self.solver_dependency_refs)
         expected = expected_patch_id(
             self.target_protected_statement_hash,
@@ -74,7 +74,6 @@ class LeanPatchCandidateV1:
         required_imports: tuple[str, ...] = (),
         helper_lemmas: tuple[dict[str, str], ...] = (),
         raw_provider_output_used_as_proof: bool = False,
-        metadata: dict[str, Any] | None = None,
     ) -> "LeanPatchCandidateV1":
         text_hash = sha256_ref(proof_region_text)
         replacement = {"text_ref": text_hash, "text_hash": text_hash}
@@ -91,12 +90,12 @@ class LeanPatchCandidateV1:
             required_imports=required_imports,
             helper_lemmas=helper_lemmas,
             proof_region_replacement=replacement,
+            proof_region_replacement_text=proof_region_text,
             solver_dependency_refs=solver_dependency_refs,
             proof_template_id=proof_template_id,
             proof_origin=proof_origin,
             raw_provider_output_used_as_proof=raw_provider_output_used_as_proof,
             created_by=created_by,
-            metadata=metadata or {},
         )
 
     @classmethod
@@ -105,7 +104,7 @@ class LeanPatchCandidateV1:
         unknown = sorted(set(payload) - allowed)
         if unknown:
             raise ValueError(f"unknown LeanPatchCandidateV1 fields: {unknown}")
-        missing = sorted(allowed - {"metadata"} - set(payload))
+        missing = sorted(allowed - set(payload))
         if missing:
             raise ValueError(f"missing LeanPatchCandidateV1 fields: {missing}")
         return cls(
@@ -120,12 +119,12 @@ class LeanPatchCandidateV1:
             required_imports=tuple(payload.get("required_imports", ())),
             helper_lemmas=tuple(dict(item) for item in payload.get("helper_lemmas", ())),
             proof_region_replacement=dict(payload["proof_region_replacement"]),
+            proof_region_replacement_text=str(payload["proof_region_replacement_text"]),
             solver_dependency_refs=tuple(payload["solver_dependency_refs"]),
             proof_template_id=str(payload["proof_template_id"]),
             proof_origin=str(payload["proof_origin"]),
             raw_provider_output_used_as_proof=bool(payload["raw_provider_output_used_as_proof"]),
             created_by=str(payload["created_by"]),
-            metadata=dict(payload.get("metadata", {})),
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -162,21 +161,27 @@ def _require_sha256(field_name: str, value: str) -> None:
         raise ValueError(f"{field_name} must be sha256:<64 hex>")
 
 
-def _validate_allowed_edit_region(value: dict[str, str]) -> None:
+def _validate_allowed_edit_region(value: dict[str, str], theorem_name: str) -> None:
     required = {"region_id", "start_marker", "end_marker"}
     if set(value) != required:
         raise ValueError("allowed_edit_region must contain exactly region_id, start_marker, end_marker")
     if not all(str(value[key]) for key in required):
         raise ValueError("allowed_edit_region values must be non-empty strings")
+    expected_start = f"-- MARP_PROOF_REGION_START:{theorem_name}"
+    expected_end = f"-- MARP_PROOF_REGION_END:{theorem_name}"
+    if value["start_marker"] != expected_start or value["end_marker"] != expected_end:
+        raise ValueError("allowed_edit_region markers must exactly match MARP proof-region markers for the theorem")
 
 
-def _validate_proof_region_replacement(value: dict[str, str]) -> None:
+def _validate_proof_region_replacement(value: dict[str, str], replacement_text: str) -> None:
     if set(value) != {"text_ref", "text_hash"}:
         raise ValueError("proof_region_replacement must contain exactly text_ref and text_hash")
     _require_sha256("proof_region_replacement.text_ref", value["text_ref"])
     _require_sha256("proof_region_replacement.text_hash", value["text_hash"])
     if value["text_ref"] != value["text_hash"]:
         raise ValueError("proof_region_replacement.text_ref must be content-addressed by text_hash")
+    if value["text_hash"] != sha256_ref(replacement_text):
+        raise ValueError("proof_region_replacement.text_hash must match proof_region_replacement_text")
 
 
 def _validate_solver_dependencies(refs: tuple[str, ...]) -> None:

@@ -63,8 +63,8 @@ def _valid_patch() -> LeanPatchCandidateV1:
         patch_kind="replace_proof_region",
         allowed_edit_region={
             "region_id": "proof_region:sample_target",
-            "start_marker": "-- PROOF-REGION-START:sample_target",
-            "end_marker": "-- PROOF-REGION-END:sample_target",
+            "start_marker": "-- MARP_PROOF_REGION_START:sample_target",
+            "end_marker": "-- MARP_PROOF_REGION_END:sample_target",
         },
         proof_region_text="  exact True.intro",
         solver_dependency_refs=(
@@ -83,7 +83,7 @@ def _valid_certificate(patch: LeanPatchCandidateV1) -> SolverBackedProofCertific
         task_run_id="task_run:fixture",
         benchmark_entry_id="entry:fixture",
         baseline_id="B2",
-        source_problem_ref="source_problem:fixture",
+        source_problem_ref=_sha("source_problem"),
         generated_candidate_file_ref=_sha("candidate"),
         theorem_name="sample_target",
         protected_statement_hash=patch.target_protected_statement_hash,

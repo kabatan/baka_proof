@@ -43,13 +43,18 @@ class SolverBackedProofCertificate:
             raise ValueError("SolverBackedProofCertificate.schema_version must be 1.0.0")
         if self.baseline_id not in {"B2", "B4", "other"}:
             raise ValueError("baseline_id must be B2, B4, or other")
+        _require_sha256("source_problem_ref", self.source_problem_ref)
         _require_sha256("generated_candidate_file_ref", self.generated_candidate_file_ref)
         _require_sha256("protected_statement_hash", self.protected_statement_hash)
         _require_sha256("proof_region_diff_hash", self.proof_region_diff_hash)
+        _require_prefix("extraction_report_ref", self.extraction_report_ref, ("geometry_extraction_report:", "geometry_extraction:"))
+        _require_prefix("goal_anchor_ref", self.goal_anchor_ref, ("goal_anchor:", "goal:"))
         _require_prefix("provider_run_manifest_ref", self.provider_run_manifest_ref, ("provider_run_manifest:",))
         _validate_solver_artifact(self.normalized_solver_artifact)
         _require_prefix("compiler_result_ref", self.compiler_result_ref, ("trace_compilation:", "construction_compilation:"))
         _require_prefix("lean_patch_candidate_ref", self.lean_patch_candidate_ref, ("lean_patch:",))
+        _require_prefix("worker_result_ref", self.worker_result_ref, ("worker_result:",))
+        _require_prefix("final_verify_report_ref", self.final_verify_report_ref, ("final_verify:",))
         if self.solver_dependency_status not in {"passed", "failed"}:
             raise ValueError("solver_dependency_status must be passed or failed")
         if self.final_verify_status != "final_theorem":

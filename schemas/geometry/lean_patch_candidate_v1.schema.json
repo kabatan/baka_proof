@@ -6,12 +6,14 @@
       "additionalProperties": false,
       "properties": {
         "end_marker": {
+          "pattern": "^-- MARP_PROOF_REGION_END:[A-Za-z0-9_.:-]+$",
           "type": "string"
         },
         "region_id": {
           "type": "string"
         },
         "start_marker": {
+          "pattern": "^-- MARP_PROOF_REGION_START:[A-Za-z0-9_.:-]+$",
           "type": "string"
         }
       },
@@ -53,9 +55,6 @@
       },
       "type": "array"
     },
-    "metadata": {
-      "type": "object"
-    },
     "patch_id": {
       "pattern": "^lean_patch:[0-9a-f]{64}$",
       "type": "string"
@@ -92,6 +91,9 @@
         "text_hash"
       ],
       "type": "object"
+    },
+    "proof_region_replacement_text": {
+      "type": "string"
     },
     "proof_template_id": {
       "type": "string"
@@ -143,6 +145,7 @@
     "required_imports",
     "helper_lemmas",
     "proof_region_replacement",
+    "proof_region_replacement_text",
     "solver_dependency_refs",
     "proof_template_id",
     "proof_origin",

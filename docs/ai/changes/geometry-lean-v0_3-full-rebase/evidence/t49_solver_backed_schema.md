@@ -1,6 +1,6 @@
 ---
 title: T49 solver-backed schema patch evidence
-status: complete
+status: complete_rc_b1_pass
 task: T49
 plan: MARP-GEOLEAN-PLAN-004B
 date: 2026-06-14
@@ -43,7 +43,7 @@ Existing record/schema contracts were patched for:
 ```text
 make test-unit TEST_FILTER=solver_backed_schema
 Result: PASS
-Ran 6 tests in 0.001s
+Ran 8 tests in 0.001s
 ```
 
 ```text
@@ -88,6 +88,31 @@ Ran 2 tests in 0.000s
 make test-unit TEST_FILTER=final_verify
 Result: PASS
 Ran 8 tests in 37.326s
+```
+
+## RC-B1 Fixes
+
+The first RC-B1 review returned `FAIL_FIXABLE`. T49-related fixes applied:
+
+- `LeanPatchCandidateV1` now requires exact `-- MARP_PROOF_REGION_START:<theorem>` and `-- MARP_PROOF_REGION_END:<theorem>` markers.
+- `LeanPatchCandidateV1` no longer uses arbitrary proof-critical `metadata`; proof replacement text is a strict top-level field and must match `proof_region_replacement.text_hash`.
+- `SolverBackedProofCertificate` now validates concrete source/problem/provenance refs for `source_problem_ref`, `extraction_report_ref`, `goal_anchor_ref`, `worker_result_ref`, and `final_verify_report_ref`.
+- Unit tests now cover non-MARP marker rejection and unconstrained `source_problem_ref` rejection.
+
+## RC-B1 Review
+
+Guardian boundary reviewer rerun result:
+
+```text
+RESULT: PASS
+Blockers: none found for T49/T50 packet scope.
+```
+
+Reviewer reran:
+
+```text
+python scripts/check_solver_backed_patch_schema.py
+python -m unittest tests.unit.test_solver_backed_schema tests.unit.test_solver_backed_proof_region
 ```
 
 ## Claim Ceiling

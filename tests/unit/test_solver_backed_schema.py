@@ -32,6 +32,16 @@ class SolverBackedSchemaTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             LeanPatchCandidateV1.from_dict(payload)
 
+    def test_patch_rejects_non_marp_markers(self) -> None:
+        payload = valid_patch().to_dict()
+        payload["allowed_edit_region"] = {
+            "region_id": "proof_region:sample_target",
+            "start_marker": "-- PROOF-REGION-START:sample_target",
+            "end_marker": "-- PROOF-REGION-END:sample_target",
+        }
+        with self.assertRaises(ValueError):
+            LeanPatchCandidateV1.from_dict(payload)
+
     def test_certificate_requires_proof_region_diff_hash(self) -> None:
         certificate = valid_certificate(valid_patch()).to_dict()
         certificate.pop("proof_region_diff_hash")
@@ -41,6 +51,12 @@ class SolverBackedSchemaTests(unittest.TestCase):
     def test_certificate_rejects_unknown_fields(self) -> None:
         certificate = valid_certificate(valid_patch()).to_dict()
         certificate["unexpected"] = "not admitted"
+        with self.assertRaises(ValueError):
+            SolverBackedProofCertificate.from_dict(certificate)
+
+    def test_certificate_rejects_unconstrained_source_problem_ref(self) -> None:
+        certificate = valid_certificate(valid_patch()).to_dict()
+        certificate["source_problem_ref"] = "source_problem:fixture"
         with self.assertRaises(ValueError):
             SolverBackedProofCertificate.from_dict(certificate)
 
@@ -54,8 +70,8 @@ def valid_patch() -> LeanPatchCandidateV1:
         patch_kind="replace_proof_region",
         allowed_edit_region={
             "region_id": "proof_region:sample_target",
-            "start_marker": "-- PROOF-REGION-START:sample_target",
-            "end_marker": "-- PROOF-REGION-END:sample_target",
+            "start_marker": "-- MARP_PROOF_REGION_START:sample_target",
+            "end_marker": "-- MARP_PROOF_REGION_END:sample_target",
         },
         proof_region_text="  exact True.intro",
         solver_dependency_refs=(
@@ -74,7 +90,7 @@ def valid_certificate(patch: LeanPatchCandidateV1) -> SolverBackedProofCertifica
         task_run_id="task_run:fixture",
         benchmark_entry_id="entry:fixture",
         baseline_id="B2",
-        source_problem_ref="source_problem:fixture",
+        source_problem_ref=_sha("source_problem"),
         generated_candidate_file_ref=_sha("candidate"),
         theorem_name="sample_target",
         protected_statement_hash=patch.target_protected_statement_hash,

@@ -22,6 +22,7 @@
       "type": "string"
     },
     "extraction_report_ref": {
+      "pattern": "^(geometry_extraction_report|geometry_extraction):.+$",
       "type": "string"
     },
     "failure_reason": {
@@ -31,6 +32,7 @@
       ]
     },
     "final_verify_report_ref": {
+      "pattern": "^final_verify:.+$",
       "type": "string"
     },
     "final_verify_status": {
@@ -42,6 +44,7 @@
       "type": "string"
     },
     "goal_anchor_ref": {
+      "pattern": "^(goal_anchor|goal):.+$",
       "type": "string"
     },
     "lean_patch_candidate_ref": {
@@ -108,6 +111,7 @@
       "type": "string"
     },
     "source_problem_ref": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
       "type": "string"
     },
     "status": {
@@ -127,6 +131,7 @@
       "type": "string"
     },
     "worker_result_ref": {
+      "pattern": "^worker_result:.+$",
       "type": "string"
     }
   },
