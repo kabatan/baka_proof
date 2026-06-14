@@ -109,21 +109,25 @@ def _validate_config(config: dict[str, Any]) -> None:
 def _baseline_for_run(baseline: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
     uses_geometry = bool(baseline.get("uses_geometry_solve"))
     baseline_id = str(baseline["baseline_id"])
-    release_real_provider = config.get("matrix_id") in {"geometry_level2_pilot", "geometry_level2_ablation"} and uses_geometry
     solver_backed_matrix = config.get("matrix_id") == "geometry_solver_backed_proof_repair"
+    release_real_provider = (
+        config.get("matrix_id") in {"geometry_level2_pilot", "geometry_level2_ablation"}
+        or (solver_backed_matrix and baseline_id in {"B2", "B4"})
+    ) and uses_geometry
+    budget = str(config.get("resource_budget", "medium")) if solver_backed_matrix else ("heavy" if baseline_id == "B4" else str(config.get("resource_budget", "medium")))
     return {
         "baseline_id": baseline_id,
         "geometry_solve_enabled": uses_geometry,
         "final_verify_enabled": (uses_geometry or baseline_id == "B0")
         and (not solver_backed_matrix or baseline_id in {"B2", "B4"}),
-        "budget": "heavy" if baseline_id == "B4" else str(config.get("resource_budget", "medium")),
+        "budget": budget,
         "use_real_newclid": release_real_provider,
         "use_real_genesisgeo": release_real_provider,
-        "use_real_tonggeometry": release_real_provider,
-        "require_real_integration": release_real_provider,
+        "use_real_tonggeometry": release_real_provider and not solver_backed_matrix,
+        "require_real_integration": release_real_provider and not solver_backed_matrix,
         "construction_enabled": baseline.get("construction_enabled") is not False,
-        "explicit_escalation": baseline_id == "B4",
-        "heavy_search_requested": baseline_id == "B4",
+        "explicit_escalation": baseline_id == "B4" and not solver_backed_matrix,
+        "heavy_search_requested": baseline_id == "B4" and not solver_backed_matrix,
     }
 
 

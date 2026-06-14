@@ -33,21 +33,30 @@ def main() -> int:
         label = f"{baseline_id}:{task_result.get('task_entry_id')}"
         artifact_index = task_result.get("artifact_index", {})
         provider_manifest = _read_json(artifact_index.get("provider_run_manifest.json"), errors, label)
-        if provider_manifest.get("fixture_flag") is True:
-            errors.append(f"{label}:provider_manifest_fixture_flag")
-        if provider_manifest.get("real_integration_flag") is not True:
-            errors.append(f"{label}:provider_manifest_not_real_integration")
-        for index, engine_run in enumerate(provider_manifest.get("engine_runs", [])):
+        certificate = _read_json(artifact_index.get("solver_backed_proof_certificate.json"), errors, label)
+        solver_artifact = certificate.get("normalized_solver_artifact", {})
+        source_role = solver_artifact.get("source_engine_role")
+        solver_ref = solver_artifact.get("ref")
+        matching_engine_runs = [
+            run
+            for run in provider_manifest.get("engine_runs", [])
+            if isinstance(run, dict)
+            and run.get("engine_role") == source_role
+            and run.get("normalized_output_ref") == solver_ref
+        ]
+        if not matching_engine_runs:
+            errors.append(f"{label}:missing_solver_artifact_engine_run:{source_role}:{solver_ref}")
+        for index, engine_run in enumerate(matching_engine_runs):
             if not isinstance(engine_run, dict):
                 continue
             if engine_run.get("fixture_flag") is True:
-                errors.append(f"{label}:engine_run_{index}_fixture_flag")
+                errors.append(f"{label}:solver_engine_run_{index}_fixture_flag")
             if engine_run.get("real_integration_flag") is not True:
-                errors.append(f"{label}:engine_run_{index}_not_real_integration")
+                errors.append(f"{label}:solver_engine_run_{index}_not_real_integration")
             for field in ("adapter_version", "engine_version"):
                 value = str(engine_run.get(field, ""))
                 if "fixture" in value.lower():
-                    errors.append(f"{label}:engine_run_{index}_{field}_fixture:{value}")
+                    errors.append(f"{label}:solver_engine_run_{index}_{field}_fixture:{value}")
         for name in ("source_problem_ref.json", "generated_candidate_file_ref.json"):
             ref = _read_json(artifact_index.get(name), errors, label)
             for path_value in _artifact_paths(ref):

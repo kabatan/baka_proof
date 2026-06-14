@@ -83,6 +83,8 @@ def _make_counted_task(run_dir: Path, *, fixture: bool) -> dict:
         "real_integration_flag": not fixture,
         "engine_runs": [
             {
+                "engine_role": "symbolic_closure",
+                "normalized_output_ref": "geotrace:task",
                 "fixture_flag": fixture,
                 "real_integration_flag": not fixture,
                 "adapter_version": "newclid-compatible-fixture:0.1" if fixture else "newclid-real:1.0",
@@ -109,7 +111,16 @@ def _make_counted_task(run_dir: Path, *, fixture: bool) -> dict:
         artifacts["final_verify_report.json"],
         {"proof_use_status": "final_theorem", "solver_backed_proof_status": "passed"},
     )
-    _write_json(artifacts["solver_backed_proof_certificate.json"], {"certificate_id": certificate_id})
+    _write_json(
+        artifacts["solver_backed_proof_certificate.json"],
+        {
+            "certificate_id": certificate_id,
+            "normalized_solver_artifact": {
+                "source_engine_role": "symbolic_closure",
+                "ref": "geotrace:task",
+            },
+        },
+    )
     _write_json(artifacts["provider_run_manifest.json"], provider)
     artifact_index = {name: str(path) for name, path in artifacts.items()}
     _write_json(artifacts["artifact_index.json"], artifact_index)

@@ -143,6 +143,11 @@ class StandardGeometryProofLoop:
             "solver_backed_construction_final",
             "solver_backed_hybrid_or_side_condition_final",
         }
+        needs_trace_solver = task_category in solver_trace_categories or "symbolic_closure" in expected_stages
+        needs_construction_solver = (
+            bool(_field(baseline, "construction_enabled", True))
+            and (task_category in solver_construction_categories or "construction_proposer" in expected_stages)
+        )
         if geometry_solve_enabled and claim_spec is not None and geometry_stage_required:
             construction_enabled = bool(_field(baseline, "construction_enabled", True))
             request = GeometrySolveRequest(
@@ -156,8 +161,8 @@ class StandardGeometryProofLoop:
                     "construction_needed": construction_enabled and task_category in solver_construction_categories,
                     "claim_spec": claim_spec.to_dict(),
                     "emit_trace_candidate": task_category in solver_trace_categories,
-                    "use_real_newclid": bool(_field(baseline, "use_real_newclid", False)),
-                    "use_real_genesisgeo": bool(_field(baseline, "use_real_genesisgeo", False)),
+                    "use_real_newclid": bool(_field(baseline, "use_real_newclid", False)) and needs_trace_solver,
+                    "use_real_genesisgeo": bool(_field(baseline, "use_real_genesisgeo", False)) and needs_construction_solver,
                     "use_real_tonggeometry": bool(_field(baseline, "use_real_tonggeometry", False)),
                     "require_real_integration": bool(_field(baseline, "require_real_integration", False)),
                     "explicit_escalation": bool(_field(baseline, "explicit_escalation", False)),
