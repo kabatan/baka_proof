@@ -19,6 +19,7 @@
     {"fixture_id": "positive:circle_with_center_through_point", "form": "circle_with_center_through_point", "expected": "accepted"},
     {"fixture_id": "positive:intersection_of_two_nonparallel_lines", "form": "intersection_of_two_nonparallel_lines", "expected": "accepted"},
     {"fixture_id": "positive:foot_of_perpendicular", "form": "foot_of_perpendicular", "expected": "accepted"},
+    {"fixture_id": "positive:plugin_supported", "form": "plugin_supported", "expected": "accepted"},
     {"fixture_id": "positive:sufficient_direction", "form": "collinear", "relation": "sufficient", "direction_needed": "forward", "direction_available": "forward", "expected": "accepted"}
   ],
   "negative_fixtures": [

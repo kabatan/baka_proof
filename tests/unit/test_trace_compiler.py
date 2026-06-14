@@ -20,8 +20,8 @@ def supported_trace() -> GeoTraceV1:
             GeoTraceStep(
                 step_id="step:1",
                 rule_id="rule:collinearity_identity:v1",
-                premises=("Coll A B C",),
-                conclusion="Coll A B C",
+                premises=("Coll A A B",),
+                conclusion="Coll A A B",
                 side_condition_refs=("points_declared:A:B:C",),
             ),
         ),

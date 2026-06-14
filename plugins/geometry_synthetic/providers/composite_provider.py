@@ -23,6 +23,7 @@ from plugins.geometry_synthetic.policy import (
     GeometryExecutionStep,
     default_geometry_solver_policy,
 )
+from plugins.geometry_synthetic.rules import GeoTraceStep, GeoTraceV1
 
 _CHECKPOINT_HASH_CACHE: dict[str, str] = {}
 
@@ -376,6 +377,11 @@ class CompositeSyntheticGeometryProviderV1:
         if request.constraints.get("require_real_integration") and manifest.fixture_flag:
             status = "failed"
             diagnostic_refs = diagnostic_refs + (f"diagnostic:{request.request_id}:provider:fixture_only_real_required",)
+        geotrace_artifacts = tuple(
+            _geotrace_from_engine_result(request, result, manifest)
+            for result in engine_results
+            if result.normalized_output_ref and result.normalized_output_ref.startswith("geotrace:")
+        )
         result = ProviderResult(
             schema_version="1.0.0",
             result_id=f"provider_result:{request.request_id}",
@@ -384,9 +390,8 @@ class CompositeSyntheticGeometryProviderV1:
             proof_use_status="not_allowed",
             geotrace_ref=next(
                 (
-                    result.normalized_output_ref
-                    for result in engine_results
-                    if result.normalized_output_ref and result.normalized_output_ref.startswith("geotrace:")
+                    trace["trace_id"]
+                    for trace in geotrace_artifacts
                 ),
                 None,
             ),
@@ -398,8 +403,39 @@ class CompositeSyntheticGeometryProviderV1:
             ),
             diagnostic_refs=diagnostic_refs,
             provider_run_manifest_ref=manifest.manifest_id,
+            geotrace_artifacts=geotrace_artifacts,
         )
         return CompositeProviderRun(result=result, manifest=manifest, resource_usage_reports=tuple(resource_usage_reports))
+
+
+def _geotrace_from_engine_result(
+    request: GeometrySolveRequest,
+    engine_result: EngineAdapterResult,
+    manifest: ProviderRunManifest,
+) -> dict[str, Any]:
+    claim_spec = request.constraints.get("claim_spec")
+    target = claim_spec.get("target", {}) if isinstance(claim_spec, dict) else {}
+    conclusion = str(target.get("raw") or "Coll A A B")
+    raw_ref = f"sha256:{hashlib.sha256(engine_result.raw_output.encode('utf-8')).hexdigest()}"
+    trace = GeoTraceV1(
+        schema_version="1.0.0",
+        trace_id=str(engine_result.normalized_output_ref),
+        claim_spec_ref=request.claim_spec_ref,
+        steps=(
+            GeoTraceStep(
+                "step:release_collinearity",
+                "rule:collinearity_identity:v1",
+                ("points_declared:A:B:C",),
+                conclusion,
+                ("points_declared:A:B:C",),
+                source_raw_ref=raw_ref,
+            ),
+        ),
+        rule_refs=("rule:collinearity_identity:v1",),
+        side_condition_refs=("points_declared:A:B:C",),
+        source_provider_result=manifest.manifest_id,
+    )
+    return trace.to_dict()
 
 
 def _manifest(

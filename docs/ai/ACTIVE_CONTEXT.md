@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A+v0.3B-patch
-status: V03B_T60_COMPLETE_T61_READY
+status: V03B_SOLVER_BACKED_RELEASE_ACCEPTANCE_PASSED_NO_TONG_MODEL_BACKED_CLAIM
 created: 2026-06-13
 last_updated: 2026-06-14
 base_spec: MARP-GEOLEAN-BASE-004
@@ -73,7 +73,9 @@ The user approved importing the v0.3B solver-backed proof-repair patch bundle on
 
 The repo has completed the v0.3A hardening implementation tasks through T46. Core v0.3A harness readiness is closed as passed; the separate TongGeometry model-backed heavy-search claim remains blocked by unavailable checkpoint artifacts.
 
-The v0.3B patch identifies the remaining intended v0.3 gap: provider-backed geometry chains currently do not yet become final theorem successes through a concrete solver-backed Lean proof-repair path. v0.3B is not complete until `V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY` passes.
+T46 final replay and closure are complete for the v0.3A core harness-ready claim.
+
+The v0.3B solver-backed proof-repair acceptance path has been rerun after stricter artifact/provenance checker fixes. The current release acceptance report passes release blockers 1-47 with open_blockers=[] and keeps the TongGeometry model-backed heavy-search claim blocked by unavailable checkpoint artifacts.
 
 ## Current Task Pointer
 
@@ -533,10 +535,28 @@ Completed task:
 T60 — Checker scripts
 ```
 
-Current task:
+Completed task:
 
 ```text
 T61 — Release acceptance integration
+```
+
+Completed task:
+
+```text
+T62 — Focused smoke and mutation tests
+```
+
+Completed task:
+
+```text
+T63 — Full command pass
+```
+
+Current task:
+
+```text
+T64 — Closure update
 ```
 
 Current task files changed in T46:
@@ -707,28 +727,26 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
 
 Allowed:
 
-```text
 BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A and BASE-004B / PLAN-004B / ACCEPTANCE-004B patch documents are installed and user-approved.
 
 T46 final replay and v0.3A closure are complete: release blockers 1-34 pass, core_experiment_ready_status=passed, and tonggeometry_model_backed_status=blocked due admitted unavailable external checkpoint artifacts.
 
-After v0.3B patch installation, the intended complete v0.3 closure is not final until solver-backed proof repair also passes. Current allowed status is:
+After spec-verifier review and checker hardening, solver-backed proof repair is supported by the current release acceptance report. Current allowed status is:
 
 ```text
-V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: v0.3A harness-ready passed, v0.3B schema/proof-region/compiler/worker/final-verify/certificate trust pieces and standard loop solver-backed path implemented; corpus/metrics/release flow pending
-V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY: not yet claimed
+V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: not claimed while TongGeometry model-backed heavy-search remains blocked
+V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY: supported by release_acceptance_v0_3b_report.json
 V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY: blocked
+claim_ceiling: v0_3b_solver_backed_ready_no_tong_model_backed_claim
 ```
 
 No R-ID is VERIFIED.
-```
 
 Not allowed yet:
 
 ```text
 V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY
-V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY
-v0_3b_solver_backed_ready_no_tong_model_backed_claim
+V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY
 real Level 2 advantage
 arbitrary LeanGeo support
 open-problem solving

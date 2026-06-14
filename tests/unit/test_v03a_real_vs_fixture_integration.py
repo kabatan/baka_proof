@@ -72,8 +72,8 @@ class V03ARealVsFixtureIntegrationTest(unittest.TestCase):
         manifest = load_json("benchmarks/leangeo/real_smoke_corpus.yaml")
         self.assertEqual(manifest["claim_ceiling"], "limited_real_smoke_corpus_not_arbitrary_leangeo_support")
         active_context = (ROOT / "docs/ai/ACTIVE_CONTEXT.md").read_text(encoding="utf-8")
-        self.assertIn("V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY is admitted", active_context)
-        self.assertIn("T46 final replay and closure are complete", active_context)
+        self.assertIn("V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY: supported", active_context)
+        self.assertIn("claim_ceiling: v0_3b_solver_backed_ready_no_tong_model_backed_claim", active_context)
         self.assertIn("tonggeometry_model_backed_status=blocked", active_context)
         self.assertIn("arbitrary LeanGeo support", active_context)
 

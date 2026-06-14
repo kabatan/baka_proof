@@ -160,7 +160,7 @@
         ],
         "returncode": 0,
         "stderr_tail": "",
-        "stdout_tail": "256:77406d21e84699b3d0d123653e40b7f48f3642beae10c0b608f58249223b8099\",\n      \"model_inference_status\": \"available\",\n      \"public_discovery_evidence_ref\": null,\n      \"role\": \"construction_proposer\"\n    },\n    {\n      \"claim_impact\": \"blocks_model_backed_tonggeometry_claim\",\n      \"code_install_status\": \"vendored\",\n      \"code_source\": \"local_vendor\",\n      \"code_version_or_commit\": \"d00925f07dc3174f91326386cb8e785e539a91a1\",\n      \"evidence_refs\": [\n        \"sha256:7d5ba2bb972a2a8fa03ec08ebc6b53eb275d88fa9613a7dedfdfed8f3f8995ba\"\n      ],\n      \"expected_commit\": \"d00925f07dc3174f91326386cb8e785e539a91a1\",\n      \"family\": \"tonggeometry_compatible\",\n      \"model_artifact_expected\": true,\n      \"model_artifact_status\": \"admitted_unavailable_external_artifact\",\n      \"model_checkpoint_hash\": null,\n      \"model_inference_status\": \"unavailable\",\n      \"public_discovery_evidence_ref\": \"sha256:7d5ba2bb972a2a8fa03ec08ebc6b53eb275d88fa9613a7dedfdfed8f3f8995ba\",\n      \"role\": \"heavy_search\"\n    }\n  ],\n  \"evidence_refs\": [\n    \"sha256:01721c1696137647ec8d6a01cb360b5c919521b7acfa8c4ffde34b8c289787ed\"\n  ],\n  \"lake_version\": \"Lake version 5.0.0-1165156 (Lean version 4.15.0)\",\n  \"lean_version\": \"Lean (version 4.15.0, x86_64-w64-windows-gnu, commit 11651562caae, Release)\",\n  \"os\": \"Windows-11-10.0.26200-SP0\",\n  \"packages\": [\n    {\n      \"lock_ref\": \"sha256:d66310b4e2144b62886842f50e2dcaa12f51f61e32b486748647054148ba9cad\",\n      \"name\": \"pyproject.toml\",\n      \"source\": \"local\",\n      \"version_or_commit\": \"workspace\"\n    },\n    {\n      \"lock_ref\": \"sha256:ea3f3c3819151a8a62ea882e38a5f1f5412e07318f1d1f7a527ae8568059d382\",\n      \"name\": \"lakefile.lean\",\n      \"source\": \"local\",\n      \"version_or_commit\": \"workspace\"\n    }\n  ],\n  \"python_version\": \"3.12.11\",\n  \"report_id\": \"dependency_resolution:20260614T092858Z\",\n  \"schema_version\": \"1.0.0\",\n  \"unresolved\": [\n    {\n      \"component\": \"tonggeometry_compatible\",\n      \"consequence\": \"blocks_model_backed_tonggeometry_claim\"\n    }\n  ]\n}\n"
+        "stdout_tail": "256:77406d21e84699b3d0d123653e40b7f48f3642beae10c0b608f58249223b8099\",\n      \"model_inference_status\": \"available\",\n      \"public_discovery_evidence_ref\": null,\n      \"role\": \"construction_proposer\"\n    },\n    {\n      \"claim_impact\": \"blocks_model_backed_tonggeometry_claim\",\n      \"code_install_status\": \"vendored\",\n      \"code_source\": \"local_vendor\",\n      \"code_version_or_commit\": \"d00925f07dc3174f91326386cb8e785e539a91a1\",\n      \"evidence_refs\": [\n        \"sha256:7d5ba2bb972a2a8fa03ec08ebc6b53eb275d88fa9613a7dedfdfed8f3f8995ba\"\n      ],\n      \"expected_commit\": \"d00925f07dc3174f91326386cb8e785e539a91a1\",\n      \"family\": \"tonggeometry_compatible\",\n      \"model_artifact_expected\": true,\n      \"model_artifact_status\": \"admitted_unavailable_external_artifact\",\n      \"model_checkpoint_hash\": null,\n      \"model_inference_status\": \"unavailable\",\n      \"public_discovery_evidence_ref\": \"sha256:7d5ba2bb972a2a8fa03ec08ebc6b53eb275d88fa9613a7dedfdfed8f3f8995ba\",\n      \"role\": \"heavy_search\"\n    }\n  ],\n  \"evidence_refs\": [\n    \"sha256:01721c1696137647ec8d6a01cb360b5c919521b7acfa8c4ffde34b8c289787ed\"\n  ],\n  \"lake_version\": \"Lake version 5.0.0-1165156 (Lean version 4.15.0)\",\n  \"lean_version\": \"Lean (version 4.15.0, x86_64-w64-windows-gnu, commit 11651562caae, Release)\",\n  \"os\": \"Windows-11-10.0.26200-SP0\",\n  \"packages\": [\n    {\n      \"lock_ref\": \"sha256:d66310b4e2144b62886842f50e2dcaa12f51f61e32b486748647054148ba9cad\",\n      \"name\": \"pyproject.toml\",\n      \"source\": \"local\",\n      \"version_or_commit\": \"workspace\"\n    },\n    {\n      \"lock_ref\": \"sha256:ea3f3c3819151a8a62ea882e38a5f1f5412e07318f1d1f7a527ae8568059d382\",\n      \"name\": \"lakefile.lean\",\n      \"source\": \"local\",\n      \"version_or_commit\": \"workspace\"\n    }\n  ],\n  \"python_version\": \"3.12.11\",\n  \"report_id\": \"dependency_resolution:20260614T143526Z\",\n  \"schema_version\": \"1.0.0\",\n  \"unresolved\": [\n    {\n      \"component\": \"tonggeometry_compatible\",\n      \"consequence\": \"blocks_model_backed_tonggeometry_claim\"\n    }\n  ]\n}\n"
       },
       "status": "passed"
     },
@@ -185,7 +185,7 @@
         ],
         "returncode": 0,
         "stderr_tail": "",
-        "stdout_tail": "python -m math_auto_research.cli.report_target_library_status\n{\n  \"blockers\": [],\n  \"claim_ceiling\": \"leangeo_subset_v1_available_not_arbitrary_leangeo_support\",\n  \"construction_mapping_ref\": \"sha256:c7577247cc68b0288d7157cdab38649f6a9730a69a2d1e8b6507fa515f2a2468\",\n  \"expected_lean_version\": \"4.15\",\n  \"install_status\": \"available\",\n  \"local_lean_version\": \"Lean (version 4.15.0, x86_64-w64-windows-gnu, commit 11651562caae, Release)\",\n  \"namespace_discovery_status\": \"leangeo_subset_v1_available\",\n  \"namespace_map_ref\": \"sha256:196f30dc41efa425c51630b9b3434c8d3002f04da962686b5e5bb232b4eb603a\",\n  \"native_windows_full_corpus_status\": \"blocked_by_windows_archive\",\n  \"native_windows_install_status\": \"available\",\n  \"predicate_mapping_ref\": \"sha256:5823fbb3f9a798f1da381b82b81207207ba5cd04d81c5626957512fdc9ee77a3\",\n  \"relation_mapping_ref\": \"sha256:eb2619b6c4bbd932acb6e05117901da8423adc991391c42a0add5363b379d9a4\",\n  \"report_id\": \"target_library_status:1781429345794225400\",\n  \"schema_version\": \"1.0.0\",\n  \"source_dependency\": \"LeanGeo-compatible\",\n  \"source_url\": \"https://github.com/project-numina/LeanGeo.git\",\n  \"target_library_id\": \"LeanGeoSubsetV1\",\n  \"theorem_discovery_status\": \"leangeo_subset_v1_available\",\n  \"theorem_grammar_ref\": \"sha256:c6310eb2fb57bc20a4fe73540e2f8c0ee6c8b455cfbb20f212dd571d2bbb86ab\",\n  \"version_or_commit\": \"9212b89ef0cb08adb049b32f6332a1f2b9e551ab\",\n  \"wsl_install_status\": \"available\",\n  \"wsl_lean_version\": \"Lean (version 4.15.0, x86_64-unknown-linux-gnu, commit 11651562caae, Release)\",\n  \"wsl_subset_elaboration_status\": \"available\"\n}\n"
+        "stdout_tail": "python -m math_auto_research.cli.report_target_library_status\n{\n  \"blockers\": [],\n  \"claim_ceiling\": \"leangeo_subset_v1_available_not_arbitrary_leangeo_support\",\n  \"construction_mapping_ref\": \"sha256:c7577247cc68b0288d7157cdab38649f6a9730a69a2d1e8b6507fa515f2a2468\",\n  \"expected_lean_version\": \"4.15\",\n  \"install_status\": \"available\",\n  \"local_lean_version\": \"Lean (version 4.15.0, x86_64-w64-windows-gnu, commit 11651562caae, Release)\",\n  \"namespace_discovery_status\": \"leangeo_subset_v1_available\",\n  \"namespace_map_ref\": \"sha256:196f30dc41efa425c51630b9b3434c8d3002f04da962686b5e5bb232b4eb603a\",\n  \"native_windows_full_corpus_status\": \"blocked_by_windows_archive\",\n  \"native_windows_install_status\": \"available\",\n  \"predicate_mapping_ref\": \"sha256:5823fbb3f9a798f1da381b82b81207207ba5cd04d81c5626957512fdc9ee77a3\",\n  \"relation_mapping_ref\": \"sha256:eb2619b6c4bbd932acb6e05117901da8423adc991391c42a0add5363b379d9a4\",\n  \"report_id\": \"target_library_status:1781447734259574700\",\n  \"schema_version\": \"1.0.0\",\n  \"source_dependency\": \"LeanGeo-compatible\",\n  \"source_url\": \"https://github.com/project-numina/LeanGeo.git\",\n  \"target_library_id\": \"LeanGeoSubsetV1\",\n  \"theorem_discovery_status\": \"leangeo_subset_v1_available\",\n  \"theorem_grammar_ref\": \"sha256:c6310eb2fb57bc20a4fe73540e2f8c0ee6c8b455cfbb20f212dd571d2bbb86ab\",\n  \"version_or_commit\": \"9212b89ef0cb08adb049b32f6332a1f2b9e551ab\",\n  \"wsl_install_status\": \"available\",\n  \"wsl_lean_version\": \"Lean (version 4.15.0, x86_64-unknown-linux-gnu, commit 11651562caae, Release)\",\n  \"wsl_subset_elaboration_status\": \"available\"\n}\n"
       },
       "status": "passed"
     },
@@ -204,7 +204,7 @@
               ],
               "returncode": 0,
               "stderr_tail": "",
-              "stdout_tail": " \"provider_class\": \"CompositeSyntheticGeometryProviderV1\",\n    \"provider_id\": \"geometry_solver_provider:composite_synthetic:v1\",\n    \"provider_version\": \"v1\",\n    \"raw_output_hashes\": [\n      \"b8b082c5ad07b286\"\n    ],\n    \"real_integration_flag\": true,\n    \"request_id\": \"geometry_request:real_newclid_smoke\",\n    \"resource_usage_refs\": [\n      \"resource_usage:geometry_request:real_newclid_smoke:symbolic_closure:228f36267403a526\"\n    ],\n    \"schema_version\": \"1.0.0\",\n    \"side_condition_loss_count\": 0,\n    \"unsupported_rule_count\": 0\n  },\n  \"resource_usage_reports\": [\n    {\n      \"admission_status\": \"admitted\",\n      \"budget\": \"small\",\n      \"component\": \"geometry_solver_provider\",\n      \"cpu_time_sec\": 0,\n      \"ended_at\": \"1781429352.4173808\",\n      \"engine_role\": \"symbolic_closure\",\n      \"exit_status\": \"completed\",\n      \"gpu_vram_peak_mb\": null,\n      \"hard_kill_executed\": false,\n      \"heartbeat_count\": 79,\n      \"logs_ref\": \"external_newclid_stdout\",\n      \"orphan_check_passed\": true,\n      \"peak_rss_mb\": 0,\n      \"process_id\": \"39048\",\n      \"queue_wait_sec\": 0,\n      \"report_id\": \"resource_usage:geometry_request:real_newclid_smoke:symbolic_closure:228f36267403a526\",\n      \"role\": \"symbolic_closure\",\n      \"run_id\": \"geometry_request:real_newclid_smoke\",\n      \"schema_version\": \"1.0.0\",\n      \"started_at\": \"1781429348.3932571\",\n      \"timeout_status\": \"none\",\n      \"wall_time_sec\": 4.031\n    }\n  ],\n  \"result\": {\n    \"construction_candidate_refs\": [],\n    \"diagnostic_refs\": [\n      \"diagnostic:geometry_request:real_newclid_smoke:symbolic_closure:newclid_real\"\n    ],\n    \"geotrace_ref\": \"geotrace:geometry_request:real_newclid_smoke:symbolic_closure:newclid_real\",\n    \"proof_use_status\": \"not_allowed\",\n    \"provider_run_manifest_ref\": \"provider_run_manifest:9075607249235d92\",\n    \"request_id\": \"geometry_request:real_newclid_smoke\",\n    \"result_id\": \"provider_result:geometry_request:real_newclid_smoke\",\n    \"schema_version\": \"1.0.0\",\n    \"status\": \"partial\"\n  }\n}\n"
+              "stdout_tail": "\"queue_wait_sec\": 0,\n      \"report_id\": \"resource_usage:geometry_request:real_newclid_smoke:symbolic_closure:228f36267403a526\",\n      \"role\": \"symbolic_closure\",\n      \"run_id\": \"geometry_request:real_newclid_smoke\",\n      \"schema_version\": \"1.0.0\",\n      \"started_at\": \"1781447737.3534496\",\n      \"timeout_status\": \"none\",\n      \"wall_time_sec\": 4.609\n    }\n  ],\n  \"result\": {\n    \"construction_candidate_refs\": [],\n    \"diagnostic_refs\": [\n      \"diagnostic:geometry_request:real_newclid_smoke:symbolic_closure:newclid_real\"\n    ],\n    \"geotrace_artifacts\": [\n      {\n        \"claim_spec_ref\": \"sha256:real-newclid-smoke\",\n        \"proof_use_status\": \"not_allowed\",\n        \"rule_refs\": [\n          \"rule:collinearity_identity:v1\"\n        ],\n        \"schema_version\": \"1.0.0\",\n        \"side_condition_refs\": [\n          \"points_declared:A:B:C\"\n        ],\n        \"source_provider_result\": \"provider_run_manifest:0e8da3770e796bc4\",\n        \"steps\": [\n          {\n            \"conclusion\": \"Coll A B C\",\n            \"premises\": [\n              \"points_declared:A:B:C\"\n            ],\n            \"rule_id\": \"rule:collinearity_identity:v1\",\n            \"side_condition_refs\": [\n              \"points_declared:A:B:C\"\n            ],\n            \"source_raw_ref\": \"sha256:d498deda657b71d6e4e9c691fe888c37cbcb6f57e6a9f7280f081cdabcd8bfdf\",\n            \"step_id\": \"step:release_collinearity\"\n          }\n        ],\n        \"target_library\": \"LeanGeoSubsetV1\",\n        \"trace_id\": \"geotrace:geometry_request:real_newclid_smoke:symbolic_closure:newclid_real\",\n        \"unsupported_steps\": []\n      }\n    ],\n    \"geotrace_ref\": \"geotrace:geometry_request:real_newclid_smoke:symbolic_closure:newclid_real\",\n    \"proof_use_status\": \"not_allowed\",\n    \"provider_run_manifest_ref\": \"provider_run_manifest:0e8da3770e796bc4\",\n    \"request_id\": \"geometry_request:real_newclid_smoke\",\n    \"result_id\": \"provider_result:geometry_request:real_newclid_smoke\",\n    \"schema_version\": \"1.0.0\",\n    \"status\": \"partial\"\n  }\n}\n"
             },
             "status": "passed"
           },
@@ -218,7 +218,7 @@
               ],
               "returncode": 0,
               "stderr_tail": "",
-              "stdout_tail": "rce_usage:geometry_request:real_genesisgeo_smoke:construction_proposer:b54327b8852b561f\",\n      \"role\": \"construction_proposer\",\n      \"run_id\": \"geometry_request:real_genesisgeo_smoke\",\n      \"schema_version\": \"1.0.0\",\n      \"started_at\": \"1781429355.2254713\",\n      \"timeout_status\": \"none\",\n      \"wall_time_sec\": 15.203\n    },\n    {\n      \"admission_status\": \"admitted\",\n      \"budget\": \"medium\",\n      \"component\": \"geometry_solver_provider\",\n      \"cpu_time_sec\": 0,\n      \"ended_at\": \"1781429370.4257672\",\n      \"engine_role\": \"symbolic_closure\",\n      \"exit_status\": \"completed\",\n      \"gpu_vram_peak_mb\": null,\n      \"hard_kill_executed\": false,\n      \"heartbeat_count\": 1,\n      \"logs_ref\": \"inline_dummy_adapter\",\n      \"orphan_check_passed\": true,\n      \"peak_rss_mb\": 0,\n      \"process_id\": \"\",\n      \"queue_wait_sec\": 0,\n      \"report_id\": \"resource_usage:geometry_request:real_genesisgeo_smoke:symbolic_closure:447e2586808a2f1c\",\n      \"role\": \"symbolic_closure\",\n      \"run_id\": \"geometry_request:real_genesisgeo_smoke\",\n      \"schema_version\": \"1.0.0\",\n      \"started_at\": \"1781429370.4257672\",\n      \"timeout_status\": \"none\",\n      \"wall_time_sec\": 0.0\n    }\n  ],\n  \"result\": {\n    \"construction_candidate_refs\": [\n      \"aux_construction_candidate:geometry_request:real_genesisgeo_smoke:construction_proposer:genesisgeo_real\"\n    ],\n    \"diagnostic_refs\": [\n      \"diagnostic:geometry_request:real_genesisgeo_smoke:symbolic_closure:newclid_fixture\",\n      \"diagnostic:geometry_request:real_genesisgeo_smoke:construction_proposer:genesisgeo_real\",\n      \"diagnostic:geometry_request:real_genesisgeo_smoke:symbolic_closure:newclid_fixture\"\n    ],\n    \"geotrace_ref\": null,\n    \"proof_use_status\": \"not_allowed\",\n    \"provider_run_manifest_ref\": \"provider_run_manifest:d9463eae597d6531\",\n    \"request_id\": \"geometry_request:real_genesisgeo_smoke\",\n    \"result_id\": \"provider_result:geometry_request:real_genesisgeo_smoke\",\n    \"schema_version\": \"1.0.0\",\n    \"status\": \"partial\"\n  }\n}\n"
+              "stdout_tail": "l_genesisgeo_smoke:construction_proposer:b54327b8852b561f\",\n      \"role\": \"construction_proposer\",\n      \"run_id\": \"geometry_request:real_genesisgeo_smoke\",\n      \"schema_version\": \"1.0.0\",\n      \"started_at\": \"1781447744.9199746\",\n      \"timeout_status\": \"none\",\n      \"wall_time_sec\": 16.109\n    },\n    {\n      \"admission_status\": \"admitted\",\n      \"budget\": \"medium\",\n      \"component\": \"geometry_solver_provider\",\n      \"cpu_time_sec\": 0,\n      \"ended_at\": \"1781447761.0372334\",\n      \"engine_role\": \"symbolic_closure\",\n      \"exit_status\": \"completed\",\n      \"gpu_vram_peak_mb\": null,\n      \"hard_kill_executed\": false,\n      \"heartbeat_count\": 1,\n      \"logs_ref\": \"inline_dummy_adapter\",\n      \"orphan_check_passed\": true,\n      \"peak_rss_mb\": 0,\n      \"process_id\": \"\",\n      \"queue_wait_sec\": 0,\n      \"report_id\": \"resource_usage:geometry_request:real_genesisgeo_smoke:symbolic_closure:447e2586808a2f1c\",\n      \"role\": \"symbolic_closure\",\n      \"run_id\": \"geometry_request:real_genesisgeo_smoke\",\n      \"schema_version\": \"1.0.0\",\n      \"started_at\": \"1781447761.0367243\",\n      \"timeout_status\": \"none\",\n      \"wall_time_sec\": 0.0\n    }\n  ],\n  \"result\": {\n    \"construction_candidate_refs\": [\n      \"aux_construction_candidate:geometry_request:real_genesisgeo_smoke:construction_proposer:genesisgeo_real\"\n    ],\n    \"diagnostic_refs\": [\n      \"diagnostic:geometry_request:real_genesisgeo_smoke:symbolic_closure:newclid_fixture\",\n      \"diagnostic:geometry_request:real_genesisgeo_smoke:construction_proposer:genesisgeo_real\",\n      \"diagnostic:geometry_request:real_genesisgeo_smoke:symbolic_closure:newclid_fixture\"\n    ],\n    \"geotrace_artifacts\": [],\n    \"geotrace_ref\": null,\n    \"proof_use_status\": \"not_allowed\",\n    \"provider_run_manifest_ref\": \"provider_run_manifest:d9463eae597d6531\",\n    \"request_id\": \"geometry_request:real_genesisgeo_smoke\",\n    \"result_id\": \"provider_result:geometry_request:real_genesisgeo_smoke\",\n    \"schema_version\": \"1.0.0\",\n    \"status\": \"partial\"\n  }\n}\n"
             },
             "status": "passed"
           },
@@ -232,7 +232,7 @@
               ],
               "returncode": 0,
               "stderr_tail": "",
-              "stdout_tail": "rsion\": \"v1\",\n      \"raw_output_hashes\": [\n        \"9cb446b7e294ea9b\"\n      ],\n      \"real_integration_flag\": false,\n      \"request_id\": \"geometry_request:real_tonggeometry_smoke:medium\",\n      \"resource_usage_refs\": [\n        \"resource_usage:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:fd22ad170dcb0dc4\"\n      ],\n      \"schema_version\": \"1.0.0\",\n      \"side_condition_loss_count\": 0,\n      \"unsupported_rule_count\": 0\n    },\n    \"resource_usage_reports\": [\n      {\n        \"admission_status\": \"admitted\",\n        \"budget\": \"medium\",\n        \"component\": \"geometry_solver_provider\",\n        \"cpu_time_sec\": 0,\n        \"ended_at\": \"1781429372.9256413\",\n        \"engine_role\": \"symbolic_closure\",\n        \"exit_status\": \"completed\",\n        \"gpu_vram_peak_mb\": null,\n        \"hard_kill_executed\": false,\n        \"heartbeat_count\": 1,\n        \"logs_ref\": \"inline_dummy_adapter\",\n        \"orphan_check_passed\": true,\n        \"peak_rss_mb\": 0,\n        \"process_id\": \"\",\n        \"queue_wait_sec\": 0,\n        \"report_id\": \"resource_usage:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:fd22ad170dcb0dc4\",\n        \"role\": \"symbolic_closure\",\n        \"run_id\": \"geometry_request:real_tonggeometry_smoke:medium\",\n        \"schema_version\": \"1.0.0\",\n        \"started_at\": \"1781429372.9244173\",\n        \"timeout_status\": \"none\",\n        \"wall_time_sec\": 0.0\n      }\n    ],\n    \"result\": {\n      \"construction_candidate_refs\": [],\n      \"diagnostic_refs\": [\n        \"diagnostic:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:newclid_fixture\"\n      ],\n      \"geotrace_ref\": null,\n      \"proof_use_status\": \"not_allowed\",\n      \"provider_run_manifest_ref\": \"provider_run_manifest:e29d483540941b63\",\n      \"request_id\": \"geometry_request:real_tonggeometry_smoke:medium\",\n      \"result_id\": \"provider_result:geometry_request:real_tonggeometry_smoke:medium\",\n      \"schema_version\": \"1.0.0\",\n      \"status\": \"unsupported\"\n    }\n  },\n  \"schema_version\": \"1.0.0\"\n}\n"
+              "stdout_tail": "hashes\": [\n        \"9cb446b7e294ea9b\"\n      ],\n      \"real_integration_flag\": false,\n      \"request_id\": \"geometry_request:real_tonggeometry_smoke:medium\",\n      \"resource_usage_refs\": [\n        \"resource_usage:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:fd22ad170dcb0dc4\"\n      ],\n      \"schema_version\": \"1.0.0\",\n      \"side_condition_loss_count\": 0,\n      \"unsupported_rule_count\": 0\n    },\n    \"resource_usage_reports\": [\n      {\n        \"admission_status\": \"admitted\",\n        \"budget\": \"medium\",\n        \"component\": \"geometry_solver_provider\",\n        \"cpu_time_sec\": 0,\n        \"ended_at\": \"1781447764.0431044\",\n        \"engine_role\": \"symbolic_closure\",\n        \"exit_status\": \"completed\",\n        \"gpu_vram_peak_mb\": null,\n        \"hard_kill_executed\": false,\n        \"heartbeat_count\": 1,\n        \"logs_ref\": \"inline_dummy_adapter\",\n        \"orphan_check_passed\": true,\n        \"peak_rss_mb\": 0,\n        \"process_id\": \"\",\n        \"queue_wait_sec\": 0,\n        \"report_id\": \"resource_usage:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:fd22ad170dcb0dc4\",\n        \"role\": \"symbolic_closure\",\n        \"run_id\": \"geometry_request:real_tonggeometry_smoke:medium\",\n        \"schema_version\": \"1.0.0\",\n        \"started_at\": \"1781447764.0431044\",\n        \"timeout_status\": \"none\",\n        \"wall_time_sec\": 0.0\n      }\n    ],\n    \"result\": {\n      \"construction_candidate_refs\": [],\n      \"diagnostic_refs\": [\n        \"diagnostic:geometry_request:real_tonggeometry_smoke:medium:symbolic_closure:newclid_fixture\"\n      ],\n      \"geotrace_artifacts\": [],\n      \"geotrace_ref\": null,\n      \"proof_use_status\": \"not_allowed\",\n      \"provider_run_manifest_ref\": \"provider_run_manifest:e29d483540941b63\",\n      \"request_id\": \"geometry_request:real_tonggeometry_smoke:medium\",\n      \"result_id\": \"provider_result:geometry_request:real_tonggeometry_smoke:medium\",\n      \"schema_version\": \"1.0.0\",\n      \"status\": \"unsupported\"\n    }\n  },\n  \"schema_version\": \"1.0.0\"\n}\n"
             },
             "status": "passed"
           }
@@ -285,7 +285,7 @@
           "TEST_FILTER=composite_provider"
         ],
         "returncode": 0,
-        "stderr_tail": "..............\n----------------------------------------------------------------------\nRan 14 tests in 34.834s\n\nOK\n",
+        "stderr_tail": "..............\n----------------------------------------------------------------------\nRan 14 tests in 28.775s\n\nOK\n",
         "stdout_tail": "python -m unittest discover -s tests/unit -p \"*composite_provider*.py\"\n"
       },
       "status": "passed"
@@ -330,7 +330,7 @@
           "TEST_FILTER=geotrace_rule_registry"
         ],
         "returncode": 0,
-        "stderr_tail": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.008s\n\nOK\n",
+        "stderr_tail": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.026s\n\nOK\n",
         "stdout_tail": "python -m unittest discover -s tests/unit -p \"*geotrace_rule_registry*.py\"\n"
       },
       "status": "passed"
@@ -345,7 +345,7 @@
           "TEST_FILTER=trace_compiler"
         ],
         "returncode": 0,
-        "stderr_tail": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.007s\n\nOK\n",
+        "stderr_tail": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.015s\n\nOK\n",
         "stdout_tail": "python -m unittest discover -s tests/unit -p \"*trace_compiler*.py\"\n"
       },
       "status": "passed"
@@ -360,7 +360,7 @@
           "TEST_FILTER=trace_compiler"
         ],
         "returncode": 0,
-        "stderr_tail": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.008s\n\nOK\n",
+        "stderr_tail": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.006s\n\nOK\n",
         "stdout_tail": "python -m unittest discover -s tests/unit -p \"*trace_compiler*.py\"\n"
       },
       "status": "passed"
@@ -375,7 +375,7 @@
           "TEST_FILTER=construction_compiler"
         ],
         "returncode": 0,
-        "stderr_tail": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.009s\n\nOK\n",
+        "stderr_tail": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.026s\n\nOK\n",
         "stdout_tail": "python -m unittest discover -s tests/unit -p \"*construction_compiler*.py\"\n"
       },
       "status": "passed"
@@ -390,7 +390,7 @@
           "TEST_FILTER=final_verify"
         ],
         "returncode": 0,
-        "stderr_tail": "..............\n----------------------------------------------------------------------\nRan 14 tests in 41.413s\n\nOK\n",
+        "stderr_tail": "...............\n----------------------------------------------------------------------\nRan 15 tests in 39.117s\n\nOK\n",
         "stdout_tail": "python -m unittest discover -s tests/unit -p \"*final_verify*.py\"\n"
       },
       "status": "passed"
@@ -569,7 +569,7 @@
           "TEST_FILTER=standard_geometry_loop"
         ],
         "returncode": 0,
-        "stderr_tail": ".........\n----------------------------------------------------------------------\nRan 9 tests in 76.678s\n\nOK\n",
+        "stderr_tail": ".........\n----------------------------------------------------------------------\nRan 9 tests in 169.646s\n\nOK\n",
         "stdout_tail": "python -m unittest discover -s tests/unit -p \"*standard_geometry_loop*.py\"\n"
       },
       "status": "passed"
@@ -674,7 +674,7 @@
           "TEST_FILTER=proof_worker_solver_patch"
         ],
         "returncode": 0,
-        "stderr_tail": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.037s\n\nOK\n",
+        "stderr_tail": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.008s\n\nOK\n",
         "stdout_tail": "python -m unittest discover -s tests/unit -p \"*proof_worker_solver_patch*.py\"\n"
       },
       "status": "passed"
@@ -694,7 +694,7 @@
                 "TEST_FILTER=final_verify_solver_backed"
               ],
               "returncode": 0,
-              "stderr_tail": ".....\n----------------------------------------------------------------------\nRan 5 tests in 16.958s\n\nOK\n",
+              "stderr_tail": "......\n----------------------------------------------------------------------\nRan 6 tests in 23.989s\n\nOK\n",
               "stdout_tail": "python -m unittest discover -s tests/unit -p \"*final_verify_solver_backed*.py\"\n"
             },
             "status": "passed"
@@ -709,7 +709,7 @@
                 "TEST_FILTER=final_verify_solver_backed"
               ],
               "returncode": 0,
-              "stderr_tail": ".....\n----------------------------------------------------------------------\nRan 5 tests in 15.506s\n\nOK\n",
+              "stderr_tail": "......\n----------------------------------------------------------------------\nRan 6 tests in 19.702s\n\nOK\n",
               "stdout_tail": "python -m unittest discover -s tests/unit -p \"*final_verify_solver_backed*.py\"\npython scripts/check_domain_contamination.py\ndomain contamination check passed\npython scripts/check_no_loose_options.py\nno loose options check passed\n"
             },
             "status": "passed"
@@ -733,7 +733,7 @@
                 "TEST_FILTER=standard_geometry_loop_solver_backed"
               ],
               "returncode": 0,
-              "stderr_tail": ".\n----------------------------------------------------------------------\nRan 1 test in 21.330s\n\nOK\n",
+              "stderr_tail": ".\n----------------------------------------------------------------------\nRan 1 test in 17.189s\n\nOK\n",
               "stdout_tail": "python -m unittest discover -s tests/unit -p \"*standard_geometry_loop_solver_backed*.py\"\n"
             },
             "status": "passed"
@@ -748,7 +748,7 @@
                 "TEST_FILTER=standard_loop_no_unconditional_provider_block"
               ],
               "returncode": 0,
-              "stderr_tail": ".\n----------------------------------------------------------------------\nRan 1 test in 20.615s\n\nOK\n",
+              "stderr_tail": ".\n----------------------------------------------------------------------\nRan 1 test in 15.414s\n\nOK\n",
               "stdout_tail": "python -m unittest discover -s tests/unit -p \"*standard_loop_no_unconditional_provider_block*.py\"\npython scripts/check_domain_contamination.py\ndomain contamination check passed\npython scripts/check_no_loose_options.py\nno loose options check passed\n"
             },
             "status": "passed"
@@ -788,7 +788,7 @@
               ],
               "returncode": 0,
               "stderr_tail": "",
-              "stdout_tail": "{\n  \"errors\": [],\n  \"observed\": {\n    \"B2\": {\n      \"construction_solver_backed_final_theorem_count\": 3,\n      \"geotrace_solver_backed_final_theorem_count\": 6,\n      \"solver_backed_final_theorem_count\": 10\n    },\n    \"B4\": {\n      \"solver_backed_final_theorem_count\": 10\n    }\n  },\n  \"status\": \"passed\"\n}\n"
+              "stdout_tail": "{\n  \"derived\": {\n    \"B2\": {\n      \"construction_solver_backed_final_theorem_count\": 3,\n      \"geotrace_solver_backed_final_theorem_count\": 6,\n      \"solver_backed_final_theorem_count\": 10\n    },\n    \"B4\": {\n      \"construction_solver_backed_final_theorem_count\": 3,\n      \"geotrace_solver_backed_final_theorem_count\": 6,\n      \"solver_backed_final_theorem_count\": 10\n    }\n  },\n  \"errors\": [],\n  \"observed\": {\n    \"B2\": {\n      \"construction_solver_backed_final_theorem_count\": 3,\n      \"geotrace_solver_backed_final_theorem_count\": 6,\n      \"solver_backed_final_theorem_count\": 10\n    },\n    \"B4\": {\n      \"solver_backed_final_theorem_count\": 10\n    }\n  },\n  \"status\": \"passed\"\n}\n"
             },
             "status": "passed"
           }
@@ -808,7 +808,7 @@
         ],
         "returncode": 0,
         "stderr_tail": "",
-        "stdout_tail": "{\n  \"errors\": [],\n  \"observed\": {\n    \"B2\": {\n      \"construction_solver_backed_final_theorem_count\": 3,\n      \"geotrace_solver_backed_final_theorem_count\": 6,\n      \"solver_backed_final_theorem_count\": 10\n    },\n    \"B4\": {\n      \"solver_backed_final_theorem_count\": 10\n    }\n  },\n  \"status\": \"passed\"\n}\n"
+        "stdout_tail": "{\n  \"derived\": {\n    \"B2\": {\n      \"construction_solver_backed_final_theorem_count\": 3,\n      \"geotrace_solver_backed_final_theorem_count\": 6,\n      \"solver_backed_final_theorem_count\": 10\n    },\n    \"B4\": {\n      \"construction_solver_backed_final_theorem_count\": 3,\n      \"geotrace_solver_backed_final_theorem_count\": 6,\n      \"solver_backed_final_theorem_count\": 10\n    }\n  },\n  \"errors\": [],\n  \"observed\": {\n    \"B2\": {\n      \"construction_solver_backed_final_theorem_count\": 3,\n      \"geotrace_solver_backed_final_theorem_count\": 6,\n      \"solver_backed_final_theorem_count\": 10\n    },\n    \"B4\": {\n      \"solver_backed_final_theorem_count\": 10\n    }\n  },\n  \"status\": \"passed\"\n}\n"
       },
       "status": "passed"
     },
@@ -903,7 +903,7 @@
   "config_ref": "configs\\benchmark_runs\\geometry_solver_backed_proof_repair.yaml",
   "core_experiment_ready_status": "passed",
   "open_blockers": [],
-  "report_id": "release_acceptance:1781429657",
+  "report_id": "release_acceptance:1781448122",
   "schema_version": "1.0.0",
   "solver_backed_proof_repair_status": "passed",
   "solver_backed_summary": {

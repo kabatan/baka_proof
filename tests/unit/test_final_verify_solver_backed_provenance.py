@@ -76,6 +76,21 @@ class FinalVerifySolverBackedProvenanceTests(unittest.TestCase):
             self.assertEqual(report.sorry_status, "failed")
             self.assertEqual(report.proof_use_status, "not_allowed")
 
+    def test_solver_backed_rejects_non_target_sorry_in_candidate_file(self) -> None:
+        candidate = LEAN_TEMPLATE + "\ntheorem other_target : True := by\n  sorry\n"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "Sample.lean"
+            path.write_text(candidate, encoding="utf-8")
+            report = FinalVerifyGate().verify_file(
+                LEAN_TEMPLATE,
+                path,
+                "sample_target",
+                "obligation:sample",
+                proof_use_provenance=solver_backed_provenance(),
+            )
+            self.assertEqual(report.sorry_status, "failed")
+            self.assertEqual(report.proof_use_status, "not_allowed")
+
     def test_solver_backed_rejects_statement_edit(self) -> None:
         candidate = LEAN_TEMPLATE.replace(": True", ": False")
         with tempfile.TemporaryDirectory() as tmp:

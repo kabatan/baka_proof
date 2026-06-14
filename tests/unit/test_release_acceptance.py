@@ -54,26 +54,53 @@ class ReleaseAcceptanceTest(unittest.TestCase):
 
     def test_release_acceptance_static_mode_blocks_commands_disabled(self) -> None:
         report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)
-        self.assertEqual(len(report["checked_blockers"]), 34)
+        self.assertEqual(len(report["checked_blockers"]), 47)
         self.assertIn(report["core_experiment_ready_status"], {"blocked", "failed"})
+        self.assertIn(report["solver_backed_proof_repair_status"], {"blocked", "failed"})
         self.assertIn(report["tonggeometry_model_backed_status"], {"blocked", "failed", "passed"})
         self.assertIn("blocked_claims", report)
         self.assertIn("release_blocker_24_level2_matrix_run_replay", report["open_blockers"])
+        self.assertIn("release_blocker_42_b2_solver_backed_floor", report["open_blockers"])
 
     def test_release_acceptance_reports_independent_claim_statuses(self) -> None:
         report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)
         self.assertIn("core_experiment_ready_status", report)
+        self.assertIn("solver_backed_proof_repair_status", report)
         self.assertIn("tonggeometry_model_backed_status", report)
+        self.assertIn("solver_backed_summary", report)
         self.assertIn("blocked_claims", report)
         self.assertIn(
             report["claim_ceiling"],
             {
-                "core_experiment_ready_passed_no_tong_model_backed_claim",
-                "core_experiment_ready_passed_and_tong_model_backed_ready",
+                "v0_3b_solver_backed_ready_no_tong_model_backed_claim",
+                "v0_3b_solver_backed_ready_and_tong_model_backed_ready",
+                "v0_3a_harness_ready_but_solver_backed_proof_repair_blocked",
                 "release_acceptance_blocked_no_v0_3_completion_claim",
                 "release_acceptance_failed_no_v0_3_completion_claim",
             },
         )
+
+    def test_solver_backed_config_uses_core_config_for_level2_blockers(self) -> None:
+        report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_solver_backed_proof_repair.yaml"), run_commands=False)
+        check = next(
+            item
+            for item in report["checks"]
+            if item["check_id"] == "release_blocker_23_level2_pilot_corpus_not_fixture_only"
+        )
+        self.assertEqual(check["details"]["benchmark_pool_count"], 25)
+        self.assertEqual(report["solver_backed_summary"]["run_dir"], "runs\\geometry_solver_backed_proof_repair")
+
+    def test_release_acceptance_wires_solver_backed_blockers(self) -> None:
+        report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)
+        blocker_ids = set(report["checked_blockers"])
+        for blocker_id in [str(index) for index in range(35, 48)]:
+            self.assertIn(blocker_id, blocker_ids)
+        check = next(
+            item
+            for item in report["checks"]
+            if item["check_id"] == "release_blocker_47_release_acceptance_solver_backed_patch_checks_present"
+        )
+        self.assertEqual(check["status"], "passed")
 
     def test_release_acceptance_blocks_missing_model_backed_provider_evidence(self) -> None:
         report = evaluate_release_acceptance(Path("configs/benchmark_runs/geometry_level2_pilot.yaml"), run_commands=False)

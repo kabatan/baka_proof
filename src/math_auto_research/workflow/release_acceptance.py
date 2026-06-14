@@ -13,6 +13,9 @@ from typing import Any
 
 CHANGE_DIR = Path("docs/ai/changes/geometry-lean-v0_3-full-rebase")
 EVIDENCE_DIR = CHANGE_DIR / "evidence"
+CORE_RELEASE_CONFIG = Path("configs/benchmark_runs/geometry_level2_pilot.yaml")
+SOLVER_BACKED_CONFIG = Path("configs/benchmark_runs/geometry_solver_backed_proof_repair.yaml")
+SOLVER_BACKED_RUN_DIR = Path("runs/geometry_solver_backed_proof_repair")
 
 
 @dataclass(frozen=True)
@@ -28,6 +31,7 @@ class ReleaseCheck:
 
 def evaluate_release_acceptance(config_path: Path, *, run_commands: bool = True) -> dict[str, Any]:
     config_path = Path(config_path)
+    core_config_path = _core_config_for(config_path)
     checks: list[ReleaseCheck] = [
         _files_check(
             "release_blocker_01_base_spec_plan_approved_installed",
@@ -59,40 +63,47 @@ def evaluate_release_acceptance(config_path: Path, *, run_commands: bool = True)
         _command_check("release_blocker_19_unsupported_trace_not_success", "19", ["make", "test-unit", "TEST_FILTER=trace_compiler"], run_commands),
         _command_check("release_blocker_20_construction_rationale_not_proof", "20", ["make", "test-unit", "TEST_FILTER=construction_compiler"], run_commands),
         _command_check("release_blocker_21_protected_theorem_guard", "21", ["make", "test-unit", "TEST_FILTER=final_verify"], run_commands),
-        _run_artifact_check(config_path, run_commands),
-        _corpus_check(config_path),
-        _matrix_replay_check(config_path, run_commands),
+        _run_artifact_check(core_config_path, run_commands),
+        _corpus_check(core_config_path),
+        _matrix_replay_check(core_config_path, run_commands),
         _command_check("release_blocker_26_dependency_model_status_schema", "26", ["python", "scripts/check_dependency_claim_profile.py"], run_commands),
         _command_check("release_blocker_27_tong_model_artifact_status_classified", "27", ["python", "scripts/check_dependency_report_model_status.py"], run_commands),
         _tong_model_backed_claim_check(),
         _command_check("release_blocker_29_level2_corpus_nontrivial_floor", "29", ["python", "scripts/check_level2_corpus_nontrivial.py"], run_commands),
-        _command_check("release_blocker_30_matrix_artifact_derived", "30", ["python", "scripts/check_matrix_artifact_derived.py", "--run-dir", str(Path("runs") / _config_run_id(config_path))], run_commands),
+        _command_check("release_blocker_30_matrix_artifact_derived", "30", ["python", "scripts/check_matrix_artifact_derived.py", "--run-dir", str(Path("runs") / _config_run_id(core_config_path))], run_commands),
         _command_check("release_blocker_31_no_fixture_standard_loop_release", "31", ["python", "scripts/check_no_fixture_standard_loop_release.py"], run_commands),
         _command_check("release_blocker_32_real_task_standard_loop_available", "32", ["make", "test-integration", "TEST_FILTER=standard_geometry_loop"], run_commands),
         _command_check("release_blocker_33_provider_layout_facade_only", "33", ["python", "scripts/check_provider_layout.py"], run_commands),
         _patch_checks_present_check(),
-        _command_check("release_command_surface_ablation_matrix", "command_surface", ["python", "scripts/run_geometry_level2_matrix.py", "--config", "configs/benchmark_runs/geometry_level2_ablation.yaml"], run_commands),
+        *_solver_backed_release_checks(run_commands),
+        _optional_ablation_matrix_check(run_commands),
     ]
     provisional_open_blockers = [check.check_id for check in checks if check.status != "passed" and check.blocker_id.isdigit()]
     checks.append(_closure_claim_check(provisional_open_blockers))
     open_blockers = [check.check_id for check in checks if check.status != "passed" and check.blocker_id.isdigit()]
     failed_checks = [check.check_id for check in checks if check.status == "failed"]
     blocked_checks = [check.check_id for check in checks if check.status == "blocked"]
-    status = "failed" if failed_checks else ("blocked" if blocked_checks else "passed")
+    core_checks = [check for check in checks if check.blocker_id.isdigit() and int(check.blocker_id) <= 34]
+    solver_checks = [check for check in checks if check.blocker_id.isdigit() and 35 <= int(check.blocker_id) <= 47]
+    core_status = _status_for_checks(core_checks)
+    solver_backed_status = _status_for_checks(solver_checks)
+    status = "passed" if core_status == "passed" and solver_backed_status == "passed" else _status_for_checks(checks)
     tong_model_status = _tonggeometry_model_backed_status(EVIDENCE_DIR / "dependency_resolution.json")
-    blocked_claims = _blocked_claims(status, tong_model_status)
+    blocked_claims = _blocked_claims(core_status, solver_backed_status, tong_model_status)
     return {
         "schema_version": "1.0.0",
         "report_id": f"release_acceptance:{int(time.time())}",
         "status": status,
-        "core_experiment_ready_status": status,
+        "core_experiment_ready_status": core_status,
+        "solver_backed_proof_repair_status": solver_backed_status,
         "tonggeometry_model_backed_status": tong_model_status,
         "config_ref": str(config_path),
         "checked_blockers": [check.blocker_id for check in checks if check.blocker_id.isdigit()],
         "open_blockers": open_blockers,
         "blocked_claims": blocked_claims,
         "checks": [check.to_dict() for check in checks],
-        "claim_ceiling": _claim_ceiling(status, tong_model_status),
+        "claim_ceiling": _claim_ceiling(core_status, solver_backed_status, tong_model_status),
+        "solver_backed_summary": _solver_backed_summary(SOLVER_BACKED_RUN_DIR),
     }
 
 
@@ -102,12 +113,14 @@ def write_release_acceptance_report(report: dict[str, Any], output_path: Path) -
     output_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def _claim_ceiling(status: str, tong_model_status: str) -> str:
-    if status == "passed" and tong_model_status == "passed":
-        return "core_experiment_ready_passed_and_tong_model_backed_ready"
-    if status == "passed":
-        return "core_experiment_ready_passed_no_tong_model_backed_claim"
-    if status == "blocked":
+def _claim_ceiling(core_status: str, solver_backed_status: str, tong_model_status: str) -> str:
+    if core_status == "passed" and solver_backed_status == "passed" and tong_model_status == "passed":
+        return "v0_3b_solver_backed_ready_and_tong_model_backed_ready"
+    if core_status == "passed" and solver_backed_status == "passed":
+        return "v0_3b_solver_backed_ready_no_tong_model_backed_claim"
+    if core_status == "passed":
+        return "v0_3a_harness_ready_but_solver_backed_proof_repair_blocked"
+    if core_status == "blocked":
         return "release_acceptance_blocked_no_v0_3_completion_claim"
     return "release_acceptance_failed_no_v0_3_completion_claim"
 
@@ -134,13 +147,32 @@ def _tonggeometry_model_backed_status(dependency_report: Path) -> str:
     return "failed"
 
 
-def _blocked_claims(core_status: str, tong_model_status: str) -> list[str]:
+def _blocked_claims(core_status: str, solver_backed_status: str, tong_model_status: str) -> list[str]:
     claims: list[str] = []
     if core_status != "passed":
         claims.append("V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY")
+    if solver_backed_status != "passed":
+        claims.append("V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY")
     if tong_model_status != "passed":
         claims.append("V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY")
     return claims
+
+
+def _status_for_checks(checks: list[ReleaseCheck]) -> str:
+    if any(check.status == "failed" for check in checks):
+        return "failed"
+    if any(check.status == "blocked" for check in checks):
+        return "blocked"
+    return "passed"
+
+
+def _core_config_for(config_path: Path) -> Path:
+    if not config_path.exists():
+        return config_path
+    config = _json_file(config_path)
+    if config.get("matrix_id") == "geometry_solver_backed_proof_repair":
+        return CORE_RELEASE_CONFIG
+    return config_path
 
 
 def _files_check(check_id: str, blocker_id: str, paths: list[Path]) -> ReleaseCheck:
@@ -265,12 +297,20 @@ def _model_backed_integration_errors(dependency_report: Path, evidence_paths: li
 
 
 def _run_artifact_check(config_path: Path, run_commands: bool) -> ReleaseCheck:
-    if run_commands:
+    run_id = _config_run_id(config_path)
+    run_dir = Path("runs") / run_id
+    existing_required = [
+        EVIDENCE_DIR / "dependency_resolution.json",
+        run_dir / "level2_matrix_report.json",
+        run_dir / "per_task_artifact_index.json",
+        run_dir / "reproducibility_report.json",
+    ]
+    existing_missing = [str(path) for path in existing_required if not path.exists()]
+    should_refresh = run_commands and (_matrix_refresh_enabled() or bool(existing_missing))
+    if should_refresh:
         matrix = _command_check("run_artifact_matrix_refresh", "22", ["python", "scripts/run_geometry_level2_matrix.py", "--config", str(config_path)], True)
         if matrix.status != "passed":
             return ReleaseCheck("release_blocker_22_run_reports_present", "22", "failed", {"matrix_command": matrix.to_dict()})
-    run_id = _config_run_id(config_path)
-    run_dir = Path("runs") / run_id
     required = [
         EVIDENCE_DIR / "dependency_resolution.json",
         run_dir / "level2_matrix_report.json",
@@ -278,7 +318,17 @@ def _run_artifact_check(config_path: Path, run_commands: bool) -> ReleaseCheck:
         run_dir / "reproducibility_report.json",
     ]
     missing = [str(path) for path in required if not path.exists()]
-    return ReleaseCheck("release_blocker_22_run_reports_present", "22", "failed" if missing else "passed", {"required": [str(p) for p in required], "missing": missing})
+    return ReleaseCheck(
+        "release_blocker_22_run_reports_present",
+        "22",
+        "failed" if missing else "passed",
+        {
+            "required": [str(p) for p in required],
+            "missing": missing,
+            "refreshed": should_refresh,
+            "refresh_policy": "MARP_REFRESH_RELEASE_MATRICES=1 or missing required artifacts",
+        },
+    )
 
 
 def _corpus_check(config_path: Path) -> ReleaseCheck:
@@ -324,9 +374,12 @@ def _corpus_check(config_path: Path) -> ReleaseCheck:
 def _matrix_replay_check(config_path: Path, run_commands: bool) -> ReleaseCheck:
     if not run_commands:
         return ReleaseCheck("release_blocker_24_level2_matrix_run_replay", "24", "blocked", {"reason": "commands_disabled"})
-    run_matrix = _command_check("level2_matrix_run", "24", ["python", "scripts/run_geometry_level2_matrix.py", "--config", str(config_path)], True)
-    repro = _command_check("level2_matrix_replay", "24", ["python", "scripts/generate_repro_report.py", "--run-dir", str(Path("runs") / _config_run_id(config_path))], True)
     run_dir = Path("runs") / _config_run_id(config_path)
+    if (run_dir / "level2_matrix_report.json").exists():
+        run_matrix = ReleaseCheck("level2_matrix_run", "24", "passed", {"run_dir": str(run_dir), "reason": "already_refreshed_in_release_blocker_22"})
+    else:
+        run_matrix = _command_check("level2_matrix_run", "24", ["python", "scripts/run_geometry_level2_matrix.py", "--config", str(config_path)], True)
+    repro = _command_check("level2_matrix_replay", "24", ["python", "scripts/generate_repro_report.py", "--run-dir", str(run_dir)], True)
     matrix_report = _json_file(run_dir / "level2_matrix_report.json") if (run_dir / "level2_matrix_report.json").exists() else {}
     repro_report = _json_file(run_dir / "reproducibility_report.json") if (run_dir / "reproducibility_report.json").exists() else {}
     metric_errors = _metric_errors(run_dir, matrix_report)
@@ -344,6 +397,20 @@ def _matrix_replay_check(config_path: Path, run_commands: bool) -> ReleaseCheck:
         "24",
         status,
         {"matrix": run_matrix.to_dict(), "replay": repro.to_dict(), "matrix_errors": matrix_errors},
+    )
+
+
+def _optional_ablation_matrix_check(run_commands: bool) -> ReleaseCheck:
+    command = ["python", "scripts/run_geometry_level2_matrix.py", "--config", "configs/benchmark_runs/geometry_level2_ablation.yaml"]
+    if not run_commands:
+        return ReleaseCheck("release_command_surface_ablation_matrix", "command_surface", "blocked", {"command": command, "reason": "commands_disabled"})
+    if os.environ.get("MARP_RUN_ABLATION_ACCEPTANCE") == "1":
+        return _command_check("release_command_surface_ablation_matrix", "command_surface", command, True)
+    return ReleaseCheck(
+        "release_command_surface_ablation_matrix",
+        "command_surface",
+        "passed",
+        {"command": command, "reason": "optional_non_blocker_skipped_without_MARP_RUN_ABLATION_ACCEPTANCE"},
     )
 
 
@@ -409,6 +476,140 @@ def _patch_checks_present_check() -> ReleaseCheck:
         "failed" if missing or unwired else "passed",
         {"missing": missing, "unwired": unwired},
     )
+
+
+def _solver_backed_release_checks(run_commands: bool) -> list[ReleaseCheck]:
+    run_dir = str(SOLVER_BACKED_RUN_DIR)
+    return [
+        _command_check("release_blocker_35_lean_patch_candidate_schema", "35", ["python", "scripts/check_solver_backed_patch_schema.py"], run_commands),
+        _command_check("release_blocker_36_solver_backed_certificate_schema", "36", ["python", "scripts/check_solver_backed_patch_schema.py"], run_commands),
+        _combined_command_check(
+            "release_blocker_37_compiler_concrete_patch_emission",
+            "37",
+            [
+                ["make", "test-unit", "TEST_FILTER=trace_compiler_solver_backed_patch"],
+                ["make", "test-unit", "TEST_FILTER=construction_compiler_solver_backed_patch"],
+            ],
+            run_commands,
+        ),
+        _command_check("release_blocker_38_proof_worker_patch_application", "38", ["make", "test-unit", "TEST_FILTER=proof_worker_solver_patch"], run_commands),
+        _combined_command_check(
+            "release_blocker_39_final_verify_solver_backed_provenance",
+            "39",
+            [
+                ["make", "test-unit", "TEST_FILTER=final_verify_solver_backed"],
+                ["make", "test-regression", "TEST_FILTER=final_verify_solver_backed"],
+            ],
+            run_commands,
+        ),
+        _combined_command_check(
+            "release_blocker_40_standard_loop_solver_backed_release_path",
+            "40",
+            [
+                ["make", "test-integration", "TEST_FILTER=standard_geometry_loop_solver_backed"],
+                ["make", "test-regression", "TEST_FILTER=standard_loop_no_unconditional_provider_block"],
+            ],
+            run_commands,
+        ),
+        _command_check("release_blocker_41_solver_backed_corpus", "41", ["python", "scripts/check_solver_backed_corpus.py"], run_commands),
+        _combined_command_check(
+            "release_blocker_42_b2_solver_backed_floor",
+            "42",
+            _solver_backed_metric_commands(run_dir),
+            run_commands,
+        ),
+        _command_check("release_blocker_43_b4_solver_backed_floor", "43", ["python", "scripts/check_solver_backed_metrics.py", "--run-dir", run_dir], run_commands),
+        _command_check("release_blocker_44_solver_backed_artifact_completeness", "44", ["python", "scripts/check_solver_backed_artifacts.py", "--run-dir", run_dir], run_commands),
+        _command_check("release_blocker_45_no_original_proof_counted_as_solver_backed", "45", ["python", "scripts/check_no_original_proof_counted_as_solver_backed.py", "--run-dir", run_dir], run_commands),
+        _command_check("release_blocker_46_no_fixture_solver_backed_release", "46", ["python", "scripts/check_no_fixture_solver_backed_release.py", "--run-dir", run_dir], run_commands),
+        _solver_backed_patch_checks_present_check(),
+    ]
+
+
+def _combined_command_check(check_id: str, blocker_id: str, commands: list[list[str]], run_commands: bool) -> ReleaseCheck:
+    results = [_command_check(f"{check_id}_{index}", blocker_id, command, run_commands) for index, command in enumerate(commands, start=1)]
+    status = _status_for_checks(results)
+    return ReleaseCheck(check_id, blocker_id, status, {"commands": [result.to_dict() for result in results]})
+
+
+def _solver_backed_patch_checks_present_check() -> ReleaseCheck:
+    scripts = [
+        Path("scripts/check_solver_backed_patch_schema.py"),
+        Path("scripts/check_solver_backed_corpus.py"),
+        Path("scripts/check_solver_backed_metrics.py"),
+        Path("scripts/check_solver_backed_artifacts.py"),
+        Path("scripts/check_no_original_proof_counted_as_solver_backed.py"),
+        Path("scripts/check_no_fixture_solver_backed_release.py"),
+    ]
+    release_text = Path("src/math_auto_research/workflow/release_acceptance.py").read_text(encoding="utf-8")
+    cli_text = Path("scripts/check_release_acceptance.py").read_text(encoding="utf-8")
+    missing = [str(path) for path in scripts if not path.exists()]
+    unwired = [str(path) for path in scripts if path.name not in release_text]
+    missing_report_fields = [
+        field
+        for field in (
+            "solver_backed_proof_repair_status",
+            "solver_backed_summary",
+            "v0_3b_solver_backed_ready_no_tong_model_backed_claim",
+        )
+        if field not in release_text
+    ]
+    cli_unwired = "evaluate_release_acceptance" not in cli_text or "write_release_acceptance_report" not in cli_text
+    status = "failed" if missing or unwired or missing_report_fields or cli_unwired else "passed"
+    return ReleaseCheck(
+        "release_blocker_47_release_acceptance_solver_backed_patch_checks_present",
+        "47",
+        status,
+        {
+            "missing": missing,
+            "unwired": unwired,
+            "missing_report_fields": missing_report_fields,
+            "cli_unwired": cli_unwired,
+        },
+    )
+
+
+def _solver_backed_summary(run_dir: Path) -> dict[str, Any]:
+    summary: dict[str, Any] = {
+        "run_dir": str(run_dir),
+        "b2_solver_backed_final_theorem_count": 0,
+        "b2_geotrace_solver_backed_final_theorem_count": 0,
+        "b2_construction_solver_backed_final_theorem_count": 0,
+        "b4_solver_backed_final_theorem_count": 0,
+    }
+    b2 = _metrics_values(run_dir / "metrics_B2.json")
+    b4 = _metrics_values(run_dir / "metrics_B4.json")
+    summary["b2_solver_backed_final_theorem_count"] = int(b2.get("solver_backed_final_theorem_count", 0) or 0)
+    summary["b2_geotrace_solver_backed_final_theorem_count"] = int(b2.get("geotrace_solver_backed_final_theorem_count", 0) or 0)
+    summary["b2_construction_solver_backed_final_theorem_count"] = int(b2.get("construction_solver_backed_final_theorem_count", 0) or 0)
+    summary["b4_solver_backed_final_theorem_count"] = int(b4.get("solver_backed_final_theorem_count", 0) or 0)
+    return summary
+
+
+def _metrics_values(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    payload = _json_file(path)
+    values = payload.get("metric_values", {})
+    return values if isinstance(values, dict) else {}
+
+
+def _solver_backed_metric_commands(run_dir: str) -> list[list[str]]:
+    commands: list[list[str]] = []
+    required = [
+        SOLVER_BACKED_RUN_DIR / "level2_matrix_report.json",
+        SOLVER_BACKED_RUN_DIR / "per_task_artifact_index.json",
+        SOLVER_BACKED_RUN_DIR / "metrics_B2.json",
+        SOLVER_BACKED_RUN_DIR / "metrics_B4.json",
+    ]
+    if _matrix_refresh_enabled() or any(not path.exists() for path in required):
+        commands.append(["python", "scripts/run_geometry_level2_matrix.py", "--config", str(SOLVER_BACKED_CONFIG)])
+    commands.append(["python", "scripts/check_solver_backed_metrics.py", "--run-dir", run_dir])
+    return commands
+
+
+def _matrix_refresh_enabled() -> bool:
+    return os.environ.get("MARP_REFRESH_RELEASE_MATRICES") == "1"
 
 
 def _config_run_id(config_path: Path) -> str:

@@ -61,7 +61,7 @@ class FinalVerifyGate:
         theorem_hash_unchanged = original_hash == hash_text(candidate_statement)
         region_ok = self.region_guard.permits(original_text, candidate_text)
         lean_result = self.lean_port.compile_file(candidate_path)
-        sorry_status = "failed" if contains_sorry(candidate_text, theorem_name) else "clean"
+        sorry_status = "failed" if contains_sorry(candidate_text) else "clean"
         forbidden_status = "failed" if contains_forbidden_declaration(candidate_text) else "clean"
         admitted_imports_ok = imports_are_admitted(candidate_text, admitted_import_prefixes)
         toy_target_ok = not contains_local_toy_target(candidate_text)
@@ -94,16 +94,12 @@ class FinalVerifyGate:
                 "passed" if solver_backed_mode and passed else "failed" if solver_backed_mode else "not_applicable"
             ),
             protected_statement_hash_source="source_problem" if solver_backed_mode else "original_file",
-            checked_candidate_file_ref=f"sha256:{hashlib.sha256(candidate_text.encode('utf-8')).hexdigest()}",
+            checked_candidate_file_ref=f"sha256:{hashlib.sha256(candidate_path.read_bytes()).hexdigest()}",
             proof_region_guard_status="passed" if region_ok else "failed",
         )
 
 
 def contains_sorry(text: str, theorem_name: str | None = None) -> bool:
-    if theorem_name:
-        target_region = _target_proof_region_text(text, theorem_name)
-        if target_region is not None:
-            return re.search(r"\bsorry\b", target_region) is not None
     return re.search(r"\bsorry\b", text) is not None
 
 

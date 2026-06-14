@@ -130,8 +130,6 @@ def _lean_patch_for_trace(trace: GeoTraceV1) -> tuple[str | None, str | None]:
         return "trace.collinear_or_left.v1", "  exact Or.inl (by simp [Coll])"
     if "∧" in conclusion or " and " in conclusion.lower():
         return "trace.collinear_and_intro.v1", "  exact And.intro (by simp [Coll]) (by simp [Coll])"
-    if conclusion == "Coll A B C":
-        return "trace.legacy_collinearity_identity_fixture.v1", "  exact h"
     return None, None
 
 

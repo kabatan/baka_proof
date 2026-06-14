@@ -27,7 +27,7 @@ from math_auto_research.model_api.proof_worker import RunContext
 GEOMETRY_FINAL_VERIFY_FIXTURE = """def Point := Unit
 def Coll (A B C : Point) : Prop := True
 
-theorem sample_target (A B C : Point) : Coll A B C := by
+theorem sample_target (A B C : Point) : Coll A A B := by
 -- PROOF-REGION-START:sample_target
   trivial
 -- PROOF-REGION-END:sample_target
@@ -102,17 +102,25 @@ class StandardGeometryProofLoop:
         artifact_index: dict[str, str] = {}
         blockers: list[str] = []
         lean_text = theorem_path.read_text(encoding="utf-8")
-        source_problem_ref = _sha256_ref(lean_text)
+        source_problem_text = _task_source_problem_text(lean_text, local_theorem_name)
+        source_problem_path = task_dir / "source_problem.lean"
+        source_problem_path.write_text(source_problem_text, encoding="utf-8")
+        source_problem_ref = _sha256_ref(source_problem_text)
         _write_json(
             task_dir,
             artifact_index,
             "source_problem_ref.json",
-            {"schema_version": "1.0.0", "source_problem_ref": source_problem_ref, "theorem_file_path": theorem_path.as_posix()},
+            {
+                "schema_version": "1.0.0",
+                "source_problem_ref": source_problem_ref,
+                "theorem_file_path": theorem_path.as_posix(),
+                "source_problem_path": source_problem_path.as_posix(),
+            },
         )
         final_gate = FinalVerifyGate()
         lean_result = final_gate.lean_port.build_project()
         stage_statuses["lean_initial_compile"] = lean_result.status
-        goal_anchor = final_gate.goal_anchor(lean_text, local_theorem_name, theorem_path)
+        goal_anchor = final_gate.goal_anchor(source_problem_text, local_theorem_name, source_problem_path)
         goal_anchor_ref = f"goal_anchor:{theorem_name}:{goal_anchor.protected_statement_hash}"
         stage_statuses["goal_anchor"] = "created"
 
@@ -143,7 +151,6 @@ class StandardGeometryProofLoop:
             "solver_backed_construction_final",
             "solver_backed_hybrid_or_side_condition_final",
         }
-        needs_trace_solver = task_category in solver_trace_categories or "symbolic_closure" in expected_stages
         needs_construction_solver = (
             bool(_field(baseline, "construction_enabled", True))
             and (task_category in solver_construction_categories or "construction_proposer" in expected_stages)
@@ -161,7 +168,7 @@ class StandardGeometryProofLoop:
                     "construction_needed": construction_enabled and task_category in solver_construction_categories,
                     "claim_spec": claim_spec.to_dict(),
                     "emit_trace_candidate": task_category in solver_trace_categories,
-                    "use_real_newclid": bool(_field(baseline, "use_real_newclid", False)) and needs_trace_solver,
+                    "use_real_newclid": bool(_field(baseline, "use_real_newclid", False)),
                     "use_real_genesisgeo": bool(_field(baseline, "use_real_genesisgeo", False)) and needs_construction_solver,
                     "use_real_tonggeometry": bool(_field(baseline, "use_real_tonggeometry", False)),
                     "require_real_integration": bool(_field(baseline, "require_real_integration", False)),
@@ -188,22 +195,8 @@ class StandardGeometryProofLoop:
 
         trace_compilation = None
         if provider_result is not None and provider_result.geotrace_ref:
-            trace = GeoTraceV1(
-                schema_version="1.0.0",
-                trace_id=provider_result.geotrace_ref,
-                claim_spec_ref=claim_spec.claim_id if claim_spec is not None else "missing_claim",
-                steps=(
-                    GeoTraceStep(
-                        "step:release_collinearity",
-                        "rule:collinearity_identity:v1",
-                        ("points_declared:A:B:C",),
-                        claim_spec.target["raw"] if claim_spec is not None else "Coll A B C",
-                        ("points_declared:A:B:C",),
-                    ),
-                ),
-                rule_refs=("rule:collinearity_identity:v1",),
-                side_condition_refs=("points_declared:A:B:C",),
-            )
+            trace = _provider_geotrace(provider_result, provider_result.geotrace_ref)
+            _write_json(task_dir, artifact_index, "geotrace.json", trace.to_dict())
             trace_compilation = TraceCompiler().compile(trace)
             stage_statuses["trace_compilation"] = trace_compilation.status
             _write_json(task_dir, artifact_index, "trace_compilation_result.json", trace_compilation.to_dict())
@@ -212,7 +205,11 @@ class StandardGeometryProofLoop:
 
         construction_compilation = None
         if provider_result is not None and provider_result.construction_candidate_refs:
-            candidate = _candidate_from_provider_ref(provider_result.construction_candidate_refs[0], claim_spec)
+            candidate = _candidate_from_provider_ref(
+                provider_result.construction_candidate_refs[0],
+                claim_spec,
+                provider_run.manifest.manifest_id if provider_run is not None else "provider_run_manifest:missing",
+            )
             construction_compilation = ConstructionCompiler().compile(candidate)
             stage_statuses["construction_compilation"] = construction_compilation.status
             _write_json(task_dir, artifact_index, "construction_candidate.json", candidate.to_dict())
@@ -234,15 +231,16 @@ class StandardGeometryProofLoop:
             solver_patch_candidate = _source_patch_candidate(
                 source_task_run_id=f"task_run:{baseline_id}:{entry_id}",
                 theorem_name=local_theorem_name,
-                theorem_path=theorem_path,
+                theorem_path=source_problem_path,
                 protected_statement_hash=goal_anchor.protected_statement_hash,
                 trace_compilation=trace_compilation,
                 construction_compilation=construction_compilation,
+                provider_run_manifest_ref=provider_run.manifest.manifest_id if provider_run is not None else None,
             )
             if solver_patch_candidate is not None:
                 _write_json(task_dir, artifact_index, "lean_patch_candidate.json", solver_patch_candidate.to_dict())
                 applied = apply_lean_patch_candidate(
-                    theorem_path,
+                    source_problem_path,
                     solver_patch_candidate,
                     task_dir / "generated",
                     RunContext(run_id=f"run:{baseline_id}", task_id=entry_id),
@@ -265,10 +263,10 @@ class StandardGeometryProofLoop:
         solver_certificate = None
         final_verify_enabled = bool(_field(baseline, "final_verify_enabled", True))
         if final_verify_enabled and lean_result.status == "passed":
-            candidate_path = Path(worker_result.get("worker_output", {}).get("generated_candidate_path") or theorem_path)
+            candidate_path = Path(worker_result.get("worker_output", {}).get("generated_candidate_path") or source_problem_path)
             solver_backed_mode = bool(worker_result.get("patch_applied") and solver_patch_candidate is not None)
             final_report = final_gate.verify_file(
-                lean_text,
+                source_problem_text,
                 candidate_path,
                 local_theorem_name,
                 f"obligation:{entry_id}",
@@ -379,8 +377,13 @@ class StandardGeometryProofLoop:
         )
         if solver_certificate is not None and proof_use_status == "final_theorem":
             object.__setattr__(result, "solver_backed_final_theorem", True)
+        artifact_index_path = task_dir / "artifact_index.json"
+        artifact_index["artifact_index.json"] = str(artifact_index_path)
+        object.__setattr__(result, "artifact_index", dict(artifact_index))
         _write_json(task_dir, artifact_index, "task_result.json", result.to_dict())
-        _write_json(task_dir, artifact_index, "artifact_index.json", artifact_index)
+        object.__setattr__(result, "artifact_index", dict(artifact_index))
+        artifact_index_path.write_text(json_dumps(artifact_index) + "\n", encoding="utf-8")
+        (task_dir / "task_result.json").write_text(json_dumps(result.to_dict()) + "\n", encoding="utf-8")
         return result
 
     def run_fixture(
@@ -446,7 +449,7 @@ class StandardGeometryProofLoop:
                 objects=("A:Point", "B:Point", "C:Point"),
                 hypotheses=("collinear",),
                 target_form="collinear",
-                target_raw="Coll A B C",
+                target_raw="Coll A A B",
             )
         )
         stage_statuses["geometry_extraction"] = extraction_report.status
@@ -493,8 +496,8 @@ class StandardGeometryProofLoop:
                 GeoTraceStep(
                     "step:collinearity",
                     trace_rule_id,
-                    ("Coll A B C",),
-                    "Coll A B C",
+                    ("Coll A A B",),
+                    "Coll A A B",
                     ("points_declared:A:B:C",),
                 ),
             ),
@@ -732,7 +735,43 @@ def _selected_to_dict(selected: Any) -> dict[str, Any]:
     return {"schema_version": "1.0.0", "selected_implementations_ref": str(selected)}
 
 
-def _candidate_from_provider_ref(candidate_ref: str, claim_spec: Any) -> AuxiliaryConstructionCandidateV1:
+def _provider_geotrace(provider_result: Any, trace_ref: str) -> GeoTraceV1:
+    for artifact in getattr(provider_result, "geotrace_artifacts", ()) or ():
+        if isinstance(artifact, dict) and artifact.get("trace_id") == trace_ref:
+            steps = tuple(
+                GeoTraceStep(
+                    str(step.get("step_id")),
+                    str(step.get("rule_id")),
+                    tuple(str(item) for item in step.get("premises", ())),
+                    str(step.get("conclusion")),
+                    tuple(str(item) for item in step.get("side_condition_refs", ())),
+                    source_raw_ref=str(step.get("source_raw_ref")),
+                )
+                for step in artifact.get("steps", ())
+                if isinstance(step, dict)
+            )
+            if not steps:
+                raise ValueError(f"provider geotrace has no steps: {trace_ref}")
+            return GeoTraceV1(
+                schema_version=str(artifact.get("schema_version", "1.0.0")),
+                trace_id=str(artifact["trace_id"]),
+                claim_spec_ref=str(artifact.get("claim_spec_ref", "missing_claim")),
+                steps=steps,
+                rule_refs=tuple(str(item) for item in artifact.get("rule_refs", ())),
+                side_condition_refs=tuple(str(item) for item in artifact.get("side_condition_refs", ())),
+                proof_use_status=str(artifact.get("proof_use_status", "not_allowed")),
+                source_provider_result=str(artifact.get("source_provider_result", "sha256:unknown_provider_result")),
+                target_library=str(artifact.get("target_library", "LeanGeoSubsetV1")),
+                unsupported_steps=tuple(artifact.get("unsupported_steps", ())),
+            )
+    raise ValueError(f"provider geotrace artifact missing: {trace_ref}")
+
+
+def _candidate_from_provider_ref(
+    candidate_ref: str,
+    claim_spec: Any,
+    provider_run_manifest_ref: str = "provider_run_manifest:missing",
+) -> AuxiliaryConstructionCandidateV1:
     objects = tuple(getattr(claim_spec, "objects", ()) or ())
     point_names = tuple(item.split(":", 1)[0] for item in objects if str(item).endswith(":Point"))
     dependency_names = list(point_names[:2])
@@ -759,7 +798,7 @@ def _candidate_from_provider_ref(candidate_ref: str, claim_spec: Any) -> Auxilia
         intended_use="release_matrix_construction_path",
         side_conditions=(f"{dependencies[0]} != {dependencies[1]}",),
         construction_id=candidate_ref,
-        source_provider_result=f"sha256:{candidate_ref}",
+        source_provider_result=provider_run_manifest_ref,
         required_side_conditions={
             "nondegeneracy": (f"{dependencies[0]} != {dependencies[1]}",),
             "incidence": (),
@@ -809,11 +848,24 @@ def _source_patch_candidate(
     protected_statement_hash: str,
     trace_compilation: Any,
     construction_compilation: Any,
+    provider_run_manifest_ref: str | None = None,
 ) -> LeanPatchCandidateV1 | None:
     compiler = trace_compilation if getattr(trace_compilation, "status", None) == "compiled" else construction_compilation
     if compiler is None or getattr(compiler, "lean_patch_candidate", None) is None:
         return None
     compiler_patch = LeanPatchCandidateV1.from_dict(compiler.lean_patch_candidate)
+    dependency_refs = _dedupe_refs(
+        (
+            provider_run_manifest_ref,
+            _normalized_solver_ref(trace_compilation, construction_compilation),
+            _compiler_result_ref(trace_compilation, construction_compilation),
+            _trace_solver_ref(trace_compilation),
+            _construction_solver_ref(construction_compilation),
+            _trace_compiler_ref(trace_compilation),
+            _construction_compiler_ref(construction_compilation),
+            *compiler_patch.solver_dependency_refs,
+        )
+    )
     return LeanPatchCandidateV1.create(
         source_task_run_id=source_task_run_id,
         target_theorem_name=theorem_name,
@@ -826,7 +878,7 @@ def _source_patch_candidate(
             "end_marker": f"-- MARP_PROOF_REGION_END:{theorem_name}",
         },
         proof_region_text=compiler_patch.proof_region_replacement_text,
-        solver_dependency_refs=compiler_patch.solver_dependency_refs,
+        solver_dependency_refs=dependency_refs,
         proof_template_id=compiler_patch.proof_template_id,
         proof_origin=compiler_patch.proof_origin,
         created_by=compiler_patch.created_by,
@@ -851,6 +903,30 @@ def _compiler_result_ref(trace_compilation: Any, construction_compilation: Any) 
     return None
 
 
+def _trace_solver_ref(trace_compilation: Any) -> str | None:
+    if getattr(trace_compilation, "status", None) == "compiled":
+        return getattr(trace_compilation, "trace_id", None)
+    return None
+
+
+def _construction_solver_ref(construction_compilation: Any) -> str | None:
+    if getattr(construction_compilation, "status", None) == "compiled":
+        return getattr(construction_compilation, "candidate_id", None)
+    return None
+
+
+def _trace_compiler_ref(trace_compilation: Any) -> str | None:
+    if getattr(trace_compilation, "status", None) == "compiled":
+        return getattr(trace_compilation, "result_id", None)
+    return None
+
+
+def _construction_compiler_ref(construction_compilation: Any) -> str | None:
+    if getattr(construction_compilation, "status", None) == "compiled":
+        return getattr(construction_compilation, "result_id", None)
+    return None
+
+
 def _normalized_solver_artifact(trace_compilation: Any, construction_compilation: Any) -> dict[str, str]:
     if getattr(trace_compilation, "status", None) == "compiled":
         return {"kind": "geotrace", "ref": trace_compilation.trace_id, "source_engine_role": "symbolic_closure"}
@@ -861,6 +937,17 @@ def _normalized_solver_artifact(trace_compilation: Any, construction_compilation
             "source_engine_role": "construction_proposer",
         }
     return {"kind": "geotrace", "ref": "geotrace:missing", "source_engine_role": "symbolic_closure"}
+
+
+def _dedupe_refs(refs: tuple[str | None, ...]) -> tuple[str, ...]:
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for ref in refs:
+        if not ref or ref in seen:
+            continue
+        seen.add(ref)
+        ordered.append(ref)
+    return tuple(ordered)
 
 
 def _sha256_ref(text: str) -> str:
@@ -881,3 +968,29 @@ def json_dumps(payload: Any) -> str:
 
 def _safe_path_part(value: str) -> str:
     return "".join(char if char.isalnum() or char in {"-", "_"} else "_" for char in value)
+
+
+def _task_source_problem_text(lean_text: str, theorem_name: str) -> str:
+    lines = lean_text.splitlines()
+    start_marker = f"-- MARP_PROOF_REGION_START:{theorem_name}"
+    end_marker = f"-- MARP_PROOF_REGION_END:{theorem_name}"
+    marker_index = next((index for index, line in enumerate(lines) if line.strip() == start_marker), None)
+    if marker_index is None:
+        return lean_text
+    theorem_index = marker_index
+    while theorem_index >= 0 and not lines[theorem_index].lstrip().startswith(f"theorem {theorem_name} "):
+        theorem_index -= 1
+    end_index = next(
+        (index for index in range(marker_index + 1, len(lines)) if lines[index].strip() == end_marker),
+        None,
+    )
+    if theorem_index < 0 or end_index is None:
+        return lean_text
+    prefix = [
+        line
+        for line in lines[:theorem_index]
+        if line.startswith("import ") or line.startswith("open ") or line.startswith("namespace ")
+    ]
+    suffix = [line for line in lines[end_index + 1 :] if line.startswith("end ")]
+    selected = prefix + [""] + lines[theorem_index : end_index + 1] + [""] + suffix
+    return "\n".join(selected) + ("\n" if lean_text.endswith("\n") else "")

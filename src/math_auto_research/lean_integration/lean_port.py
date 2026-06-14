@@ -11,6 +11,7 @@ from math_auto_research.lean_integration.goal_anchor import GoalAnchor, goal_anc
 from math_auto_research.lean_integration.lean_error_summary import LeanErrorSummary
 
 _PROJECT_BUILD_CACHE: LeanCompileResult | None = None
+_FILE_COMPILE_CACHE: dict[tuple[str, int, int], LeanCompileResult] = {}
 
 
 @dataclass(frozen=True)
@@ -34,13 +35,24 @@ class LeanPort:
         self.governor = governor or ResourceGovernor()
 
     def compile_file(self, path: Path, budget: ResourceRequest | None = None) -> LeanCompileResult:
+        resolved_path = Path(path).resolve()
+        try:
+            stat = resolved_path.stat()
+            cache_key = (str(resolved_path), int(stat.st_mtime_ns), int(stat.st_size))
+        except FileNotFoundError:
+            cache_key = None
+        if cache_key is not None and cache_key in _FILE_COMPILE_CACHE:
+            return _FILE_COMPILE_CACHE[cache_key]
         request = budget or ResourceRequest(component="lean_file", engine_role="lean_build", budget="tiny", timeout_sec=120)
         if Path("lakefile.lean").exists():
             command = [self.lake_executable, "env", "lean", str(path)]
         else:
             command = [self.lean_executable, str(path)]
         report = run_guarded_process(command, request, self.governor)
-        return self._compile_result(report)
+        result = self._compile_result(report)
+        if cache_key is not None:
+            _FILE_COMPILE_CACHE[cache_key] = result
+        return result
 
     def check_file(self, path: Path) -> LeanCompileResult:
         return self.compile_file(path)

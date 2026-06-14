@@ -30,6 +30,7 @@ class ProviderResult:
     construction_candidate_refs: tuple[str, ...]
     diagnostic_refs: tuple[str, ...]
     provider_run_manifest_ref: str | None
+    geotrace_artifacts: tuple[dict[str, Any], ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

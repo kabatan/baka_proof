@@ -1,4 +1,4 @@
-.PHONY: fmt lint typecheck test test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-real-newclid smoke-real-genesisgeo smoke-real-tonggeometry smoke-geometry-trace smoke-geometry-construction smoke-geometry-final-verify smoke-level2-pilot
+.PHONY: fmt lint typecheck test test-unit test-mutation test-regression test-integration smoke-env-bootstrap smoke-resource-governor smoke-model-provider-set lean-build lean-no-sorry smoke-target-library-status smoke-geometry-extraction smoke-geometry-context-fixture smoke-leangeo-fixture smoke-leangeo-extraction smoke-geometry-provider smoke-real-newclid smoke-real-genesisgeo smoke-real-tonggeometry smoke-geometry-trace smoke-geometry-construction smoke-geometry-final-verify smoke-level2-pilot smoke-solver-backed-proof-repair smoke-solver-backed-geotrace-final smoke-solver-backed-construction-final
 
 PYTHON ?= python
 ELAN_LAKE := $(USERPROFILE)/.elan/bin/lake.exe
@@ -88,3 +88,16 @@ smoke-geometry-final-verify:
 
 smoke-level2-pilot:
 	$(PYTHON) scripts/run_geometry_level2_matrix.py --config configs/benchmark_runs/geometry_level2_pilot.yaml
+
+smoke-solver-backed-proof-repair:
+	$(PYTHON) scripts/check_solver_backed_corpus.py
+	$(PYTHON) scripts/check_solver_backed_metrics.py --run-dir runs/geometry_solver_backed_proof_repair
+	$(PYTHON) scripts/check_solver_backed_artifacts.py --run-dir runs/geometry_solver_backed_proof_repair
+	$(PYTHON) scripts/check_no_original_proof_counted_as_solver_backed.py --run-dir runs/geometry_solver_backed_proof_repair
+	$(PYTHON) scripts/check_no_fixture_solver_backed_release.py --run-dir runs/geometry_solver_backed_proof_repair
+
+smoke-solver-backed-geotrace-final:
+	$(PYTHON) scripts/check_solver_backed_metrics.py --run-dir runs/geometry_solver_backed_proof_repair
+
+smoke-solver-backed-construction-final:
+	$(PYTHON) scripts/check_solver_backed_metrics.py --run-dir runs/geometry_solver_backed_proof_repair
