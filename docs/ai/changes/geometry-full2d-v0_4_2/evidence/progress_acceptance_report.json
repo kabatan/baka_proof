@@ -108,7 +108,20 @@
       "details": {
         "path": "lean\\MathAutoResearch\\GeometryFull2D"
       },
-      "status": "failed"
+      "status": "passed"
+    },
+    {
+      "check_id": "WP02-lean-facade-checker",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_geometry_full2d_facade.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
     },
     {
       "check_id": "WP03-structured-extraction-script",
@@ -136,12 +149,12 @@
   "completed_work_packages": [
     "WP-00:authority-docs-imported",
     "WP-00:active-guardian-spec-checker-passed",
-    "WP-01:plugin-boundary-passed"
+    "WP-01:plugin-boundary-passed",
+    "WP-02:facade-checker-passed"
   ],
   "config_ref": "configs\\benchmark_runs\\geometry_full2d_v0_4_2.yaml",
   "hard_blockers": [],
   "next_unblocked_work_packages": [
-    "WP-02",
     "WP-03",
     "WP-04",
     "WP-05",
@@ -151,31 +164,14 @@
   "release_blockers": [
     {
       "kind": "ReleaseBlocker",
-      "ref": "C-001",
-      "summary": "MathAutoResearch.GeometryFull2D Lean namespace is required for release."
-    },
-    {
-      "kind": "ReleaseBlocker",
       "ref": "H-001",
       "summary": "GeometryFull2D release corpus is not created yet."
     }
   ],
-  "report_id": "progress_acceptance_v0_4_2:1781459286",
+  "report_id": "progress_acceptance_v0_4_2:1781459553",
   "schema_version": "1.0.0",
   "status": "progress_ok_with_debt",
   "work_debt": [
-    {
-      "evidence": {
-        "check_id": "WP02-lean-facade-dir",
-        "details": {
-          "path": "lean\\MathAutoResearch\\GeometryFull2D"
-        },
-        "status": "failed"
-      },
-      "kind": "WorkDebt",
-      "ref": "WP-02",
-      "summary": "GeometryFull2D Lean facade directory is not created yet."
-    },
     {
       "evidence": {
         "check_id": "WP03-structured-extraction-script",

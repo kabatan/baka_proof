@@ -5,11 +5,6 @@
   "release_blockers": [
     {
       "kind": "ReleaseBlocker",
-      "ref": "C-001",
-      "summary": "MathAutoResearch.GeometryFull2D Lean namespace is required for release."
-    },
-    {
-      "kind": "ReleaseBlocker",
       "ref": "H-001",
       "summary": "GeometryFull2D release corpus is not created yet."
     }
@@ -17,18 +12,6 @@
   "schema_version": "1.0.0",
   "status": "not_run",
   "work_debt_open": [
-    {
-      "evidence": {
-        "check_id": "WP02-lean-facade-dir",
-        "details": {
-          "path": "lean\\MathAutoResearch\\GeometryFull2D"
-        },
-        "status": "failed"
-      },
-      "kind": "WorkDebt",
-      "ref": "WP-02",
-      "summary": "GeometryFull2D Lean facade directory is not created yet."
-    },
     {
       "evidence": {
         "check_id": "WP03-structured-extraction-script",
