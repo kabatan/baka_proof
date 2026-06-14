@@ -97,6 +97,17 @@ def run_smoke(engine: str) -> list[str]:
             errors.append("order_case_missing_checker_ref")
         if not output.real_integration_flag:
             errors.append("order_case_not_real_integration")
+    if engine == "inequality":
+        if output.status != "normalized_success":
+            errors.append("inequality_not_normalized_success")
+        if not output.normalized_output_ref:
+            errors.append("inequality_missing_certificate_ref")
+        elif not str(output.normalized_output_ref).startswith("InequalityCertificateFull2D:sha256:"):
+            errors.append("inequality_wrong_certificate_ref")
+        if not output.checker_or_compiler_ref:
+            errors.append("inequality_missing_checker_ref")
+        if not output.real_integration_flag:
+            errors.append("inequality_not_real_integration")
     return sorted(set(errors))
 
 

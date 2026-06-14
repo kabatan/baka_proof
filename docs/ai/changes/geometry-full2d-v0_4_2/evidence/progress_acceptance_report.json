@@ -260,6 +260,21 @@
       "status": "passed"
     },
     {
+      "check_id": "WP12-inequality-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "inequality"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
       "check_id": "WP15-rule-registry-checker",
       "details": {
         "path": "scripts\\check_full2d_rule_registry.py"
@@ -289,12 +304,12 @@
     "WP-09:metric-angle-smoke-passed",
     "WP-10:transformation-smoke-passed",
     "WP-11:order-case-smoke-passed",
+    "WP-12:inequality-smoke-passed",
     "WP-15:rule-registry-checker-passed"
   ],
   "config_ref": "configs\\benchmark_runs\\geometry_full2d_v0_4_2.yaml",
   "hard_blockers": [],
   "next_unblocked_work_packages": [
-    "WP-12",
     "WP-13",
     "WP-14",
     "WP-20"
@@ -306,7 +321,7 @@
       "summary": "GeometryFull2D release corpus is not created yet."
     }
   ],
-  "report_id": "progress_acceptance_v0_4_2:1781463310",
+  "report_id": "progress_acceptance_v0_4_2:1781463596",
   "schema_version": "1.0.0",
   "status": "progress_ok_with_debt",
   "work_debt": []
