@@ -64,6 +64,17 @@ def run_smoke(engine: str) -> list[str]:
             errors.append("algebraic_geometry_missing_checker_ref")
         if not output.real_integration_flag:
             errors.append("algebraic_geometry_not_real_integration")
+    if engine == "metric_angle":
+        if output.status != "normalized_success":
+            errors.append("metric_angle_not_normalized_success")
+        if not output.normalized_output_ref:
+            errors.append("metric_angle_missing_trace_ref")
+        elif not str(output.normalized_output_ref).startswith("MetricAngleTraceFull2D:sha256:"):
+            errors.append("metric_angle_wrong_trace_ref")
+        if not output.checker_or_compiler_ref:
+            errors.append("metric_angle_missing_checker_ref")
+        if not output.real_integration_flag:
+            errors.append("metric_angle_not_real_integration")
     return sorted(set(errors))
 
 

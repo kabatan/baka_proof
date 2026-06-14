@@ -2,7 +2,7 @@
 title: Guardian Active Context — GeometryFull2D v0.4.2
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-007
 version: v0.4.2-governed-full2d
-status: V04_2_WP08_ALGEBRAIC_GEOMETRY_PASSED_WP09_READY
+status: V04_2_WP09_METRIC_ANGLE_PASSED_WP10_READY
 created: 2026-06-15
 last_updated: 2026-06-15
 base_spec: MARP-GEOLEAN-BASE-007
@@ -56,7 +56,7 @@ Before editing implementation code, read the current Plan task, required require
 Current task:
 
 ```text
-WP-09 — MetricAngleEngine
+WP-10 — TransformationEngine
 ```
 
 Completed preparation:
@@ -76,6 +76,7 @@ WP-05 engine contracts and provider skeleton checker passed.
 WP-06 SyntheticClosureEngine smoke passed.
 WP-07 ConstructionSearchEngine smoke passed.
 WP-08 AlgebraicGeometryEngine smoke passed.
+WP-09 MetricAngleEngine smoke passed.
 WP-15 RuleRegistryFull2D floor checker passed.
 ```
 
@@ -107,7 +108,7 @@ Allowed:
 
 ```text
 MARP-GEOLEAN-BASE-007 / PLAN-007 / ACCEPTANCE-007 are installed as the active user-approved v0.4.2 Guardian authority set.
-WP-00 through WP-08 and WP-15 have passed progress checks.
+WP-00 through WP-09 and WP-15 have passed progress checks.
 ```
 
 Not allowed yet:
