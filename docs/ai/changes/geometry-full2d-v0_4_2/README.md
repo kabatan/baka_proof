@@ -2,7 +2,7 @@
 title: Change Index — GeometryFull2D v0.4.2
 change_id: geometry-full2d-v0_4_2
 version: v0.4.2-governed-full2d
-status: WP05_ENGINE_CONTRACTS_PASSED_WP06_READY
+status: WP06_SYNTHETIC_CLOSURE_PASSED_WP07_READY
 created: 2026-06-15
 purpose: Index the Guardian document set for the GeometryFull2D v0.4.2 governed full implementation track.
 authority: Navigation only; individual Base Spec, Plan, Acceptance, and contract documents declare their own authority.
@@ -45,7 +45,7 @@ The track supersedes the previous v0.3, v0.3A, v0.3 full-rebase, v0.3A patch, an
 Current task:
 
 ```text
-WP-06 — SyntheticClosureEngine
+WP-07 — ConstructionSearchEngine
 ```
 
 WP-00 is complete for implementation flow:
@@ -59,6 +59,7 @@ WP-02 Lean facade checker, elaboration-backed facade materialization, lean-no-so
 WP-03 structured Lean extraction checker passed.
 WP-04 ClaimSpec canonical bridge checker passed.
 WP-05 engine contracts and provider skeleton checker passed.
+WP-06 SyntheticClosureEngine smoke passed.
 WP-15 RuleRegistryFull2D floor checker passed.
 ```
 

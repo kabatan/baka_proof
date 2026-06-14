@@ -5,7 +5,7 @@ Status: USER_APPROVED_ACTIVE
 -->
 ---
 title: "Active Context Seed — GeometryFull2D v0.4.2"
-status: "WP05_ENGINE_CONTRACTS_PASSED_WP06_READY"
+status: "WP06_SYNTHETIC_CLOSURE_PASSED_WP07_READY"
 created: "2026-06-14"
 ---
 
@@ -47,7 +47,7 @@ Implementation in progress only.
 Current task:
 
 ```text
-WP-06 — SyntheticClosureEngine
+WP-07 — ConstructionSearchEngine
 ```
 
 Progress acceptance:
@@ -55,8 +55,8 @@ Progress acceptance:
 ```text
 hard_blockers=[]
 status=progress_ok_with_debt
-completed_work_packages include WP-00, WP-01, WP-02, WP-03, WP-04, WP-05, and WP-15
-next_unblocked_work_packages include WP-06 through WP-14 and WP-20
+completed_work_packages include WP-00, WP-01, WP-02, WP-03, WP-04, WP-05, WP-06, and WP-15
+next_unblocked_work_packages include WP-07 through WP-14 and WP-20
 ```
 
 TongGeometry:

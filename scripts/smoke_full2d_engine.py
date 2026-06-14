@@ -1,0 +1,63 @@
+from __future__ import annotations
+
+import argparse
+import importlib
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from plugins.geometry_full2d.claim_spec import build_claim_spec  # noqa: E402
+from plugins.geometry_full2d.engine_contracts import EngineInputFull2D, ResourceBudget, RunContext, validate_engine_output  # noqa: E402
+from scripts.extract_geometry_full2d_statement import extract_statement  # noqa: E402
+
+
+def run_smoke(engine: str) -> list[str]:
+    errors: list[str] = []
+    payload = extract_statement(ROOT / "lean" / "MathAutoResearch" / "GeometryFull2D" / "ExtractionSmoke.lean")
+    claim_result = build_claim_spec(payload)
+    if claim_result.claim_spec is None:
+        return [f"claimspec_not_accepted:{claim_result.status}"]
+    engine_input = EngineInputFull2D(
+        schema_version="1.0.0",
+        request_id=f"full2d_smoke:{engine}",
+        claim_spec_ref=claim_result.claim_spec.claim_spec_hash,
+        target_library=claim_result.claim_spec.target_library,
+        claim_spec=claim_result.claim_spec.to_dict(),
+    )
+    module = importlib.import_module(f"plugins.geometry_full2d.engines.{engine}")
+    output = module.run(
+        engine_input,
+        ResourceBudget(budget="tiny", timeout_sec=5.0),
+        RunContext(
+            run_id=f"provider_run:full2d_smoke:{engine}",
+            request_id=f"full2d_smoke:{engine}",
+            resource_usage_ref=f"resource_usage:full2d_smoke:{engine}",
+        ),
+    )
+    errors.extend(validate_engine_output(output))
+    if engine == "synthetic_closure":
+        if output.status != "normalized_success":
+            errors.append("synthetic_closure_not_normalized_success")
+        if not output.normalized_output_ref:
+            errors.append("synthetic_closure_missing_trace_ref")
+        if not output.real_integration_flag:
+            errors.append("synthetic_closure_not_real_integration")
+    return sorted(set(errors))
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--engine", required=True)
+    args = parser.parse_args()
+    errors = run_smoke(args.engine)
+    status = "passed" if not errors else "failed"
+    print(json.dumps({"status": status, "errors": errors}, indent=2, sort_keys=True))
+    return 0 if not errors else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
