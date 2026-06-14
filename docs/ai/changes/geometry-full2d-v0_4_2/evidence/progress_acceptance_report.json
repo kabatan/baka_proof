@@ -326,7 +326,7 @@
         ],
         "returncode": 1,
         "stderr_tail": "",
-        "stdout_tail": "{\n  \"errors\": [\n    \"missing_corpus_manifest:benchmarks/geometry_full2d/corpus_manifest.json\"\n  ],\n  \"status\": \"failed\"\n}\n"
+        "stdout_tail": "{\n  \"errors\": [\n    \"H-003_external_or_human_curated_positive_lt_900:0\",\n    \"H-004_synthetic_positive_fraction_gt_0_5:3000/3000\",\n    \"corpus_manifest_status_not_release_frozen:draft_synthetic_not_release_complete\"\n  ],\n  \"status\": \"failed\"\n}\n"
       },
       "status": "failed"
     },
@@ -373,21 +373,21 @@
   "release_blockers": [
     {
       "kind": "ReleaseBlocker",
-      "ref": "H-001",
-      "summary": "GeometryFull2D release corpus is not created yet."
+      "ref": "H-003",
+      "summary": "H-003_external_or_human_curated_positive_lt_900:0"
     },
     {
       "kind": "ReleaseBlocker",
-      "ref": "H-001",
-      "summary": "GeometryFull2D corpus_manifest.json is not created yet."
+      "ref": "H-004",
+      "summary": "H-004_synthetic_positive_fraction_gt_0_5:3000/3000"
     },
     {
       "kind": "ReleaseBlocker",
       "ref": "H-008",
-      "summary": "Frozen corpus manifest hash is not a sha256 ref."
+      "summary": "corpus_manifest_status_not_release_frozen:draft_synthetic_not_release_complete"
     }
   ],
-  "report_id": "progress_acceptance_v0_4_2:1781464683",
+  "report_id": "progress_acceptance_v0_4_2:1781465740",
   "schema_version": "1.0.0",
   "status": "progress_ok_with_debt",
   "work_debt": [
@@ -401,7 +401,7 @@
           ],
           "returncode": 1,
           "stderr_tail": "",
-          "stdout_tail": "{\n  \"errors\": [\n    \"missing_corpus_manifest:benchmarks/geometry_full2d/corpus_manifest.json\"\n  ],\n  \"status\": \"failed\"\n}\n"
+          "stdout_tail": "{\n  \"errors\": [\n    \"H-003_external_or_human_curated_positive_lt_900:0\",\n    \"H-004_synthetic_positive_fraction_gt_0_5:3000/3000\",\n    \"corpus_manifest_status_not_release_frozen:draft_synthetic_not_release_complete\"\n  ],\n  \"status\": \"failed\"\n}\n"
         },
         "status": "failed"
       },

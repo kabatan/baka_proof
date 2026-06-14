@@ -1,26 +1,380 @@
 {
+  "advantage_summary": {},
+  "checked_rids": [],
+  "checks": [
+    {
+      "check_id": "A-001",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_active_guardian_spec.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"active_base_spec_path\": \"docs/ai/changes/geometry-full2d-v0_4_2/BASE_SPEC.md\",\n  \"active_geometry_base_spec\": \"MARP-GEOLEAN-BASE-007\",\n  \"base_specs\": [\n    {\n      \"active\": true,\n      \"path\": \"docs/ai/changes/geometry-full2d-v0_4_2/BASE_SPEC.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-007\",\n      \"status\": \"USER_APPROVED_ACTIVE\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3/BASE_SPEC.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-003\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/ACCEPTANCE_MATRIX.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    }\n  ],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-BASE_SPEC.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\BASE_SPEC.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-PLAN.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\PLAN.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-ACCEPTANCE.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\ACCEPTANCE.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-ENGINE_CONTRACTS.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\ENGINE_CONTRACTS.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-REFACTOR_DIRECTIVE.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\REFACTOR_DIRECTIVE.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-SOURCE_MAP.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\SOURCE_MAP.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-ACTIVE_CONTEXT.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\ACTIVE_CONTEXT.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-CODEX_HANDOFF.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\CODEX_HANDOFF.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-debt-ledger",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\debt\\debt_ledger.jsonl"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-config",
+      "details": {
+        "path": "configs\\benchmark_runs\\geometry_full2d_v0_4_2.yaml"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP01-plugin-dir",
+      "details": {
+        "path": "plugins\\geometry_full2d"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP01-plugin-boundary",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_v0_4_2_plugin_boundary.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP02-lean-facade-dir",
+      "details": {
+        "path": "lean\\MathAutoResearch\\GeometryFull2D"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP02-lean-facade-checker",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_geometry_full2d_facade.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP03-structured-extraction-script",
+      "details": {
+        "path": "scripts\\check_structured_extraction_v0_4_2.py"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP03-structured-extraction-checker",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_structured_extraction_v0_4_2.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP04-claimspec-checker",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_claimspec.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP05-engine-contracts-checker",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_engine_contracts.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP06-synthetic-closure-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "synthetic_closure"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP07-construction-search-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "construction_search"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP08-algebraic-geometry-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "algebraic_geometry"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP09-metric-angle-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "metric_angle"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP10-transformation-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "transformation"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP11-order-case-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "order_case"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP12-inequality-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "inequality"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP13-lean-proof-search-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "lean_proof_search"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP14-portfolio-coordinator-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "portfolio_coordinator"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP14-portfolio-reason-codes",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_portfolio_reason_codes.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP20-corpus-manifest",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_corpus_manifest.py"
+        ],
+        "returncode": 1,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [\n    \"H-003_external_or_human_curated_positive_lt_900:0\",\n    \"H-004_synthetic_positive_fraction_gt_0_5:3000/3000\",\n    \"corpus_manifest_status_not_release_frozen:draft_synthetic_not_release_complete\"\n  ],\n  \"status\": \"failed\"\n}\n"
+      },
+      "status": "failed"
+    },
+    {
+      "check_id": "WP15-rule-registry-checker",
+      "details": {
+        "path": "scripts\\check_full2d_rule_registry.py"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP21-release-checker",
+      "details": {
+        "path": "scripts\\check_release_acceptance_v0_4_2.py"
+      },
+      "status": "passed"
+    }
+  ],
   "claim_ceiling": "implementation_in_progress_no_v0_4_2_completion_claim",
   "closure_allowed": false,
+  "corpus_manifest_hash": "sha256:df876567319a669aa97efd159ad9429aa3e02d941302a43a168208aaae536ea8",
+  "engine_usage_summary": {},
   "hard_blockers": [],
+  "measured_failure_summary": {},
+  "metrics_summary": {},
   "release_blockers": [
     {
       "kind": "ReleaseBlocker",
-      "ref": "H-001",
-      "summary": "GeometryFull2D release corpus is not created yet."
+      "ref": "H-003",
+      "summary": "H-003_external_or_human_curated_positive_lt_900:0"
     },
     {
       "kind": "ReleaseBlocker",
-      "ref": "H-001",
-      "summary": "GeometryFull2D corpus_manifest.json is not created yet."
+      "ref": "H-004",
+      "summary": "H-004_synthetic_positive_fraction_gt_0_5:3000/3000"
     },
     {
       "kind": "ReleaseBlocker",
       "ref": "H-008",
-      "summary": "Frozen corpus manifest hash is not a sha256 ref."
+      "summary": "corpus_manifest_status_not_release_frozen:draft_synthetic_not_release_complete"
     }
   ],
+  "report_id": "release_acceptance_v0_4_2:1781465741",
   "schema_version": "1.0.0",
-  "status": "not_run",
+  "status": "blocked",
+  "used_rule_coverage_summary": {},
   "work_debt_open": [
     {
       "evidence": {
@@ -32,7 +386,7 @@
           ],
           "returncode": 1,
           "stderr_tail": "",
-          "stdout_tail": "{\n  \"errors\": [\n    \"missing_corpus_manifest:benchmarks/geometry_full2d/corpus_manifest.json\"\n  ],\n  \"status\": \"failed\"\n}\n"
+          "stdout_tail": "{\n  \"errors\": [\n    \"H-003_external_or_human_curated_positive_lt_900:0\",\n    \"H-004_synthetic_positive_fraction_gt_0_5:3000/3000\",\n    \"corpus_manifest_status_not_release_frozen:draft_synthetic_not_release_complete\"\n  ],\n  \"status\": \"failed\"\n}\n"
         },
         "status": "failed"
       },

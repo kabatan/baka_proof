@@ -8,6 +8,8 @@ import time
 from pathlib import Path
 from typing import Any
 
+from check_full2d_corpus_manifest import canonical_manifest_hash, check_manifest, load_manifest
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CHANGE_DIR = ROOT / "docs" / "ai" / "changes" / "geometry-full2d-v0_4_2"
@@ -286,6 +288,12 @@ def _release_blocker_scan() -> list[dict[str, Any]]:
         frozen = (EVIDENCE_DIR / "frozen_corpus_manifest_hash.txt").read_text(encoding="utf-8").strip()
         if not frozen.startswith("sha256:"):
             blockers.append(_simple_issue("ReleaseBlocker", "H-008", "Frozen corpus manifest hash is not a sha256 ref."))
+    for error in check_manifest(ROOT / "benchmarks" / "geometry_full2d", EVIDENCE_DIR):
+        ref = error.split("_", 1)[0]
+        if ref.startswith("H-"):
+            blockers.append(_simple_issue("ReleaseBlocker", ref, error))
+        elif error.startswith("corpus_manifest_status_not_release_frozen"):
+            blockers.append(_simple_issue("ReleaseBlocker", "H-008", error))
     for role in ENGINE_ROLES:
         expected = ROOT / "plugins" / "geometry_full2d" / "engines" / f"{role}.py"
         if not expected.exists():
@@ -339,9 +347,10 @@ def _write_status_artifacts(report: dict[str, Any]) -> None:
         },
         "corpus_manifest.json": {
             "schema_version": "1.0.0",
-            "status": "missing",
+            "status": _corpus_status(),
             "required_positive_formal_lean_tasks": 3000,
             "required_negative_target_outside_malformed_tasks": 500,
+            "corpus_manifest_hash": _corpus_manifest_hash(),
         },
         "release_acceptance_report.json": {
             "schema_version": "1.0.0",
@@ -359,6 +368,20 @@ def _write_status_artifacts(report: dict[str, Any]) -> None:
     frozen = EVIDENCE_DIR / "frozen_corpus_manifest_hash.txt"
     if not frozen.exists():
         frozen.write_text("not_frozen\n", encoding="utf-8")
+
+
+def _corpus_status() -> str:
+    errors = check_manifest(ROOT / "benchmarks" / "geometry_full2d", EVIDENCE_DIR)
+    if not (ROOT / "benchmarks" / "geometry_full2d" / "corpus_manifest.json").exists():
+        return "missing"
+    return "passed" if not errors else "present_with_release_blockers"
+
+
+def _corpus_manifest_hash() -> str:
+    manifest = load_manifest(ROOT / "benchmarks" / "geometry_full2d")
+    if manifest is None:
+        return "not_frozen"
+    return canonical_manifest_hash(manifest)
 
 
 def _command_check(check_id: str, command: list[str]) -> dict[str, Any]:

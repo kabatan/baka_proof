@@ -61,6 +61,8 @@ def check_manifest(corpus_root: Path = DEFAULT_CORPUS_ROOT, evidence_dir: Path =
     near_duplicates = [task for task in positives if bool(task.get("near_duplicate_group"))]
 
     errors: list[str] = []
+    if manifest.get("status") != "release_frozen":
+        errors.append(f"corpus_manifest_status_not_release_frozen:{manifest.get('status', '<missing>')}")
     if len(positives) < 3000:
         errors.append(f"H-001_positive_formal_lean_tasks_lt_3000:{len(positives)}")
     if len(negatives) < 500:
@@ -89,6 +91,10 @@ def check_manifest(corpus_root: Path = DEFAULT_CORPUS_ROOT, evidence_dir: Path =
     for task in positives:
         if not task.get("lean_file"):
             errors.append(f"positive_missing_lean_file:{task.get('task_id', '<missing>')}")
+            break
+        lean_path = ROOT / str(task["lean_file"])
+        if not lean_path.exists():
+            errors.append(f"positive_lean_file_missing:{task.get('task_id', '<missing>')}:{task['lean_file']}")
             break
         if not task.get("source_statement_hash"):
             errors.append(f"positive_missing_source_statement_hash:{task.get('task_id', '<missing>')}")

@@ -1,6 +1,7 @@
 {
+  "corpus_manifest_hash": "sha256:df876567319a669aa97efd159ad9429aa3e02d941302a43a168208aaae536ea8",
   "required_negative_target_outside_malformed_tasks": 500,
   "required_positive_formal_lean_tasks": 3000,
   "schema_version": "1.0.0",
-  "status": "missing"
+  "status": "present_with_release_blockers"
 }

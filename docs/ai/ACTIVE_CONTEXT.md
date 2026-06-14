@@ -2,7 +2,7 @@
 title: Guardian Active Context — GeometryFull2D v0.4.2
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-007
 version: v0.4.2-governed-full2d
-status: V04_2_RELEASE_BLOCKED_ON_WP20_CORPUS_MANIFEST
+status: V04_2_RELEASE_BLOCKED_ON_WP20_CURATED_CORPUS
 created: 2026-06-15
 last_updated: 2026-06-15
 base_spec: MARP-GEOLEAN-BASE-007
@@ -113,8 +113,8 @@ Allowed:
 
 ```text
 MARP-GEOLEAN-BASE-007 / PLAN-007 / ACCEPTANCE-007 are installed as the active user-approved v0.4.2 Guardian authority set.
-WP-00 through WP-15 have passed progress checks. WP-20 remains open because the release corpus manifest and frozen manifest hash are not implemented.
-Final release acceptance is currently blocked by H-001 and H-008.
+WP-00 through WP-15 have passed progress checks. WP-20 remains open because the draft corpus is entirely synthetic and is not release_frozen.
+Final release acceptance is currently blocked by H-003, H-004, and H-008.
 ```
 
 Not allowed yet:

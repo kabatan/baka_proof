@@ -1,0 +1,10 @@
+{
+  "corpus_manifest_hash": "sha256:df876567319a669aa97efd159ad9429aa3e02d941302a43a168208aaae536ea8",
+  "errors": [
+    "H-003_external_or_human_curated_positive_lt_900:0",
+    "H-004_synthetic_positive_fraction_gt_0_5:3000/3000",
+    "corpus_manifest_status_not_release_frozen:draft_synthetic_not_release_complete"
+  ],
+  "schema_version": "1.0.0",
+  "status": "frozen_with_open_release_blockers"
+}

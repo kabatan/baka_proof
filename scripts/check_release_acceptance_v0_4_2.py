@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
+from check_full2d_corpus_manifest import canonical_manifest_hash, load_manifest
 from check_v0_4_2_progress_acceptance import evaluate_progress
 
 
@@ -21,6 +22,8 @@ def main() -> int:
     release_blockers = progress["release_blockers"]
     work_debt_open = progress["work_debt"]
     status = "passed" if not hard_blockers and not release_blockers and not work_debt_open else "blocked"
+    manifest = load_manifest(Path("benchmarks/geometry_full2d"))
+    corpus_manifest_hash = canonical_manifest_hash(manifest) if manifest is not None else "not_frozen"
     report = {
         "schema_version": "1.0.0",
         "report_id": progress["report_id"].replace("progress_acceptance", "release_acceptance"),
@@ -36,7 +39,7 @@ def main() -> int:
         "advantage_summary": {},
         "used_rule_coverage_summary": {},
         "engine_usage_summary": {},
-        "corpus_manifest_hash": "not_frozen",
+        "corpus_manifest_hash": corpus_manifest_hash,
         "closure_allowed": status == "passed",
     }
     output = Path(args.output)
