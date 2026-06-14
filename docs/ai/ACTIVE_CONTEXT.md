@@ -2,7 +2,7 @@
 title: Guardian Active Context — GeometryFull2D v0.4.2
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-007
 version: v0.4.2-governed-full2d
-status: V04_2_RELEASE_BLOCKED_ON_WP20_CURATED_CORPUS
+status: V04_2_RELEASE_BLOCKED_ON_WP20_SOLVER_BACKED_METRICS
 created: 2026-06-15
 last_updated: 2026-06-15
 base_spec: MARP-GEOLEAN-BASE-007
@@ -83,6 +83,8 @@ WP-12 InequalityEngine smoke passed.
 WP-13 LeanProofSearchEngine smoke passed.
 WP-14 PortfolioCoordinator smoke and reason-code checker passed.
 WP-15 RuleRegistryFull2D floor checker passed.
+WP-20 corpus manifest, curated/external share, synthetic share, family/tier floors, and frozen manifest hash passed.
+WP-20 matrix/reproducibility artifacts are generated.
 ```
 
 Open ReleaseBlocker / WorkDebt items are recorded in:
@@ -113,8 +115,8 @@ Allowed:
 
 ```text
 MARP-GEOLEAN-BASE-007 / PLAN-007 / ACCEPTANCE-007 are installed as the active user-approved v0.4.2 Guardian authority set.
-WP-00 through WP-15 have passed progress checks. WP-20 remains open because the draft corpus is entirely synthetic and is not release_frozen.
-Final release acceptance is currently blocked by H-003, H-004, and H-008.
+WP-00 through WP-15 have passed progress checks.
+WP-20 corpus/freeze checks pass. WP-20 remains open because final release acceptance is currently blocked by solver-backed metrics: positive tasks do not yet carry the required SolverBackedProofCertificateFull2D, FinalVerifyGate, and proof-region artifacts needed for artifact-derived final theorem counts.
 ```
 
 Not allowed yet:

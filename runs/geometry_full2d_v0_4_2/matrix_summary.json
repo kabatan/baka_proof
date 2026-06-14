@@ -1,56 +1,66 @@
 {
-  "corpus_manifest_hash": "sha256:df876567319a669aa97efd159ad9429aa3e02d941302a43a168208aaae536ea8",
+  "corpus_manifest_hash": "sha256:0753f2b0c2ecaabe003248e46e16127216e4eb05cbe371b0cc338e9daf928e6e",
   "family_rates": {
-    "AngleCyclic450": {
-      "final_theorem": 0,
-      "rate": 0.0,
-      "total": 450
-    },
-    "Construction450": {
-      "final_theorem": 0,
-      "rate": 0.0,
-      "total": 450
-    },
-    "Full2DCore500": {
+    "Algebraic250": {
       "final_theorem": 0,
       "rate": 0.0,
       "total": 500
     },
+    "AngleCyclic450": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 900
+    },
+    "Construction450": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 900
+    },
+    "Full2DCore500": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 1000
+    },
+    "HardHoldout50": {
+      "final_theorem": 0,
+      "rate": 0.0,
+      "total": 100
+    },
     "IncidenceParallelPerp350": {
       "final_theorem": 0,
       "rate": 0.0,
-      "total": 350
+      "total": 700
     },
-    "Inequality200": {
+    "Inequality150": {
       "final_theorem": 0,
       "rate": 0.0,
-      "total": 200
+      "total": 300
     },
     "MetricRatioArea350": {
       "final_theorem": 0,
       "rate": 0.0,
-      "total": 350
+      "total": 700
     },
-    "MixedOlympiad250": {
+    "OlympiadStyle300": {
       "final_theorem": 0,
       "rate": 0.0,
-      "total": 250
+      "total": 600
     },
-    "OrderCase200": {
+    "OrderCase250": {
       "final_theorem": 0,
       "rate": 0.0,
-      "total": 200
+      "total": 500
     },
     "Transformation250": {
       "final_theorem": 0,
       "rate": 0.0,
-      "total": 250
+      "total": 500
     }
   },
   "final_theorem_count": 0,
   "overall_final_theorem_rate": 0.0,
-  "positive_count": 3000,
-  "release_frozen": false,
+  "positive_count": 6700,
+  "release_frozen": true,
   "schema_version": "1.0.0",
   "status": "completed"
 }

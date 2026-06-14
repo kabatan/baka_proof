@@ -16,9 +16,11 @@ FAMILY_COUNTS = (
     ("Construction450", 450, "construction", "midpoint_collinear"),
     ("MetricRatioArea350", 350, "metric", "equal_length_refl"),
     ("Transformation250", 250, "transformation", "reflection_has_evidence"),
-    ("OrderCase200", 200, "order_case", "between_collinear"),
-    ("Inequality200", 200, "inequality", "length_le_refl"),
-    ("MixedOlympiad250", 250, "mixed", "collinear_refl_left"),
+    ("OrderCase250", 250, "order_case", "between_collinear"),
+    ("Algebraic250", 250, "algebraic", "equal_length_refl"),
+    ("Inequality150", 150, "inequality", "length_le_refl"),
+    ("OlympiadStyle300", 300, "mixed", "collinear_refl_left"),
+    ("HardHoldout50", 50, "mixed", "collinear_refl_left"),
 )
 
 TIER_SEQUENCE = (
@@ -29,8 +31,10 @@ TIER_SEQUENCE = (
     ("tier_5_olympiad_style", 300),
     ("tier_6_hard_holdout", 50),
     ("tier_0_smoke", 100),
-    ("tier_1_basic", 950),
+    ("tier_1_basic", 1300),
 )
+
+POSITIVE_COUNT = sum(count for _family, count, _grammar_family, _proof_template in FAMILY_COUNTS)
 
 
 def main() -> int:
@@ -131,8 +135,8 @@ def _expanded_tiers() -> list[str]:
     tiers: list[str] = []
     for tier, count in TIER_SEQUENCE:
         tiers.extend([tier] * count)
-    if len(tiers) != 3000:
-        raise ValueError(f"tier sequence must contain exactly 3000 positives, got {len(tiers)}")
+    if len(tiers) != POSITIVE_COUNT:
+        raise ValueError(f"tier sequence must contain exactly {POSITIVE_COUNT} positives, got {len(tiers)}")
     return tiers
 
 

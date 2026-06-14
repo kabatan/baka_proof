@@ -34,16 +34,16 @@ def main() -> int:
 
 
 def _results_for_manifest(manifest: dict[str, Any]) -> list[dict[str, Any]]:
-    release_frozen = manifest.get("status") == "release_frozen"
     results: list[dict[str, Any]] = []
     for task in manifest.get("tasks", []):
         target_status = task.get("target_status")
-        if target_status == "in_target_positive" and release_frozen:
+        proof_artifacts = _proof_artifacts_for_task(task)
+        if target_status == "in_target_positive" and proof_artifacts:
             outcome = "final_theorem"
             final_theorem = True
             measured_failure = False
         elif target_status == "in_target_positive":
-            outcome = "measured_failure"
+            outcome = "measured_failure_missing_solver_backed_certificate"
             final_theorem = False
             measured_failure = True
         else:
@@ -64,12 +64,26 @@ def _results_for_manifest(manifest: dict[str, Any]) -> list[dict[str, Any]]:
                 "safe_reject_counted_as_success": False,
                 "used_engine_roles": _engine_roles_for_task(task),
                 "used_rule_refs": _rule_refs_for_task(task),
+                "proof_artifacts": proof_artifacts,
                 "fixture_flag": False,
                 "real_integration_flag": True,
                 "proof_use_status": "final_theorem" if final_theorem else "not_allowed",
             }
         )
     return results
+
+
+def _proof_artifacts_for_task(task: dict[str, Any]) -> dict[str, str]:
+    required = {
+        "solver_backed_certificate_ref": task.get("solver_backed_certificate_ref"),
+        "final_verify_ref": task.get("final_verify_ref"),
+        "proof_region_diff_ref": task.get("proof_region_diff_ref"),
+    }
+    if task.get("proof_use_status") != "solver_backed_final_theorem":
+        return {}
+    if any(not value for value in required.values()):
+        return {}
+    return {key: str(value) for key, value in required.items()}
 
 
 def _summary(manifest: dict[str, Any], results: list[dict[str, Any]]) -> dict[str, Any]:

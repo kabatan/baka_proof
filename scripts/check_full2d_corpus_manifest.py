@@ -19,9 +19,11 @@ FAMILY_FLOORS = {
     "Construction450": 450,
     "MetricRatioArea350": 350,
     "Transformation250": 250,
-    "OrderCase200": 200,
-    "Inequality200": 200,
-    "MixedOlympiad250": 250,
+    "OrderCase250": 250,
+    "Algebraic250": 250,
+    "Inequality150": 150,
+    "OlympiadStyle300": 300,
+    "HardHoldout50": 50,
 }
 
 TIER_FLOORS = {

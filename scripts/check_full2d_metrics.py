@@ -12,9 +12,11 @@ FAMILY_THRESHOLDS = {
     "Construction450": 0.85,
     "MetricRatioArea350": 0.85,
     "Transformation250": 0.75,
-    "OrderCase200": 0.75,
-    "Inequality200": 0.75,
-    "MixedOlympiad250": 0.50,
+    "OrderCase250": 0.80,
+    "Algebraic250": 0.85,
+    "Inequality150": 0.75,
+    "OlympiadStyle300": 0.70,
+    "HardHoldout50": 0.50,
 }
 
 
@@ -40,6 +42,9 @@ def check_metrics(run_dir: Path) -> list[str]:
     errors: list[str] = []
     if not summary.get("release_frozen"):
         errors.append("I-000_matrix_run_not_release_frozen")
+    overall_rate = float(summary.get("overall_final_theorem_rate", 0.0))
+    if overall_rate < 0.85:
+        errors.append(f"I-overall-rate-below-threshold:{overall_rate:.4f}<0.8500")
     for family, threshold in FAMILY_THRESHOLDS.items():
         rate = float(summary.get("family_rates", {}).get(family, {}).get("rate", 0.0))
         if rate < threshold:

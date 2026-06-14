@@ -5,7 +5,7 @@ Status: USER_APPROVED_ACTIVE
 -->
 ---
 title: "Active Context Seed — GeometryFull2D v0.4.2"
-status: "RELEASE_BLOCKED_ON_WP20_CURATED_CORPUS"
+status: "RELEASE_BLOCKED_ON_WP20_SOLVER_BACKED_METRICS"
 created: "2026-06-14"
 ---
 
@@ -57,7 +57,7 @@ hard_blockers=[]
 status=progress_ok_with_debt
 completed_work_packages include WP-00, WP-01, WP-02, WP-03, WP-04, WP-05, WP-06, WP-07, WP-08, WP-09, WP-10, WP-11, WP-12, WP-13, WP-14, and WP-15
 next_unblocked_work_packages include WP-20
-release_acceptance status is blocked on H-003/H-004/H-008 because the current draft corpus is synthetic-generated and not release_frozen
+release_acceptance status is blocked on WP-20 metrics because the frozen corpus has no solver-backed certificate/final-verify/proof-region artifacts to support artifact-derived final theorem counts
 ```
 
 TongGeometry:
