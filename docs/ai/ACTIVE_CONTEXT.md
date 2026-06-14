@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A+v0.3B-patch
-status: V03B_T55_COMPLETE_T56_READY
+status: V03B_RCB3_PASS_T57_READY
 created: 2026-06-13
 last_updated: 2026-06-14
 base_spec: MARP-GEOLEAN-BASE-004
@@ -491,10 +491,22 @@ Completed task:
 T55 — FinalVerifyGate solver-backed provenance
 ```
 
-Current task:
+Completed task:
 
 ```text
 T56 — TrustGuard and SolverBackedProofCertificate generation
+```
+
+Completed review checkpoint:
+
+```text
+RC-B3 — FinalVerifyGate and certificate/trust checkpoint
+```
+
+Current task:
+
+```text
+T57 — StandardGeometryProofLoop solver-backed release path
 ```
 
 Current task files changed in T46:
@@ -555,6 +567,18 @@ src/math_auto_research/lean_integration/final_verify_gate.py
 tests/unit/test_final_verify_solver_backed_provenance.py
 tests/unit/test_final_verify_rejects_missing_solver_backed_provenance.py
 docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t55_final_verify_solver_backed_provenance.md
+docs/ai/ACTIVE_CONTEXT.md
+```
+
+Current task files changed in T56:
+
+```text
+plugins/geometry_synthetic/proof/certificate_builder.py
+plugins/geometry_synthetic/proof/__init__.py
+plugins/geometry_synthetic/bridge/__init__.py
+tests/unit/test_solver_backed_proof_certificate.py
+tests/unit/test_solver_backed_laundering.py
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t56_solver_backed_certificate_trust.md
 docs/ai/ACTIVE_CONTEXT.md
 ```
 
@@ -639,7 +663,7 @@ T46 final replay and v0.3A closure are complete: release blockers 1-34 pass, cor
 After v0.3B patch installation, the intended complete v0.3 closure is not final until solver-backed proof repair also passes. Current allowed status is:
 
 ```text
-V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: v0.3A harness-ready passed, v0.3B schema/proof-region guard implemented and compiler patch-candidate floor implemented; worker/final certificate/release flow pending
+V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: v0.3A harness-ready passed, v0.3B schema/proof-region/compiler/worker/final-verify/certificate trust pieces implemented; standard loop/corpus/metrics/release flow pending
 V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY: not yet claimed
 V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY: blocked
 ```

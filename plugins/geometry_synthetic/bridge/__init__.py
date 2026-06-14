@@ -167,13 +167,20 @@ class TrustGuard:
         requested_result_level: str,
         bridge_report: GeometryBridgeReport | None = None,
         final_verify_report: FinalVerifyReport | None = None,
+        solver_backed_proof_certificate: dict[str, Any] | None = None,
+        solver_backed_required: bool = False,
     ) -> TrustDecision:
         if requested_result_level not in TRUST_LEVELS:
             return TrustDecision("1.0.0", "diagnostic_only", "not_allowed", False, "unknown_result_level")
         if evidence_kind in RAW_EVIDENCE_KINDS:
             return TrustDecision("1.0.0", "diagnostic_only", "not_allowed", False, "raw_output_not_proof")
         if requested_result_level == "final_theorem":
-            return self._final_theorem_decision(evidence_kind, final_verify_report)
+            return self._final_theorem_decision(
+                evidence_kind,
+                final_verify_report,
+                solver_backed_proof_certificate,
+                solver_backed_required,
+            )
         if bridge_report is not None and bridge_report.proof_use_status == "lean_patch_candidate":
             return TrustDecision(
                 "1.0.0",
@@ -194,6 +201,8 @@ class TrustGuard:
         self,
         evidence_kind: str,
         final_verify_report: FinalVerifyReport | None,
+        solver_backed_proof_certificate: dict[str, Any] | None = None,
+        solver_backed_required: bool = False,
     ) -> TrustDecision:
         if evidence_kind != "final_verify_report" or final_verify_report is None:
             return TrustDecision(
@@ -219,6 +228,16 @@ class TrustGuard:
                 "final_verify_report_not_valid",
                 final_verify_report.report_id,
             )
+        if solver_backed_required or getattr(final_verify_report, "solver_backed_proof_status", "not_applicable") == "passed":
+            if not solver_backed_proof_certificate or solver_backed_proof_certificate.get("status") != "passed":
+                return TrustDecision(
+                    "1.0.0",
+                    "diagnostic_only",
+                    "not_allowed",
+                    False,
+                    "solver_backed_final_theorem_requires_passed_certificate",
+                    final_verify_report.report_id,
+                )
         return TrustDecision(
             "1.0.0",
             "final_theorem",

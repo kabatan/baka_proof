@@ -40,15 +40,30 @@ It records:
 ```text
 make test-unit TEST_FILTER=final_verify_solver_backed
 Result: PASS
-Ran 4 tests in 24.766s
+Ran 5 tests in 28.121s
 ```
 
 ```text
 make test-regression TEST_FILTER=final_verify_solver_backed
 Result: PASS
-Ran 4 tests in 24.769s
+Ran 5 tests in 28.119s
 domain contamination check passed
 no loose options check passed
+```
+
+## RC-B3 Fixes
+
+The first RC-B3 review returned `FAIL_FIXABLE`. T55-related fix:
+
+- Solver-backed provenance now validates ref shapes, including rejecting raw provider output as `normalized_solver_artifact_ref`.
+
+## RC-B3 Review
+
+Guardian boundary reviewer rerun result:
+
+```text
+RESULT: PASS
+Concrete blockers: none for the RC-B3 T55/T56 packet.
 ```
 
 ```text

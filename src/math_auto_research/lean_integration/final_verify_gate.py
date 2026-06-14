@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
@@ -148,4 +149,22 @@ def proof_use_provenance_valid(provenance: dict[str, Any] | None) -> bool:
         "proof_region_diff_hash",
         "generated_candidate_file_ref",
     }
-    return solver_backed_required.issubset(provenance)
+    if not solver_backed_required.issubset(provenance):
+        return False
+    return (
+        _matches_ref(provenance["provider_run_manifest_ref"], ("provider_run_manifest:",))
+        and _matches_ref(provenance["normalized_solver_artifact_ref"], ("geotrace:", "aux_construction_candidate:"))
+        and _matches_ref(provenance["compiler_result_ref"], ("trace_compilation:", "construction_compilation:"))
+        and _matches_ref(provenance["lean_patch_candidate_ref"], ("lean_patch:",))
+        and _matches_ref(provenance["worker_result_ref"], ("worker_result:",))
+        and _matches_sha256(provenance["proof_region_diff_hash"])
+        and _matches_sha256(provenance["generated_candidate_file_ref"])
+    )
+
+
+def _matches_ref(value: Any, prefixes: tuple[str, ...]) -> bool:
+    return isinstance(value, str) and value.startswith(prefixes)
+
+
+def _matches_sha256(value: Any) -> bool:
+    return isinstance(value, str) and re.fullmatch(r"sha256:[0-9a-f]{64}", value) is not None

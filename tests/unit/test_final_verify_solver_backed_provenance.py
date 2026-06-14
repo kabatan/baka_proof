@@ -44,6 +44,23 @@ class FinalVerifySolverBackedProvenanceTests(unittest.TestCase):
             self.assertEqual(report.proof_use_provenance_status, "failed")
             self.assertEqual(report.solver_backed_proof_status, "failed")
 
+    def test_solver_backed_provenance_rejects_raw_solver_artifact_ref(self) -> None:
+        provenance = solver_backed_provenance()
+        provenance["normalized_solver_artifact_ref"] = "raw_provider_output:only"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "Sample.lean"
+            path.write_text(LEAN_TEMPLATE, encoding="utf-8")
+            report = FinalVerifyGate().verify_file(
+                LEAN_TEMPLATE,
+                path,
+                "sample_target",
+                "obligation:sample",
+                proof_use_provenance=provenance,
+            )
+            self.assertEqual(report.proof_use_status, "not_allowed")
+            self.assertEqual(report.proof_use_provenance_status, "failed")
+            self.assertEqual(report.solver_backed_proof_status, "failed")
+
     def test_solver_backed_rejects_candidate_with_sorry(self) -> None:
         candidate = LEAN_TEMPLATE.replace("trivial", "sorry")
         with tempfile.TemporaryDirectory() as tmp:
