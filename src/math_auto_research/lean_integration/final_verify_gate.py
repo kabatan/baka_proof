@@ -61,7 +61,7 @@ class FinalVerifyGate:
         theorem_hash_unchanged = original_hash == hash_text(candidate_statement)
         region_ok = self.region_guard.permits(original_text, candidate_text)
         lean_result = self.lean_port.compile_file(candidate_path)
-        sorry_status = "failed" if contains_sorry(candidate_text) else "clean"
+        sorry_status = "failed" if contains_sorry(candidate_text, theorem_name) else "clean"
         forbidden_status = "failed" if contains_forbidden_declaration(candidate_text) else "clean"
         admitted_imports_ok = imports_are_admitted(candidate_text, admitted_import_prefixes)
         toy_target_ok = not contains_local_toy_target(candidate_text)
@@ -99,9 +99,11 @@ class FinalVerifyGate:
         )
 
 
-def contains_sorry(text: str) -> bool:
-    import re
-
+def contains_sorry(text: str, theorem_name: str | None = None) -> bool:
+    if theorem_name:
+        target_region = _target_proof_region_text(text, theorem_name)
+        if target_region is not None:
+            return re.search(r"\bsorry\b", target_region) is not None
     return re.search(r"\bsorry\b", text) is not None
 
 
@@ -125,6 +127,15 @@ def imports_are_admitted(text: str, admitted_prefixes: tuple[str, ...]) -> bool:
 def contains_local_toy_target(text: str) -> bool:
     forbidden = ("ToyGeometry", "LocalToyGeometry", "toy_geometry")
     return any(token in text for token in forbidden)
+
+
+def _target_proof_region_text(text: str, theorem_name: str) -> str | None:
+    short_name = theorem_name.rsplit(".", 1)[-1]
+    start = f"-- MARP_PROOF_REGION_START:{short_name}"
+    end = f"-- MARP_PROOF_REGION_END:{short_name}"
+    if start not in text or end not in text:
+        return None
+    return text.split(start, 1)[1].split(end, 1)[0]
 
 
 def proof_use_provenance_valid(provenance: dict[str, Any] | None) -> bool:

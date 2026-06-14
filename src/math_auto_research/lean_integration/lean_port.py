@@ -35,8 +35,6 @@ class LeanPort:
 
     def compile_file(self, path: Path, budget: ResourceRequest | None = None) -> LeanCompileResult:
         request = budget or ResourceRequest(component="lean_file", engine_role="lean_build", budget="tiny", timeout_sec=120)
-        if Path("lakefile.lean").exists() and _is_within_workspace(path):
-            return self.build_project(budget)
         if Path("lakefile.lean").exists():
             command = [self.lake_executable, "env", "lean", str(path)]
         else:

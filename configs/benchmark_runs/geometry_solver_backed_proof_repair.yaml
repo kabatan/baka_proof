@@ -16,7 +16,7 @@
     "solver_backed:construction:03",
     "solver_backed:hybrid:01"
   ],
-  "resource_budget": "tiny",
+  "resource_budget": "small",
   "baselines": [
     {"baseline_id": "B0", "label": "proof_worker_only", "uses_controller": false, "uses_geometry_solve": false, "model_tier": "baseline"},
     {"baseline_id": "B1", "label": "controller_worker_no_geometry", "uses_controller": true, "uses_geometry_solve": false, "model_tier": "baseline"},

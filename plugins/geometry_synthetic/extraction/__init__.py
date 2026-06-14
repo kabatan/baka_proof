@@ -482,6 +482,12 @@ def _classify_lean_atom(atom: str) -> str | None:
         return "equal_angle_supported_pattern"
     if re.search(r"\bline_from_points\b", cleaned):
         return "line_through_two_distinct_points"
+    if re.search(r"∃\s+\w+\s*:\s*Line\s*,\s*\w+\.onLine\s+\w+", cleaned):
+        return "plugin_supported"
+    if re.search(r"∃\s+\w+\s*:\s*Point\s*,\s*Coll\s+\w+\s+\w+\s+\w+", cleaned):
+        return "plugin_supported"
+    if re.search(r"\bdistinctPointsOnLine\s+\w+\s+\w+\s+\w+", cleaned):
+        return "plugin_supported"
     if re.search(r"\bintersection_lines\b", cleaned):
         return "intersection_of_two_nonparallel_lines"
     if re.search(r"\bFoot\s+\w+\s+\w+\s+\w+", cleaned):

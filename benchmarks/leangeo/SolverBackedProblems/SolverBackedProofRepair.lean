@@ -33,7 +33,7 @@ theorem solver_trace_06 (A B : Point) (h : Coll A B B) : Coll A B B := by
   sorry
   -- MARP_PROOF_REGION_END:solver_trace_06
 
-theorem solver_construction_01 (A : Point) (L : Line) (h : A.onLine L) : ∃ M : Line, A.onLine M := by
+theorem solver_construction_01 (A B : Point) (L : Line) (h : A.onLine L) (hne : A ≠ B) : ∃ M : Line, A.onLine M := by
   -- MARP_PROOF_REGION_START:solver_construction_01
   sorry
   -- MARP_PROOF_REGION_END:solver_construction_01

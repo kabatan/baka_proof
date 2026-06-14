@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A+v0.3B-patch
-status: V03B_T58_COMPLETE_T59_READY
+status: V03B_T59_COMPLETE_T60_READY
 created: 2026-06-13
 last_updated: 2026-06-14
 base_spec: MARP-GEOLEAN-BASE-004
@@ -521,10 +521,16 @@ Completed task:
 T58 — Solver-backed corpus
 ```
 
-Current task:
+Completed task:
 
 ```text
 T59 — Evaluation matrix and metrics update
+```
+
+Current task:
+
+```text
+T60 — Release blocker scripts for solver-backed proof repair
 ```
 
 Current task files changed in T46:

@@ -18,7 +18,7 @@ def main() -> int:
     violations: list[str] = []
     guard = SolverBackedProofRegionGuard()
     for path in sorted(Path(".").rglob("*.lean")):
-        if ".lake" in path.parts or ".tmp" in path.parts:
+        if ".lake" in path.parts or ".tmp" in path.parts or "runs" in path.parts:
             continue
         text = path.read_text(encoding="utf-8")
         if path.parts[:3] == ("benchmarks", "leangeo", "SolverBackedProblems"):

@@ -132,6 +132,17 @@ class StandardGeometryProofLoop:
             stage in expected_stages
             for stage in ("symbolic_closure", "construction_proposer", "heavy_search")
         )
+        task_category = str(_field(task, "task_category", "unknown"))
+        solver_trace_categories = {
+            "nonidentity_symbolic_closure",
+            "solver_backed_geotrace_final",
+            "solver_backed_hybrid_or_side_condition_final",
+        }
+        solver_construction_categories = {
+            "auxiliary_construction",
+            "solver_backed_construction_final",
+            "solver_backed_hybrid_or_side_condition_final",
+        }
         if geometry_solve_enabled and claim_spec is not None and geometry_stage_required:
             construction_enabled = bool(_field(baseline, "construction_enabled", True))
             request = GeometrySolveRequest(
@@ -142,9 +153,9 @@ class StandardGeometryProofLoop:
                 trust_target="lean_patch_candidate",
                 budget=str(_field(baseline, "budget", "medium")),
                 constraints={
-                    "construction_needed": construction_enabled and _field(task, "task_category") == "auxiliary_construction",
+                    "construction_needed": construction_enabled and task_category in solver_construction_categories,
                     "claim_spec": claim_spec.to_dict(),
-                    "emit_trace_candidate": _field(task, "task_category") == "nonidentity_symbolic_closure",
+                    "emit_trace_candidate": task_category in solver_trace_categories,
                     "use_real_newclid": bool(_field(baseline, "use_real_newclid", False)),
                     "use_real_genesisgeo": bool(_field(baseline, "use_real_genesisgeo", False)),
                     "use_real_tonggeometry": bool(_field(baseline, "use_real_tonggeometry", False)),
@@ -723,6 +734,16 @@ def _candidate_from_provider_ref(candidate_ref: str, claim_spec: Any) -> Auxilia
     while len(dependency_names) < 2:
         dependency_names.append(f"aux{len(dependency_names) + 1}")
     dependencies = tuple(f"{name}:Point" for name in dependency_names)
+    target_raw = str(getattr(claim_spec, "target", {}).get("raw", "") if claim_spec is not None else "")
+    if "distinctPointsOnLine" in target_raw:
+        template_id = "lean_template:distinct_points_on_line_pack.v1"
+        target_shape = "distinct_points_on_line_pack"
+    elif "∃ P : Point" in target_raw and "Coll" in target_raw:
+        template_id = "lean_template:exists_point_collinear_self.v1"
+        target_shape = "exists_point_collinear_self"
+    else:
+        template_id = "lean_template:exists_existing_line_witness.v1"
+        target_shape = "exists_existing_line_witness"
     return AuxiliaryConstructionCandidateV1(
         schema_version="1.0.0",
         candidate_id=candidate_ref,
@@ -743,7 +764,8 @@ def _candidate_from_provider_ref(candidate_ref: str, claim_spec: Any) -> Auxilia
             "diagram_cases": (),
         },
         lean_introduction_plan={
-            "theorem_template_id": "lean_template:line_through_two_distinct_points:v1",
+            "theorem_template_id": template_id,
+            "target_shape": target_shape,
             "generated_obligations": (f"obligation:{dependencies[0]} != {dependencies[1]}",),
         },
     )

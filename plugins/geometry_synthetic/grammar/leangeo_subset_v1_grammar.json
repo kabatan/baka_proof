@@ -55,7 +55,8 @@
     "intersection_of_two_nonparallel_lines": {"side_conditions": ["lines_nonparallel"]},
     "foot_of_perpendicular": {"side_conditions": ["point_declared", "line_declared"]},
     "midpoint": {"side_conditions": ["endpoints_distinct"]},
-    "circle_with_center_through_point": {"side_conditions": ["center_point_distinct"]}
+    "circle_with_center_through_point": {"side_conditions": ["center_point_distinct"]},
+    "plugin_supported": {"side_conditions": ["plugin_contract_checked"]}
   },
   "relation_mappings": {
     "exact": {"goal_level_allowed": true},

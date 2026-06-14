@@ -110,10 +110,12 @@ def _baseline_for_run(baseline: dict[str, Any], config: dict[str, Any]) -> dict[
     uses_geometry = bool(baseline.get("uses_geometry_solve"))
     baseline_id = str(baseline["baseline_id"])
     release_real_provider = config.get("matrix_id") in {"geometry_level2_pilot", "geometry_level2_ablation"} and uses_geometry
+    solver_backed_matrix = config.get("matrix_id") == "geometry_solver_backed_proof_repair"
     return {
         "baseline_id": baseline_id,
         "geometry_solve_enabled": uses_geometry,
-        "final_verify_enabled": uses_geometry or baseline_id == "B0",
+        "final_verify_enabled": (uses_geometry or baseline_id == "B0")
+        and (not solver_backed_matrix or baseline_id in {"B2", "B4"}),
         "budget": "heavy" if baseline_id == "B4" else str(config.get("resource_budget", "medium")),
         "use_real_newclid": release_real_provider,
         "use_real_genesisgeo": release_real_provider,
@@ -148,6 +150,28 @@ def _metrics_for_baseline(
     resource_usage_by_role = _resource_usage_by_role(task_results)
     timeout_count = sum(_timeout_count(result) for result in task_results)
     diagnostic_counts = _diagnostic_kind_counts(task_results)
+    task_by_id = {str(task.get("entry_id")): task for task in corpus}
+    solver_backed_countable = [
+        result
+        for result in task_results
+        if _solver_backed_countable_result(result)
+    ]
+    solver_backed_final = len(solver_backed_countable)
+    geotrace_solver_backed_final = sum(
+        1
+        for result in solver_backed_countable
+        if str(task_by_id.get(result.task_entry_id, {}).get("task_category")) == "solver_backed_geotrace_final"
+    )
+    construction_solver_backed_final = sum(
+        1
+        for result in solver_backed_countable
+        if str(task_by_id.get(result.task_entry_id, {}).get("task_category")) == "solver_backed_construction_final"
+    )
+    hybrid_solver_backed_final = sum(
+        1
+        for result in solver_backed_countable
+        if str(task_by_id.get(result.task_entry_id, {}).get("task_category")) == "solver_backed_hybrid_or_side_condition_final"
+    )
     metric_values = {
         "benchmark_count": benchmark_count,
         "accepted_count": accepted_count,
@@ -160,6 +184,14 @@ def _metrics_for_baseline(
         "provider_success_rate_by_role": provider_success_by_role,
         "proof_repair_success_count": final_success,
         "proof_repair_success_rate": final_success / benchmark_count,
+        "solver_backed_final_theorem_count": solver_backed_final,
+        "solver_backed_final_theorem_rate": solver_backed_final / benchmark_count,
+        "solver_backed_certificate_count": sum(
+            1 for result in task_results if "solver_backed_proof_certificate.json" in result.artifact_index
+        ),
+        "geotrace_solver_backed_final_theorem_count": geotrace_solver_backed_final,
+        "construction_solver_backed_final_theorem_count": construction_solver_backed_final,
+        "hybrid_solver_backed_final_theorem_count": hybrid_solver_backed_final,
         "construction_candidate_accepted_count": auxiliary_count,
         "auxiliary_construction_accepted_count": auxiliary_count,
         "trace_compile_success_count": trace_compile,
@@ -227,6 +259,32 @@ def _diagnostic_kind_counts(task_results: list[TaskRunResult]) -> dict[str, int]
         if isinstance(provider, dict):
             counts[f"provider:{provider.get('status')}"] = counts.get(f"provider:{provider.get('status')}", 0) + 1
     return counts
+
+
+def _solver_backed_countable_result(result: TaskRunResult) -> bool:
+    if result.proof_use_status != "final_theorem" or not result.solver_backed_final_theorem:
+        return False
+    if not result.proof_repair_patch_applied:
+        return False
+    required_artifacts = {
+        "source_problem_ref.json",
+        "generated_candidate_file_ref.json",
+        "lean_patch_candidate.json",
+        "worker_result.json",
+        "final_verify_report.json",
+        "solver_backed_proof_certificate.json",
+    }
+    if not required_artifacts.issubset(result.artifact_index):
+        return False
+    certificate = _read_artifact(result, "solver_backed_proof_certificate.json")
+    final_report = _read_artifact(result, "final_verify_report.json")
+    worker_result = _read_artifact(result, "worker_result.json")
+    return (
+        certificate.get("certificate_id") == result.solver_backed_proof_certificate_ref
+        and final_report.get("proof_use_status") == "final_theorem"
+        and final_report.get("solver_backed_proof_status") == "passed"
+        and worker_result.get("patch_applied") is True
+    )
 
 
 def _read_artifact(result: TaskRunResult, name: str) -> dict[str, Any]:

@@ -73,7 +73,7 @@ def apply_lean_patch_candidate(
                 str(patch_candidate.allowed_edit_region["end_marker"]),
                 str(patch_candidate.proof_region_replacement_text),
             )
-            blockers.extend(_candidate_blockers(candidate_text))
+            blockers.extend(_candidate_blockers(candidate_text, str(patch_candidate.target_theorem_name)))
             blockers.extend(_outside_edit_blockers(source_text, candidate_text, str(patch_candidate.target_theorem_name)))
             diff_hash = _proof_region_diff_hash(source_text, candidate_text, str(patch_candidate.target_theorem_name))
             if not blockers:
@@ -176,8 +176,9 @@ def _source_problem_blockers(text: str) -> tuple[str, ...]:
     return tuple(blockers)
 
 
-def _candidate_blockers(text: str) -> tuple[str, ...]:
-    if re.search(r"\bsorry\b", text):
+def _candidate_blockers(text: str, target_name: str) -> tuple[str, ...]:
+    target_region = _single_region_text(text, target_name)
+    if re.search(r"\bsorry\b", target_region):
         return ("generated_candidate_contains_sorry",)
     return ()
 
