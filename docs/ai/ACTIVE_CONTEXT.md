@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A+v0.3B-patch
-status: V03B_RCB2_PASS_T54_READY
+status: V03B_T54_COMPLETE_T55_READY
 created: 2026-06-13
 last_updated: 2026-06-14
 base_spec: MARP-GEOLEAN-BASE-004
@@ -479,10 +479,16 @@ Completed review checkpoint:
 RC-B2 — Compiler patch candidate checkpoint
 ```
 
-Current task:
+Completed task:
 
 ```text
 T54 — ProofWorker patch application
+```
+
+Current task:
+
+```text
+T55 — FinalVerifyGate solver-backed provenance
 ```
 
 Current task files changed in T46:
@@ -523,6 +529,16 @@ tests/unit/test_construction_compiler_solver_backed_mutation.py
 tests/unit/test_compiler_patch_candidate_not_final_proof.py
 tests/unit/test_raw_provider_output_not_patch_material.py
 docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t51_t52_t53_compiler_patch_candidates.md
+docs/ai/ACTIVE_CONTEXT.md
+```
+
+Current task files changed in T54:
+
+```text
+plugins/geometry_synthetic/patching/apply_patch.py
+tests/unit/test_proof_worker_solver_patch_application.py
+tests/unit/test_worker_cannot_claim_final.py
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t54_proof_worker_patch_application.md
 docs/ai/ACTIVE_CONTEXT.md
 ```
 
