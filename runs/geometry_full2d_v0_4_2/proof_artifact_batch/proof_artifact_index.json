@@ -1087,5 +1087,905 @@
     "status": "passed",
     "task_id": "full2d-positive-3009",
     "theorem_name": "full2d_synth_3009"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3310/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3310/worker/full2d_release_proof_artifact_batch/full2d-positive-3310/full2d_synth_3310.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3310/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3310/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3310",
+    "theorem_name": "full2d_synth_3310"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3311/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3311/worker/full2d_release_proof_artifact_batch/full2d-positive-3311/full2d_synth_3311.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3311/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3311/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3311",
+    "theorem_name": "full2d_synth_3311"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0510/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0510/worker/full2d_release_proof_artifact_batch/full2d-positive-0510/full2d_synth_0510.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0510/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0510/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0510",
+    "theorem_name": "full2d_synth_0510"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0511/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0511/worker/full2d_release_proof_artifact_batch/full2d-positive-0511/full2d_synth_0511.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0511/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0511/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0511",
+    "theorem_name": "full2d_synth_0511"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0512/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0512/worker/full2d_release_proof_artifact_batch/full2d-positive-0512/full2d_synth_0512.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0512/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0512/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0512",
+    "theorem_name": "full2d_synth_0512"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0513/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0513/worker/full2d_release_proof_artifact_batch/full2d-positive-0513/full2d_synth_0513.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0513/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0513/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0513",
+    "theorem_name": "full2d_synth_0513"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0514/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0514/worker/full2d_release_proof_artifact_batch/full2d-positive-0514/full2d_synth_0514.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0514/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0514/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0514",
+    "theorem_name": "full2d_synth_0514"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0515/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0515/worker/full2d_release_proof_artifact_batch/full2d-positive-0515/full2d_synth_0515.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0515/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0515/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0515",
+    "theorem_name": "full2d_synth_0515"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0516/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0516/worker/full2d_release_proof_artifact_batch/full2d-positive-0516/full2d_synth_0516.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0516/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0516/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0516",
+    "theorem_name": "full2d_synth_0516"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0517/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0517/worker/full2d_release_proof_artifact_batch/full2d-positive-0517/full2d_synth_0517.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0517/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0517/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0517",
+    "theorem_name": "full2d_synth_0517"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0518/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0518/worker/full2d_release_proof_artifact_batch/full2d-positive-0518/full2d_synth_0518.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0518/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0518/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0518",
+    "theorem_name": "full2d_synth_0518"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0519/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0519/worker/full2d_release_proof_artifact_batch/full2d-positive-0519/full2d_synth_0519.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0519/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0519/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0519",
+    "theorem_name": "full2d_synth_0519"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0860/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0860/worker/full2d_release_proof_artifact_batch/full2d-positive-0860/full2d_synth_0860.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0860/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0860/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0860",
+    "theorem_name": "full2d_synth_0860"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0861/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0861/worker/full2d_release_proof_artifact_batch/full2d-positive-0861/full2d_synth_0861.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0861/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0861/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0861",
+    "theorem_name": "full2d_synth_0861"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0862/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0862/worker/full2d_release_proof_artifact_batch/full2d-positive-0862/full2d_synth_0862.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0862/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0862/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0862",
+    "theorem_name": "full2d_synth_0862"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0863/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0863/worker/full2d_release_proof_artifact_batch/full2d-positive-0863/full2d_synth_0863.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0863/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0863/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0863",
+    "theorem_name": "full2d_synth_0863"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0864/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0864/worker/full2d_release_proof_artifact_batch/full2d-positive-0864/full2d_synth_0864.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0864/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0864/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0864",
+    "theorem_name": "full2d_synth_0864"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0865/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0865/worker/full2d_release_proof_artifact_batch/full2d-positive-0865/full2d_synth_0865.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0865/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0865/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0865",
+    "theorem_name": "full2d_synth_0865"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0866/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0866/worker/full2d_release_proof_artifact_batch/full2d-positive-0866/full2d_synth_0866.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0866/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0866/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0866",
+    "theorem_name": "full2d_synth_0866"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0867/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0867/worker/full2d_release_proof_artifact_batch/full2d-positive-0867/full2d_synth_0867.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0867/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0867/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0867",
+    "theorem_name": "full2d_synth_0867"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0868/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0868/worker/full2d_release_proof_artifact_batch/full2d-positive-0868/full2d_synth_0868.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0868/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0868/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0868",
+    "theorem_name": "full2d_synth_0868"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0869/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0869/worker/full2d_release_proof_artifact_batch/full2d-positive-0869/full2d_synth_0869.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0869/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-0869/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-0869",
+    "theorem_name": "full2d_synth_0869"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1310/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1310/worker/full2d_release_proof_artifact_batch/full2d-positive-1310/full2d_synth_1310.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1310/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1310/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1310",
+    "theorem_name": "full2d_synth_1310"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1311/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1311/worker/full2d_release_proof_artifact_batch/full2d-positive-1311/full2d_synth_1311.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1311/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1311/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1311",
+    "theorem_name": "full2d_synth_1311"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1312/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1312/worker/full2d_release_proof_artifact_batch/full2d-positive-1312/full2d_synth_1312.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1312/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1312/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1312",
+    "theorem_name": "full2d_synth_1312"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1313/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1313/worker/full2d_release_proof_artifact_batch/full2d-positive-1313/full2d_synth_1313.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1313/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1313/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1313",
+    "theorem_name": "full2d_synth_1313"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1314/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1314/worker/full2d_release_proof_artifact_batch/full2d-positive-1314/full2d_synth_1314.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1314/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1314/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1314",
+    "theorem_name": "full2d_synth_1314"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1315/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1315/worker/full2d_release_proof_artifact_batch/full2d-positive-1315/full2d_synth_1315.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1315/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1315/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1315",
+    "theorem_name": "full2d_synth_1315"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1316/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1316/worker/full2d_release_proof_artifact_batch/full2d-positive-1316/full2d_synth_1316.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1316/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1316/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1316",
+    "theorem_name": "full2d_synth_1316"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1317/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1317/worker/full2d_release_proof_artifact_batch/full2d-positive-1317/full2d_synth_1317.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1317/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1317/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1317",
+    "theorem_name": "full2d_synth_1317"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1318/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1318/worker/full2d_release_proof_artifact_batch/full2d-positive-1318/full2d_synth_1318.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1318/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1318/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1318",
+    "theorem_name": "full2d_synth_1318"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1319/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1319/worker/full2d_release_proof_artifact_batch/full2d-positive-1319/full2d_synth_1319.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1319/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1319/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1319",
+    "theorem_name": "full2d_synth_1319"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1760/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1760/worker/full2d_release_proof_artifact_batch/full2d-positive-1760/full2d_synth_1760.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1760/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1760/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1760",
+    "theorem_name": "full2d_synth_1760"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1761/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1761/worker/full2d_release_proof_artifact_batch/full2d-positive-1761/full2d_synth_1761.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1761/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1761/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1761",
+    "theorem_name": "full2d_synth_1761"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1762/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1762/worker/full2d_release_proof_artifact_batch/full2d-positive-1762/full2d_synth_1762.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1762/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1762/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1762",
+    "theorem_name": "full2d_synth_1762"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1763/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1763/worker/full2d_release_proof_artifact_batch/full2d-positive-1763/full2d_synth_1763.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1763/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1763/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1763",
+    "theorem_name": "full2d_synth_1763"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1764/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1764/worker/full2d_release_proof_artifact_batch/full2d-positive-1764/full2d_synth_1764.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1764/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1764/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1764",
+    "theorem_name": "full2d_synth_1764"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1765/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1765/worker/full2d_release_proof_artifact_batch/full2d-positive-1765/full2d_synth_1765.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1765/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1765/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1765",
+    "theorem_name": "full2d_synth_1765"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1766/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1766/worker/full2d_release_proof_artifact_batch/full2d-positive-1766/full2d_synth_1766.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1766/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1766/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1766",
+    "theorem_name": "full2d_synth_1766"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1767/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1767/worker/full2d_release_proof_artifact_batch/full2d-positive-1767/full2d_synth_1767.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1767/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1767/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1767",
+    "theorem_name": "full2d_synth_1767"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1768/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1768/worker/full2d_release_proof_artifact_batch/full2d-positive-1768/full2d_synth_1768.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1768/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1768/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1768",
+    "theorem_name": "full2d_synth_1768"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1769/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1769/worker/full2d_release_proof_artifact_batch/full2d-positive-1769/full2d_synth_1769.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1769/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-1769/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-1769",
+    "theorem_name": "full2d_synth_1769"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2110/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2110/worker/full2d_release_proof_artifact_batch/full2d-positive-2110/full2d_synth_2110.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2110/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2110/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2110",
+    "theorem_name": "full2d_synth_2110"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2111/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2111/worker/full2d_release_proof_artifact_batch/full2d-positive-2111/full2d_synth_2111.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2111/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2111/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2111",
+    "theorem_name": "full2d_synth_2111"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2112/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2112/worker/full2d_release_proof_artifact_batch/full2d-positive-2112/full2d_synth_2112.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2112/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2112/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2112",
+    "theorem_name": "full2d_synth_2112"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2113/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2113/worker/full2d_release_proof_artifact_batch/full2d-positive-2113/full2d_synth_2113.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2113/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2113/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2113",
+    "theorem_name": "full2d_synth_2113"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2114/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2114/worker/full2d_release_proof_artifact_batch/full2d-positive-2114/full2d_synth_2114.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2114/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2114/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2114",
+    "theorem_name": "full2d_synth_2114"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2115/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2115/worker/full2d_release_proof_artifact_batch/full2d-positive-2115/full2d_synth_2115.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2115/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2115/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2115",
+    "theorem_name": "full2d_synth_2115"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2116/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2116/worker/full2d_release_proof_artifact_batch/full2d-positive-2116/full2d_synth_2116.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2116/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2116/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2116",
+    "theorem_name": "full2d_synth_2116"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2117/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2117/worker/full2d_release_proof_artifact_batch/full2d-positive-2117/full2d_synth_2117.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2117/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2117/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2117",
+    "theorem_name": "full2d_synth_2117"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2118/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2118/worker/full2d_release_proof_artifact_batch/full2d-positive-2118/full2d_synth_2118.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2118/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2118/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2118",
+    "theorem_name": "full2d_synth_2118"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2119/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2119/worker/full2d_release_proof_artifact_batch/full2d-positive-2119/full2d_synth_2119.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2119/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2119/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2119",
+    "theorem_name": "full2d_synth_2119"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2360/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2360/worker/full2d_release_proof_artifact_batch/full2d-positive-2360/full2d_synth_2360.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2360/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2360/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2360",
+    "theorem_name": "full2d_synth_2360"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2361/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2361/worker/full2d_release_proof_artifact_batch/full2d-positive-2361/full2d_synth_2361.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2361/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2361/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2361",
+    "theorem_name": "full2d_synth_2361"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2362/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2362/worker/full2d_release_proof_artifact_batch/full2d-positive-2362/full2d_synth_2362.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2362/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2362/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2362",
+    "theorem_name": "full2d_synth_2362"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2363/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2363/worker/full2d_release_proof_artifact_batch/full2d-positive-2363/full2d_synth_2363.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2363/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2363/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2363",
+    "theorem_name": "full2d_synth_2363"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2364/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2364/worker/full2d_release_proof_artifact_batch/full2d-positive-2364/full2d_synth_2364.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2364/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2364/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2364",
+    "theorem_name": "full2d_synth_2364"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2365/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2365/worker/full2d_release_proof_artifact_batch/full2d-positive-2365/full2d_synth_2365.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2365/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2365/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2365",
+    "theorem_name": "full2d_synth_2365"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2366/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2366/worker/full2d_release_proof_artifact_batch/full2d-positive-2366/full2d_synth_2366.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2366/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2366/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2366",
+    "theorem_name": "full2d_synth_2366"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2367/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2367/worker/full2d_release_proof_artifact_batch/full2d-positive-2367/full2d_synth_2367.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2367/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2367/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2367",
+    "theorem_name": "full2d_synth_2367"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2368/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2368/worker/full2d_release_proof_artifact_batch/full2d-positive-2368/full2d_synth_2368.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2368/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2368/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2368",
+    "theorem_name": "full2d_synth_2368"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2369/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2369/worker/full2d_release_proof_artifact_batch/full2d-positive-2369/full2d_synth_2369.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2369/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2369/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2369",
+    "theorem_name": "full2d_synth_2369"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2610/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2610/worker/full2d_release_proof_artifact_batch/full2d-positive-2610/full2d_synth_2610.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2610/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2610/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2610",
+    "theorem_name": "full2d_synth_2610"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2611/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2611/worker/full2d_release_proof_artifact_batch/full2d-positive-2611/full2d_synth_2611.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2611/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2611/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2611",
+    "theorem_name": "full2d_synth_2611"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2612/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2612/worker/full2d_release_proof_artifact_batch/full2d-positive-2612/full2d_synth_2612.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2612/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2612/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2612",
+    "theorem_name": "full2d_synth_2612"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2613/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2613/worker/full2d_release_proof_artifact_batch/full2d-positive-2613/full2d_synth_2613.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2613/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2613/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2613",
+    "theorem_name": "full2d_synth_2613"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2614/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2614/worker/full2d_release_proof_artifact_batch/full2d-positive-2614/full2d_synth_2614.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2614/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2614/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2614",
+    "theorem_name": "full2d_synth_2614"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2615/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2615/worker/full2d_release_proof_artifact_batch/full2d-positive-2615/full2d_synth_2615.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2615/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2615/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2615",
+    "theorem_name": "full2d_synth_2615"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2616/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2616/worker/full2d_release_proof_artifact_batch/full2d-positive-2616/full2d_synth_2616.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2616/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2616/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2616",
+    "theorem_name": "full2d_synth_2616"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2617/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2617/worker/full2d_release_proof_artifact_batch/full2d-positive-2617/full2d_synth_2617.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2617/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2617/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2617",
+    "theorem_name": "full2d_synth_2617"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2618/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2618/worker/full2d_release_proof_artifact_batch/full2d-positive-2618/full2d_synth_2618.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2618/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2618/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2618",
+    "theorem_name": "full2d_synth_2618"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2619/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2619/worker/full2d_release_proof_artifact_batch/full2d-positive-2619/full2d_synth_2619.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2619/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2619/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2619",
+    "theorem_name": "full2d_synth_2619"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2860/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2860/worker/full2d_release_proof_artifact_batch/full2d-positive-2860/full2d_synth_2860.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2860/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2860/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2860",
+    "theorem_name": "full2d_synth_2860"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2861/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2861/worker/full2d_release_proof_artifact_batch/full2d-positive-2861/full2d_synth_2861.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2861/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2861/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2861",
+    "theorem_name": "full2d_synth_2861"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2862/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2862/worker/full2d_release_proof_artifact_batch/full2d-positive-2862/full2d_synth_2862.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2862/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2862/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2862",
+    "theorem_name": "full2d_synth_2862"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2863/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2863/worker/full2d_release_proof_artifact_batch/full2d-positive-2863/full2d_synth_2863.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2863/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2863/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2863",
+    "theorem_name": "full2d_synth_2863"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2864/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2864/worker/full2d_release_proof_artifact_batch/full2d-positive-2864/full2d_synth_2864.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2864/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2864/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2864",
+    "theorem_name": "full2d_synth_2864"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2865/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2865/worker/full2d_release_proof_artifact_batch/full2d-positive-2865/full2d_synth_2865.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2865/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2865/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2865",
+    "theorem_name": "full2d_synth_2865"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2866/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2866/worker/full2d_release_proof_artifact_batch/full2d-positive-2866/full2d_synth_2866.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2866/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2866/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2866",
+    "theorem_name": "full2d_synth_2866"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2867/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2867/worker/full2d_release_proof_artifact_batch/full2d-positive-2867/full2d_synth_2867.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2867/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2867/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2867",
+    "theorem_name": "full2d_synth_2867"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2868/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2868/worker/full2d_release_proof_artifact_batch/full2d-positive-2868/full2d_synth_2868.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2868/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2868/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2868",
+    "theorem_name": "full2d_synth_2868"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2869/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2869/worker/full2d_release_proof_artifact_batch/full2d-positive-2869/full2d_synth_2869.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2869/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2869/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-2869",
+    "theorem_name": "full2d_synth_2869"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3010/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3010/worker/full2d_release_proof_artifact_batch/full2d-positive-3010/full2d_synth_3010.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3010/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3010/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3010",
+    "theorem_name": "full2d_synth_3010"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3011/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3011/worker/full2d_release_proof_artifact_batch/full2d-positive-3011/full2d_synth_3011.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3011/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3011/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3011",
+    "theorem_name": "full2d_synth_3011"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3012/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3012/worker/full2d_release_proof_artifact_batch/full2d-positive-3012/full2d_synth_3012.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3012/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3012/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3012",
+    "theorem_name": "full2d_synth_3012"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3013/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3013/worker/full2d_release_proof_artifact_batch/full2d-positive-3013/full2d_synth_3013.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3013/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3013/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3013",
+    "theorem_name": "full2d_synth_3013"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3014/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3014/worker/full2d_release_proof_artifact_batch/full2d-positive-3014/full2d_synth_3014.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3014/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3014/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3014",
+    "theorem_name": "full2d_synth_3014"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3015/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3015/worker/full2d_release_proof_artifact_batch/full2d-positive-3015/full2d_synth_3015.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3015/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3015/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3015",
+    "theorem_name": "full2d_synth_3015"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3016/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3016/worker/full2d_release_proof_artifact_batch/full2d-positive-3016/full2d_synth_3016.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3016/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3016/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3016",
+    "theorem_name": "full2d_synth_3016"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3017/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3017/worker/full2d_release_proof_artifact_batch/full2d-positive-3017/full2d_synth_3017.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3017/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3017/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3017",
+    "theorem_name": "full2d_synth_3017"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3018/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3018/worker/full2d_release_proof_artifact_batch/full2d-positive-3018/full2d_synth_3018.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3018/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3018/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3018",
+    "theorem_name": "full2d_synth_3018"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3019/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3019/worker/full2d_release_proof_artifact_batch/full2d-positive-3019/full2d_synth_3019.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3019/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3019/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3019",
+    "theorem_name": "full2d_synth_3019"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3312/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3312/worker/full2d_release_proof_artifact_batch/full2d-positive-3312/full2d_synth_3312.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3312/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3312/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3312",
+    "theorem_name": "full2d_synth_3312"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3313/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3313/worker/full2d_release_proof_artifact_batch/full2d-positive-3313/full2d_synth_3313.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3313/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3313/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3313",
+    "theorem_name": "full2d_synth_3313"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3314/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3314/worker/full2d_release_proof_artifact_batch/full2d-positive-3314/full2d_synth_3314.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3314/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3314/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3314",
+    "theorem_name": "full2d_synth_3314"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3315/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3315/worker/full2d_release_proof_artifact_batch/full2d-positive-3315/full2d_synth_3315.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3315/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3315/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3315",
+    "theorem_name": "full2d_synth_3315"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3316/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3316/worker/full2d_release_proof_artifact_batch/full2d-positive-3316/full2d_synth_3316.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3316/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3316/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3316",
+    "theorem_name": "full2d_synth_3316"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3317/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3317/worker/full2d_release_proof_artifact_batch/full2d-positive-3317/full2d_synth_3317.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3317/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3317/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3317",
+    "theorem_name": "full2d_synth_3317"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3318/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3318/worker/full2d_release_proof_artifact_batch/full2d-positive-3318/full2d_synth_3318.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3318/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3318/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3318",
+    "theorem_name": "full2d_synth_3318"
+  },
+  {
+    "final_verify_report_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3319/final_verify_report.json",
+    "generated_candidate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3319/worker/full2d_release_proof_artifact_batch/full2d-positive-3319/full2d_synth_3319.lean",
+    "solver_backed_certificate_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3319/solver_backed_proof_certificate_full2d.json",
+    "source_problem_path": "runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-3319/source_problem.lean",
+    "status": "passed",
+    "task_id": "full2d-positive-3319",
+    "theorem_name": "full2d_synth_3319"
   }
 ]
