@@ -1,20 +1,20 @@
 {
-  "artifact_overlay_final_theorem_count": 70,
+  "artifact_overlay_final_theorem_count": 120,
   "corpus_manifest_hash": "sha256:0753f2b0c2ecaabe003248e46e16127216e4eb05cbe371b0cc338e9daf928e6e",
   "family_rates": {
     "Algebraic250": {
-      "final_theorem": 5,
-      "rate": 0.01,
+      "final_theorem": 10,
+      "rate": 0.02,
       "total": 500
     },
     "AngleCyclic450": {
-      "final_theorem": 5,
-      "rate": 0.005555555555555556,
+      "final_theorem": 10,
+      "rate": 0.011111111111111112,
       "total": 900
     },
     "Construction450": {
-      "final_theorem": 5,
-      "rate": 0.005555555555555556,
+      "final_theorem": 10,
+      "rate": 0.011111111111111112,
       "total": 900
     },
     "Full2DCore500": {
@@ -23,43 +23,43 @@
       "total": 1000
     },
     "HardHoldout50": {
-      "final_theorem": 5,
-      "rate": 0.05,
+      "final_theorem": 10,
+      "rate": 0.1,
       "total": 100
     },
     "IncidenceParallelPerp350": {
-      "final_theorem": 5,
-      "rate": 0.007142857142857143,
+      "final_theorem": 10,
+      "rate": 0.014285714285714285,
       "total": 700
     },
     "Inequality150": {
-      "final_theorem": 5,
-      "rate": 0.016666666666666666,
+      "final_theorem": 10,
+      "rate": 0.03333333333333333,
       "total": 300
     },
     "MetricRatioArea350": {
-      "final_theorem": 5,
-      "rate": 0.007142857142857143,
+      "final_theorem": 10,
+      "rate": 0.014285714285714285,
       "total": 700
     },
     "OlympiadStyle300": {
-      "final_theorem": 5,
-      "rate": 0.008333333333333333,
+      "final_theorem": 10,
+      "rate": 0.016666666666666666,
       "total": 600
     },
     "OrderCase250": {
-      "final_theorem": 5,
-      "rate": 0.01,
+      "final_theorem": 10,
+      "rate": 0.02,
       "total": 500
     },
     "Transformation250": {
-      "final_theorem": 5,
-      "rate": 0.01,
+      "final_theorem": 10,
+      "rate": 0.02,
       "total": 500
     }
   },
-  "final_theorem_count": 70,
-  "overall_final_theorem_rate": 0.010447761194029851,
+  "final_theorem_count": 120,
+  "overall_final_theorem_rate": 0.01791044776119403,
   "positive_count": 6700,
   "release_frozen": true,
   "schema_version": "1.0.0",
