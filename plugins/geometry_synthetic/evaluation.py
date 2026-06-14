@@ -157,6 +157,15 @@ def _metrics_for_baseline(
         if _solver_backed_countable_result(result)
     ]
     solver_backed_final = len(solver_backed_countable)
+    proof_repair_patch_applied_count = sum(1 for result in task_results if result.proof_repair_patch_applied)
+    lean_patch_candidate_count = sum(1 for result in task_results if "lean_patch_candidate.json" in result.artifact_index)
+    solver_backed_final_verify_failure_count = sum(
+        1
+        for result in task_results
+        if result.proof_repair_patch_applied
+        and _read_artifact(result, "final_verify_report.json").get("solver_backed_proof_status") == "failed"
+    )
+    solver_backed_blocker_kind_counts = _solver_backed_blocker_kind_counts(task_results)
     geotrace_solver_backed_final = sum(
         1
         for result in solver_backed_countable
@@ -192,6 +201,12 @@ def _metrics_for_baseline(
         "geotrace_solver_backed_final_theorem_count": geotrace_solver_backed_final,
         "construction_solver_backed_final_theorem_count": construction_solver_backed_final,
         "hybrid_solver_backed_final_theorem_count": hybrid_solver_backed_final,
+        "solver_backed_geotrace_final_count": geotrace_solver_backed_final,
+        "solver_backed_construction_final_count": construction_solver_backed_final,
+        "proof_repair_patch_applied_count": proof_repair_patch_applied_count,
+        "lean_patch_candidate_count": lean_patch_candidate_count,
+        "solver_backed_final_verify_failure_count": solver_backed_final_verify_failure_count,
+        "solver_backed_blocker_kind_counts": solver_backed_blocker_kind_counts,
         "construction_candidate_accepted_count": auxiliary_count,
         "auxiliary_construction_accepted_count": auxiliary_count,
         "trace_compile_success_count": trace_compile,
@@ -285,6 +300,16 @@ def _solver_backed_countable_result(result: TaskRunResult) -> bool:
         and final_report.get("solver_backed_proof_status") == "passed"
         and worker_result.get("patch_applied") is True
     )
+
+
+def _solver_backed_blocker_kind_counts(task_results: list[TaskRunResult]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for result in task_results:
+        if result.solver_backed_final_theorem:
+            continue
+        for blocker in result.blockers:
+            counts[str(blocker)] = counts.get(str(blocker), 0) + 1
+    return counts
 
 
 def _read_artifact(result: TaskRunResult, name: str) -> dict[str, Any]:
