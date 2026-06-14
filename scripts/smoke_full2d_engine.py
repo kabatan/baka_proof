@@ -46,6 +46,13 @@ def run_smoke(engine: str) -> list[str]:
             errors.append("synthetic_closure_missing_trace_ref")
         if not output.real_integration_flag:
             errors.append("synthetic_closure_not_real_integration")
+    if engine == "construction_search":
+        if output.status != "normalized_success":
+            errors.append("construction_search_not_normalized_success")
+        if not output.normalized_output_ref:
+            errors.append("construction_search_missing_construction_ref")
+        if not output.real_integration_flag:
+            errors.append("construction_search_not_real_integration")
     return sorted(set(errors))
 
 

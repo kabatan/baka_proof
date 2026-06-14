@@ -185,6 +185,21 @@
       "status": "passed"
     },
     {
+      "check_id": "WP07-construction-search-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "construction_search"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
       "check_id": "WP15-rule-registry-checker",
       "details": {
         "path": "scripts\\check_full2d_rule_registry.py"
@@ -209,12 +224,12 @@
     "WP-04:claimspec-checker-passed",
     "WP-05:engine-contracts-checker-passed",
     "WP-06:synthetic-closure-smoke-passed",
+    "WP-07:construction-search-smoke-passed",
     "WP-15:rule-registry-checker-passed"
   ],
   "config_ref": "configs\\benchmark_runs\\geometry_full2d_v0_4_2.yaml",
   "hard_blockers": [],
   "next_unblocked_work_packages": [
-    "WP-07",
     "WP-08",
     "WP-09",
     "WP-10",
@@ -231,7 +246,7 @@
       "summary": "GeometryFull2D release corpus is not created yet."
     }
   ],
-  "report_id": "progress_acceptance_v0_4_2:1781461764",
+  "report_id": "progress_acceptance_v0_4_2:1781462086",
   "schema_version": "1.0.0",
   "status": "progress_ok_with_debt",
   "work_debt": []
