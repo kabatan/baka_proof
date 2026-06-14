@@ -98,6 +98,7 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     checks.append(_command_check("WP13-lean-proof-search-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "lean_proof_search"]))
     checks.append(_command_check("WP14-portfolio-coordinator-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "portfolio_coordinator"]))
     checks.append(_command_check("WP14-portfolio-reason-codes", [sys.executable, "scripts/check_portfolio_reason_codes.py"]))
+    checks.append(_command_check("WP20-corpus-manifest", [sys.executable, "scripts/check_full2d_corpus_manifest.py"]))
     checks.append(_file_check("WP15-rule-registry-checker", ROOT / "scripts" / "check_full2d_rule_registry.py"))
     checks.append(_file_check("WP21-release-checker", ROOT / "scripts" / "check_release_acceptance_v0_4_2.py"))
 
@@ -120,6 +121,7 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     lean_proof_search_check = check_by_id["WP13-lean-proof-search-smoke"]
     portfolio_coordinator_check = check_by_id["WP14-portfolio-coordinator-smoke"]
     portfolio_reason_codes_check = check_by_id["WP14-portfolio-reason-codes"]
+    corpus_manifest_check = check_by_id["WP20-corpus-manifest"]
     rule_registry_check = check_by_id["WP15-rule-registry-checker"]
     release_checker_check = check_by_id["WP21-release-checker"]
     if plugin_dir_check["status"] != "passed":
@@ -158,6 +160,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         work_debt.append(_issue("WorkDebt", "WP-14", "PortfolioCoordinator smoke is not passing.", portfolio_coordinator_check))
     if portfolio_reason_codes_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-14", "PortfolioCoordinator reason code checker is not passing.", portfolio_reason_codes_check))
+    if corpus_manifest_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-20", "GeometryFull2D release corpus manifest checker is not passing.", corpus_manifest_check))
     if rule_registry_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-15", "Full2D rule registry checker is not implemented yet.", rule_registry_check))
     if release_checker_check["status"] != "passed":
@@ -244,6 +248,9 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         next_work = [item for item in next_work if item != "WP-13"]
     if "WP-14:portfolio-coordinator-smoke-passed" in completed:
         next_work = [item for item in next_work if item != "WP-14"]
+    if corpus_manifest_check["status"] == "passed":
+        completed.append("WP-20:corpus-manifest-checker-passed")
+        next_work = [item for item in next_work if item != "WP-20"]
     if "WP-15:rule-registry-checker-passed" in completed:
         next_work = [item for item in next_work if item != "WP-15"]
     status = "progress_blocked_hard" if hard_blockers else "progress_ok_with_debt"
@@ -270,8 +277,15 @@ def _release_blocker_scan() -> list[dict[str, Any]]:
         blockers.append(_simple_issue("ReleaseBlocker", "C-001", "MathAutoResearch.GeometryFull2D Lean namespace is required for release."))
     if not (ROOT / "benchmarks" / "geometry_full2d").exists():
         blockers.append(_simple_issue("ReleaseBlocker", "H-001", "GeometryFull2D release corpus is not created yet."))
+    manifest = ROOT / "benchmarks" / "geometry_full2d" / "corpus_manifest.json"
+    if not manifest.exists():
+        blockers.append(_simple_issue("ReleaseBlocker", "H-001", "GeometryFull2D corpus_manifest.json is not created yet."))
     if not (EVIDENCE_DIR / "frozen_corpus_manifest_hash.txt").exists():
         blockers.append(_simple_issue("ReleaseBlocker", "H-008", "Frozen corpus manifest hash is not created yet."))
+    else:
+        frozen = (EVIDENCE_DIR / "frozen_corpus_manifest_hash.txt").read_text(encoding="utf-8").strip()
+        if not frozen.startswith("sha256:"):
+            blockers.append(_simple_issue("ReleaseBlocker", "H-008", "Frozen corpus manifest hash is not a sha256 ref."))
     for role in ENGINE_ROLES:
         expected = ROOT / "plugins" / "geometry_full2d" / "engines" / f"{role}.py"
         if not expected.exists():

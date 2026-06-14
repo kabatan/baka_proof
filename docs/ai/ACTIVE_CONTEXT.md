@@ -2,7 +2,7 @@
 title: Guardian Active Context — GeometryFull2D v0.4.2
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-007
 version: v0.4.2-governed-full2d
-status: V04_2_WP14_PORTFOLIO_COORDINATOR_PASSED_WP20_READY
+status: V04_2_RELEASE_BLOCKED_ON_WP20_CORPUS_MANIFEST
 created: 2026-06-15
 last_updated: 2026-06-15
 base_spec: MARP-GEOLEAN-BASE-007
@@ -56,7 +56,7 @@ Before editing implementation code, read the current Plan task, required require
 Current task:
 
 ```text
-WP-20 — Progress acceptance / release readiness gap closure
+WP-20 — Corpus and final release acceptance closure
 ```
 
 Completed preparation:
@@ -113,7 +113,8 @@ Allowed:
 
 ```text
 MARP-GEOLEAN-BASE-007 / PLAN-007 / ACCEPTANCE-007 are installed as the active user-approved v0.4.2 Guardian authority set.
-WP-00 through WP-15 have passed progress checks except WP-16 through WP-19 release-path work remains folded into WP-20 acceptance closure.
+WP-00 through WP-15 have passed progress checks. WP-20 remains open because the release corpus manifest and frozen manifest hash are not implemented.
+Final release acceptance is currently blocked by H-001 and H-008.
 ```
 
 Not allowed yet:

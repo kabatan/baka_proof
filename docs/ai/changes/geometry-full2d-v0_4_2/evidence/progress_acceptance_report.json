@@ -318,6 +318,19 @@
       "status": "passed"
     },
     {
+      "check_id": "WP20-corpus-manifest",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_corpus_manifest.py"
+        ],
+        "returncode": 1,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [\n    \"missing_corpus_manifest:benchmarks/geometry_full2d/corpus_manifest.json\"\n  ],\n  \"status\": \"failed\"\n}\n"
+      },
+      "status": "failed"
+    },
+    {
       "check_id": "WP15-rule-registry-checker",
       "details": {
         "path": "scripts\\check_full2d_rule_registry.py"
@@ -362,10 +375,39 @@
       "kind": "ReleaseBlocker",
       "ref": "H-001",
       "summary": "GeometryFull2D release corpus is not created yet."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "H-001",
+      "summary": "GeometryFull2D corpus_manifest.json is not created yet."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "H-008",
+      "summary": "Frozen corpus manifest hash is not a sha256 ref."
     }
   ],
-  "report_id": "progress_acceptance_v0_4_2:1781464340",
+  "report_id": "progress_acceptance_v0_4_2:1781464683",
   "schema_version": "1.0.0",
   "status": "progress_ok_with_debt",
-  "work_debt": []
+  "work_debt": [
+    {
+      "evidence": {
+        "check_id": "WP20-corpus-manifest",
+        "details": {
+          "command": [
+            "C:\\Users\\bakat\\miniforge3\\python.exe",
+            "scripts/check_full2d_corpus_manifest.py"
+          ],
+          "returncode": 1,
+          "stderr_tail": "",
+          "stdout_tail": "{\n  \"errors\": [\n    \"missing_corpus_manifest:benchmarks/geometry_full2d/corpus_manifest.json\"\n  ],\n  \"status\": \"failed\"\n}\n"
+        },
+        "status": "failed"
+      },
+      "kind": "WorkDebt",
+      "ref": "WP-20",
+      "summary": "GeometryFull2D release corpus manifest checker is not passing."
+    }
+  ]
 }

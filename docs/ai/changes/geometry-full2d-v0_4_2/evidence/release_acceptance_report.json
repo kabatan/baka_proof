@@ -7,9 +7,38 @@
       "kind": "ReleaseBlocker",
       "ref": "H-001",
       "summary": "GeometryFull2D release corpus is not created yet."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "H-001",
+      "summary": "GeometryFull2D corpus_manifest.json is not created yet."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "H-008",
+      "summary": "Frozen corpus manifest hash is not a sha256 ref."
     }
   ],
   "schema_version": "1.0.0",
   "status": "not_run",
-  "work_debt_open": []
+  "work_debt_open": [
+    {
+      "evidence": {
+        "check_id": "WP20-corpus-manifest",
+        "details": {
+          "command": [
+            "C:\\Users\\bakat\\miniforge3\\python.exe",
+            "scripts/check_full2d_corpus_manifest.py"
+          ],
+          "returncode": 1,
+          "stderr_tail": "",
+          "stdout_tail": "{\n  \"errors\": [\n    \"missing_corpus_manifest:benchmarks/geometry_full2d/corpus_manifest.json\"\n  ],\n  \"status\": \"failed\"\n}\n"
+        },
+        "status": "failed"
+      },
+      "kind": "WorkDebt",
+      "ref": "WP-20",
+      "summary": "GeometryFull2D release corpus manifest checker is not passing."
+    }
+  ]
 }
