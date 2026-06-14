@@ -144,6 +144,19 @@
       "status": "passed"
     },
     {
+      "check_id": "WP04-claimspec-checker",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_claimspec.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
       "check_id": "WP15-rule-registry-checker",
       "details": {
         "path": "scripts\\check_full2d_rule_registry.py"
@@ -164,12 +177,12 @@
     "WP-00:active-guardian-spec-checker-passed",
     "WP-01:plugin-boundary-passed",
     "WP-02:facade-checker-passed",
-    "WP-03:structured-extraction-checker-passed"
+    "WP-03:structured-extraction-checker-passed",
+    "WP-04:claimspec-checker-passed"
   ],
   "config_ref": "configs\\benchmark_runs\\geometry_full2d_v0_4_2.yaml",
   "hard_blockers": [],
   "next_unblocked_work_packages": [
-    "WP-04",
     "WP-05",
     "WP-15",
     "WP-20"
@@ -181,7 +194,7 @@
       "summary": "GeometryFull2D release corpus is not created yet."
     }
   ],
-  "report_id": "progress_acceptance_v0_4_2:1781460454",
+  "report_id": "progress_acceptance_v0_4_2:1781460850",
   "schema_version": "1.0.0",
   "status": "progress_ok_with_debt",
   "work_debt": [

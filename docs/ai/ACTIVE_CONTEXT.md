@@ -2,7 +2,7 @@
 title: Guardian Active Context — GeometryFull2D v0.4.2
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-007
 version: v0.4.2-governed-full2d
-status: V04_2_WP03_STRUCTURED_EXTRACTION_PASSED_WP04_READY
+status: V04_2_WP04_CLAIMSPEC_PASSED_WP05_READY
 created: 2026-06-15
 last_updated: 2026-06-15
 base_spec: MARP-GEOLEAN-BASE-007
@@ -56,7 +56,7 @@ Before editing implementation code, read the current Plan task, required require
 Current task:
 
 ```text
-WP-04 — ClaimSpec and canonical bridge
+WP-05 — Engine contracts and provider skeleton
 ```
 
 Completed preparation:
@@ -71,6 +71,7 @@ Initial progress acceptance reports hard_blockers=[] and progress_ok_with_debt.
 WP-01 plugin boundary checker passed.
 WP-02 Lean facade checker, elaboration-backed facade materialization, lean-no-sorry, and lean-build passed.
 WP-03 structured Lean extraction checker passed.
+WP-04 ClaimSpec canonical bridge checker passed.
 ```
 
 Open ReleaseBlocker / WorkDebt items are recorded in:
@@ -101,7 +102,7 @@ Allowed:
 
 ```text
 MARP-GEOLEAN-BASE-007 / PLAN-007 / ACCEPTANCE-007 are installed as the active user-approved v0.4.2 Guardian authority set.
-WP-00 through WP-03 have passed progress checks.
+WP-00 through WP-04 have passed progress checks.
 ```
 
 Not allowed yet:

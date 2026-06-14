@@ -86,6 +86,7 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     checks.append(_command_check("WP02-lean-facade-checker", [sys.executable, "scripts/check_geometry_full2d_facade.py"]))
     checks.append(_file_check("WP03-structured-extraction-script", ROOT / "scripts" / "check_structured_extraction_v0_4_2.py"))
     checks.append(_command_check("WP03-structured-extraction-checker", [sys.executable, "scripts/check_structured_extraction_v0_4_2.py"]))
+    checks.append(_command_check("WP04-claimspec-checker", [sys.executable, "scripts/check_full2d_claimspec.py"]))
     checks.append(_file_check("WP15-rule-registry-checker", ROOT / "scripts" / "check_full2d_rule_registry.py"))
     checks.append(_file_check("WP21-release-checker", ROOT / "scripts" / "check_release_acceptance_v0_4_2.py"))
 
@@ -96,6 +97,7 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     lean_facade_checker_check = check_by_id["WP02-lean-facade-checker"]
     extraction_file_check = check_by_id["WP03-structured-extraction-script"]
     extraction_checker_check = check_by_id["WP03-structured-extraction-checker"]
+    claimspec_checker_check = check_by_id["WP04-claimspec-checker"]
     rule_registry_check = check_by_id["WP15-rule-registry-checker"]
     release_checker_check = check_by_id["WP21-release-checker"]
     if plugin_dir_check["status"] != "passed":
@@ -110,6 +112,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         work_debt.append(_issue("WorkDebt", "WP-03", "Structured extraction checker is not implemented yet.", extraction_file_check))
     if extraction_checker_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-03", "Structured extraction checker is not passing.", extraction_checker_check))
+    if claimspec_checker_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-04", "Full2D ClaimSpec checker is not passing.", claimspec_checker_check))
     if rule_registry_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-15", "Full2D rule registry checker is not implemented yet.", rule_registry_check))
     if release_checker_check["status"] != "passed":
@@ -126,6 +130,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         completed.append("WP-02:facade-checker-passed")
     if extraction_file_check["status"] == "passed" and extraction_checker_check["status"] == "passed":
         completed.append("WP-03:structured-extraction-checker-passed")
+    if claimspec_checker_check["status"] == "passed":
+        completed.append("WP-04:claimspec-checker-passed")
 
     next_work = ["WP-02", "WP-03", "WP-04", "WP-05", "WP-15", "WP-20"]
     if not ("WP-01:plugin-boundary-passed" in completed):
@@ -134,6 +140,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         next_work = [item for item in next_work if item != "WP-02"]
     if "WP-03:structured-extraction-checker-passed" in completed:
         next_work = [item for item in next_work if item != "WP-03"]
+    if "WP-04:claimspec-checker-passed" in completed:
+        next_work = [item for item in next_work if item != "WP-04"]
     status = "progress_blocked_hard" if hard_blockers else "progress_ok_with_debt"
     return {
         "schema_version": "1.0.0",
@@ -196,6 +204,11 @@ def _write_status_artifacts(report: dict[str, Any]) -> None:
                 }
                 for role in ENGINE_ROLES
             },
+        },
+        "claim_spec_status.json": {
+            "schema_version": "1.0.0",
+            "status": _check_status(report, "WP04-claimspec-checker"),
+            "checker": "scripts/check_full2d_claimspec.py",
         },
         "rule_registry_status.json": {
             "schema_version": "1.0.0",

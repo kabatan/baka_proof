@@ -2,7 +2,7 @@
 title: Change Index — GeometryFull2D v0.4.2
 change_id: geometry-full2d-v0_4_2
 version: v0.4.2-governed-full2d
-status: WP03_STRUCTURED_EXTRACTION_PASSED_WP04_READY
+status: WP04_CLAIMSPEC_PASSED_WP05_READY
 created: 2026-06-15
 purpose: Index the Guardian document set for the GeometryFull2D v0.4.2 governed full implementation track.
 authority: Navigation only; individual Base Spec, Plan, Acceptance, and contract documents declare their own authority.
@@ -45,7 +45,7 @@ The track supersedes the previous v0.3, v0.3A, v0.3 full-rebase, v0.3A patch, an
 Current task:
 
 ```text
-WP-04 — ClaimSpec and canonical bridge
+WP-05 — Engine contracts and provider skeleton
 ```
 
 WP-00 is complete for implementation flow:
@@ -57,6 +57,7 @@ ReleaseBlocker and WorkDebt items are recorded in debt/debt_ledger.jsonl.
 WP-01 plugin boundary checker passed.
 WP-02 Lean facade checker, elaboration-backed facade materialization, lean-no-sorry, and lean-build passed.
 WP-03 structured Lean extraction checker passed.
+WP-04 ClaimSpec canonical bridge checker passed.
 ```
 
 ## Claim Ceiling

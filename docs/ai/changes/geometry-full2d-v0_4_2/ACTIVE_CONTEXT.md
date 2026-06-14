@@ -5,7 +5,7 @@ Status: USER_APPROVED_ACTIVE
 -->
 ---
 title: "Active Context Seed — GeometryFull2D v0.4.2"
-status: "WP03_STRUCTURED_EXTRACTION_PASSED_WP04_READY"
+status: "WP04_CLAIMSPEC_PASSED_WP05_READY"
 created: "2026-06-14"
 ---
 
@@ -47,7 +47,7 @@ Implementation in progress only.
 Current task:
 
 ```text
-WP-04 — ClaimSpec and canonical bridge
+WP-05 — Engine contracts and provider skeleton
 ```
 
 Progress acceptance:
@@ -55,8 +55,8 @@ Progress acceptance:
 ```text
 hard_blockers=[]
 status=progress_ok_with_debt
-completed_work_packages include WP-00, WP-01, WP-02, and WP-03
-next_unblocked_work_packages include WP-04, WP-05, WP-15, and WP-20
+completed_work_packages include WP-00, WP-01, WP-02, WP-03, and WP-04
+next_unblocked_work_packages include WP-05, WP-15, and WP-20
 ```
 
 TongGeometry:
