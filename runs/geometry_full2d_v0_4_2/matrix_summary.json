@@ -1,5 +1,5 @@
 {
-  "artifact_overlay_final_theorem_count": 440,
+  "artifact_overlay_final_theorem_count": 450,
   "corpus_manifest_hash": "sha256:0753f2b0c2ecaabe003248e46e16127216e4eb05cbe371b0cc338e9daf928e6e",
   "family_rates": {
     "Algebraic250": {
@@ -23,8 +23,8 @@
       "total": 1000
     },
     "HardHoldout50": {
-      "final_theorem": 40,
-      "rate": 0.4,
+      "final_theorem": 50,
+      "rate": 0.5,
       "total": 100
     },
     "IncidenceParallelPerp350": {
@@ -58,8 +58,8 @@
       "total": 500
     }
   },
-  "final_theorem_count": 440,
-  "overall_final_theorem_rate": 0.06567164179104477,
+  "final_theorem_count": 450,
+  "overall_final_theorem_rate": 0.06716417910447761,
   "positive_count": 6700,
   "release_frozen": true,
   "schema_version": "1.0.0",
