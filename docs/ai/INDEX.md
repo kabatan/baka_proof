@@ -49,19 +49,22 @@ Primary documents:
 
 Purpose: Guardian-managed full v0.3 experiment-ready rebase track targeting `V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY`.
 
-Status: Base Spec/Plan Guardian-admitted and user-approved. v0.3A patch is installed and user-approved. T46 final replay and closure is complete. Core v0.3 experiment readiness passed; the separate TongGeometry model-backed heavy-search claim remains blocked by unavailable checkpoint artifacts.
+Status: Base Spec/Plan Guardian-admitted and user-approved. v0.3A patch is installed and user-approved. T46 final replay and closure is complete for the v0.3A harness-ready claim. v0.3B solver-backed proof-repair patch is installed and user-approved; implementation resumes at T48. TongGeometry model-backed heavy-search remains blocked by unavailable checkpoint artifacts.
 
 Primary documents:
 
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md` — correctness authority for `MARP-GEOLEAN-BASE-004`, amended by `MARP-GEOLEAN-BASE-004A`.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/PLAN.md` — execution contract for `MARP-GEOLEAN-PLAN-004`, amended by `MARP-GEOLEAN-PLAN-004A`.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md` — correctness authority for `MARP-GEOLEAN-BASE-004`, amended by `MARP-GEOLEAN-BASE-004A` and `MARP-GEOLEAN-BASE-004B`.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/PLAN.md` — execution contract for `MARP-GEOLEAN-PLAN-004`, amended by `MARP-GEOLEAN-PLAN-004A` and `MARP-GEOLEAN-PLAN-004B`.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3A.md` — active Base Spec patch `MARP-GEOLEAN-BASE-004A`.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3A.md` — active Plan patch `MARP-GEOLEAN-PLAN-004A`.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACCEPTANCE_PATCH_v0_3A.md` — active acceptance patch.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3B.md` — active Base Spec patch `MARP-GEOLEAN-BASE-004B`.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3B.md` — active Plan patch `MARP-GEOLEAN-PLAN-004B`.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACCEPTANCE_PATCH_v0_3B.md` — active acceptance patch for solver-backed proof repair.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md` — source-to-requirement traceability aid.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md` — repository cleanup directive for the rebase.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/ACCEPTANCE_MATRIX.md` — final acceptance evidence and command matrix.
-- `docs/ai/changes/geometry-lean-v0_3-full-rebase/CLOSURE.md` — final closure for core v0.3 experiment readiness and the separate TongGeometry model-backed claim status.
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/CLOSURE.md` — v0.3A closure record plus v0.3B resume state; final solver-backed proof-repair closure is not yet complete.
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/` — import, review, approval, and implementation evidence.
 
 Architecture documents:

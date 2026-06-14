@@ -1,15 +1,19 @@
 ---
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
-version: v0.3-full-rebase+v0.3A-patch
-status: V03_CORE_EXPERIMENT_READY_PASSED
+version: v0.3-full-rebase+v0.3A+v0.3B-patch
+status: V03B_PATCH_INSTALLED_T48_READY
 created: 2026-06-13
-last_updated: 2026-06-13
+last_updated: 2026-06-14
 base_spec: MARP-GEOLEAN-BASE-004
 plan: MARP-GEOLEAN-PLAN-004
 active_patches:
   - MARP-GEOLEAN-BASE-004A
   - MARP-GEOLEAN-PLAN-004A
+  - MARP-GEOLEAN-ACCEPTANCE-004A
+  - MARP-GEOLEAN-BASE-004B
+  - MARP-GEOLEAN-PLAN-004B
+  - MARP-GEOLEAN-ACCEPTANCE-004B
 purpose: Minimal navigation state for the full v0.3 experiment-ready rebase track.
 authority: Navigation only; never overrides the Base Spec, Plan, Source Map, reviewer records, or user approval state.
 ---
@@ -18,7 +22,7 @@ authority: Navigation only; never overrides the Base Spec, Plan, Source Map, rev
 
 ## Status
 
-Guardian Lane is active for the geometry x Lean v0.3 full rebase track, now amended by the v0.3A patch.
+Guardian Lane is active for the geometry x Lean v0.3 full rebase track, now amended by the v0.3A and v0.3B patches.
 
 The previous v0.3A limited real-integration recovery remains recorded under:
 
@@ -27,7 +31,7 @@ The previous v0.3A limited real-integration recovery remains recorded under:
 Current mission:
 
 ```text
-Rebase kabatan/baka_proof from the fixture-level / limited-recovery implementation state to the full v0.3 experiment-ready implementation defined by MARP-GEOLEAN-BASE-004 / PLAN-004, as amended by MARP-GEOLEAN-BASE-004A / PLAN-004A.
+Resume implementation from the v0.3A harness-ready state to the v0.3B solver-backed proof-repair target defined by MARP-GEOLEAN-BASE-004 / PLAN-004, as amended by MARP-GEOLEAN-BASE-004A / PLAN-004A and MARP-GEOLEAN-BASE-004B / PLAN-004B / ACCEPTANCE-004B.
 ```
 
 ## Implementation Permission
@@ -44,6 +48,10 @@ The user approved importing the v0.3A patch bundle on 2026-06-13. Patch import e
 
 - `docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3a_patch_import.md`
 
+The user approved importing the v0.3B solver-backed proof-repair patch bundle on 2026-06-14. Patch import evidence is recorded in:
+
+- `docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3b_patch_import.md`
+
 ## Read First
 
 1. `docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md`
@@ -51,14 +59,21 @@ The user approved importing the v0.3A patch bundle on 2026-06-13. Patch import e
 3. `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3A.md`
 4. `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3A.md`
 5. `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACCEPTANCE_PATCH_v0_3A.md`
-6. `docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md`
-7. `docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md`
-8. Current Plan task and required R-IDs/MECHs.
-9. Files in the admitted ReadSet before editing.
+6. `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3B.md`
+7. `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3B.md`
+8. `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACCEPTANCE_PATCH_v0_3B.md`
+9. `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/SOURCE_MAP_PATCH_v0_3B.md`
+10. `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/REPO_AUDIT_FOCUS_v0_3B.md`
+11. `docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md`
+12. `docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md`
+13. Current Plan task and required R-IDs/MECHs.
+14. Files in the admitted ReadSet before editing.
 
 ## Current Known Problem
 
-The repo has completed the v0.3A hardening implementation tasks through T46. Core v0.3 experiment readiness is closed as passed; the separate TongGeometry model-backed heavy-search claim remains blocked by unavailable checkpoint artifacts.
+The repo has completed the v0.3A hardening implementation tasks through T46. Core v0.3A harness readiness is closed as passed; the separate TongGeometry model-backed heavy-search claim remains blocked by unavailable checkpoint artifacts.
+
+The v0.3B patch identifies the remaining intended v0.3 gap: provider-backed geometry chains currently do not yet become final theorem successes through a concrete solver-backed Lean proof-repair path. v0.3B is not complete until `V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY` passes.
 
 ## Current Task Pointer
 
@@ -410,6 +425,18 @@ Completed task:
 T46 — Replay and closure claim update
 ```
 
+Completed task:
+
+```text
+T47 — Install v0.3B authority docs
+```
+
+Current task:
+
+```text
+T48 — Audit current proof-repair gap
+```
+
 Current task files changed in T46:
 
 ```text
@@ -421,6 +448,26 @@ tests/unit/test_replay.py
 tests/unit/test_v03a_real_vs_fixture_integration.py
 docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/tonggeometry_smoke.json
 docs/ai/ACTIVE_CONTEXT.md
+```
+
+Current task files changed in T47:
+
+```text
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/BASE_SPEC_PATCH_v0_3B.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3B.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACCEPTANCE_PATCH_v0_3B.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/CODEX_HANDOFF_PATCH_v0_3B.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/REPO_AUDIT_FOCUS_v0_3B.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/SOURCE_MAP_PATCH_v0_3B.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/ACTIVE_CONTEXT_PATCH_seed_v0_3B.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/v0_3B_patch_source_sha256sums.txt
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3b_patch_import.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/README.md
+docs/ai/INDEX.md
+docs/ai/ACTIVE_CONTEXT.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/CLOSURE.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/CODEX_HANDOFF_PROMPT.md
 ```
 
 ## Non-Negotiables
@@ -436,6 +483,9 @@ docs/ai/ACTIVE_CONTEXT.md
 - No theorem statement mutation.
 - No final theorem claim without `FinalVerifyGate`.
 - No v0.3 full completion claim without all original and v0.3A patch release blockers passing.
+- No v0.3B solver-backed proof-repair readiness claim without release blockers 1-47 passing.
+- No provider-backed final theorem claim without SolverBackedProofCertificate and FinalVerifyGate final theorem status.
+- No solver-backed success from an unchanged already-proved theorem.
 - No TongGeometry model-backed claim without tokenizer/lm_s/lm_l/cls, aggregate checkpoint hash, and model_inference_status=available.
 
 ## Evidence Folder
@@ -449,14 +499,27 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/
 Allowed:
 
 ```text
-BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A patch documents are installed and user-approved. T46 final replay and closure are complete: release blockers 1-34 pass, core_experiment_ready_status=passed, and tonggeometry_model_backed_status=blocked due admitted unavailable external checkpoint artifacts.
-V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY is admitted for the core experiment-ready claim. No R-ID is VERIFIED.
+BASE-004 / PLAN-004 are admitted and user-approved for implementation. BASE-004A / PLAN-004A and BASE-004B / PLAN-004B / ACCEPTANCE-004B patch documents are installed and user-approved.
+
+T46 final replay and v0.3A closure are complete: release blockers 1-34 pass, core_experiment_ready_status=passed, and tonggeometry_model_backed_status=blocked due admitted unavailable external checkpoint artifacts.
+
+After v0.3B patch installation, the intended complete v0.3 closure is not final until solver-backed proof repair also passes. Current allowed status is:
+
+```text
+V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: v0.3A harness-ready passed, v0.3B solver-backed proof-repair pending
+V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY: not yet claimed
+V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY: blocked
+```
+
+No R-ID is VERIFIED.
 ```
 
 Not allowed yet:
 
 ```text
 V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY
+V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY
+v0_3b_solver_backed_ready_no_tong_model_backed_claim
 real Level 2 advantage
 arbitrary LeanGeo support
 open-problem solving
@@ -485,3 +548,6 @@ Stop and request decision if any work requires:
 - satisfying corpus nontriviality by metadata labels only;
 - satisfying matrix acceptance without per-task artifacts;
 - weakening any v0.3A patch blocker.
+- weakening any v0.3B patch blocker;
+- counting raw provider output, a compiler result alone, or an unchanged original theorem as solver-backed proof repair;
+- keeping provider-backed tasks diagnostic-only while adjusting metrics to claim v0.3B readiness.

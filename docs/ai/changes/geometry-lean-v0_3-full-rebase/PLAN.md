@@ -1,12 +1,13 @@
 ---
 title: "Guardian Plan — geometry × Lean v0.3 full rebase implementation"
 plan_id: "MARP-GEOLEAN-PLAN-004"
-version: "v0.3-full-rebase"
-status: "USER_APPROVED_ACTIVE_WITH_V0_3A_PATCH"
+version: "v0.3-full-rebase+v0.3B"
+status: "USER_APPROVED_ACTIVE_WITH_V0_3A_AND_V0_3B_PATCHES"
 created: "2026-06-12"
 base_spec: "MARP-GEOLEAN-BASE-004"
 active_patches:
   - "MARP-GEOLEAN-PLAN-004A"
+  - "MARP-GEOLEAN-PLAN-004B"
 target_repo: "https://github.com/kabatan/baka_proof"
 ---
 
@@ -18,7 +19,14 @@ This Plan defines how Codex agents must implement `MARP-GEOLEAN-BASE-004`.
 
 The Base Spec wins over this Plan if there is a conflict. This Plan must not add requirements, remove requirements, weaken requirements, or reinterpret requirements. Each task maps to explicit R-IDs and MECHs from the Base Spec.
 
-This Plan is amended by `docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3A.md`. The Plan Patch adds T38-T46/T49-class hardening work and modifies T25/T34/T36/T37 acceptance behavior. If the Plan Patch conflicts with `BASE_SPEC_PATCH_v0_3A.md`, the Base Patch wins.
+This Plan is amended by:
+
+```text
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3A.md
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/PLAN_PATCH_v0_3B.md
+```
+
+The v0.3A Plan Patch adds T38-T46 hardening work and modifies T25/T34/T36/T37 acceptance behavior. The v0.3B Plan Patch adds T47-T64 solver-backed proof-repair work. If any Plan Patch conflicts with a Base Spec or Base Spec Patch, the Base authority wins.
 
 Implementation must not start until the user approves both:
 

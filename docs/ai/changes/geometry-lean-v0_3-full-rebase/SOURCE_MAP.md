@@ -3,7 +3,7 @@ title: "Source Map — geometry × Lean v0.3 full rebase"
 version: "v0.3-full-rebase"
 spec_id: "MARP-GEOLEAN-BASE-004"
 plan_id: "MARP-GEOLEAN-PLAN-004"
-status: "USER_APPROVED_ACTIVE_WITH_V0_3A_PATCH"
+status: "USER_APPROVED_ACTIVE_WITH_V0_3A_AND_V0_3B_PATCHES"
 created: "2026-06-12"
 ---
 
@@ -85,3 +85,21 @@ docs/ai/changes/geometry-lean-v0_3-full-rebase/source/geometry_lean_pipeline_pla
 previous CLOSURE.md files
 previous fixture-level acceptance reports
 ```
+
+## 7. v0.3B solver-backed proof-repair patch mapping
+
+The active v0.3B traceability patch is:
+
+```text
+docs/ai/changes/geometry-lean-v0_3-full-rebase/patches/SOURCE_MAP_PATCH_v0_3B.md
+```
+
+Source observations that motivated v0.3B:
+
+| Observation | Requirement mapping |
+|---|---|
+| v0.3A closure correctly says core experiment-ready passed but TongGeometry model-backed heavy search is blocked. | `R-CLAIM-010`, explicit v0.3B non-goals |
+| v0.3A final command log states that provider-backed geometry tasks are not counted as final theorem/proof repair success. | `INV-B001`, `R-LOOP-B001`, `R-LOOP-B002` |
+| StandardGeometryProofLoop uses provider artifacts but blocks provider-backed final theorem status. | `R-LOOP-B001`, `R-TRUST-B001`, release blocker 40 |
+| The release corpus and matrix are artifact-derived but do not yet establish solver-backed proof repair success. | `R-EVAL-B001`, `R-EVAL-B010`, `R-EVAL-B011`, blockers 41-47 |
+| TongGeometry model checkpoints are externally unavailable. | `R-CLAIM-010`, explicit non-goals; TongGeometry model-backed readiness remains separate |
