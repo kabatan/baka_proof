@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import tempfile
+import hashlib
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
@@ -15,8 +16,12 @@ from plugins.geometry_synthetic.construction.construction_compiler import Constr
 from plugins.geometry_synthetic.extraction import GeometryExtractor, LeanGoalContext, TARGET_LIBRARY_MANIFEST_HASH
 from plugins.geometry_synthetic.facade import GeometrySolveFacade, GeometrySolveRequest
 from plugins.geometry_synthetic.provider import CompositeSyntheticGeometryProvider
+from plugins.geometry_synthetic.patching import LeanPatchCandidateV1
+from plugins.geometry_synthetic.patching.apply_patch import apply_lean_patch_candidate
+from plugins.geometry_synthetic.proof import build_solver_backed_proof_certificate
 from plugins.geometry_synthetic.rules import GeoTraceStep, GeoTraceV1
 from plugins.geometry_synthetic.trace_compiler import TraceCompiler
+from math_auto_research.model_api.proof_worker import RunContext
 
 
 GEOMETRY_FINAL_VERIFY_FIXTURE = """def Point := Unit
@@ -97,6 +102,13 @@ class StandardGeometryProofLoop:
         artifact_index: dict[str, str] = {}
         blockers: list[str] = []
         lean_text = theorem_path.read_text(encoding="utf-8")
+        source_problem_ref = _sha256_ref(lean_text)
+        _write_json(
+            task_dir,
+            artifact_index,
+            "source_problem_ref.json",
+            {"schema_version": "1.0.0", "source_problem_ref": source_problem_ref, "theorem_file_path": theorem_path.as_posix()},
+        )
         final_gate = FinalVerifyGate()
         lean_result = final_gate.lean_port.build_project()
         stage_statuses["lean_initial_compile"] = lean_result.status
@@ -200,28 +212,87 @@ class StandardGeometryProofLoop:
             "construction_compilation_ref": construction_compilation.result_id if construction_compilation is not None else None,
             "proof_use_note": "Final theorem use requires FinalVerifyGate plus required release chain artifacts.",
         }
+        solver_patch_candidate = None
+        solver_dependency_kind = _solver_dependency_kind(trace_compilation, construction_compilation)
+        if geometry_stage_required and _release_chain_satisfied(expected_stages, trace_compilation, construction_compilation):
+            solver_patch_candidate = _source_patch_candidate(
+                source_task_run_id=f"task_run:{baseline_id}:{entry_id}",
+                theorem_name=local_theorem_name,
+                theorem_path=theorem_path,
+                protected_statement_hash=goal_anchor.protected_statement_hash,
+                trace_compilation=trace_compilation,
+                construction_compilation=construction_compilation,
+            )
+            if solver_patch_candidate is not None:
+                _write_json(task_dir, artifact_index, "lean_patch_candidate.json", solver_patch_candidate.to_dict())
+                applied = apply_lean_patch_candidate(
+                    theorem_path,
+                    solver_patch_candidate,
+                    task_dir / "generated",
+                    RunContext(run_id=f"run:{baseline_id}", task_id=entry_id),
+                )
+                worker_result = applied.to_dict()
+                if worker_result.get("generated_candidate_file_ref"):
+                    _write_json(
+                        task_dir,
+                        artifact_index,
+                        "generated_candidate_file_ref.json",
+                        {
+                            "schema_version": "1.0.0",
+                            "generated_candidate_file_ref": worker_result["generated_candidate_file_ref"],
+                            "generated_candidate_path": worker_result.get("worker_output", {}).get("generated_candidate_path"),
+                        },
+                    )
         _write_json(task_dir, artifact_index, "worker_result.json", worker_result)
 
         final_report = None
+        solver_certificate = None
         final_verify_enabled = bool(_field(baseline, "final_verify_enabled", True))
         if final_verify_enabled and lean_result.status == "passed":
+            candidate_path = Path(worker_result.get("worker_output", {}).get("generated_candidate_path") or theorem_path)
+            solver_backed_mode = bool(worker_result.get("patch_applied") and solver_patch_candidate is not None)
             final_report = final_gate.verify_file(
                 lean_text,
-                theorem_path,
+                candidate_path,
                 local_theorem_name,
                 f"obligation:{entry_id}",
                 proof_use_provenance={
+                    "solver_backed_mode": solver_backed_mode,
                     "geometry_extraction_report_ref": extraction_report.report_id,
                     "goal_anchor_ref": goal_anchor_ref,
                     "protected_statement_hash": goal_anchor.protected_statement_hash,
                     "target_library_manifest_hash": TARGET_LIBRARY_MANIFEST_HASH,
+                    "provider_run_manifest_ref": provider_run.manifest.manifest_id if provider_run is not None else None,
+                    "normalized_solver_artifact_ref": _normalized_solver_ref(trace_compilation, construction_compilation),
+                    "compiler_result_ref": _compiler_result_ref(trace_compilation, construction_compilation),
+                    "lean_patch_candidate_ref": solver_patch_candidate.patch_id if solver_patch_candidate is not None else None,
                     "trace_compilation_result_ref": trace_compilation.result_id if trace_compilation is not None else None,
                     "construction_compilation_result_ref": construction_compilation.result_id if construction_compilation is not None else None,
-                    "worker_result_ref": worker_result["work_order_id"],
+                    "worker_result_ref": worker_result.get("worker_result_id") or worker_result["work_order_id"],
+                    "proof_region_diff_hash": worker_result.get("proof_region_diff_hash"),
+                    "generated_candidate_file_ref": worker_result.get("generated_candidate_file_ref"),
                 },
             )
             stage_statuses["final_verify"] = final_report.lean_status
             _write_json(task_dir, artifact_index, "final_verify_report.json", final_report.to_dict())
+            if solver_backed_mode and final_report.proof_use_status == "final_theorem":
+                solver_certificate = build_solver_backed_proof_certificate(
+                    task_run_id=f"task_run:{baseline_id}:{entry_id}",
+                    benchmark_entry_id=entry_id,
+                    baseline_id=baseline_id if baseline_id in {"B2", "B4"} else "other",
+                    source_problem_ref=source_problem_ref,
+                    theorem_name=theorem_name,
+                    protected_statement_hash=final_report.theorem_statement_hash,
+                    extraction_report_ref=extraction_report.report_id,
+                    goal_anchor_ref=goal_anchor_ref,
+                    provider_run_manifest_ref=provider_run.manifest.manifest_id if provider_run is not None else "provider_run_manifest:missing",
+                    normalized_solver_artifact=_normalized_solver_artifact(trace_compilation, construction_compilation),
+                    compiler_result_ref=_compiler_result_ref(trace_compilation, construction_compilation) or "trace_compilation:missing",
+                    lean_patch_candidate_ref=solver_patch_candidate.patch_id,
+                    worker_result=worker_result,
+                    final_verify_report=final_report,
+                )
+                _write_json(task_dir, artifact_index, "solver_backed_proof_certificate.json", solver_certificate.to_dict())
         else:
             stage_statuses["final_verify"] = "disabled_or_initial_compile_failed"
             if lean_result.status != "passed":
@@ -247,8 +318,18 @@ class StandardGeometryProofLoop:
             if final_verify_status == "final_theorem" and proof_worker_only
             else "not_allowed"
         )
-        if geometry_stage_required and final_verify_status == "final_theorem" and chain_satisfied:
-            blockers.append("geometry_chain_diagnostic_only_no_proof_repair_claim")
+        if geometry_stage_required and chain_satisfied and final_verify_status == "final_theorem":
+            decision = TrustGuard().classify(
+                evidence_kind="final_verify_report",
+                requested_result_level="final_theorem",
+                final_verify_report=final_report,
+                solver_backed_proof_certificate=solver_certificate.to_dict() if solver_certificate is not None else None,
+                solver_backed_required=True,
+            )
+            if decision.allowed_for_goal_closure:
+                proof_use_status = "final_theorem"
+            else:
+                blockers.append(decision.reason)
         expected_reject = _field(task, "expected_extraction_status", "") == "safe_rejected"
         if expected_reject and extraction_report.status == "safe_rejected":
             status = "safe_rejected"
@@ -272,14 +353,16 @@ class StandardGeometryProofLoop:
             blockers=tuple(blockers),
             proof_use_status=proof_use_status,
             solver_backed_final_theorem=False,
-            solver_backed_proof_certificate_ref=None,
-            proof_repair_patch_applied=False,
-            proof_region_diff_hash=None,
-            generated_candidate_file_ref=None,
-            solver_dependency_kind=_solver_dependency_kind(trace_compilation, construction_compilation),
+            solver_backed_proof_certificate_ref=solver_certificate.certificate_id if solver_certificate is not None else None,
+            proof_repair_patch_applied=bool(worker_result.get("patch_applied")),
+            proof_region_diff_hash=worker_result.get("proof_region_diff_hash"),
+            generated_candidate_file_ref=worker_result.get("generated_candidate_file_ref"),
+            solver_dependency_kind=solver_dependency_kind,
             original_problem_compile_status=lean_result.status,
             final_verify_report_ref=final_report.report_id if final_report is not None else None,
         )
+        if solver_certificate is not None and proof_use_status == "final_theorem":
+            object.__setattr__(result, "solver_backed_final_theorem", True)
         _write_json(task_dir, artifact_index, "task_result.json", result.to_dict())
         _write_json(task_dir, artifact_index, "artifact_index.json", artifact_index)
         return result
@@ -689,6 +772,72 @@ def _solver_dependency_kind(trace_compilation: Any, construction_compilation: An
     if construction_ok:
         return "auxiliary_construction"
     return "none"
+
+
+def _source_patch_candidate(
+    *,
+    source_task_run_id: str,
+    theorem_name: str,
+    theorem_path: Path,
+    protected_statement_hash: str,
+    trace_compilation: Any,
+    construction_compilation: Any,
+) -> LeanPatchCandidateV1 | None:
+    compiler = trace_compilation if getattr(trace_compilation, "status", None) == "compiled" else construction_compilation
+    if compiler is None or getattr(compiler, "lean_patch_candidate", None) is None:
+        return None
+    compiler_patch = LeanPatchCandidateV1.from_dict(compiler.lean_patch_candidate)
+    return LeanPatchCandidateV1.create(
+        source_task_run_id=source_task_run_id,
+        target_theorem_name=theorem_name,
+        target_file_path=theorem_path.as_posix(),
+        target_protected_statement_hash=protected_statement_hash,
+        patch_kind=compiler_patch.patch_kind,
+        allowed_edit_region={
+            "region_id": f"proof_region:{theorem_name}",
+            "start_marker": f"-- MARP_PROOF_REGION_START:{theorem_name}",
+            "end_marker": f"-- MARP_PROOF_REGION_END:{theorem_name}",
+        },
+        proof_region_text=compiler_patch.proof_region_replacement_text,
+        solver_dependency_refs=compiler_patch.solver_dependency_refs,
+        proof_template_id=compiler_patch.proof_template_id,
+        proof_origin=compiler_patch.proof_origin,
+        created_by=compiler_patch.created_by,
+        required_imports=compiler_patch.required_imports,
+        helper_lemmas=compiler_patch.helper_lemmas,
+    )
+
+
+def _normalized_solver_ref(trace_compilation: Any, construction_compilation: Any) -> str | None:
+    if getattr(trace_compilation, "status", None) == "compiled":
+        return getattr(trace_compilation, "trace_id", None)
+    if getattr(construction_compilation, "status", None) == "compiled":
+        return getattr(construction_compilation, "candidate_id", None)
+    return None
+
+
+def _compiler_result_ref(trace_compilation: Any, construction_compilation: Any) -> str | None:
+    if getattr(trace_compilation, "status", None) == "compiled":
+        return getattr(trace_compilation, "result_id", None)
+    if getattr(construction_compilation, "status", None) == "compiled":
+        return getattr(construction_compilation, "result_id", None)
+    return None
+
+
+def _normalized_solver_artifact(trace_compilation: Any, construction_compilation: Any) -> dict[str, str]:
+    if getattr(trace_compilation, "status", None) == "compiled":
+        return {"kind": "geotrace", "ref": trace_compilation.trace_id, "source_engine_role": "symbolic_closure"}
+    if getattr(construction_compilation, "status", None) == "compiled":
+        return {
+            "kind": "auxiliary_construction",
+            "ref": construction_compilation.candidate_id,
+            "source_engine_role": "construction_proposer",
+        }
+    return {"kind": "geotrace", "ref": "geotrace:missing", "source_engine_role": "symbolic_closure"}
+
+
+def _sha256_ref(text: str) -> str:
+    return f"sha256:{hashlib.sha256(text.encode('utf-8')).hexdigest()}"
 
 
 def _write_json(directory: Path, index: dict[str, str], filename: str, payload: Any) -> None:

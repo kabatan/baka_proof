@@ -2,7 +2,7 @@
 title: Guardian Active Context — geometry x Lean v0.3 full rebase
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-004
 version: v0.3-full-rebase+v0.3A+v0.3B-patch
-status: V03B_RCB3_PASS_T57_READY
+status: V03B_RCB4_PASS_T58_READY
 created: 2026-06-13
 last_updated: 2026-06-14
 base_spec: MARP-GEOLEAN-BASE-004
@@ -503,10 +503,22 @@ Completed review checkpoint:
 RC-B3 — FinalVerifyGate and certificate/trust checkpoint
 ```
 
-Current task:
+Completed task:
 
 ```text
 T57 — StandardGeometryProofLoop solver-backed release path
+```
+
+Completed review checkpoint:
+
+```text
+RC-B4 — Standard loop solver-backed path checkpoint
+```
+
+Current task:
+
+```text
+T58 — Solver-backed corpus
 ```
 
 Current task files changed in T46:
@@ -579,6 +591,17 @@ plugins/geometry_synthetic/bridge/__init__.py
 tests/unit/test_solver_backed_proof_certificate.py
 tests/unit/test_solver_backed_laundering.py
 docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t56_solver_backed_certificate_trust.md
+docs/ai/ACTIVE_CONTEXT.md
+```
+
+Current task files changed in T57:
+
+```text
+plugins/geometry_synthetic/standard_loop.py
+src/math_auto_research/lean_integration/proof_region_guard.py
+tests/unit/test_standard_geometry_loop_solver_backed.py
+tests/unit/test_standard_loop_no_unconditional_provider_block.py
+docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/t57_standard_loop_solver_backed_path.md
 docs/ai/ACTIVE_CONTEXT.md
 ```
 
@@ -663,7 +686,7 @@ T46 final replay and v0.3A closure are complete: release blockers 1-34 pass, cor
 After v0.3B patch installation, the intended complete v0.3 closure is not final until solver-backed proof repair also passes. Current allowed status is:
 
 ```text
-V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: v0.3A harness-ready passed, v0.3B schema/proof-region/compiler/worker/final-verify/certificate trust pieces implemented; standard loop/corpus/metrics/release flow pending
+V0.3_FULL_IMPLEMENTED_EXPERIMENT_READY: v0.3A harness-ready passed, v0.3B schema/proof-region/compiler/worker/final-verify/certificate trust pieces and standard loop solver-backed path implemented; corpus/metrics/release flow pending
 V0.3B_SOLVER_BACKED_PROOF_REPAIR_READY: not yet claimed
 V0.3_TONGGEOMETRY_MODEL_BACKED_HEAVY_SEARCH_READY: blocked
 ```

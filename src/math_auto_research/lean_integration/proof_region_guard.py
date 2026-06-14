@@ -4,8 +4,8 @@ import re
 
 
 class ProofRegionGuard:
-    start_pattern = re.compile(r"--\s*PROOF-REGION-START:[A-Za-z0-9_.:-]+")
-    end_pattern = re.compile(r"--\s*PROOF-REGION-END:[A-Za-z0-9_.:-]+")
+    start_pattern = re.compile(r"--\s*(?:PROOF-REGION-START|MARP_PROOF_REGION_START):[A-Za-z0-9_.:-]+")
+    end_pattern = re.compile(r"--\s*(?:PROOF-REGION-END|MARP_PROOF_REGION_END):[A-Za-z0-9_.:-]+")
 
     def outside_regions(self, text: str) -> str:
         kept: list[str] = []
