@@ -275,6 +275,21 @@
       "status": "passed"
     },
     {
+      "check_id": "WP13-lean-proof-search-smoke",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/smoke_full2d_engine.py",
+          "--engine",
+          "lean_proof_search"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
       "check_id": "WP15-rule-registry-checker",
       "details": {
         "path": "scripts\\check_full2d_rule_registry.py"
@@ -305,12 +320,12 @@
     "WP-10:transformation-smoke-passed",
     "WP-11:order-case-smoke-passed",
     "WP-12:inequality-smoke-passed",
+    "WP-13:lean-proof-search-smoke-passed",
     "WP-15:rule-registry-checker-passed"
   ],
   "config_ref": "configs\\benchmark_runs\\geometry_full2d_v0_4_2.yaml",
   "hard_blockers": [],
   "next_unblocked_work_packages": [
-    "WP-13",
     "WP-14",
     "WP-20"
   ],
@@ -321,7 +336,7 @@
       "summary": "GeometryFull2D release corpus is not created yet."
     }
   ],
-  "report_id": "progress_acceptance_v0_4_2:1781463596",
+  "report_id": "progress_acceptance_v0_4_2:1781463955",
   "schema_version": "1.0.0",
   "status": "progress_ok_with_debt",
   "work_debt": []

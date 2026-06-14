@@ -108,6 +108,17 @@ def run_smoke(engine: str) -> list[str]:
             errors.append("inequality_missing_checker_ref")
         if not output.real_integration_flag:
             errors.append("inequality_not_real_integration")
+    if engine == "lean_proof_search":
+        if output.status != "normalized_success":
+            errors.append("lean_proof_search_not_normalized_success")
+        if not output.normalized_output_ref:
+            errors.append("lean_proof_search_missing_candidate_ref")
+        elif not str(output.normalized_output_ref).startswith("LeanPatchCandidateFull2D:sha256:"):
+            errors.append("lean_proof_search_wrong_candidate_ref")
+        if not output.checker_or_compiler_ref:
+            errors.append("lean_proof_search_missing_checker_ref")
+        if not output.real_integration_flag:
+            errors.append("lean_proof_search_not_real_integration")
     return sorted(set(errors))
 
 

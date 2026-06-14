@@ -95,6 +95,7 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     checks.append(_command_check("WP10-transformation-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "transformation"]))
     checks.append(_command_check("WP11-order-case-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "order_case"]))
     checks.append(_command_check("WP12-inequality-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "inequality"]))
+    checks.append(_command_check("WP13-lean-proof-search-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "lean_proof_search"]))
     checks.append(_file_check("WP15-rule-registry-checker", ROOT / "scripts" / "check_full2d_rule_registry.py"))
     checks.append(_file_check("WP21-release-checker", ROOT / "scripts" / "check_release_acceptance_v0_4_2.py"))
 
@@ -114,6 +115,7 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     transformation_check = check_by_id["WP10-transformation-smoke"]
     order_case_check = check_by_id["WP11-order-case-smoke"]
     inequality_check = check_by_id["WP12-inequality-smoke"]
+    lean_proof_search_check = check_by_id["WP13-lean-proof-search-smoke"]
     rule_registry_check = check_by_id["WP15-rule-registry-checker"]
     release_checker_check = check_by_id["WP21-release-checker"]
     if plugin_dir_check["status"] != "passed":
@@ -146,6 +148,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         work_debt.append(_issue("WorkDebt", "WP-11", "OrderCaseEngine smoke is not passing.", order_case_check))
     if inequality_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-12", "InequalityEngine smoke is not passing.", inequality_check))
+    if lean_proof_search_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-13", "LeanProofSearchEngine smoke is not passing.", lean_proof_search_check))
     if rule_registry_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-15", "Full2D rule registry checker is not implemented yet.", rule_registry_check))
     if release_checker_check["status"] != "passed":
@@ -180,6 +184,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         completed.append("WP-11:order-case-smoke-passed")
     if inequality_check["status"] == "passed":
         completed.append("WP-12:inequality-smoke-passed")
+    if lean_proof_search_check["status"] == "passed":
+        completed.append("WP-13:lean-proof-search-smoke-passed")
     if rule_registry_check["status"] == "passed":
         completed.append("WP-15:rule-registry-checker-passed")
 
@@ -224,6 +230,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         next_work = [item for item in next_work if item != "WP-11"]
     if "WP-12:inequality-smoke-passed" in completed:
         next_work = [item for item in next_work if item != "WP-12"]
+    if "WP-13:lean-proof-search-smoke-passed" in completed:
+        next_work = [item for item in next_work if item != "WP-13"]
     if "WP-15:rule-registry-checker-passed" in completed:
         next_work = [item for item in next_work if item != "WP-15"]
     status = "progress_blocked_hard" if hard_blockers else "progress_ok_with_debt"

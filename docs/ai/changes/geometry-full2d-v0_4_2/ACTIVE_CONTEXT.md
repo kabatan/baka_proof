@@ -5,7 +5,7 @@ Status: USER_APPROVED_ACTIVE
 -->
 ---
 title: "Active Context Seed — GeometryFull2D v0.4.2"
-status: "WP12_INEQUALITY_PASSED_WP13_READY"
+status: "WP13_LEAN_PROOF_SEARCH_PASSED_WP14_READY"
 created: "2026-06-14"
 ---
 
@@ -47,7 +47,7 @@ Implementation in progress only.
 Current task:
 
 ```text
-WP-13 — LeanProofSearchEngine
+WP-14 — PortfolioCoordinator
 ```
 
 Progress acceptance:
@@ -55,8 +55,8 @@ Progress acceptance:
 ```text
 hard_blockers=[]
 status=progress_ok_with_debt
-completed_work_packages include WP-00, WP-01, WP-02, WP-03, WP-04, WP-05, WP-06, WP-07, WP-08, WP-09, WP-10, WP-11, WP-12, and WP-15
-next_unblocked_work_packages include WP-13, WP-14, and WP-20
+completed_work_packages include WP-00, WP-01, WP-02, WP-03, WP-04, WP-05, WP-06, WP-07, WP-08, WP-09, WP-10, WP-11, WP-12, WP-13, and WP-15
+next_unblocked_work_packages include WP-14 and WP-20
 ```
 
 TongGeometry:
