@@ -76,8 +76,12 @@ def _results_for_manifest(manifest: dict[str, Any]) -> list[dict[str, Any]]:
 def _proof_artifacts_for_task(task: dict[str, Any]) -> dict[str, str]:
     required = {
         "solver_backed_certificate_ref": task.get("solver_backed_certificate_ref"),
+        "solver_backed_certificate_path": task.get("solver_backed_certificate_path"),
         "final_verify_ref": task.get("final_verify_ref"),
+        "final_verify_report_path": task.get("final_verify_report_path"),
         "proof_region_diff_ref": task.get("proof_region_diff_ref"),
+        "checked_candidate_file_ref": task.get("checked_candidate_file_ref"),
+        "checked_candidate_file_path": task.get("checked_candidate_file_path"),
     }
     if task.get("proof_use_status") != "solver_backed_final_theorem":
         return {}

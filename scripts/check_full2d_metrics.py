@@ -2,8 +2,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.check_full2d_proof_artifacts import check_proof_artifacts  # noqa: E402
 
 FAMILY_THRESHOLDS = {
     "Full2DCore500": 0.95,
@@ -56,6 +63,9 @@ def check_metrics(run_dir: Path) -> list[str]:
         if item.get("fixture_flag"):
             errors.append(f"K-003_fixture_result_counted:{item.get('task_id')}")
             break
+    final_count = sum(1 for item in results if item.get("final_theorem"))
+    if final_count:
+        errors.extend(f"K-002_proof_artifact_validation:{error}" for error in check_proof_artifacts(run_dir))
     return sorted(set(errors))
 
 

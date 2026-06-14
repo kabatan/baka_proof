@@ -333,6 +333,22 @@
       "status": "passed"
     },
     {
+      "check_id": "WP17-proof-artifacts",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_proof_artifacts.py",
+          "--run-dir",
+          "runs/geometry_full2d_v0_4_2",
+          "--self-test"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
       "check_id": "WP20-corpus-manifest",
       "details": {
         "command": [
@@ -397,7 +413,7 @@
   "measured_failure_summary": {},
   "metrics_summary": {},
   "release_blockers": [],
-  "report_id": "release_acceptance_v0_4_2:1781469363",
+  "report_id": "release_acceptance_v0_4_2:1781469982",
   "schema_version": "1.0.0",
   "status": "blocked",
   "used_rule_coverage_summary": {},
