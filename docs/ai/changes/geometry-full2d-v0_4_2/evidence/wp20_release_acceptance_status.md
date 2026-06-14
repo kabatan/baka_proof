@@ -80,8 +80,8 @@ SolverBackedProofCertificateFull2D schema/checker exists and rejects raw solver 
 Proof artifact checker exists and rejects final theorem results whose certificate, FinalVerify report, or checked candidate file is missing or mismatched.
 Full2D FinalVerify smoke applies a proof-region patch through ProofWorker, compiles the generated candidate through FinalVerifyGate, emits a SolverBackedProofCertificateFull2D, and validates the smoke task artifacts.
 Release corpus proof artifact batch generation currently produces and validates solver-backed artifacts for 2 release tasks without editing the frozen corpus manifest.
-Matrix metrics now consume the validated proof artifact batch sidecar, so 450 positives are counted as artifact-derived final theorems across all required metric families.
-The current overall final theorem rate is 450/6700 = 0.06716417910447761, which remains far below the required 0.85 overall threshold. HardHoldout50 now reaches its required 0.50 family threshold; all other required family thresholds remain below threshold.
+Matrix metrics now consume the validated proof artifact batch sidecar, so 635 positives are counted as artifact-derived final theorems across all required metric families.
+The current overall final theorem rate is 635/6700 = 0.09477611940298507, which remains far below the required 0.85 overall threshold. HardHoldout50 and Inequality150 now reach their required family thresholds; all other required family thresholds remain below threshold.
 ```
 
 Lean corpus compile note:
