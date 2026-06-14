@@ -11,18 +11,5 @@
   ],
   "schema_version": "1.0.0",
   "status": "not_run",
-  "work_debt_open": [
-    {
-      "evidence": {
-        "check_id": "WP15-rule-registry-checker",
-        "details": {
-          "path": "scripts\\check_full2d_rule_registry.py"
-        },
-        "status": "failed"
-      },
-      "kind": "WorkDebt",
-      "ref": "WP-15",
-      "summary": "Full2D rule registry checker is not implemented yet."
-    }
-  ]
+  "work_debt_open": []
 }

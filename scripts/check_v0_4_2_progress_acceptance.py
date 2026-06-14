@@ -138,6 +138,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         completed.append("WP-04:claimspec-checker-passed")
     if engine_contracts_check["status"] == "passed":
         completed.append("WP-05:engine-contracts-checker-passed")
+    if rule_registry_check["status"] == "passed":
+        completed.append("WP-15:rule-registry-checker-passed")
 
     next_work = [
         "WP-02",
@@ -166,6 +168,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         next_work = [item for item in next_work if item != "WP-04"]
     if "WP-05:engine-contracts-checker-passed" in completed:
         next_work = [item for item in next_work if item != "WP-05"]
+    if "WP-15:rule-registry-checker-passed" in completed:
+        next_work = [item for item in next_work if item != "WP-15"]
     status = "progress_blocked_hard" if hard_blockers else "progress_ok_with_debt"
     return {
         "schema_version": "1.0.0",
@@ -238,7 +242,8 @@ def _write_status_artifacts(report: dict[str, Any]) -> None:
         },
         "rule_registry_status.json": {
             "schema_version": "1.0.0",
-            "status": "missing",
+            "status": _check_status(report, "WP15-rule-registry-checker"),
+            "checker": "scripts/check_full2d_rule_registry.py",
             "required_concrete_rules": 150,
             "required_rule_families": 25,
         },

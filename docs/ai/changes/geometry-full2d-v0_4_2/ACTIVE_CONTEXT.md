@@ -55,8 +55,8 @@ Progress acceptance:
 ```text
 hard_blockers=[]
 status=progress_ok_with_debt
-completed_work_packages include WP-00, WP-01, WP-02, WP-03, WP-04, and WP-05
-next_unblocked_work_packages include WP-06 through WP-15 and WP-20
+completed_work_packages include WP-00, WP-01, WP-02, WP-03, WP-04, WP-05, and WP-15
+next_unblocked_work_packages include WP-06 through WP-14 and WP-20
 ```
 
 TongGeometry:

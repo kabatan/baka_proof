@@ -73,6 +73,7 @@ WP-02 Lean facade checker, elaboration-backed facade materialization, lean-no-so
 WP-03 structured Lean extraction checker passed.
 WP-04 ClaimSpec canonical bridge checker passed.
 WP-05 engine contracts and provider skeleton checker passed.
+WP-15 RuleRegistryFull2D floor checker passed.
 ```
 
 Open ReleaseBlocker / WorkDebt items are recorded in:

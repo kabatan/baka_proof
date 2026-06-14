@@ -174,7 +174,7 @@
       "details": {
         "path": "scripts\\check_full2d_rule_registry.py"
       },
-      "status": "failed"
+      "status": "passed"
     },
     {
       "check_id": "WP21-release-checker",
@@ -192,7 +192,8 @@
     "WP-02:facade-checker-passed",
     "WP-03:structured-extraction-checker-passed",
     "WP-04:claimspec-checker-passed",
-    "WP-05:engine-contracts-checker-passed"
+    "WP-05:engine-contracts-checker-passed",
+    "WP-15:rule-registry-checker-passed"
   ],
   "config_ref": "configs\\benchmark_runs\\geometry_full2d_v0_4_2.yaml",
   "hard_blockers": [],
@@ -206,7 +207,6 @@
     "WP-12",
     "WP-13",
     "WP-14",
-    "WP-15",
     "WP-20"
   ],
   "release_blockers": [
@@ -216,21 +216,8 @@
       "summary": "GeometryFull2D release corpus is not created yet."
     }
   ],
-  "report_id": "progress_acceptance_v0_4_2:1781461206",
+  "report_id": "progress_acceptance_v0_4_2:1781461478",
   "schema_version": "1.0.0",
   "status": "progress_ok_with_debt",
-  "work_debt": [
-    {
-      "evidence": {
-        "check_id": "WP15-rule-registry-checker",
-        "details": {
-          "path": "scripts\\check_full2d_rule_registry.py"
-        },
-        "status": "failed"
-      },
-      "kind": "WorkDebt",
-      "ref": "WP-15",
-      "summary": "Full2D rule registry checker is not implemented yet."
-    }
-  ]
+  "work_debt": []
 }
