@@ -19,7 +19,9 @@ Implemented in this checkpoint:
 - synthetic draft corpus at `benchmarks/geometry_full2d`
 - `scripts/run_full2d_matrix.py`
 - `scripts/check_full2d_metrics.py`
+- `scripts/check_full2d_solver_backed_certificate.py`
 - `scripts/import_full2d_curated_corpus.py`
+- `plugins/geometry_full2d/proof.py`
 - curated corpus import schema at `benchmarks/geometry_full2d/metadata/CURATED_IMPORT_SCHEMA.md`
 
 Verification commands:
@@ -33,6 +35,7 @@ python scripts/freeze_full2d_corpus.py
 lake env lean benchmarks/geometry_full2d/lean/SyntheticDraftCorpus.lean
 python scripts/check_v0_4_2_progress_acceptance.py --config configs/benchmark_runs/geometry_full2d_v0_4_2.yaml --output docs/ai/changes/geometry-full2d-v0_4_2/evidence/progress_acceptance_report.json
 python scripts/check_release_acceptance_v0_4_2.py --config configs/benchmark_runs/geometry_full2d_v0_4_2.yaml --output docs/ai/changes/geometry-full2d-v0_4_2/evidence/release_acceptance_report.json
+python scripts/check_full2d_solver_backed_certificate.py
 python -m py_compile scripts/import_full2d_curated_corpus.py scripts/run_full2d_matrix.py scripts/check_full2d_metrics.py scripts/generate_repro_report.py
 ```
 
@@ -62,6 +65,7 @@ H-007 family/tier floors pass with Base Spec metric family names.
 H-008 frozen manifest hash passes.
 Matrix, metrics, and reproducibility report plumbing exists and fails release metrics honestly when solver-backed artifacts are absent.
 Curated corpus import now has a gate that rejects synthetic relabeling and requires explicit source references.
+SolverBackedProofCertificateFull2D schema/checker exists and rejects raw solver output, failed FinalVerifyGate, and worker-level final theorem claims.
 ```
 
 Lean corpus compile note:

@@ -320,6 +320,19 @@
       "status": "passed"
     },
     {
+      "check_id": "WP17-solver-backed-certificate",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_solver_backed_certificate.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
       "check_id": "WP20-corpus-manifest",
       "details": {
         "command": [
@@ -384,7 +397,7 @@
   "measured_failure_summary": {},
   "metrics_summary": {},
   "release_blockers": [],
-  "report_id": "release_acceptance_v0_4_2:1781468748",
+  "report_id": "release_acceptance_v0_4_2:1781469363",
   "schema_version": "1.0.0",
   "status": "blocked",
   "used_rule_coverage_summary": {},

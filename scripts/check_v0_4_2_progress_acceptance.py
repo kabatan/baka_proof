@@ -100,6 +100,7 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     checks.append(_command_check("WP13-lean-proof-search-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "lean_proof_search"]))
     checks.append(_command_check("WP14-portfolio-coordinator-smoke", [sys.executable, "scripts/smoke_full2d_engine.py", "--engine", "portfolio_coordinator"]))
     checks.append(_command_check("WP14-portfolio-reason-codes", [sys.executable, "scripts/check_portfolio_reason_codes.py"]))
+    checks.append(_command_check("WP17-solver-backed-certificate", [sys.executable, "scripts/check_full2d_solver_backed_certificate.py"]))
     checks.append(_command_check("WP20-corpus-manifest", [sys.executable, "scripts/check_full2d_corpus_manifest.py"]))
     checks.append(_file_check("WP20-matrix-summary", ROOT / "runs" / "geometry_full2d_v0_4_2" / "matrix_summary.json"))
     checks.append(_command_check("WP20-metrics", [sys.executable, "scripts/check_full2d_metrics.py", "--run-dir", "runs/geometry_full2d_v0_4_2"]))
@@ -126,6 +127,7 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     lean_proof_search_check = check_by_id["WP13-lean-proof-search-smoke"]
     portfolio_coordinator_check = check_by_id["WP14-portfolio-coordinator-smoke"]
     portfolio_reason_codes_check = check_by_id["WP14-portfolio-reason-codes"]
+    certificate_check = check_by_id["WP17-solver-backed-certificate"]
     corpus_manifest_check = check_by_id["WP20-corpus-manifest"]
     matrix_summary_check = check_by_id["WP20-matrix-summary"]
     metrics_check = check_by_id["WP20-metrics"]
@@ -168,6 +170,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         work_debt.append(_issue("WorkDebt", "WP-14", "PortfolioCoordinator smoke is not passing.", portfolio_coordinator_check))
     if portfolio_reason_codes_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-14", "PortfolioCoordinator reason code checker is not passing.", portfolio_reason_codes_check))
+    if certificate_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-17", "SolverBackedProofCertificateFull2D checker is not passing.", certificate_check))
     if corpus_manifest_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-20", "GeometryFull2D release corpus manifest checker is not passing.", corpus_manifest_check))
     if matrix_summary_check["status"] != "passed":
@@ -214,6 +218,8 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         completed.append("WP-13:lean-proof-search-smoke-passed")
     if portfolio_coordinator_check["status"] == "passed" and portfolio_reason_codes_check["status"] == "passed":
         completed.append("WP-14:portfolio-coordinator-smoke-passed")
+    if certificate_check["status"] == "passed":
+        completed.append("WP-17:solver-backed-certificate-checker-passed")
     if rule_registry_check["status"] == "passed":
         completed.append("WP-15:rule-registry-checker-passed")
 

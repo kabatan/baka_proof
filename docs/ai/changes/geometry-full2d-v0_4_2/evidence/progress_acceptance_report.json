@@ -318,6 +318,19 @@
       "status": "passed"
     },
     {
+      "check_id": "WP17-solver-backed-certificate",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_solver_backed_certificate.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"errors\": [],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
       "check_id": "WP20-corpus-manifest",
       "details": {
         "command": [
@@ -392,6 +405,7 @@
     "WP-12:inequality-smoke-passed",
     "WP-13:lean-proof-search-smoke-passed",
     "WP-14:portfolio-coordinator-smoke-passed",
+    "WP-17:solver-backed-certificate-checker-passed",
     "WP-15:rule-registry-checker-passed"
   ],
   "config_ref": "configs\\benchmark_runs\\geometry_full2d_v0_4_2.yaml",
@@ -400,7 +414,7 @@
     "WP-20"
   ],
   "release_blockers": [],
-  "report_id": "progress_acceptance_v0_4_2:1781468535",
+  "report_id": "progress_acceptance_v0_4_2:1781469155",
   "schema_version": "1.0.0",
   "status": "progress_ok_with_debt",
   "work_debt": [
