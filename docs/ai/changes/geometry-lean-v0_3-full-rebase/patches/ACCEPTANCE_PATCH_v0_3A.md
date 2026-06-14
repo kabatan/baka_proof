@@ -1,7 +1,7 @@
 ---
 title: "Acceptance Patch — v0.3A release checker requirements"
 patch_id: "MARP-GEOLEAN-ACCEPTANCE-004A"
-status: "USER_APPROVED_ACTIVE_ACCEPTANCE_AMENDMENT"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
 created: "2026-06-13"
 installed: "2026-06-13"
 approval_evidence: "docs/ai/changes/geometry-lean-v0_3-full-rebase/evidence/v0_3a_patch_import.md"

@@ -1,0 +1,253 @@
+{
+  "checks": [
+    {
+      "check_id": "A-001",
+      "details": {
+        "command": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_active_guardian_spec.py"
+        ],
+        "returncode": 0,
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"active_base_spec_path\": \"docs/ai/changes/geometry-full2d-v0_4_2/BASE_SPEC.md\",\n  \"active_geometry_base_spec\": \"MARP-GEOLEAN-BASE-007\",\n  \"base_specs\": [\n    {\n      \"active\": true,\n      \"path\": \"docs/ai/changes/geometry-full2d-v0_4_2/BASE_SPEC.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-007\",\n      \"status\": \"USER_APPROVED_ACTIVE\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3/BASE_SPEC.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-003\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/ACCEPTANCE_MATRIX.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    }\n  ],\n  \"status\": \"passed\"\n}\n"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-BASE_SPEC.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\BASE_SPEC.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-PLAN.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\PLAN.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-ACCEPTANCE.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\ACCEPTANCE.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-ENGINE_CONTRACTS.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\ENGINE_CONTRACTS.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-REFACTOR_DIRECTIVE.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\REFACTOR_DIRECTIVE.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-SOURCE_MAP.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\SOURCE_MAP.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-ACTIVE_CONTEXT.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\ACTIVE_CONTEXT.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-doc-CODEX_HANDOFF.md",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\CODEX_HANDOFF.md"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-debt-ledger",
+      "details": {
+        "path": "docs\\ai\\changes\\geometry-full2d-v0_4_2\\debt\\debt_ledger.jsonl"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP00-config",
+      "details": {
+        "path": "configs\\benchmark_runs\\geometry_full2d_v0_4_2.yaml"
+      },
+      "status": "passed"
+    },
+    {
+      "check_id": "WP01-plugin-dir",
+      "details": {
+        "path": "plugins\\geometry_full2d"
+      },
+      "status": "failed"
+    },
+    {
+      "check_id": "WP02-lean-facade-dir",
+      "details": {
+        "path": "lean\\MathAutoResearch\\GeometryFull2D"
+      },
+      "status": "failed"
+    },
+    {
+      "check_id": "WP03-structured-extraction-script",
+      "details": {
+        "path": "scripts\\check_structured_extraction_v0_4_2.py"
+      },
+      "status": "failed"
+    },
+    {
+      "check_id": "WP15-rule-registry-checker",
+      "details": {
+        "path": "scripts\\check_full2d_rule_registry.py"
+      },
+      "status": "failed"
+    },
+    {
+      "check_id": "WP21-release-checker",
+      "details": {
+        "path": "scripts\\check_release_acceptance_v0_4_2.py"
+      },
+      "status": "passed"
+    }
+  ],
+  "claim_ceiling": "implementation_in_progress_no_v0_4_2_completion_claim",
+  "completed_work_packages": [
+    "WP-00:authority-docs-imported",
+    "WP-00:active-guardian-spec-checker-passed"
+  ],
+  "config_ref": "configs\\benchmark_runs\\geometry_full2d_v0_4_2.yaml",
+  "hard_blockers": [],
+  "next_unblocked_work_packages": [
+    "WP-01",
+    "WP-02",
+    "WP-03",
+    "WP-04",
+    "WP-05",
+    "WP-15",
+    "WP-20"
+  ],
+  "release_blockers": [
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "B-001",
+      "summary": "plugins/geometry_full2d is required for release."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "C-001",
+      "summary": "MathAutoResearch.GeometryFull2D Lean namespace is required for release."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "H-001",
+      "summary": "GeometryFull2D release corpus is not created yet."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "E-001",
+      "summary": "Missing engine implementation for role synthetic_closure."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "E-001",
+      "summary": "Missing engine implementation for role construction_search."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "E-001",
+      "summary": "Missing engine implementation for role algebraic_geometry."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "E-001",
+      "summary": "Missing engine implementation for role metric_angle."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "E-001",
+      "summary": "Missing engine implementation for role transformation."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "E-001",
+      "summary": "Missing engine implementation for role order_case."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "E-001",
+      "summary": "Missing engine implementation for role inequality."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "E-001",
+      "summary": "Missing engine implementation for role lean_proof_search."
+    },
+    {
+      "kind": "ReleaseBlocker",
+      "ref": "E-001",
+      "summary": "Missing engine implementation for role portfolio_coordinator."
+    }
+  ],
+  "report_id": "progress_acceptance_v0_4_2:1781459088",
+  "schema_version": "1.0.0",
+  "status": "progress_ok_with_debt",
+  "work_debt": [
+    {
+      "evidence": {
+        "check_id": "WP01-plugin-dir",
+        "details": {
+          "path": "plugins\\geometry_full2d"
+        },
+        "status": "failed"
+      },
+      "kind": "WorkDebt",
+      "ref": "WP-01",
+      "summary": "plugins/geometry_full2d is not created yet."
+    },
+    {
+      "evidence": {
+        "check_id": "WP02-lean-facade-dir",
+        "details": {
+          "path": "lean\\MathAutoResearch\\GeometryFull2D"
+        },
+        "status": "failed"
+      },
+      "kind": "WorkDebt",
+      "ref": "WP-02",
+      "summary": "GeometryFull2D Lean facade directory is not created yet."
+    },
+    {
+      "evidence": {
+        "check_id": "WP03-structured-extraction-script",
+        "details": {
+          "path": "scripts\\check_structured_extraction_v0_4_2.py"
+        },
+        "status": "failed"
+      },
+      "kind": "WorkDebt",
+      "ref": "WP-03",
+      "summary": "Structured extraction checker is not implemented yet."
+    },
+    {
+      "evidence": {
+        "check_id": "WP15-rule-registry-checker",
+        "details": {
+          "path": "scripts\\check_full2d_rule_registry.py"
+        },
+        "status": "failed"
+      },
+      "kind": "WorkDebt",
+      "ref": "WP-15",
+      "summary": "Full2D rule registry checker is not implemented yet."
+    }
+  ]
+}

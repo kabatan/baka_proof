@@ -3,7 +3,7 @@ title: Guardian Base Spec Amendment — geometry x Lean v0.3A real integration r
 spec_id: MARP-GEOLEAN-BASE-003A
 amends: MARP-GEOLEAN-BASE-003
 version: v0.3A-recovery-admitted
-status: GUARDIAN_BOUNDARY_ADMITTED_FOR_RECOVERY
+status: ARCHIVED_SUPERSEDED_BY_MARP-GEOLEAN-BASE-007
 created: 2026-06-12
 lane: Guardian Lane
 purpose: Define correctness requirements for recovering from v0.3 fixture-level closure blockers into a real-integration track.

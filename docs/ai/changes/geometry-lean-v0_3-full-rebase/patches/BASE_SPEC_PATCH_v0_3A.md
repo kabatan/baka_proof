@@ -2,7 +2,7 @@
 title: "Guardian Base Spec Patch — geometry × Lean v0.3A experiment-readiness hardening"
 patch_id: "MARP-GEOLEAN-BASE-004A"
 base_spec: "MARP-GEOLEAN-BASE-004"
-status: "USER_APPROVED_ACTIVE_AMENDMENT"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
 target_repo: "kabatan/baka_proof"
 created: "2026-06-13"
 installed: "2026-06-13"

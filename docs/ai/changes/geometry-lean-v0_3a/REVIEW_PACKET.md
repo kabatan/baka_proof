@@ -24,8 +24,8 @@ The review target is document admission only. It must not approve real-integrati
 
 ## Candidate Documents
 
-- `docs/ai/specs/MARP-GEOLEAN-BASE-003A.md`
-- `docs/ai/plans/MARP-GEOLEAN-PLAN-003A.md`
+- `docs/ai/archive/geometry_pre_v0_4_2/specs/MARP-GEOLEAN-BASE-003A.md`
+- `docs/ai/archive/geometry_pre_v0_4_2/plans/MARP-GEOLEAN-PLAN-003A.md`
 - `docs/ai/changes/geometry-lean-v0_3a/source_map.md`
 - `docs/ai/changes/geometry-lean-v0_3a/README.md`
 - `docs/ai/ACTIVE_CONTEXT.md`

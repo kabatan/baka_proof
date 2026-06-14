@@ -3,7 +3,7 @@ title: "Guardian Acceptance Patch — geometry × Lean v0.3B solver-backed proof
 acceptance_patch_id: "MARP-GEOLEAN-ACCEPTANCE-004B"
 base_patch: "MARP-GEOLEAN-BASE-004B"
 plan_patch: "MARP-GEOLEAN-PLAN-004B"
-status: "USER_APPROVED_ACTIVE_AMENDMENT"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
 target_repo: "kabatan/baka_proof"
 created: "2026-06-14"
 installed: "2026-06-14"

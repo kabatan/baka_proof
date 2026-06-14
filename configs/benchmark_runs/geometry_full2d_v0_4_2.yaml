@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "matrix_id": "geometry_full2d_v0_4_2",
+  "run_id": "geometry_full2d_v0_4_2",
+  "benchmark_pool_id": "benchmark_pool:geometry_full2d:v0_4_2",
+  "benchmark_corpus_root": "benchmarks/geometry_full2d",
+  "provider": "plugins.geometry_full2d.provider.GeometryFull2DProvider",
+  "target_library": "GeometryFull2DTarget:1.0.0",
+  "resource_budget": "small",
+  "baselines": [
+    {"baseline_id": "B0", "label": "proof_worker_only", "uses_controller": false, "uses_geometry_solve": false, "model_tier": "baseline"},
+    {"baseline_id": "B1", "label": "controller_worker_no_geometry", "uses_controller": true, "uses_geometry_solve": false, "model_tier": "baseline"},
+    {"baseline_id": "B2", "label": "full_geometry_enabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "baseline"},
+    {"baseline_id": "B3", "label": "strong_model_no_geometry", "uses_controller": true, "uses_geometry_solve": false, "model_tier": "strong"},
+    {"baseline_id": "B4", "label": "lower_model_geometry_enabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "lower"},
+    {"baseline_id": "B5", "label": "construction_disabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "baseline", "construction_enabled": false},
+    {"baseline_id": "B6", "label": "algebraic_disabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "baseline", "algebraic_enabled": false},
+    {"baseline_id": "B7", "label": "order_case_disabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "baseline", "order_case_enabled": false},
+    {"baseline_id": "B8", "label": "model_disabled", "uses_controller": true, "uses_geometry_solve": true, "model_tier": "none"}
+  ]
+}

@@ -4,7 +4,7 @@ plan_id: MARP-GEOLEAN-PLAN-003A
 base_spec: MARP-GEOLEAN-BASE-003A
 amends: MARP-GEOLEAN-PLAN-003
 version: v0.3A-recovery-admitted
-status: GUARDIAN_BOUNDARY_ADMITTED_FOR_RECOVERY
+status: ARCHIVED_SUPERSEDED_BY_MARP-GEOLEAN-BASE-007
 created: 2026-06-12
 purpose: Define recovery execution order for resolving v0.3 completion blockers without expanding claims prematurely.
 authority: Guardian-admitted execution contract for v0.3A recovery; cannot add or weaken BASE-003A requirements.

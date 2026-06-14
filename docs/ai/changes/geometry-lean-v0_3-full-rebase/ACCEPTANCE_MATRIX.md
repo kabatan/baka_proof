@@ -3,7 +3,7 @@ title: "Acceptance Matrix — geometry × Lean v0.3 full rebase"
 version: "v0.3-full-rebase+v0.3B"
 spec_id: "MARP-GEOLEAN-BASE-004"
 plan_id: "MARP-GEOLEAN-PLAN-004"
-status: "USER_APPROVED_ACTIVE_WITH_V0_3A_AND_V0_3B_PATCHES"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
 created: "2026-06-12"
 ---
 

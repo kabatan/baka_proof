@@ -5,7 +5,7 @@ Status: USER_APPROVED_ACTIVE
 -->
 ---
 title: "Active Context Seed — GeometryFull2D v0.4.2"
-status: "USER_APPROVED_ACTIVE"
+status: "WP00_PROGRESS_ACCEPTANCE_PASSED_WP01_READY"
 created: "2026-06-14"
 ---
 
@@ -42,6 +42,19 @@ Claim ceiling until final release acceptance passes:
 ```text
 No v0.4.2 completion claim.
 Implementation in progress only.
+```
+
+Current task:
+
+```text
+WP-01 — Refactor release plugin boundary
+```
+
+WP-00 progress acceptance:
+
+```text
+hard_blockers=[]
+status=progress_ok_with_debt
 ```
 
 TongGeometry:

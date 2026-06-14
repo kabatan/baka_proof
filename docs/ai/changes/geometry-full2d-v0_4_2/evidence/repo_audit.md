@@ -43,8 +43,8 @@ docs/ai/changes/geometry-lean-v0_3/
 docs/ai/changes/geometry-lean-v0_3a/
 docs/ai/changes/geometry-lean-v0_3-full-rebase/
 docs/ai/changes/geometry-lean_v0_3/
-docs/ai/specs/MARP-GEOLEAN-BASE-003A.md
-docs/ai/plans/MARP-GEOLEAN-PLAN-003A.md
+docs/ai/archive/geometry_pre_v0_4_2/specs/MARP-GEOLEAN-BASE-003A.md
+docs/ai/archive/geometry_pre_v0_4_2/plans/MARP-GEOLEAN-PLAN-003A.md
 ```
 
 The v0.4.2 Refactor Directive requires older active geometry authority to be archived. During import, those files were not physically moved because existing repository code still references older evidence paths, including:
@@ -62,7 +62,7 @@ scripts/smoke_leangeo_extraction.py
 tests/unit/test_geometry_extraction.py
 ```
 
-Physical archival and reference repair are therefore WP-00 implementation work, not a safe pre-implementation file move.
+The root v0.3A Base Spec and Plan were physically archived during WP-00. The larger v0.3-family change directories remain in place as historical evidence because current repository code still references their evidence paths.
 
 ## Installed v0.4.2 Track
 

@@ -2,7 +2,7 @@
 title: "Guardian Base Spec — geometry × Lean v0.3 full rebase implementation"
 spec_id: "MARP-GEOLEAN-BASE-004"
 version: "v0.3-full-rebase+v0.3B"
-status: "USER_APPROVED_ACTIVE_WITH_V0_3A_AND_V0_3B_PATCHES"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
 created: "2026-06-12"
 target_repo: "https://github.com/kabatan/baka_proof"
 supersedes:

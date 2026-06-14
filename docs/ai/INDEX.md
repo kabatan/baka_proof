@@ -57,8 +57,8 @@ Status: superseded by `MARP-GEOLEAN-BASE-007`; retained for historical evidence 
 
 Locations:
 
-- `docs/ai/specs/MARP-GEOLEAN-BASE-003A.md`
-- `docs/ai/plans/MARP-GEOLEAN-PLAN-003A.md`
+- `docs/ai/archive/geometry_pre_v0_4_2/specs/MARP-GEOLEAN-BASE-003A.md`
+- `docs/ai/archive/geometry_pre_v0_4_2/plans/MARP-GEOLEAN-PLAN-003A.md`
 - `docs/ai/changes/geometry-lean-v0_3a/`
 
 ### geometry-lean-v0_3-full-rebase

@@ -1,7 +1,7 @@
 ---
 title: geometry-lean-v0_3A Guardian Change Index
 version: v0.3A-recovery-admitted
-status: GUARDIAN_BOUNDARY_ADMITTED_FOR_RECOVERY
+status: SUPERSEDED_BY_MARP-GEOLEAN-BASE-007
 created: 2026-06-12
 purpose: Index the Guardian documents and evidence for v0.3A real-integration recovery.
 authority: Navigation only; BASE-003A and PLAN-003A define authority after admission.
@@ -11,8 +11,8 @@ authority: Navigation only; BASE-003A and PLAN-003A define authority after admis
 
 ## Authority Chain
 
-1. `docs/ai/specs/MARP-GEOLEAN-BASE-003A.md` defines the recovery correctness requirements after Guardian admission.
-2. `docs/ai/plans/MARP-GEOLEAN-PLAN-003A.md` defines the recovery execution order after admission.
+1. `docs/ai/archive/geometry_pre_v0_4_2/specs/MARP-GEOLEAN-BASE-003A.md` defines the recovery correctness requirements after Guardian admission.
+2. `docs/ai/archive/geometry_pre_v0_4_2/plans/MARP-GEOLEAN-PLAN-003A.md` defines the recovery execution order after admission.
 3. `source_map.md` maps source instructions and blocker evidence to v0.3A requirements.
 4. `docs/ai/ACTIVE_CONTEXT.md` points to current work but does not override requirements.
 

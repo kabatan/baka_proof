@@ -4,7 +4,7 @@ patch_id: "MARP-GEOLEAN-BASE-004B"
 base_spec: "MARP-GEOLEAN-BASE-004"
 prior_patches:
   - "MARP-GEOLEAN-BASE-004A"
-status: "USER_APPROVED_ACTIVE_AMENDMENT"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
 target_repo: "kabatan/baka_proof"
 created: "2026-06-14"
 installed: "2026-06-14"

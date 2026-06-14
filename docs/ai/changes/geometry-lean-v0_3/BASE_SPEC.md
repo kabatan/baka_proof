@@ -2,7 +2,7 @@
 title: Guardian Base Spec — geometry × Lean 自動研究 pipeline v0.3
 spec_id: MARP-GEOLEAN-BASE-003
 version: v0.3-admission-candidate
-status: SOURCE_FIDELITY_REVIEW_PASSED_PENDING_USER_IMPLEMENTATION_APPROVAL
+status: SUPERSEDED_BY_MARP-GEOLEAN-BASE-007
 created: 2026-06-10
 last_updated: 2026-06-11
 lane: Guardian Lane

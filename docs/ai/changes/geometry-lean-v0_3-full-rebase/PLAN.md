@@ -2,7 +2,7 @@
 title: "Guardian Plan — geometry × Lean v0.3 full rebase implementation"
 plan_id: "MARP-GEOLEAN-PLAN-004"
 version: "v0.3-full-rebase+v0.3B"
-status: "USER_APPROVED_ACTIVE_WITH_V0_3A_AND_V0_3B_PATCHES"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
 created: "2026-06-12"
 base_spec: "MARP-GEOLEAN-BASE-004"
 active_patches:

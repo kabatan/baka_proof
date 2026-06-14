@@ -2,7 +2,7 @@
 title: Change Index — GeometryFull2D v0.4.2
 change_id: geometry-full2d-v0_4_2
 version: v0.4.2-governed-full2d
-status: USER_APPROVED_ACTIVE_WP00_READY
+status: WP00_PROGRESS_ACCEPTANCE_PASSED_WP01_READY
 created: 2026-06-15
 purpose: Index the Guardian document set for the GeometryFull2D v0.4.2 governed full implementation track.
 authority: Navigation only; individual Base Spec, Plan, Acceptance, and contract documents declare their own authority.
@@ -45,15 +45,15 @@ The track supersedes the previous v0.3, v0.3A, v0.3 full-rebase, v0.3A patch, an
 Current task:
 
 ```text
-WP-00 — Install v0.4.2 authority and audit repo
+WP-01 — Refactor release plugin boundary
 ```
 
-Document installation is complete. The implementation-side WP-00 work remains:
+WP-00 is complete for implementation flow:
 
 ```text
-1. implement or run the active Guardian spec checker;
-2. archive/refactor older geometry authority documents without breaking existing scripts/tests;
-3. produce dependency and release-path status evidence as the implementation begins.
+scripts/check_active_guardian_spec.py reports exactly one active geometry spec: MARP-GEOLEAN-BASE-007.
+Initial progress acceptance reports hard_blockers=[] and progress_ok_with_debt.
+ReleaseBlocker and WorkDebt items are recorded in debt/debt_ledger.jsonl.
 ```
 
 ## Claim Ceiling
