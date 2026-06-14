@@ -1,5 +1,6 @@
 {
+  "checker": "scripts/check_structured_extraction_v0_4_2.py",
   "required_path": "Lean elaborator-backed JSON extraction",
   "schema_version": "1.0.0",
-  "status": "missing"
+  "status": "passed"
 }

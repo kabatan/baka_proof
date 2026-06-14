@@ -14,18 +14,6 @@
   "work_debt_open": [
     {
       "evidence": {
-        "check_id": "WP03-structured-extraction-script",
-        "details": {
-          "path": "scripts\\check_structured_extraction_v0_4_2.py"
-        },
-        "status": "failed"
-      },
-      "kind": "WorkDebt",
-      "ref": "WP-03",
-      "summary": "Structured extraction checker is not implemented yet."
-    },
-    {
-      "evidence": {
         "check_id": "WP15-rule-registry-checker",
         "details": {
           "path": "scripts\\check_full2d_rule_registry.py"

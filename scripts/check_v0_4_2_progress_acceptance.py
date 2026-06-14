@@ -85,16 +85,19 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
     checks.append(_directory_check("WP02-lean-facade-dir", ROOT / "lean" / "MathAutoResearch" / "GeometryFull2D"))
     checks.append(_command_check("WP02-lean-facade-checker", [sys.executable, "scripts/check_geometry_full2d_facade.py"]))
     checks.append(_file_check("WP03-structured-extraction-script", ROOT / "scripts" / "check_structured_extraction_v0_4_2.py"))
+    checks.append(_command_check("WP03-structured-extraction-checker", [sys.executable, "scripts/check_structured_extraction_v0_4_2.py"]))
     checks.append(_file_check("WP15-rule-registry-checker", ROOT / "scripts" / "check_full2d_rule_registry.py"))
     checks.append(_file_check("WP21-release-checker", ROOT / "scripts" / "check_release_acceptance_v0_4_2.py"))
 
-    plugin_dir_check = checks[-6]
-    plugin_boundary_check = checks[-5]
-    lean_facade_dir_check = checks[-5]
-    lean_facade_checker_check = checks[-4]
-    extraction_check = checks[-3]
-    rule_registry_check = checks[-2]
-    release_checker_check = checks[-1]
+    check_by_id = {check["check_id"]: check for check in checks}
+    plugin_dir_check = check_by_id["WP01-plugin-dir"]
+    plugin_boundary_check = check_by_id["WP01-plugin-boundary"]
+    lean_facade_dir_check = check_by_id["WP02-lean-facade-dir"]
+    lean_facade_checker_check = check_by_id["WP02-lean-facade-checker"]
+    extraction_file_check = check_by_id["WP03-structured-extraction-script"]
+    extraction_checker_check = check_by_id["WP03-structured-extraction-checker"]
+    rule_registry_check = check_by_id["WP15-rule-registry-checker"]
+    release_checker_check = check_by_id["WP21-release-checker"]
     if plugin_dir_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-01", "plugins/geometry_full2d is not created yet.", plugin_dir_check))
     if plugin_boundary_check["status"] != "passed":
@@ -103,8 +106,10 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         work_debt.append(_issue("WorkDebt", "WP-02", "GeometryFull2D Lean facade directory is not created yet.", lean_facade_dir_check))
     if lean_facade_checker_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-02", "GeometryFull2D facade checker is not passing.", lean_facade_checker_check))
-    if extraction_check["status"] != "passed":
-        work_debt.append(_issue("WorkDebt", "WP-03", "Structured extraction checker is not implemented yet.", extraction_check))
+    if extraction_file_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-03", "Structured extraction checker is not implemented yet.", extraction_file_check))
+    if extraction_checker_check["status"] != "passed":
+        work_debt.append(_issue("WorkDebt", "WP-03", "Structured extraction checker is not passing.", extraction_checker_check))
     if rule_registry_check["status"] != "passed":
         work_debt.append(_issue("WorkDebt", "WP-15", "Full2D rule registry checker is not implemented yet.", rule_registry_check))
     if release_checker_check["status"] != "passed":
@@ -119,12 +124,16 @@ def evaluate_progress(config_path: Path) -> dict[str, Any]:
         completed.append("WP-01:plugin-boundary-passed")
     if lean_facade_dir_check["status"] == "passed" and lean_facade_checker_check["status"] == "passed":
         completed.append("WP-02:facade-checker-passed")
+    if extraction_file_check["status"] == "passed" and extraction_checker_check["status"] == "passed":
+        completed.append("WP-03:structured-extraction-checker-passed")
 
     next_work = ["WP-02", "WP-03", "WP-04", "WP-05", "WP-15", "WP-20"]
     if not ("WP-01:plugin-boundary-passed" in completed):
         next_work.insert(0, "WP-01")
     if "WP-02:facade-checker-passed" in completed:
         next_work = [item for item in next_work if item != "WP-02"]
+    if "WP-03:structured-extraction-checker-passed" in completed:
+        next_work = [item for item in next_work if item != "WP-03"]
     status = "progress_blocked_hard" if hard_blockers else "progress_ok_with_debt"
     return {
         "schema_version": "1.0.0",
@@ -173,7 +182,8 @@ def _write_status_artifacts(report: dict[str, Any]) -> None:
         },
         "extraction_status.json": {
             "schema_version": "1.0.0",
-            "status": "missing",
+            "status": _check_status(report, "WP03-structured-extraction-checker"),
+            "checker": "scripts/check_structured_extraction_v0_4_2.py",
             "required_path": "Lean elaborator-backed JSON extraction",
         },
         "engine_status.json": {
@@ -229,6 +239,13 @@ def _command_check(check_id: str, command: list[str]) -> dict[str, Any]:
             "stderr_tail": completed.stderr[-2000:],
         },
     }
+
+
+def _check_status(report: dict[str, Any], check_id: str) -> str:
+    for check in report["checks"]:
+        if check["check_id"] == check_id:
+            return check["status"]
+    return "missing"
 
 
 def _file_check(check_id: str, path: Path) -> dict[str, Any]:

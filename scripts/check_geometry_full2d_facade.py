@@ -4,6 +4,11 @@ import json
 import re
 from pathlib import Path
 
+try:
+    from extract_geometry_full2d_statement import _ensure_local_lean_artifacts
+except ModuleNotFoundError:  # pragma: no cover - used when imported as scripts.*
+    from scripts.extract_geometry_full2d_statement import _ensure_local_lean_artifacts
+
 
 ROOT = Path(__file__).resolve().parents[1]
 FACADE_DIR = ROOT / "lean" / "MathAutoResearch" / "GeometryFull2D"
@@ -96,6 +101,10 @@ def check_facade() -> list[str]:
     for pattern in FORBIDDEN_PATTERNS:
         if re.search(pattern, combined):
             errors.append(f"facade_forbidden_pattern:{pattern}")
+    try:
+        _ensure_local_lean_artifacts()
+    except Exception as exc:
+        errors.append(f"facade_elaboration_failed:{exc}")
     return errors
 
 

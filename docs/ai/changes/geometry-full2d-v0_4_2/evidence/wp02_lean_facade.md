@@ -46,6 +46,8 @@ Result:
 passed
 ```
 
+This checker now materializes the local GeometryFull2D Lean modules with `lean -o` before passing, so API mismatches such as nonexistent LeanGeo symbols are caught by WP-02 evidence.
+
 ```text
 python -m pytest tests/unit/test_geometry_full2d_facade.py -q
 ```

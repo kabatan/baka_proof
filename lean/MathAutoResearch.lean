@@ -12,6 +12,7 @@ import MathAutoResearch.GeometryFull2D.Transformation
 import MathAutoResearch.GeometryFull2D.Order
 import MathAutoResearch.GeometryFull2D.Inequality
 import MathAutoResearch.GeometryFull2D.Tactics
+import MathAutoResearch.GeometryFull2D.Extraction
 
 /- Minimal root module for the v0.3 scaffold. -/
 
