@@ -70,6 +70,7 @@ def extract_theorem(
     canonical_statement = _canonical_statement(
         lean_file,
         theorem_name,
+        theorem_source,
         source_statement_hash,
         grammar_family,
         target_classification,
@@ -193,12 +194,16 @@ def _compile_lean_file(lean_file: Path) -> dict[str, Any]:
 def _canonical_statement(
     lean_file: Path,
     theorem_name: str,
+    theorem_source: str,
     source_statement_hash: str,
     grammar_family: str,
     target_classification: dict[str, Any],
 ) -> dict[str, Any]:
-    family = _family_from_grammar(grammar_family)
-    source_expr_hash = _sha256_text(f"{theorem_name}:target:{family}")
+    objects, hypotheses, side_conditions = _statement_parts(theorem_name, theorem_source)
+    target_expr = _target_expr(theorem_source)
+    family = _family_from_target(target_expr, grammar_family)
+    target_args = _target_args(target_expr, objects)
+    source_expr_hash = _sha256_text(f"{theorem_name}:target:{target_expr}")
     return {
         "schema_version": "1.0.0",
         "theorem_name": theorem_name,
@@ -206,22 +211,16 @@ def _canonical_statement(
         "source_statement_hash": source_statement_hash,
         "lean_context_hash": _lean_context_hash(),
         "target_library": TARGET_LIBRARY,
-        "objects": [],
-        "hypotheses": [],
+        "objects": objects,
+        "hypotheses": hypotheses,
         "target": {
             "predicate_or_shape_id": f"goal:{theorem_name}",
             "family": family,
-            "args": [],
+            "args": target_args,
             "source_expr_hash": source_expr_hash,
             "canonical_expr_hash": _sha256_text(f"canonical:{source_expr_hash}"),
         },
-        "side_conditions": {
-            "nondegeneracy": [],
-            "orientation": [],
-            "existence": [],
-            "uniqueness": [],
-            "order_cases": [],
-        },
+        "side_conditions": side_conditions,
         "relation_to_goal": {
             "kind": target_classification["relation_to_goal"],
             "direction_needed": "equivalence" if target_classification["relation_to_goal"] == "exact_goal" else "not_applicable",
@@ -240,7 +239,133 @@ def _target_classification(target_status: str) -> dict[str, Any]:
         "grammar_id": "GeometryFull2DTheoremGrammarV1",
         "relation_to_goal": relation,
         "unsupported_constructs": unsupported,
+        "classification_source": "lean_compilation_backed_exact_theorem",
     }
+
+
+def _statement_parts(theorem_name: str, theorem_source: str) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, list[str]]]:
+    header = theorem_source.split(":= by", 1)[0]
+    object_kinds = {
+        "Point",
+        "Line",
+        "Circle",
+        "Segment",
+        "Ray",
+        "Triangle",
+        "Reflection",
+        "Rotation",
+        "Homothety",
+        "Inversion",
+        "SpiralSimilarity",
+    }
+    objects: list[dict[str, Any]] = []
+    hypotheses: list[dict[str, Any]] = []
+    side_conditions = {
+        "nondegeneracy": [],
+        "orientation": [],
+        "existence": [],
+        "uniqueness": [],
+        "order_cases": [],
+    }
+    for binder in re.findall(r"\(([^()]*)\)", header):
+        if ":" not in binder:
+            continue
+        names_text, type_expr = binder.split(":", 1)
+        names = [name.strip() for name in names_text.split() if name.strip()]
+        type_expr = type_expr.strip()
+        simple_type = type_expr.split()[0] if type_expr.split() else type_expr
+        if simple_type in object_kinds:
+            for name in names:
+                if name.startswith("_"):
+                    continue
+                objects.append(
+                    {
+                        "object_id": f"{simple_type.lower()}:{name}",
+                        "kind": simple_type,
+                        "source_expr": name,
+                        "source_expr_hash": _sha256_text(f"{theorem_name}:object:{name}:{simple_type}"),
+                        "canonical_name": name,
+                    }
+                )
+            continue
+        for name in names or [f"hyp{len(hypotheses)}"]:
+            hypothesis = {
+                "predicate_id": f"hyp:{name}",
+                "family": _family_from_target(type_expr, "incidence"),
+                "args": _args_from_expr(type_expr, objects),
+                "polarity": "positive",
+                "source_expr_hash": _sha256_text(f"{theorem_name}:hypothesis:{name}:{type_expr}"),
+                "canonical_expr_hash": _sha256_text(f"{theorem_name}:canonical_hypothesis:{type_expr}"),
+            }
+            hypotheses.append(hypothesis)
+            lowered = type_expr.lower()
+            if "≠" in type_expr or "!=" in type_expr or "ne " in lowered:
+                side_conditions["nondegeneracy"].append(type_expr)
+            if "between" in lowered:
+                side_conditions["order_cases"].append(type_expr)
+            if "exists" in lowered or "∃" in type_expr:
+                side_conditions["existence"].append(type_expr)
+            if "unique" in lowered or "∃!" in type_expr:
+                side_conditions["uniqueness"].append(type_expr)
+    if not objects:
+        objects.append(
+            {
+                "object_id": f"theorem:{theorem_name}",
+                "kind": "TheoremGoal",
+                "source_expr": theorem_name,
+                "source_expr_hash": _sha256_text(f"{theorem_name}:implicit-goal-object"),
+                "canonical_name": theorem_name,
+            }
+        )
+    return objects, hypotheses, side_conditions
+
+
+def _target_expr(theorem_source: str) -> str:
+    header = theorem_source.split(":= by", 1)[0]
+    depth = 0
+    target_start = None
+    for index, char in enumerate(header):
+        if char == "(":
+            depth += 1
+        elif char == ")":
+            depth = max(0, depth - 1)
+        elif char == ":" and depth == 0:
+            target_start = index + 1
+    if target_start is None:
+        return header.strip()
+    return header[target_start:].strip()
+
+
+def _target_args(target_expr: str, objects: list[dict[str, Any]]) -> list[str]:
+    args: list[str] = []
+    for obj in objects:
+        name = str(obj["canonical_name"])
+        if re.search(rf"\b{re.escape(name)}\b", target_expr):
+            args.append(str(obj["object_id"]))
+    return args
+
+
+def _args_from_expr(expr: str, objects: list[dict[str, Any]]) -> list[str]:
+    return _target_args(expr, objects)
+
+
+def _family_from_target(target_expr: str, grammar_family: str) -> str:
+    lowered = target_expr.lower()
+    if "collinear" in lowered or "on_line" in lowered:
+        return "incidence"
+    if "equal_length" in lowered or "length" in lowered or "ratio" in lowered or "area" in lowered:
+        return "metric"
+    if "angle" in lowered or "cyclic" in lowered:
+        return "angle"
+    if "midpoint" in lowered:
+        return "construction"
+    if "between" in lowered:
+        return "order"
+    if "reflection" in lowered or "rotation" in lowered or "homothety" in lowered or "inversion" in lowered:
+        return "transformation"
+    if "≤" in target_expr or "<" in target_expr or "le" in lowered or "lt" in lowered:
+        return "inequality"
+    return _family_from_grammar(grammar_family)
 
 
 def _extract_theorem_source(text: str, theorem_name: str) -> str:

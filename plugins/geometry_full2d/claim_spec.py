@@ -73,6 +73,7 @@ class GeometryFull2DClaimSpec:
     target: dict[str, Any]
     side_conditions: dict[str, tuple[str, ...]]
     relation_to_goal: dict[str, str]
+    target_classification: dict[str, Any]
     proof_use_status: Literal["not_allowed"] = "not_allowed"
 
     def to_dict(self) -> dict[str, Any]:
@@ -130,6 +131,16 @@ def build_claim_spec(payload: dict[str, Any]) -> ClaimSpecBuildResult:
         "direction_needed": str(payload["relation_to_goal"]["direction_needed"]),
         "direction_available": str(payload["relation_to_goal"]["direction_available"]),
     }
+    target_classification = _canonical_mapping(
+        payload.get("target_classification")
+        or {
+            "target_status": "in_target_positive" if relation["kind"] == "exact_goal" else relation["kind"],
+            "grammar_id": "GeometryFull2DTheoremGrammarV1",
+            "relation_to_goal": relation["kind"],
+            "unsupported_constructs": [],
+            "classification_source": "legacy_canonical_statement",
+        }
+    )
     unsigned = {
         "schema_version": CLAIM_SPEC_SCHEMA_VERSION,
         "theorem_name": str(payload["theorem_name"]),
@@ -143,16 +154,105 @@ def build_claim_spec(payload: dict[str, Any]) -> ClaimSpecBuildResult:
         "target": _canonical_mapping(payload["target"]),
         "side_conditions": side_conditions,
         "relation_to_goal": relation,
+        "target_classification": target_classification,
         "proof_use_status": "not_allowed",
     }
-    claim_id = _ref("geometry_full2d_claim", _canonical_json(unsigned))
-    claim_spec_hash = _hash_ref(_canonical_json({"claim_id": claim_id, **unsigned}))
+    claim_spec_hash = _hash_ref(_canonical_json(unsigned))
+    claim_id = f"GeometryFull2DClaimSpec:{claim_spec_hash}"
     claim_spec = GeometryFull2DClaimSpec(
         claim_id=claim_id,
         claim_spec_hash=claim_spec_hash,
         **unsigned,
     )
     return ClaimSpecBuildResult(status="accepted", claim_spec=claim_spec)
+
+
+def build_claim_spec_from_extraction_report(report: dict[str, Any]) -> ClaimSpecBuildResult:
+    errors = validate_extraction_report_for_claimspec(report)
+    theorem_name = report.get("theorem_name") if isinstance(report, dict) else None
+    if errors:
+        return ClaimSpecBuildResult(
+            status="malformed",
+            claim_spec=None,
+            malformed_report=MalformedStatementReport(
+                schema_version=CLAIM_SPEC_SCHEMA_VERSION,
+                report_id=_ref("malformed_extraction_report", json.dumps(errors, sort_keys=True)),
+                theorem_name=theorem_name,
+                errors=tuple(errors),
+            ),
+        )
+    classification = report["target_classification"]
+    if classification["target_status"] != "in_target_positive" or classification["relation_to_goal"] != "exact_goal":
+        return ClaimSpecBuildResult(
+            status="target_outside",
+            claim_spec=None,
+            target_outside_report=TargetOutsideReport(
+                schema_version=CLAIM_SPEC_SCHEMA_VERSION,
+                report_id=_ref("target_outside", json.dumps(classification, sort_keys=True)),
+                theorem_name=str(report["theorem_name"]),
+                target_family=str(classification["target_status"]),
+                reason="target_classification_not_in_target_exact_goal",
+            ),
+        )
+    canonical = dict(report["canonical_statement"])
+    canonical["target_classification"] = classification
+    return build_claim_spec(canonical)
+
+
+def validate_extraction_report_for_claimspec(report: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(report, dict):
+        return ["extraction_report_not_object"]
+    for key in (
+        "theorem_name",
+        "canonical_statement",
+        "target_classification",
+        "regex_used_for_semantics",
+        "extraction_method",
+    ):
+        if key not in report:
+            errors.append(f"missing_report_field:{key}")
+    if errors:
+        return errors
+    if report["regex_used_for_semantics"] is not False:
+        errors.append("semantic_regex_not_allowed_for_claimspec")
+    if report["extraction_method"] != "lean_compilation_backed_exact_theorem":
+        errors.append("unsupported_extraction_method_for_claimspec")
+    classification = report["target_classification"]
+    errors.extend(validate_target_classification(classification))
+    if isinstance(classification, dict) and classification.get("classification_source") == "synthetic_python":
+        errors.append("synthetic_python_classification_not_allowed")
+    canonical = report["canonical_statement"]
+    if not isinstance(canonical, dict):
+        errors.append("canonical_statement_not_object")
+    else:
+        if canonical.get("theorem_name") != report.get("theorem_name"):
+            errors.append("canonical_theorem_name_mismatch")
+        if canonical.get("source_statement_hash") != report.get("source_statement_hash"):
+            errors.append("canonical_source_statement_hash_mismatch")
+        errors.extend(f"canonical:{error}" for error in validate_canonical_statement({**canonical, "target_classification": classification}))
+    return sorted(set(errors))
+
+
+def validate_target_classification(payload: Any) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(payload, dict):
+        return ["target_classification_not_object"]
+    for key in ("target_status", "grammar_id", "relation_to_goal", "unsupported_constructs", "classification_source"):
+        if key not in payload:
+            errors.append(f"target_classification_missing:{key}")
+    if errors:
+        return errors
+    if payload["grammar_id"] != "GeometryFull2DTheoremGrammarV1":
+        errors.append("target_classification_grammar_mismatch")
+    if payload["target_status"] == "in_target_positive":
+        if payload["relation_to_goal"] != "exact_goal":
+            errors.append("positive_classification_not_exact_goal")
+        if payload["unsupported_constructs"] != []:
+            errors.append("positive_classification_has_unsupported_constructs")
+    elif payload["target_status"] not in {"target_outside", "malformed", "measured_failure"}:
+        errors.append("target_classification_status_unknown")
+    return sorted(set(errors))
 
 
 def validate_canonical_statement(payload: dict[str, Any]) -> list[str]:
@@ -193,6 +293,8 @@ def validate_canonical_statement(payload: dict[str, Any]) -> list[str]:
     _validate_target(payload["target"], "target", errors)
     _validate_side_conditions(payload["side_conditions"], errors)
     _validate_relation(payload["relation_to_goal"], errors)
+    if "target_classification" in payload:
+        errors.extend(validate_target_classification(payload["target_classification"]))
     return sorted(set(errors))
 
 
