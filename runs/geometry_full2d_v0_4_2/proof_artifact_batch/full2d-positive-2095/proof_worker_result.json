@@ -1,0 +1,23 @@
+{
+  "final_verify_ref": null,
+  "generated_candidate_file_ref": "sha256:57c4ca24fb563ad19f7a2117216a4d06e0e278aacb4420d4d7785d352ef142cb",
+  "model_invocation_record": null,
+  "patch_applied": true,
+  "patch_candidate_ref": "LeanPatchCandidateFull2D:sha256:104b333f557b5ff2a63c5e75cd7ea5c1c5555985ee3c722630bf5e3c611d5aba",
+  "proof_region_diff_hash": "sha256:9fe4b29859449dd8608a1fc3a0739911140f39972f27559bd1a5318acf938f7f",
+  "proof_use_note": "patch application is not final proof evidence without FinalVerifyGate",
+  "proof_use_status": "not_allowed",
+  "result_level": "lean_patch_candidate",
+  "schema_version": "1.0.0",
+  "solver_dependency_refs": [
+    "AlgebraicCertificateFull2D:sha256:ed29cb5fc5df4ddf7cbed6868292a5a29e36e34dad0bd83ea02e59dedda3c774"
+  ],
+  "status": "patch_applied",
+  "work_order_id": "work_order:full2d_release_proof_artifact_batch:full2d-positive-2095",
+  "worker_output": {
+    "blockers": [],
+    "generated_candidate_path": "C:/Users/bakat/work/AI_math_research/runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2095/worker/full2d_release_proof_artifact_batch/full2d-positive-2095/full2d_synth_2095.lean",
+    "source_problem_path": "C:/Users/bakat/work/AI_math_research/runs/geometry_full2d_v0_4_2/proof_artifact_batch/full2d-positive-2095/source_problem.lean"
+  },
+  "worker_result_id": "worker_result:f2fcacfbffd4c2d4"
+}
