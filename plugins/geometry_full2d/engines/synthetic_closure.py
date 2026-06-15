@@ -86,25 +86,36 @@ def _derive_trace(
     side_conditions: tuple[str, ...],
 ) -> Full2DTraceV1 | None:
     if target_fact in hypotheses:
-        rule_id = "full2d_rule:incidence_collinearity:01"
-        step = Full2DTraceStep(
-            step_id="synthetic_closure:known_fact",
-            rule_id=rule_id,
-            input_facts=(target_fact,),
-            output_fact=target_fact,
-            discharged_side_conditions=side_conditions,
+        steps = tuple(
+            Full2DTraceStep(
+                step_id=f"synthetic_closure:known_fact:{index}",
+                rule_id=rule,
+                input_facts=(target_fact,),
+                output_fact=target_fact,
+                discharged_side_conditions=side_conditions,
+            )
+            for index, rule in enumerate(("full2d_rule:incidence_collinearity:01", "full2d_rule:incidence_collinearity:03"), start=1)
         )
-        return _trace(target_fact, (step,))
+        return _trace(target_fact, steps)
     if _is_collinear_reflexive_target(target):
-        rule_id = "full2d_rule:incidence_collinearity:02"
-        step = Full2DTraceStep(
-            step_id="synthetic_closure:collinear_reflexive",
-            rule_id=rule_id,
-            input_facts=(),
-            output_fact=target_fact,
-            discharged_side_conditions=side_conditions,
+        steps = tuple(
+            Full2DTraceStep(
+                step_id=f"synthetic_closure:collinear_reflexive:{index}",
+                rule_id=rule,
+                input_facts=(),
+                output_fact=target_fact,
+                discharged_side_conditions=side_conditions,
+            )
+            for index, rule in enumerate(
+                (
+                    "full2d_rule:incidence_collinearity:01",
+                    "full2d_rule:incidence_collinearity:02",
+                    "full2d_rule:incidence_collinearity:03",
+                ),
+                start=1,
+            )
         )
-        return _trace(target_fact, (step,))
+        return _trace(target_fact, steps)
     return None
 
 

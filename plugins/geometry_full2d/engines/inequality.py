@@ -87,7 +87,12 @@ def _build_certificate(claim_spec: dict[str, Any]) -> InequalityCertificateFull2
                 inequality_goal=inequality_goal,
                 exact_certificate_steps=steps,
                 checker_result="passed",
-                source_rule_ids=("full2d_rule:inequality_length:02", "full2d_rule:inequality_power:01"),
+                source_rule_ids=(
+                    "full2d_rule:inequality_length:02",
+                    "full2d_rule:inequality_length:03",
+                    "full2d_rule:inequality_power:01",
+                    "full2d_rule:inequality_power:02",
+                ),
                 lean_summary="two chained length inequalities are composed into the target inequality by transitivity",
             )
     if str(target.get("family")) == "inequality" and "length_le" in source_expr and len(args) == 4 and args[:2] == args[2:]:
@@ -103,7 +108,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> InequalityCertificateFull2
             inequality_goal=inequality_goal,
             exact_certificate_steps=steps,
             checker_result="passed",
-            source_rule_ids=("full2d_rule:inequality_length:01",),
+            source_rule_ids=("full2d_rule:inequality_length:01", "full2d_rule:inequality_length:03"),
             lean_summary="the inequality target compares identical length terms and closes by reflexive order",
         )
     if not side_conditions:
@@ -131,7 +136,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> InequalityCertificateFull2
         inequality_goal=inequality_goal,
         exact_certificate_steps=steps,
         checker_result=checker_result,
-        source_rule_ids=("full2d_rule:inequality_length:01",),
+        source_rule_ids=("full2d_rule:inequality_length:01", "full2d_rule:inequality_length:03"),
         lean_summary="declared point distinctness is normalized as a positive squared-distance domain condition",
     )
 

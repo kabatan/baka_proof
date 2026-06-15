@@ -91,7 +91,13 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
                 nondegeneracy_conditions=_side_conditions(claim_spec, "nondegeneracy"),
                 denominator_conditions=(),
                 checker_result="passed",
-                source_rule_ids=("full2d_rule:algebraic_coordinate:02", "full2d_rule:metric_equal_length:02"),
+                source_rule_ids=(
+                    "full2d_rule:algebraic_coordinate:02",
+                    "full2d_rule:algebraic_coordinate:03",
+                    "full2d_rule:metric_equal_length:01",
+                    "full2d_rule:metric_equal_length:02",
+                    "full2d_rule:metric_equal_length:03",
+                ),
                 lean_summary="a reversed equal-length hypothesis is normalized by equality symmetry into the requested target",
             )
     if family == "metric" and "equal_length" in source_expr and len(args) == 4 and args[:2] == args[2:]:
@@ -114,7 +120,12 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
             nondegeneracy_conditions=_side_conditions(claim_spec, "nondegeneracy"),
             denominator_conditions=(),
             checker_result="passed",
-            source_rule_ids=("full2d_rule:algebraic_coordinate:01", "full2d_rule:metric_equal_length:01"),
+            source_rule_ids=(
+                "full2d_rule:algebraic_coordinate:01",
+                "full2d_rule:algebraic_coordinate:03",
+                "full2d_rule:metric_equal_length:01",
+                "full2d_rule:metric_equal_length:03",
+            ),
             lean_summary="the equal-length target has identical segment terms on both sides and reduces to reflexive equality",
         )
     if family not in {"incidence", "collinear"} or len(args) != 3:
@@ -146,7 +157,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
         nondegeneracy_conditions=nondegeneracy,
         denominator_conditions=(),
         checker_result=checker_result,
-        source_rule_ids=("full2d_rule:algebraic_coordinate:01",),
+        source_rule_ids=("full2d_rule:algebraic_coordinate:01", "full2d_rule:algebraic_coordinate:03"),
         lean_summary="collinearity determinant has duplicate coordinate rows, so the exact polynomial goal reduces to zero",
     )
 

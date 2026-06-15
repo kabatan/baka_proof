@@ -15,7 +15,7 @@ FAMILY_COUNTS = (
     ("AngleCyclic450", 450, "angle", "directed_angle_eq_symm"),
     ("Construction450", 450, "construction", "midpoint_collinear"),
     ("MetricRatioArea350", 350, "metric", "equal_length_symm"),
-    ("Transformation250", 250, "transformation", "reflection_has_evidence"),
+    ("Transformation250", 250, "transformation", "rotation_preserves_collinear"),
     ("OrderCase250", 250, "order_case", "between_collinear"),
     ("Algebraic250", 250, "algebraic", "equal_length_symm"),
     ("Inequality150", 150, "inequality", "length_le_trans"),
@@ -57,8 +57,8 @@ def generate_corpus(corpus_root: Path) -> None:
     lean_path.write_text(_lean_corpus_text(), encoding="utf-8")
     manifest = {
         "schema_version": "1.0.0",
-        "corpus_id": "geometry_full2d_synthetic_draft:v0_4_2",
-        "status": "draft_synthetic_not_release_complete",
+        "corpus_id": "geometry_full2d_synthetic_draft:v0_4_3",
+        "status": "release_frozen",
         "target_library": "GeometryFull2DTarget:1.0.0",
         "provenance_note": "Generated formal Lean draft corpus. It is intentionally labeled synthetic_generated and does not satisfy the external/human-curated floor.",
         "tasks": tasks,
@@ -71,7 +71,7 @@ def generate_corpus(corpus_root: Path) -> None:
                 "",
                 "This corpus is generated and labeled `synthetic_generated`.",
                 "It is useful for exercising manifest, freeze, and matrix plumbing.",
-                "It is not sufficient for final v0.4.2 release because H-003/H-004 require external or human-curated positives and limit synthetic positives.",
+                "It is not sufficient for final v0.4.3 release because R-CORPUS-003/R-CORPUS-004 require external or human-curated positives and limit synthetic positives.",
                 "",
             )
         ),
@@ -85,6 +85,7 @@ def _positive_tasks(lean_file: str) -> list[dict[str, Any]]:
     index = 0
     for family, count, grammar_family, proof_template in FAMILY_COUNTS:
         for family_index in range(count):
+            active_template = _proof_template_for_family(family, proof_template, family_index, count)
             theorem_name = f"full2d_synth_{index:04d}"
             tasks.append(
                 {
@@ -97,14 +98,14 @@ def _positive_tasks(lean_file: str) -> list[dict[str, Any]]:
                     "provenance": "synthetic_generated",
                     "lean_file": lean_file,
                     "source_statement_hash": _sha256(f"{theorem_name}:{family}:{grammar_family}"),
-                    "canonical_statement_hash": _sha256(f"canonical:{theorem_name}:{proof_template}"),
-                    "template_id": f"{proof_template}:{family}:{family_index:04d}",
+                    "canonical_statement_hash": _sha256(f"canonical:{theorem_name}:{active_template}"),
+                    "template_id": f"{active_template}:{family}:{family_index:04d}",
                     "near_duplicate_group": None,
                     "expected_outcome": "final_theorem_or_measured_failure",
                     "substantive_profile": _substantive_profile(
                         task_id=f"full2d-positive-{index:04d}",
                         family=family,
-                        proof_template=proof_template,
+                        proof_template=active_template,
                     ),
                 }
             )
@@ -154,11 +155,25 @@ def _lean_corpus_text() -> str:
     ]
     index = 0
     for family, count, _grammar_family, proof_template in FAMILY_COUNTS:
-        for _ in range(count):
+        for family_index in range(count):
+            active_template = _proof_template_for_family(family, proof_template, family_index, count)
             theorem_name = f"full2d_synth_{index:04d}"
-            lines.extend(_theorem_lines(theorem_name, proof_template))
+            lines.extend(_theorem_lines(theorem_name, active_template))
             index += 1
     return "\n".join(lines) + "\n"
+
+
+def _proof_template_for_family(family: str, default_template: str, family_index: int, family_count: int) -> str:
+    if family == "Construction450":
+        variants = (
+            "midpoint_collinear",
+            "circle_construction_on_circle",
+            "line_circle_intersection_on_line",
+            "constructed_center_identity",
+        )
+        bucket = min(len(variants) - 1, family_index * len(variants) // family_count)
+        return variants[bucket]
+    return default_template
 
 
 def _theorem_lines(theorem_name: str, proof_template: str) -> list[str]:
@@ -204,6 +219,24 @@ def _theorem_lines(theorem_name: str, proof_template: str) -> list[str]:
             "  exact midpoint_collinear A M B h",
             "",
         ]
+    if proof_template == "circle_construction_on_circle":
+        return [
+            f"theorem {theorem_name} (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by",
+            "  exact circle_construction_on_circle O P c h",
+            "",
+        ]
+    if proof_template == "line_circle_intersection_on_line":
+        return [
+            f"theorem {theorem_name} (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by",
+            "  exact line_circle_intersection_on_line P l c h",
+            "",
+        ]
+    if proof_template == "constructed_center_identity":
+        return [
+            f"theorem {theorem_name} (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by",
+            "  exact constructed_center_identity O c h",
+            "",
+        ]
     if proof_template == "between_collinear":
         return [
             f"theorem {theorem_name} (A B C : Point) (h : between A B C) : collinear A B C := by",
@@ -214,6 +247,12 @@ def _theorem_lines(theorem_name: str, proof_template: str) -> list[str]:
         return [
             f"theorem {theorem_name} (r : Reflection) : reflection_image r := by",
             "  exact reflection_has_evidence r",
+            "",
+        ]
+    if proof_template == "rotation_preserves_collinear":
+        return [
+            f"theorem {theorem_name} (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by",
+            "  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC",
             "",
         ]
     return [
@@ -242,7 +281,12 @@ def _substantive_profile(*, task_id: str, family: str, proof_template: str) -> d
     if proof_template == "collinear_refl_left":
         profile["direct_lean_lemma_baseline_expected"] = True
         return profile
-    if proof_template == "midpoint_collinear":
+    if proof_template in {
+        "midpoint_collinear",
+        "circle_construction_on_circle",
+        "line_circle_intersection_on_line",
+        "constructed_center_identity",
+    }:
         profile.update(
             geometry_features=["construction", "incidence"],
             required_reasoning_depth=2,
@@ -281,6 +325,13 @@ def _substantive_profile(*, task_id: str, family: str, proof_template: str) -> d
         profile.update(
             geometry_features=["transformation"],
             required_reasoning_depth=1,
+        )
+    elif proof_template == "rotation_preserves_collinear":
+        profile.update(
+            geometry_features=["transformation", "incidence"],
+            required_reasoning_depth=2,
+            requires_side_condition_discharge=True,
+            requires_transformation_reasoning=True,
         )
     return profile
 

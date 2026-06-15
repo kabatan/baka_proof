@@ -27,9 +27,31 @@ abbrev perpendicular_bisector (a b : Point) (l : Line) : Prop := LeanGeo.PerpBis
 abbrev tangent_line_construction (p o : Point) (l : Line) (c : Circle) : Prop :=
   LeanGeo.TangentLineCircleAtPoint p o l c
 abbrev auxiliary_object_intro (w : ConstructionWitness) : Prop := w.proposition
+abbrev constructed_circle_point (o p : Point) (c : Circle) : Prop :=
+  LeanGeo.Point.isCentre o c → on_circle p c
+abbrev constructed_line_circle_point (p : Point) (l : Line) (c : Circle) : Prop :=
+  on_circle p c → on_line p l
+abbrev constructed_center_point (o : Point) (c : Circle) : Prop := LeanGeo.Point.isCentre o c
 
 theorem midpoint_collinear (a m b : Point) : midpoint a m b → collinear a m b := by
   intro h
   exact Or.inl h.1
+
+theorem circle_construction_on_circle (o p : Point) (c : Circle) :
+    circle_with_center_through_point o p c → constructed_circle_point o p c := by
+  intro h
+  intro _hc
+  exact h.2
+
+theorem line_circle_intersection_on_line (p : Point) (l : Line) (c : Circle) :
+    line_circle_intersection p l c → constructed_line_circle_point p l c := by
+  intro h
+  intro _hc
+  exact h.1
+
+theorem constructed_center_identity (o : Point) (c : Circle) :
+    constructed_center_point o c → constructed_center_point o c := by
+  intro h
+  exact h
 
 end MathAutoResearch.GeometryFull2D

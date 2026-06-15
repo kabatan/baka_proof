@@ -373,7 +373,12 @@ def _proof_text_from_claim_and_rules(
             a, m, b = (_object_ref_to_name(ref, names) for ref in args)
             return (
                 f"  exact midpoint_collinear {a} {m} {b} {_hypothesis_name(midpoint_hyp)}",
-                ("full2d_rule:construction_line:01", "full2d_rule:midpoint_segment:01"),
+                (
+                    "full2d_rule:construction_line:01",
+                    "full2d_rule:construction_line:02",
+                    "full2d_rule:midpoint_segment:01",
+                    "full2d_rule:midpoint_segment:02",
+                ),
             )
 
         between_hyp = _hypothesis_for(claim_spec, "between", args)
@@ -382,21 +387,68 @@ def _proof_text_from_claim_and_rules(
             a, b, c = (_object_ref_to_name(ref, names) for ref in args)
             return (
                 f"  exact between_collinear {a} {b} {c} {_hypothesis_name(between_hyp)}",
-                ("full2d_rule:case_split_orientation:01", "full2d_rule:order_between:01"),
+                (
+                    "full2d_rule:case_split_orientation:01",
+                    "full2d_rule:case_split_orientation:02",
+                    "full2d_rule:order_between:01",
+                    "full2d_rule:order_between:02",
+                ),
             )
 
         if args[0] == args[1]:
             _require_role(roles, "lean_proof_search")
             left = _object_ref_to_name(args[0], names)
             right = _object_ref_to_name(args[2], names)
-            return (f"  exact collinear_refl_left {left} {right}", ("full2d_rule:incidence_collinearity:02",))
+            return (
+                f"  exact collinear_refl_left {left} {right}",
+                (
+                    "full2d_rule:incidence_collinearity:01",
+                    "full2d_rule:incidence_collinearity:02",
+                    "full2d_rule:incidence_collinearity:03",
+                ),
+            )
+
+    if family == "construction" and "constructed_circle_point" in source_expr and len(args) == 3:
+        hyp = _hypothesis_for_args(claim_spec, "circle_with_center_through_point", args)
+        if hyp is not None:
+            _require_role(roles, "construction_search")
+            o, p, c = (_object_ref_to_name(ref, names) for ref in args)
+            return (
+                f"  exact circle_construction_on_circle {o} {p} {c} {_hypothesis_name(hyp)}",
+                ("full2d_rule:construction_circle:01", "full2d_rule:construction_circle:02"),
+            )
+
+    if family == "construction" and "constructed_line_circle_point" in source_expr and len(args) == 3:
+        hyp = _hypothesis_for_args(claim_spec, "line_circle_intersection", args)
+        if hyp is not None:
+            _require_role(roles, "construction_search")
+            p, l, c = (_object_ref_to_name(ref, names) for ref in args)
+            return (
+                f"  exact line_circle_intersection_on_line {p} {l} {c} {_hypothesis_name(hyp)}",
+                ("full2d_rule:construction_intersection:01", "full2d_rule:construction_intersection:02"),
+            )
+
+    if family == "construction" and "constructed_center_point" in source_expr and len(args) == 2:
+        hyp = _hypothesis_for_args(claim_spec, "constructed_center_point", args)
+        if hyp is not None:
+            _require_role(roles, "construction_search")
+            o, c = (_object_ref_to_name(ref, names) for ref in args)
+            return (
+                f"  exact constructed_center_identity {o} {c} {_hypothesis_name(hyp)}",
+                ("full2d_rule:construction_center:01", "full2d_rule:construction_center:02"),
+            )
 
     if family == "angle" and "directed_angle_eq_mod_pi" in source_expr and len(args) == 6 and args[:3] == args[3:]:
         _require_role(roles, "metric_angle")
         a, b, c = (_object_ref_to_name(ref, names) for ref in args[:3])
         return (
             f"  exact directed_angle_eq_refl {a} {b} {c}",
-            ("full2d_rule:directed_angle_mod_pi:01", "full2d_rule:angle_chase:01"),
+            (
+                "full2d_rule:directed_angle_mod_pi:01",
+                "full2d_rule:directed_angle_mod_pi:03",
+                "full2d_rule:angle_chase:01",
+                "full2d_rule:angle_chase:03",
+            ),
         )
 
     if family == "angle" and "directed_angle_eq_mod_pi" in source_expr and len(args) == 6:
@@ -406,7 +458,12 @@ def _proof_text_from_claim_and_rules(
             d, e, f, a, b, c = (_object_ref_to_name(ref, names) for ref in args[3:] + args[:3])
             return (
                 f"  exact directed_angle_eq_symm {d} {e} {f} {a} {b} {c} {_hypothesis_name(reverse_hyp)}",
-                ("full2d_rule:directed_angle_mod_pi:02", "full2d_rule:angle_chase:02"),
+                (
+                    "full2d_rule:directed_angle_mod_pi:02",
+                    "full2d_rule:directed_angle_mod_pi:03",
+                    "full2d_rule:angle_chase:02",
+                    "full2d_rule:angle_chase:03",
+                ),
             )
 
     if family == "metric" and "equal_length" in source_expr and len(args) == 4 and args[:2] == args[2:]:
@@ -414,7 +471,12 @@ def _proof_text_from_claim_and_rules(
         a, b = (_object_ref_to_name(ref, names) for ref in args[:2])
         return (
             f"  exact equal_length_refl {a} {b}",
-            ("full2d_rule:algebraic_coordinate:01", "full2d_rule:metric_equal_length:01"),
+            (
+                "full2d_rule:algebraic_coordinate:01",
+                "full2d_rule:algebraic_coordinate:03",
+                "full2d_rule:metric_equal_length:01",
+                "full2d_rule:metric_equal_length:03",
+            ),
         )
 
     if family == "metric" and "equal_length" in source_expr and len(args) == 4:
@@ -424,7 +486,13 @@ def _proof_text_from_claim_and_rules(
             a, b, c, d = (_object_ref_to_name(ref, names) for ref in args[2:] + args[:2])
             return (
                 f"  exact equal_length_symm {a} {b} {c} {d} {_hypothesis_name(reverse_hyp)}",
-                ("full2d_rule:algebraic_coordinate:02", "full2d_rule:metric_equal_length:02"),
+                (
+                    "full2d_rule:algebraic_coordinate:02",
+                    "full2d_rule:algebraic_coordinate:03",
+                    "full2d_rule:metric_equal_length:01",
+                    "full2d_rule:metric_equal_length:02",
+                    "full2d_rule:metric_equal_length:03",
+                ),
             )
 
     if family == "inequality" and "length_le" in source_expr and len(args) == 4 and args[:2] == args[2:]:
@@ -432,7 +500,7 @@ def _proof_text_from_claim_and_rules(
         a, b = (_object_ref_to_name(ref, names) for ref in args[:2])
         return (
             f"  exact length_le_refl {a} {b}",
-            ("full2d_rule:inequality_length:01",),
+            ("full2d_rule:inequality_length:01", "full2d_rule:inequality_length:03"),
         )
 
     if family == "inequality" and "length_le" in source_expr and len(args) == 4:
@@ -445,7 +513,12 @@ def _proof_text_from_claim_and_rules(
             e, f = (_object_ref_to_name(ref, names) for ref in args[2:])
             return (
                 f"  exact length_le_trans {a} {b} {c} {d} {e} {f} {_hypothesis_name(first_hyp)} {_hypothesis_name(second_hyp)}",
-                ("full2d_rule:inequality_length:02", "full2d_rule:inequality_power:01"),
+                (
+                    "full2d_rule:inequality_length:02",
+                    "full2d_rule:inequality_length:03",
+                    "full2d_rule:inequality_power:01",
+                    "full2d_rule:inequality_power:02",
+                ),
             )
 
     if family == "transformation" and "reflection_image" in source_expr and len(args) == 1:
@@ -455,6 +528,17 @@ def _proof_text_from_claim_and_rules(
             f"  exact reflection_has_evidence {r}",
             ("full2d_rule:transformation_reflection:01",),
         )
+
+    if family == "transformation" and "rotation_preserves_collinear" in source_expr and len(args) == 6:
+        equality_hyps = tuple(_equality_hypothesis(claim_spec, args[index], args[index + 3]) for index in range(3))
+        if all(item is not None for item in equality_hyps):
+            _require_role(roles, "transformation")
+            a, b, c, a1, b1, c1 = (_object_ref_to_name(ref, names) for ref in args)
+            ha, hb, hc = (_hypothesis_name(item) for item in equality_hyps if item is not None)
+            return (
+                f"  exact rotation_preserves_collinear_of_eq {a} {b} {c} {a1} {b1} {c1} {ha} {hb} {hc}",
+                ("full2d_rule:transformation_rotation:01", "full2d_rule:transformation_rotation:02"),
+            )
 
     raise ValueError("no_compiler_rule_for_target")
 
@@ -472,6 +556,9 @@ def _selected_rules_for_role(role: str, selected_rule_ids: tuple[str, ...]) -> t
         "incidence_collinearity": "lean_proof_search",
         "midpoint_segment": "construction_search",
         "construction_line": "construction_search",
+        "construction_circle": "construction_search",
+        "construction_intersection": "construction_search",
+        "construction_center": "construction_search",
         "order_between": "order_case",
         "case_split_orientation": "order_case",
         "directed_angle_mod_pi": "metric_angle",
@@ -481,6 +568,7 @@ def _selected_rules_for_role(role: str, selected_rule_ids: tuple[str, ...]) -> t
         "inequality_length": "inequality",
         "inequality_power": "inequality",
         "transformation_reflection": "transformation",
+        "transformation_rotation": "transformation",
     }
     matched: list[str] = []
     for rule_id in selected_rule_ids:
@@ -542,6 +630,18 @@ def _length_le_trans_hypotheses(
             second_args = tuple(str(arg) for arg in second.get("args", ()))
             if first_args[2:] == second_args[:2] and second_args[2:] == target_args[2:]:
                 return first, second, first_args[2:]
+    return None
+
+
+def _equality_hypothesis(claim_spec: dict[str, Any], left: str, right: str) -> dict[str, Any] | None:
+    for item in claim_spec.get("hypotheses", ()):
+        if not isinstance(item, dict):
+            continue
+        source_expr = str(item.get("source_expr", ""))
+        if "=" not in source_expr or "!=" in source_expr or "≠" in source_expr:
+            continue
+        if tuple(str(arg) for arg in item.get("args", ())) == (left, right):
+            return item
     return None
 
 

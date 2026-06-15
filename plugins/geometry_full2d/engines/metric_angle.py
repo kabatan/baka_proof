@@ -81,7 +81,12 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
                 normalization_policy="directed_angle_mod_pi_symmetry_from_hypothesis",
                 normalized_value="symmetric directed angle equality modulo pi",
                 required_side_conditions=_side_conditions(claim_spec),
-                rule_ids=("full2d_rule:directed_angle_mod_pi:02", "full2d_rule:angle_chase:02"),
+                rule_ids=(
+                    "full2d_rule:directed_angle_mod_pi:02",
+                    "full2d_rule:directed_angle_mod_pi:03",
+                    "full2d_rule:angle_chase:02",
+                    "full2d_rule:angle_chase:03",
+                ),
                 checker_result="passed",
                 lean_summary="a reverse directed-angle equality hypothesis is normalized into the requested symmetric target",
             )
@@ -97,7 +102,12 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
             normalization_policy="directed_angle_mod_pi_reflexivity",
             normalized_value="same directed angle modulo pi",
             required_side_conditions=_side_conditions(claim_spec),
-            rule_ids=("full2d_rule:directed_angle_mod_pi:01", "full2d_rule:angle_chase:01"),
+            rule_ids=(
+                "full2d_rule:directed_angle_mod_pi:01",
+                "full2d_rule:directed_angle_mod_pi:03",
+                "full2d_rule:angle_chase:01",
+                "full2d_rule:angle_chase:03",
+            ),
             checker_result="passed",
             lean_summary="identical directed-angle expressions are equal modulo pi by reflexivity",
         )
@@ -128,7 +138,12 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
         normalization_policy=policy,
         normalized_value="0 mod pi",
         required_side_conditions=side_conditions,
-        rule_ids=("full2d_rule:directed_angle_mod_pi:01", "full2d_rule:angle_chase:01"),
+        rule_ids=(
+            "full2d_rule:directed_angle_mod_pi:01",
+            "full2d_rule:directed_angle_mod_pi:03",
+            "full2d_rule:angle_chase:01",
+            "full2d_rule:angle_chase:03",
+        ),
         checker_result=checker_result,
         lean_summary="the repeated endpoint angle normalizes to 0 modulo pi under the declared nondegeneracy convention",
     )

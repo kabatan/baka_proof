@@ -4241,1016 +4241,1016 @@ theorem full2d_synth_1411 (A M B : Point) (h : midpoint A M B) : collinear A M B
 theorem full2d_synth_1412 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
   exact midpoint_collinear A M B h
 
-theorem full2d_synth_1413 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1413 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1414 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1414 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1415 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1415 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1416 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1416 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1417 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1417 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1418 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1418 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1419 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1419 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1420 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1420 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1421 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1421 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1422 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1422 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1423 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1423 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1424 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1424 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1425 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1425 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1426 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1426 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1427 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1427 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1428 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1428 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1429 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1429 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1430 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1430 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1431 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1431 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1432 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1432 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1433 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1433 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1434 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1434 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1435 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1435 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1436 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1436 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1437 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1437 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1438 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1438 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1439 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1439 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1440 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1440 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1441 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1441 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1442 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1442 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1443 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1443 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1444 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1444 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1445 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1445 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1446 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1446 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1447 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1447 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1448 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1448 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1449 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1449 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1450 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1450 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1451 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1451 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1452 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1452 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1453 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1453 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1454 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1454 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1455 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1455 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1456 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1456 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1457 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1457 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1458 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1458 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1459 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1459 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1460 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1460 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1461 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1461 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1462 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1462 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1463 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1463 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1464 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1464 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1465 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1465 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1466 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1466 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1467 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1467 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1468 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1468 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1469 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1469 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1470 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1470 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1471 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1471 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1472 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1472 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1473 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1473 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1474 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1474 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1475 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1475 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1476 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1476 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1477 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1477 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1478 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1478 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1479 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1479 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1480 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1480 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1481 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1481 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1482 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1482 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1483 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1483 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1484 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1484 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1485 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1485 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1486 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1486 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1487 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1487 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1488 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1488 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1489 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1489 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1490 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1490 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1491 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1491 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1492 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1492 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1493 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1493 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1494 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1494 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1495 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1495 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1496 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1496 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1497 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1497 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1498 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1498 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1499 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1499 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1500 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1500 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1501 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1501 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1502 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1502 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1503 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1503 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1504 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1504 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1505 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1505 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1506 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1506 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1507 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1507 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1508 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1508 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1509 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1509 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1510 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1510 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1511 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1511 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1512 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1512 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1513 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1513 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1514 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1514 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1515 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1515 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1516 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1516 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1517 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1517 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1518 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1518 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1519 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1519 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1520 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1520 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1521 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1521 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1522 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1522 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1523 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1523 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1524 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1524 (O P : Point) (c : Circle) (h : circle_with_center_through_point O P c) : constructed_circle_point O P c := by
+  exact circle_construction_on_circle O P c h
 
-theorem full2d_synth_1525 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1525 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1526 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1526 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1527 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1527 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1528 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1528 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1529 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1529 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1530 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1530 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1531 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1531 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1532 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1532 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1533 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1533 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1534 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1534 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1535 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1535 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1536 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1536 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1537 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1537 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1538 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1538 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1539 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1539 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1540 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1540 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1541 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1541 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1542 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1542 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1543 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1543 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1544 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1544 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1545 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1545 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1546 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1546 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1547 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1547 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1548 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1548 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1549 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1549 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1550 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1550 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1551 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1551 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1552 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1552 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1553 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1553 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1554 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1554 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1555 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1555 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1556 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1556 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1557 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1557 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1558 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1558 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1559 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1559 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1560 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1560 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1561 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1561 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1562 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1562 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1563 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1563 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1564 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1564 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1565 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1565 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1566 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1566 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1567 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1567 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1568 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1568 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1569 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1569 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1570 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1570 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1571 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1571 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1572 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1572 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1573 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1573 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1574 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1574 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1575 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1575 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1576 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1576 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1577 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1577 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1578 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1578 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1579 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1579 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1580 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1580 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1581 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1581 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1582 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1582 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1583 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1583 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1584 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1584 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1585 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1585 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1586 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1586 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1587 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1587 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1588 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1588 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1589 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1589 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1590 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1590 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1591 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1591 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1592 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1592 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1593 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1593 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1594 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1594 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1595 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1595 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1596 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1596 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1597 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1597 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1598 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1598 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1599 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1599 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1600 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1600 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1601 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1601 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1602 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1602 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1603 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1603 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1604 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1604 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1605 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1605 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1606 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1606 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1607 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1607 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1608 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1608 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1609 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1609 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1610 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1610 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1611 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1611 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1612 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1612 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1613 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1613 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1614 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1614 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1615 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1615 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1616 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1616 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1617 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1617 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1618 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1618 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1619 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1619 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1620 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1620 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1621 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1621 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1622 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1622 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1623 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1623 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1624 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1624 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1625 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1625 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1626 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1626 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1627 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1627 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1628 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1628 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1629 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1629 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1630 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1630 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1631 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1631 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1632 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1632 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1633 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1633 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1634 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1634 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1635 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1635 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1636 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1636 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1637 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1637 (P : Point) (l : Line) (c : Circle) (h : line_circle_intersection P l c) : constructed_line_circle_point P l c := by
+  exact line_circle_intersection_on_line P l c h
 
-theorem full2d_synth_1638 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1638 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1639 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1639 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1640 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1640 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1641 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1641 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1642 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1642 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1643 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1643 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1644 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1644 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1645 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1645 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1646 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1646 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1647 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1647 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1648 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1648 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1649 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1649 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1650 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1650 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1651 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1651 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1652 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1652 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1653 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1653 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1654 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1654 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1655 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1655 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1656 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1656 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1657 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1657 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1658 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1658 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1659 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1659 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1660 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1660 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1661 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1661 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1662 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1662 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1663 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1663 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1664 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1664 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1665 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1665 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1666 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1666 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1667 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1667 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1668 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1668 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1669 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1669 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1670 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1670 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1671 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1671 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1672 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1672 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1673 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1673 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1674 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1674 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1675 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1675 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1676 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1676 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1677 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1677 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1678 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1678 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1679 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1679 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1680 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1680 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1681 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1681 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1682 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1682 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1683 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1683 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1684 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1684 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1685 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1685 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1686 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1686 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1687 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1687 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1688 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1688 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1689 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1689 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1690 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1690 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1691 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1691 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1692 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1692 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1693 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1693 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1694 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1694 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1695 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1695 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1696 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1696 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1697 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1697 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1698 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1698 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1699 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1699 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1700 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1700 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1701 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1701 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1702 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1702 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1703 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1703 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1704 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1704 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1705 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1705 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1706 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1706 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1707 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1707 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1708 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1708 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1709 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1709 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1710 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1710 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1711 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1711 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1712 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1712 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1713 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1713 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1714 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1714 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1715 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1715 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1716 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1716 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1717 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1717 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1718 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1718 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1719 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1719 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1720 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1720 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1721 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1721 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1722 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1722 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1723 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1723 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1724 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1724 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1725 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1725 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1726 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1726 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1727 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1727 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1728 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1728 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1729 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1729 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1730 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1730 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1731 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1731 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1732 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1732 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1733 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1733 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1734 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1734 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1735 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1735 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1736 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1736 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1737 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1737 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1738 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1738 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1739 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1739 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1740 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1740 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1741 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1741 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1742 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1742 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1743 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1743 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1744 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1744 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1745 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1745 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1746 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1746 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1747 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1747 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1748 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1748 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
-theorem full2d_synth_1749 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
-  exact midpoint_collinear A M B h
+theorem full2d_synth_1749 (O : Point) (c : Circle) (h : constructed_center_point O c) : constructed_center_point O c := by
+  exact constructed_center_identity O c h
 
 theorem full2d_synth_1750 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
   exact equal_length_symm A B C D h
@@ -6302,755 +6302,755 @@ theorem full2d_synth_2098 (A B C D : Point) (h : equal_length A B C D) : equal_l
 theorem full2d_synth_2099 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
   exact equal_length_symm A B C D h
 
-theorem full2d_synth_2100 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2100 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2101 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2101 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2102 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2102 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2103 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2103 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2104 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2104 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2105 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2105 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2106 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2106 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2107 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2107 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2108 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2108 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2109 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2109 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2110 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2110 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2111 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2111 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2112 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2112 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2113 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2113 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2114 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2114 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2115 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2115 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2116 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2116 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2117 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2117 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2118 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2118 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2119 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2119 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2120 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2120 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2121 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2121 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2122 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2122 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2123 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2123 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2124 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2124 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2125 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2125 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2126 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2126 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2127 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2127 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2128 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2128 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2129 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2129 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2130 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2130 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2131 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2131 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2132 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2132 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2133 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2133 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2134 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2134 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2135 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2135 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2136 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2136 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2137 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2137 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2138 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2138 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2139 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2139 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2140 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2140 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2141 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2141 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2142 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2142 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2143 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2143 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2144 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2144 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2145 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2145 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2146 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2146 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2147 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2147 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2148 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2148 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2149 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2149 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2150 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2150 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2151 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2151 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2152 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2152 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2153 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2153 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2154 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2154 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2155 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2155 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2156 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2156 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2157 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2157 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2158 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2158 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2159 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2159 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2160 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2160 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2161 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2161 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2162 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2162 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2163 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2163 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2164 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2164 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2165 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2165 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2166 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2166 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2167 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2167 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2168 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2168 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2169 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2169 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2170 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2170 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2171 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2171 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2172 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2172 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2173 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2173 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2174 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2174 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2175 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2175 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2176 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2176 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2177 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2177 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2178 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2178 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2179 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2179 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2180 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2180 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2181 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2181 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2182 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2182 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2183 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2183 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2184 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2184 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2185 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2185 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2186 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2186 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2187 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2187 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2188 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2188 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2189 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2189 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2190 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2190 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2191 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2191 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2192 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2192 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2193 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2193 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2194 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2194 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2195 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2195 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2196 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2196 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2197 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2197 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2198 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2198 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2199 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2199 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2200 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2200 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2201 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2201 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2202 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2202 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2203 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2203 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2204 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2204 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2205 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2205 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2206 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2206 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2207 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2207 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2208 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2208 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2209 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2209 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2210 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2210 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2211 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2211 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2212 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2212 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2213 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2213 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2214 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2214 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2215 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2215 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2216 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2216 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2217 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2217 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2218 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2218 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2219 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2219 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2220 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2220 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2221 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2221 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2222 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2222 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2223 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2223 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2224 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2224 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2225 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2225 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2226 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2226 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2227 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2227 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2228 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2228 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2229 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2229 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2230 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2230 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2231 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2231 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2232 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2232 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2233 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2233 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2234 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2234 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2235 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2235 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2236 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2236 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2237 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2237 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2238 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2238 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2239 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2239 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2240 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2240 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2241 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2241 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2242 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2242 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2243 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2243 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2244 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2244 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2245 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2245 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2246 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2246 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2247 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2247 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2248 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2248 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2249 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2249 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2250 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2250 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2251 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2251 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2252 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2252 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2253 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2253 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2254 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2254 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2255 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2255 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2256 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2256 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2257 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2257 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2258 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2258 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2259 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2259 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2260 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2260 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2261 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2261 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2262 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2262 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2263 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2263 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2264 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2264 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2265 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2265 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2266 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2266 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2267 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2267 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2268 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2268 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2269 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2269 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2270 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2270 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2271 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2271 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2272 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2272 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2273 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2273 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2274 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2274 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2275 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2275 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2276 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2276 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2277 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2277 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2278 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2278 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2279 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2279 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2280 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2280 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2281 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2281 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2282 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2282 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2283 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2283 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2284 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2284 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2285 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2285 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2286 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2286 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2287 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2287 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2288 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2288 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2289 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2289 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2290 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2290 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2291 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2291 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2292 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2292 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2293 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2293 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2294 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2294 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2295 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2295 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2296 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2296 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2297 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2297 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2298 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2298 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2299 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2299 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2300 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2300 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2301 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2301 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2302 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2302 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2303 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2303 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2304 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2304 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2305 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2305 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2306 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2306 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2307 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2307 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2308 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2308 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2309 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2309 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2310 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2310 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2311 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2311 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2312 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2312 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2313 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2313 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2314 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2314 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2315 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2315 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2316 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2316 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2317 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2317 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2318 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2318 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2319 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2319 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2320 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2320 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2321 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2321 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2322 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2322 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2323 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2323 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2324 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2324 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2325 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2325 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2326 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2326 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2327 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2327 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2328 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2328 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2329 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2329 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2330 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2330 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2331 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2331 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2332 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2332 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2333 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2333 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2334 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2334 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2335 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2335 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2336 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2336 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2337 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2337 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2338 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2338 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2339 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2339 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2340 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2340 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2341 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2341 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2342 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2342 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2343 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2343 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2344 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2344 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2345 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2345 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2346 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2346 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2347 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2347 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2348 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2348 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
-theorem full2d_synth_2349 (r : Reflection) : reflection_image r := by
-  exact reflection_has_evidence r
+theorem full2d_synth_2349 (A B C A1 B1 C1 : Point) (hA : A = A1) (hB : B = B1) (hC : C = C1) : rotation_preserves_collinear A B C A1 B1 C1 := by
+  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC
 
 theorem full2d_synth_2350 (A B C : Point) (h : between A B C) : collinear A B C := by
   exact between_collinear A B C h

@@ -375,6 +375,14 @@ def _canonical_condition(expr: str, objects: list[dict[str, Any]]) -> str:
 
 def _family_from_target(target_expr: str, grammar_family: str) -> str:
     lowered = target_expr.lower()
+    if "rotation_preserves_collinear" in lowered:
+        return "transformation"
+    if (
+        "constructed_circle_point" in lowered
+        or "constructed_line_circle_point" in lowered
+        or "constructed_center_point" in lowered
+    ):
+        return "construction"
     if "collinear" in lowered or "on_line" in lowered:
         return "incidence"
     if (

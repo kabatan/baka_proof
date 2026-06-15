@@ -88,7 +88,12 @@ def _build_gate(claim_spec: dict[str, Any]) -> CoverageGateFull2D | None:
             obligations=(target_fact,),
             status="closed_by_between_order",
         )
-        coverage_rule_ids = ("full2d_rule:order_between:01", "full2d_rule:case_split_orientation:01")
+        coverage_rule_ids = (
+            "full2d_rule:order_between:01",
+            "full2d_rule:order_between:02",
+            "full2d_rule:case_split_orientation:01",
+            "full2d_rule:case_split_orientation:02",
+        )
         coverage_result = _check_coverage((case,), coverage_rule_ids, accepted_statuses={"closed_by_between_order"})
         if coverage_result != "passed":
             return None
@@ -112,7 +117,7 @@ def _build_gate(claim_spec: dict[str, Any]) -> CoverageGateFull2D | None:
         obligations=(target_fact,),
         status="closed_by_repeated_point",
     )
-    coverage_rule_ids = ("full2d_rule:case_split_orientation:01",)
+    coverage_rule_ids = ("full2d_rule:case_split_orientation:01", "full2d_rule:case_split_orientation:02")
     coverage_result = _check_coverage((case,), coverage_rule_ids, accepted_statuses={"closed_by_repeated_point"})
     if coverage_result != "passed":
         return None

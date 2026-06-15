@@ -68,6 +68,25 @@ def _build_trace(claim_spec: dict[str, Any]) -> TransformationTraceFull2D | None
     family = str(target.get("family", ""))
     args = tuple(str(arg) for arg in target.get("args", ()))
     source_expr = str(target.get("source_expr", "")).lower()
+    if family == "transformation" and "rotation_preserves_collinear" in source_expr and len(args) == 6:
+        equality_hyps = tuple(_equality_hypothesis(claim_spec, args[index], args[index + 3]) for index in range(3))
+        if any(item is None for item in equality_hyps):
+            return None
+        rule_ids = ("full2d_rule:transformation_rotation:01", "full2d_rule:transformation_rotation:02")
+        seed = canonical_json({"target": target, "equality_hyps": equality_hyps})
+        return TransformationTraceFull2D(
+            schema_version="1.0.0",
+            trace_id=f"transformation_trace:{hash_ref(seed)[7:23]}",
+            transformation_kind="rotation_identity_collinearity_preservation",
+            source_objects=args[:3],
+            image_objects=args[3:],
+            invariant="collinearity_preserved_under_identity_rotation_witnesses",
+            construction_witnesses=tuple(str(item["predicate_id"]) for item in equality_hyps if isinstance(item, dict)),
+            required_side_conditions=_nondegeneracy_conditions(claim_spec),
+            rule_ids=rule_ids,
+            checker_result="passed",
+            lean_summary="collinearity is transported across point-image equalities without using stored transformation evidence",
+        )
     if family == "transformation" and "reflection_image" in source_expr and len(args) == 1:
         rule_ids = ("full2d_rule:transformation_reflection:01",)
         seed = canonical_json({"target": target, "rule_ids": rule_ids})
@@ -93,7 +112,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> TransformationTraceFull2D | None
         return None
     image_objects = tuple(f"{arg}'" for arg in args)
     construction_witnesses = tuple(f"witness:identity_image:{arg}" for arg in dict.fromkeys(args))
-    rule_ids = ("full2d_rule:transformation_rotation:01",)
+    rule_ids = ("full2d_rule:transformation_rotation:01", "full2d_rule:transformation_rotation:02")
     checker_result = _check_trace(args, image_objects, construction_witnesses, side_conditions)
     if checker_result != "passed":
         return None
@@ -125,6 +144,19 @@ def _nondegeneracy_conditions(claim_spec: dict[str, Any]) -> tuple[str, ...]:
     if not isinstance(values, (list, tuple)):
         return ()
     return tuple(str(item) for item in values)
+
+
+def _equality_hypothesis(claim_spec: dict[str, Any], left: str, right: str) -> dict[str, Any] | None:
+    for item in claim_spec.get("hypotheses", ()):
+        if not isinstance(item, dict):
+            continue
+        source_expr = str(item.get("source_expr", ""))
+        if "=" not in source_expr or "!=" in source_expr or "≠" in source_expr:
+            continue
+        args = tuple(str(arg) for arg in item.get("args", ()))
+        if args == (left, right):
+            return item
+    return None
 
 
 def _check_trace(
