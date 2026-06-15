@@ -12,7 +12,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CORPUS_ROOT = ROOT / "benchmarks" / "geometry_full2d"
-ALLOWED_CURATED_PROVENANCE = {"external_formal", "human_curated_formal"}
+ALLOWED_CURATED_PROVENANCE = {"external_formal", "user_reviewed_human_curated"}
 REQUIRED_FIELDS = {
     "task_id",
     "target_status",
@@ -24,6 +24,7 @@ REQUIRED_FIELDS = {
     "lean_file",
     "template_id",
     "source_ref",
+    "substantive_profile",
 }
 
 
@@ -90,8 +91,7 @@ def _validate_records(records: list[dict[str, Any]]) -> list[str]:
         missing = sorted(field for field in REQUIRED_FIELDS if not record.get(field))
         if missing:
             errors.append(f"{prefix}:missing_required_fields:{','.join(missing)}")
-            continue
-        task_id = str(record["task_id"])
+        task_id = str(record.get("task_id", f"<missing:{index}>"))
         if task_id in seen:
             errors.append(f"{prefix}:duplicate_task_id:{task_id}")
         seen.add(task_id)
@@ -100,18 +100,63 @@ def _validate_records(records: list[dict[str, Any]]) -> list[str]:
         provenance = str(record.get("provenance"))
         if provenance not in ALLOWED_CURATED_PROVENANCE:
             errors.append(f"{prefix}:invalid_curated_provenance:{task_id}:{provenance}")
-        lean_path = ROOT / str(record["lean_file"])
-        if not lean_path.exists():
-            errors.append(f"{prefix}:lean_file_missing:{task_id}:{record['lean_file']}")
+        if provenance == "human_curated_formal":
+            errors.append(f"{prefix}:human_curated_formal_forbidden_in_v0_4_3:{task_id}")
+        if provenance == "external_formal":
+            if not str(record.get("license_or_provenance_ref", "")).strip():
+                errors.append(f"{prefix}:external_formal_missing_license_or_provenance_ref:{task_id}")
+        if provenance == "user_reviewed_human_curated":
+            if not str(record.get("review_manifest_ref", "")).strip():
+                errors.append(f"{prefix}:user_reviewed_missing_review_manifest_ref:{task_id}")
+        lean_file = record.get("lean_file")
+        if isinstance(lean_file, str) and lean_file:
+            lean_path = ROOT / lean_file
+            if not lean_path.exists():
+                errors.append(f"{prefix}:lean_file_missing:{task_id}:{lean_file}")
         if not str(record.get("source_ref", "")).strip():
             errors.append(f"{prefix}:missing_source_ref:{task_id}")
-        if str(record.get("provenance_note", "")).lower().find("synthetic") >= 0:
+        note = str(record.get("provenance_note", "")).lower()
+        if "synthetic" in note:
             errors.append(f"{prefix}:synthetic_note_not_allowed_for_curated_import:{task_id}")
+        if "codex-created" in note or "codex created" in note or "without_review_manifest" in note:
+            errors.append(f"{prefix}:codex_created_note_not_allowed_for_curated_import:{task_id}")
+        errors.extend(f"{prefix}:{error}" for error in _profile_errors(task_id, record))
         record.setdefault("source_statement_hash", _record_hash(record, "source"))
         record.setdefault("canonical_statement_hash", _record_hash(record, "canonical"))
         record.setdefault("near_duplicate_group", None)
         record.setdefault("expected_outcome", "final_theorem_or_measured_failure")
     return sorted(set(errors))
+
+
+def _profile_errors(task_id: str, record: dict[str, Any]) -> list[str]:
+    profile = record.get("substantive_profile")
+    if not isinstance(profile, dict):
+        return [f"{task_id}:substantive_profile_not_object"]
+    errors: list[str] = []
+    if profile.get("schema_version") != "1.0.0":
+        errors.append(f"{task_id}:substantive_profile_schema_version_mismatch")
+    if profile.get("task_id") != task_id:
+        errors.append(f"{task_id}:substantive_profile_task_id_mismatch")
+    if profile.get("source_kind") != record.get("provenance"):
+        errors.append(f"{task_id}:substantive_profile_source_kind_mismatch")
+    if profile.get("theorem_family") != record.get("theorem_family"):
+        errors.append(f"{task_id}:substantive_profile_theorem_family_mismatch")
+    if not isinstance(profile.get("geometry_features"), list) or not profile.get("geometry_features"):
+        errors.append(f"{task_id}:substantive_profile_geometry_features_missing")
+    if not isinstance(profile.get("required_reasoning_depth"), int):
+        errors.append(f"{task_id}:substantive_profile_depth_not_int")
+    for key in (
+        "requires_construction",
+        "requires_side_condition_discharge",
+        "requires_case_split_or_order_reasoning",
+        "requires_nontrivial_metric_or_algebraic_reasoning",
+        "direct_lean_lemma_baseline_expected",
+    ):
+        if profile.get(key) not in {True, False}:
+            errors.append(f"{task_id}:substantive_profile_{key}_not_boolean")
+    if record.get("provenance") == "user_reviewed_human_curated" and profile.get("review_manifest_ref") != record.get("review_manifest_ref"):
+        errors.append(f"{task_id}:substantive_profile_review_manifest_ref_mismatch")
+    return errors
 
 
 def _check_lean_files(records: list[dict[str, Any]]) -> list[str]:
@@ -121,6 +166,9 @@ def _check_lean_files(records: list[dict[str, Any]]) -> list[str]:
     errors: list[str] = []
     env = os.environ.copy()
     env["BROWSER"] = "python -c \"import sys; sys.exit(0)\""
+    no_browser_path = str((ROOT / "scripts" / "no_browser_sitecustomize").resolve())
+    existing_pythonpath = env.get("PYTHONPATH")
+    env["PYTHONPATH"] = no_browser_path if not existing_pythonpath else os.pathsep.join([no_browser_path, existing_pythonpath])
     for lean_file in sorted({str(record["lean_file"]) for record in records}):
         completed = subprocess.run(
             [lake, "env", "lean", lean_file],
@@ -153,10 +201,11 @@ def _merge_manifest(manifest: dict[str, Any], incoming: list[dict[str, Any]]) ->
         return manifest, sorted(set(errors))
     merged = dict(manifest)
     merged["status"] = "draft_curated_merge_not_release_frozen"
-    merged["corpus_id"] = "geometry_full2d_curated_merge:v0_4_2"
+    merged["corpus_id"] = "geometry_full2d_curated_merge:v0_4_3"
     merged["provenance_note"] = (
         "Synthetic draft tasks remain labeled synthetic_generated. Imported records are counted as "
-        "external_formal or human_curated_formal only after this importer validates their explicit source_ref and Lean file."
+        "external_formal only with explicit license/provenance refs, or as user_reviewed_human_curated only with "
+        "a ReviewManifestV1 ref. Codex-generated local tasks are not admitted as curated provenance."
     )
     merged["tasks"] = tasks + incoming
     return merged, []

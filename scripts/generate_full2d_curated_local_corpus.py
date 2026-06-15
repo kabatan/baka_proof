@@ -59,12 +59,12 @@ def generate_curated_corpus(corpus_root: Path) -> dict[str, Any]:
     jsonl_path.write_text("\n".join(json.dumps(item, sort_keys=True) for item in records) + "\n", encoding="utf-8")
     return {
         "schema_version": "1.0.0",
-        "status": "generated",
+        "status": "generated_synthetic_local_draft",
         "positive_records": len(records),
         "lean_file": lean_path.relative_to(ROOT).as_posix(),
         "import_file": jsonl_path.relative_to(ROOT).as_posix(),
-        "provenance": "human_curated_formal",
-        "provenance_note": "Codex-created formal Lean facade tasks. No natural-language formalization fidelity is claimed.",
+        "provenance": "synthetic_generated",
+        "provenance_note": "Codex-created formal Lean facade tasks. These are synthetic draft records and cannot satisfy curated provenance gates.",
     }
 
 
@@ -75,7 +75,7 @@ def _records(lean_file: str) -> list[dict[str, Any]]:
     for family, count, grammar_family, proof_template in FAMILY_COUNTS:
         for family_index in range(count):
             theorem_name = f"full2d_curated_{index:04d}"
-            source_ref = f"local-codex-curation:v0_4_2:{family}:{family_index:04d}"
+            source_ref = f"local-codex-synthetic:v0_4_3:{family}:{family_index:04d}"
             records.append(
                 {
                     "task_id": f"full2d-curated-{index:04d}",
@@ -84,8 +84,8 @@ def _records(lean_file: str) -> list[dict[str, Any]]:
                     "theorem_family": family,
                     "grammar_family": grammar_family,
                     "difficulty_tier": tiers[index],
-                    "provenance": "human_curated_formal",
-                    "provenance_note": "Codex-created formal Lean facade task; no natural-language source fidelity claim.",
+                    "provenance": "synthetic_generated",
+                    "provenance_note": "Codex-created formal Lean facade task; synthetic draft only.",
                     "source_ref": source_ref,
                     "lean_file": lean_file,
                     "source_statement_hash": _sha256(f"{source_ref}:{theorem_name}:{family}:{grammar_family}"),
