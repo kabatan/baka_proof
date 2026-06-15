@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, fields
 from pathlib import Path
 from typing import Any
 
@@ -92,7 +92,8 @@ class ActualTaskPipelineRunV1:
         errors = validate_actual_task_pipeline_run_structure(payload)
         if errors:
             raise ValueError(";".join(errors))
-        data = dict(payload)
+        admitted = {field.name for field in fields(cls)}
+        data = {key: value for key, value in payload.items() if key in admitted}
         data["engine_output_refs"] = tuple(str(ref) for ref in data["engine_output_refs"])
         data["compiler_result_refs"] = tuple(str(ref) for ref in data["compiler_result_refs"])
         data["artifact_paths"] = {str(key): str(value) for key, value in data["artifact_paths"].items()}

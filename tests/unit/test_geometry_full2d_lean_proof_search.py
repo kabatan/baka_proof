@@ -13,7 +13,7 @@ class GeometryFull2DLeanProofSearchTest(unittest.TestCase):
     def test_lean_proof_search_smoke_passes(self) -> None:
         self.assertEqual(run_smoke("lean_proof_search"), [])
 
-    def test_smoke_claim_produces_lean_patch_candidate(self) -> None:
+    def test_smoke_claim_produces_semantic_trace(self) -> None:
         payload = extract_statement("lean/MathAutoResearch/GeometryFull2D/ExtractionSmoke.lean")
         claim = build_claim_spec(payload).claim_spec
         assert claim is not None
@@ -35,14 +35,14 @@ class GeometryFull2DLeanProofSearchTest(unittest.TestCase):
         self.assertEqual(output.status, "normalized_success")
         self.assertTrue(output.real_integration_flag)
         self.assertFalse(output.fixture_flag)
-        self.assertTrue(str(output.normalized_output_ref).startswith("LeanPatchCandidateFull2D:sha256:"))
+        self.assertTrue(str(output.normalized_output_ref).startswith("LeanProofSearchTraceFull2D:sha256:"))
 
     def test_unsupported_theorem_is_measured_failure(self) -> None:
         payload = extract_statement("lean/MathAutoResearch/GeometryFull2D/ExtractionSmoke.lean")
         claim = build_claim_spec(payload).claim_spec
         assert claim is not None
         claim_dict = claim.to_dict()
-        claim_dict["theorem_name"] = "not_the_smoke_theorem"
+        claim_dict["target"] = {**claim_dict["target"], "args": ["point:A", "point:B", "point:A"]}
         output = run(
             EngineInputFull2D(
                 schema_version="1.0.0",

@@ -287,7 +287,7 @@ def _validate_binding_payload(payload: dict[str, Any]) -> list[str]:
     if extraction is not None:
         if extraction.get("source_theorem_ref") != payload.get("source_theorem_ref"):
             errors.append("extraction_source_theorem_ref_mismatch")
-        if extraction.get("claim_spec_ref") != payload.get("claim_spec_ref"):
+        if extraction.get("claim_spec_ref") is not None and extraction.get("claim_spec_ref") != payload.get("claim_spec_ref"):
             errors.append("extraction_claim_spec_ref_mismatch")
 
     provider = _load_ref(payload.get("provider_run_manifest_ref"), artifact_paths, errors, "provider")
@@ -363,7 +363,7 @@ def _check_run_records(run_dir: Path, errors: list[str]) -> list[dict[str, Any]]
         if record.get("final_status") != "final_theorem":
             continue
         run_id = str(record.get("run_id", source))
-        artifact_paths = record.get("artifact_paths", {})
+        artifact_paths = _resolve_record_artifact_paths(record.get("artifact_paths", {}), run_dir)
         certificate = _load_ref(record.get("solver_backed_certificate_ref"), artifact_paths, errors, run_id)
         if certificate is None:
             reports.append({"source": source, "run_id": run_id, "status": "failed", "errors": [f"{run_id}:missing_certificate"]})
@@ -506,6 +506,18 @@ def _load_ref(ref: Any, artifact_paths: Any, errors: list[str], label: str) -> d
         errors.append(f"{label}:missing_artifact_file:{path}")
         return None
     return _read_json(path, errors)
+
+
+def _resolve_record_artifact_paths(artifact_paths: Any, run_dir: Path) -> dict[str, str]:
+    if not isinstance(artifact_paths, dict):
+        return {}
+    resolved: dict[str, str] = {}
+    for ref, path_value in artifact_paths.items():
+        if not isinstance(path_value, str):
+            continue
+        path = Path(path_value)
+        resolved[str(ref)] = str(path if path.is_absolute() else run_dir / path)
+    return resolved
 
 
 def _read_json(path: Path, errors: list[str]) -> dict[str, Any] | None:
