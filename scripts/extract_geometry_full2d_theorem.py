@@ -227,6 +227,7 @@ def _canonical_statement(
             "predicate_or_shape_id": f"goal:{theorem_name}",
             "family": family,
             "args": target_args,
+            "source_expr": target_expr,
             "source_expr_hash": source_expr_hash,
             "canonical_expr_hash": _sha256_text(f"canonical:{source_expr_hash}"),
         },
@@ -304,6 +305,7 @@ def _statement_parts(theorem_name: str, theorem_source: str) -> tuple[list[dict[
                 "family": _family_from_target(type_expr, "incidence"),
                 "args": _args_from_expr(type_expr, objects),
                 "polarity": "positive",
+                "source_expr": type_expr,
                 "source_expr_hash": _sha256_text(f"{theorem_name}:hypothesis:{name}:{type_expr}"),
                 "canonical_expr_hash": _sha256_text(f"{theorem_name}:canonical_hypothesis:{type_expr}"),
             }
@@ -375,6 +377,17 @@ def _family_from_target(target_expr: str, grammar_family: str) -> str:
     lowered = target_expr.lower()
     if "collinear" in lowered or "on_line" in lowered:
         return "incidence"
+    if (
+        "length_le" in lowered
+        or "length_lt" in lowered
+        or "area_le" in lowered
+        or "area_lt" in lowered
+        or "ratio_le" in lowered
+        or "ratio_lt" in lowered
+        or "≤" in target_expr
+        or "<" in target_expr
+    ):
+        return "inequality"
     if "equal_length" in lowered or "length" in lowered or "ratio" in lowered or "area" in lowered:
         return "metric"
     if "angle" in lowered or "cyclic" in lowered:
@@ -385,7 +398,7 @@ def _family_from_target(target_expr: str, grammar_family: str) -> str:
         return "order"
     if "reflection" in lowered or "rotation" in lowered or "homothety" in lowered or "inversion" in lowered:
         return "transformation"
-    if "≤" in target_expr or "<" in target_expr or "le" in lowered or "lt" in lowered:
+    if "le" in lowered or "lt" in lowered:
         return "inequality"
     return _family_from_grammar(grammar_family)
 

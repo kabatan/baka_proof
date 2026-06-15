@@ -59,6 +59,20 @@ def run(engine_input: EngineInputFull2D, budget: ResourceBudget, context: RunCon
 
 
 def _construct_auxiliary_line(claim_spec: dict[str, Any]) -> AuxiliaryConstructionFull2D | None:
+    midpoint = _midpoint_target_hypothesis(claim_spec)
+    if midpoint is not None:
+        args, side_conditions = midpoint
+        construction_id = f"aux_construction:{hash_ref(':'.join(args))[7:23]}"
+        return AuxiliaryConstructionFull2D(
+            schema_version="1.0.0",
+            construction_id=construction_id,
+            construction_kind="midpoint_collinearity_witness",
+            introduced_objects=(),
+            dependencies=args,
+            required_side_conditions=side_conditions,
+            generated_obligations=tuple(f"obligation:{condition}" for condition in side_conditions),
+            source_rule_id="full2d_rule:midpoint_segment:01",
+        )
     points = [
         str(item["object_id"])
         for item in claim_spec.get("objects", [])
@@ -94,6 +108,36 @@ def _side_conditions_for_pair(claim_spec: dict[str, Any], a: str, b: str) -> tup
     if compact in declared or reversed_compact in declared:
         return (f"{a} != {b}",)
     return ()
+
+
+def _midpoint_target_hypothesis(claim_spec: dict[str, Any]) -> tuple[tuple[str, ...], tuple[str, ...]] | None:
+    target = claim_spec.get("target", {})
+    if not isinstance(target, dict):
+        return None
+    if str(target.get("family")) not in {"incidence", "collinear"}:
+        return None
+    target_args = tuple(str(arg) for arg in target.get("args", ()))
+    if len(target_args) != 3:
+        return None
+    for hypothesis in claim_spec.get("hypotheses", ()):
+        if not isinstance(hypothesis, dict):
+            continue
+        if "midpoint" not in str(hypothesis.get("source_expr", "")).lower():
+            continue
+        if tuple(str(arg) for arg in hypothesis.get("args", ())) == target_args:
+            return target_args, _side_conditions(claim_spec)
+    return None
+
+
+def _side_conditions(claim_spec: dict[str, Any]) -> tuple[str, ...]:
+    buckets = claim_spec.get("side_conditions", {})
+    if not isinstance(buckets, dict):
+        return ()
+    collected: list[str] = []
+    for values in buckets.values():
+        if isinstance(values, (list, tuple)):
+            collected.extend(str(item) for item in values)
+    return tuple(collected)
 
 
 def _compact_condition(value: str) -> str:

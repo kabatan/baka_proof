@@ -19,4 +19,9 @@ abbrev triangle_inequality (a b c : Point) : Prop := dist a c ≤ dist a b + dis
 theorem equal_length_refl (a b : Point) : equal_length a b a b := by
   rfl
 
+theorem equal_length_symm (a b c d : Point) :
+    equal_length a b c d → equal_length c d a b := by
+  intro h
+  exact h.symm
+
 end MathAutoResearch.GeometryFull2D

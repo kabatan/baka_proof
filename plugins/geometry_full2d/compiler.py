@@ -126,7 +126,7 @@ def compile_full2d_engine_outputs(
         role = str(engine_payload.get("engine_role", ""))
         if role not in ENGINE_ROLES:
             continue
-        role_rules = RULES_BY_ROLE[role]
+        role_rules = tuple(dict.fromkeys(RULES_BY_ROLE[role] + _selected_rules_for_role(role, selected_rule_ids)))
         payload = {
             "schema_version": "1.0.0",
             "compiler_id": COMPILER_BY_ROLE[role],
@@ -360,15 +360,198 @@ def _proof_text_from_claim_and_rules(
     target = claim_spec.get("target", {})
     if not isinstance(target, dict):
         raise ValueError("claim_target_not_object")
-    args = [str(arg) for arg in target.get("args", [])]
-    if str(target.get("family")) not in {"incidence", "collinear"} or len(args) != 3 or args[0] != args[1]:
-        raise ValueError("no_compiler_rule_for_target")
-    if not any(payload.get("engine_role") == "lean_proof_search" for payload in engine_outputs.values()):
-        raise ValueError("lean_proof_search_engine_output_required_for_patch")
+    args = tuple(str(arg) for arg in target.get("args", []))
+    family = str(target.get("family", ""))
+    source_expr = _source_expr(target)
     names = _object_names(claim_spec)
-    left = names.get(args[0], _last_ref_part(args[0]))
-    right = names.get(args[2], _last_ref_part(args[2]))
-    return (f"  exact collinear_refl_left {left} {right}", ("full2d_rule:incidence_collinearity:02",))
+    roles = _available_roles(engine_outputs)
+
+    if family in {"incidence", "collinear"} and len(args) == 3:
+        midpoint_hyp = _hypothesis_for(claim_spec, "midpoint", args)
+        if midpoint_hyp is not None:
+            _require_role(roles, "construction_search")
+            a, m, b = (_object_ref_to_name(ref, names) for ref in args)
+            return (
+                f"  exact midpoint_collinear {a} {m} {b} {_hypothesis_name(midpoint_hyp)}",
+                ("full2d_rule:construction_line:01", "full2d_rule:midpoint_segment:01"),
+            )
+
+        between_hyp = _hypothesis_for(claim_spec, "between", args)
+        if between_hyp is not None:
+            _require_role(roles, "order_case")
+            a, b, c = (_object_ref_to_name(ref, names) for ref in args)
+            return (
+                f"  exact between_collinear {a} {b} {c} {_hypothesis_name(between_hyp)}",
+                ("full2d_rule:case_split_orientation:01", "full2d_rule:order_between:01"),
+            )
+
+        if args[0] == args[1]:
+            _require_role(roles, "lean_proof_search")
+            left = _object_ref_to_name(args[0], names)
+            right = _object_ref_to_name(args[2], names)
+            return (f"  exact collinear_refl_left {left} {right}", ("full2d_rule:incidence_collinearity:02",))
+
+    if family == "angle" and "directed_angle_eq_mod_pi" in source_expr and len(args) == 6 and args[:3] == args[3:]:
+        _require_role(roles, "metric_angle")
+        a, b, c = (_object_ref_to_name(ref, names) for ref in args[:3])
+        return (
+            f"  exact directed_angle_eq_refl {a} {b} {c}",
+            ("full2d_rule:directed_angle_mod_pi:01", "full2d_rule:angle_chase:01"),
+        )
+
+    if family == "angle" and "directed_angle_eq_mod_pi" in source_expr and len(args) == 6:
+        reverse_hyp = _hypothesis_for_args(claim_spec, "directed_angle_eq_mod_pi", args[3:] + args[:3])
+        if reverse_hyp is not None:
+            _require_role(roles, "metric_angle")
+            d, e, f, a, b, c = (_object_ref_to_name(ref, names) for ref in args[3:] + args[:3])
+            return (
+                f"  exact directed_angle_eq_symm {d} {e} {f} {a} {b} {c} {_hypothesis_name(reverse_hyp)}",
+                ("full2d_rule:directed_angle_mod_pi:02", "full2d_rule:angle_chase:02"),
+            )
+
+    if family == "metric" and "equal_length" in source_expr and len(args) == 4 and args[:2] == args[2:]:
+        _require_role(roles, "algebraic_geometry")
+        a, b = (_object_ref_to_name(ref, names) for ref in args[:2])
+        return (
+            f"  exact equal_length_refl {a} {b}",
+            ("full2d_rule:algebraic_coordinate:01", "full2d_rule:metric_equal_length:01"),
+        )
+
+    if family == "metric" and "equal_length" in source_expr and len(args) == 4:
+        reverse_hyp = _hypothesis_for_args(claim_spec, "equal_length", args[2:] + args[:2])
+        if reverse_hyp is not None:
+            _require_role(roles, "algebraic_geometry")
+            a, b, c, d = (_object_ref_to_name(ref, names) for ref in args[2:] + args[:2])
+            return (
+                f"  exact equal_length_symm {a} {b} {c} {d} {_hypothesis_name(reverse_hyp)}",
+                ("full2d_rule:algebraic_coordinate:02", "full2d_rule:metric_equal_length:02"),
+            )
+
+    if family == "inequality" and "length_le" in source_expr and len(args) == 4 and args[:2] == args[2:]:
+        _require_role(roles, "inequality")
+        a, b = (_object_ref_to_name(ref, names) for ref in args[:2])
+        return (
+            f"  exact length_le_refl {a} {b}",
+            ("full2d_rule:inequality_length:01",),
+        )
+
+    if family == "inequality" and "length_le" in source_expr and len(args) == 4:
+        trans_hyps = _length_le_trans_hypotheses(claim_spec, args)
+        if trans_hyps is not None:
+            first_hyp, second_hyp, middle = trans_hyps
+            _require_role(roles, "inequality")
+            a, b = (_object_ref_to_name(ref, names) for ref in args[:2])
+            c, d = (_object_ref_to_name(ref, names) for ref in middle)
+            e, f = (_object_ref_to_name(ref, names) for ref in args[2:])
+            return (
+                f"  exact length_le_trans {a} {b} {c} {d} {e} {f} {_hypothesis_name(first_hyp)} {_hypothesis_name(second_hyp)}",
+                ("full2d_rule:inequality_length:02", "full2d_rule:inequality_power:01"),
+            )
+
+    if family == "transformation" and "reflection_image" in source_expr and len(args) == 1:
+        _require_role(roles, "transformation")
+        r = _object_ref_to_name(args[0], names)
+        return (
+            f"  exact reflection_has_evidence {r}",
+            ("full2d_rule:transformation_reflection:01",),
+        )
+
+    raise ValueError("no_compiler_rule_for_target")
+
+
+def _available_roles(engine_outputs: dict[str, dict[str, Any]]) -> set[str]:
+    return {
+        str(payload.get("engine_role"))
+        for payload in engine_outputs.values()
+        if payload.get("status") == "normalized_success" and payload.get("normalized_output_ref")
+    }
+
+
+def _selected_rules_for_role(role: str, selected_rule_ids: tuple[str, ...]) -> tuple[str, ...]:
+    family_to_role = {
+        "incidence_collinearity": "lean_proof_search",
+        "midpoint_segment": "construction_search",
+        "construction_line": "construction_search",
+        "order_between": "order_case",
+        "case_split_orientation": "order_case",
+        "directed_angle_mod_pi": "metric_angle",
+        "angle_chase": "metric_angle",
+        "algebraic_coordinate": "algebraic_geometry",
+        "metric_equal_length": "algebraic_geometry",
+        "inequality_length": "inequality",
+        "inequality_power": "inequality",
+        "transformation_reflection": "transformation",
+    }
+    matched: list[str] = []
+    for rule_id in selected_rule_ids:
+        parts = rule_id.split(":")
+        if len(parts) < 3:
+            continue
+        if family_to_role.get(parts[1]) == role:
+            matched.append(rule_id)
+    return tuple(dict.fromkeys(matched))
+
+
+def _require_role(roles: set[str], role: str) -> None:
+    if role not in roles:
+        raise ValueError(f"{role}_engine_output_required_for_patch")
+
+
+def _source_expr(item: dict[str, Any]) -> str:
+    return str(item.get("source_expr", "")).lower()
+
+
+def _hypothesis_for(claim_spec: dict[str, Any], token: str, args: tuple[str, ...]) -> dict[str, Any] | None:
+    for item in claim_spec.get("hypotheses", ()):
+        if not isinstance(item, dict):
+            continue
+        if token not in _source_expr(item):
+            continue
+        if tuple(str(arg) for arg in item.get("args", ())) == args:
+            return item
+    return None
+
+
+def _hypothesis_for_args(claim_spec: dict[str, Any], token: str, args: tuple[str, ...]) -> dict[str, Any] | None:
+    for item in claim_spec.get("hypotheses", ()):
+        if not isinstance(item, dict):
+            continue
+        if token not in _source_expr(item):
+            continue
+        if tuple(str(arg) for arg in item.get("args", ())) == args:
+            return item
+    return None
+
+
+def _length_le_trans_hypotheses(
+    claim_spec: dict[str, Any],
+    target_args: tuple[str, ...],
+) -> tuple[dict[str, Any], dict[str, Any], tuple[str, str]] | None:
+    length_hyps = [
+        item
+        for item in claim_spec.get("hypotheses", ())
+        if isinstance(item, dict)
+        and "length_le" in _source_expr(item)
+        and len(tuple(item.get("args", ()))) == 4
+    ]
+    for first in length_hyps:
+        first_args = tuple(str(arg) for arg in first.get("args", ()))
+        if first_args[:2] != target_args[:2]:
+            continue
+        for second in length_hyps:
+            second_args = tuple(str(arg) for arg in second.get("args", ()))
+            if first_args[2:] == second_args[:2] and second_args[2:] == target_args[2:]:
+                return first, second, first_args[2:]
+    return None
+
+
+def _hypothesis_name(hypothesis: dict[str, Any]) -> str:
+    predicate_id = str(hypothesis.get("predicate_id", "hyp:h"))
+    return predicate_id.rsplit(":", 1)[-1]
+
+
+def _object_ref_to_name(ref: str, names: dict[str, str]) -> str:
+    return names.get(ref, _last_ref_part(ref))
 
 
 def _generated_obligations(claim_spec: dict[str, Any], role: str) -> list[str]:

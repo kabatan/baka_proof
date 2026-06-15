@@ -1502,2405 +1502,2405 @@ theorem full2d_synth_0498 (A B : Point) (_h : A ≠ B) : collinear A A B := by
 theorem full2d_synth_0499 (A B : Point) (_h : A ≠ B) : collinear A A B := by
   exact collinear_refl_left A B
 
-theorem full2d_synth_0500 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0500 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0501 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0501 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0502 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0502 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0503 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0503 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0504 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0504 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0505 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0505 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0506 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0506 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0507 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0507 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0508 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0508 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0509 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0509 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0510 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0510 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0511 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0511 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0512 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0512 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0513 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0513 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0514 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0514 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0515 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0515 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0516 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0516 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0517 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0517 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0518 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0518 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0519 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0519 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0520 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0520 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0521 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0521 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0522 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0522 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0523 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0523 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0524 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0524 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0525 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0525 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0526 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0526 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0527 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0527 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0528 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0528 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0529 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0529 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0530 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0530 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0531 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0531 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0532 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0532 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0533 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0533 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0534 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0534 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0535 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0535 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0536 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0536 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0537 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0537 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0538 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0538 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0539 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0539 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0540 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0540 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0541 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0541 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0542 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0542 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0543 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0543 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0544 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0544 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0545 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0545 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0546 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0546 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0547 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0547 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0548 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0548 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0549 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0549 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0550 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0550 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0551 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0551 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0552 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0552 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0553 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0553 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0554 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0554 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0555 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0555 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0556 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0556 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0557 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0557 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0558 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0558 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0559 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0559 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0560 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0560 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0561 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0561 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0562 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0562 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0563 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0563 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0564 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0564 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0565 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0565 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0566 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0566 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0567 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0567 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0568 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0568 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0569 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0569 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0570 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0570 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0571 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0571 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0572 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0572 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0573 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0573 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0574 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0574 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0575 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0575 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0576 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0576 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0577 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0577 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0578 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0578 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0579 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0579 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0580 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0580 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0581 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0581 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0582 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0582 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0583 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0583 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0584 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0584 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0585 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0585 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0586 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0586 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0587 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0587 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0588 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0588 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0589 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0589 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0590 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0590 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0591 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0591 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0592 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0592 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0593 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0593 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0594 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0594 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0595 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0595 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0596 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0596 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0597 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0597 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0598 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0598 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0599 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0599 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0600 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0600 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0601 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0601 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0602 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0602 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0603 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0603 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0604 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0604 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0605 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0605 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0606 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0606 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0607 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0607 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0608 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0608 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0609 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0609 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0610 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0610 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0611 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0611 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0612 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0612 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0613 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0613 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0614 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0614 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0615 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0615 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0616 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0616 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0617 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0617 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0618 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0618 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0619 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0619 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0620 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0620 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0621 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0621 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0622 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0622 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0623 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0623 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0624 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0624 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0625 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0625 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0626 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0626 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0627 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0627 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0628 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0628 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0629 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0629 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0630 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0630 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0631 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0631 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0632 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0632 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0633 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0633 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0634 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0634 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0635 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0635 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0636 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0636 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0637 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0637 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0638 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0638 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0639 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0639 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0640 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0640 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0641 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0641 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0642 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0642 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0643 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0643 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0644 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0644 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0645 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0645 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0646 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0646 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0647 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0647 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0648 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0648 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0649 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0649 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0650 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0650 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0651 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0651 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0652 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0652 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0653 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0653 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0654 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0654 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0655 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0655 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0656 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0656 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0657 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0657 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0658 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0658 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0659 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0659 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0660 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0660 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0661 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0661 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0662 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0662 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0663 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0663 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0664 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0664 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0665 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0665 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0666 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0666 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0667 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0667 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0668 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0668 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0669 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0669 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0670 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0670 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0671 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0671 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0672 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0672 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0673 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0673 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0674 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0674 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0675 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0675 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0676 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0676 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0677 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0677 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0678 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0678 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0679 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0679 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0680 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0680 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0681 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0681 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0682 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0682 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0683 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0683 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0684 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0684 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0685 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0685 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0686 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0686 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0687 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0687 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0688 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0688 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0689 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0689 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0690 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0690 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0691 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0691 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0692 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0692 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0693 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0693 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0694 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0694 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0695 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0695 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0696 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0696 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0697 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0697 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0698 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0698 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0699 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0699 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0700 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0700 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0701 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0701 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0702 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0702 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0703 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0703 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0704 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0704 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0705 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0705 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0706 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0706 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0707 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0707 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0708 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0708 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0709 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0709 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0710 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0710 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0711 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0711 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0712 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0712 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0713 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0713 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0714 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0714 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0715 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0715 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0716 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0716 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0717 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0717 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0718 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0718 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0719 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0719 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0720 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0720 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0721 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0721 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0722 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0722 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0723 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0723 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0724 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0724 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0725 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0725 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0726 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0726 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0727 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0727 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0728 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0728 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0729 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0729 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0730 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0730 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0731 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0731 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0732 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0732 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0733 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0733 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0734 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0734 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0735 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0735 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0736 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0736 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0737 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0737 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0738 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0738 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0739 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0739 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0740 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0740 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0741 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0741 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0742 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0742 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0743 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0743 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0744 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0744 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0745 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0745 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0746 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0746 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0747 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0747 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0748 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0748 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0749 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0749 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0750 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0750 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0751 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0751 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0752 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0752 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0753 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0753 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0754 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0754 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0755 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0755 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0756 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0756 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0757 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0757 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0758 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0758 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0759 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0759 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0760 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0760 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0761 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0761 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0762 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0762 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0763 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0763 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0764 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0764 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0765 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0765 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0766 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0766 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0767 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0767 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0768 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0768 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0769 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0769 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0770 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0770 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0771 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0771 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0772 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0772 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0773 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0773 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0774 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0774 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0775 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0775 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0776 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0776 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0777 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0777 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0778 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0778 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0779 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0779 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0780 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0780 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0781 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0781 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0782 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0782 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0783 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0783 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0784 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0784 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0785 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0785 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0786 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0786 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0787 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0787 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0788 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0788 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0789 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0789 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0790 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0790 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0791 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0791 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0792 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0792 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0793 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0793 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0794 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0794 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0795 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0795 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0796 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0796 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0797 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0797 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0798 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0798 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0799 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0799 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0800 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0800 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0801 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0801 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0802 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0802 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0803 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0803 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0804 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0804 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0805 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0805 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0806 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0806 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0807 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0807 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0808 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0808 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0809 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0809 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0810 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0810 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0811 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0811 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0812 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0812 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0813 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0813 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0814 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0814 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0815 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0815 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0816 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0816 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0817 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0817 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0818 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0818 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0819 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0819 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0820 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0820 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0821 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0821 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0822 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0822 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0823 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0823 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0824 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0824 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0825 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0825 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0826 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0826 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0827 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0827 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0828 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0828 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0829 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0829 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0830 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0830 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0831 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0831 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0832 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0832 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0833 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0833 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0834 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0834 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0835 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0835 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0836 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0836 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0837 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0837 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0838 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0838 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0839 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0839 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0840 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0840 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0841 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0841 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0842 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0842 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0843 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0843 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0844 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0844 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0845 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0845 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0846 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0846 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0847 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0847 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0848 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0848 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0849 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_0849 (A B C : Point) (h : between A B C) : collinear A B C := by
+  exact between_collinear A B C h
 
-theorem full2d_synth_0850 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0850 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0851 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0851 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0852 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0852 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0853 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0853 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0854 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0854 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0855 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0855 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0856 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0856 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0857 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0857 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0858 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0858 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0859 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0859 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0860 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0860 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0861 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0861 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0862 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0862 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0863 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0863 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0864 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0864 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0865 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0865 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0866 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0866 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0867 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0867 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0868 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0868 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0869 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0869 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0870 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0870 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0871 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0871 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0872 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0872 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0873 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0873 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0874 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0874 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0875 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0875 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0876 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0876 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0877 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0877 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0878 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0878 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0879 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0879 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0880 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0880 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0881 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0881 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0882 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0882 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0883 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0883 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0884 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0884 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0885 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0885 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0886 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0886 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0887 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0887 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0888 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0888 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0889 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0889 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0890 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0890 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0891 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0891 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0892 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0892 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0893 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0893 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0894 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0894 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0895 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0895 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0896 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0896 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0897 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0897 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0898 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0898 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0899 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0899 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0900 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0900 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0901 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0901 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0902 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0902 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0903 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0903 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0904 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0904 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0905 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0905 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0906 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0906 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0907 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0907 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0908 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0908 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0909 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0909 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0910 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0910 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0911 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0911 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0912 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0912 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0913 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0913 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0914 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0914 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0915 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0915 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0916 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0916 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0917 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0917 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0918 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0918 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0919 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0919 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0920 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0920 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0921 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0921 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0922 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0922 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0923 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0923 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0924 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0924 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0925 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0925 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0926 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0926 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0927 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0927 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0928 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0928 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0929 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0929 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0930 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0930 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0931 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0931 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0932 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0932 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0933 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0933 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0934 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0934 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0935 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0935 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0936 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0936 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0937 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0937 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0938 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0938 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0939 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0939 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0940 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0940 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0941 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0941 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0942 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0942 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0943 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0943 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0944 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0944 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0945 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0945 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0946 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0946 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0947 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0947 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0948 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0948 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0949 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0949 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0950 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0950 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0951 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0951 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0952 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0952 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0953 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0953 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0954 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0954 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0955 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0955 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0956 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0956 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0957 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0957 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0958 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0958 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0959 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0959 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0960 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0960 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0961 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0961 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0962 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0962 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0963 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0963 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0964 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0964 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0965 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0965 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0966 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0966 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0967 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0967 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0968 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0968 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0969 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0969 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0970 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0970 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0971 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0971 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0972 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0972 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0973 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0973 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0974 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0974 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0975 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0975 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0976 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0976 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0977 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0977 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0978 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0978 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0979 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0979 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0980 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0980 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0981 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0981 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0982 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0982 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0983 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0983 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0984 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0984 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0985 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0985 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0986 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0986 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0987 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0987 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0988 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0988 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0989 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0989 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0990 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0990 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0991 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0991 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0992 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0992 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0993 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0993 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0994 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0994 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0995 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0995 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0996 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0996 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0997 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0997 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0998 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0998 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_0999 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_0999 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1000 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1000 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1001 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1001 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1002 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1002 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1003 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1003 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1004 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1004 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1005 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1005 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1006 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1006 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1007 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1007 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1008 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1008 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1009 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1009 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1010 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1010 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1011 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1011 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1012 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1012 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1013 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1013 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1014 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1014 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1015 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1015 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1016 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1016 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1017 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1017 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1018 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1018 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1019 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1019 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1020 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1020 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1021 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1021 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1022 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1022 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1023 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1023 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1024 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1024 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1025 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1025 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1026 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1026 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1027 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1027 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1028 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1028 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1029 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1029 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1030 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1030 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1031 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1031 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1032 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1032 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1033 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1033 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1034 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1034 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1035 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1035 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1036 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1036 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1037 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1037 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1038 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1038 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1039 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1039 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1040 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1040 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1041 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1041 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1042 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1042 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1043 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1043 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1044 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1044 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1045 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1045 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1046 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1046 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1047 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1047 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1048 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1048 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1049 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1049 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1050 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1050 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1051 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1051 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1052 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1052 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1053 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1053 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1054 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1054 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1055 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1055 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1056 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1056 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1057 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1057 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1058 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1058 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1059 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1059 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1060 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1060 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1061 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1061 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1062 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1062 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1063 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1063 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1064 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1064 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1065 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1065 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1066 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1066 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1067 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1067 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1068 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1068 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1069 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1069 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1070 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1070 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1071 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1071 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1072 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1072 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1073 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1073 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1074 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1074 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1075 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1075 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1076 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1076 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1077 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1077 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1078 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1078 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1079 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1079 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1080 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1080 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1081 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1081 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1082 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1082 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1083 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1083 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1084 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1084 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1085 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1085 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1086 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1086 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1087 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1087 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1088 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1088 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1089 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1089 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1090 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1090 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1091 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1091 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1092 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1092 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1093 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1093 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1094 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1094 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1095 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1095 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1096 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1096 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1097 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1097 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1098 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1098 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1099 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1099 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1100 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1100 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1101 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1101 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1102 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1102 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1103 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1103 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1104 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1104 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1105 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1105 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1106 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1106 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1107 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1107 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1108 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1108 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1109 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1109 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1110 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1110 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1111 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1111 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1112 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1112 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1113 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1113 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1114 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1114 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1115 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1115 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1116 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1116 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1117 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1117 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1118 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1118 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1119 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1119 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1120 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1120 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1121 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1121 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1122 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1122 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1123 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1123 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1124 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1124 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1125 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1125 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1126 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1126 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1127 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1127 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1128 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1128 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1129 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1129 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1130 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1130 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1131 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1131 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1132 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1132 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1133 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1133 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1134 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1134 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1135 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1135 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1136 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1136 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1137 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1137 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1138 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1138 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1139 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1139 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1140 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1140 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1141 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1141 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1142 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1142 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1143 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1143 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1144 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1144 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1145 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1145 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1146 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1146 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1147 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1147 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1148 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1148 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1149 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1149 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1150 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1150 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1151 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1151 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1152 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1152 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1153 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1153 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1154 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1154 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1155 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1155 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1156 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1156 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1157 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1157 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1158 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1158 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1159 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1159 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1160 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1160 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1161 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1161 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1162 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1162 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1163 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1163 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1164 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1164 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1165 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1165 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1166 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1166 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1167 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1167 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1168 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1168 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1169 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1169 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1170 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1170 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1171 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1171 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1172 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1172 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1173 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1173 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1174 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1174 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1175 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1175 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1176 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1176 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1177 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1177 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1178 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1178 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1179 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1179 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1180 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1180 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1181 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1181 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1182 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1182 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1183 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1183 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1184 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1184 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1185 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1185 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1186 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1186 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1187 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1187 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1188 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1188 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1189 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1189 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1190 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1190 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1191 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1191 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1192 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1192 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1193 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1193 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1194 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1194 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1195 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1195 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1196 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1196 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1197 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1197 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1198 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1198 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1199 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1199 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1200 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1200 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1201 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1201 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1202 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1202 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1203 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1203 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1204 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1204 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1205 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1205 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1206 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1206 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1207 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1207 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1208 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1208 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1209 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1209 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1210 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1210 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1211 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1211 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1212 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1212 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1213 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1213 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1214 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1214 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1215 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1215 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1216 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1216 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1217 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1217 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1218 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1218 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1219 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1219 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1220 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1220 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1221 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1221 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1222 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1222 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1223 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1223 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1224 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1224 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1225 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1225 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1226 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1226 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1227 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1227 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1228 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1228 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1229 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1229 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1230 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1230 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1231 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1231 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1232 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1232 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1233 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1233 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1234 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1234 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1235 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1235 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1236 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1236 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1237 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1237 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1238 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1238 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1239 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1239 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1240 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1240 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1241 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1241 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1242 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1242 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1243 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1243 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1244 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1244 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1245 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1245 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1246 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1246 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1247 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1247 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1248 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1248 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1249 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1249 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1250 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1250 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1251 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1251 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1252 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1252 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1253 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1253 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1254 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1254 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1255 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1255 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1256 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1256 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1257 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1257 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1258 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1258 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1259 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1259 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1260 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1260 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1261 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1261 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1262 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1262 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1263 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1263 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1264 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1264 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1265 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1265 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1266 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1266 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1267 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1267 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1268 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1268 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1269 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1269 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1270 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1270 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1271 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1271 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1272 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1272 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1273 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1273 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1274 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1274 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1275 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1275 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1276 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1276 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1277 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1277 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1278 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1278 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1279 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1279 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1280 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1280 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1281 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1281 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1282 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1282 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1283 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1283 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1284 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1284 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1285 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1285 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1286 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1286 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1287 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1287 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1288 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1288 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1289 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1289 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1290 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1290 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1291 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1291 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1292 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1292 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1293 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1293 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1294 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1294 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1295 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1295 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1296 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1296 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1297 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1297 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1298 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1298 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_1299 (A B C : Point) : directed_angle_eq_mod_pi A B C A B C := by
-  exact directed_angle_eq_refl A B C
+theorem full2d_synth_1299 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
 theorem full2d_synth_1300 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
   exact midpoint_collinear A M B h
@@ -5252,1055 +5252,1055 @@ theorem full2d_synth_1748 (A M B : Point) (h : midpoint A M B) : collinear A M B
 theorem full2d_synth_1749 (A M B : Point) (h : midpoint A M B) : collinear A M B := by
   exact midpoint_collinear A M B h
 
-theorem full2d_synth_1750 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1750 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1751 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1751 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1752 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1752 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1753 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1753 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1754 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1754 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1755 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1755 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1756 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1756 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1757 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1757 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1758 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1758 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1759 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1759 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1760 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1760 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1761 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1761 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1762 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1762 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1763 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1763 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1764 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1764 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1765 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1765 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1766 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1766 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1767 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1767 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1768 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1768 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1769 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1769 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1770 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1770 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1771 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1771 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1772 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1772 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1773 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1773 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1774 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1774 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1775 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1775 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1776 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1776 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1777 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1777 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1778 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1778 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1779 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1779 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1780 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1780 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1781 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1781 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1782 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1782 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1783 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1783 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1784 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1784 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1785 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1785 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1786 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1786 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1787 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1787 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1788 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1788 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1789 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1789 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1790 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1790 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1791 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1791 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1792 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1792 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1793 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1793 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1794 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1794 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1795 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1795 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1796 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1796 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1797 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1797 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1798 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1798 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1799 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1799 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1800 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1800 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1801 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1801 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1802 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1802 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1803 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1803 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1804 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1804 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1805 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1805 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1806 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1806 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1807 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1807 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1808 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1808 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1809 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1809 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1810 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1810 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1811 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1811 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1812 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1812 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1813 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1813 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1814 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1814 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1815 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1815 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1816 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1816 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1817 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1817 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1818 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1818 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1819 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1819 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1820 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1820 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1821 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1821 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1822 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1822 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1823 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1823 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1824 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1824 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1825 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1825 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1826 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1826 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1827 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1827 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1828 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1828 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1829 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1829 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1830 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1830 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1831 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1831 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1832 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1832 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1833 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1833 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1834 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1834 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1835 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1835 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1836 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1836 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1837 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1837 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1838 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1838 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1839 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1839 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1840 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1840 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1841 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1841 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1842 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1842 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1843 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1843 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1844 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1844 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1845 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1845 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1846 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1846 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1847 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1847 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1848 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1848 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1849 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1849 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1850 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1850 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1851 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1851 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1852 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1852 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1853 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1853 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1854 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1854 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1855 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1855 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1856 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1856 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1857 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1857 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1858 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1858 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1859 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1859 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1860 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1860 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1861 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1861 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1862 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1862 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1863 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1863 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1864 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1864 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1865 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1865 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1866 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1866 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1867 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1867 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1868 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1868 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1869 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1869 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1870 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1870 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1871 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1871 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1872 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1872 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1873 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1873 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1874 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1874 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1875 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1875 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1876 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1876 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1877 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1877 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1878 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1878 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1879 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1879 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1880 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1880 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1881 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1881 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1882 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1882 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1883 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1883 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1884 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1884 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1885 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1885 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1886 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1886 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1887 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1887 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1888 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1888 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1889 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1889 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1890 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1890 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1891 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1891 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1892 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1892 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1893 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1893 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1894 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1894 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1895 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1895 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1896 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1896 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1897 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1897 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1898 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1898 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1899 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1899 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1900 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1900 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1901 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1901 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1902 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1902 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1903 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1903 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1904 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1904 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1905 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1905 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1906 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1906 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1907 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1907 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1908 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1908 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1909 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1909 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1910 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1910 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1911 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1911 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1912 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1912 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1913 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1913 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1914 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1914 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1915 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1915 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1916 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1916 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1917 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1917 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1918 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1918 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1919 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1919 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1920 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1920 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1921 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1921 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1922 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1922 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1923 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1923 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1924 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1924 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1925 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1925 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1926 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1926 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1927 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1927 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1928 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1928 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1929 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1929 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1930 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1930 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1931 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1931 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1932 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1932 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1933 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1933 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1934 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1934 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1935 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1935 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1936 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1936 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1937 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1937 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1938 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1938 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1939 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1939 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1940 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1940 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1941 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1941 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1942 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1942 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1943 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1943 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1944 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1944 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1945 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1945 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1946 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1946 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1947 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1947 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1948 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1948 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1949 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1949 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1950 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1950 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1951 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1951 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1952 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1952 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1953 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1953 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1954 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1954 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1955 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1955 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1956 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1956 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1957 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1957 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1958 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1958 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1959 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1959 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1960 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1960 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1961 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1961 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1962 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1962 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1963 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1963 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1964 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1964 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1965 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1965 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1966 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1966 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1967 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1967 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1968 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1968 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1969 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1969 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1970 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1970 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1971 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1971 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1972 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1972 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1973 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1973 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1974 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1974 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1975 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1975 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1976 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1976 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1977 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1977 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1978 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1978 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1979 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1979 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1980 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1980 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1981 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1981 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1982 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1982 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1983 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1983 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1984 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1984 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1985 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1985 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1986 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1986 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1987 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1987 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1988 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1988 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1989 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1989 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1990 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1990 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1991 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1991 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1992 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1992 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1993 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1993 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1994 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1994 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1995 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1995 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1996 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1996 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1997 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1997 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1998 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1998 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_1999 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_1999 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2000 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2000 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2001 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2001 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2002 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2002 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2003 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2003 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2004 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2004 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2005 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2005 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2006 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2006 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2007 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2007 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2008 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2008 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2009 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2009 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2010 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2010 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2011 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2011 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2012 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2012 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2013 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2013 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2014 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2014 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2015 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2015 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2016 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2016 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2017 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2017 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2018 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2018 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2019 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2019 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2020 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2020 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2021 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2021 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2022 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2022 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2023 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2023 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2024 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2024 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2025 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2025 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2026 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2026 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2027 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2027 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2028 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2028 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2029 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2029 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2030 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2030 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2031 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2031 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2032 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2032 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2033 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2033 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2034 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2034 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2035 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2035 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2036 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2036 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2037 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2037 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2038 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2038 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2039 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2039 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2040 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2040 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2041 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2041 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2042 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2042 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2043 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2043 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2044 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2044 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2045 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2045 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2046 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2046 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2047 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2047 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2048 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2048 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2049 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2049 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2050 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2050 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2051 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2051 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2052 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2052 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2053 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2053 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2054 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2054 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2055 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2055 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2056 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2056 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2057 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2057 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2058 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2058 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2059 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2059 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2060 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2060 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2061 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2061 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2062 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2062 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2063 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2063 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2064 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2064 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2065 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2065 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2066 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2066 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2067 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2067 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2068 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2068 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2069 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2069 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2070 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2070 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2071 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2071 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2072 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2072 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2073 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2073 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2074 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2074 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2075 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2075 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2076 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2076 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2077 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2077 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2078 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2078 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2079 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2079 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2080 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2080 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2081 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2081 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2082 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2082 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2083 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2083 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2084 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2084 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2085 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2085 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2086 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2086 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2087 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2087 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2088 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2088 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2089 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2089 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2090 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2090 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2091 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2091 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2092 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2092 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2093 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2093 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2094 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2094 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2095 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2095 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2096 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2096 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2097 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2097 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2098 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2098 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2099 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2099 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
 theorem full2d_synth_2100 (r : Reflection) : reflection_image r := by
   exact reflection_has_evidence r
@@ -7802,2253 +7802,2253 @@ theorem full2d_synth_2598 (A B C : Point) (h : between A B C) : collinear A B C 
 theorem full2d_synth_2599 (A B C : Point) (h : between A B C) : collinear A B C := by
   exact between_collinear A B C h
 
-theorem full2d_synth_2600 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2600 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2601 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2601 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2602 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2602 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2603 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2603 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2604 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2604 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2605 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2605 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2606 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2606 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2607 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2607 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2608 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2608 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2609 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2609 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2610 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2610 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2611 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2611 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2612 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2612 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2613 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2613 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2614 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2614 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2615 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2615 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2616 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2616 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2617 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2617 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2618 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2618 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2619 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2619 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2620 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2620 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2621 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2621 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2622 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2622 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2623 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2623 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2624 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2624 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2625 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2625 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2626 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2626 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2627 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2627 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2628 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2628 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2629 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2629 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2630 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2630 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2631 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2631 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2632 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2632 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2633 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2633 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2634 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2634 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2635 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2635 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2636 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2636 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2637 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2637 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2638 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2638 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2639 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2639 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2640 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2640 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2641 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2641 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2642 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2642 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2643 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2643 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2644 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2644 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2645 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2645 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2646 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2646 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2647 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2647 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2648 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2648 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2649 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2649 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2650 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2650 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2651 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2651 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2652 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2652 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2653 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2653 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2654 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2654 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2655 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2655 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2656 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2656 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2657 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2657 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2658 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2658 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2659 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2659 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2660 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2660 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2661 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2661 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2662 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2662 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2663 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2663 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2664 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2664 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2665 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2665 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2666 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2666 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2667 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2667 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2668 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2668 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2669 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2669 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2670 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2670 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2671 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2671 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2672 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2672 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2673 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2673 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2674 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2674 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2675 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2675 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2676 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2676 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2677 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2677 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2678 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2678 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2679 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2679 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2680 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2680 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2681 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2681 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2682 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2682 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2683 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2683 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2684 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2684 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2685 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2685 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2686 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2686 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2687 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2687 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2688 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2688 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2689 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2689 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2690 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2690 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2691 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2691 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2692 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2692 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2693 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2693 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2694 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2694 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2695 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2695 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2696 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2696 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2697 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2697 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2698 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2698 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2699 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2699 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2700 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2700 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2701 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2701 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2702 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2702 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2703 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2703 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2704 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2704 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2705 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2705 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2706 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2706 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2707 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2707 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2708 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2708 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2709 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2709 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2710 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2710 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2711 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2711 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2712 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2712 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2713 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2713 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2714 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2714 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2715 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2715 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2716 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2716 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2717 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2717 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2718 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2718 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2719 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2719 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2720 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2720 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2721 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2721 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2722 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2722 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2723 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2723 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2724 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2724 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2725 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2725 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2726 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2726 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2727 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2727 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2728 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2728 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2729 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2729 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2730 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2730 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2731 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2731 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2732 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2732 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2733 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2733 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2734 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2734 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2735 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2735 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2736 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2736 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2737 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2737 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2738 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2738 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2739 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2739 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2740 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2740 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2741 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2741 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2742 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2742 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2743 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2743 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2744 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2744 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2745 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2745 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2746 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2746 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2747 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2747 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2748 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2748 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2749 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2749 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2750 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2750 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2751 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2751 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2752 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2752 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2753 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2753 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2754 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2754 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2755 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2755 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2756 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2756 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2757 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2757 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2758 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2758 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2759 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2759 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2760 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2760 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2761 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2761 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2762 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2762 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2763 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2763 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2764 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2764 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2765 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2765 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2766 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2766 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2767 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2767 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2768 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2768 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2769 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2769 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2770 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2770 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2771 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2771 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2772 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2772 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2773 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2773 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2774 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2774 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2775 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2775 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2776 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2776 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2777 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2777 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2778 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2778 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2779 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2779 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2780 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2780 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2781 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2781 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2782 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2782 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2783 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2783 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2784 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2784 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2785 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2785 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2786 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2786 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2787 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2787 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2788 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2788 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2789 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2789 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2790 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2790 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2791 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2791 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2792 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2792 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2793 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2793 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2794 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2794 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2795 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2795 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2796 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2796 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2797 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2797 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2798 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2798 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2799 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2799 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2800 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2800 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2801 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2801 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2802 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2802 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2803 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2803 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2804 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2804 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2805 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2805 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2806 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2806 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2807 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2807 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2808 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2808 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2809 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2809 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2810 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2810 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2811 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2811 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2812 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2812 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2813 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2813 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2814 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2814 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2815 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2815 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2816 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2816 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2817 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2817 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2818 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2818 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2819 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2819 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2820 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2820 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2821 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2821 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2822 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2822 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2823 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2823 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2824 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2824 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2825 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2825 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2826 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2826 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2827 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2827 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2828 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2828 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2829 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2829 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2830 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2830 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2831 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2831 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2832 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2832 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2833 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2833 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2834 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2834 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2835 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2835 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2836 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2836 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2837 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2837 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2838 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2838 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2839 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2839 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2840 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2840 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2841 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2841 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2842 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2842 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2843 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2843 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2844 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2844 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2845 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2845 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2846 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2846 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2847 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2847 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2848 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2848 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2849 (A B : Point) : equal_length A B A B := by
-  exact equal_length_refl A B
+theorem full2d_synth_2849 (A B C D : Point) (h : equal_length A B C D) : equal_length C D A B := by
+  exact equal_length_symm A B C D h
 
-theorem full2d_synth_2850 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2850 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2851 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2851 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2852 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2852 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2853 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2853 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2854 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2854 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2855 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2855 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2856 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2856 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2857 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2857 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2858 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2858 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2859 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2859 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2860 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2860 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2861 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2861 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2862 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2862 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2863 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2863 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2864 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2864 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2865 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2865 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2866 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2866 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2867 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2867 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2868 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2868 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2869 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2869 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2870 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2870 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2871 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2871 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2872 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2872 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2873 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2873 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2874 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2874 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2875 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2875 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2876 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2876 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2877 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2877 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2878 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2878 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2879 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2879 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2880 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2880 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2881 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2881 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2882 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2882 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2883 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2883 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2884 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2884 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2885 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2885 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2886 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2886 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2887 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2887 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2888 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2888 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2889 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2889 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2890 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2890 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2891 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2891 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2892 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2892 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2893 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2893 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2894 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2894 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2895 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2895 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2896 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2896 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2897 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2897 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2898 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2898 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2899 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2899 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2900 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2900 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2901 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2901 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2902 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2902 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2903 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2903 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2904 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2904 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2905 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2905 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2906 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2906 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2907 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2907 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2908 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2908 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2909 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2909 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2910 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2910 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2911 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2911 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2912 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2912 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2913 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2913 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2914 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2914 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2915 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2915 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2916 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2916 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2917 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2917 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2918 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2918 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2919 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2919 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2920 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2920 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2921 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2921 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2922 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2922 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2923 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2923 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2924 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2924 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2925 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2925 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2926 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2926 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2927 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2927 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2928 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2928 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2929 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2929 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2930 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2930 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2931 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2931 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2932 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2932 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2933 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2933 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2934 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2934 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2935 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2935 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2936 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2936 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2937 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2937 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2938 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2938 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2939 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2939 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2940 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2940 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2941 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2941 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2942 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2942 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2943 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2943 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2944 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2944 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2945 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2945 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2946 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2946 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2947 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2947 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2948 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2948 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2949 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2949 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2950 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2950 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2951 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2951 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2952 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2952 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2953 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2953 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2954 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2954 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2955 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2955 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2956 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2956 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2957 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2957 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2958 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2958 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2959 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2959 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2960 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2960 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2961 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2961 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2962 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2962 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2963 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2963 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2964 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2964 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2965 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2965 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2966 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2966 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2967 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2967 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2968 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2968 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2969 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2969 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2970 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2970 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2971 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2971 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2972 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2972 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2973 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2973 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2974 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2974 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2975 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2975 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2976 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2976 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2977 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2977 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2978 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2978 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2979 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2979 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2980 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2980 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2981 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2981 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2982 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2982 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2983 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2983 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2984 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2984 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2985 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2985 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2986 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2986 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2987 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2987 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2988 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2988 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2989 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2989 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2990 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2990 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2991 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2991 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2992 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2992 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2993 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2993 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2994 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2994 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2995 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2995 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2996 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2996 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2997 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2997 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2998 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2998 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_2999 (A B : Point) : length_le A B A B := by
-  exact length_le_refl A B
+theorem full2d_synth_2999 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3000 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3000 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3001 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3001 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3002 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3002 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3003 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3003 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3004 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3004 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3005 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3005 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3006 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3006 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3007 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3007 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3008 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3008 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3009 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3009 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3010 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3010 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3011 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3011 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3012 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3012 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3013 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3013 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3014 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3014 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3015 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3015 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3016 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3016 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3017 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3017 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3018 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3018 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3019 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3019 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3020 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3020 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3021 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3021 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3022 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3022 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3023 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3023 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3024 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3024 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3025 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3025 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3026 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3026 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3027 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3027 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3028 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3028 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3029 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3029 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3030 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3030 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3031 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3031 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3032 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3032 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3033 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3033 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3034 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3034 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3035 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3035 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3036 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3036 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3037 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3037 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3038 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3038 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3039 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3039 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3040 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3040 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3041 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3041 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3042 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3042 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3043 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3043 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3044 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3044 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3045 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3045 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3046 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3046 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3047 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3047 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3048 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3048 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3049 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3049 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3050 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3050 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3051 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3051 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3052 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3052 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3053 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3053 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3054 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3054 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3055 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3055 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3056 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3056 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3057 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3057 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3058 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3058 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3059 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3059 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3060 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3060 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3061 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3061 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3062 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3062 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3063 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3063 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3064 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3064 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3065 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3065 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3066 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3066 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3067 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3067 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3068 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3068 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3069 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3069 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3070 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3070 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3071 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3071 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3072 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3072 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3073 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3073 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3074 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3074 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3075 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3075 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3076 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3076 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3077 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3077 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3078 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3078 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3079 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3079 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3080 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3080 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3081 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3081 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3082 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3082 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3083 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3083 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3084 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3084 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3085 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3085 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3086 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3086 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3087 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3087 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3088 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3088 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3089 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3089 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3090 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3090 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3091 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3091 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3092 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3092 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3093 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3093 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3094 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3094 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3095 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3095 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3096 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3096 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3097 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3097 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3098 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3098 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3099 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3099 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3100 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3100 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3101 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3101 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3102 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3102 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3103 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3103 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3104 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3104 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3105 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3105 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3106 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3106 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3107 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3107 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3108 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3108 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3109 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3109 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3110 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3110 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3111 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3111 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3112 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3112 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3113 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3113 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3114 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3114 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3115 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3115 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3116 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3116 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3117 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3117 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3118 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3118 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3119 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3119 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3120 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3120 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3121 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3121 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3122 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3122 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3123 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3123 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3124 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3124 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3125 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3125 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3126 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3126 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3127 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3127 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3128 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3128 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3129 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3129 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3130 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3130 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3131 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3131 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3132 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3132 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3133 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3133 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3134 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3134 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3135 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3135 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3136 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3136 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3137 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3137 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3138 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3138 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3139 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3139 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3140 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3140 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3141 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3141 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3142 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3142 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3143 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3143 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3144 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3144 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3145 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3145 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3146 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3146 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3147 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3147 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3148 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3148 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3149 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3149 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3150 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3150 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3151 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3151 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3152 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3152 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3153 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3153 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3154 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3154 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3155 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3155 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3156 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3156 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3157 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3157 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3158 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3158 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3159 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3159 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3160 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3160 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3161 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3161 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3162 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3162 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3163 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3163 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3164 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3164 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3165 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3165 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3166 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3166 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3167 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3167 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3168 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3168 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3169 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3169 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3170 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3170 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3171 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3171 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3172 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3172 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3173 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3173 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3174 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3174 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3175 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3175 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3176 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3176 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3177 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3177 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3178 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3178 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3179 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3179 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3180 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3180 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3181 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3181 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3182 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3182 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3183 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3183 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3184 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3184 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3185 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3185 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3186 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3186 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3187 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3187 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3188 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3188 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3189 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3189 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3190 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3190 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3191 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3191 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3192 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3192 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3193 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3193 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3194 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3194 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3195 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3195 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3196 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3196 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3197 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3197 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3198 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3198 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3199 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3199 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3200 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3200 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3201 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3201 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3202 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3202 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3203 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3203 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3204 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3204 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3205 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3205 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3206 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3206 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3207 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3207 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3208 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3208 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3209 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3209 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3210 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3210 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3211 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3211 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3212 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3212 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3213 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3213 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3214 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3214 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3215 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3215 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3216 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3216 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3217 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3217 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3218 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3218 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3219 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3219 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3220 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3220 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3221 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3221 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3222 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3222 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3223 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3223 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3224 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3224 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3225 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3225 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3226 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3226 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3227 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3227 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3228 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3228 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3229 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3229 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3230 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3230 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3231 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3231 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3232 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3232 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3233 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3233 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3234 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3234 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3235 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3235 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3236 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3236 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3237 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3237 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3238 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3238 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3239 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3239 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3240 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3240 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3241 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3241 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3242 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3242 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3243 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3243 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3244 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3244 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3245 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3245 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3246 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3246 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3247 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3247 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3248 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3248 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3249 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3249 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3250 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3250 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3251 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3251 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3252 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3252 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3253 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3253 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3254 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3254 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3255 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3255 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3256 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3256 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3257 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3257 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3258 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3258 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3259 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3259 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3260 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3260 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3261 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3261 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3262 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3262 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3263 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3263 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3264 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3264 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3265 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3265 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3266 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3266 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3267 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3267 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3268 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3268 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3269 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3269 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3270 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3270 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3271 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3271 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3272 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3272 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3273 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3273 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3274 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3274 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3275 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3275 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3276 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3276 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3277 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3277 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3278 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3278 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3279 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3279 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3280 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3280 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3281 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3281 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3282 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3282 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3283 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3283 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3284 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3284 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3285 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3285 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3286 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3286 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3287 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3287 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3288 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3288 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3289 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3289 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3290 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3290 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3291 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3291 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3292 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3292 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3293 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3293 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3294 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3294 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3295 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3295 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3296 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3296 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3297 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3297 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3298 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3298 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3299 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3299 (A B C D E F : Point) (h1 : length_le A B C D) (h2 : length_le C D E F) : length_le A B E F := by
+  exact length_le_trans A B C D E F h1 h2
 
-theorem full2d_synth_3300 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3300 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3301 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3301 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3302 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3302 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3303 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3303 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3304 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3304 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3305 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3305 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3306 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3306 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3307 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3307 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3308 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3308 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3309 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3309 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3310 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3310 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3311 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3311 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3312 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3312 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3313 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3313 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3314 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3314 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3315 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3315 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3316 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3316 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3317 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3317 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3318 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3318 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3319 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3319 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3320 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3320 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3321 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3321 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3322 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3322 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3323 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3323 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3324 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3324 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3325 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3325 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3326 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3326 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3327 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3327 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3328 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3328 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3329 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3329 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3330 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3330 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3331 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3331 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3332 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3332 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3333 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3333 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3334 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3334 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3335 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3335 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3336 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3336 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3337 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3337 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3338 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3338 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3339 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3339 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3340 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3340 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3341 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3341 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3342 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3342 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3343 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3343 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3344 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3344 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3345 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3345 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3346 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3346 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3347 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3347 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3348 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3348 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 
-theorem full2d_synth_3349 (A B : Point) (_h : A ≠ B) : collinear A A B := by
-  exact collinear_refl_left A B
+theorem full2d_synth_3349 (A B C D E F : Point) (h : directed_angle_eq_mod_pi D E F A B C) : directed_angle_eq_mod_pi A B C D E F := by
+  exact directed_angle_eq_symm D E F A B C h
 

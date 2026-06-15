@@ -78,6 +78,30 @@ def _build_gate(claim_spec: dict[str, Any]) -> CoverageGateFull2D | None:
     args = tuple(str(arg) for arg in target.get("args", ()))
     if family not in {"incidence", "collinear"} or len(args) != 3:
         return None
+    between_hypothesis = _has_between_hypothesis(claim_spec, args)
+    if between_hypothesis:
+        target_fact = f"{family}:{','.join(args)}:positive"
+        assumptions = _side_conditions(claim_spec)
+        case = ProofStateDAGCaseFull2D(
+            case_id="case:between_implies_collinearity",
+            assumptions=assumptions + (between_hypothesis,),
+            obligations=(target_fact,),
+            status="closed_by_between_order",
+        )
+        coverage_rule_ids = ("full2d_rule:order_between:01", "full2d_rule:case_split_orientation:01")
+        coverage_result = _check_coverage((case,), coverage_rule_ids, accepted_statuses={"closed_by_between_order"})
+        if coverage_result != "passed":
+            return None
+        seed = canonical_json({"target": target, "case": case.to_dict(), "coverage_rule_ids": coverage_rule_ids})
+        return CoverageGateFull2D(
+            schema_version="1.0.0",
+            gate_id=f"coverage_gate:{hash_ref(seed)[7:23]}",
+            target_fact=target_fact,
+            cases=(case,),
+            coverage_rule_ids=coverage_rule_ids,
+            coverage_result=coverage_result,
+            lean_summary="the declared between relation closes the collinearity target through the order-case rule",
+        )
     if not _has_repeated_point(args):
         return None
     target_fact = f"{family}:{','.join(args)}:positive"
@@ -89,7 +113,7 @@ def _build_gate(claim_spec: dict[str, Any]) -> CoverageGateFull2D | None:
         status="closed_by_repeated_point",
     )
     coverage_rule_ids = ("full2d_rule:case_split_orientation:01",)
-    coverage_result = _check_coverage((case,), coverage_rule_ids)
+    coverage_result = _check_coverage((case,), coverage_rule_ids, accepted_statuses={"closed_by_repeated_point"})
     if coverage_result != "passed":
         return None
     seed = canonical_json({"target": target, "case": case.to_dict(), "coverage_rule_ids": coverage_rule_ids})
@@ -120,10 +144,26 @@ def _has_repeated_point(args: tuple[str, ...]) -> bool:
     return args[0] == args[1] or args[0] == args[2] or args[1] == args[2]
 
 
-def _check_coverage(cases: tuple[ProofStateDAGCaseFull2D, ...], rule_ids: tuple[str, ...]) -> str:
+def _has_between_hypothesis(claim_spec: dict[str, Any], args: tuple[str, ...]) -> str | None:
+    for hypothesis in claim_spec.get("hypotheses", ()):
+        if not isinstance(hypothesis, dict):
+            continue
+        if "between" not in str(hypothesis.get("source_expr", "")).lower():
+            continue
+        if tuple(str(arg) for arg in hypothesis.get("args", ())) == args:
+            return str(hypothesis.get("predicate_id", "hyp:between"))
+    return None
+
+
+def _check_coverage(
+    cases: tuple[ProofStateDAGCaseFull2D, ...],
+    rule_ids: tuple[str, ...],
+    *,
+    accepted_statuses: set[str],
+) -> str:
     if not cases or not rule_ids:
         return "failed"
-    if any(case.status != "closed_by_repeated_point" for case in cases):
+    if any(case.status not in accepted_statuses for case in cases):
         return "failed"
     return "passed"
 

@@ -68,6 +68,55 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
         return None
     family = str(target.get("family", ""))
     args = tuple(str(arg) for arg in target.get("args", ()))
+    source_expr = str(target.get("source_expr", "")).lower()
+    if family == "metric" and "equal_length" in source_expr and len(args) == 4:
+        reverse_hyp = _hypothesis_with_args(claim_spec, "equal_length", args[2:] + args[:2])
+        if reverse_hyp is not None:
+            variables = tuple(dict.fromkeys(variable for point in args for variable in _variables_for_point(point)))
+            polynomial_goal = "dist(C,D) - dist(A,B) = 0"
+            reduction_steps = (
+                "translate_equal_length_hypothesis_to_symbolic_distance_equality",
+                "apply_symmetric_equality_rewrite",
+                "reduce_subtracted_equal_terms_to_zero",
+            )
+            payload_seed = canonical_json({"target": target, "hypothesis": reverse_hyp, "rule": "metric_equal_length_symmetry"})
+            return AlgebraicCertificateFull2D(
+                schema_version="1.0.0",
+                certificate_id=f"algebraic_certificate:{hash_ref(payload_seed)[7:23]}",
+                target_family=family,
+                coordinate_model="symbolic_metric_term_algebra",
+                variables=variables,
+                polynomial_goal=polynomial_goal,
+                reduction_steps=reduction_steps,
+                nondegeneracy_conditions=_side_conditions(claim_spec, "nondegeneracy"),
+                denominator_conditions=(),
+                checker_result="passed",
+                source_rule_ids=("full2d_rule:algebraic_coordinate:02", "full2d_rule:metric_equal_length:02"),
+                lean_summary="a reversed equal-length hypothesis is normalized by equality symmetry into the requested target",
+            )
+    if family == "metric" and "equal_length" in source_expr and len(args) == 4 and args[:2] == args[2:]:
+        variables = tuple(dict.fromkeys(variable for point in args[:2] for variable in _variables_for_point(point)))
+        polynomial_goal = "dist(A,B) - dist(A,B) = 0"
+        reduction_steps = (
+            "translate_equal_length_to_symbolic_distance_identity",
+            "cancel_identical_distance_terms",
+            "reduce_zero_polynomial",
+        )
+        payload_seed = canonical_json({"target": target, "rule": "metric_equal_length_reflexive"})
+        return AlgebraicCertificateFull2D(
+            schema_version="1.0.0",
+            certificate_id=f"algebraic_certificate:{hash_ref(payload_seed)[7:23]}",
+            target_family=family,
+            coordinate_model="symbolic_metric_term_algebra",
+            variables=variables,
+            polynomial_goal=polynomial_goal,
+            reduction_steps=reduction_steps,
+            nondegeneracy_conditions=_side_conditions(claim_spec, "nondegeneracy"),
+            denominator_conditions=(),
+            checker_result="passed",
+            source_rule_ids=("full2d_rule:algebraic_coordinate:01", "full2d_rule:metric_equal_length:01"),
+            lean_summary="the equal-length target has identical segment terms on both sides and reduces to reflexive equality",
+        )
     if family not in {"incidence", "collinear"} or len(args) != 3:
         return None
     if not _is_repeated_point_collinearity(args):
@@ -126,6 +175,17 @@ def _side_conditions(claim_spec: dict[str, Any], key: str) -> tuple[str, ...]:
     if not isinstance(values, (list, tuple)):
         return ()
     return tuple(str(item) for item in values)
+
+
+def _hypothesis_with_args(claim_spec: dict[str, Any], token: str, args: tuple[str, ...]) -> dict[str, Any] | None:
+    for item in claim_spec.get("hypotheses", ()):
+        if not isinstance(item, dict):
+            continue
+        if token not in str(item.get("source_expr", "")).lower():
+            continue
+        if tuple(str(arg) for arg in item.get("args", ())) == args:
+            return item
+    return None
 
 
 def _measured_failure(engine_input: EngineInputFull2D, context: RunContext, reason: str) -> EngineOutputFull2D:

@@ -84,10 +84,7 @@ def _is_repeated_collinearity_target(target: Any) -> bool:
         return False
     family = str(target.get("family", ""))
     args = tuple(str(arg) for arg in target.get("args", ()))
-    return family in {"incidence", "collinear"} and args in {
-        ("pt:A", "pt:A", "pt:B"),
-        ("point:A", "point:A", "point:B"),
-    }
+    return family in {"incidence", "collinear"} and len(args) == 3 and args[0] == args[1]
 
 
 def _side_conditions(claim_spec: dict[str, Any]) -> tuple[str, ...]:

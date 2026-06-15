@@ -66,6 +66,41 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
         return None
     family = str(target.get("family", ""))
     args = tuple(str(arg) for arg in target.get("args", ()))
+    source_expr = str(target.get("source_expr", "")).lower()
+    if family == "angle" and "directed_angle_eq_mod_pi" in source_expr and len(args) == 6:
+        reverse_hyp = _hypothesis_with_args(claim_spec, "directed_angle_eq_mod_pi", args[3:] + args[:3])
+        if reverse_hyp is not None:
+            target_fact = f"{family}:{','.join(args)}:positive"
+            steps = ("match_reverse_directed_angle_hypothesis", "apply_mod_pi_angle_symmetry")
+            trace_seed = canonical_json({"target": target, "hypothesis": reverse_hyp, "steps": steps})
+            return MetricAngleTraceFull2D(
+                schema_version="1.0.0",
+                trace_id=f"metric_angle_trace:{hash_ref(trace_seed)[7:23]}",
+                target_fact=target_fact,
+                angle_expression=f"angle({args[0]}, {args[1]}, {args[2]}) = angle({args[3]}, {args[4]}, {args[5]})",
+                normalization_policy="directed_angle_mod_pi_symmetry_from_hypothesis",
+                normalized_value="symmetric directed angle equality modulo pi",
+                required_side_conditions=_side_conditions(claim_spec),
+                rule_ids=("full2d_rule:directed_angle_mod_pi:02", "full2d_rule:angle_chase:02"),
+                checker_result="passed",
+                lean_summary="a reverse directed-angle equality hypothesis is normalized into the requested symmetric target",
+            )
+    if family == "angle" and "directed_angle_eq_mod_pi" in source_expr and len(args) == 6 and args[:3] == args[3:]:
+        target_fact = f"{family}:{','.join(args)}:positive"
+        steps = ("normalize_identical_directed_angles", "check_mod_pi_reflexivity")
+        trace_seed = canonical_json({"target": target, "steps": steps})
+        return MetricAngleTraceFull2D(
+            schema_version="1.0.0",
+            trace_id=f"metric_angle_trace:{hash_ref(trace_seed)[7:23]}",
+            target_fact=target_fact,
+            angle_expression=f"angle({args[0]}, {args[1]}, {args[2]})",
+            normalization_policy="directed_angle_mod_pi_reflexivity",
+            normalized_value="same directed angle modulo pi",
+            required_side_conditions=_side_conditions(claim_spec),
+            rule_ids=("full2d_rule:directed_angle_mod_pi:01", "full2d_rule:angle_chase:01"),
+            checker_result="passed",
+            lean_summary="identical directed-angle expressions are equal modulo pi by reflexivity",
+        )
     if family not in {"incidence", "collinear"} or len(args) != 3:
         return None
     if not (args[0] == args[1] or args[1] == args[2]):
@@ -109,6 +144,17 @@ def _side_conditions(claim_spec: dict[str, Any]) -> tuple[str, ...]:
         if isinstance(values, (list, tuple)):
             collected.extend(str(item) for item in values)
     return tuple(collected)
+
+
+def _hypothesis_with_args(claim_spec: dict[str, Any], token: str, args: tuple[str, ...]) -> dict[str, Any] | None:
+    for item in claim_spec.get("hypotheses", ()):
+        if not isinstance(item, dict):
+            continue
+        if token not in str(item.get("source_expr", "")).lower():
+            continue
+        if tuple(str(arg) for arg in item.get("args", ())) == args:
+            return item
+    return None
 
 
 def _has_nonzero_baseline(args: tuple[str, ...], side_conditions: tuple[str, ...]) -> bool:

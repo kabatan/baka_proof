@@ -67,6 +67,23 @@ def _build_trace(claim_spec: dict[str, Any]) -> TransformationTraceFull2D | None
         return None
     family = str(target.get("family", ""))
     args = tuple(str(arg) for arg in target.get("args", ()))
+    source_expr = str(target.get("source_expr", "")).lower()
+    if family == "transformation" and "reflection_image" in source_expr and len(args) == 1:
+        rule_ids = ("full2d_rule:transformation_reflection:01",)
+        seed = canonical_json({"target": target, "rule_ids": rule_ids})
+        return TransformationTraceFull2D(
+            schema_version="1.0.0",
+            trace_id=f"transformation_trace:{hash_ref(seed)[7:23]}",
+            transformation_kind="reflection_evidence_projection",
+            source_objects=args,
+            image_objects=args,
+            invariant="reflection_image_predicate",
+            construction_witnesses=(f"witness:reflection_evidence:{args[0]}",),
+            required_side_conditions=(),
+            rule_ids=rule_ids,
+            checker_result="passed",
+            lean_summary="the reflection structure carries evidence of its image predicate",
+        )
     if family not in {"incidence", "collinear"} or len(args) != 3:
         return None
     if not _has_repeated_point(args):

@@ -63,7 +63,50 @@ def run(engine_input: EngineInputFull2D, budget: ResourceBudget, context: RunCon
 def _build_certificate(claim_spec: dict[str, Any]) -> InequalityCertificateFull2D | None:
     target = claim_spec.get("target", {})
     side_conditions = _nondegeneracy_conditions(claim_spec)
-    if not isinstance(target, dict) or not side_conditions:
+    if not isinstance(target, dict):
+        return None
+    source_expr = str(target.get("source_expr", "")).lower()
+    args = tuple(str(arg) for arg in target.get("args", ()))
+    if str(target.get("family")) == "inequality" and "length_le" in source_expr and len(args) == 4:
+        trans_hyps = _length_le_trans_hypotheses(claim_spec, args)
+        if trans_hyps is not None:
+            h1, h2, middle = trans_hyps
+            inequality_goal = f"length({args[0]}, {args[1]}) <= length({args[2]}, {args[3]})"
+            steps = (
+                "match_first_length_le_hypothesis",
+                "match_second_length_le_hypothesis",
+                "compose_length_inequalities_by_transitivity",
+            )
+            seed = canonical_json({"target": target, "hypotheses": (h1, h2), "middle": middle, "rule": "length_le_transitive"})
+            return InequalityCertificateFull2D(
+                schema_version="1.0.0",
+                certificate_id=f"inequality_certificate:{hash_ref(seed)[7:23]}",
+                certificate_scope="target_inequality",
+                expression_family="length_le",
+                domain_constraints=side_conditions,
+                inequality_goal=inequality_goal,
+                exact_certificate_steps=steps,
+                checker_result="passed",
+                source_rule_ids=("full2d_rule:inequality_length:02", "full2d_rule:inequality_power:01"),
+                lean_summary="two chained length inequalities are composed into the target inequality by transitivity",
+            )
+    if str(target.get("family")) == "inequality" and "length_le" in source_expr and len(args) == 4 and args[:2] == args[2:]:
+        inequality_goal = f"length({args[0]}, {args[1]}) <= length({args[0]}, {args[1]})"
+        steps = ("normalize_identical_length_terms", "apply_reflexive_order_certificate")
+        seed = canonical_json({"target": target, "rule": "length_le_reflexive"})
+        return InequalityCertificateFull2D(
+            schema_version="1.0.0",
+            certificate_id=f"inequality_certificate:{hash_ref(seed)[7:23]}",
+            certificate_scope="target_inequality",
+            expression_family="length_le",
+            domain_constraints=side_conditions,
+            inequality_goal=inequality_goal,
+            exact_certificate_steps=steps,
+            checker_result="passed",
+            source_rule_ids=("full2d_rule:inequality_length:01",),
+            lean_summary="the inequality target compares identical length terms and closes by reflexive order",
+        )
+    if not side_conditions:
         return None
     point_pair = _first_distinct_point_pair(side_conditions)
     if point_pair is None:
@@ -112,6 +155,28 @@ def _first_distinct_point_pair(side_conditions: tuple[str, ...]) -> tuple[str, s
         right = right.strip()
         if left and right and left != right:
             return (left, right)
+    return None
+
+
+def _length_le_trans_hypotheses(
+    claim_spec: dict[str, Any],
+    target_args: tuple[str, ...],
+) -> tuple[dict[str, Any], dict[str, Any], tuple[str, str]] | None:
+    length_hyps = [
+        item
+        for item in claim_spec.get("hypotheses", ())
+        if isinstance(item, dict)
+        and "length_le" in str(item.get("source_expr", "")).lower()
+        and len(tuple(item.get("args", ()))) == 4
+    ]
+    for first in length_hyps:
+        first_args = tuple(str(arg) for arg in first.get("args", ()))
+        if first_args[:2] != target_args[:2]:
+            continue
+        for second in length_hyps:
+            second_args = tuple(str(arg) for arg in second.get("args", ()))
+            if first_args[2:] == second_args[:2] and second_args[2:] == target_args[2:]:
+                return first, second, first_args[2:]
     return None
 
 

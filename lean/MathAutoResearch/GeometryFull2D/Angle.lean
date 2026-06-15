@@ -23,4 +23,9 @@ theorem directed_angle_eq_refl (a b c : Point) :
     directed_angle_eq_mod_pi a b c a b c := by
   rfl
 
+theorem directed_angle_eq_symm (a b c d e f : Point) :
+    directed_angle_eq_mod_pi a b c d e f → directed_angle_eq_mod_pi d e f a b c := by
+  intro h
+  exact h.symm
+
 end MathAutoResearch.GeometryFull2D
