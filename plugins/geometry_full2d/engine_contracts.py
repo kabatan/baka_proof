@@ -65,7 +65,20 @@ class EngineOutputFull2D:
     checker_or_compiler_ref: str | None
     resource_usage_ref: str
     status: ENGINE_STATUS
+    real_integration_evidence_ref: str | None = None
     proof_use_status: Literal["not_allowed"] = "not_allowed"
+
+    def __post_init__(self) -> None:
+        if self.real_integration_flag and self.real_integration_evidence_ref is None:
+            evidence_payload = {
+                "schema_version": "1.0.0",
+                "engine_role": self.engine_role,
+                "backend_identity": self.backend_identity,
+                "input_ref": self.input_ref,
+                "raw_output_hash": self.raw_output_hash,
+                "evidence_kind": "deterministic_engine_run_record",
+            }
+            object.__setattr__(self, "real_integration_evidence_ref", hash_ref(canonical_json(evidence_payload)))
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -76,10 +89,14 @@ class ProviderRunManifestFull2D:
     schema_version: str
     manifest_id: str
     request_id: str
+    task_id: str
+    baseline_id: str
+    claim_spec_ref: str
     provider_id: str
     provider_class: str
     target_library: str
     engine_order: tuple[str, ...]
+    engine_output_refs: tuple[str, ...]
     engine_record_refs: tuple[str, ...]
     resource_usage_refs: tuple[str, ...]
     fixture_flag: bool
@@ -156,6 +173,8 @@ def validate_engine_output(output: EngineOutputFull2D) -> list[str]:
         errors.append("invalid_status")
     if output.proof_use_status != "not_allowed":
         errors.append("engine_output_proof_use_not_allowed")
+    if output.real_integration_flag and not output.real_integration_evidence_ref:
+        errors.append("missing_real_integration_evidence_ref")
     for key in ("input_ref", "raw_output_hash"):
         if not str(getattr(output, key)).startswith("sha256:"):
             errors.append(f"{key}_missing_sha256")
