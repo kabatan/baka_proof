@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 V043_RELEASE_SCRIPT_PATTERNS = (
     "scripts/*v0_4_3*.py",
     "scripts/check_actual_task_pipeline_runs.py",
+    "scripts/extract_geometry_full2d_theorem.py",
     "scripts/check_full2d_engine_real_execution.py",
     "scripts/check_full2d_extraction_corpus.py",
     "scripts/check_full2d_compiler_evidence.py",
