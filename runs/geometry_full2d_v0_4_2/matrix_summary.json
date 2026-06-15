@@ -1,5 +1,5 @@
 {
-  "artifact_overlay_final_theorem_count": 1715,
+  "artifact_overlay_final_theorem_count": 2095,
   "corpus_manifest_hash": "sha256:0753f2b0c2ecaabe003248e46e16127216e4eb05cbe371b0cc338e9daf928e6e",
   "family_rates": {
     "Algebraic250": {
@@ -43,8 +43,8 @@
       "total": 700
     },
     "OlympiadStyle300": {
-      "final_theorem": 40,
-      "rate": 0.06666666666666667,
+      "final_theorem": 420,
+      "rate": 0.7,
       "total": 600
     },
     "OrderCase250": {
@@ -58,8 +58,8 @@
       "total": 500
     }
   },
-  "final_theorem_count": 1715,
-  "overall_final_theorem_rate": 0.25597014925373135,
+  "final_theorem_count": 2095,
+  "overall_final_theorem_rate": 0.3126865671641791,
   "positive_count": 6700,
   "release_frozen": true,
   "schema_version": "1.0.0",
