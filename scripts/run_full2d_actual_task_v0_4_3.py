@@ -21,13 +21,22 @@ def main() -> int:
     parser.add_argument("--corpus-root", default="benchmarks/geometry_full2d")
     args = parser.parse_args()
 
-    report = execute_actual_task_pipeline_v0_4_3(
-        task_id=args.task_id,
-        baseline_id=args.baseline_id,
-        run_dir=Path(args.run_dir),
-        config_path=Path(args.config),
-        corpus_root=Path(args.corpus_root),
-    )
+    try:
+        report = execute_actual_task_pipeline_v0_4_3(
+            task_id=args.task_id,
+            baseline_id=args.baseline_id,
+            run_dir=Path(args.run_dir),
+            config_path=Path(args.config),
+            corpus_root=Path(args.corpus_root),
+        )
+    except Exception as exc:
+        report = {
+            "schema_version": "1.0.0",
+            "status": "failed",
+            "task_id": args.task_id,
+            "baseline_id": args.baseline_id,
+            "error": str(exc),
+        }
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["status"] == "passed" else 1
 

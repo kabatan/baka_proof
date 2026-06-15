@@ -32,6 +32,12 @@ FORBIDDEN_SOURCE_TOKENS = (
     "template_id",
     "theorem_family",
 )
+DISABLED_BY_BASELINE = {
+    "B1": set(ENGINE_ROLES),
+    "B5": {"construction_search"},
+    "B6": {"algebraic_geometry"},
+    "B7": {"order_case"},
+}
 
 
 def main() -> int:
@@ -96,7 +102,7 @@ def _run_self_test() -> dict[str, Any]:
             )
         )
         payload = provider_run.to_dict()
-        errors.extend(_validate_engine_artifact_set(payload["engine_output_refs"], payload["artifact_paths"], artifact_root))
+        errors.extend(_validate_engine_artifact_set(payload["engine_output_refs"], payload["artifact_paths"], artifact_root, expected_roles=set(ENGINE_ROLES)))
     return {"status": "passed" if not errors else "failed", "errors": sorted(set(errors))}
 
 
@@ -113,13 +119,14 @@ def _check_run_engine_artifacts(run_dir: Path, errors: list[str]) -> list[dict[s
             errors.append(issue)
             reports.append({"source": source, "run_id": run_id, "status": "failed", "errors": [issue]})
             continue
-        engine_errors = [f"{run_id}:{error}" for error in _validate_engine_artifact_set(engine_refs, artifact_paths, run_dir)]
+        expected_roles = _expected_engine_roles(record)
+        engine_errors = [f"{run_id}:{error}" for error in _validate_engine_artifact_set(engine_refs, artifact_paths, run_dir, expected_roles=expected_roles)]
         reports.append({"source": source, "run_id": run_id, "status": "passed" if not engine_errors else "failed", "errors": engine_errors})
         errors.extend(engine_errors)
     return reports
 
 
-def _validate_engine_artifact_set(engine_refs: list[str], artifact_paths: dict[str, str], base_dir: Path) -> list[str]:
+def _validate_engine_artifact_set(engine_refs: list[str], artifact_paths: dict[str, str], base_dir: Path, *, expected_roles: set[str]) -> list[str]:
     errors: list[str] = []
     roles_seen: set[str] = set()
     for engine_ref in engine_refs:
@@ -157,10 +164,19 @@ def _validate_engine_artifact_set(engine_refs: list[str], artifact_paths: dict[s
                     errors.append(f"real_integration_evidence_hash_mismatch:{role}:{evidence_ref}")
         if payload.get("proof_use_status") != "not_allowed":
             errors.append(f"engine_output_proof_use_status_violation:{role}")
-    missing = sorted(set(ENGINE_ROLES) - roles_seen)
+    missing = sorted(expected_roles - roles_seen)
     if missing:
         errors.append(f"missing_engine_roles:{','.join(missing)}")
+    unexpected = sorted(roles_seen - expected_roles)
+    if unexpected:
+        errors.append(f"unexpected_disabled_engine_roles:{','.join(unexpected)}")
     return sorted(set(errors))
+
+
+def _expected_engine_roles(record: dict[str, Any]) -> set[str]:
+    baseline_id = str(record.get("baseline_id", "B2"))
+    disabled = DISABLED_BY_BASELINE.get(baseline_id, set())
+    return set(ENGINE_ROLES) - disabled
 
 
 def _iter_run_records(run_dir: Path, errors: list[str]) -> list[tuple[str, dict[str, Any]]]:

@@ -29,6 +29,12 @@ IDENTITY_FIELDS = {
     "payload_sha256",
     "artifact_sha256",
 }
+DISABLED_BY_BASELINE = {
+    "B1": set(ENGINE_ROLES),
+    "B5": {"construction_search"},
+    "B6": {"algebraic_geometry"},
+    "B7": {"order_case"},
+}
 
 
 def main() -> int:
@@ -99,6 +105,7 @@ def _check_run_provider_records(run_dir: Path, errors: list[str]) -> list[dict[s
             "manifest": _read_json(_resolve_path(manifest_path_value, run_dir), []),
             "artifact_paths": artifact_paths,
             "engine_output_refs": record.get("engine_output_refs", []),
+            "expected_engine_roles": sorted(_expected_engine_roles(record)),
         }
         provider_errors = _validate_provider_run_payload(payload, run_dir)
         reports.append({"source": source, "run_id": run_id, "status": "passed" if not provider_errors else "failed", "errors": provider_errors})
@@ -194,10 +201,20 @@ def _validate_provider_run_payload(payload: dict[str, Any], base_dir: Path) -> l
         normalized_ref = str(engine_payload.get("normalized_output_ref", ""))
         if manifest.get("task_id") and str(manifest["task_id"]) in normalized_ref:
             errors.append(f"normalized_output_ref_contains_task_id:{role}")
-    missing_roles = sorted(set(ENGINE_ROLES) - roles_seen)
+    expected_roles = set(payload.get("expected_engine_roles", ENGINE_ROLES))
+    missing_roles = sorted(expected_roles - roles_seen)
     if missing_roles:
         errors.append(f"provider_missing_release_engine_roles:{','.join(missing_roles)}")
+    unexpected_roles = sorted(roles_seen - expected_roles)
+    if unexpected_roles:
+        errors.append(f"provider_unexpected_disabled_engine_roles:{','.join(unexpected_roles)}")
     return sorted(set(errors))
+
+
+def _expected_engine_roles(record: dict[str, Any]) -> set[str]:
+    baseline_id = str(record.get("baseline_id", "B2"))
+    disabled = DISABLED_BY_BASELINE.get(baseline_id, set())
+    return set(ENGINE_ROLES) - disabled
 
 
 def _validate_typed_json_ref(ref: str, payload: dict[str, Any], id_field: str, label: str) -> list[str]:

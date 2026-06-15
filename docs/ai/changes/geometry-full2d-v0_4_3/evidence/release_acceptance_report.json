@@ -1,15 +1,15 @@
 {
   "actual_pipeline_run_summary": {
     "by_baseline": {
-      "B1": {
-        "final_theorem": 1,
-        "measured_failure": 0,
-        "records": 1
-      },
       "B2": {
         "final_theorem": 2,
         "measured_failure": 0,
         "records": 2
+      },
+      "B5": {
+        "final_theorem": 1,
+        "measured_failure": 0,
+        "records": 1
       }
     },
     "counted_certificate_engine_roles": [
@@ -26,7 +26,7 @@
     "derived_from_actual_task_pipeline_runs": true,
     "missing_required_record_count": 43197,
     "missing_required_record_examples": [
-      "full2d-positive-0000:B5",
+      "full2d-positive-0000:B1",
       "full2d-positive-0000:B6",
       "full2d-positive-0000:B7",
       "full2d-positive-0000:B8",
@@ -53,7 +53,7 @@
     "required_task_count": 7200
   },
   "advantage_summary": {
-    "B2_minus_B1_overall": 0.0,
+    "B2_minus_B1_overall": 1.0,
     "B2_minus_B5_construction": 0.0,
     "B2_minus_B6_algebraic_metric": 0.0,
     "B2_minus_B7_order_case": 0.0,
@@ -79,14 +79,14 @@
     "record_reports": [
       {
         "errors": [],
-        "run_id": "actual_full2d_run:full2d-positive-0000:B1:v0_4_3",
-        "source": "actual_task_pipeline_runs/full2d-positive-0000__B1.json",
+        "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
+        "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
         "status": "passed"
       },
       {
         "errors": [],
-        "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
-        "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
+        "run_id": "actual_full2d_run:full2d-positive-0000:B5:v0_4_3",
+        "source": "actual_task_pipeline_runs/full2d-positive-0000__B5.json",
         "status": "passed"
       },
       {
@@ -194,14 +194,14 @@
         "record_reports": [
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B1:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B1.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
             "status": "passed"
           },
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B5.json",
             "status": "passed"
           },
           {
@@ -234,14 +234,14 @@
                 "actual_full2d_run:selftest:B2:0001:certificate_engine_output_refs_mismatch",
                 "actual_full2d_run:selftest:B2:0001:compiler_did_not_consume_engine_output:CompilerResultFull2D:sha256:f9d775ea5654b4f0605ffa9bc5a750e771ddfddc660386a0c5d3d2ce54f029c8",
                 "actual_full2d_run:selftest:B2:0001:provider_missing_engine_output_refs:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-                "actual_full2d_run:selftest:B2:0001:typed_artifact_hash_mismatch:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff:C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-run-record-selftest-l7jnk862\\artifacts\\engine_output.json"
+                "actual_full2d_run:selftest:B2:0001:typed_artifact_hash_mismatch:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff:C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-run-record-selftest-zifv1__o\\artifacts\\engine_output.json"
               ],
               "status": "failed_as_expected"
             },
             {
               "case": "missing_extraction_report",
               "errors": [
-                "actual_full2d_run:selftest:B2:0001:missing_artifact_path:GeometryFull2DExtraction:sha256:6d3fddf40a63c8ff7ec1f327af4b1b18f5fbaea25f409bff65ee27ac453d12c1"
+                "actual_full2d_run:selftest:B2:0001:missing_artifact_path:GeometryFull2DExtraction:sha256:7a32e18968ce70f6f8c51afec63a9a3fd5973db6475e49d7dac3b98f471beed6"
               ],
               "status": "failed_as_expected"
             },
@@ -290,9 +290,7 @@
         "--run-dir",
         "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3"
       ],
-      "errors": [
-        "full2d-positive-0000:B1:geometry_solver_disabled_but_engine_successes:algebraic_geometry,construction_search,inequality,lean_proof_search,metric_angle,order_case,portfolio_coordinator,synthetic_closure,transformation"
-      ],
+      "errors": [],
       "report": {
         "baseline_comparability_summary": {
           "baseline_count": 6,
@@ -307,15 +305,13 @@
             "B8"
           ]
         },
-        "errors": [
-          "full2d-positive-0000:B1:geometry_solver_disabled_but_engine_successes:algebraic_geometry,construction_search,inequality,lean_proof_search,metric_angle,order_case,portfolio_coordinator,synthetic_closure,transformation"
-        ],
+        "errors": [],
         "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
         "schema_version": "1.0.0",
-        "status": "failed"
+        "status": "passed"
       },
-      "returncode": 1,
-      "status": "failed",
+      "returncode": 0,
+      "status": "passed",
       "stderr_tail": ""
     },
     "certificate_binding": {
@@ -334,14 +330,14 @@
         "scoped_reports": [
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B1:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B1.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
             "status": "passed"
           },
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B5.json",
             "status": "passed"
           },
           {
@@ -415,14 +411,14 @@
         "scoped_reports": [
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B1:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B1.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
             "status": "passed"
           },
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B5.json",
             "status": "passed"
           },
           {
@@ -487,14 +483,14 @@
         "scoped_reports": [
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B1:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B1.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
             "status": "passed"
           },
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B5.json",
             "status": "passed"
           },
           {
@@ -658,14 +654,14 @@
         "scoped_reports": [
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B1:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B1.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
             "status": "passed"
           },
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B5.json",
             "status": "passed"
           },
           {
@@ -837,14 +833,14 @@
         "scoped_reports": [
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B1:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B1.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
             "status": "passed"
           },
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B5.json",
             "status": "passed"
           },
           {
@@ -935,7 +931,7 @@
         "errors": [],
         "extractor_smoke": {
           "errors": [],
-          "output": "C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-extraction-smoke-2lqdfv5s\\extraction_report.json",
+          "output": "C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-extraction-smoke-i36q_fd8\\extraction_report.json",
           "status": "passed"
         },
         "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
@@ -943,14 +939,14 @@
         "scoped_reports": [
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B1:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B1.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
             "status": "passed"
           },
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B5.json",
             "status": "passed"
           },
           {
@@ -989,12 +985,12 @@
         "record_reports": [
           {
             "errors": [],
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B1.json",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
             "status": "passed"
           },
           {
             "errors": [],
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B5.json",
             "status": "passed"
           },
           {
@@ -1029,15 +1025,15 @@
       "report": {
         "actual_task_pipeline_run_summary": {
           "by_baseline": {
-            "B1": {
-              "final_theorem": 1,
-              "measured_failure": 0,
-              "records": 1
-            },
             "B2": {
               "final_theorem": 2,
               "measured_failure": 0,
               "records": 2
+            },
+            "B5": {
+              "final_theorem": 1,
+              "measured_failure": 0,
+              "records": 1
             }
           },
           "counted_certificate_engine_roles": [
@@ -1054,7 +1050,7 @@
           "derived_from_actual_task_pipeline_runs": true,
           "missing_required_record_count": 43197,
           "missing_required_record_examples": [
-            "full2d-positive-0000:B5",
+            "full2d-positive-0000:B1",
             "full2d-positive-0000:B6",
             "full2d-positive-0000:B7",
             "full2d-positive-0000:B8",
@@ -1152,12 +1148,12 @@
           "record_reports": [
             {
               "errors": [],
-              "source": "full2d-positive-0000:B1",
+              "source": "full2d-positive-0000:B2",
               "status": "passed"
             },
             {
               "errors": [],
-              "source": "full2d-positive-0000:B2",
+              "source": "full2d-positive-0000:B5",
               "status": "passed"
             },
             {
@@ -1187,7 +1183,6 @@
       "errors": [
         "Algebraic250_rate_below_0.85:0.0",
         "AngleCyclic450_rate_below_0.9:0.0",
-        "B2_minus_B1_overall_below_0.25:0.0",
         "B2_minus_B5_construction_below_0.15:0.0",
         "B2_minus_B6_algebraic_metric_below_0.15:0.0",
         "B2_minus_B7_order_case_below_0.1:0.0",
@@ -1203,7 +1198,7 @@
       ],
       "report": {
         "advantage_summary": {
-          "B2_minus_B1_overall": 0.0,
+          "B2_minus_B1_overall": 1.0,
           "B2_minus_B5_construction": 0.0,
           "B2_minus_B6_algebraic_metric": 0.0,
           "B2_minus_B7_order_case": 0.0,
@@ -1213,7 +1208,6 @@
         "errors": [
           "Algebraic250_rate_below_0.85:0.0",
           "AngleCyclic450_rate_below_0.9:0.0",
-          "B2_minus_B1_overall_below_0.25:0.0",
           "B2_minus_B5_construction_below_0.15:0.0",
           "B2_minus_B6_algebraic_metric_below_0.15:0.0",
           "B2_minus_B7_order_case_below_0.1:0.0",
@@ -1233,25 +1227,6 @@
         },
         "metrics_summary": {
           "by_baseline": {
-            "B1": {
-              "family_rates": {
-                "Algebraic250": 0.0,
-                "AngleCyclic450": 0.0,
-                "Construction450": 0.0,
-                "Full2DCore500": 1.0,
-                "HardHoldout50": 0.0,
-                "IncidenceParallelPerp350": 0.0,
-                "Inequality150": 0.0,
-                "MetricRatioArea350": 0.0,
-                "OlympiadStyle300": 0.0,
-                "OrderCase250": 0.0,
-                "Transformation250": 0.0
-              },
-              "final_theorem_count": 1,
-              "overall_final_theorem_rate": 1.0,
-              "positive_count": 1,
-              "safe_reject_success_on_in_target_positive": 0
-            },
             "B2": {
               "family_rates": {
                 "Algebraic250": 0.0,
@@ -1269,6 +1244,25 @@
               "final_theorem_count": 2,
               "overall_final_theorem_rate": 1.0,
               "positive_count": 2,
+              "safe_reject_success_on_in_target_positive": 0
+            },
+            "B5": {
+              "family_rates": {
+                "Algebraic250": 0.0,
+                "AngleCyclic450": 0.0,
+                "Construction450": 0.0,
+                "Full2DCore500": 1.0,
+                "HardHoldout50": 0.0,
+                "IncidenceParallelPerp350": 0.0,
+                "Inequality150": 0.0,
+                "MetricRatioArea350": 0.0,
+                "OlympiadStyle300": 0.0,
+                "OrderCase250": 0.0,
+                "Transformation250": 0.0
+              },
+              "final_theorem_count": 1,
+              "overall_final_theorem_rate": 1.0,
+              "positive_count": 1,
               "safe_reject_success_on_in_target_positive": 0
             }
           },
@@ -1363,14 +1357,14 @@
         "scoped_reports": [
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B1:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B1.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
             "status": "passed"
           },
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B5.json",
             "status": "passed"
           },
           {
@@ -1441,14 +1435,14 @@
         "scoped_reports": [
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B1:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B1.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
             "status": "passed"
           },
           {
             "errors": [],
-            "run_id": "actual_full2d_run:full2d-positive-0000:B2:v0_4_3",
-            "source": "actual_task_pipeline_runs/full2d-positive-0000__B2.json",
+            "run_id": "actual_full2d_run:full2d-positive-0000:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B5.json",
             "status": "passed"
           },
           {
@@ -1584,7 +1578,7 @@
         "status": "failed",
         "used_rule_coverage_report": {
           "certificate_bound_rules": {
-            "actual_full2d_run:full2d-positive-0000:B1:v0_4_3": [
+            "actual_full2d_run:full2d-positive-0000:B2:v0_4_3": [
               "full2d_rule:algebraic_coordinate:01",
               "full2d_rule:angle_chase:01",
               "full2d_rule:case_split_orientation:01",
@@ -1594,11 +1588,10 @@
               "full2d_rule:inequality_length:01",
               "full2d_rule:transformation_reflection:01"
             ],
-            "actual_full2d_run:full2d-positive-0000:B2:v0_4_3": [
+            "actual_full2d_run:full2d-positive-0000:B5:v0_4_3": [
               "full2d_rule:algebraic_coordinate:01",
               "full2d_rule:angle_chase:01",
               "full2d_rule:case_split_orientation:01",
-              "full2d_rule:construction_line:01",
               "full2d_rule:directed_angle_mod_pi:01",
               "full2d_rule:incidence_collinearity:02",
               "full2d_rule:inequality_length:01",
@@ -1691,7 +1684,7 @@
     "open_release_blocker_count": 3,
     "open_work_debt_count": 0,
     "path": "C:\\Users\\bakat\\work\\AI_math_research\\docs\\ai\\changes\\geometry-full2d-v0_4_3\\debt\\debt_ledger.jsonl",
-    "sha256": "sha256:475dc7923f6ff0b796d9c4c1402e0ea13775204b0b3a76fab3c44c1aa68d3497"
+    "sha256": "sha256:a255f7911471ee61eb581fe884e6eda1ef55b061bc5d4acc50f54419394c106a"
   },
   "debt_ledger_summary": {
     "entry_count": 3,
@@ -1774,10 +1767,9 @@
         "schema_version": "1.0.0",
         "severity": "ReleaseBlocker",
         "status": "open",
-        "summary": "The release run directory contains replay-valid B2 ActualTaskPipelineRunV1 records and the matrix runner can execute missing records, but the full required matrix is missing. A probe B1 record also shows the current runner incorrectly uses geometry-engine successes under the geometry_solver-disabled baseline, so baseline semantics must be fixed before advantage evidence is valid.",
+        "summary": "The release run directory contains replay-valid ActualTaskPipelineRunV1 records, baseline-aware disabled-engine execution is enforced, and the matrix runner can execute missing records. The full required matrix is still missing, and current records do not satisfy family thresholds, advantage thresholds, or used-rule coverage floors.",
         "unblock_plan": [
           "Run or replay valid ActualTaskPipelineRunV1 records for the frozen v0.4.3 corpus and required baselines B1/B2/B5/B6/B7/B8.",
-          "Fix baseline execution so B1 does not reference GeometryFull2D engine successes and B5/B6/B7 do not reference their disabled engine successes.",
           "Produce enough counted final-theorem successes to satisfy family thresholds, advantage thresholds, and used-rule coverage floors from certificate-bound compiler rules.",
           "Recompute matrix, baseline comparability, used-rule coverage, metrics, and advantage summaries from those records."
         ]
@@ -1869,25 +1861,6 @@
   },
   "metrics_summary": {
     "by_baseline": {
-      "B1": {
-        "family_rates": {
-          "Algebraic250": 0.0,
-          "AngleCyclic450": 0.0,
-          "Construction450": 0.0,
-          "Full2DCore500": 1.0,
-          "HardHoldout50": 0.0,
-          "IncidenceParallelPerp350": 0.0,
-          "Inequality150": 0.0,
-          "MetricRatioArea350": 0.0,
-          "OlympiadStyle300": 0.0,
-          "OrderCase250": 0.0,
-          "Transformation250": 0.0
-        },
-        "final_theorem_count": 1,
-        "overall_final_theorem_rate": 1.0,
-        "positive_count": 1,
-        "safe_reject_success_on_in_target_positive": 0
-      },
       "B2": {
         "family_rates": {
           "Algebraic250": 0.0,
@@ -1905,6 +1878,25 @@
         "final_theorem_count": 2,
         "overall_final_theorem_rate": 1.0,
         "positive_count": 2,
+        "safe_reject_success_on_in_target_positive": 0
+      },
+      "B5": {
+        "family_rates": {
+          "Algebraic250": 0.0,
+          "AngleCyclic450": 0.0,
+          "Construction450": 0.0,
+          "Full2DCore500": 1.0,
+          "HardHoldout50": 0.0,
+          "IncidenceParallelPerp350": 0.0,
+          "Inequality150": 0.0,
+          "MetricRatioArea350": 0.0,
+          "OlympiadStyle300": 0.0,
+          "OrderCase250": 0.0,
+          "Transformation250": 0.0
+        },
+        "final_theorem_count": 1,
+        "overall_final_theorem_rate": 1.0,
+        "positive_count": 1,
         "safe_reject_success_on_in_target_positive": 0
       }
     },
@@ -2001,10 +1993,9 @@
         "schema_version": "1.0.0",
         "severity": "ReleaseBlocker",
         "status": "open",
-        "summary": "The release run directory contains replay-valid B2 ActualTaskPipelineRunV1 records and the matrix runner can execute missing records, but the full required matrix is missing. A probe B1 record also shows the current runner incorrectly uses geometry-engine successes under the geometry_solver-disabled baseline, so baseline semantics must be fixed before advantage evidence is valid.",
+        "summary": "The release run directory contains replay-valid ActualTaskPipelineRunV1 records, baseline-aware disabled-engine execution is enforced, and the matrix runner can execute missing records. The full required matrix is still missing, and current records do not satisfy family thresholds, advantage thresholds, or used-rule coverage floors.",
         "unblock_plan": [
           "Run or replay valid ActualTaskPipelineRunV1 records for the frozen v0.4.3 corpus and required baselines B1/B2/B5/B6/B7/B8.",
-          "Fix baseline execution so B1 does not reference GeometryFull2D engine successes and B5/B6/B7 do not reference their disabled engine successes.",
           "Produce enough counted final-theorem successes to satisfy family thresholds, advantage thresholds, and used-rule coverage floors from certificate-bound compiler rules.",
           "Recompute matrix, baseline comparability, used-rule coverage, metrics, and advantage summaries from those records."
         ]
@@ -2063,14 +2054,6 @@
     },
     {
       "evidence": [
-        "full2d-positive-0000:B1:geometry_solver_disabled_but_engine_successes:algebraic_geometry,construction_search,inequality,lean_proof_search,metric_angle,order_case,portfolio_coordinator,synthetic_closure,transformation"
-      ],
-      "kind": "ReleaseBlocker",
-      "rid": "CHECK",
-      "summary": "baseline_comparability failed"
-    },
-    {
-      "evidence": [
         "matrix_summary_status_not_passed"
       ],
       "kind": "ReleaseBlocker",
@@ -2081,7 +2064,6 @@
       "evidence": [
         "Algebraic250_rate_below_0.85:0.0",
         "AngleCyclic450_rate_below_0.9:0.0",
-        "B2_minus_B1_overall_below_0.25:0.0",
         "B2_minus_B5_construction_below_0.15:0.0",
         "B2_minus_B6_algebraic_metric_below_0.15:0.0",
         "B2_minus_B7_order_case_below_0.1:0.0",
@@ -2102,7 +2084,7 @@
     {
       "evidence": {
         "certificate_bound_rules": {
-          "actual_full2d_run:full2d-positive-0000:B1:v0_4_3": [
+          "actual_full2d_run:full2d-positive-0000:B2:v0_4_3": [
             "full2d_rule:algebraic_coordinate:01",
             "full2d_rule:angle_chase:01",
             "full2d_rule:case_split_orientation:01",
@@ -2112,11 +2094,10 @@
             "full2d_rule:inequality_length:01",
             "full2d_rule:transformation_reflection:01"
           ],
-          "actual_full2d_run:full2d-positive-0000:B2:v0_4_3": [
+          "actual_full2d_run:full2d-positive-0000:B5:v0_4_3": [
             "full2d_rule:algebraic_coordinate:01",
             "full2d_rule:angle_chase:01",
             "full2d_rule:case_split_orientation:01",
-            "full2d_rule:construction_line:01",
             "full2d_rule:directed_angle_mod_pi:01",
             "full2d_rule:incidence_collinearity:02",
             "full2d_rule:inequality_length:01",
@@ -2221,7 +2202,6 @@
       "evidence": [
         "Algebraic250_rate_below_0.85:0.0",
         "AngleCyclic450_rate_below_0.9:0.0",
-        "B2_minus_B1_overall_below_0.25:0.0",
         "B2_minus_B5_construction_below_0.15:0.0",
         "B2_minus_B6_algebraic_metric_below_0.15:0.0",
         "B2_minus_B7_order_case_below_0.1:0.0",
@@ -2256,7 +2236,7 @@
   },
   "used_rule_coverage_summary": {
     "certificate_bound_rules": {
-      "actual_full2d_run:full2d-positive-0000:B1:v0_4_3": [
+      "actual_full2d_run:full2d-positive-0000:B2:v0_4_3": [
         "full2d_rule:algebraic_coordinate:01",
         "full2d_rule:angle_chase:01",
         "full2d_rule:case_split_orientation:01",
@@ -2266,11 +2246,10 @@
         "full2d_rule:inequality_length:01",
         "full2d_rule:transformation_reflection:01"
       ],
-      "actual_full2d_run:full2d-positive-0000:B2:v0_4_3": [
+      "actual_full2d_run:full2d-positive-0000:B5:v0_4_3": [
         "full2d_rule:algebraic_coordinate:01",
         "full2d_rule:angle_chase:01",
         "full2d_rule:case_split_orientation:01",
-        "full2d_rule:construction_line:01",
         "full2d_rule:directed_angle_mod_pi:01",
         "full2d_rule:incidence_collinearity:02",
         "full2d_rule:inequality_length:01",

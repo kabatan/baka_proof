@@ -78,6 +78,7 @@ class GeometryFull2DProvider:
 
     def solve(self, request: GeometryFull2DSolveRequest) -> GeometryFull2DProviderRun:
         budget = ResourceBudget(budget=request.budget, timeout_sec=float(request.constraints.get("timeout_sec", 5.0)))
+        disabled_roles = _disabled_engine_roles(request)
         engine_input = EngineInputFull2D(
             schema_version="1.0.0",
             request_id=request.request_id,
@@ -88,6 +89,10 @@ class GeometryFull2DProvider:
         records: list[GeometryFull2DEngineRunRecord] = []
         usage_reports: list[dict[str, Any]] = []
         for role in ENGINE_ROLES:
+            if role in disabled_roles:
+                usage = resource_usage_report(request.request_id, role, "disabled_by_baseline", 0.0)
+                usage_reports.append(usage)
+                continue
             started = time.monotonic()
             resource_request = resource_request_for(role, budget)
             with self.governor.admit(resource_request):
@@ -237,6 +242,15 @@ def _artifact_root(request: GeometryFull2DSolveRequest) -> Path | None:
 
 def _task_id(request: GeometryFull2DSolveRequest) -> str:
     return request.task_id or request.request_id
+
+
+def _disabled_engine_roles(request: GeometryFull2DSolveRequest) -> set[str]:
+    component = str(request.constraints.get("disabled_component", "none"))
+    configured = request.constraints.get("disabled_engine_roles", ())
+    roles = {str(role) for role in configured if str(role) in ENGINE_ROLES} if isinstance(configured, (list, tuple, set)) else set()
+    if component == "geometry_solver":
+        return set(ENGINE_ROLES)
+    return roles
 
 
 def _write_typed_json(

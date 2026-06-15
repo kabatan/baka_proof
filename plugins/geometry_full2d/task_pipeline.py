@@ -40,6 +40,7 @@ def execute_actual_task_pipeline_v0_4_3(
     corpus_root = _resolve(corpus_root)
     run_dir.mkdir(parents=True, exist_ok=True)
     task = _task_by_id(corpus_root / "corpus_manifest.json", task_id)
+    baseline_constraints = _baseline_constraints(config_path, baseline_id)
     theorem_name = str(task["theorem_name"])
     run_id = f"actual_full2d_run:{task_id}:{baseline_id}:v0_4_3"
     artifact_paths: dict[str, str] = {}
@@ -84,7 +85,7 @@ def execute_actual_task_pipeline_v0_4_3(
             task_id=task_id,
             baseline_id=baseline_id,
             budget="tiny",
-            constraints={"release_mode": True, "artifact_root": str(run_dir / "artifacts")},
+            constraints={"release_mode": True, "artifact_root": str(run_dir / "artifacts"), **baseline_constraints},
             claim_spec=claim_payload,
             artifact_root=str(run_dir / "artifacts"),
         )
@@ -384,6 +385,21 @@ def _task_by_id(manifest_path: Path, task_id: str) -> dict[str, Any]:
         if isinstance(task, dict) and task.get("task_id") == task_id:
             return task
     raise ValueError(f"task_not_found:{task_id}")
+
+
+def _baseline_constraints(config_path: Path, baseline_id: str) -> dict[str, Any]:
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    if not isinstance(config, dict) or not isinstance(config.get("baselines"), list):
+        return {}
+    for baseline in config["baselines"]:
+        if not isinstance(baseline, dict) or baseline.get("baseline_id") != baseline_id:
+            continue
+        return {
+            "disabled_component": baseline.get("disabled_component", "none"),
+            "disabled_engine_roles": baseline.get("disabled_engine_roles", []),
+            "uses_geometry_solve": baseline.get("uses_geometry_solve"),
+        }
+    return {}
 
 
 def _extract_theorem_source(text: str, theorem_name: str) -> str:
