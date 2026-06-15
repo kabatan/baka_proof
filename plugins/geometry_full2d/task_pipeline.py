@@ -96,15 +96,27 @@ def execute_actual_task_pipeline_v0_4_3(
     engine_outputs = _load_engine_outputs(provider_run.engine_output_refs, provider_run.artifact_paths)
 
     try:
-        compiler_run = compile_full2d_engine_outputs(
-            task_id=task_id,
-            claim_spec=claim_payload,
-            claim_spec_ref=claim_ref,
-            provider_run_manifest_ref=provider_ref,
-            engine_outputs=engine_outputs,
-            artifact_root=run_dir / "artifacts",
-            artifact_paths=artifact_paths,
-        )
+        if baseline_constraints.get("uses_geometry_solve") is False:
+            compiler_run = _compile_direct_lean_baseline(
+                run_dir=run_dir,
+                task_id=task_id,
+                baseline_id=baseline_id,
+                claim_payload=claim_payload,
+                claim_ref=claim_ref,
+                provider_ref=provider_ref,
+                engine_refs=tuple(provider_run.engine_output_refs),
+                artifact_paths=artifact_paths,
+            )
+        else:
+            compiler_run = compile_full2d_engine_outputs(
+                task_id=task_id,
+                claim_spec=claim_payload,
+                claim_spec_ref=claim_ref,
+                provider_run_manifest_ref=provider_ref,
+                engine_outputs=engine_outputs,
+                artifact_root=run_dir / "artifacts",
+                artifact_paths=artifact_paths,
+            )
     except Exception as exc:
         return _write_compiler_measured_failure_record(
             run_dir=run_dir,
@@ -191,6 +203,7 @@ def execute_actual_task_pipeline_v0_4_3(
             worker_payload=worker_payload,
             patch_payload=compiler_run.lean_patch_candidate.to_dict(),
             artifact_paths=artifact_paths,
+            direct_lean_lemma_baseline_expected=_is_direct_lean_lemma(claim_payload),
         )
     else:
         certificate_ref, _certificate_payload = _write_measured_failure_certificate(
@@ -355,6 +368,7 @@ def _write_certificate(
     worker_payload: dict[str, Any],
     patch_payload: dict[str, Any],
     artifact_paths: dict[str, str],
+    direct_lean_lemma_baseline_expected: bool = False,
 ) -> tuple[str, dict[str, Any]]:
     certificate = SolverBackedProofCertificateFull2D.create(
         task_id=task_id,
@@ -383,6 +397,7 @@ def _write_certificate(
         used_rule_refs=list(patch_payload.get("used_rule_refs", ())),
         used_rule_ids=list(patch_payload.get("used_rule_ids", ())),
         target_library="GeometryFull2DTarget:1.0.0",
+        direct_lean_lemma_baseline_expected=direct_lean_lemma_baseline_expected,
     )
     return _write_typed_json(
         run_dir,
@@ -392,6 +407,153 @@ def _write_certificate(
         certificate.to_dict(),
         artifact_paths,
     )
+
+
+def _compile_direct_lean_baseline(
+    *,
+    run_dir: Path,
+    task_id: str,
+    baseline_id: str,
+    claim_payload: dict[str, Any],
+    claim_ref: str,
+    provider_ref: str,
+    engine_refs: tuple[str, ...],
+    artifact_paths: dict[str, str],
+) -> Any:
+    if not engine_refs:
+        raise ValueError("direct_lean_baseline_requires_disabled_engine_artifacts")
+    proof_text, rule_ids = _direct_lean_proof_text(claim_payload)
+    compiler_ref, compiler_payload = _write_typed_json(
+        run_dir,
+        "compiler_result_direct_lean_baseline",
+        "CompilerResultFull2D",
+        "result_id",
+        {
+            "schema_version": "1.0.0",
+            "compiler_id": "PortfolioCompilerFull2D",
+            "task_id": task_id,
+            "baseline_id": baseline_id,
+            "claim_spec_ref": claim_ref,
+            "provider_run_manifest_ref": provider_ref,
+            "consumed_engine_output_refs": list(engine_refs),
+            "input_engine_output_refs": list(engine_refs),
+            "consumed_normalized_output_refs": [],
+            "consumed_rule_ids": list(rule_ids),
+            "used_rule_ids": list(rule_ids),
+            "used_rule_refs": list(rule_ids),
+            "generated_obligations": ["obligation:direct_lean_baseline_no_geometry_solver"],
+            "side_condition_report_ref": _sha_text(f"direct_lean_baseline:{task_id}:{baseline_id}:{','.join(rule_ids)}"),
+            "lean_patch_candidate_ref": None,
+            "status": "compiled_patch",
+            "proof_use_status": "not_allowed",
+            "compile_mode": "proof_worker_only_direct_lean",
+        },
+        artifact_paths,
+    )
+    patch_payload_without_id = _direct_lean_patch_payload(
+        claim_payload=claim_payload,
+        claim_ref=claim_ref,
+        provider_ref=provider_ref,
+        engine_refs=engine_refs,
+        compiler_ref=compiler_ref,
+        rule_ids=rule_ids,
+        proof_text=proof_text,
+    )
+    patch_ref, patch_payload = _write_typed_json(
+        run_dir,
+        "lean_patch_candidate_direct_lean_baseline",
+        "LeanPatchCandidateFull2D",
+        "patch_id",
+        patch_payload_without_id,
+        artifact_paths,
+    )
+    patch_object = SimpleNamespace(
+        target_theorem_name=patch_payload["target_theorem_name"],
+        allowed_edit_region=patch_payload["allowed_edit_region"],
+        proof_region_replacement_text=patch_payload["proof_region_replacement_text"],
+        patch_id=patch_ref,
+        solver_dependency_refs=tuple(patch_payload["solver_dependency_refs"]),
+        to_dict=lambda payload=patch_payload: dict(payload),
+    )
+    return SimpleNamespace(
+        compiler_results=(compiler_payload,),
+        lean_patch_candidate=patch_object,
+        compiler_result_refs=(compiler_ref,),
+        lean_patch_candidate_ref=patch_ref,
+        artifact_paths=artifact_paths,
+    )
+
+
+def _direct_lean_patch_payload(
+    *,
+    claim_payload: dict[str, Any],
+    claim_ref: str,
+    provider_ref: str,
+    engine_refs: tuple[str, ...],
+    compiler_ref: str,
+    rule_ids: tuple[str, ...],
+    proof_text: str,
+) -> dict[str, Any]:
+    theorem_name = str(claim_payload["theorem_name"])
+    return {
+        "schema_version": "1.0.0",
+        "target_theorem_name": theorem_name,
+        "target_statement_hash": str(claim_payload["source_statement_hash"]),
+        "allowed_edit_region": {
+            "policy": "MARP proof region only",
+            "region_id": f"proof_region:{theorem_name}",
+            "start_marker": f"-- MARP_PROOF_REGION_START:{theorem_name}",
+            "end_marker": f"-- MARP_PROOF_REGION_END:{theorem_name}",
+        },
+        "proof_region_replacement_ref": _sha_text(proof_text),
+        "proof_region_replacement_text": proof_text,
+        "source_compiler_result_refs": [compiler_ref],
+        "compiler_result_refs": [compiler_ref],
+        "source_engine_output_refs": list(engine_refs),
+        "source_rule_ids": list(rule_ids),
+        "used_rule_ids": list(rule_ids),
+        "used_rule_refs": list(rule_ids),
+        "provider_run_manifest_ref": provider_ref,
+        "claim_spec_ref": claim_ref,
+        "solver_dependency_refs": [provider_ref, *engine_refs, compiler_ref],
+        "raw_provider_output_used_as_proof": False,
+        "status": "lean_patch_candidate",
+        "proof_use_status": "lean_patch_candidate",
+        "compile_mode": "proof_worker_only_direct_lean",
+    }
+
+
+def _direct_lean_proof_text(claim_payload: dict[str, Any]) -> tuple[str, tuple[str, ...]]:
+    target = claim_payload.get("target", {})
+    if not isinstance(target, dict):
+        raise ValueError("claim_target_not_object")
+    args = [str(arg) for arg in target.get("args", [])]
+    if str(target.get("family")) not in {"incidence", "collinear"} or len(args) != 3 or args[0] != args[1]:
+        raise ValueError("direct_lean_baseline_no_rule_for_target")
+    names = _claim_object_names(claim_payload)
+    left = names.get(args[0], _last_ref_part(args[0]))
+    right = names.get(args[2], _last_ref_part(args[2]))
+    return (f"  exact collinear_refl_left {left} {right}", ("full2d_rule:incidence_collinearity:02",))
+
+
+def _is_direct_lean_lemma(claim_payload: dict[str, Any]) -> bool:
+    try:
+        _direct_lean_proof_text(claim_payload)
+    except ValueError:
+        return False
+    return True
+
+
+def _claim_object_names(claim_payload: dict[str, Any]) -> dict[str, str]:
+    names: dict[str, str] = {}
+    for item in claim_payload.get("objects", ()):
+        if isinstance(item, dict) and item.get("object_id") and item.get("canonical_name"):
+            names[str(item["object_id"])] = str(item["canonical_name"])
+    return names
+
+
+def _last_ref_part(value: str) -> str:
+    return value.rsplit(":", 1)[-1]
 
 
 def _write_compiler_measured_failure_record(

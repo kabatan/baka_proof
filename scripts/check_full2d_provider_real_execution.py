@@ -168,6 +168,9 @@ def _validate_provider_run_payload(payload: dict[str, Any], base_dir: Path) -> l
     if not isinstance(artifact_paths, dict):
         return errors + ["provider_artifact_paths_not_object"]
     roles_seen: set[str] = set()
+    disabled_failure_roles: set[str] = set()
+    expected_roles = set(payload.get("expected_engine_roles", ENGINE_ROLES))
+    disabled_roles = set(ENGINE_ROLES) - expected_roles
     for engine_ref in engine_refs:
         path_value = artifact_paths.get(engine_ref)
         if not isinstance(path_value, str):
@@ -187,6 +190,9 @@ def _validate_provider_run_payload(payload: dict[str, Any], base_dir: Path) -> l
             errors.append(f"forbidden_backend_identity:{role}:{backend}")
         if engine_payload.get("proof_use_status") != "not_allowed":
             errors.append(f"engine_output_proof_use_not_allowed_violation:{role}")
+        if _is_disabled_measured_failure(engine_payload, disabled_roles):
+            disabled_failure_roles.add(role)
+            continue
         if engine_payload.get("real_integration_flag") is True:
             evidence_ref = engine_payload.get("real_integration_evidence_ref")
             if not isinstance(evidence_ref, str):
@@ -201,14 +207,24 @@ def _validate_provider_run_payload(payload: dict[str, Any], base_dir: Path) -> l
         normalized_ref = str(engine_payload.get("normalized_output_ref", ""))
         if manifest.get("task_id") and str(manifest["task_id"]) in normalized_ref:
             errors.append(f"normalized_output_ref_contains_task_id:{role}")
-    expected_roles = set(payload.get("expected_engine_roles", ENGINE_ROLES))
     missing_roles = sorted(expected_roles - roles_seen)
     if missing_roles:
         errors.append(f"provider_missing_release_engine_roles:{','.join(missing_roles)}")
-    unexpected_roles = sorted(roles_seen - expected_roles)
+    unexpected_roles = sorted((roles_seen - expected_roles) - disabled_failure_roles)
     if unexpected_roles:
         errors.append(f"provider_unexpected_disabled_engine_roles:{','.join(unexpected_roles)}")
     return sorted(set(errors))
+
+
+def _is_disabled_measured_failure(payload: dict[str, Any], disabled_roles: set[str]) -> bool:
+    role = str(payload.get("engine_role", ""))
+    return (
+        role in disabled_roles
+        and payload.get("status") == "measured_failure"
+        and payload.get("real_integration_flag") is False
+        and str(payload.get("backend_identity", "")).endswith(":disabled_by_baseline")
+        and payload.get("proof_use_status") == "not_allowed"
+    )
 
 
 def _expected_engine_roles(record: dict[str, Any]) -> set[str]:

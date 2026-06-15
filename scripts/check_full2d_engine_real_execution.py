@@ -129,6 +129,8 @@ def _check_run_engine_artifacts(run_dir: Path, errors: list[str]) -> list[dict[s
 def _validate_engine_artifact_set(engine_refs: list[str], artifact_paths: dict[str, str], base_dir: Path, *, expected_roles: set[str]) -> list[str]:
     errors: list[str] = []
     roles_seen: set[str] = set()
+    disabled_failure_roles: set[str] = set()
+    disabled_roles = set(ENGINE_ROLES) - expected_roles
     for engine_ref in engine_refs:
         path_value = artifact_paths.get(engine_ref)
         if not isinstance(path_value, str):
@@ -149,6 +151,9 @@ def _validate_engine_artifact_set(engine_refs: list[str], artifact_paths: dict[s
         backend = str(payload.get("backend_identity", "")).lower()
         if any(token in backend for token in FORBIDDEN_BACKEND_TOKENS):
             errors.append(f"forbidden_backend_identity:{role}:{backend}")
+        if _is_disabled_measured_failure(payload, disabled_roles):
+            disabled_failure_roles.add(role)
+            continue
         if payload.get("real_integration_flag") is not True:
             errors.append(f"real_integration_flag_not_true:{role}")
         evidence_ref = payload.get("real_integration_evidence_ref")
@@ -168,9 +173,21 @@ def _validate_engine_artifact_set(engine_refs: list[str], artifact_paths: dict[s
     if missing:
         errors.append(f"missing_engine_roles:{','.join(missing)}")
     unexpected = sorted(roles_seen - expected_roles)
+    unexpected = [role for role in unexpected if role not in disabled_failure_roles]
     if unexpected:
         errors.append(f"unexpected_disabled_engine_roles:{','.join(unexpected)}")
     return sorted(set(errors))
+
+
+def _is_disabled_measured_failure(payload: dict[str, Any], disabled_roles: set[str]) -> bool:
+    role = str(payload.get("engine_role", ""))
+    return (
+        role in disabled_roles
+        and payload.get("status") == "measured_failure"
+        and payload.get("real_integration_flag") is False
+        and str(payload.get("backend_identity", "")).endswith(":disabled_by_baseline")
+        and payload.get("proof_use_status") == "not_allowed"
+    )
 
 
 def _expected_engine_roles(record: dict[str, Any]) -> set[str]:
