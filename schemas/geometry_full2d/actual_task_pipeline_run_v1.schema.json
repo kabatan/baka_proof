@@ -1,0 +1,143 @@
+{
+  "$id": "geometry_full2d.actual_task_pipeline_run_v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "task_id",
+    "baseline_id",
+    "frozen_corpus_manifest_hash",
+    "config_hash",
+    "selected_implementations_hash",
+    "source_theorem_ref",
+    "source_theorem_path",
+    "source_theorem_preproved",
+    "lean_extraction_report_ref",
+    "claim_spec_ref",
+    "provider_run_manifest_ref",
+    "engine_output_refs",
+    "compiler_result_refs",
+    "lean_patch_candidate_ref",
+    "proof_worker_result_ref",
+    "generated_candidate_file_ref",
+    "final_verify_report_ref",
+    "solver_backed_certificate_ref",
+    "causal_chain_hash",
+    "final_status",
+    "artifact_paths"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0",
+      "type": "string"
+    },
+    "run_id": {
+      "pattern": "^actual_full2d_run:.+",
+      "type": "string"
+    },
+    "task_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "baseline_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "frozen_corpus_manifest_hash": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "config_hash": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "selected_implementations_hash": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "source_theorem_ref": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "source_theorem_path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "source_theorem_preproved": {
+      "type": "boolean"
+    },
+    "lean_extraction_report_ref": {
+      "pattern": "^GeometryFull2DExtraction:sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "claim_spec_ref": {
+      "pattern": "^GeometryFull2DClaimSpec:sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "provider_run_manifest_ref": {
+      "pattern": "^ProviderRunManifestFull2D:sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "engine_output_refs": {
+      "items": {
+        "pattern": "^[A-Za-z0-9_]+Full2D:sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "compiler_result_refs": {
+      "items": {
+        "pattern": "^CompilerResultFull2D:sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "lean_patch_candidate_ref": {
+      "pattern": "^LeanPatchCandidateFull2D:sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "proof_worker_result_ref": {
+      "pattern": "^ProofWorkerResultFull2D:sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "generated_candidate_file_ref": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "final_verify_report_ref": {
+      "pattern": "^FinalVerifyGateFull2D:sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "solver_backed_certificate_ref": {
+      "pattern": "^SolverBackedProofCertificateFull2D:sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "causal_chain_hash": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "final_status": {
+      "enum": [
+        "final_theorem",
+        "measured_failure"
+      ],
+      "type": "string"
+    },
+    "artifact_paths": {
+      "additionalProperties": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "failure_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}
