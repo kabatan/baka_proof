@@ -92,6 +92,8 @@ class GeometryFull2DProvider:
             if role in disabled_roles:
                 usage = resource_usage_report(request.request_id, role, "disabled_by_baseline", 0.0)
                 usage_reports.append(usage)
+                if _emit_disabled_engine_output(request):
+                    records.append(_disabled_engine_output(role, engine_input, budget, usage["report_id"]))
                 continue
             started = time.monotonic()
             resource_request = resource_request_for(role, budget)
@@ -251,6 +253,40 @@ def _disabled_engine_roles(request: GeometryFull2DSolveRequest) -> set[str]:
     if component == "geometry_solver":
         return set(ENGINE_ROLES)
     return roles
+
+
+def _emit_disabled_engine_output(request: GeometryFull2DSolveRequest) -> bool:
+    return str(request.constraints.get("disabled_component", "none")) == "geometry_solver"
+
+
+def _disabled_engine_output(
+    role: str,
+    engine_input: EngineInputFull2D,
+    budget: ResourceBudget,
+    usage_ref: str,
+) -> EngineOutputFull2D:
+    payload = {
+        "engine_role": role,
+        "request_id": engine_input.request_id,
+        "claim_spec_ref": engine_input.claim_spec_ref,
+        "budget": budget.budget,
+        "status": "measured_failure",
+        "reason": "disabled_by_baseline",
+        "proof_use_status": "not_allowed",
+    }
+    return EngineOutputFull2D(
+        schema_version="1.0.0",
+        engine_role=role,
+        backend_identity=f"geometry_full2d.{role}:disabled_by_baseline",
+        real_integration_flag=False,
+        fixture_flag=False,
+        input_ref=engine_input.input_ref(),
+        raw_output_hash=hash_ref(canonical_json(payload)),
+        normalized_output_ref=None,
+        checker_or_compiler_ref=None,
+        resource_usage_ref=usage_ref,
+        status="measured_failure",
+    )
 
 
 def _write_typed_json(

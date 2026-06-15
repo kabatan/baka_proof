@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 
 from math_auto_research.lean_integration.final_verify_gate import FinalVerifyGate
@@ -94,15 +95,37 @@ def execute_actual_task_pipeline_v0_4_3(
     provider_ref = provider_run.manifest_ref
     engine_outputs = _load_engine_outputs(provider_run.engine_output_refs, provider_run.artifact_paths)
 
-    compiler_run = compile_full2d_engine_outputs(
-        task_id=task_id,
-        claim_spec=claim_payload,
-        claim_spec_ref=claim_ref,
-        provider_run_manifest_ref=provider_ref,
-        engine_outputs=engine_outputs,
-        artifact_root=run_dir / "artifacts",
-        artifact_paths=artifact_paths,
-    )
+    try:
+        compiler_run = compile_full2d_engine_outputs(
+            task_id=task_id,
+            claim_spec=claim_payload,
+            claim_spec_ref=claim_ref,
+            provider_run_manifest_ref=provider_ref,
+            engine_outputs=engine_outputs,
+            artifact_root=run_dir / "artifacts",
+            artifact_paths=artifact_paths,
+        )
+    except Exception as exc:
+        return _write_compiler_measured_failure_record(
+            run_dir=run_dir,
+            config_path=config_path,
+            corpus_root=corpus_root,
+            corpus_task=task,
+            run_id=run_id,
+            task_id=task_id,
+            baseline_id=baseline_id,
+            theorem_name=theorem_name,
+            source_path=source_path,
+            source_ref=source_ref,
+            extraction_ref=extraction_ref,
+            extraction_payload=extraction_payload,
+            claim_ref=claim_ref,
+            claim_payload=claim_payload,
+            provider_ref=provider_ref,
+            provider_run=provider_run,
+            artifact_paths=artifact_paths,
+            failure_reason=f"compiler:{exc}",
+        )
     artifact_paths = _relative_artifact_paths(run_dir, artifact_paths)
 
     worker_result = apply_lean_patch_candidate(
@@ -150,22 +173,43 @@ def execute_actual_task_pipeline_v0_4_3(
         artifact_paths,
     )
 
-    certificate_ref, _certificate_payload = _write_certificate(
-        run_dir=run_dir,
-        task_id=task_id,
-        source_ref=source_ref,
-        extraction_ref=extraction_ref,
-        claim_ref=claim_ref,
-        provider_ref=provider_ref,
-        engine_refs=tuple(provider_run.engine_output_refs),
-        compiler_refs=compiler_run.compiler_result_refs,
-        patch_ref=compiler_run.lean_patch_candidate_ref,
-        worker_ref=worker_ref,
-        final_verify_ref=final_verify_ref,
-        worker_payload=worker_payload,
-        patch_payload=compiler_run.lean_patch_candidate.to_dict(),
-        artifact_paths=artifact_paths,
-    )
+    final_status = "final_theorem" if final_verify_payload.get("status") == "passed" else "measured_failure"
+    failure_reason = None if final_status == "final_theorem" else "final_verify_failed"
+    if final_status == "final_theorem":
+        certificate_ref, _certificate_payload = _write_certificate(
+            run_dir=run_dir,
+            task_id=task_id,
+            source_ref=source_ref,
+            extraction_ref=extraction_ref,
+            claim_ref=claim_ref,
+            provider_ref=provider_ref,
+            engine_refs=tuple(provider_run.engine_output_refs),
+            compiler_refs=compiler_run.compiler_result_refs,
+            patch_ref=compiler_run.lean_patch_candidate_ref,
+            worker_ref=worker_ref,
+            final_verify_ref=final_verify_ref,
+            worker_payload=worker_payload,
+            patch_payload=compiler_run.lean_patch_candidate.to_dict(),
+            artifact_paths=artifact_paths,
+        )
+    else:
+        certificate_ref, _certificate_payload = _write_measured_failure_certificate(
+            run_dir=run_dir,
+            task_id=task_id,
+            source_ref=source_ref,
+            extraction_ref=extraction_ref,
+            claim_ref=claim_ref,
+            provider_ref=provider_ref,
+            engine_refs=tuple(provider_run.engine_output_refs),
+            compiler_refs=compiler_run.compiler_result_refs,
+            patch_ref=compiler_run.lean_patch_candidate_ref,
+            worker_ref=worker_ref,
+            final_verify_ref=final_verify_ref,
+            worker_payload=worker_payload,
+            final_verify_payload=final_verify_payload,
+            artifact_paths=artifact_paths,
+            failure_reason=failure_reason,
+        )
 
     corpus_manifest = json.loads((corpus_root / "corpus_manifest.json").read_text(encoding="utf-8"))
     record = {
@@ -200,9 +244,9 @@ def execute_actual_task_pipeline_v0_4_3(
         "final_verify_report_ref": final_verify_ref,
         "solver_backed_certificate_ref": certificate_ref,
         "causal_chain_hash": "sha256:" + "0" * 64,
-        "final_status": "final_theorem",
+        "final_status": final_status,
         "artifact_paths": artifact_paths,
-        "failure_reason": None,
+        "failure_reason": failure_reason,
     }
     record["causal_chain_hash"] = compute_causal_chain_hash(record)
     record_dir = run_dir / "actual_task_pipeline_runs"
@@ -218,6 +262,7 @@ def execute_actual_task_pipeline_v0_4_3(
         "baseline_id": baseline_id,
         "record_path": str(record_path),
         "record_errors": record_errors,
+        "final_status": final_status,
         "final_verify_status": final_verify_payload.get("status"),
         "certificate_ref": certificate_ref,
     }
@@ -345,6 +390,335 @@ def _write_certificate(
         "SolverBackedProofCertificateFull2D",
         "certificate_id",
         certificate.to_dict(),
+        artifact_paths,
+    )
+
+
+def _write_compiler_measured_failure_record(
+    *,
+    run_dir: Path,
+    config_path: Path,
+    corpus_root: Path,
+    corpus_task: dict[str, Any],
+    run_id: str,
+    task_id: str,
+    baseline_id: str,
+    theorem_name: str,
+    source_path: Path,
+    source_ref: str,
+    extraction_ref: str,
+    extraction_payload: dict[str, Any],
+    claim_ref: str,
+    claim_payload: dict[str, Any],
+    provider_ref: str,
+    provider_run: Any,
+    artifact_paths: dict[str, str],
+    failure_reason: str,
+) -> dict[str, Any]:
+    engine_refs = tuple(provider_run.engine_output_refs)
+    if not engine_refs:
+        raise ValueError(f"measured_failure_requires_engine_output_refs:{failure_reason}")
+    rule_id = "full2d_rule:measured_failure:no_normalized_engine_output"
+    compiler_ref, compiler_payload = _write_typed_json(
+        run_dir,
+        "compiler_result_measured_failure",
+        "CompilerResultFull2D",
+        "result_id",
+        {
+            "schema_version": "1.0.0",
+            "compiler_id": "PortfolioCompilerFull2D",
+            "task_id": task_id,
+            "claim_spec_ref": claim_ref,
+            "provider_run_manifest_ref": provider_ref,
+            "consumed_engine_output_refs": list(engine_refs),
+            "input_engine_output_refs": list(engine_refs),
+            "consumed_normalized_output_refs": [],
+            "consumed_rule_ids": [rule_id],
+            "used_rule_ids": [],
+            "used_rule_refs": [],
+            "generated_obligations": [],
+            "side_condition_report_ref": _sha_text(f"measured_failure:{task_id}:{baseline_id}:{failure_reason}"),
+            "lean_patch_candidate_ref": None,
+            "status": "measured_failure",
+            "proof_use_status": "not_allowed",
+            "failure_reason": failure_reason,
+        },
+        artifact_paths,
+    )
+    patch_payload_without_id = _measured_failure_patch_payload(
+        claim_payload=claim_payload,
+        claim_ref=claim_ref,
+        provider_ref=provider_ref,
+        engine_refs=engine_refs,
+        compiler_ref=compiler_ref,
+        rule_id=rule_id,
+        failure_reason=failure_reason,
+    )
+    patch_ref, patch_payload = _write_typed_json(
+        run_dir,
+        "lean_patch_candidate_measured_failure",
+        "LeanPatchCandidateFull2D",
+        "patch_id",
+        patch_payload_without_id,
+        artifact_paths,
+    )
+    patch_object = SimpleNamespace(
+        target_theorem_name=patch_payload["target_theorem_name"],
+        allowed_edit_region=patch_payload["allowed_edit_region"],
+        proof_region_replacement_text=patch_payload["proof_region_replacement_text"],
+        patch_id=patch_ref,
+        solver_dependency_refs=tuple(patch_payload["solver_dependency_refs"]),
+    )
+    worker_result = apply_lean_patch_candidate(
+        source_path,
+        patch_object,
+        run_dir / "generated",
+        WorkerRunContext(run_id=run_id, task_id=task_id),
+    )
+    worker_payload = worker_result.to_dict()
+    worker_payload["lean_patch_candidate_ref"] = patch_ref
+    candidate_path, candidate_ref = _candidate_from_worker_or_failure_copy(
+        run_dir=run_dir,
+        run_id=run_id,
+        task_id=task_id,
+        source_path=source_path,
+        worker_payload=worker_payload,
+        failure_reason=failure_reason,
+    )
+    worker_payload["generated_candidate_file_ref"] = candidate_ref
+    worker_payload["proof_region_diff_hash"] = worker_payload.get("proof_region_diff_hash") or _sha_text(
+        f"no_patch:{run_id}:{failure_reason}"
+    )
+    artifact_paths[candidate_ref] = candidate_path.relative_to(run_dir).as_posix()
+    worker_ref, worker_payload = _write_typed_json(
+        run_dir,
+        "proof_worker_result_measured_failure",
+        "ProofWorkerResultFull2D",
+        "worker_result_id",
+        worker_payload,
+        artifact_paths,
+    )
+    final_verify_payload = _final_verify_payload(
+        source_path=source_path,
+        candidate_path=candidate_path,
+        theorem_name=theorem_name,
+        task_id=task_id,
+        extraction_ref=extraction_ref,
+        extraction_payload=extraction_payload,
+        provider_ref=provider_ref,
+        engine_refs=engine_refs,
+        compiler_refs=(compiler_ref,),
+        patch_ref=patch_ref,
+        worker_ref=worker_ref,
+        worker_payload=worker_payload,
+    )
+    final_verify_ref, final_verify_payload = _write_typed_json(
+        run_dir,
+        "final_verify_report_measured_failure",
+        "FinalVerifyGateFull2D",
+        "report_id",
+        final_verify_payload,
+        artifact_paths,
+    )
+    certificate_ref, _certificate_payload = _write_measured_failure_certificate(
+        run_dir=run_dir,
+        task_id=task_id,
+        source_ref=source_ref,
+        extraction_ref=extraction_ref,
+        claim_ref=claim_ref,
+        provider_ref=provider_ref,
+        engine_refs=engine_refs,
+        compiler_refs=(compiler_ref,),
+        patch_ref=patch_ref,
+        worker_ref=worker_ref,
+        final_verify_ref=final_verify_ref,
+        worker_payload=worker_payload,
+        final_verify_payload=final_verify_payload,
+        artifact_paths=artifact_paths,
+        failure_reason=failure_reason,
+    )
+    corpus_manifest = json.loads((corpus_root / "corpus_manifest.json").read_text(encoding="utf-8"))
+    record = {
+        "schema_version": "1.0.0",
+        "run_id": run_id,
+        "task_id": task_id,
+        "baseline_id": baseline_id,
+        "target_status": str(corpus_task.get("target_status", "in_target_positive")),
+        "theorem_family": str(corpus_task.get("theorem_family", "")),
+        "task_metadata": {
+            "target_status": str(corpus_task.get("target_status", "in_target_positive")),
+            "theorem_family": str(corpus_task.get("theorem_family", "")),
+            "grammar_family": str(corpus_task.get("grammar_family", "")),
+            "provenance": str(corpus_task.get("provenance", "")),
+            "source_statement_hash": str(corpus_task.get("source_statement_hash", "")),
+            "canonical_statement_hash": str(corpus_task.get("canonical_statement_hash", "")),
+        },
+        "frozen_corpus_manifest_hash": canonical_manifest_hash(corpus_manifest),
+        "config_hash": _sha_file(config_path),
+        "selected_implementations_hash": _selected_implementations_hash(),
+        "source_theorem_ref": source_ref,
+        "source_theorem_path": str(source_path),
+        "source_theorem_preproved": False,
+        "lean_extraction_report_ref": extraction_ref,
+        "claim_spec_ref": claim_ref,
+        "provider_run_manifest_ref": provider_ref,
+        "engine_output_refs": list(engine_refs),
+        "compiler_result_refs": [compiler_ref],
+        "lean_patch_candidate_ref": patch_ref,
+        "proof_worker_result_ref": worker_ref,
+        "generated_candidate_file_ref": candidate_ref,
+        "final_verify_report_ref": final_verify_ref,
+        "solver_backed_certificate_ref": certificate_ref,
+        "causal_chain_hash": "sha256:" + "0" * 64,
+        "final_status": "measured_failure",
+        "artifact_paths": artifact_paths,
+        "failure_reason": failure_reason,
+    }
+    record["causal_chain_hash"] = compute_causal_chain_hash(record)
+    record_dir = run_dir / "actual_task_pipeline_runs"
+    record_dir.mkdir(parents=True, exist_ok=True)
+    record_path = record_dir / f"{_safe_name(task_id)}__{_safe_name(baseline_id)}.json"
+    _write_json(record_path, record)
+    record_errors = validate_actual_task_pipeline_run(record, run_dir=run_dir)
+    return {
+        "schema_version": "1.0.0",
+        "status": "passed" if not record_errors else "failed",
+        "run_id": run_id,
+        "task_id": task_id,
+        "baseline_id": baseline_id,
+        "record_path": str(record_path),
+        "record_errors": record_errors,
+        "final_status": "measured_failure",
+        "final_verify_status": final_verify_payload.get("status"),
+        "certificate_ref": certificate_ref,
+        "failure_reason": failure_reason,
+    }
+
+
+def _measured_failure_patch_payload(
+    *,
+    claim_payload: dict[str, Any],
+    claim_ref: str,
+    provider_ref: str,
+    engine_refs: tuple[str, ...],
+    compiler_ref: str,
+    rule_id: str,
+    failure_reason: str,
+) -> dict[str, Any]:
+    theorem_name = str(claim_payload["theorem_name"])
+    proof_text = ""
+    return {
+        "schema_version": "1.0.0",
+        "target_theorem_name": theorem_name,
+        "target_statement_hash": str(claim_payload["source_statement_hash"]),
+        "allowed_edit_region": {
+            "policy": "MARP proof region only",
+            "region_id": f"proof_region:{theorem_name}",
+            "start_marker": f"-- MARP_PROOF_REGION_START:{theorem_name}",
+            "end_marker": f"-- MARP_PROOF_REGION_END:{theorem_name}",
+        },
+        "proof_region_replacement_ref": _sha_text(proof_text),
+        "proof_region_replacement_text": proof_text,
+        "source_compiler_result_refs": [compiler_ref],
+        "compiler_result_refs": [compiler_ref],
+        "source_engine_output_refs": list(engine_refs),
+        "source_rule_ids": [rule_id],
+        "used_rule_ids": [],
+        "used_rule_refs": [],
+        "provider_run_manifest_ref": provider_ref,
+        "claim_spec_ref": claim_ref,
+        "solver_dependency_refs": [provider_ref, *engine_refs, compiler_ref],
+        "raw_provider_output_used_as_proof": False,
+        "status": "lean_patch_candidate",
+        "proof_use_status": "lean_patch_candidate",
+        "failure_reason": failure_reason,
+    }
+
+
+def _candidate_from_worker_or_failure_copy(
+    *,
+    run_dir: Path,
+    run_id: str,
+    task_id: str,
+    source_path: Path,
+    worker_payload: dict[str, Any],
+    failure_reason: str,
+) -> tuple[Path, str]:
+    worker_output = worker_payload.get("worker_output")
+    if isinstance(worker_output, dict):
+        generated_path = worker_output.get("generated_candidate_path")
+        generated_ref = worker_payload.get("generated_candidate_file_ref")
+        if isinstance(generated_path, str) and isinstance(generated_ref, str):
+            path = Path(generated_path)
+            if path.exists():
+                return path, generated_ref
+    candidate_path = run_dir / "generated" / _safe_name(run_id) / _safe_name(task_id) / "measured_failure_candidate.lean"
+    candidate_path.parent.mkdir(parents=True, exist_ok=True)
+    candidate_path.write_text(source_path.read_text(encoding="utf-8"), encoding="utf-8")
+    candidate_ref = _sha_file(candidate_path)
+    if isinstance(worker_output, dict):
+        worker_output["generated_candidate_path"] = str(candidate_path)
+        blockers = list(worker_output.get("blockers", ()))
+        blockers.append(f"measured_failure_candidate_copy:{failure_reason}")
+        worker_output["blockers"] = tuple(blockers)
+    return candidate_path, candidate_ref
+
+
+def _write_measured_failure_certificate(
+    *,
+    run_dir: Path,
+    task_id: str,
+    source_ref: str,
+    extraction_ref: str,
+    claim_ref: str,
+    provider_ref: str,
+    engine_refs: tuple[str, ...],
+    compiler_refs: tuple[str, ...],
+    patch_ref: str,
+    worker_ref: str,
+    final_verify_ref: str,
+    worker_payload: dict[str, Any],
+    final_verify_payload: dict[str, Any],
+    artifact_paths: dict[str, str],
+    failure_reason: str | None,
+) -> tuple[str, dict[str, Any]]:
+    candidate_ref = str(worker_payload["generated_candidate_file_ref"])
+    payload = {
+        "schema_version": "1.0.0",
+        "task_id": task_id,
+        "source_statement_hash": source_ref,
+        "source_theorem_ref": source_ref,
+        "extraction_report_ref": extraction_ref,
+        "lean_extraction_report_ref": extraction_ref,
+        "claim_spec_ref": claim_ref,
+        "provider_run_manifest_ref": provider_ref,
+        "engine_output_refs": list(engine_refs),
+        "compiler_result_refs": list(compiler_refs),
+        "lean_patch_candidate_ref": patch_ref,
+        "proof_worker_result_ref": worker_ref,
+        "generated_candidate_file_ref": candidate_ref,
+        "final_verify_report_ref": final_verify_ref,
+        "proof_region_diff_ref": worker_payload.get("proof_region_diff_hash") or _sha_text(f"measured_failure:{task_id}"),
+        "checked_candidate_file_ref": candidate_ref,
+        "theorem_hash_unchanged": final_verify_payload.get("protected_theorem_hash_unchanged") is True,
+        "no_sorry": final_verify_payload.get("sorry_status") == "clean",
+        "no_forbidden_axioms": final_verify_payload.get("forbidden_axiom_status") == "clean",
+        "raw_solver_output_used_as_proof": False,
+        "raw_provider_output_used_as_proof": False,
+        "proof_use_status": "not_allowed",
+        "status": "measured_failure",
+        "final_status": "measured_failure",
+        "final_verify_status": final_verify_payload.get("status", "failed"),
+        "solver_dependency_status": "failed",
+        "failure_reason": failure_reason,
+        "target_library": "GeometryFull2DTarget:1.0.0",
+    }
+    return _write_typed_json(
+        run_dir,
+        "measured_failure_certificate",
+        "MeasuredFailureCertificateFull2D",
+        "certificate_id",
+        payload,
         artifact_paths,
     )
 
