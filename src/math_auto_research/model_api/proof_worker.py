@@ -12,6 +12,10 @@ from math_auto_research.lean_integration.lean_port import LeanPort
 from math_auto_research.model_api.work_order import WorkOrder
 
 
+FORBIDDEN_CANDIDATE_DECLARATIONS = re.compile(r"\b(axiom|admit|unsafe)\b")
+UNSAFE_TARGET_SEMANTICS_TOKENS = ("ToyGeometry", "LocalToyGeometry", "toy_geometry")
+
+
 @dataclass(frozen=True)
 class ProofWorkerPluginManifest:
     schema_version: str
@@ -62,6 +66,9 @@ def apply_lean_patch_candidate(
     blockers: list[str] = []
     source_text = source_problem_path.read_text(encoding="utf-8")
     blockers.extend(_source_problem_blockers(source_text))
+    target_name = str(patch_candidate.target_theorem_name)
+    if not _target_region_contains_sorry(source_text, target_name):
+        blockers.append(f"source_proof_region_missing_sorry:{target_name}")
     candidate_dir = output_dir / _safe_path_part(context.run_id) / _safe_path_part(context.task_id)
     output_path: Path | None = None
     diff_hash: str | None = None
@@ -73,9 +80,9 @@ def apply_lean_patch_candidate(
                 str(patch_candidate.allowed_edit_region["end_marker"]),
                 str(patch_candidate.proof_region_replacement_text),
             )
-            blockers.extend(_candidate_blockers(candidate_text, str(patch_candidate.target_theorem_name)))
-            blockers.extend(_outside_edit_blockers(source_text, candidate_text, str(patch_candidate.target_theorem_name)))
-            diff_hash = _proof_region_diff_hash(source_text, candidate_text, str(patch_candidate.target_theorem_name))
+            blockers.extend(_candidate_blockers(candidate_text, target_name))
+            blockers.extend(_outside_edit_blockers(source_text, candidate_text, target_name))
+            diff_hash = _proof_region_diff_hash(source_text, candidate_text, target_name)
             if not blockers:
                 candidate_dir.mkdir(parents=True, exist_ok=True)
                 output_path = candidate_dir / f"{_safe_path_part(str(patch_candidate.target_theorem_name))}.lean"
@@ -177,10 +184,15 @@ def _source_problem_blockers(text: str) -> tuple[str, ...]:
 
 
 def _candidate_blockers(text: str, target_name: str) -> tuple[str, ...]:
+    blockers: list[str] = []
     target_region = _single_region_text(text, target_name)
-    if re.search(r"\bsorry\b", target_region):
-        return ("generated_candidate_contains_sorry",)
-    return ()
+    if re.search(r"\bsorry\b", target_region) or re.search(r"\bsorry\b", text):
+        blockers.append("generated_candidate_contains_sorry")
+    if FORBIDDEN_CANDIDATE_DECLARATIONS.search(text):
+        blockers.append("generated_candidate_contains_forbidden_declaration")
+    if any(token in text for token in UNSAFE_TARGET_SEMANTICS_TOKENS):
+        blockers.append("generated_candidate_contains_unsafe_target_semantics")
+    return tuple(blockers)
 
 
 def _outside_edit_blockers(source_text: str, candidate_text: str, target_name: str) -> tuple[str, ...]:
@@ -215,8 +227,7 @@ def _proof_region_diff_hash(source_text: str, candidate_text: str, target_name: 
 
 def _target_regions(text: str, target_name: str, blockers: list[str]) -> tuple[tuple[int, int, str], ...]:
     proof = _regions(text, "-- MARP_PROOF_REGION_START:", "-- MARP_PROOF_REGION_END:", blockers)
-    helper = _regions(text, "-- MARP_HELPER_REGION_START:", "-- MARP_HELPER_REGION_END:", blockers)
-    target = tuple(region for region in proof + helper if region[2] == target_name)
+    target = tuple(region for region in proof if region[2] == target_name)
     if not any(region[2] == target_name for region in proof):
         blockers.append(f"missing_target_marp_proof_region:{target_name}")
     return target
@@ -265,3 +276,7 @@ def _single_region_text(text: str, target_name: str) -> str:
         return ""
     start, end, _name = matching[0]
     return "\n".join(text.splitlines()[start:end - 1])
+
+
+def _target_region_contains_sorry(text: str, target_name: str) -> bool:
+    return re.search(r"\bsorry\b", _single_region_text(text, target_name)) is not None

@@ -17,6 +17,7 @@ V043_RELEASE_SCRIPT_PATTERNS = (
     "scripts/check_full2d_engine_real_execution.py",
     "scripts/check_full2d_extraction_corpus.py",
     "scripts/check_full2d_compiler_evidence.py",
+    "scripts/check_full2d_proof_worker_hardening.py",
     "scripts/check_full2d_certificate_binding.py",
     "scripts/check_full2d_used_rule_coverage.py",
     "scripts/check_full2d_matrix_evidence.py",
