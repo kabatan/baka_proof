@@ -59,6 +59,7 @@ no v0.4.2 closure claim is treated as v0.4.3 release evidence
    - proof patch is chosen from `template_id`;
    - normalized solver ref is generated from `task_id`;
    - matrix applies sidecar overlay without replay-valid `ActualTaskPipelineRunV1`;
+   - any v0.4.3 release command imports `plugins.geometry_synthetic`;
    - release report summaries are empty.
 3. Add `scripts/check_no_v042_template_release_path.py`.
 
@@ -72,6 +73,7 @@ Pass criteria:
 
 ```text
 No v0.4.3 release command imports or calls the template artifact batch path.
+No v0.4.3 release command imports `plugins.geometry_synthetic`.
 No release script contains direct mapping from template_id/theorem_family to proof replacement text.
 No release script fabricates solver refs from task_id/theorem_name/template_id.
 ```
@@ -80,7 +82,7 @@ No release script fabricates solver refs from task_id/theorem_name/template_id.
 
 ### Tasks
 
-1. Add JSON schema: `schemas/geometry_full2d/actual_task_pipeline_run_v1.schema.json`.
+1. Add JSON schema: `schemas/geometry_full2d/actual_task_pipeline_run_v1.schema.json`, including the required `causal_chain_hash` field.
 2. Implement `plugins/geometry_full2d/run_records.py` with dataclasses and validators.
 3. Implement `scripts/check_actual_task_pipeline_runs.py`.
 4. Checker must verify:
@@ -92,6 +94,7 @@ No release script fabricates solver refs from task_id/theorem_name/template_id.
    - proof worker consumed compiler patch;
    - FinalVerifyGate checked generated candidate;
    - certificate binds all previous refs.
+   - `causal_chain_hash` is present; full recomputation and mutation controls are completed in WP-19.
 
 ### Acceptance
 
@@ -114,7 +117,10 @@ python scripts/extract_geometry_full2d_theorem.py --lean-file <path> --theorem-n
 2. The command must invoke `lake env lean` or a Lean elaborator-backed command for that exact theorem.
 3. Add Lean code or executable support to inspect the theorem declaration and emit structured JSON.
 4. If complete elaborator inspection is not possible for all grammar forms, unsupported extraction becomes measured failure, not success.
-5. Add `scripts/check_full2d_extraction_corpus.py` to run extraction for all counted positive successes and all negative tasks.
+5. Add `scripts/check_full2d_extraction_corpus.py` to run extraction for:
+   - 100% of counted positive successes;
+   - 100% of measured failures in sampled release metrics;
+   - 100% of target-outside / malformed negative tasks used for safe-reject metrics.
 
 ### Acceptance
 
@@ -128,6 +134,8 @@ Pass criteria:
 
 ```text
 Each counted positive success has LeanExtractionReportFull2D.
+Each measured failure in sampled release metrics has LeanExtractionReportFull2D or an extraction-backed measured-failure report.
+Each target-outside / malformed negative task used for safe-reject metrics has extraction evidence.
 No counted positive uses fixed smokeStatement JSON.
 The theorem_name and source_statement_hash match source theorem.
 regex_used_for_semantics=false for every counted success.
@@ -199,11 +207,13 @@ implement:
 2. Engine-specific challenge suite under `tests/fixtures/geometry_full2d/engine_challenges/<role>.jsonl`.
 3. Real integration evidence generator.
 4. Negative tests proving the engine does not depend on task_id/theorem_name/template_id.
+5. Implement `scripts/check_full2d_engine_real_execution.py` to enforce the Base Spec engine-real-execution requirements over source and run artifacts.
 
 ### Acceptance
 
 ```bash
 python scripts/check_full2d_engine_challenge_suite.py --all-engines
+python scripts/check_full2d_engine_real_execution.py --run-dir runs/geometry_full2d_v0_4_3 --self-test
 ```
 
 Pass criteria:
@@ -213,6 +223,8 @@ Each engine passes challenge suite.
 Each engine fails altered-input mutation tests when output should change.
 No engine source contains release benchmark theorem names.
 No engine source branches on template_id.
+No engine self-attests real execution without independent evidence.
+No normalized engine output is generated from task_id/template_id/theorem_name rather than ClaimSpec-dependent engine output.
 ```
 
 ## WP-07 — RuleRegistryFull2D used-rule coverage
@@ -431,8 +443,8 @@ python scripts/check_full2d_baseline_comparability.py --run-dir runs/geometry_fu
 
 ### Tasks
 
-1. Extend `ActualTaskPipelineRunV1` with `causal_chain_hash`.
-2. Implement recomputation in `scripts/check_actual_task_pipeline_runs.py`.
+1. Implement `causal_chain_hash` recomputation for `ActualTaskPipelineRunV1`.
+2. Enforce recomputation in `scripts/check_actual_task_pipeline_runs.py`.
 3. Add negative controls for reordered, missing, fabricated, or substituted artifacts.
 
 ### Acceptance
@@ -485,7 +497,7 @@ python scripts/check_anti_v042_regression.py
 ### Acceptance
 
 ```bash
-python scripts/check_release_acceptance_v0_4_3.py --config configs/benchmark_runs/geometry_full2d_v0_4_3.yaml --output docs/ai/changes/geometry-full2d_v0_4_3/evidence/release_acceptance_report.json
+python scripts/check_release_acceptance_v0_4_3.py --config configs/benchmark_runs/geometry_full2d_v0_4_3.yaml --output docs/ai/changes/geometry-full2d-v0_4_3/evidence/release_acceptance_report.json
 ```
 
 ## WP-22 — Closure review

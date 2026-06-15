@@ -76,7 +76,7 @@ Release must fail until all real pipeline requirements are satisfied.
 
 
 
-## 4. Additional integrated anti-gaming refactors
+## 5. Additional integrated anti-gaming refactors
 
 The following must also be removed from release paths or rewritten before release:
 

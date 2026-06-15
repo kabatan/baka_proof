@@ -92,7 +92,7 @@ ActualTaskPipelineRunV1
   lean_extraction_report_ref
   claim_spec_ref
   provider_run_manifest_ref
-  selected_engine_output_refs
+  engine_output_refs
   compiler_result_refs
   lean_patch_candidate_ref
   proof_worker_result_ref
@@ -304,6 +304,7 @@ ActualTaskPipelineRunV1:
   generated_candidate_file_ref: "sha256:..."
   final_verify_report_ref: "sha256:..."
   solver_backed_certificate_ref: "sha256:..."
+  causal_chain_hash: "sha256:..."
   final_status: "final_theorem | measured_failure"
 ```
 
@@ -768,7 +769,7 @@ source theorem artifact
 LeanExtractionReportFull2D
 GeometryFull2DClaimSpec
 ProviderRunManifestFull2D
-selected EngineOutputFull2D artifacts
+EngineOutputFull2D artifacts listed in engine_output_refs
 CompilerResultFull2D artifacts
 LeanPatchCandidateFull2D
 ProofWorkerResultFull2D

@@ -92,6 +92,7 @@ python scripts/check_full2d_engine_no_proof_text.py --run-dir runs/geometry_full
 python scripts/check_full2d_compiler_input_isolation.py --run-dir runs/geometry_full2d_v0_4_3 --self-test
 python scripts/check_full2d_baseline_comparability.py --run-dir runs/geometry_full2d_v0_4_3
 python scripts/check_actual_task_pipeline_runs.py --run-dir runs/geometry_full2d_v0_4_3 --self-test
+python scripts/check_full2d_engine_real_execution.py --run-dir runs/geometry_full2d_v0_4_3 --self-test
 python scripts/check_anti_v042_regression.py
 ```
 
@@ -114,7 +115,7 @@ actual_pipeline_run_summary
 
 Empty placeholder objects fail release.
 
-## D. R-ID checklist
+## G. R-ID checklist
 
 ### R-AUTH
 
@@ -131,6 +132,7 @@ R-REF-001 v0.4.2 template artifact path is not used by release matrix.
 R-REF-002 no release script maps template_id/theorem_family to proof text.
 R-REF-003 no release script fabricates solver refs from task_id/theorem_name/template_id.
 R-REF-004 no release matrix applies sidecar overlay without replay-valid ActualTaskPipelineRunV1.
+R-REF-005 no v0.4.3 release command imports plugins.geometry_synthetic.
 ```
 
 ### R-EXTRACT
@@ -141,6 +143,8 @@ R-EXT-002 extraction report is theorem-specific and matches source theorem hash.
 R-EXT-003 regex_used_for_semantics=false.
 R-EXT-004 no fixed smokeStatement is used for counted tasks.
 R-EXT-005 side conditions are preserved or reported as obligations/measured failures.
+R-EXT-006 measured failures in sampled release metrics have extraction evidence or extraction-backed measured-failure reports.
+R-EXT-007 target-outside / malformed negatives used for safe-reject metrics have extraction evidence.
 ```
 
 ### R-CLAIMSPEC
@@ -154,7 +158,7 @@ R-CLAIM-003 nondegeneracy/orientation/order/existence fields are present.
 ### R-PROVIDER
 
 ```text
-R-PROV-001 each counted success has actual provider.run manifest.
+R-PROV-001 each counted success has actual provider.solve run manifest.
 R-PROV-002 provider manifest is bound to task_id and claim_spec_ref.
 R-PROV-003 engine outputs are content-addressed.
 R-PROV-004 real_integration_flag is backed by evidence, not self-attestation.
@@ -229,7 +233,7 @@ R-DEBT-003 no open WorkDebt entries at closure.
 R-DEBT-004 release report reads debt ledger and includes its hash.
 ```
 
-## E. Anti-gaming tests
+## H. Anti-gaming tests
 
 Release must run all anti-gaming tests:
 
@@ -247,7 +251,7 @@ python scripts/check_full2d_metrics_v0_4_3.py --run-dir runs/geometry_full2d_v0_
 
 Any failure blocks release but should not stop unrelated implementation work.
 
-## F. Required negative controls
+## I. Required negative controls
 
 The checker suite must include negative controls proving release fails when:
 

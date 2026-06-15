@@ -72,22 +72,22 @@ A final theorem count is valid only if every counted task has a valid certificat
 
 
 
-## Invariant 9 — Engine semantic outputs only
+## Invariant 11 — Engine semantic outputs only
 
 Release-critical engines must output semantic artifacts only: facts, trace steps, constructions, side-condition reports, case/coverage reports, algebraic/metric/inequality certificates, and diagnostics. They must not output Lean proof text, tactic scripts, proof-region replacement text, exact lemma applications, theorem-family dispatch, task-id dispatch, or benchmark-template dispatch.
 
-## Invariant 10 — Compiler input isolation
+## Invariant 12 — Compiler input isolation
 
 Release compilers may not read benchmark labels. They may consume only ClaimSpec, engine artifacts, RuleRegistry, SideConditionCalculus, and the target hash/edit region. Any compiler path that reads `template_id`, `theorem_family`, `provenance`, `difficulty_tier`, or benchmark labels to decide proof text is invalid.
 
-## Invariant 11 — Substantive corpus is required
+## Invariant 13 — Substantive corpus is required
 
 A large corpus of shallow reflexivity/direct-lemma tasks is not sufficient. SubstantiveTaskProfileV1 and ReviewManifestV1 are release-critical. Direct-lemma successes may not exceed the release ceiling.
 
-## Invariant 12 — Baseline comparability is proof of advantage
+## Invariant 14 — Baseline comparability is proof of advantage
 
 Advantage metrics are valid only when baselines differ by the named disabled component and not by weaker FinalVerifyGate, weaker ProofWorker, hidden source theorem access, or different model/provider/resource setup.
 
-## Invariant 13 — Causal-chain hash binds the run
+## Invariant 15 — Causal-chain hash binds the run
 
 ActualTaskPipelineRunV1 must include a recomputable causal_chain_hash over the ordered source/extraction/claim/provider/engine/compiler/patch/worker/final-verify/certificate artifacts. Metrics may count only runs whose causal chain is valid.

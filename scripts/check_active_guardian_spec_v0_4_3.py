@@ -120,6 +120,28 @@ def _check_superseded_doc(errors: list[str], path: Path) -> None:
             errors.append(f"uncaveated_superseded_active_claim:{_relative(path)}:{line_number}")
 
 
+def _check_no_duplicate_heading_keys(errors: list[str], path: Path, pattern: str, label: str) -> None:
+    if not path.exists():
+        return
+    seen: dict[str, int] = {}
+    for line_number, line in enumerate(_read(path).splitlines(), start=1):
+        match = re.match(pattern, line)
+        if not match:
+            continue
+        key = match.group(1)
+        if key in seen:
+            errors.append(
+                f"duplicate_{label}:{_relative(path)}:{key}:lines_{seen[key]}_{line_number}"
+            )
+        else:
+            seen[key] = line_number
+
+
+def _check_required_text(errors: list[str], path: Path, needle: str, error: str) -> None:
+    if path.exists() and needle not in _read(path):
+        errors.append(error)
+
+
 def main() -> int:
     errors: list[str] = []
 
@@ -132,8 +154,22 @@ def main() -> int:
     import_evidence = ACTIVE_CHANGE_DIR / "evidence" / "v0_4_3_bundle_import.md"
     superseded_base = SUPERSEDED_CHANGE_DIR / "BASE_SPEC.md"
     superseded_docs = [SUPERSEDED_CHANGE_DIR / name for name in SUPERSEDED_TOP_LEVEL_DOCS]
+    invariants = ACTIVE_CHANGE_DIR / "REAL_PIPELINE_INVARIANTS.md"
+    refactor_directive = ACTIVE_CHANGE_DIR / "REFACTOR_DIRECTIVE.md"
 
-    for required in [active_context, index, plan, acceptance, base_spec, debt_ledger, import_evidence, superseded_base, *superseded_docs]:
+    for required in [
+        active_context,
+        index,
+        plan,
+        acceptance,
+        base_spec,
+        debt_ledger,
+        import_evidence,
+        superseded_base,
+        invariants,
+        refactor_directive,
+        *superseded_docs,
+    ]:
         _expect_file(errors, required)
 
     records = _base_spec_records()
@@ -210,6 +246,51 @@ def main() -> int:
             errors.append("import_evidence_hash_status_missing")
         if "No implementation work beyond Guardian authority installation is claimed" not in text:
             errors.append("import_evidence_claim_ceiling_missing")
+
+    for path in [base_spec, plan, acceptance, active_context, index, import_evidence]:
+        if path.exists() and "geometry-full2d_v0_4_3" in _read(path):
+            errors.append(f"bad_geometry_full2d_v0_4_3_path:{_relative(path)}")
+
+    _check_no_duplicate_heading_keys(errors, acceptance, r"^## ([A-Z])\. ", "acceptance_section")
+    _check_no_duplicate_heading_keys(errors, invariants, r"^## Invariant ([0-9]+) ", "pipeline_invariant")
+    _check_no_duplicate_heading_keys(errors, refactor_directive, r"^## ([0-9]+)\. ", "refactor_section")
+
+    _check_required_text(
+        errors,
+        plan,
+        "python scripts/check_full2d_engine_real_execution.py --run-dir runs/geometry_full2d_v0_4_3 --self-test",
+        "plan_missing_engine_real_execution_acceptance",
+    )
+    _check_required_text(
+        errors,
+        plan,
+        "No v0.4.3 release command imports `plugins.geometry_synthetic`.",
+        "plan_missing_geometry_synthetic_import_ban",
+    )
+    _check_required_text(
+        errors,
+        plan,
+        "100% of measured failures in sampled release metrics",
+        "plan_missing_measured_failure_extraction_scope",
+    )
+    _check_required_text(
+        errors,
+        base_spec,
+        'causal_chain_hash: "sha256:..."',
+        "base_spec_actual_run_schema_missing_causal_chain_hash",
+    )
+    _check_required_text(
+        errors,
+        plan,
+        "including the required `causal_chain_hash` field",
+        "plan_wp02_missing_causal_chain_hash_schema_requirement",
+    )
+    if base_spec.exists():
+        text = _read(base_spec)
+        if "selected_engine_output_refs" in text:
+            errors.append("base_spec_uses_ambiguous_selected_engine_output_refs")
+        if "engine_output_refs:" not in text:
+            errors.append("base_spec_missing_engine_output_refs_field")
 
     if errors:
         print(
