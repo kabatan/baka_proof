@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
@@ -45,11 +46,17 @@ class LeanPort:
             return _FILE_COMPILE_CACHE[cache_key]
         request = budget or ResourceRequest(component="lean_file", engine_role="lean_build", budget="tiny", timeout_sec=120)
         if Path("lakefile.lean").exists():
-            command = [self.lake_executable, "env", "lean", str(path)]
+            command = [self.lean_executable, str(path)]
+            env = _direct_lean_env()
         else:
             command = [self.lean_executable, str(path)]
-        report = run_guarded_process(command, request, self.governor)
+            env = None
+        report = run_guarded_process(command, request, self.governor, env=env)
         result = self._compile_result(report)
+        if result.status != "passed" and Path("lakefile.lean").exists() and _needs_lake_fallback(result.stderr):
+            fallback = [self.lake_executable, "env", "lean", str(path)]
+            fallback_report = run_guarded_process(fallback, request, self.governor)
+            result = self._compile_result(fallback_report)
         if cache_key is not None:
             _FILE_COMPILE_CACHE[cache_key] = result
         return result
@@ -89,3 +96,30 @@ def _is_within_workspace(path: Path) -> bool:
         return True
     except ValueError:
         return False
+
+
+def _direct_lean_env() -> dict[str, str]:
+    env = os.environ.copy()
+    paths = []
+    project_lib = Path(".lake") / "build" / "lib"
+    if project_lib.exists():
+        paths.append(str(project_lib.resolve()))
+    packages_root = Path(".lake") / "packages"
+    if packages_root.exists():
+        for package in sorted(path for path in packages_root.iterdir() if path.is_dir()):
+            package_lib = package / ".lake" / "build" / "lib"
+            if package_lib.exists():
+                paths.append(str(package_lib.resolve()))
+    source_root = Path("lean")
+    if source_root.exists():
+        paths.append(str(source_root.resolve()))
+    existing = env.get("LEAN_PATH")
+    if existing:
+        paths.append(existing)
+    if paths:
+        env["LEAN_PATH"] = os.pathsep.join(paths)
+    return env
+
+
+def _needs_lake_fallback(stderr: str) -> bool:
+    return "unknown module prefix" in stderr or "object file" in stderr or "No directory" in stderr

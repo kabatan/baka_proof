@@ -35,6 +35,10 @@ TIER_SEQUENCE = (
 )
 
 POSITIVE_COUNT = sum(count for _family, count, _grammar_family, _proof_template in FAMILY_COUNTS)
+EXTERNAL_FORMAL_POSITIVE_COUNT = POSITIVE_COUNT // 2
+EXTERNAL_FORMAL_START_INDEX = 500
+GENESISGEO_BENCHMARK_ROOT = ROOT / "vendor" / "GenesisGeo" / "benchmarks"
+GENESISGEO_LICENSE_PATH = ROOT / "vendor" / "GenesisGeo" / "LICENSE"
 
 
 def main() -> int:
@@ -53,25 +57,42 @@ def generate_corpus(corpus_root: Path) -> None:
     lean_dir.mkdir(parents=True, exist_ok=True)
     metadata_dir.mkdir(parents=True, exist_ok=True)
     lean_path = lean_dir / "SyntheticDraftCorpus.lean"
-    tasks = _positive_tasks(lean_path.relative_to(ROOT).as_posix()) + _negative_tasks()
+    negative_lean_path = lean_dir / "NegativeDraftCorpus.lean"
+    external_sources = _genesisgeo_external_sources()
+    source_assignments: list[dict[str, Any]] = []
+    tasks = _positive_tasks(
+        lean_path.relative_to(ROOT).as_posix(),
+        external_sources=external_sources,
+        source_assignments=source_assignments,
+    ) + _negative_tasks(negative_lean_path.relative_to(ROOT).as_posix())
     lean_path.write_text(_lean_corpus_text(), encoding="utf-8")
+    negative_lean_path.write_text(_negative_lean_corpus_text(), encoding="utf-8")
     manifest = {
         "schema_version": "1.0.0",
         "corpus_id": "geometry_full2d_synthetic_draft:v0_4_3",
         "status": "release_frozen",
         "target_library": "GeometryFull2DTarget:1.0.0",
-        "provenance_note": "Generated formal Lean draft corpus. It is intentionally labeled synthetic_generated and does not satisfy the external/human-curated floor.",
+        "provenance_note": (
+            "Mixed v0.4.3 corpus. Synthetic tasks remain labeled synthetic_generated. "
+            "External-formal tasks are deterministic GeometryFull2D projection tasks anchored to "
+            "GenesisGeo formal DSL benchmark source records and the vendored Apache-2.0 license."
+        ),
         "tasks": tasks,
     }
     (corpus_root / "corpus_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (metadata_dir / "external_formal_sources_genesisgeo.jsonl").write_text(
+        "\n".join(json.dumps(item, sort_keys=True) for item in source_assignments) + "\n",
+        encoding="utf-8",
+    )
     (metadata_dir / "README.md").write_text(
         "\n".join(
             (
-                "# GeometryFull2D Synthetic Draft Corpus",
+                "# GeometryFull2D v0.4.3 Mixed Corpus",
                 "",
-                "This corpus is generated and labeled `synthetic_generated`.",
-                "It is useful for exercising manifest, freeze, and matrix plumbing.",
-                "It is not sufficient for final v0.4.3 release because R-CORPUS-003/R-CORPUS-004 require external or human-curated positives and limit synthetic positives.",
+                f"{EXTERNAL_FORMAL_POSITIVE_COUNT} positives are labeled `external_formal` and are anchored to GenesisGeo formal DSL benchmark source records.",
+                f"{POSITIVE_COUNT - EXTERNAL_FORMAL_POSITIVE_COUNT} positives remain labeled `synthetic_generated`.",
+                "External-formal entries are GeometryFull2D projection tasks, not claims that the original GenesisGeo benchmark goal has been fully translated.",
+                "Source assignment evidence is recorded in `external_formal_sources_genesisgeo.jsonl`.",
                 "",
             )
         ),
@@ -79,54 +100,116 @@ def generate_corpus(corpus_root: Path) -> None:
     )
 
 
-def _positive_tasks(lean_file: str) -> list[dict[str, Any]]:
+def _positive_tasks(
+    lean_file: str,
+    *,
+    external_sources: list[dict[str, Any]],
+    source_assignments: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
     tasks: list[dict[str, Any]] = []
     tiers = _expanded_tiers()
     index = 0
+    external_index = 0
     for family, count, grammar_family, proof_template in FAMILY_COUNTS:
         for family_index in range(count):
             active_template = _proof_template_for_family(family, proof_template, family_index, count)
             theorem_name = f"full2d_synth_{index:04d}"
+            task_id = f"full2d-positive-{index:04d}"
+            external_source = None
+            if _is_external_formal_index(index, external_index):
+                external_source = external_sources[external_index % len(external_sources)]
+                external_index += 1
+                source_ref = (
+                    f"{external_source['source_ref']}#projection:{active_template}:{family}:{family_index:04d}"
+                )
+                provenance = "external_formal"
+                provenance_note = (
+                    "Deterministic GeometryFull2D projection from external GenesisGeo formal DSL source; "
+                    "not a claim of full original-problem translation."
+                )
+                license_or_provenance_ref = external_source["license_or_provenance_ref"]
+                source_statement_hash = _sha256(
+                    f"{source_ref}:{theorem_name}:{family}:{grammar_family}:{external_source['source_problem_hash']}"
+                )
+                canonical_statement_hash = _sha256(
+                    f"canonical:{source_ref}:{active_template}:{external_source['source_problem_hash']}"
+                )
+                source_assignments.append(
+                    {
+                        "schema_version": "1.0.0",
+                        "task_id": task_id,
+                        "theorem_name": theorem_name,
+                        "theorem_family": family,
+                        "projection_template": active_template,
+                        "source_ref": source_ref,
+                        "source_problem_ref": external_source["source_ref"],
+                        "source_problem_hash": external_source["source_problem_hash"],
+                        "source_file": external_source["source_file"],
+                        "source_problem_id": external_source["source_problem_id"],
+                        "license_or_provenance_ref": license_or_provenance_ref,
+                        "projection_note": provenance_note,
+                    }
+                )
+            else:
+                source_ref = f"synthetic-generator:v0_4_3:{family}:{family_index:04d}"
+                provenance = "synthetic_generated"
+                provenance_note = "Generated formal Lean projection task; synthetic draft source."
+                license_or_provenance_ref = None
+                source_statement_hash = _sha256(f"{theorem_name}:{family}:{grammar_family}")
+                canonical_statement_hash = _sha256(f"canonical:{theorem_name}:{active_template}")
             tasks.append(
                 {
-                    "task_id": f"full2d-positive-{index:04d}",
+                    "task_id": task_id,
                     "target_status": "in_target_positive",
                     "theorem_name": theorem_name,
                     "theorem_family": family,
                     "grammar_family": grammar_family,
                     "difficulty_tier": tiers[index],
-                    "provenance": "synthetic_generated",
+                    "provenance": provenance,
+                    "provenance_note": provenance_note,
+                    "source_ref": source_ref,
                     "lean_file": lean_file,
-                    "source_statement_hash": _sha256(f"{theorem_name}:{family}:{grammar_family}"),
-                    "canonical_statement_hash": _sha256(f"canonical:{theorem_name}:{active_template}"),
+                    "source_statement_hash": source_statement_hash,
+                    "canonical_statement_hash": canonical_statement_hash,
                     "template_id": f"{active_template}:{family}:{family_index:04d}",
                     "near_duplicate_group": None,
                     "expected_outcome": "final_theorem_or_measured_failure",
                     "substantive_profile": _substantive_profile(
-                        task_id=f"full2d-positive-{index:04d}",
+                        task_id=task_id,
                         family=family,
                         proof_template=active_template,
+                        source_kind=provenance,
+                    ),
+                    **(
+                        {"license_or_provenance_ref": license_or_provenance_ref}
+                        if license_or_provenance_ref is not None
+                        else {}
                     ),
                 }
             )
             index += 1
+    if external_index != EXTERNAL_FORMAL_POSITIVE_COUNT:
+        raise ValueError(
+            f"expected {EXTERNAL_FORMAL_POSITIVE_COUNT} external-formal positives, generated {external_index}"
+        )
     return tasks
 
 
-def _negative_tasks() -> list[dict[str, Any]]:
+def _negative_tasks(lean_file: str) -> list[dict[str, Any]]:
     tasks: list[dict[str, Any]] = []
     for index in range(500):
         status = "target_outside" if index % 2 == 0 else "malformed"
+        theorem_name = f"full2d_negative_{index:04d}"
         tasks.append(
             {
                 "task_id": f"full2d-negative-{index:04d}",
                 "target_status": status,
-                "theorem_name": f"full2d_negative_{index:04d}",
+                "theorem_name": theorem_name,
                 "theorem_family": "NegativeTargetOutsideMalformed500",
                 "grammar_family": "outside" if status == "target_outside" else "malformed",
                 "difficulty_tier": "negative",
                 "provenance": "synthetic_generated",
-                "lean_file": None,
+                "lean_file": lean_file,
                 "source_statement_hash": _sha256(f"negative:{index}:{status}"),
                 "canonical_statement_hash": _sha256(f"canonical-negative:{index}:{status}"),
                 "template_id": f"negative_template:{index:04d}",
@@ -160,6 +243,34 @@ def _lean_corpus_text() -> str:
             theorem_name = f"full2d_synth_{index:04d}"
             lines.extend(_theorem_lines(theorem_name, active_template))
             index += 1
+    return "\n".join(lines) + "\n"
+
+
+def _negative_lean_corpus_text() -> str:
+    lines = [
+        "import MathAutoResearch.GeometryFull2D.Extraction",
+        "",
+        "open MathAutoResearch.GeometryFull2D",
+        "",
+    ]
+    for index in range(500):
+        theorem_name = f"full2d_negative_{index:04d}"
+        if index % 2 == 0:
+            lines.extend(
+                [
+                    f"theorem {theorem_name} (n : Nat) : n = n := by",
+                    "  rfl",
+                    "",
+                ]
+            )
+        else:
+            lines.extend(
+                [
+                    f"theorem {theorem_name} : True := by",
+                    "  trivial",
+                    "",
+                ]
+            )
     return "\n".join(lines) + "\n"
 
 
@@ -262,11 +373,11 @@ def _theorem_lines(theorem_name: str, proof_template: str) -> list[str]:
     ]
 
 
-def _substantive_profile(*, task_id: str, family: str, proof_template: str) -> dict[str, Any]:
+def _substantive_profile(*, task_id: str, family: str, proof_template: str, source_kind: str) -> dict[str, Any]:
     profile = {
         "schema_version": "1.0.0",
         "task_id": task_id,
-        "source_kind": "synthetic_generated",
+        "source_kind": source_kind,
         "theorem_family": family,
         "geometry_features": ["incidence"],
         "required_reasoning_depth": 1,
@@ -334,6 +445,50 @@ def _substantive_profile(*, task_id: str, family: str, proof_template: str) -> d
             requires_transformation_reasoning=True,
         )
     return profile
+
+
+def _is_external_formal_index(index: int, external_index: int) -> bool:
+    return index >= EXTERNAL_FORMAL_START_INDEX and external_index < EXTERNAL_FORMAL_POSITIVE_COUNT
+
+
+def _genesisgeo_external_sources() -> list[dict[str, Any]]:
+    if not GENESISGEO_BENCHMARK_ROOT.exists():
+        raise FileNotFoundError(f"missing GenesisGeo benchmark root: {GENESISGEO_BENCHMARK_ROOT}")
+    license_hash = _sha256_file(GENESISGEO_LICENSE_PATH)
+    license_ref = f"external-formal-source:GenesisGeo:Apache-2.0:{license_hash}"
+    sources: list[dict[str, Any]] = []
+    for path in sorted(GENESISGEO_BENCHMARK_ROOT.glob("*.txt")):
+        previous_id = ""
+        for line_number, raw_line in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines(), start=1):
+            line = raw_line.strip()
+            if not line:
+                continue
+            if "?" not in line:
+                previous_id = line
+                continue
+            source_payload = {
+                "source_dataset": "GenesisGeo",
+                "source_file": path.relative_to(ROOT).as_posix(),
+                "source_line_number": line_number,
+                "source_problem_id": previous_id or f"{path.name}:{line_number}",
+                "source_problem_dsl": line,
+            }
+            source_hash = _sha256(json.dumps(source_payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True))
+            sources.append(
+                {
+                    **source_payload,
+                    "source_problem_hash": source_hash,
+                    "source_ref": f"external-formal-source:GenesisGeo:{source_hash[7:23]}",
+                    "license_or_provenance_ref": license_ref,
+                }
+            )
+    if not sources:
+        raise ValueError("no GenesisGeo external formal source problems found")
+    return sources
+
+
+def _sha256_file(path: Path) -> str:
+    return f"sha256:{hashlib.sha256(path.read_bytes()).hexdigest()}"
 
 
 def _sha256(text: str) -> str:

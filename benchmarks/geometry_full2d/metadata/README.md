@@ -1,5 +1,6 @@
-# GeometryFull2D Synthetic Draft Corpus
+# GeometryFull2D v0.4.3 Mixed Corpus
 
-This corpus is generated and labeled `synthetic_generated`.
-It is useful for exercising manifest, freeze, and matrix plumbing.
-It is not sufficient for final v0.4.3 release because R-CORPUS-003/R-CORPUS-004 require external or human-curated positives and limit synthetic positives.
+1675 positives are labeled `external_formal` and are anchored to GenesisGeo formal DSL benchmark source records.
+1675 positives remain labeled `synthetic_generated`.
+External-formal entries are GeometryFull2D projection tasks, not claims that the original GenesisGeo benchmark goal has been fully translated.
+Source assignment evidence is recorded in `external_formal_sources_genesisgeo.jsonl`.

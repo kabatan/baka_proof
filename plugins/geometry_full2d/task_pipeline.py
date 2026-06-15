@@ -74,16 +74,24 @@ def execute_actual_task_pipeline_v0_4_3(
         )
 
         claim_result = build_claim_spec_from_extraction_report(extraction_payload)
-        if claim_result.status != "accepted" or claim_result.claim_spec is None:
-            raise ValueError(f"claim_spec_not_accepted:{claim_result.status}")
-        claim_ref, claim_payload = _write_typed_json(
-            run_dir,
-            "claim_spec",
-            "GeometryFull2DClaimSpec",
-            "claim_id",
-            claim_result.claim_spec.to_dict(),
-            artifact_paths,
-        )
+        if claim_result.status == "accepted" and claim_result.claim_spec is not None:
+            claim_ref, claim_payload = _write_typed_json(
+                run_dir,
+                "claim_spec",
+                "GeometryFull2DClaimSpec",
+                "claim_id",
+                claim_result.claim_spec.to_dict(),
+                artifact_paths,
+            )
+        else:
+            claim_ref, claim_payload = _write_typed_json(
+                run_dir,
+                "claim_reject_report",
+                "GeometryFull2DClaimReject",
+                "report_id",
+                _claim_reject_payload(claim_result, extraction_payload),
+                artifact_paths,
+            )
     else:
         extraction_ref = str(frontend["extraction_ref"])
         extraction_payload = dict(frontend["extraction_payload"])
@@ -107,6 +115,28 @@ def execute_actual_task_pipeline_v0_4_3(
     artifact_paths.update(_relative_artifact_paths(run_dir, provider_run.artifact_paths))
     provider_ref = provider_run.manifest_ref
     engine_outputs = _load_engine_outputs(provider_run.engine_output_refs, provider_run.artifact_paths)
+
+    if _is_safe_reject_claim(claim_payload):
+        return _write_compiler_measured_failure_record(
+            run_dir=run_dir,
+            config_path=config_path,
+            corpus_root=corpus_root,
+            corpus_task=task,
+            run_id=run_id,
+            task_id=task_id,
+            baseline_id=baseline_id,
+            theorem_name=theorem_name,
+            source_path=source_path,
+            source_ref=source_ref,
+            extraction_ref=extraction_ref,
+            extraction_payload=extraction_payload,
+            claim_ref=claim_ref,
+            claim_payload=claim_payload,
+            provider_ref=provider_ref,
+            provider_run=provider_run,
+            artifact_paths=artifact_paths,
+            failure_reason="safe_reject",
+        )
 
     try:
         if baseline_constraints.get("uses_geometry_solve") is False:
@@ -311,6 +341,30 @@ def _write_source_problem(run_dir: Path, task: dict[str, Any]) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(source_text, encoding="utf-8")
     return path
+
+
+def _claim_reject_payload(claim_result: Any, extraction_payload: dict[str, Any]) -> dict[str, Any]:
+    canonical = dict(extraction_payload["canonical_statement"])
+    canonical["target_classification"] = dict(extraction_payload["target_classification"])
+    canonical["rejection_status"] = str(getattr(claim_result, "status", "target_outside"))
+    canonical["proof_use_status"] = "not_allowed"
+    target_outside = getattr(claim_result, "target_outside_report", None)
+    malformed = getattr(claim_result, "malformed_report", None)
+    if target_outside is not None:
+        canonical["target_outside_report"] = target_outside.to_dict()
+    if malformed is not None:
+        canonical["malformed_report"] = malformed.to_dict()
+    return canonical
+
+
+def _is_safe_reject_claim(claim_payload: dict[str, Any]) -> bool:
+    classification = claim_payload.get("target_classification")
+    if not isinstance(classification, dict):
+        return False
+    return (
+        classification.get("target_status") != "in_target_positive"
+        or classification.get("relation_to_goal") != "exact_goal"
+    )
 
 
 def _final_verify_payload(
@@ -1048,8 +1102,10 @@ def _selected_implementations_hash() -> str:
         "plugins/geometry_full2d/proof.py",
         "plugins/geometry_full2d/run_records.py",
         "plugins/geometry_full2d/task_pipeline.py",
+        "scripts/extract_geometry_full2d_theorem.py",
         "src/math_auto_research/model_api/proof_worker.py",
         "src/math_auto_research/lean_integration/final_verify_gate.py",
+        "src/math_auto_research/lean_integration/lean_port.py",
     ]
     payload = [
         {"path": path, "sha256": _sha_file(ROOT / path)}

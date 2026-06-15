@@ -11,11 +11,17 @@ from math_auto_research.base.resources.resource_budget import ResourceRequest
 from math_auto_research.base.resources.resource_governor import ResourceGovernor
 
 
-def run_guarded_process(command: list[str], request: ResourceRequest, governor: ResourceGovernor) -> dict[str, Any]:
+def run_guarded_process(
+    command: list[str],
+    request: ResourceRequest,
+    governor: ResourceGovernor,
+    *,
+    env: dict[str, str] | None = None,
+) -> dict[str, Any]:
     started_at = time.time()
     start_monotonic = time.monotonic()
     with governor.admit(request):
-        process_report = run_process_group(command, timeout_sec=request.timeout_sec)
+        process_report = run_process_group(command, timeout_sec=request.timeout_sec, env=env)
     ended_at = time.time()
     wall = time.monotonic() - start_monotonic
     exit_status = "killed" if process_report["timed_out"] else "completed" if process_report["returncode"] == 0 else "failed"
@@ -62,6 +68,8 @@ def run_process_group(
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         creationflags=creationflags,
         start_new_session=(os.name != "nt"),
         env=env,

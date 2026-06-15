@@ -60,6 +60,7 @@ def run_matrix(config_path: Path, run_dir: Path, *, max_executions: int = 0, wor
         config_path=config_path,
         corpus_root=corpus_root,
         run_dir=run_dir,
+        corpus_manifest=corpus_manifest,
         task_ids=matrix_task_ids,
         baseline_ids=required_baselines,
         max_executions=max_executions,
@@ -140,13 +141,15 @@ def _execute_missing_records(
     config_path: Path,
     corpus_root: Path,
     run_dir: Path,
+    corpus_manifest: dict[str, Any] | None,
     task_ids: tuple[str, ...],
     baseline_ids: tuple[str, ...],
     max_executions: int,
     workers: int,
 ) -> dict[str, Any]:
     errors: list[str] = []
-    existing = _record_key_set(_load_run_records(run_dir))
+    existing_records = _load_run_records(run_dir)
+    existing = _valid_record_key_set(existing_records, run_dir=run_dir, config_path=config_path, corpus_manifest=corpus_manifest)
     planned = [(task_id, baseline_id) for task_id in task_ids for baseline_id in baseline_ids]
     missing = [(task_id, baseline_id) for task_id, baseline_id in planned if (task_id, baseline_id) not in existing]
     executed: list[dict[str, Any]] = []
@@ -198,7 +201,9 @@ def _execute_missing_records(
         "max_executions": max_executions,
         "workers": workers,
         "planned_record_count": len(planned),
-        "existing_record_count_before_execution": len(existing),
+        "existing_record_count_before_execution": len(existing_records),
+        "valid_existing_record_count_before_execution": len(existing),
+        "invalid_or_stale_existing_record_count_before_execution": len(existing_records) - len(existing),
         "missing_record_count_before_execution": len(missing),
         "executed_record_count": len(executed),
         "failed_execution_count": len(failed),
@@ -300,6 +305,27 @@ def _record_summary(records: list[dict[str, Any]], *, run_dir: Path, required_ta
 
 def _record_key_set(records: list[dict[str, Any]]) -> set[tuple[str, str]]:
     return {(str(record.get("task_id")), str(record.get("baseline_id"))) for record in records}
+
+
+def _valid_record_key_set(
+    records: list[dict[str, Any]],
+    *,
+    run_dir: Path,
+    config_path: Path,
+    corpus_manifest: dict[str, Any] | None,
+) -> set[tuple[str, str]]:
+    expected_config_hash = _sha_file(config_path)
+    expected_corpus_hash = canonical_manifest_hash(corpus_manifest) if isinstance(corpus_manifest, dict) else None
+    valid: set[tuple[str, str]] = set()
+    for record in records:
+        errors = validate_actual_task_pipeline_run(record, run_dir=run_dir)
+        if expected_config_hash and record.get("config_hash") != expected_config_hash:
+            errors.append("record_config_hash_mismatch")
+        if expected_corpus_hash and record.get("frozen_corpus_manifest_hash") != expected_corpus_hash:
+            errors.append("record_frozen_corpus_manifest_hash_mismatch")
+        if not errors:
+            valid.add((str(record.get("task_id")), str(record.get("baseline_id"))))
+    return valid
 
 
 def _counted_certificate_engine_roles(records: list[dict[str, Any]], run_dir: Path) -> list[str]:

@@ -3,7 +3,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -172,7 +174,7 @@ def validate_lean_extraction_report_full2d(payload: dict[str, Any], *, lean_file
 
 def _compile_lean_file(lean_file: Path) -> dict[str, Any]:
     _ensure_local_lean_artifacts()
-    command = [_lake(), "env", "lean", "-R", "lean", str(lean_file)]
+    command = [_lean(), str(lean_file)]
     cache_key = (str(lean_file.resolve()), _file_sha256(lean_file))
     if cache_key in _LEAN_COMPILE_CACHE:
         cached = dict(_LEAN_COMPILE_CACHE[cache_key])
@@ -187,8 +189,23 @@ def _compile_lean_file(lean_file: Path) -> dict[str, Any]:
         encoding="utf-8",
         errors="replace",
         check=False,
-        env=_browser_suppressed_env(),
+        env=_direct_lean_env(),
     )
+    if completed.returncode != 0 and _needs_lake_fallback(completed.stderr):
+        fallback_command = [_lake(), "env", "lean", "-R", "lean", str(lean_file)]
+        fallback_completed = subprocess.run(
+            fallback_command,
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+            env=_browser_suppressed_env(),
+        )
+        if fallback_completed.returncode == 0:
+            command = fallback_command
+            completed = fallback_completed
     report = {
         "command": command,
         "returncode": completed.returncode,
@@ -199,6 +216,40 @@ def _compile_lean_file(lean_file: Path) -> dict[str, Any]:
     }
     _LEAN_COMPILE_CACHE[cache_key] = dict(report)
     return report
+
+
+def _lean() -> str:
+    elan_lean = Path.home() / ".elan" / "bin" / ("lean.exe" if sys.platform == "win32" else "lean")
+    if elan_lean.exists():
+        return str(elan_lean)
+    return shutil.which("lean") or "lean"
+
+
+def _direct_lean_env() -> dict[str, str]:
+    env = _browser_suppressed_env()
+    paths = []
+    project_lib = ROOT / ".lake" / "build" / "lib"
+    if project_lib.exists():
+        paths.append(str(project_lib.resolve()))
+    packages_root = ROOT / ".lake" / "packages"
+    if packages_root.exists():
+        for package in sorted(path for path in packages_root.iterdir() if path.is_dir()):
+            package_lib = package / ".lake" / "build" / "lib"
+            if package_lib.exists():
+                paths.append(str(package_lib.resolve()))
+    source_root = ROOT / "lean"
+    if source_root.exists():
+        paths.append(str(source_root.resolve()))
+    existing = env.get("LEAN_PATH")
+    if existing:
+        paths.append(existing)
+    if paths:
+        env["LEAN_PATH"] = os.pathsep.join(paths)
+    return env
+
+
+def _needs_lake_fallback(stderr: str) -> bool:
+    return "unknown module prefix" in stderr or "object file" in stderr or "No directory" in stderr
 
 
 def _canonical_statement(
