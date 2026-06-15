@@ -149,41 +149,58 @@ def proof_use_provenance_valid(provenance: dict[str, Any] | None) -> bool:
         return True
     solver_backed_required = {
         "provider_run_manifest_ref",
-        "normalized_solver_artifact_ref",
-        "compiler_result_ref",
         "lean_patch_candidate_ref",
-        "worker_result_ref",
         "proof_region_diff_hash",
         "generated_candidate_file_ref",
     }
     if not solver_backed_required.issubset(provenance):
         return False
+    worker_ref = provenance.get("worker_result_ref", provenance.get("proof_worker_result_ref"))
+    compiler_refs = _refs_from_provenance(provenance, "compiler_result_refs", "compiler_result_ref")
+    engine_refs = _refs_from_provenance(provenance, "engine_output_refs", "normalized_solver_artifact_ref")
+    if not worker_ref or not compiler_refs or not engine_refs:
+        return False
     return (
         _matches_ref(provenance["provider_run_manifest_ref"], ("provider_run_manifest:", "ProviderRunManifestFull2D:"))
-        and _matches_ref(
-            provenance["normalized_solver_artifact_ref"],
-            (
-                "geotrace:",
-                "aux_construction_candidate:",
-                "SyntheticClosureTraceFull2D:",
-                "ConstructionTraceFull2D:",
-                "AlgebraicCertificateFull2D:",
-                "MetricAngleTraceFull2D:",
-                "TransformationTraceFull2D:",
-                "CoverageGateFull2D:",
-                "InequalityCertificateFull2D:",
-                "PortfolioDecisionFull2D:",
-            ),
-        )
-        and _matches_ref(
-            provenance["compiler_result_ref"],
-            ("trace_compilation:", "construction_compilation:", "CompilerResultFull2D:"),
-        )
+        and all(_matches_ref(ref, _engine_or_solver_prefixes()) for ref in engine_refs)
+        and all(_matches_ref(ref, ("trace_compilation:", "construction_compilation:", "CompilerResultFull2D:")) for ref in compiler_refs)
         and _matches_ref(provenance["lean_patch_candidate_ref"], ("lean_patch:", "LeanPatchCandidateFull2D:"))
-        and _matches_ref(provenance["worker_result_ref"], ("worker_result:", "ProofWorkerResultFull2D:"))
+        and _matches_ref(worker_ref, ("worker_result:", "ProofWorkerResultFull2D:"))
         and _matches_sha256(provenance["proof_region_diff_hash"])
         and _matches_sha256(provenance["generated_candidate_file_ref"])
     )
+
+
+def _engine_or_solver_prefixes() -> tuple[str, ...]:
+    return (
+        "EngineOutputFull2D:",
+        "geotrace:",
+        "aux_construction_candidate:",
+        "Full2DTraceV1:",
+        "AuxiliaryConstructionFull2D:",
+        "SyntheticClosureTraceFull2D:",
+        "ConstructionTraceFull2D:",
+        "AlgebraicCertificateFull2D:",
+        "MetricAngleTraceFull2D:",
+        "TransformationTraceFull2D:",
+        "OrderCaseReportFull2D:",
+        "CoverageGateFull2D:",
+        "InequalityCertificateFull2D:",
+        "LeanPatchCandidateFull2D:",
+        "PortfolioDecisionFull2D:",
+    )
+
+
+def _refs_from_provenance(provenance: dict[str, Any], list_key: str, scalar_key: str) -> tuple[str, ...]:
+    value = provenance.get(list_key)
+    if isinstance(value, list):
+        return tuple(str(item) for item in value)
+    if isinstance(value, tuple):
+        return tuple(str(item) for item in value)
+    scalar = provenance.get(scalar_key)
+    if isinstance(scalar, str):
+        return (scalar,)
+    return ()
 
 
 def _matches_ref(value: Any, prefixes: tuple[str, ...]) -> bool:
