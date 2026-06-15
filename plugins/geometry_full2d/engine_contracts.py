@@ -21,6 +21,29 @@ ENGINE_ROLES: tuple[str, ...] = (
     "portfolio_coordinator",
 )
 ENGINE_STATUS = Literal["normalized_success", "measured_failure", "diagnostic"]
+FORBIDDEN_ENGINE_OUTPUT_FIELDS = frozenset(
+    {
+        "proof_text",
+        "tactic_script",
+        "lean_patch",
+        "proof_region_replacement_text",
+        "exact_lemma_application",
+        "benchmark_template_id",
+        "theorem_family_dispatch",
+        "task_id_dispatch",
+        "theorem_name_dispatch",
+    }
+)
+FORBIDDEN_ENGINE_OUTPUT_TEXT = (
+    " by\n",
+    " by ",
+    "exact ",
+    "apply ",
+    "simp ",
+    "aesop",
+    "nlinarith",
+    "linarith",
+)
 
 
 @dataclass(frozen=True)
@@ -180,12 +203,31 @@ def validate_engine_output(output: EngineOutputFull2D) -> list[str]:
             errors.append(f"{key}_missing_sha256")
     if output.fixture_flag and output.real_integration_flag:
         errors.append("fixture_and_real_integration_both_true")
+    errors.extend(validate_engine_semantic_output_payload(output.to_dict()))
     return errors
+
+
+def validate_engine_semantic_output_payload(payload: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    forbidden_fields = sorted(FORBIDDEN_ENGINE_OUTPUT_FIELDS.intersection(payload))
+    if forbidden_fields:
+        errors.append(f"engine_output_forbidden_proof_fields:{','.join(forbidden_fields)}")
+    for key, value in payload.items():
+        if key in {"backend_identity", "checker_or_compiler_ref", "resource_usage_ref"}:
+            continue
+        if isinstance(value, str) and _looks_like_proof_text(value):
+            errors.append(f"engine_output_forbidden_proof_text:{key}")
+    return sorted(set(errors))
 
 
 def detect_fixture_backend(backend_identity: str) -> bool:
     lowered = backend_identity.lower()
     return any(token in lowered for token in ("fixture", "dummy", "hardcoded", "test-only"))
+
+
+def _looks_like_proof_text(value: str) -> bool:
+    lowered = value.lower()
+    return any(token in lowered for token in FORBIDDEN_ENGINE_OUTPUT_TEXT)
 
 
 def canonical_json(payload: Any) -> str:
