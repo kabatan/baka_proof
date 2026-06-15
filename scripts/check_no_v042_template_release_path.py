@@ -13,6 +13,7 @@ V043_RELEASE_SCRIPT_PATTERNS = (
     "scripts/check_actual_task_pipeline_runs.py",
     "scripts/extract_geometry_full2d_theorem.py",
     "scripts/check_full2d_provider_real_execution.py",
+    "scripts/check_full2d_engine_challenge_suite.py",
     "scripts/check_full2d_engine_real_execution.py",
     "scripts/check_full2d_extraction_corpus.py",
     "scripts/check_full2d_compiler_evidence.py",

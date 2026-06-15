@@ -300,7 +300,7 @@ def _statement_parts(theorem_name: str, theorem_source: str) -> tuple[list[dict[
             hypotheses.append(hypothesis)
             lowered = type_expr.lower()
             if "≠" in type_expr or "!=" in type_expr or "ne " in lowered:
-                side_conditions["nondegeneracy"].append(type_expr)
+                side_conditions["nondegeneracy"].append(_canonical_condition(type_expr, objects))
             if "between" in lowered:
                 side_conditions["order_cases"].append(type_expr)
             if "exists" in lowered or "∃" in type_expr:
@@ -337,16 +337,28 @@ def _target_expr(theorem_source: str) -> str:
 
 
 def _target_args(target_expr: str, objects: list[dict[str, Any]]) -> list[str]:
-    args: list[str] = []
-    for obj in objects:
-        name = str(obj["canonical_name"])
-        if re.search(rf"\b{re.escape(name)}\b", target_expr):
-            args.append(str(obj["object_id"]))
-    return args
+    name_to_id = {str(obj["canonical_name"]): str(obj["object_id"]) for obj in objects}
+    tokens = re.findall(r"\b[A-Za-z][A-Za-z0-9_]*\b", target_expr)
+    return [name_to_id[token] for token in tokens if token in name_to_id]
 
 
 def _args_from_expr(expr: str, objects: list[dict[str, Any]]) -> list[str]:
     return _target_args(expr, objects)
+
+
+def _canonical_condition(expr: str, objects: list[dict[str, Any]]) -> str:
+    if "≠" in expr:
+        left, right = expr.split("≠", 1)
+        operator = "!="
+    elif "!=" in expr:
+        left, right = expr.split("!=", 1)
+        operator = "!="
+    else:
+        return expr
+    name_to_id = {str(obj["canonical_name"]): str(obj["object_id"]) for obj in objects}
+    left_ref = name_to_id.get(left.strip(), left.strip())
+    right_ref = name_to_id.get(right.strip(), right.strip())
+    return f"{left_ref} {operator} {right_ref}"
 
 
 def _family_from_target(target_expr: str, grammar_family: str) -> str:

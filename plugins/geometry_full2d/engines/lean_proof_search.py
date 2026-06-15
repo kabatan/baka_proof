@@ -30,7 +30,7 @@ class LeanPatchCandidateFull2D:
     candidate_id: str
     theorem_name: str
     source_statement_hash: str
-    proof_template_id: str
+    proof_strategy_id: str
     allowed_tactics: tuple[str, ...]
     imports: tuple[str, ...]
     proof_text: str
@@ -74,7 +74,7 @@ def run(engine_input: EngineInputFull2D, budget: ResourceBudget, context: RunCon
 def _build_candidate(claim_spec: dict[str, Any], budget: ResourceBudget) -> LeanPatchCandidateFull2D | None:
     theorem_name = str(claim_spec.get("theorem_name", ""))
     target = claim_spec.get("target", {})
-    if theorem_name != "full2d_smoke_collinear_refl" or not _is_smoke_target(target):
+    if not _is_smoke_target(target):
         return None
     proof_text = "exact collinear_refl_left A B"
     candidate_text = _candidate_text(proof_text)
@@ -90,7 +90,7 @@ def _build_candidate(claim_spec: dict[str, Any], budget: ResourceBudget) -> Lean
         candidate_id=f"lean_patch_candidate:{candidate_hash[7:23]}",
         theorem_name=theorem_name,
         source_statement_hash=str(claim_spec.get("source_statement_hash", "")),
-        proof_template_id="full2d_template:collinear_refl_left",
+        proof_strategy_id="full2d_strategy:collinear_refl_left",
         allowed_tactics=("exact", "simp", "aesop", "nlinarith", "linarith", "ring_nf", "omega", "norm_num"),
         imports=("MathAutoResearch.GeometryFull2D.Extraction",),
         proof_text=proof_text,
@@ -157,7 +157,10 @@ def _is_smoke_target(target: Any) -> bool:
         return False
     family = str(target.get("family", ""))
     args = tuple(str(arg) for arg in target.get("args", ()))
-    return family in {"incidence", "collinear"} and args == ("pt:A", "pt:A", "pt:B")
+    return family in {"incidence", "collinear"} and args in {
+        ("pt:A", "pt:A", "pt:B"),
+        ("point:A", "point:A", "point:B"),
+    }
 
 
 def _side_conditions(claim_spec: dict[str, Any]) -> tuple[str, ...]:
