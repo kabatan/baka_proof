@@ -1,0 +1,18 @@
+{
+  "checked_candidate_file_ref": "sha256:bc3c42802ffdbe19e9175ffebad0f809bb620cefde56f5ffcc375dcc5ed040ba",
+  "forbidden_axiom_status": "clean",
+  "lean_artifact_ref": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_2\\proof_artifact_batch\\full2d-curated-2673\\worker\\full2d_release_proof_artifact_batch\\full2d-curated-2673\\full2d_curated_2673.lean",
+  "lean_status": "passed",
+  "proof_artifact_ref": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_2\\proof_artifact_batch\\full2d-curated-2673\\worker\\full2d_release_proof_artifact_batch\\full2d-curated-2673\\full2d_curated_2673.lean",
+  "proof_region_guard_status": "passed",
+  "proof_use_provenance_status": "passed",
+  "proof_use_status": "final_theorem",
+  "protected_statement_hash_source": "source_problem",
+  "protected_theorem_hash_unchanged": true,
+  "report_id": "FinalVerifyGateFull2D:d5f99c3258e6f891cc6f8c483ee7c0b80c6b020fb843fc0d4deb9311a142c997",
+  "schema_version": "1.0.0",
+  "solver_backed_proof_status": "passed",
+  "sorry_status": "clean",
+  "target_obligation_id": "full2d-obligation:full2d-curated-2673",
+  "theorem_statement_hash": "sha256:c24a5c340226979b4724839543f7b8cc94374c8f8312571f1252fbbbac430e25"
+}

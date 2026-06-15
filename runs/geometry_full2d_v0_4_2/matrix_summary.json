@@ -1,10 +1,10 @@
 {
-  "artifact_overlay_final_theorem_count": 1330,
+  "artifact_overlay_final_theorem_count": 1715,
   "corpus_manifest_hash": "sha256:0753f2b0c2ecaabe003248e46e16127216e4eb05cbe371b0cc338e9daf928e6e",
   "family_rates": {
     "Algebraic250": {
-      "final_theorem": 40,
-      "rate": 0.08,
+      "final_theorem": 425,
+      "rate": 0.85,
       "total": 500
     },
     "AngleCyclic450": {
@@ -58,8 +58,8 @@
       "total": 500
     }
   },
-  "final_theorem_count": 1330,
-  "overall_final_theorem_rate": 0.19850746268656716,
+  "final_theorem_count": 1715,
+  "overall_final_theorem_rate": 0.25597014925373135,
   "positive_count": 6700,
   "release_frozen": true,
   "schema_version": "1.0.0",
