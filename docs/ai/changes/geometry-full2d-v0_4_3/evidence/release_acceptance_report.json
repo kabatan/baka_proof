@@ -1,0 +1,1700 @@
+{
+  "actual_pipeline_run_summary": {
+    "by_baseline": {},
+    "derived_from_actual_task_pipeline_runs": true,
+    "record_count": 0
+  },
+  "advantage_summary": {
+    "B2_minus_B1_overall": 0.0,
+    "B2_minus_B5_construction": 0.0,
+    "B2_minus_B6_algebraic_metric": 0.0,
+    "B2_minus_B7_order_case": 0.0,
+    "B2_minus_B8_olympiad": 0.0,
+    "derived_from": "ActualTaskPipelineRunV1"
+  },
+  "anti_v042_regression_status": "passed",
+  "baseline_comparability_summary": {
+    "baseline_count": 6,
+    "config_hash": "sha256:8c3473acd1e2758686fbd6a2b9e7758db3b4972253dae5706e232db44b1b9bc1",
+    "matrix_report_present": true,
+    "required_baselines": [
+      "B1",
+      "B2",
+      "B5",
+      "B6",
+      "B7",
+      "B8"
+    ]
+  },
+  "causal_chain_summary": {
+    "record_count": 0,
+    "record_reports": [],
+    "self_test_status": "passed"
+  },
+  "checked_rids": [
+    "R-AUTH-001",
+    "R-AUTH-002",
+    "R-AUTH-003",
+    "R-REF-001",
+    "R-REF-002",
+    "R-REF-003",
+    "R-REF-004",
+    "R-REF-005",
+    "R-EXT-001",
+    "R-CLAIM-001",
+    "R-PROV-001",
+    "R-ENG-001",
+    "R-COMP-001",
+    "R-PROOF-001",
+    "R-CORPUS-001",
+    "R-MET-001",
+    "R-ADV-001",
+    "R-DEBT-001"
+  ],
+  "checks": {
+    "active_guardian_spec": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_active_guardian_spec_v0_4_3.py"
+      ],
+      "errors": [
+        "unparseable_json_stdout"
+      ],
+      "report": {
+        "active_base_spec_path": "docs/ai/changes/geometry-full2d-v0_4_3/BASE_SPEC.md",
+        "active_geometry_base_spec": "MARP-GEOLEAN-BASE-008",
+        "base_specs": [
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-full2d-v0_4_2/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-007",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-008"
+          },
+          {
+            "active": true,
+            "path": "docs/ai/changes/geometry-full2d-v0_4_3/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-008",
+            "status": "USER_APPROVED_ACTIVE"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-003",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/ACCEPTANCE_MATRIX.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          }
+        ],
+        "status": "passed",
+        "superseded_geometry_base_spec": "MARP-GEOLEAN-BASE-007"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "actual_task_pipeline_runs": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_actual_task_pipeline_runs.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "--self-test"
+      ],
+      "errors": [],
+      "report": {
+        "errors": [],
+        "record_count": 0,
+        "record_reports": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "self_test": {
+          "cases": [
+            {
+              "case": "valid_record",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "case": "missing_provider_manifest",
+              "errors": [
+                "actual_full2d_run:selftest:B2:0001:missing_artifact_path:ProviderRunManifestFull2D:sha256:ca0657383440a03157e079bcf1b17bff1bf382918f57cf35421dc2b80e608001"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "fabricated_solver_ref",
+              "errors": [
+                "actual_full2d_run:selftest:B2:0001:artifact_identity_mismatch:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "actual_full2d_run:selftest:B2:0001:certificate_engine_output_refs_mismatch",
+                "actual_full2d_run:selftest:B2:0001:compiler_did_not_consume_engine_output:CompilerResultFull2D:sha256:f9d775ea5654b4f0605ffa9bc5a750e771ddfddc660386a0c5d3d2ce54f029c8",
+                "actual_full2d_run:selftest:B2:0001:provider_missing_engine_output_refs:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "actual_full2d_run:selftest:B2:0001:typed_artifact_hash_mismatch:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff:C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-run-record-selftest-fnbr4_c5\\artifacts\\engine_output.json"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "missing_extraction_report",
+              "errors": [
+                "actual_full2d_run:selftest:B2:0001:missing_artifact_path:GeometryFull2DExtraction:sha256:7eb96328340f2f36ba698e58dbdc3f383d78e99bbd684f8d8149b16bafa44ccb"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "source_theorem_already_proved",
+              "errors": [
+                "actual_full2d_run:selftest:B2:0001:source_theorem_already_preproved"
+              ],
+              "status": "failed_as_expected"
+            }
+          ],
+          "errors": [],
+          "status": "passed"
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "anti_v042_regression": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_anti_v042_regression.py"
+      ],
+      "errors": [],
+      "report": {
+        "anti_v042_regression_status": "passed",
+        "errors": [],
+        "fixture": "C:\\Users\\bakat\\work\\AI_math_research\\tests\\fixtures\\geometry_full2d\\anti_v042_template_overlay\\legacy_overlay_path.py",
+        "fixture_rejection_errors": [
+          "release_path_template_dispatch:tests/fixtures/geometry_full2d/anti_v042_template_overlay/legacy_overlay_path.py:template_id\\s*(?:==|in|\\.get\\()",
+          "release_path_fabricated_solver_ref:tests/fixtures/geometry_full2d/anti_v042_template_overlay/legacy_overlay_path.py:normalized_solver(?:_artifact)?_ref\\s*=.*theorem_name"
+        ],
+        "schema_version": "1.0.0",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "baseline_comparability": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_baseline_comparability.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3"
+      ],
+      "errors": [],
+      "report": {
+        "baseline_comparability_summary": {
+          "baseline_count": 6,
+          "config_hash": "sha256:8c3473acd1e2758686fbd6a2b9e7758db3b4972253dae5706e232db44b1b9bc1",
+          "matrix_report_present": true,
+          "required_baselines": [
+            "B1",
+            "B2",
+            "B5",
+            "B6",
+            "B7",
+            "B8"
+          ]
+        },
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "certificate_binding": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_certificate_binding.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "--self-test"
+      ],
+      "errors": [],
+      "report": {
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "scoped_reports": [],
+        "self_test": {
+          "cases": [
+            {
+              "case": "valid_certificate_binding",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "case": "modified_candidate_file",
+              "errors": [
+                "checked_candidate_file_hash_mismatch"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "mismatched_provider_manifest",
+              "errors": [
+                "certificate_id_content_mismatch",
+                "certificate_provider_run_manifest_ref_mismatch"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "fabricated_engine_ref",
+              "errors": [
+                "certificate_engine_output_refs_mismatch",
+                "certificate_id_content_mismatch"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "raw_solver_output_proof_use",
+              "errors": [
+                "certificate_id_content_mismatch",
+                "raw_solver_output_used_as_proof"
+              ],
+              "status": "failed_as_expected"
+            }
+          ],
+          "errors": [],
+          "status": "passed"
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "claimspec": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_claimspec_v0_4_3.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "--self-test"
+      ],
+      "errors": [],
+      "report": {
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "scoped_reports": [],
+        "self_test": {
+          "cases": [
+            {
+              "case": "valid_extraction_report",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "case": "missing_side_conditions",
+              "errors": [
+                "canonical:side_conditions:missing_orientation"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "non_exact_relation",
+              "errors": [
+                "canonical:positive_classification_not_exact_goal",
+                "positive_classification_not_exact_goal"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "synthetic_python_classification",
+              "errors": [
+                "synthetic_python_classification_not_allowed"
+              ],
+              "status": "failed_as_expected"
+            }
+          ],
+          "errors": [],
+          "status": "passed"
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "compiler_evidence": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_compiler_evidence.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "--self-test"
+      ],
+      "errors": [],
+      "report": {
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "scoped_reports": [],
+        "self_test": {
+          "cases": [
+            {
+              "case": "valid_compiler_run",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "case": "no_consumed_engine_output",
+              "errors": [
+                "compiler_missing_consumed_engine_output_refs",
+                "compiler_result_ref_content_mismatch"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "no_consumed_rule_ids",
+              "errors": [
+                "compiler_missing_consumed_rule_ids",
+                "compiler_result_ref_content_mismatch"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "benchmark_label_patch",
+              "errors": [
+                "patch_benchmark_label_source_detected",
+                "patch_id_content_mismatch"
+              ],
+              "status": "failed_as_expected"
+            }
+          ],
+          "errors": [],
+          "status": "passed"
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "compiler_input_isolation": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_compiler_input_isolation.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "--self-test"
+      ],
+      "errors": [],
+      "report": {
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "self_test": {
+          "cases": [
+            {
+              "case": "forbidden_metadata_does_not_select_proof_text",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "case": "legacy_key_patch_rejected",
+              "errors": [
+                "patch_benchmark_label_source_detected",
+                "patch_id_content_mismatch"
+              ],
+              "status": "failed_as_expected"
+            }
+          ],
+          "errors": [],
+          "status": "passed"
+        },
+        "static_report": {
+          "errors": [],
+          "status": "passed"
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "corpus_manifest": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_corpus_manifest_v0_4_3.py",
+        "--corpus-root",
+        "benchmarks/geometry_full2d"
+      ],
+      "errors": [
+        "external_or_user_reviewed_positive_lt_900:0",
+        "synthetic_positive_fraction_gt_0_5:6700/6700"
+      ],
+      "report": {
+        "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d",
+        "corpus_summary": {
+          "external_or_user_reviewed_positive_count": 0,
+          "family_counts": {
+            "Algebraic250": 500,
+            "AngleCyclic450": 900,
+            "Construction450": 900,
+            "Full2DCore500": 1000,
+            "HardHoldout50": 100,
+            "IncidenceParallelPerp350": 700,
+            "Inequality150": 300,
+            "MetricRatioArea350": 700,
+            "OlympiadStyle300": 600,
+            "OrderCase250": 500,
+            "Transformation250": 500
+          },
+          "manifest_hash": "sha256:f31c646f91ec690950d2e7201e4777f1e1bf1c59d88c3b088c523a5e155375da",
+          "near_duplicate_positive_count": 0,
+          "negative_target_outside_malformed_count": 500,
+          "positive_count": 6700,
+          "provenance_counts": {
+            "synthetic_generated": 6700
+          },
+          "synthetic_positive_count": 6700,
+          "synthetic_positive_fraction": 1.0,
+          "task_count": 7200
+        },
+        "errors": [
+          "external_or_user_reviewed_positive_lt_900:0",
+          "synthetic_positive_fraction_gt_0_5:6700/6700"
+        ],
+        "review_manifest_summary": {
+          "review_manifest_count": 0,
+          "reviewed_task_count": 0,
+          "user_reviewed_human_curated_task_count": 0
+        },
+        "schema_version": "1.0.0",
+        "status": "failed"
+      },
+      "returncode": 1,
+      "status": "failed",
+      "stderr_tail": ""
+    },
+    "engine_no_proof_text": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_engine_no_proof_text.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "--self-test"
+      ],
+      "errors": [],
+      "report": {
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "scoped_reports": [],
+        "self_test": {
+          "cases": [
+            {
+              "case": "semantic_engine_payload",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "case": "forbidden_field:benchmark_template_id",
+              "errors": [
+                "engine_output_forbidden_proof_fields:benchmark_template_id",
+                "engine_output_forbidden_proof_text:benchmark_template_id"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "forbidden_field:exact_lemma_application",
+              "errors": [
+                "engine_output_forbidden_proof_fields:exact_lemma_application",
+                "engine_output_forbidden_proof_text:exact_lemma_application"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "forbidden_field:lean_patch",
+              "errors": [
+                "engine_output_forbidden_proof_fields:lean_patch",
+                "engine_output_forbidden_proof_text:lean_patch"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "forbidden_field:proof_region_replacement_text",
+              "errors": [
+                "engine_output_forbidden_proof_fields:proof_region_replacement_text",
+                "engine_output_forbidden_proof_text:proof_region_replacement_text"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "forbidden_field:proof_text",
+              "errors": [
+                "engine_output_forbidden_proof_fields:proof_text",
+                "engine_output_forbidden_proof_text:proof_text"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "forbidden_field:tactic_script",
+              "errors": [
+                "engine_output_forbidden_proof_fields:tactic_script",
+                "engine_output_forbidden_proof_text:tactic_script"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "forbidden_field:task_id_dispatch",
+              "errors": [
+                "engine_output_forbidden_proof_fields:task_id_dispatch",
+                "engine_output_forbidden_proof_text:task_id_dispatch"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "forbidden_field:theorem_family_dispatch",
+              "errors": [
+                "engine_output_forbidden_proof_fields:theorem_family_dispatch",
+                "engine_output_forbidden_proof_text:theorem_family_dispatch"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "forbidden_field:theorem_name_dispatch",
+              "errors": [
+                "engine_output_forbidden_proof_fields:theorem_name_dispatch",
+                "engine_output_forbidden_proof_text:theorem_name_dispatch"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "forbidden_proof_text",
+              "errors": [
+                "engine_output_forbidden_proof_text:semantic_summary"
+              ],
+              "status": "failed_as_expected"
+            }
+          ],
+          "errors": [],
+          "status": "passed"
+        },
+        "source_report": {
+          "reports": [
+            {
+              "engine_role": "synthetic_closure",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "construction_search",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "algebraic_geometry",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "metric_angle",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "transformation",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "order_case",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "inequality",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "lean_proof_search",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "portfolio_coordinator",
+              "errors": [],
+              "status": "passed"
+            }
+          ],
+          "status": "passed"
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "engine_real_execution": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_engine_real_execution.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "--self-test"
+      ],
+      "errors": [],
+      "report": {
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "scoped_reports": [],
+        "self_test": {
+          "errors": [],
+          "status": "passed"
+        },
+        "source_report": {
+          "reports": [
+            {
+              "engine_role": "synthetic_closure",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "construction_search",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "algebraic_geometry",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "metric_angle",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "transformation",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "order_case",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "inequality",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "lean_proof_search",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "engine_role": "portfolio_coordinator",
+              "errors": [],
+              "status": "passed"
+            }
+          ],
+          "status": "passed"
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "extraction_corpus": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_extraction_corpus.py",
+        "--corpus-root",
+        "benchmarks/geometry_full2d",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3"
+      ],
+      "errors": [],
+      "report": {
+        "corpus_report": {
+          "checked_file_sample": 50,
+          "manifest_path": "benchmarks\\geometry_full2d\\corpus_manifest.json",
+          "status": "passed",
+          "task_count": 7200
+        },
+        "corpus_root": "benchmarks\\geometry_full2d",
+        "errors": [],
+        "extractor_smoke": {
+          "errors": [],
+          "output": "C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-extraction-smoke-zfg6j1cz\\extraction_report.json",
+          "status": "passed"
+        },
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "scoped_reports": [],
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "matrix_evidence": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_matrix_evidence.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3"
+      ],
+      "errors": [
+        "matrix_summary_status_not_passed",
+        "no_actual_task_pipeline_runs_for_matrix"
+      ],
+      "report": {
+        "errors": [
+          "matrix_summary_status_not_passed",
+          "no_actual_task_pipeline_runs_for_matrix"
+        ],
+        "matrix_evidence_summary": {
+          "baseline_comparability_report_present": true,
+          "final_theorem_record_count": 0,
+          "matrix_summary_present": true,
+          "record_count": 0
+        },
+        "record_reports": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "status": "failed"
+      },
+      "returncode": 1,
+      "status": "failed",
+      "stderr_tail": ""
+    },
+    "matrix_run": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/run_full2d_matrix_v0_4_3.py",
+        "--config",
+        "C:\\Users\\bakat\\work\\AI_math_research\\configs\\benchmark_runs\\geometry_full2d_v0_4_3.yaml",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3"
+      ],
+      "errors": [
+        "corpus:external_or_user_reviewed_positive_lt_900:0",
+        "corpus:synthetic_positive_fraction_gt_0_5:6700/6700",
+        "no_actual_task_pipeline_runs_available_for_matrix"
+      ],
+      "report": {
+        "actual_task_pipeline_run_summary": {
+          "by_baseline": {},
+          "derived_from_actual_task_pipeline_runs": true,
+          "record_count": 0
+        },
+        "baseline_comparability_summary": {
+          "baseline_count": 6,
+          "final_verify_same": true,
+          "lean_library_access_same": true,
+          "proof_worker_same": true,
+          "required_baselines_missing": [],
+          "required_baselines_present": [
+            "B1",
+            "B2",
+            "B5",
+            "B6",
+            "B7",
+            "B8"
+          ]
+        },
+        "config_hash": "sha256:8c3473acd1e2758686fbd6a2b9e7758db3b4972253dae5706e232db44b1b9bc1",
+        "config_path": "C:\\Users\\bakat\\work\\AI_math_research\\configs\\benchmark_runs\\geometry_full2d_v0_4_3.yaml",
+        "corpus_manifest_hash": "sha256:f31c646f91ec690950d2e7201e4777f1e1bf1c59d88c3b088c523a5e155375da",
+        "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d",
+        "corpus_summary": {
+          "external_or_user_reviewed_positive_count": 0,
+          "family_counts": {
+            "Algebraic250": 500,
+            "AngleCyclic450": 900,
+            "Construction450": 900,
+            "Full2DCore500": 1000,
+            "HardHoldout50": 100,
+            "IncidenceParallelPerp350": 700,
+            "Inequality150": 300,
+            "MetricRatioArea350": 700,
+            "OlympiadStyle300": 600,
+            "OrderCase250": 500,
+            "Transformation250": 500
+          },
+          "manifest_hash": "sha256:f31c646f91ec690950d2e7201e4777f1e1bf1c59d88c3b088c523a5e155375da",
+          "near_duplicate_positive_count": 0,
+          "negative_target_outside_malformed_count": 500,
+          "positive_count": 6700,
+          "provenance_counts": {
+            "synthetic_generated": 6700
+          },
+          "synthetic_positive_count": 6700,
+          "synthetic_positive_fraction": 1.0,
+          "task_count": 7200
+        },
+        "errors": [
+          "corpus:external_or_user_reviewed_positive_lt_900:0",
+          "corpus:synthetic_positive_fraction_gt_0_5:6700/6700",
+          "no_actual_task_pipeline_runs_available_for_matrix"
+        ],
+        "matrix_id": "geometry_full2d_v0_4_3",
+        "run_id": "geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "sidecar_overlay_used": false,
+        "status": "failed"
+      },
+      "returncode": 1,
+      "status": "failed",
+      "stderr_tail": ""
+    },
+    "metrics": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_metrics_v0_4_3.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3"
+      ],
+      "errors": [
+        "missing_B2_metrics",
+        "no_valid_actual_task_pipeline_runs_for_metrics"
+      ],
+      "report": {
+        "advantage_summary": {
+          "B2_minus_B1_overall": 0.0,
+          "B2_minus_B5_construction": 0.0,
+          "B2_minus_B6_algebraic_metric": 0.0,
+          "B2_minus_B7_order_case": 0.0,
+          "B2_minus_B8_olympiad": 0.0,
+          "derived_from": "ActualTaskPipelineRunV1"
+        },
+        "errors": [
+          "missing_B2_metrics",
+          "no_valid_actual_task_pipeline_runs_for_metrics"
+        ],
+        "measured_failure_summary": {
+          "measured_failure_count": 0,
+          "reasons": {}
+        },
+        "metrics_summary": {
+          "by_baseline": {},
+          "derived_from": "ActualTaskPipelineRunV1"
+        },
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "status": "failed"
+      },
+      "returncode": 1,
+      "status": "failed",
+      "stderr_tail": ""
+    },
+    "no_v042_template_release_path": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_no_v042_template_release_path.py"
+      ],
+      "errors": [],
+      "report": {
+        "checked_release_files": [
+          "configs/benchmark_runs/geometry_full2d_v0_4_3.yaml",
+          "scripts/check_active_guardian_spec_v0_4_3.py",
+          "scripts/check_actual_task_pipeline_runs.py",
+          "scripts/check_anti_v042_regression.py",
+          "scripts/check_full2d_baseline_comparability.py",
+          "scripts/check_full2d_certificate_binding.py",
+          "scripts/check_full2d_claimspec_v0_4_3.py",
+          "scripts/check_full2d_compiler_evidence.py",
+          "scripts/check_full2d_compiler_input_isolation.py",
+          "scripts/check_full2d_corpus_manifest_v0_4_3.py",
+          "scripts/check_full2d_engine_challenge_suite.py",
+          "scripts/check_full2d_engine_no_proof_text.py",
+          "scripts/check_full2d_engine_real_execution.py",
+          "scripts/check_full2d_extraction_corpus.py",
+          "scripts/check_full2d_matrix_evidence.py",
+          "scripts/check_full2d_metrics_v0_4_3.py",
+          "scripts/check_full2d_proof_worker_hardening.py",
+          "scripts/check_full2d_provider_real_execution.py",
+          "scripts/check_full2d_review_manifest.py",
+          "scripts/check_full2d_substantive_corpus.py",
+          "scripts/check_full2d_used_rule_coverage.py",
+          "scripts/check_release_acceptance_v0_4_3.py",
+          "scripts/extract_geometry_full2d_theorem.py",
+          "scripts/run_full2d_matrix_v0_4_3.py"
+        ],
+        "errors": [],
+        "legacy_v0_4_2_paths": [
+          {
+            "exists": true,
+            "path": "scripts/build_full2d_proof_artifact_batch.py",
+            "release_authority": false
+          },
+          {
+            "exists": true,
+            "path": "scripts/run_full2d_matrix.py",
+            "release_authority": false
+          },
+          {
+            "exists": true,
+            "path": "scripts/check_full2d_metrics.py",
+            "release_authority": false
+          },
+          {
+            "exists": true,
+            "path": "scripts/check_release_acceptance_v0_4_2.py",
+            "release_authority": false
+          }
+        ],
+        "release_authority": "v0.4.3 release commands only; legacy v0.4.2 scripts are compatibility utilities",
+        "schema_version": "1.0.0",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "proof_worker_hardening": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_proof_worker_hardening.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "--self-test"
+      ],
+      "errors": [],
+      "report": {
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "scoped_reports": [],
+        "self_test": {
+          "cases": [
+            {
+              "case": "valid_proof_region_patch",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "blockers": [
+                "source_proof_region_missing_sorry:full2d_worker_selftest"
+              ],
+              "case": "source_region_without_sorry",
+              "status": "failed_as_expected"
+            },
+            {
+              "blockers": [
+                "generated_candidate_contains_forbidden_declaration"
+              ],
+              "case": "candidate_contains_admit",
+              "status": "failed_as_expected"
+            },
+            {
+              "blockers": [
+                "generated_candidate_contains_unsafe_target_semantics"
+              ],
+              "case": "candidate_contains_unsafe_target_semantics",
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "candidate_edit_outside_region",
+              "errors": [
+                "edit_outside_marp_proof_region"
+              ],
+              "status": "failed_as_expected"
+            }
+          ],
+          "errors": [],
+          "status": "passed"
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "provider_real_execution": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_provider_real_execution.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "--self-test"
+      ],
+      "errors": [],
+      "report": {
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "scoped_reports": [],
+        "self_test": {
+          "cases": [
+            {
+              "case": "valid_provider_run",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "case": "missing_real_integration_evidence",
+              "errors": [
+                "missing_real_integration_evidence_artifact:synthetic_closure:sha256:d15a35c6b7dc4034b20d59ecda6fb3bc4ff5e4d3444526381f4679d0e1d422bf"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "fabricated_engine_output_ref",
+              "errors": [
+                "engine_output_identity_mismatch:EngineOutputFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "engine_output_typed_ref_hash_mismatch:EngineOutputFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              ],
+              "status": "failed_as_expected"
+            }
+          ],
+          "errors": [],
+          "status": "passed"
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "review_manifest": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_review_manifest.py",
+        "--corpus-root",
+        "benchmarks/geometry_full2d"
+      ],
+      "errors": [],
+      "report": {
+        "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d",
+        "errors": [],
+        "review_manifest_summary": {
+          "review_manifest_count": 0,
+          "reviewed_task_count": 0,
+          "user_reviewed_human_curated_task_count": 0
+        },
+        "schema_version": "1.0.0",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "substantive_corpus": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_substantive_corpus.py",
+        "--corpus-root",
+        "benchmarks/geometry_full2d"
+      ],
+      "errors": [
+        "direct_lemma_task_fraction_gt_0_20:6700/6700",
+        "substantive_floor_case_or_order_required_lt_250:0",
+        "substantive_floor_construction_required_lt_350:0",
+        "substantive_floor_depth_ge_2_lt_1200:0",
+        "substantive_floor_depth_ge_4_lt_350:0",
+        "substantive_floor_hard_holdout_unique_lt_50:0",
+        "substantive_floor_metric_angle_algebraic_inequality_required_lt_500:0",
+        "substantive_floor_olympiad_depth_ge_4_lt_150:0",
+        "substantive_floor_side_condition_required_lt_350:0",
+        "substantive_floor_transformation_required_lt_150:0"
+      ],
+      "report": {
+        "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d",
+        "errors": [
+          "direct_lemma_task_fraction_gt_0_20:6700/6700",
+          "substantive_floor_case_or_order_required_lt_250:0",
+          "substantive_floor_construction_required_lt_350:0",
+          "substantive_floor_depth_ge_2_lt_1200:0",
+          "substantive_floor_depth_ge_4_lt_350:0",
+          "substantive_floor_hard_holdout_unique_lt_50:0",
+          "substantive_floor_metric_angle_algebraic_inequality_required_lt_500:0",
+          "substantive_floor_olympiad_depth_ge_4_lt_150:0",
+          "substantive_floor_side_condition_required_lt_350:0",
+          "substantive_floor_transformation_required_lt_150:0"
+        ],
+        "schema_version": "1.0.0",
+        "status": "failed",
+        "substantive_corpus_summary": {
+          "direct_lemma_task_count": 6700,
+          "direct_lemma_task_fraction": 1.0,
+          "floor_counts": {},
+          "positive_count": 6700
+        }
+      },
+      "returncode": 1,
+      "status": "failed",
+      "stderr_tail": ""
+    },
+    "used_rule_coverage": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_used_rule_coverage.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3"
+      ],
+      "errors": [
+        "construction_family_count_below_4:0",
+        "no_counted_final_theorem_records_for_used_rule_coverage",
+        "outside_incidence_family_count_below_8:0",
+        "side_condition_family_count_below_5:0",
+        "used_rule_count_below_35:0",
+        "used_rule_family_count_below_15:0"
+      ],
+      "report": {
+        "errors": [
+          "construction_family_count_below_4:0",
+          "no_counted_final_theorem_records_for_used_rule_coverage",
+          "outside_incidence_family_count_below_8:0",
+          "side_condition_family_count_below_5:0",
+          "used_rule_count_below_35:0",
+          "used_rule_family_count_below_15:0"
+        ],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
+        "schema_version": "1.0.0",
+        "status": "failed",
+        "used_rule_coverage_report": {
+          "certificate_bound_rules": {},
+          "construction_family_count": 0,
+          "counted_final_theorem_records": 0,
+          "outside_incidence_family_count": 0,
+          "registry_hash": "sha256:db8081a3ab3703fbb3b336e3f5107dcdea66e0fa4174d4500726364698f909f5",
+          "report_id": "UsedRuleCoverageReportFull2D:0:0",
+          "schema_version": "1.0.0",
+          "side_condition_family_count": 0,
+          "used_rule_count": 0,
+          "used_rule_families": [],
+          "used_rule_family_count": 0,
+          "used_rule_refs": []
+        }
+      },
+      "returncode": 1,
+      "status": "failed",
+      "stderr_tail": ""
+    }
+  },
+  "closure_allowed": false,
+  "compiler_input_isolation_summary": {
+    "self_test_status": "passed",
+    "static_report": {
+      "errors": [],
+      "status": "passed"
+    }
+  },
+  "config": "C:\\Users\\bakat\\work\\AI_math_research\\configs\\benchmark_runs\\geometry_full2d_v0_4_3.yaml",
+  "config_hash": "sha256:8c3473acd1e2758686fbd6a2b9e7758db3b4972253dae5706e232db44b1b9bc1",
+  "corpus_summary": {
+    "external_or_user_reviewed_positive_count": 0,
+    "family_counts": {
+      "Algebraic250": 500,
+      "AngleCyclic450": 900,
+      "Construction450": 900,
+      "Full2DCore500": 1000,
+      "HardHoldout50": 100,
+      "IncidenceParallelPerp350": 700,
+      "Inequality150": 300,
+      "MetricRatioArea350": 700,
+      "OlympiadStyle300": 600,
+      "OrderCase250": 500,
+      "Transformation250": 500
+    },
+    "manifest_hash": "sha256:f31c646f91ec690950d2e7201e4777f1e1bf1c59d88c3b088c523a5e155375da",
+    "near_duplicate_positive_count": 0,
+    "negative_target_outside_malformed_count": 500,
+    "positive_count": 6700,
+    "provenance_counts": {
+      "synthetic_generated": 6700
+    },
+    "synthetic_positive_count": 6700,
+    "synthetic_positive_fraction": 1.0,
+    "task_count": 7200
+  },
+  "debt_ledger": {
+    "open_release_blocker_count": 3,
+    "open_work_debt_count": 0,
+    "path": "C:\\Users\\bakat\\work\\AI_math_research\\docs\\ai\\changes\\geometry-full2d-v0_4_3\\debt\\debt_ledger.jsonl",
+    "sha256": "sha256:a68a2de359791644932ca4dddc184274ff691a3759b00816a55e7fcc84635416"
+  },
+  "debt_ledger_summary": {
+    "entry_count": 3,
+    "open_entries": [
+      {
+        "affected_rids": [
+          "R-CORPUS-003",
+          "R-CORPUS-004",
+          "K-009",
+          "K-018"
+        ],
+        "affected_work_packages": [
+          "WP-11",
+          "WP-15"
+        ],
+        "closure_evidence_ref": null,
+        "created_at": "2026-06-15",
+        "debt_id": "debt:v0_4_3:corpus_external_review_share_missing",
+        "evidence_ref": "scripts/check_full2d_corpus_manifest_v0_4_3.py --corpus-root benchmarks/geometry_full2d",
+        "schema_version": "1.0.0",
+        "severity": "ReleaseBlocker",
+        "status": "open",
+        "summary": "The current corpus has no external_formal or user_reviewed_human_curated positive tasks after relabelling unreviewed human_curated_formal entries to synthetic_generated; synthetic positives are 6700/6700.",
+        "unblock_plan": [
+          "Add at least 900 positive tasks with valid external_formal source/license refs or explicit user/named-reviewer ReviewManifestV1 evidence.",
+          "Keep synthetic_generated positives at or below 50% of positives.",
+          "Regenerate and freeze corpus_manifest.json after provenance gates pass."
+        ]
+      },
+      {
+        "affected_rids": [
+          "K-016",
+          "K-017"
+        ],
+        "affected_work_packages": [
+          "WP-14"
+        ],
+        "closure_evidence_ref": null,
+        "created_at": "2026-06-15",
+        "debt_id": "debt:v0_4_3:substantive_corpus_floors_missing",
+        "evidence_ref": "scripts/check_full2d_substantive_corpus.py --corpus-root benchmarks/geometry_full2d",
+        "schema_version": "1.0.0",
+        "severity": "ReleaseBlocker",
+        "status": "open",
+        "summary": "The current corpus profiles all positive tasks as direct lemma/depth-1 tasks, so substantive reasoning floors and the direct lemma ceiling fail.",
+        "unblock_plan": [
+          "Add or import substantive GeometryFull2D tasks with required reasoning depth, construction, side-condition, order/case, transformation, and metric/algebraic/inequality profiles.",
+          "Ensure direct-lemma-only tasks are at most 20% of counted positive successes.",
+          "Provide valid review evidence for any non-synthetic profile override."
+        ]
+      },
+      {
+        "affected_rids": [
+          "R-MET-001",
+          "R-MET-002",
+          "R-MET-003",
+          "R-ADV-001",
+          "R-ADV-002",
+          "R-ADV-003",
+          "R-ADV-004",
+          "R-ADV-005",
+          "K-001",
+          "K-003",
+          "K-007",
+          "K-012",
+          "K-013",
+          "K-022"
+        ],
+        "affected_work_packages": [
+          "WP-07",
+          "WP-12",
+          "WP-13",
+          "WP-19",
+          "WP-21"
+        ],
+        "closure_evidence_ref": null,
+        "created_at": "2026-06-15",
+        "debt_id": "debt:v0_4_3:actual_matrix_metrics_missing",
+        "evidence_ref": "runs/geometry_full2d_v0_4_3/matrix_summary.json",
+        "schema_version": "1.0.0",
+        "severity": "ReleaseBlocker",
+        "status": "open",
+        "summary": "No release ActualTaskPipelineRunV1 records exist in runs/geometry_full2d_v0_4_3, so used-rule coverage, matrix evidence, metrics, and advantage thresholds cannot pass.",
+        "unblock_plan": [
+          "Run or replay valid ActualTaskPipelineRunV1 records for the frozen v0.4.3 corpus and required baselines.",
+          "Ensure counted successes bind extraction, claimspec, provider, engine, compiler, patch, worker, final verify, certificate, and causal_chain_hash.",
+          "Recompute matrix, used-rule coverage, metrics, and advantage summaries from those records."
+        ]
+      }
+    ]
+  },
+  "engine_semantic_output_summary": {
+    "self_test_status": "passed",
+    "source_report": {
+      "reports": [
+        {
+          "engine_role": "synthetic_closure",
+          "errors": [],
+          "status": "passed"
+        },
+        {
+          "engine_role": "construction_search",
+          "errors": [],
+          "status": "passed"
+        },
+        {
+          "engine_role": "algebraic_geometry",
+          "errors": [],
+          "status": "passed"
+        },
+        {
+          "engine_role": "metric_angle",
+          "errors": [],
+          "status": "passed"
+        },
+        {
+          "engine_role": "transformation",
+          "errors": [],
+          "status": "passed"
+        },
+        {
+          "engine_role": "order_case",
+          "errors": [],
+          "status": "passed"
+        },
+        {
+          "engine_role": "inequality",
+          "errors": [],
+          "status": "passed"
+        },
+        {
+          "engine_role": "lean_proof_search",
+          "errors": [],
+          "status": "passed"
+        },
+        {
+          "engine_role": "portfolio_coordinator",
+          "errors": [],
+          "status": "passed"
+        }
+      ],
+      "status": "passed"
+    }
+  },
+  "engine_usage_summary": {
+    "counted_certificate_engine_roles": [],
+    "matrix_status": "failed",
+    "release_engine_roles_with_challenge_pass": [
+      "synthetic_closure",
+      "construction_search",
+      "algebraic_geometry",
+      "metric_angle",
+      "transformation",
+      "order_case",
+      "inequality",
+      "lean_proof_search",
+      "portfolio_coordinator"
+    ]
+  },
+  "hard_blockers": [],
+  "measured_failure_summary": {
+    "measured_failure_count": 0,
+    "reasons": {}
+  },
+  "metrics_summary": {
+    "by_baseline": {},
+    "derived_from": "ActualTaskPipelineRunV1"
+  },
+  "output": "C:\\Users\\bakat\\work\\AI_math_research\\docs\\ai\\changes\\geometry-full2d-v0_4_3\\evidence\\release_acceptance_report.json",
+  "release_blockers": [
+    {
+      "evidence": {
+        "affected_rids": [
+          "R-CORPUS-003",
+          "R-CORPUS-004",
+          "K-009",
+          "K-018"
+        ],
+        "affected_work_packages": [
+          "WP-11",
+          "WP-15"
+        ],
+        "closure_evidence_ref": null,
+        "created_at": "2026-06-15",
+        "debt_id": "debt:v0_4_3:corpus_external_review_share_missing",
+        "evidence_ref": "scripts/check_full2d_corpus_manifest_v0_4_3.py --corpus-root benchmarks/geometry_full2d",
+        "schema_version": "1.0.0",
+        "severity": "ReleaseBlocker",
+        "status": "open",
+        "summary": "The current corpus has no external_formal or user_reviewed_human_curated positive tasks after relabelling unreviewed human_curated_formal entries to synthetic_generated; synthetic positives are 6700/6700.",
+        "unblock_plan": [
+          "Add at least 900 positive tasks with valid external_formal source/license refs or explicit user/named-reviewer ReviewManifestV1 evidence.",
+          "Keep synthetic_generated positives at or below 50% of positives.",
+          "Regenerate and freeze corpus_manifest.json after provenance gates pass."
+        ]
+      },
+      "kind": "ReleaseBlocker",
+      "rid": "K-002",
+      "summary": "open debt ledger entry: debt:v0_4_3:corpus_external_review_share_missing"
+    },
+    {
+      "evidence": {
+        "affected_rids": [
+          "K-016",
+          "K-017"
+        ],
+        "affected_work_packages": [
+          "WP-14"
+        ],
+        "closure_evidence_ref": null,
+        "created_at": "2026-06-15",
+        "debt_id": "debt:v0_4_3:substantive_corpus_floors_missing",
+        "evidence_ref": "scripts/check_full2d_substantive_corpus.py --corpus-root benchmarks/geometry_full2d",
+        "schema_version": "1.0.0",
+        "severity": "ReleaseBlocker",
+        "status": "open",
+        "summary": "The current corpus profiles all positive tasks as direct lemma/depth-1 tasks, so substantive reasoning floors and the direct lemma ceiling fail.",
+        "unblock_plan": [
+          "Add or import substantive GeometryFull2D tasks with required reasoning depth, construction, side-condition, order/case, transformation, and metric/algebraic/inequality profiles.",
+          "Ensure direct-lemma-only tasks are at most 20% of counted positive successes.",
+          "Provide valid review evidence for any non-synthetic profile override."
+        ]
+      },
+      "kind": "ReleaseBlocker",
+      "rid": "K-002",
+      "summary": "open debt ledger entry: debt:v0_4_3:substantive_corpus_floors_missing"
+    },
+    {
+      "evidence": {
+        "affected_rids": [
+          "R-MET-001",
+          "R-MET-002",
+          "R-MET-003",
+          "R-ADV-001",
+          "R-ADV-002",
+          "R-ADV-003",
+          "R-ADV-004",
+          "R-ADV-005",
+          "K-001",
+          "K-003",
+          "K-007",
+          "K-012",
+          "K-013",
+          "K-022"
+        ],
+        "affected_work_packages": [
+          "WP-07",
+          "WP-12",
+          "WP-13",
+          "WP-19",
+          "WP-21"
+        ],
+        "closure_evidence_ref": null,
+        "created_at": "2026-06-15",
+        "debt_id": "debt:v0_4_3:actual_matrix_metrics_missing",
+        "evidence_ref": "runs/geometry_full2d_v0_4_3/matrix_summary.json",
+        "schema_version": "1.0.0",
+        "severity": "ReleaseBlocker",
+        "status": "open",
+        "summary": "No release ActualTaskPipelineRunV1 records exist in runs/geometry_full2d_v0_4_3, so used-rule coverage, matrix evidence, metrics, and advantage thresholds cannot pass.",
+        "unblock_plan": [
+          "Run or replay valid ActualTaskPipelineRunV1 records for the frozen v0.4.3 corpus and required baselines.",
+          "Ensure counted successes bind extraction, claimspec, provider, engine, compiler, patch, worker, final verify, certificate, and causal_chain_hash.",
+          "Recompute matrix, used-rule coverage, metrics, and advantage summaries from those records."
+        ]
+      },
+      "kind": "ReleaseBlocker",
+      "rid": "K-002",
+      "summary": "open debt ledger entry: debt:v0_4_3:actual_matrix_metrics_missing"
+    },
+    {
+      "evidence": [
+        "corpus:external_or_user_reviewed_positive_lt_900:0",
+        "corpus:synthetic_positive_fraction_gt_0_5:6700/6700",
+        "no_actual_task_pipeline_runs_available_for_matrix"
+      ],
+      "kind": "ReleaseBlocker",
+      "rid": "CHECK",
+      "summary": "matrix_run failed"
+    },
+    {
+      "evidence": [
+        "construction_family_count_below_4:0",
+        "no_counted_final_theorem_records_for_used_rule_coverage",
+        "outside_incidence_family_count_below_8:0",
+        "side_condition_family_count_below_5:0",
+        "used_rule_count_below_35:0",
+        "used_rule_family_count_below_15:0"
+      ],
+      "kind": "ReleaseBlocker",
+      "rid": "CHECK",
+      "summary": "used_rule_coverage failed"
+    },
+    {
+      "evidence": [
+        "external_or_user_reviewed_positive_lt_900:0",
+        "synthetic_positive_fraction_gt_0_5:6700/6700"
+      ],
+      "kind": "ReleaseBlocker",
+      "rid": "CHECK",
+      "summary": "corpus_manifest failed"
+    },
+    {
+      "evidence": [
+        "direct_lemma_task_fraction_gt_0_20:6700/6700",
+        "substantive_floor_case_or_order_required_lt_250:0",
+        "substantive_floor_construction_required_lt_350:0",
+        "substantive_floor_depth_ge_2_lt_1200:0",
+        "substantive_floor_depth_ge_4_lt_350:0",
+        "substantive_floor_hard_holdout_unique_lt_50:0",
+        "substantive_floor_metric_angle_algebraic_inequality_required_lt_500:0",
+        "substantive_floor_olympiad_depth_ge_4_lt_150:0",
+        "substantive_floor_side_condition_required_lt_350:0",
+        "substantive_floor_transformation_required_lt_150:0"
+      ],
+      "kind": "ReleaseBlocker",
+      "rid": "CHECK",
+      "summary": "substantive_corpus failed"
+    },
+    {
+      "evidence": [
+        "matrix_summary_status_not_passed",
+        "no_actual_task_pipeline_runs_for_matrix"
+      ],
+      "kind": "ReleaseBlocker",
+      "rid": "CHECK",
+      "summary": "matrix_evidence failed"
+    },
+    {
+      "evidence": [
+        "missing_B2_metrics",
+        "no_valid_actual_task_pipeline_runs_for_metrics"
+      ],
+      "kind": "ReleaseBlocker",
+      "rid": "CHECK",
+      "summary": "metrics failed"
+    },
+    {
+      "evidence": {
+        "by_baseline": {},
+        "derived_from_actual_task_pipeline_runs": true,
+        "record_count": 0
+      },
+      "kind": "ReleaseBlocker",
+      "rid": "K-003",
+      "summary": "counted final theorem evidence lacks ActualTaskPipelineRunV1 records"
+    },
+    {
+      "evidence": {
+        "certificate_bound_rules": {},
+        "construction_family_count": 0,
+        "counted_final_theorem_records": 0,
+        "outside_incidence_family_count": 0,
+        "registry_hash": "sha256:db8081a3ab3703fbb3b336e3f5107dcdea66e0fa4174d4500726364698f909f5",
+        "report_id": "UsedRuleCoverageReportFull2D:0:0",
+        "schema_version": "1.0.0",
+        "side_condition_family_count": 0,
+        "used_rule_count": 0,
+        "used_rule_families": [],
+        "used_rule_family_count": 0,
+        "used_rule_refs": []
+      },
+      "kind": "ReleaseBlocker",
+      "rid": "K-012",
+      "summary": "used-rule coverage below threshold"
+    },
+    {
+      "evidence": {
+        "external_or_user_reviewed_positive_count": 0,
+        "family_counts": {
+          "Algebraic250": 500,
+          "AngleCyclic450": 900,
+          "Construction450": 900,
+          "Full2DCore500": 1000,
+          "HardHoldout50": 100,
+          "IncidenceParallelPerp350": 700,
+          "Inequality150": 300,
+          "MetricRatioArea350": 700,
+          "OlympiadStyle300": 600,
+          "OrderCase250": 500,
+          "Transformation250": 500
+        },
+        "manifest_hash": "sha256:f31c646f91ec690950d2e7201e4777f1e1bf1c59d88c3b088c523a5e155375da",
+        "near_duplicate_positive_count": 0,
+        "negative_target_outside_malformed_count": 500,
+        "positive_count": 6700,
+        "provenance_counts": {
+          "synthetic_generated": 6700
+        },
+        "synthetic_positive_count": 6700,
+        "synthetic_positive_fraction": 1.0,
+        "task_count": 7200
+      },
+      "kind": "ReleaseBlocker",
+      "rid": "K-009",
+      "summary": "external/user-reviewed corpus share below requirement"
+    },
+    {
+      "evidence": {
+        "direct_lemma_task_count": 6700,
+        "direct_lemma_task_fraction": 1.0,
+        "floor_counts": {},
+        "positive_count": 6700
+      },
+      "kind": "ReleaseBlocker",
+      "rid": "K-017",
+      "summary": "direct lemma fraction exceeds ceiling"
+    },
+    {
+      "evidence": [
+        "matrix_summary_status_not_passed",
+        "no_actual_task_pipeline_runs_for_matrix"
+      ],
+      "kind": "ReleaseBlocker",
+      "rid": "K-007",
+      "summary": "matrix evidence is not replay-valid"
+    },
+    {
+      "evidence": [
+        "missing_B2_metrics",
+        "no_valid_actual_task_pipeline_runs_for_metrics"
+      ],
+      "kind": "ReleaseBlocker",
+      "rid": "R-MET",
+      "summary": "metrics thresholds do not pass"
+    }
+  ],
+  "release_id": "geometry_full2d_v0_4_3",
+  "review_manifest_summary": {
+    "review_manifest_count": 0,
+    "reviewed_task_count": 0,
+    "user_reviewed_human_curated_task_count": 0
+  },
+  "schema_version": "1.0.0",
+  "status": "failed",
+  "substantive_corpus_summary": {
+    "direct_lemma_task_count": 6700,
+    "direct_lemma_task_fraction": 1.0,
+    "floor_counts": {},
+    "positive_count": 6700
+  },
+  "used_rule_coverage_summary": {
+    "certificate_bound_rules": {},
+    "construction_family_count": 0,
+    "counted_final_theorem_records": 0,
+    "outside_incidence_family_count": 0,
+    "registry_hash": "sha256:db8081a3ab3703fbb3b336e3f5107dcdea66e0fa4174d4500726364698f909f5",
+    "report_id": "UsedRuleCoverageReportFull2D:0:0",
+    "schema_version": "1.0.0",
+    "side_condition_family_count": 0,
+    "used_rule_count": 0,
+    "used_rule_families": [],
+    "used_rule_family_count": 0,
+    "used_rule_refs": []
+  },
+  "work_debt_open": []
+}
