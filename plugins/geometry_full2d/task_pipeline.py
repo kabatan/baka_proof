@@ -7,7 +7,15 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
 
-from math_auto_research.lean_integration.final_verify_gate import FinalVerifyGate
+from math_auto_research.lean_integration.final_verify_gate import (
+    FinalVerifyGate,
+    contains_forbidden_declaration,
+    contains_local_toy_target,
+    contains_sorry,
+    imports_are_admitted,
+    proof_use_provenance_valid,
+)
+from math_auto_research.lean_integration.goal_anchor import extract_theorem_statement, hash_text
 from math_auto_research.model_api.proof_worker import RunContext as WorkerRunContext
 from math_auto_research.model_api.proof_worker import apply_lean_patch_candidate
 from plugins.geometry_full2d.claim_spec import build_claim_spec_from_extraction_report
@@ -419,6 +427,83 @@ def _final_verify_payload(
     return payload
 
 
+def _measured_failure_final_verify_payload(
+    *,
+    source_path: Path,
+    candidate_path: Path,
+    theorem_name: str,
+    task_id: str,
+    extraction_ref: str,
+    extraction_payload: dict[str, Any],
+    provider_ref: str,
+    engine_refs: tuple[str, ...],
+    compiler_refs: tuple[str, ...],
+    patch_ref: str,
+    worker_ref: str,
+    worker_payload: dict[str, Any],
+    failure_reason: str,
+) -> dict[str, Any]:
+    source_text = source_path.read_text(encoding="utf-8")
+    candidate_text = candidate_path.read_text(encoding="utf-8")
+    try:
+        original_statement = extract_theorem_statement(source_text, theorem_name)
+        candidate_statement = extract_theorem_statement(candidate_text, theorem_name)
+        original_hash = hash_text(original_statement)
+        theorem_hash_unchanged = original_hash == hash_text(candidate_statement)
+    except Exception:
+        original_hash = str(extraction_payload.get("source_statement_hash", _sha_text(theorem_name)))
+        theorem_hash_unchanged = False
+    region_ok = FinalVerifyGate().region_guard.permits(source_text, candidate_text)
+    admitted_imports_ok = imports_are_admitted(candidate_text, ("MathAutoResearch", "Mathlib", "LeanGeo"))
+    toy_target_ok = not contains_local_toy_target(candidate_text)
+    provenance = {
+        "geometry_extraction_report_ref": extraction_ref,
+        "goal_anchor_ref": _sha_text(theorem_name),
+        "protected_statement_hash": extraction_payload["source_statement_hash"],
+        "target_library_manifest_hash": _sha_text("GeometryFull2DTarget:1.0.0"),
+        "solver_backed_mode": True,
+        "provider_run_manifest_ref": provider_ref,
+        "engine_output_refs": list(engine_refs),
+        "compiler_result_refs": list(compiler_refs),
+        "lean_patch_candidate_ref": patch_ref,
+        "proof_worker_result_ref": worker_ref,
+        "proof_region_diff_hash": worker_payload["proof_region_diff_hash"],
+        "generated_candidate_file_ref": worker_payload["generated_candidate_file_ref"],
+    }
+    provenance_ok = proof_use_provenance_valid(provenance)
+    return {
+        "schema_version": "1.0.0",
+        "report_id": f"final_verify:measured_failure:{hash_text(str(candidate_path))[:16]}",
+        "target_obligation_id": task_id,
+        "theorem_statement_hash": original_hash,
+        "protected_theorem_hash_unchanged": theorem_hash_unchanged and region_ok,
+        "lean_status": "failed",
+        "forbidden_axiom_status": (
+            "failed"
+            if contains_forbidden_declaration(candidate_text) or not admitted_imports_ok or not toy_target_ok or not provenance_ok
+            else "clean"
+        ),
+        "sorry_status": "failed" if contains_sorry(candidate_text) else "clean",
+        "proof_use_status": "not_allowed",
+        "lean_artifact_ref": str(candidate_path),
+        "proof_artifact_ref": str(candidate_path),
+        "proof_use_provenance_status": "passed" if provenance_ok else "failed",
+        "solver_backed_proof_status": "failed",
+        "protected_statement_hash_source": "source_problem",
+        "checked_candidate_file_ref": worker_payload["generated_candidate_file_ref"],
+        "proof_region_guard_status": "passed" if region_ok else "failed",
+        "status": "failed",
+        "final_status": "measured_failure",
+        "provider_run_manifest_ref": provider_ref,
+        "engine_output_refs": list(engine_refs),
+        "compiler_result_refs": list(compiler_refs),
+        "lean_patch_candidate_ref": patch_ref,
+        "proof_worker_result_ref": worker_ref,
+        "failure_reason": failure_reason,
+        "failure_evidence_kind": "pre_final_theorem_measured_failure",
+    }
+
+
 def _write_certificate(
     *,
     run_dir: Path,
@@ -727,7 +812,7 @@ def _write_compiler_measured_failure_record(
         worker_payload,
         artifact_paths,
     )
-    final_verify_payload = _final_verify_payload(
+    final_verify_payload = _measured_failure_final_verify_payload(
         source_path=source_path,
         candidate_path=candidate_path,
         theorem_name=theorem_name,
@@ -740,6 +825,7 @@ def _write_compiler_measured_failure_record(
         patch_ref=patch_ref,
         worker_ref=worker_ref,
         worker_payload=worker_payload,
+        failure_reason=failure_reason,
     )
     final_verify_ref, final_verify_payload = _write_typed_json(
         run_dir,

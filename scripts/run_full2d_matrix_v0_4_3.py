@@ -19,7 +19,10 @@ from scripts.check_full2d_corpus_manifest_v0_4_3 import (  # noqa: E402
     check_corpus_manifest_v0_4_3,
 )
 from plugins.geometry_full2d.run_records import validate_actual_task_pipeline_run  # noqa: E402
-from plugins.geometry_full2d.task_pipeline import execute_actual_task_pipeline_v0_4_3  # noqa: E402
+from plugins.geometry_full2d.task_pipeline import (  # noqa: E402
+    _selected_implementations_hash,
+    execute_actual_task_pipeline_v0_4_3,
+)
 
 
 def main() -> int:
@@ -68,7 +71,8 @@ def run_matrix(config_path: Path, run_dir: Path, *, max_executions: int = 0, wor
     )
     records = _load_run_records(run_dir)
     record_validation = _validate_records(records, run_dir, config_path, corpus_manifest)
-    record_summary = _record_summary(records, run_dir=run_dir, required_task_ids=matrix_task_ids, required_baselines=required_baselines)
+    valid_records = _valid_records(records, run_dir=run_dir, config_path=config_path, corpus_manifest=corpus_manifest)
+    record_summary = _record_summary(valid_records, run_dir=run_dir, required_task_ids=matrix_task_ids, required_baselines=required_baselines)
     matrix_errors = list(errors)
     matrix_errors.extend(execution_report["errors"])
     matrix_errors.extend(record_validation["errors"])
@@ -258,6 +262,7 @@ def _validate_records(
     errors: list[str] = []
     expected_config_hash = _sha_file(config_path)
     expected_corpus_hash = canonical_manifest_hash(corpus_manifest) if isinstance(corpus_manifest, dict) else None
+    expected_implementation_hash = _selected_implementations_hash()
     reports: list[dict[str, Any]] = []
     for record in records:
         source = f"{record.get('task_id', '<missing>')}:{record.get('baseline_id', '<missing>')}"
@@ -266,6 +271,8 @@ def _validate_records(
             record_errors.append("record_config_hash_mismatch")
         if expected_corpus_hash and record.get("frozen_corpus_manifest_hash") != expected_corpus_hash:
             record_errors.append("record_frozen_corpus_manifest_hash_mismatch")
+        if expected_implementation_hash and record.get("selected_implementations_hash") != expected_implementation_hash:
+            record_errors.append("record_selected_implementations_hash_mismatch")
         reports.append({"source": source, "status": "passed" if not record_errors else "failed", "errors": sorted(set(record_errors))})
         errors.extend(f"{source}:{error}" for error in record_errors)
     return {
@@ -275,6 +282,30 @@ def _validate_records(
         "record_reports": reports,
         "errors": sorted(set(errors)),
     }
+
+
+def _valid_records(
+    records: list[dict[str, Any]],
+    *,
+    run_dir: Path,
+    config_path: Path,
+    corpus_manifest: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
+    expected_config_hash = _sha_file(config_path)
+    expected_corpus_hash = canonical_manifest_hash(corpus_manifest) if isinstance(corpus_manifest, dict) else None
+    expected_implementation_hash = _selected_implementations_hash()
+    valid: list[dict[str, Any]] = []
+    for record in records:
+        errors = validate_actual_task_pipeline_run(record, run_dir=run_dir)
+        if expected_config_hash and record.get("config_hash") != expected_config_hash:
+            errors.append("record_config_hash_mismatch")
+        if expected_corpus_hash and record.get("frozen_corpus_manifest_hash") != expected_corpus_hash:
+            errors.append("record_frozen_corpus_manifest_hash_mismatch")
+        if expected_implementation_hash and record.get("selected_implementations_hash") != expected_implementation_hash:
+            errors.append("record_selected_implementations_hash_mismatch")
+        if not errors:
+            valid.append(record)
+    return valid
 
 
 def _record_summary(records: list[dict[str, Any]], *, run_dir: Path, required_task_ids: tuple[str, ...], required_baselines: tuple[str, ...]) -> dict[str, Any]:
@@ -316,6 +347,7 @@ def _valid_record_key_set(
 ) -> set[tuple[str, str]]:
     expected_config_hash = _sha_file(config_path)
     expected_corpus_hash = canonical_manifest_hash(corpus_manifest) if isinstance(corpus_manifest, dict) else None
+    expected_implementation_hash = _selected_implementations_hash()
     valid: set[tuple[str, str]] = set()
     for record in records:
         errors = validate_actual_task_pipeline_run(record, run_dir=run_dir)
@@ -323,6 +355,8 @@ def _valid_record_key_set(
             errors.append("record_config_hash_mismatch")
         if expected_corpus_hash and record.get("frozen_corpus_manifest_hash") != expected_corpus_hash:
             errors.append("record_frozen_corpus_manifest_hash_mismatch")
+        if expected_implementation_hash and record.get("selected_implementations_hash") != expected_implementation_hash:
+            errors.append("record_selected_implementations_hash_mismatch")
         if not errors:
             valid.add((str(record.get("task_id")), str(record.get("baseline_id"))))
     return valid
