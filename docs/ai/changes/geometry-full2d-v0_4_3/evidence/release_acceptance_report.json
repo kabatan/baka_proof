@@ -12,9 +12,24 @@
         "records": 2
       },
       "B5": {
-        "final_theorem": 1,
+        "final_theorem": 2,
         "measured_failure": 0,
-        "records": 1
+        "records": 2
+      },
+      "B6": {
+        "final_theorem": 2,
+        "measured_failure": 0,
+        "records": 2
+      },
+      "B7": {
+        "final_theorem": 2,
+        "measured_failure": 0,
+        "records": 2
+      },
+      "B8": {
+        "final_theorem": 2,
+        "measured_failure": 0,
+        "records": 2
       }
     },
     "counted_certificate_engine_roles": [
@@ -29,15 +44,8 @@
       "transformation"
     ],
     "derived_from_actual_task_pipeline_runs": true,
-    "missing_required_record_count": 43195,
+    "missing_required_record_count": 43188,
     "missing_required_record_examples": [
-      "full2d-positive-0000:B6",
-      "full2d-positive-0000:B7",
-      "full2d-positive-0000:B8",
-      "full2d-positive-0001:B5",
-      "full2d-positive-0001:B6",
-      "full2d-positive-0001:B7",
-      "full2d-positive-0001:B8",
       "full2d-positive-0002:B1",
       "full2d-positive-0002:B2",
       "full2d-positive-0002:B5",
@@ -50,9 +58,16 @@
       "full2d-positive-0003:B6",
       "full2d-positive-0003:B7",
       "full2d-positive-0003:B8",
-      "full2d-positive-0004:B1"
+      "full2d-positive-0004:B1",
+      "full2d-positive-0004:B2",
+      "full2d-positive-0004:B5",
+      "full2d-positive-0004:B6",
+      "full2d-positive-0004:B7",
+      "full2d-positive-0004:B8",
+      "full2d-positive-0005:B1",
+      "full2d-positive-0005:B2"
     ],
-    "record_count": 5,
+    "record_count": 12,
     "required_baseline_count": 6,
     "required_record_count": 43200,
     "required_task_count": 7200
@@ -80,7 +95,7 @@
     ]
   },
   "causal_chain_summary": {
-    "record_count": 5,
+    "record_count": 12,
     "record_reports": [
       {
         "errors": [],
@@ -102,6 +117,24 @@
       },
       {
         "errors": [],
+        "run_id": "actual_full2d_run:full2d-positive-0000:B6:v0_4_3",
+        "source": "actual_task_pipeline_runs/full2d-positive-0000__B6.json",
+        "status": "passed"
+      },
+      {
+        "errors": [],
+        "run_id": "actual_full2d_run:full2d-positive-0000:B7:v0_4_3",
+        "source": "actual_task_pipeline_runs/full2d-positive-0000__B7.json",
+        "status": "passed"
+      },
+      {
+        "errors": [],
+        "run_id": "actual_full2d_run:full2d-positive-0000:B8:v0_4_3",
+        "source": "actual_task_pipeline_runs/full2d-positive-0000__B8.json",
+        "status": "passed"
+      },
+      {
+        "errors": [],
         "run_id": "actual_full2d_run:full2d-positive-0001:B1:v0_4_3",
         "source": "actual_task_pipeline_runs/full2d-positive-0001__B1.json",
         "status": "passed"
@@ -110,6 +143,30 @@
         "errors": [],
         "run_id": "actual_full2d_run:full2d-positive-0001:B2:v0_4_3",
         "source": "actual_task_pipeline_runs/full2d-positive-0001__B2.json",
+        "status": "passed"
+      },
+      {
+        "errors": [],
+        "run_id": "actual_full2d_run:full2d-positive-0001:B5:v0_4_3",
+        "source": "actual_task_pipeline_runs/full2d-positive-0001__B5.json",
+        "status": "passed"
+      },
+      {
+        "errors": [],
+        "run_id": "actual_full2d_run:full2d-positive-0001:B6:v0_4_3",
+        "source": "actual_task_pipeline_runs/full2d-positive-0001__B6.json",
+        "status": "passed"
+      },
+      {
+        "errors": [],
+        "run_id": "actual_full2d_run:full2d-positive-0001:B7:v0_4_3",
+        "source": "actual_task_pipeline_runs/full2d-positive-0001__B7.json",
+        "status": "passed"
+      },
+      {
+        "errors": [],
+        "run_id": "actual_full2d_run:full2d-positive-0001:B8:v0_4_3",
+        "source": "actual_task_pipeline_runs/full2d-positive-0001__B8.json",
         "status": "passed"
       }
     ],
@@ -207,7 +264,7 @@
       "errors": [],
       "report": {
         "errors": [],
-        "record_count": 5,
+        "record_count": 12,
         "record_reports": [
           {
             "errors": [],
@@ -229,6 +286,24 @@
           },
           {
             "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B8.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B1:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B1.json",
             "status": "passed"
@@ -237,6 +312,30 @@
             "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B2:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B8.json",
             "status": "passed"
           }
         ],
@@ -263,14 +362,14 @@
                 "actual_full2d_run:selftest:B2:0001:certificate_engine_output_refs_mismatch",
                 "actual_full2d_run:selftest:B2:0001:compiler_did_not_consume_engine_output:CompilerResultFull2D:sha256:f9d775ea5654b4f0605ffa9bc5a750e771ddfddc660386a0c5d3d2ce54f029c8",
                 "actual_full2d_run:selftest:B2:0001:provider_missing_engine_output_refs:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-                "actual_full2d_run:selftest:B2:0001:typed_artifact_hash_mismatch:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff:C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-run-record-selftest-920bwxf4\\artifacts\\engine_output.json"
+                "actual_full2d_run:selftest:B2:0001:typed_artifact_hash_mismatch:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff:C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-run-record-selftest-fb4oyex6\\artifacts\\engine_output.json"
               ],
               "status": "failed_as_expected"
             },
             {
               "case": "missing_extraction_report",
               "errors": [
-                "actual_full2d_run:selftest:B2:0001:missing_artifact_path:GeometryFull2DExtraction:sha256:aad2f6dde7e0d2d147f55bedfe86cb3d8ff048d416244fd60aecca588f841e73"
+                "actual_full2d_run:selftest:B2:0001:missing_artifact_path:GeometryFull2DExtraction:sha256:7b49c8cc78e3420a49d5aabd6ca5cdcc00f9aa2f3f4ceb44459eae96cccece83"
               ],
               "status": "failed_as_expected"
             },
@@ -377,6 +476,24 @@
           },
           {
             "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B8.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B1:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B1.json",
             "status": "passed"
@@ -385,6 +502,30 @@
             "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B2:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B8.json",
             "status": "passed"
           }
         ],
@@ -470,6 +611,24 @@
           },
           {
             "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B8.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B1:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B1.json",
             "status": "passed"
@@ -478,6 +637,30 @@
             "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B2:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B8.json",
             "status": "passed"
           }
         ],
@@ -554,6 +737,24 @@
           },
           {
             "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B8.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B1:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B1.json",
             "status": "passed"
@@ -562,6 +763,30 @@
             "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B2:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B8.json",
             "status": "passed"
           }
         ],
@@ -737,6 +962,24 @@
           },
           {
             "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B8.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B1:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B1.json",
             "status": "passed"
@@ -745,6 +988,30 @@
             "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B2:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B8.json",
             "status": "passed"
           }
         ],
@@ -928,6 +1195,24 @@
           },
           {
             "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B8.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B1:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B1.json",
             "status": "passed"
@@ -936,6 +1221,30 @@
             "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B2:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B8.json",
             "status": "passed"
           }
         ],
@@ -1020,7 +1329,7 @@
         "errors": [],
         "extractor_smoke": {
           "errors": [],
-          "output": "C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-extraction-smoke-fe9306gm\\extraction_report.json",
+          "output": "C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-extraction-smoke-2rtib7i6\\extraction_report.json",
           "status": "passed"
         },
         "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
@@ -1046,6 +1355,24 @@
           },
           {
             "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B8.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B1:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B1.json",
             "status": "passed"
@@ -1054,6 +1381,30 @@
             "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B2:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B8.json",
             "status": "passed"
           }
         ],
@@ -1079,9 +1430,9 @@
         ],
         "matrix_evidence_summary": {
           "baseline_comparability_report_present": true,
-          "final_theorem_record_count": 5,
+          "final_theorem_record_count": 12,
           "matrix_summary_present": true,
-          "record_count": 5
+          "record_count": 12
         },
         "record_reports": [
           {
@@ -1101,12 +1452,47 @@
           },
           {
             "errors": [],
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B8.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B1.json",
             "status": "passed"
           },
           {
             "errors": [],
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B8.json",
             "status": "passed"
           }
         ],
@@ -1131,7 +1517,7 @@
         "corpus:external_or_user_reviewed_positive_lt_900:0",
         "corpus:synthetic_positive_fraction_gt_0_5:6700/6700",
         "missing_records_not_executed:max_executions_0",
-        "missing_required_task_baseline_records:43195"
+        "missing_required_task_baseline_records:43188"
       ],
       "report": {
         "actual_task_pipeline_run_summary": {
@@ -1147,9 +1533,24 @@
               "records": 2
             },
             "B5": {
-              "final_theorem": 1,
+              "final_theorem": 2,
               "measured_failure": 0,
-              "records": 1
+              "records": 2
+            },
+            "B6": {
+              "final_theorem": 2,
+              "measured_failure": 0,
+              "records": 2
+            },
+            "B7": {
+              "final_theorem": 2,
+              "measured_failure": 0,
+              "records": 2
+            },
+            "B8": {
+              "final_theorem": 2,
+              "measured_failure": 0,
+              "records": 2
             }
           },
           "counted_certificate_engine_roles": [
@@ -1164,15 +1565,8 @@
             "transformation"
           ],
           "derived_from_actual_task_pipeline_runs": true,
-          "missing_required_record_count": 43195,
+          "missing_required_record_count": 43188,
           "missing_required_record_examples": [
-            "full2d-positive-0000:B6",
-            "full2d-positive-0000:B7",
-            "full2d-positive-0000:B8",
-            "full2d-positive-0001:B5",
-            "full2d-positive-0001:B6",
-            "full2d-positive-0001:B7",
-            "full2d-positive-0001:B8",
             "full2d-positive-0002:B1",
             "full2d-positive-0002:B2",
             "full2d-positive-0002:B5",
@@ -1185,9 +1579,16 @@
             "full2d-positive-0003:B6",
             "full2d-positive-0003:B7",
             "full2d-positive-0003:B8",
-            "full2d-positive-0004:B1"
+            "full2d-positive-0004:B1",
+            "full2d-positive-0004:B2",
+            "full2d-positive-0004:B5",
+            "full2d-positive-0004:B6",
+            "full2d-positive-0004:B7",
+            "full2d-positive-0004:B8",
+            "full2d-positive-0005:B1",
+            "full2d-positive-0005:B2"
           ],
-          "record_count": 5,
+          "record_count": 12,
           "required_baseline_count": 6,
           "required_record_count": 43200,
           "required_task_count": 7200
@@ -1241,7 +1642,7 @@
           "corpus:external_or_user_reviewed_positive_lt_900:0",
           "corpus:synthetic_positive_fraction_gt_0_5:6700/6700",
           "missing_records_not_executed:max_executions_0",
-          "missing_required_task_baseline_records:43195"
+          "missing_required_task_baseline_records:43188"
         ],
         "execution_report": {
           "errors": [
@@ -1249,18 +1650,18 @@
           ],
           "executed": [],
           "executed_record_count": 0,
-          "existing_record_count_before_execution": 5,
+          "existing_record_count_before_execution": 12,
           "failed": [],
           "failed_execution_count": 0,
           "max_executions": 0,
-          "missing_record_count_before_execution": 43195,
+          "missing_record_count_before_execution": 43188,
           "planned_record_count": 43200
         },
         "matrix_id": "geometry_full2d_v0_4_3",
         "record_validation_summary": {
           "errors": [],
           "invalid_record_count": 0,
-          "record_count": 5,
+          "record_count": 12,
           "record_reports": [
             {
               "errors": [],
@@ -1279,6 +1680,21 @@
             },
             {
               "errors": [],
+              "source": "full2d-positive-0000:B6",
+              "status": "passed"
+            },
+            {
+              "errors": [],
+              "source": "full2d-positive-0000:B7",
+              "status": "passed"
+            },
+            {
+              "errors": [],
+              "source": "full2d-positive-0000:B8",
+              "status": "passed"
+            },
+            {
+              "errors": [],
               "source": "full2d-positive-0001:B1",
               "status": "passed"
             },
@@ -1286,9 +1702,29 @@
               "errors": [],
               "source": "full2d-positive-0001:B2",
               "status": "passed"
+            },
+            {
+              "errors": [],
+              "source": "full2d-positive-0001:B5",
+              "status": "passed"
+            },
+            {
+              "errors": [],
+              "source": "full2d-positive-0001:B6",
+              "status": "passed"
+            },
+            {
+              "errors": [],
+              "source": "full2d-positive-0001:B7",
+              "status": "passed"
+            },
+            {
+              "errors": [],
+              "source": "full2d-positive-0001:B8",
+              "status": "passed"
             }
           ],
-          "valid_record_count": 5
+          "valid_record_count": 12
         },
         "run_id": "geometry_full2d_v0_4_3",
         "schema_version": "1.0.0",
@@ -1407,9 +1843,66 @@
                 "OrderCase250": 0.0,
                 "Transformation250": 0.0
               },
-              "final_theorem_count": 1,
+              "final_theorem_count": 2,
               "overall_final_theorem_rate": 1.0,
-              "positive_count": 1,
+              "positive_count": 2,
+              "safe_reject_success_on_in_target_positive": 0
+            },
+            "B6": {
+              "family_rates": {
+                "Algebraic250": 0.0,
+                "AngleCyclic450": 0.0,
+                "Construction450": 0.0,
+                "Full2DCore500": 1.0,
+                "HardHoldout50": 0.0,
+                "IncidenceParallelPerp350": 0.0,
+                "Inequality150": 0.0,
+                "MetricRatioArea350": 0.0,
+                "OlympiadStyle300": 0.0,
+                "OrderCase250": 0.0,
+                "Transformation250": 0.0
+              },
+              "final_theorem_count": 2,
+              "overall_final_theorem_rate": 1.0,
+              "positive_count": 2,
+              "safe_reject_success_on_in_target_positive": 0
+            },
+            "B7": {
+              "family_rates": {
+                "Algebraic250": 0.0,
+                "AngleCyclic450": 0.0,
+                "Construction450": 0.0,
+                "Full2DCore500": 1.0,
+                "HardHoldout50": 0.0,
+                "IncidenceParallelPerp350": 0.0,
+                "Inequality150": 0.0,
+                "MetricRatioArea350": 0.0,
+                "OlympiadStyle300": 0.0,
+                "OrderCase250": 0.0,
+                "Transformation250": 0.0
+              },
+              "final_theorem_count": 2,
+              "overall_final_theorem_rate": 1.0,
+              "positive_count": 2,
+              "safe_reject_success_on_in_target_positive": 0
+            },
+            "B8": {
+              "family_rates": {
+                "Algebraic250": 0.0,
+                "AngleCyclic450": 0.0,
+                "Construction450": 0.0,
+                "Full2DCore500": 1.0,
+                "HardHoldout50": 0.0,
+                "IncidenceParallelPerp350": 0.0,
+                "Inequality150": 0.0,
+                "MetricRatioArea350": 0.0,
+                "OlympiadStyle300": 0.0,
+                "OrderCase250": 0.0,
+                "Transformation250": 0.0
+              },
+              "final_theorem_count": 2,
+              "overall_final_theorem_rate": 1.0,
+              "positive_count": 2,
               "safe_reject_success_on_in_target_positive": 0
             }
           },
@@ -1522,6 +2015,24 @@
           },
           {
             "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B8.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B1:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B1.json",
             "status": "passed"
@@ -1530,6 +2041,30 @@
             "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B2:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B8.json",
             "status": "passed"
           }
         ],
@@ -1612,6 +2147,24 @@
           },
           {
             "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0000:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0000__B8.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B1:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B1.json",
             "status": "passed"
@@ -1620,6 +2173,30 @@
             "errors": [],
             "run_id": "actual_full2d_run:full2d-positive-0001:B2:v0_4_3",
             "source": "actual_task_pipeline_runs/full2d-positive-0001__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B5:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B6:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B7:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:full2d-positive-0001:B8:v0_4_3",
+            "source": "actual_task_pipeline_runs/full2d-positive-0001__B8.json",
             "status": "passed"
           }
         ],
@@ -1771,6 +2348,34 @@
               "full2d_rule:inequality_length:01",
               "full2d_rule:transformation_reflection:01"
             ],
+            "actual_full2d_run:full2d-positive-0000:B6:v0_4_3": [
+              "full2d_rule:angle_chase:01",
+              "full2d_rule:case_split_orientation:01",
+              "full2d_rule:construction_line:01",
+              "full2d_rule:directed_angle_mod_pi:01",
+              "full2d_rule:incidence_collinearity:02",
+              "full2d_rule:inequality_length:01",
+              "full2d_rule:transformation_reflection:01"
+            ],
+            "actual_full2d_run:full2d-positive-0000:B7:v0_4_3": [
+              "full2d_rule:algebraic_coordinate:01",
+              "full2d_rule:angle_chase:01",
+              "full2d_rule:construction_line:01",
+              "full2d_rule:directed_angle_mod_pi:01",
+              "full2d_rule:incidence_collinearity:02",
+              "full2d_rule:inequality_length:01",
+              "full2d_rule:transformation_reflection:01"
+            ],
+            "actual_full2d_run:full2d-positive-0000:B8:v0_4_3": [
+              "full2d_rule:algebraic_coordinate:01",
+              "full2d_rule:angle_chase:01",
+              "full2d_rule:case_split_orientation:01",
+              "full2d_rule:construction_line:01",
+              "full2d_rule:directed_angle_mod_pi:01",
+              "full2d_rule:incidence_collinearity:02",
+              "full2d_rule:inequality_length:01",
+              "full2d_rule:transformation_reflection:01"
+            ],
             "actual_full2d_run:full2d-positive-0001:B1:v0_4_3": [
               "full2d_rule:incidence_collinearity:02"
             ],
@@ -1783,10 +2388,47 @@
               "full2d_rule:incidence_collinearity:02",
               "full2d_rule:inequality_length:01",
               "full2d_rule:transformation_reflection:01"
+            ],
+            "actual_full2d_run:full2d-positive-0001:B5:v0_4_3": [
+              "full2d_rule:algebraic_coordinate:01",
+              "full2d_rule:angle_chase:01",
+              "full2d_rule:case_split_orientation:01",
+              "full2d_rule:directed_angle_mod_pi:01",
+              "full2d_rule:incidence_collinearity:02",
+              "full2d_rule:inequality_length:01",
+              "full2d_rule:transformation_reflection:01"
+            ],
+            "actual_full2d_run:full2d-positive-0001:B6:v0_4_3": [
+              "full2d_rule:angle_chase:01",
+              "full2d_rule:case_split_orientation:01",
+              "full2d_rule:construction_line:01",
+              "full2d_rule:directed_angle_mod_pi:01",
+              "full2d_rule:incidence_collinearity:02",
+              "full2d_rule:inequality_length:01",
+              "full2d_rule:transformation_reflection:01"
+            ],
+            "actual_full2d_run:full2d-positive-0001:B7:v0_4_3": [
+              "full2d_rule:algebraic_coordinate:01",
+              "full2d_rule:angle_chase:01",
+              "full2d_rule:construction_line:01",
+              "full2d_rule:directed_angle_mod_pi:01",
+              "full2d_rule:incidence_collinearity:02",
+              "full2d_rule:inequality_length:01",
+              "full2d_rule:transformation_reflection:01"
+            ],
+            "actual_full2d_run:full2d-positive-0001:B8:v0_4_3": [
+              "full2d_rule:algebraic_coordinate:01",
+              "full2d_rule:angle_chase:01",
+              "full2d_rule:case_split_orientation:01",
+              "full2d_rule:construction_line:01",
+              "full2d_rule:directed_angle_mod_pi:01",
+              "full2d_rule:incidence_collinearity:02",
+              "full2d_rule:inequality_length:01",
+              "full2d_rule:transformation_reflection:01"
             ]
           },
           "construction_family_count": 1,
-          "counted_final_theorem_records": 5,
+          "counted_final_theorem_records": 12,
           "outside_incidence_family_count": 7,
           "registry_hash": "sha256:db8081a3ab3703fbb3b336e3f5107dcdea66e0fa4174d4500726364698f909f5",
           "report_id": "UsedRuleCoverageReportFull2D:8:8",
@@ -2090,9 +2732,66 @@
           "OrderCase250": 0.0,
           "Transformation250": 0.0
         },
-        "final_theorem_count": 1,
+        "final_theorem_count": 2,
         "overall_final_theorem_rate": 1.0,
-        "positive_count": 1,
+        "positive_count": 2,
+        "safe_reject_success_on_in_target_positive": 0
+      },
+      "B6": {
+        "family_rates": {
+          "Algebraic250": 0.0,
+          "AngleCyclic450": 0.0,
+          "Construction450": 0.0,
+          "Full2DCore500": 1.0,
+          "HardHoldout50": 0.0,
+          "IncidenceParallelPerp350": 0.0,
+          "Inequality150": 0.0,
+          "MetricRatioArea350": 0.0,
+          "OlympiadStyle300": 0.0,
+          "OrderCase250": 0.0,
+          "Transformation250": 0.0
+        },
+        "final_theorem_count": 2,
+        "overall_final_theorem_rate": 1.0,
+        "positive_count": 2,
+        "safe_reject_success_on_in_target_positive": 0
+      },
+      "B7": {
+        "family_rates": {
+          "Algebraic250": 0.0,
+          "AngleCyclic450": 0.0,
+          "Construction450": 0.0,
+          "Full2DCore500": 1.0,
+          "HardHoldout50": 0.0,
+          "IncidenceParallelPerp350": 0.0,
+          "Inequality150": 0.0,
+          "MetricRatioArea350": 0.0,
+          "OlympiadStyle300": 0.0,
+          "OrderCase250": 0.0,
+          "Transformation250": 0.0
+        },
+        "final_theorem_count": 2,
+        "overall_final_theorem_rate": 1.0,
+        "positive_count": 2,
+        "safe_reject_success_on_in_target_positive": 0
+      },
+      "B8": {
+        "family_rates": {
+          "Algebraic250": 0.0,
+          "AngleCyclic450": 0.0,
+          "Construction450": 0.0,
+          "Full2DCore500": 1.0,
+          "HardHoldout50": 0.0,
+          "IncidenceParallelPerp350": 0.0,
+          "Inequality150": 0.0,
+          "MetricRatioArea350": 0.0,
+          "OlympiadStyle300": 0.0,
+          "OrderCase250": 0.0,
+          "Transformation250": 0.0
+        },
+        "final_theorem_count": 2,
+        "overall_final_theorem_rate": 1.0,
+        "positive_count": 2,
         "safe_reject_success_on_in_target_positive": 0
       }
     },
@@ -2205,7 +2904,7 @@
         "corpus:external_or_user_reviewed_positive_lt_900:0",
         "corpus:synthetic_positive_fraction_gt_0_5:6700/6700",
         "missing_records_not_executed:max_executions_0",
-        "missing_required_task_baseline_records:43195"
+        "missing_required_task_baseline_records:43188"
       ],
       "kind": "ReleaseBlocker",
       "rid": "CHECK",
@@ -2303,6 +3002,34 @@
             "full2d_rule:inequality_length:01",
             "full2d_rule:transformation_reflection:01"
           ],
+          "actual_full2d_run:full2d-positive-0000:B6:v0_4_3": [
+            "full2d_rule:angle_chase:01",
+            "full2d_rule:case_split_orientation:01",
+            "full2d_rule:construction_line:01",
+            "full2d_rule:directed_angle_mod_pi:01",
+            "full2d_rule:incidence_collinearity:02",
+            "full2d_rule:inequality_length:01",
+            "full2d_rule:transformation_reflection:01"
+          ],
+          "actual_full2d_run:full2d-positive-0000:B7:v0_4_3": [
+            "full2d_rule:algebraic_coordinate:01",
+            "full2d_rule:angle_chase:01",
+            "full2d_rule:construction_line:01",
+            "full2d_rule:directed_angle_mod_pi:01",
+            "full2d_rule:incidence_collinearity:02",
+            "full2d_rule:inequality_length:01",
+            "full2d_rule:transformation_reflection:01"
+          ],
+          "actual_full2d_run:full2d-positive-0000:B8:v0_4_3": [
+            "full2d_rule:algebraic_coordinate:01",
+            "full2d_rule:angle_chase:01",
+            "full2d_rule:case_split_orientation:01",
+            "full2d_rule:construction_line:01",
+            "full2d_rule:directed_angle_mod_pi:01",
+            "full2d_rule:incidence_collinearity:02",
+            "full2d_rule:inequality_length:01",
+            "full2d_rule:transformation_reflection:01"
+          ],
           "actual_full2d_run:full2d-positive-0001:B1:v0_4_3": [
             "full2d_rule:incidence_collinearity:02"
           ],
@@ -2315,10 +3042,47 @@
             "full2d_rule:incidence_collinearity:02",
             "full2d_rule:inequality_length:01",
             "full2d_rule:transformation_reflection:01"
+          ],
+          "actual_full2d_run:full2d-positive-0001:B5:v0_4_3": [
+            "full2d_rule:algebraic_coordinate:01",
+            "full2d_rule:angle_chase:01",
+            "full2d_rule:case_split_orientation:01",
+            "full2d_rule:directed_angle_mod_pi:01",
+            "full2d_rule:incidence_collinearity:02",
+            "full2d_rule:inequality_length:01",
+            "full2d_rule:transformation_reflection:01"
+          ],
+          "actual_full2d_run:full2d-positive-0001:B6:v0_4_3": [
+            "full2d_rule:angle_chase:01",
+            "full2d_rule:case_split_orientation:01",
+            "full2d_rule:construction_line:01",
+            "full2d_rule:directed_angle_mod_pi:01",
+            "full2d_rule:incidence_collinearity:02",
+            "full2d_rule:inequality_length:01",
+            "full2d_rule:transformation_reflection:01"
+          ],
+          "actual_full2d_run:full2d-positive-0001:B7:v0_4_3": [
+            "full2d_rule:algebraic_coordinate:01",
+            "full2d_rule:angle_chase:01",
+            "full2d_rule:construction_line:01",
+            "full2d_rule:directed_angle_mod_pi:01",
+            "full2d_rule:incidence_collinearity:02",
+            "full2d_rule:inequality_length:01",
+            "full2d_rule:transformation_reflection:01"
+          ],
+          "actual_full2d_run:full2d-positive-0001:B8:v0_4_3": [
+            "full2d_rule:algebraic_coordinate:01",
+            "full2d_rule:angle_chase:01",
+            "full2d_rule:case_split_orientation:01",
+            "full2d_rule:construction_line:01",
+            "full2d_rule:directed_angle_mod_pi:01",
+            "full2d_rule:incidence_collinearity:02",
+            "full2d_rule:inequality_length:01",
+            "full2d_rule:transformation_reflection:01"
           ]
         },
         "construction_family_count": 1,
-        "counted_final_theorem_records": 5,
+        "counted_final_theorem_records": 12,
         "outside_incidence_family_count": 7,
         "registry_hash": "sha256:db8081a3ab3703fbb3b336e3f5107dcdea66e0fa4174d4500726364698f909f5",
         "report_id": "UsedRuleCoverageReportFull2D:8:8",
@@ -2462,6 +3226,34 @@
         "full2d_rule:inequality_length:01",
         "full2d_rule:transformation_reflection:01"
       ],
+      "actual_full2d_run:full2d-positive-0000:B6:v0_4_3": [
+        "full2d_rule:angle_chase:01",
+        "full2d_rule:case_split_orientation:01",
+        "full2d_rule:construction_line:01",
+        "full2d_rule:directed_angle_mod_pi:01",
+        "full2d_rule:incidence_collinearity:02",
+        "full2d_rule:inequality_length:01",
+        "full2d_rule:transformation_reflection:01"
+      ],
+      "actual_full2d_run:full2d-positive-0000:B7:v0_4_3": [
+        "full2d_rule:algebraic_coordinate:01",
+        "full2d_rule:angle_chase:01",
+        "full2d_rule:construction_line:01",
+        "full2d_rule:directed_angle_mod_pi:01",
+        "full2d_rule:incidence_collinearity:02",
+        "full2d_rule:inequality_length:01",
+        "full2d_rule:transformation_reflection:01"
+      ],
+      "actual_full2d_run:full2d-positive-0000:B8:v0_4_3": [
+        "full2d_rule:algebraic_coordinate:01",
+        "full2d_rule:angle_chase:01",
+        "full2d_rule:case_split_orientation:01",
+        "full2d_rule:construction_line:01",
+        "full2d_rule:directed_angle_mod_pi:01",
+        "full2d_rule:incidence_collinearity:02",
+        "full2d_rule:inequality_length:01",
+        "full2d_rule:transformation_reflection:01"
+      ],
       "actual_full2d_run:full2d-positive-0001:B1:v0_4_3": [
         "full2d_rule:incidence_collinearity:02"
       ],
@@ -2474,10 +3266,47 @@
         "full2d_rule:incidence_collinearity:02",
         "full2d_rule:inequality_length:01",
         "full2d_rule:transformation_reflection:01"
+      ],
+      "actual_full2d_run:full2d-positive-0001:B5:v0_4_3": [
+        "full2d_rule:algebraic_coordinate:01",
+        "full2d_rule:angle_chase:01",
+        "full2d_rule:case_split_orientation:01",
+        "full2d_rule:directed_angle_mod_pi:01",
+        "full2d_rule:incidence_collinearity:02",
+        "full2d_rule:inequality_length:01",
+        "full2d_rule:transformation_reflection:01"
+      ],
+      "actual_full2d_run:full2d-positive-0001:B6:v0_4_3": [
+        "full2d_rule:angle_chase:01",
+        "full2d_rule:case_split_orientation:01",
+        "full2d_rule:construction_line:01",
+        "full2d_rule:directed_angle_mod_pi:01",
+        "full2d_rule:incidence_collinearity:02",
+        "full2d_rule:inequality_length:01",
+        "full2d_rule:transformation_reflection:01"
+      ],
+      "actual_full2d_run:full2d-positive-0001:B7:v0_4_3": [
+        "full2d_rule:algebraic_coordinate:01",
+        "full2d_rule:angle_chase:01",
+        "full2d_rule:construction_line:01",
+        "full2d_rule:directed_angle_mod_pi:01",
+        "full2d_rule:incidence_collinearity:02",
+        "full2d_rule:inequality_length:01",
+        "full2d_rule:transformation_reflection:01"
+      ],
+      "actual_full2d_run:full2d-positive-0001:B8:v0_4_3": [
+        "full2d_rule:algebraic_coordinate:01",
+        "full2d_rule:angle_chase:01",
+        "full2d_rule:case_split_orientation:01",
+        "full2d_rule:construction_line:01",
+        "full2d_rule:directed_angle_mod_pi:01",
+        "full2d_rule:incidence_collinearity:02",
+        "full2d_rule:inequality_length:01",
+        "full2d_rule:transformation_reflection:01"
       ]
     },
     "construction_family_count": 1,
-    "counted_final_theorem_records": 5,
+    "counted_final_theorem_records": 12,
     "outside_incidence_family_count": 7,
     "registry_hash": "sha256:db8081a3ab3703fbb3b336e3f5107dcdea66e0fa4174d4500726364698f909f5",
     "report_id": "UsedRuleCoverageReportFull2D:8:8",

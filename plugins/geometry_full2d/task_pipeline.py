@@ -49,34 +49,47 @@ def execute_actual_task_pipeline_v0_4_3(
     source_path = _write_source_problem(run_dir, task)
     source_ref = _sha_file(source_path)
 
-    extraction_payload = extract_theorem(
-        source_path,
-        theorem_name,
+    frontend = _load_existing_frontend_artifacts(
+        run_dir=run_dir,
         task_id=task_id,
-        target_status=str(task.get("target_status", "in_target_positive")),
-        grammar_family=str(task.get("grammar_family", "incidence")),
+        theorem_name=theorem_name,
+        source_ref=source_ref,
     )
-    extraction_payload["source_theorem_ref"] = source_ref
-    extraction_ref, extraction_payload = _write_typed_json(
-        run_dir,
-        "extraction",
-        "GeometryFull2DExtraction",
-        "report_id",
-        extraction_payload,
-        artifact_paths,
-    )
+    if frontend is None:
+        extraction_payload = extract_theorem(
+            source_path,
+            theorem_name,
+            task_id=task_id,
+            target_status=str(task.get("target_status", "in_target_positive")),
+            grammar_family=str(task.get("grammar_family", "incidence")),
+        )
+        extraction_payload["source_theorem_ref"] = source_ref
+        extraction_ref, extraction_payload = _write_typed_json(
+            run_dir,
+            "extraction",
+            "GeometryFull2DExtraction",
+            "report_id",
+            extraction_payload,
+            artifact_paths,
+        )
 
-    claim_result = build_claim_spec_from_extraction_report(extraction_payload)
-    if claim_result.status != "accepted" or claim_result.claim_spec is None:
-        raise ValueError(f"claim_spec_not_accepted:{claim_result.status}")
-    claim_ref, claim_payload = _write_typed_json(
-        run_dir,
-        "claim_spec",
-        "GeometryFull2DClaimSpec",
-        "claim_id",
-        claim_result.claim_spec.to_dict(),
-        artifact_paths,
-    )
+        claim_result = build_claim_spec_from_extraction_report(extraction_payload)
+        if claim_result.status != "accepted" or claim_result.claim_spec is None:
+            raise ValueError(f"claim_spec_not_accepted:{claim_result.status}")
+        claim_ref, claim_payload = _write_typed_json(
+            run_dir,
+            "claim_spec",
+            "GeometryFull2DClaimSpec",
+            "claim_id",
+            claim_result.claim_spec.to_dict(),
+            artifact_paths,
+        )
+    else:
+        extraction_ref = str(frontend["extraction_ref"])
+        extraction_payload = dict(frontend["extraction_payload"])
+        claim_ref = str(frontend["claim_ref"])
+        claim_payload = dict(frontend["claim_payload"])
+        artifact_paths.update(dict(frontend["artifact_paths"]))
 
     provider_run = GeometryFull2DProvider().solve(
         GeometryFull2DSolveRequest(
@@ -913,6 +926,78 @@ def _load_engine_outputs(refs: tuple[str, ...], artifact_paths: dict[str, str]) 
             raise ValueError(f"engine_output_not_object:{ref}")
         outputs[ref] = payload
     return outputs
+
+
+def _load_existing_frontend_artifacts(
+    *,
+    run_dir: Path,
+    task_id: str,
+    theorem_name: str,
+    source_ref: str,
+) -> dict[str, Any] | None:
+    records_dir = run_dir / "actual_task_pipeline_runs"
+    if not records_dir.exists():
+        return None
+    for record_path in sorted(records_dir.glob(f"{_safe_name(task_id)}__*.json")):
+        try:
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(record, dict):
+            continue
+        if record.get("task_id") != task_id or record.get("source_theorem_ref") != source_ref:
+            continue
+        artifact_paths = record.get("artifact_paths")
+        if not isinstance(artifact_paths, dict):
+            continue
+        extraction_ref = record.get("lean_extraction_report_ref")
+        claim_ref = record.get("claim_spec_ref")
+        if not isinstance(extraction_ref, str) or not isinstance(claim_ref, str):
+            continue
+        extraction_payload = _load_record_artifact(run_dir, artifact_paths, extraction_ref)
+        claim_payload = _load_record_artifact(run_dir, artifact_paths, claim_ref)
+        if not isinstance(extraction_payload, dict) or not isinstance(claim_payload, dict):
+            continue
+        if extraction_payload.get("task_id") != task_id:
+            continue
+        if extraction_payload.get("theorem_name") != theorem_name:
+            continue
+        if extraction_payload.get("source_theorem_ref") != source_ref:
+            continue
+        claim_task_id = claim_payload.get("task_id")
+        if claim_task_id is not None and claim_task_id != task_id:
+            continue
+        if claim_payload.get("theorem_name") != theorem_name:
+            continue
+        if claim_payload.get("source_statement_hash") != extraction_payload.get("source_statement_hash"):
+            continue
+        return {
+            "extraction_ref": extraction_ref,
+            "extraction_payload": extraction_payload,
+            "claim_ref": claim_ref,
+            "claim_payload": claim_payload,
+            "artifact_paths": {
+                extraction_ref: str(artifact_paths[extraction_ref]),
+                claim_ref: str(artifact_paths[claim_ref]),
+            },
+        }
+    return None
+
+
+def _load_record_artifact(run_dir: Path, artifact_paths: dict[str, Any], ref: str) -> dict[str, Any] | None:
+    value = artifact_paths.get(ref)
+    if not isinstance(value, str):
+        return None
+    path = Path(value)
+    if not path.is_absolute():
+        path = run_dir / path
+    if not path.exists():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    return payload if isinstance(payload, dict) else None
 
 
 def _task_by_id(manifest_path: Path, task_id: str) -> dict[str, Any]:

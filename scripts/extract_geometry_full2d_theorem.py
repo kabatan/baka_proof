@@ -25,6 +25,7 @@ except ModuleNotFoundError:  # pragma: no cover - used when imported as scripts.
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET_LIBRARY = "GeometryFull2DTarget:1.0.0"
+_LEAN_COMPILE_CACHE: dict[tuple[str, str], dict[str, Any]] = {}
 
 
 def main() -> int:
@@ -172,6 +173,12 @@ def validate_lean_extraction_report_full2d(payload: dict[str, Any], *, lean_file
 def _compile_lean_file(lean_file: Path) -> dict[str, Any]:
     _ensure_local_lean_artifacts()
     command = [_lake(), "env", "lean", "-R", "lean", str(lean_file)]
+    cache_key = (str(lean_file.resolve()), _file_sha256(lean_file))
+    if cache_key in _LEAN_COMPILE_CACHE:
+        cached = dict(_LEAN_COMPILE_CACHE[cache_key])
+        cached["cache_status"] = "hit"
+        cached["command"] = command
+        return cached
     completed = subprocess.run(
         command,
         cwd=ROOT,
@@ -182,13 +189,16 @@ def _compile_lean_file(lean_file: Path) -> dict[str, Any]:
         check=False,
         env=_browser_suppressed_env(),
     )
-    return {
+    report = {
         "command": command,
         "returncode": completed.returncode,
         "status": "passed" if completed.returncode == 0 else "failed",
         "stdout": completed.stdout,
         "stderr": completed.stderr,
+        "cache_status": "miss",
     }
+    _LEAN_COMPILE_CACHE[cache_key] = dict(report)
+    return report
 
 
 def _canonical_statement(
