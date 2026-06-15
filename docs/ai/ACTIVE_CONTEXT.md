@@ -1,54 +1,54 @@
 ---
-title: Guardian Active Context — GeometryFull2D v0.4.2
-context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-007
-version: v0.4.2-governed-full2d
-status: V04_2_RELEASE_BLOCKED_ON_WP20_SOLVER_BACKED_METRICS
+title: Guardian Active Context — GeometryFull2D v0.4.3
+context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-008
+version: v0.4.3-real-full2d-recovery
+status: V04_3_AUTHORITY_INSTALLED_IMPLEMENTATION_NOT_STARTED
 created: 2026-06-15
 last_updated: 2026-06-15
-base_spec: MARP-GEOLEAN-BASE-007
-plan: MARP-GEOLEAN-PLAN-007
-acceptance: MARP-GEOLEAN-ACCEPTANCE-007
-purpose: Minimal navigation state for the active GeometryFull2D v0.4.2 Guardian track.
-authority: Navigation only; never overrides the Base Spec, Plan, Acceptance, contracts, evidence, or user approval state.
+base_spec: MARP-GEOLEAN-BASE-008
+plan: MARP-GEOLEAN-PLAN-008
+acceptance: MARP-GEOLEAN-ACCEPTANCE-008
+purpose: Minimal navigation state for the active GeometryFull2D v0.4.3 Guardian track.
+authority: Navigation only; never overrides the Base Spec, Plan, Acceptance, invariants, evidence, or user approval state.
 ---
 
-# Guardian Active Context — GeometryFull2D v0.4.2
+# Guardian Active Context — GeometryFull2D v0.4.3
 
 ## Status
 
-Guardian Lane is active for the GeometryFull2D v0.4.2 governed full implementation track.
+Guardian Lane is active for the GeometryFull2D v0.4.3 real pipeline recovery track.
 
 Current mission:
 
 ```text
-Implement V0.4.2_GEOMETRY_FULL2D_FULL_PROVER_READY under MARP-GEOLEAN-BASE-007 / PLAN-007 / ACCEPTANCE-007.
+Implement V0.4.3_GEOMETRY_FULL2D_REAL_PIPELINE_READY under MARP-GEOLEAN-BASE-008 / PLAN-008 / ACCEPTANCE-008.
 ```
 
-The v0.3-family tracks are superseded as active release authority. They remain historical evidence and safety background only.
+The v0.4.2 track is superseded as active release authority. It remains evidence and a regression source only; it is not valid v0.4.3 completion evidence.
 
 ## Implementation Permission
 
-The current user request approved importing the research-agent v0.4.2 Guardian bundle and preparing the workspace so implementation can begin.
+The current user request approved importing the research-agent v0.4.3 integrated Guardian bundle and preparing the workspace so implementation can begin.
 
 Import evidence is recorded in:
 
 ```text
-docs/ai/changes/geometry-full2d-v0_4_2/evidence/v0_4_2_bundle_import.md
+docs/ai/changes/geometry-full2d-v0_4_3/evidence/v0_4_3_bundle_import.md
 ```
 
-Before editing implementation code, read the current Plan task, required requirements, admitted ReadSet, and changed files. Keep claim scope below release completion until final acceptance passes.
+Before editing implementation code, read the current Plan task, required R-IDs/source anchors, admitted ReadSet, and changed files. Keep claim scope below release completion until final acceptance passes.
 
 ## Read First
 
-1. `docs/ai/changes/geometry-full2d-v0_4_2/BASE_SPEC.md`
-2. `docs/ai/changes/geometry-full2d-v0_4_2/PLAN.md`
-3. `docs/ai/changes/geometry-full2d-v0_4_2/ACCEPTANCE.md`
-4. `docs/ai/changes/geometry-full2d-v0_4_2/ENGINE_CONTRACTS.md`
-5. `docs/ai/changes/geometry-full2d-v0_4_2/BLOCKER_AND_DEBT_POLICY.md`
-6. `docs/ai/changes/geometry-full2d-v0_4_2/REFACTOR_DIRECTIVE.md`
-7. `docs/ai/changes/geometry-full2d-v0_4_2/SOURCE_MAP.md`
-8. `docs/ai/changes/geometry-full2d-v0_4_2/README.md`
-9. Current Plan work package and required source anchors.
+1. `docs/ai/changes/geometry-full2d-v0_4_3/BASE_SPEC.md`
+2. `docs/ai/changes/geometry-full2d-v0_4_3/PLAN.md`
+3. `docs/ai/changes/geometry-full2d-v0_4_3/ACCEPTANCE.md`
+4. `docs/ai/changes/geometry-full2d-v0_4_3/REAL_PIPELINE_INVARIANTS.md`
+5. `docs/ai/changes/geometry-full2d-v0_4_3/REFACTOR_DIRECTIVE.md`
+6. `docs/ai/changes/geometry-full2d-v0_4_3/SOURCE_MAP.md`
+7. `docs/ai/changes/geometry-full2d-v0_4_3/README.md`
+8. `docs/ai/changes/geometry-full2d-v0_4_3/CODEX_HANDOFF.md`
+9. Current Plan work package and required R-IDs.
 10. Files in the admitted ReadSet before editing.
 
 ## Current Task Pointer
@@ -56,57 +56,46 @@ Before editing implementation code, read the current Plan task, required require
 Current task:
 
 ```text
-WP-20 — Corpus and final release acceptance closure
+WP-00 — Install authority and freeze old claims
 ```
 
 Completed preparation:
 
 ```text
-v0.4.2 research-agent bundle imported.
+v0.4.3 integrated research-agent bundle imported.
 Bundle hashes verified.
-Active context and index updated to point to v0.4.2.
-Debt ledger initialized.
-scripts/check_active_guardian_spec.py reports exactly one active geometry spec: MARP-GEOLEAN-BASE-007.
-Initial progress acceptance reports hard_blockers=[] and progress_ok_with_debt.
-WP-01 plugin boundary checker passed.
-WP-02 Lean facade checker, elaboration-backed facade materialization, lean-no-sorry, and lean-build passed.
-WP-03 structured Lean extraction checker passed.
-WP-04 ClaimSpec canonical bridge checker passed.
-WP-05 engine contracts and provider skeleton checker passed.
-WP-06 SyntheticClosureEngine smoke passed.
-WP-07 ConstructionSearchEngine smoke passed.
-WP-08 AlgebraicGeometryEngine smoke passed.
-WP-09 MetricAngleEngine smoke passed.
-WP-10 TransformationEngine smoke passed.
-WP-11 OrderCaseEngine smoke passed.
-WP-12 InequalityEngine smoke passed.
-WP-13 LeanProofSearchEngine smoke passed.
-WP-14 PortfolioCoordinator smoke and reason-code checker passed.
-WP-15 RuleRegistryFull2D floor checker passed.
-WP-20 corpus manifest, curated/external share, synthetic share, family/tier floors, and frozen manifest hash passed.
-WP-20 matrix/reproducibility artifacts are generated.
+Active context and index updated to point to v0.4.3.
+v0.4.2 Guardian docs marked superseded for release claims.
+v0.4.3 debt ledger initialized.
+scripts/check_active_guardian_spec_v0_4_3.py added for authority checks.
 ```
+
+Implementation work for WP-01 and later has not started under v0.4.3 in this import step.
 
 Open ReleaseBlocker / WorkDebt items are recorded in:
 
 ```text
-docs/ai/changes/geometry-full2d-v0_4_2/debt/debt_ledger.jsonl
+docs/ai/changes/geometry-full2d-v0_4_3/debt/debt_ledger.jsonl
 ```
 
 ## Non-Negotiables
 
-- Do not close with experiment-ready only, proof plumbing only, or a v0.3B-style partial claim.
-- Do not lower corpus floors, solve-rate floors, advantage thresholds, or engine role requirements.
-- Do not use `plugins/geometry_synthetic` in the v0.4.2 release path.
-- Do not use toy geometry semantics, axioms, `sorry`, `admit`, or raw solver/model output as proof evidence.
-- Do not count safe-reject as success for in-target positive tasks.
-- Do not stop for ReleaseBlockers or WorkDebt; record them and continue independent work.
-- Stop only for HardBlockers HB-01 through HB-09 in the active Base Spec / Blocker policy.
+- Do not mark v0.4.2 passed status as v0.4.3 completion.
+- Do not use `template_id`, `theorem_family`, or `task_id` to select proof text in the v0.4.3 release path.
+- Do not fabricate solver refs.
+- Do not count proof artifacts unless they belong to a valid `ActualTaskPipelineRunV1`.
+- Do not count Codex-generated tasks as human curated without an explicit user/reviewer manifest.
+- Do not let release-critical engines output Lean proof snippets, tactic scripts, proof-region replacements, or benchmark dispatch fields.
+- Do not let compilers read benchmark labels to choose proof text.
+- Do not weaken baselines to create artificial advantage.
+- Do not omit causal-chain hash or anti-v0.4.2 regression evidence.
+- Do not close release while debt ledger entries remain open.
+- Stop only for HardBlockers HB-01 through HB-09 in the active Base Spec.
 
 ## Evidence Folder
 
 ```text
-docs/ai/changes/geometry-full2d-v0_4_2/evidence/
+docs/ai/changes/geometry-full2d-v0_4_3/evidence/
 ```
 
 ## Current Claim Ceiling
@@ -114,19 +103,16 @@ docs/ai/changes/geometry-full2d-v0_4_2/evidence/
 Allowed:
 
 ```text
-MARP-GEOLEAN-BASE-007 / PLAN-007 / ACCEPTANCE-007 are installed as the active user-approved v0.4.2 Guardian authority set.
-WP-00 through WP-15 have passed progress checks.
-WP-20 corpus/freeze checks pass. WP-20 remains open because final release acceptance is currently blocked by solver-backed metrics: positive tasks do not yet carry the required SolverBackedProofCertificateFull2D, FinalVerifyGate, and proof-region artifacts needed for artifact-derived final theorem counts.
+MARP-GEOLEAN-BASE-008 / PLAN-008 / ACCEPTANCE-008 are installed as the active user-approved v0.4.3 Guardian authority set.
+The repository is prepared to resume implementation from WP-00 under the v0.4.3 plan.
 ```
 
 Not allowed yet:
 
 ```text
-V0.4.2_GEOMETRY_FULL2D_FULL_PROVER_READY
+V0.4.3_GEOMETRY_FULL2D_REAL_PIPELINE_READY
 SOURCE_FAITHFUL
 ACCEPTANCE_COMPLETE
 PRODUCTION_SAFE
 R-ID VERIFIED
 ```
-
-TongGeometry trained checkpoints are not release-critical for v0.4.2 and must not block the v0.4.2 release path.

@@ -1,12 +1,12 @@
 <!--
 Generated for kabatan/baka_proof Guardian/Codex handoff.
 Created: 2026-06-14
-Status: USER_APPROVED_ACTIVE
+Status: SUPERSEDED_BY_MARP-GEOLEAN-BASE-008
 -->
 ---
 title: "Guardian Base Spec — Geometry × Lean Full2D Prover v0.4.2 Governed Full Implementation"
 spec_id: "MARP-GEOLEAN-BASE-007"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-008"
 target_repo: "kabatan/baka_proof"
 created: "2026-06-14"
 supersedes:

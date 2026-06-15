@@ -1,14 +1,14 @@
 <!--
 Generated for kabatan/baka_proof Guardian/Codex handoff.
 Created: 2026-06-14
-Status: USER_APPROVED_ACTIVE
+Status: SUPERSEDED_BY_MARP-GEOLEAN-BASE-008
 -->
 ---
 title: "Guardian Acceptance Spec — Geometry × Lean Full2D Prover v0.4.2 Governed Full Implementation"
 acceptance_id: "MARP-GEOLEAN-ACCEPTANCE-007"
 base_spec: "MARP-GEOLEAN-BASE-007"
 plan: "MARP-GEOLEAN-PLAN-007"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-008"
 created: "2026-06-14"
 ---
 
@@ -91,11 +91,12 @@ Only HardBlocker stops Codex. ReleaseBlocker prevents closure but not implementa
 ### A. Guardian authority checks
 
 ```text
-A-001 exactly one active geometry Base Spec: MARP-GEOLEAN-BASE-007
-A-002 older active specs archived
-A-003 Plan and Acceptance reference BASE-007
-A-004 closure claim ceiling obeys evidence
-A-005 no requirement text lowered in repo-local copy
+Historical v0.4.2 criterion at that time: A-001 exactly one active geometry Base Spec, MARP-GEOLEAN-BASE-007.
+Current active geometry Base Spec is MARP-GEOLEAN-BASE-008.
+Historical v0.4.2 criterion at that time: A-002 older active specs archived.
+Historical v0.4.2 criterion at that time: A-003 Plan and Acceptance reference BASE-007.
+Historical v0.4.2 criterion at that time: A-004 closure claim ceiling obeys evidence.
+Historical v0.4.2 criterion at that time: A-005 no requirement text lowered in repo-local copy.
 ```
 
 ### B. Refactor and boundary checks

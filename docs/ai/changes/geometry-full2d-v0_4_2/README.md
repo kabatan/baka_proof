@@ -2,9 +2,9 @@
 title: Change Index — GeometryFull2D v0.4.2
 change_id: geometry-full2d-v0_4_2
 version: v0.4.2-governed-full2d
-status: RELEASE_BLOCKED_ON_WP20_CURATED_CORPUS
+status: SUPERSEDED_BY_MARP-GEOLEAN-BASE-008
 created: 2026-06-15
-purpose: Index the Guardian document set for the GeometryFull2D v0.4.2 governed full implementation track.
+purpose: Historical index for the superseded GeometryFull2D v0.4.2 governed full implementation track.
 authority: Navigation only; individual Base Spec, Plan, Acceptance, and contract documents declare their own authority.
 ---
 
@@ -12,13 +12,13 @@ authority: Navigation only; individual Base Spec, Plan, Acceptance, and contract
 
 ## Purpose
 
-This change prepares the Guardian track for:
+This superseded change prepared the Guardian track for:
 
 ```text
 V0.4.2_GEOMETRY_FULL2D_FULL_PROVER_READY
 ```
 
-The track supersedes the previous v0.3, v0.3A, v0.3 full-rebase, v0.3A patch, and v0.3B solver-backed proof-repair tracks as release authority. Those tracks remain historical evidence and safety background only.
+This track is superseded by `MARP-GEOLEAN-BASE-008`. It remains historical evidence and a regression source for v0.4.3 only; it is not active release authority.
 
 ## Primary Documents
 
@@ -40,7 +40,7 @@ The track supersedes the previous v0.3, v0.3A, v0.3 full-rebase, v0.3A patch, an
 - `evidence/repo_audit.md` — initial import-stage repository audit.
 - `debt/debt_ledger.jsonl` — initialized empty debt ledger.
 
-## Current Gate
+## Historical Gate
 
 Current task:
 
@@ -48,10 +48,10 @@ Current task:
 WP-20 — Corpus and final release acceptance closure
 ```
 
-WP-00 is complete for implementation flow:
+Historical implementation-flow status before supersession:
 
 ```text
-scripts/check_active_guardian_spec.py reports exactly one active geometry spec: MARP-GEOLEAN-BASE-007.
+scripts/check_active_guardian_spec.py reported exactly one active geometry spec at that time: MARP-GEOLEAN-BASE-007.
 Initial progress acceptance reports hard_blockers=[] and progress_ok_with_debt.
 ReleaseBlocker and WorkDebt items are recorded in debt/debt_ledger.jsonl.
 WP-01 plugin boundary checker passed.
@@ -77,7 +77,7 @@ WP-20 corpus manifest checker is implemented. The synthetic draft corpus and sha
 Allowed:
 
 ```text
-MARP-GEOLEAN-BASE-007 / PLAN-007 / ACCEPTANCE-007 are installed as the active user-approved v0.4.2 Guardian authority set.
+MARP-GEOLEAN-BASE-007 / PLAN-007 / ACCEPTANCE-007 are retained as superseded v0.4.2 historical evidence.
 Implementation has not yet satisfied v0.4.2 release acceptance.
 ```
 

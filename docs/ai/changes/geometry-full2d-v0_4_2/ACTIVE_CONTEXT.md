@@ -1,23 +1,25 @@
 <!--
 Generated for kabatan/baka_proof Guardian/Codex handoff.
 Created: 2026-06-14
-Status: USER_APPROVED_ACTIVE
+Status: SUPERSEDED_BY_MARP-GEOLEAN-BASE-008
 -->
 ---
-title: "Active Context Seed — GeometryFull2D v0.4.2"
-status: "RELEASE_BLOCKED_ON_WP20_SOLVER_BACKED_METRICS"
+title: "Superseded Context — GeometryFull2D v0.4.2"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-008"
 created: "2026-06-14"
 ---
 
-# Active Context Seed — GeometryFull2D v0.4.2
+# Superseded Context — GeometryFull2D v0.4.2
+
+This file is retained only as historical evidence and as a regression source for v0.4.3. It is not active release authority.
 
 Current objective:
 
 ```text
-Implement V0.4.2_GEOMETRY_FULL2D_FULL_PROVER_READY.
+Superseded objective: V0.4.2_GEOMETRY_FULL2D_FULL_PROVER_READY.
 ```
 
-Active spec set:
+Superseded spec set:
 
 ```text
 docs/ai/changes/geometry-full2d-v0_4_2/BASE_SPEC.md
@@ -28,6 +30,8 @@ docs/ai/changes/geometry-full2d-v0_4_2/BLOCKER_AND_DEBT_POLICY.md
 docs/ai/changes/geometry-full2d-v0_4_2/REFACTOR_DIRECTIVE.md
 ```
 
+The active spec set is now `MARP-GEOLEAN-BASE-008` / `MARP-GEOLEAN-PLAN-008` / `MARP-GEOLEAN-ACCEPTANCE-008` under `docs/ai/changes/geometry-full2d-v0_4_3/`.
+
 Execution rule:
 
 ```text
@@ -37,7 +41,7 @@ Codex must not weaken requirements.
 Codex must continue next_unblocked_work_packages from progress acceptance.
 ```
 
-Claim ceiling until final release acceptance passes:
+Historical claim ceiling for v0.4.2:
 
 ```text
 No v0.4.2 completion claim.

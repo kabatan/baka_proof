@@ -1,13 +1,13 @@
 <!--
 Generated for kabatan/baka_proof Guardian/Codex handoff.
 Created: 2026-06-14
-Status: USER_APPROVED_ACTIVE
+Status: SUPERSEDED_BY_MARP-GEOLEAN-BASE-008
 -->
 ---
 title: "Engine Contracts — GeometryFull2D v0.4.2"
 contract_id: "MARP-GEOLEAN-ENGINE-CONTRACTS-007"
 base_spec: "MARP-GEOLEAN-BASE-007"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-008"
 created: "2026-06-14"
 ---
 

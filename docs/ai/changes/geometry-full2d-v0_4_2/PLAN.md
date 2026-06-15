@@ -1,13 +1,13 @@
 <!--
 Generated for kabatan/baka_proof Guardian/Codex handoff.
 Created: 2026-06-14
-Status: USER_APPROVED_ACTIVE
+Status: SUPERSEDED_BY_MARP-GEOLEAN-BASE-008
 -->
 ---
 title: "Guardian Plan — Geometry × Lean Full2D Prover v0.4.2 Governed Full Implementation"
 plan_id: "MARP-GEOLEAN-PLAN-007"
 base_spec: "MARP-GEOLEAN-BASE-007"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-008"
 target_repo: "kabatan/baka_proof"
 created: "2026-06-14"
 ---
@@ -104,7 +104,8 @@ Steps:
 Acceptance:
 
 ```text
-scripts/check_active_guardian_spec.py reports exactly one active geometry spec: MARP-GEOLEAN-BASE-007.
+Historical v0.4.2 acceptance at that time: scripts/check_active_guardian_spec.py reported exactly one active geometry spec, MARP-GEOLEAN-BASE-007.
+Current active geometry spec is MARP-GEOLEAN-BASE-008.
 ```
 
 ### WP-01 — Refactor release plugin boundary
