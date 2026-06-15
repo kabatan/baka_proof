@@ -362,14 +362,14 @@
                 "actual_full2d_run:selftest:B2:0001:certificate_engine_output_refs_mismatch",
                 "actual_full2d_run:selftest:B2:0001:compiler_did_not_consume_engine_output:CompilerResultFull2D:sha256:f9d775ea5654b4f0605ffa9bc5a750e771ddfddc660386a0c5d3d2ce54f029c8",
                 "actual_full2d_run:selftest:B2:0001:provider_missing_engine_output_refs:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-                "actual_full2d_run:selftest:B2:0001:typed_artifact_hash_mismatch:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff:C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-run-record-selftest-fb4oyex6\\artifacts\\engine_output.json"
+                "actual_full2d_run:selftest:B2:0001:typed_artifact_hash_mismatch:SyntheticClosureTraceFull2D:sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff:C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-run-record-selftest-jmnaxgdw\\artifacts\\engine_output.json"
               ],
               "status": "failed_as_expected"
             },
             {
               "case": "missing_extraction_report",
               "errors": [
-                "actual_full2d_run:selftest:B2:0001:missing_artifact_path:GeometryFull2DExtraction:sha256:7b49c8cc78e3420a49d5aabd6ca5cdcc00f9aa2f3f4ceb44459eae96cccece83"
+                "actual_full2d_run:selftest:B2:0001:missing_artifact_path:GeometryFull2DExtraction:sha256:98cfcc7d67ea8264c4a8eae2dba6e341e729848aba7b7c744628239be5e6b710"
               ],
               "status": "failed_as_expected"
             },
@@ -1329,7 +1329,7 @@
         "errors": [],
         "extractor_smoke": {
           "errors": [],
-          "output": "C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-extraction-smoke-2rtib7i6\\extraction_report.json",
+          "output": "C:\\Users\\bakat\\AppData\\Local\\Temp\\full2d-extraction-smoke-m2dvildr\\extraction_report.json",
           "status": "passed"
         },
         "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_3",
@@ -1655,7 +1655,8 @@
           "failed_execution_count": 0,
           "max_executions": 0,
           "missing_record_count_before_execution": 43188,
-          "planned_record_count": 43200
+          "planned_record_count": 43200,
+          "workers": 1
         },
         "matrix_id": "geometry_full2d_v0_4_3",
         "record_validation_summary": {

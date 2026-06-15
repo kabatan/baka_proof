@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
 import json
 import os
@@ -31,13 +32,19 @@ def main() -> int:
         default=int(os.environ.get("FULL2D_MATRIX_MAX_EXECUTIONS", "0")),
         help="Maximum missing task/baseline pipeline runs to execute in this invocation. Default 0 avoids an accidental full release run.",
     )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=int(os.environ.get("FULL2D_MATRIX_WORKERS", "1")),
+        help="Number of task-level worker threads. Baselines for the same task still run sequentially to preserve artifact reuse.",
+    )
     args = parser.parse_args()
-    report = run_matrix(Path(args.config), Path(args.run_dir), max_executions=args.max_executions)
+    report = run_matrix(Path(args.config), Path(args.run_dir), max_executions=args.max_executions, workers=args.workers)
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["status"] == "passed" else 1
 
 
-def run_matrix(config_path: Path, run_dir: Path, *, max_executions: int = 0) -> dict[str, Any]:
+def run_matrix(config_path: Path, run_dir: Path, *, max_executions: int = 0, workers: int = 1) -> dict[str, Any]:
     config_path = _resolve(config_path)
     run_dir = _resolve(run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -56,6 +63,7 @@ def run_matrix(config_path: Path, run_dir: Path, *, max_executions: int = 0) -> 
         task_ids=matrix_task_ids,
         baseline_ids=required_baselines,
         max_executions=max_executions,
+        workers=workers,
     )
     records = _load_run_records(run_dir)
     record_validation = _validate_records(records, run_dir, config_path, corpus_manifest)
@@ -135,6 +143,7 @@ def _execute_missing_records(
     task_ids: tuple[str, ...],
     baseline_ids: tuple[str, ...],
     max_executions: int,
+    workers: int,
 ) -> dict[str, Any]:
     errors: list[str] = []
     existing = _record_key_set(_load_run_records(run_dir))
@@ -145,7 +154,81 @@ def _execute_missing_records(
     if max_executions < 0:
         errors.append(f"max_executions_negative:{max_executions}")
         max_executions = 0
-    for task_id, baseline_id in missing[:max_executions]:
+    if workers < 1:
+        errors.append(f"workers_lt_1:{workers}")
+        workers = 1
+    selected_missing = missing[:max_executions]
+    if selected_missing:
+        selected_index = {key: index for index, key in enumerate(selected_missing)}
+        if workers == 1:
+            task_reports, task_failures = _execute_missing_group(
+                selected_missing,
+                config_path=config_path,
+                corpus_root=corpus_root,
+                run_dir=run_dir,
+            )
+            executed.extend(task_reports)
+            failed.extend(task_failures)
+        else:
+            grouped = _group_missing_by_task(selected_missing)
+            with ThreadPoolExecutor(max_workers=workers) as executor:
+                futures = [
+                    executor.submit(
+                        _execute_missing_group,
+                        group,
+                        config_path=config_path,
+                        corpus_root=corpus_root,
+                        run_dir=run_dir,
+                    )
+                    for group in grouped
+                ]
+                for future in as_completed(futures):
+                    task_reports, task_failures = future.result()
+                    executed.extend(task_reports)
+                    failed.extend(task_failures)
+        executed.sort(key=lambda item: selected_index.get((str(item.get("task_id")), str(item.get("baseline_id"))), max_executions))
+        failed.sort(key=lambda item: selected_index.get((str(item.get("task_id")), str(item.get("baseline_id"))), max_executions))
+    if failed:
+        errors.extend(f"pipeline_execution_failed:{item['task_id']}:{item['baseline_id']}:{item['error']}" for item in failed[:20])
+    if missing and max_executions == 0:
+        errors.append("missing_records_not_executed:max_executions_0")
+    elif len(missing) > max_executions:
+        errors.append(f"missing_records_remain_after_execution:{len(missing) - max_executions}")
+    return {
+        "max_executions": max_executions,
+        "workers": workers,
+        "planned_record_count": len(planned),
+        "existing_record_count_before_execution": len(existing),
+        "missing_record_count_before_execution": len(missing),
+        "executed_record_count": len(executed),
+        "failed_execution_count": len(failed),
+        "executed": executed,
+        "failed": failed,
+        "errors": sorted(set(errors)),
+    }
+
+
+def _group_missing_by_task(missing: list[tuple[str, str]]) -> list[list[tuple[str, str]]]:
+    grouped: list[list[tuple[str, str]]] = []
+    index_by_task: dict[str, int] = {}
+    for task_id, baseline_id in missing:
+        if task_id not in index_by_task:
+            index_by_task[task_id] = len(grouped)
+            grouped.append([])
+        grouped[index_by_task[task_id]].append((task_id, baseline_id))
+    return grouped
+
+
+def _execute_missing_group(
+    group: list[tuple[str, str]],
+    *,
+    config_path: Path,
+    corpus_root: Path,
+    run_dir: Path,
+) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
+    executed: list[dict[str, Any]] = []
+    failed: list[dict[str, str]] = []
+    for task_id, baseline_id in group:
         try:
             executed.append(
                 execute_actual_task_pipeline_v0_4_3(
@@ -158,23 +241,7 @@ def _execute_missing_records(
             )
         except Exception as exc:
             failed.append({"task_id": task_id, "baseline_id": baseline_id, "error": str(exc)})
-    if failed:
-        errors.extend(f"pipeline_execution_failed:{item['task_id']}:{item['baseline_id']}:{item['error']}" for item in failed[:20])
-    if missing and max_executions == 0:
-        errors.append("missing_records_not_executed:max_executions_0")
-    elif len(missing) > max_executions:
-        errors.append(f"missing_records_remain_after_execution:{len(missing) - max_executions}")
-    return {
-        "max_executions": max_executions,
-        "planned_record_count": len(planned),
-        "existing_record_count_before_execution": len(existing),
-        "missing_record_count_before_execution": len(missing),
-        "executed_record_count": len(executed),
-        "failed_execution_count": len(failed),
-        "executed": executed,
-        "failed": failed,
-        "errors": sorted(set(errors)),
-    }
+    return executed, failed
 
 
 def _validate_records(
