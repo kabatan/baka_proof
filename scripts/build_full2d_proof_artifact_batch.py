@@ -5,6 +5,7 @@ import concurrent.futures
 import hashlib
 import json
 import sys
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -188,11 +189,26 @@ def _write_batch_outputs(
     task_results: list[dict[str, Any]],
     index: list[dict[str, Any]],
 ) -> None:
-    result_path.write_text(
+    _atomic_write_text(
+        result_path,
         "\n".join(json.dumps(item, sort_keys=True) for item in task_results) + ("\n" if task_results else ""),
-        encoding="utf-8",
     )
-    index_path.write_text(json.dumps(index, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    _atomic_write_text(index_path, json.dumps(index, indent=2, sort_keys=True) + "\n")
+
+
+def _atomic_write_text(path: Path, payload: str) -> None:
+    tmp_path = path.with_name(f"{path.name}.tmp")
+    last_error: OSError | None = None
+    for attempt in range(8):
+        try:
+            tmp_path.write_text(payload, encoding="utf-8")
+            tmp_path.replace(path)
+            return
+        except OSError as exc:
+            last_error = exc
+            time.sleep(0.25 * (attempt + 1))
+    assert last_error is not None
+    raise last_error
 
 
 def _positive_tasks(manifest: dict[str, Any]) -> list[dict[str, Any]]:
