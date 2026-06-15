@@ -110,7 +110,7 @@ def _run_checks(config_path: Path, run_dir: Path) -> dict[str, dict[str, Any]]:
             "command": command,
             "returncode": completed.returncode,
             "status": parsed.get("status") if isinstance(parsed, dict) else "failed",
-            "errors": parsed.get("errors", ["unparseable_json_stdout"]) if isinstance(parsed, dict) else ["unparseable_json_stdout"],
+            "errors": parsed.get("errors", []) if isinstance(parsed, dict) else ["unparseable_json_stdout"],
             "report": parsed,
             "stderr_tail": completed.stderr[-2000:],
         }
@@ -181,9 +181,13 @@ def _engine_usage_summary(engine_real: dict[str, Any], matrix: dict[str, Any]) -
     source_report = engine_real.get("source_report", {})
     reports = source_report.get("reports", []) if isinstance(source_report, dict) else []
     roles = [report.get("engine_role") for report in reports if isinstance(report, dict) and report.get("status") == "passed"]
+    counted_roles = []
+    actual_summary = matrix.get("actual_task_pipeline_run_summary", {})
+    if isinstance(actual_summary, dict) and isinstance(actual_summary.get("counted_certificate_engine_roles"), list):
+        counted_roles = [str(role) for role in actual_summary["counted_certificate_engine_roles"]]
     return {
         "release_engine_roles_with_challenge_pass": roles,
-        "counted_certificate_engine_roles": [],
+        "counted_certificate_engine_roles": counted_roles,
         "matrix_status": matrix.get("status"),
     }
 

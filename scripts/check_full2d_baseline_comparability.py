@@ -64,6 +64,7 @@ def check_baseline_comparability(run_dir: Path, config_path: Path) -> dict[str, 
             errors.append("baseline_comparability_lean_library_access_not_same")
     direct_report_errors = _check_direct_lemma_b1_counting(run_dir)
     errors.extend(direct_report_errors)
+    errors.extend(_check_disabled_engine_usage(run_dir))
     return {
         "schema_version": "1.0.0",
         "status": "passed" if not errors else "failed",
@@ -124,6 +125,56 @@ def _check_direct_lemma_b1_counting(run_dir: Path) -> list[str]:
         elif b1.get("final_status") != "final_theorem":
             errors.append(f"{record.get('task_id')}:direct_lemma_b1_success_not_counted")
     return errors
+
+
+def _check_disabled_engine_usage(run_dir: Path) -> list[str]:
+    records = _iter_run_records(run_dir)
+    errors: list[str] = []
+    for record in records:
+        baseline_id = str(record.get("baseline_id", ""))
+        task_id = str(record.get("task_id", "<missing>"))
+        disabled_component, disabled_roles = INTENDED_DISABLED.get(baseline_id, ("", ()))
+        if disabled_component == "none" or not disabled_component:
+            continue
+        successful_roles = _certificate_bound_successful_engine_roles(record, run_dir)
+        if disabled_component == "geometry_solver" and successful_roles:
+            errors.append(f"{task_id}:{baseline_id}:geometry_solver_disabled_but_engine_successes:{','.join(successful_roles)}")
+        forbidden = sorted(set(successful_roles).intersection(disabled_roles))
+        if forbidden:
+            errors.append(f"{task_id}:{baseline_id}:disabled_engine_success_referenced:{','.join(forbidden)}")
+    return errors
+
+
+def _certificate_bound_successful_engine_roles(record: dict[str, Any], run_dir: Path) -> list[str]:
+    artifact_paths = record.get("artifact_paths", {})
+    if not isinstance(artifact_paths, dict):
+        return []
+    roles: list[str] = []
+    for ref in record.get("engine_output_refs", []):
+        payload = _load_record_artifact(str(ref), artifact_paths, run_dir)
+        if not isinstance(payload, dict):
+            continue
+        if payload.get("status") == "normalized_success" and payload.get("real_integration_flag") is True:
+            role = payload.get("engine_role")
+            if isinstance(role, str) and role:
+                roles.append(role)
+    return sorted(set(roles))
+
+
+def _load_record_artifact(ref: str, artifact_paths: dict[str, Any], run_dir: Path) -> dict[str, Any] | None:
+    path_value = artifact_paths.get(ref)
+    if not isinstance(path_value, str):
+        return None
+    path = Path(path_value)
+    if not path.is_absolute():
+        path = run_dir / path
+    if not path.exists():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    return payload if isinstance(payload, dict) else None
 
 
 def _certificate_says_direct_lemma(record: dict[str, Any], run_dir: Path) -> bool:
