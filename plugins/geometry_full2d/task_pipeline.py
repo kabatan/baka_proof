@@ -341,6 +341,7 @@ def _write_source_problem(run_dir: Path, task: dict[str, Any]) -> Path:
     header = _theorem_header(theorem_source)
     source_text = (
         "import MathAutoResearch.GeometryFull2D.Extraction\n\n"
+        "set_option linter.unusedVariables false\n\n"
         "open MathAutoResearch.GeometryFull2D\n\n"
         f"{header} := by\n"
         f"  -- MARP_PROOF_REGION_START:{theorem_name}\n"
