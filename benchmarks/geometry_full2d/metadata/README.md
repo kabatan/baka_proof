@@ -1,6 +1,6 @@
-# GeometryFull2D v0.4.3 Mixed Corpus
+# GeometryFull2D v0.4.3 External Projection Corpus
 
-1675 positives are labeled `external_formal` and are anchored to GenesisGeo formal DSL benchmark source records.
-1675 positives remain labeled `synthetic_generated`.
-External-formal entries are GeometryFull2D projection tasks, not claims that the original GenesisGeo benchmark goal has been fully translated.
+3350 positives are labeled `external_formal` and are anchored to GenesisGeo formal DSL source records.
+0 positives are labeled `synthetic_generated`; 500 negative/target-outside records remain synthetic.
+Each positive theorem is a GeometryFull2D projection obligation built from source problem points or predicates.
 Source assignment evidence is recorded in `external_formal_sources_genesisgeo.jsonl`.
