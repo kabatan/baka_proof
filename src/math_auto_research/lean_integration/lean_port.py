@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import shutil
+import hashlib
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -13,6 +14,7 @@ from math_auto_research.lean_integration.lean_error_summary import LeanErrorSumm
 
 _PROJECT_BUILD_CACHE: LeanCompileResult | None = None
 _FILE_COMPILE_CACHE: dict[tuple[str, int, int], LeanCompileResult] = {}
+_CONTENT_COMPILE_CACHE: dict[str, LeanCompileResult] = {}
 
 
 @dataclass(frozen=True)
@@ -37,13 +39,20 @@ class LeanPort:
 
     def compile_file(self, path: Path, budget: ResourceRequest | None = None) -> LeanCompileResult:
         resolved_path = Path(path).resolve()
+        content_hash = ""
         try:
             stat = resolved_path.stat()
             cache_key = (str(resolved_path), int(stat.st_mtime_ns), int(stat.st_size))
+            content_hash = hashlib.sha256(resolved_path.read_bytes()).hexdigest()
         except FileNotFoundError:
             cache_key = None
         if cache_key is not None and cache_key in _FILE_COMPILE_CACHE:
             return _FILE_COMPILE_CACHE[cache_key]
+        if content_hash and content_hash in _CONTENT_COMPILE_CACHE:
+            result = _CONTENT_COMPILE_CACHE[content_hash]
+            if cache_key is not None:
+                _FILE_COMPILE_CACHE[cache_key] = result
+            return result
         request = budget or ResourceRequest(component="lean_file", engine_role="lean_build", budget="tiny", timeout_sec=120)
         if Path("lakefile.lean").exists():
             command = [self.lean_executable, str(path)]
@@ -59,6 +68,8 @@ class LeanPort:
             result = self._compile_result(fallback_report)
         if cache_key is not None:
             _FILE_COMPILE_CACHE[cache_key] = result
+        if content_hash:
+            _CONTENT_COMPILE_CACHE[content_hash] = result
         return result
 
     def check_file(self, path: Path) -> LeanCompileResult:
