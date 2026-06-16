@@ -125,6 +125,11 @@ def compile_full2d_engine_outputs(
     if not usable:
         raise ValueError("compiler_found_no_normalized_engine_outputs")
     proof_text, selected_rule_ids = _proof_text_from_claim_and_rules(claim_spec, usable)
+    proof_text = _with_solver_intermediate_if_substantive(
+        claim_spec=claim_spec,
+        proof_text=proof_text,
+        selected_rule_ids=selected_rule_ids,
+    )
     proof_derivation_witnesses = _semantic_witnesses_for_rules(usable, selected_rule_ids)
     proof_derivation_input_refs = tuple(str(witness["normalized_output_ref"]) for witness in proof_derivation_witnesses)
     if not proof_derivation_input_refs:
@@ -629,6 +634,63 @@ def _proof_text_from_claim_and_rules(
             )
 
     raise ValueError("no_compiler_rule_for_target")
+
+
+def _with_solver_intermediate_if_substantive(
+    *,
+    claim_spec: dict[str, Any],
+    proof_text: str,
+    selected_rule_ids: tuple[str, ...],
+) -> str:
+    """Expose non-direct solver-backed derivations as an explicit Lean intermediate fact."""
+    if not re.fullmatch(r"\s*exact\s+.+\s*", proof_text, flags=re.DOTALL):
+        return proof_text
+    if _is_direct_facade_collinearity_claim(claim_spec, proof_text, selected_rule_ids):
+        return proof_text
+    target_expr = _target_source_expr_for_have(claim_spec)
+    if not target_expr:
+        return proof_text
+    exact_body = proof_text.strip()
+    return "\n".join(
+        (
+            f"  have h_solver_intermediate : {target_expr} := by",
+            f"    {exact_body}",
+            "  exact h_solver_intermediate",
+        )
+    )
+
+
+def _is_direct_facade_collinearity_claim(
+    claim_spec: dict[str, Any],
+    proof_text: str,
+    selected_rule_ids: tuple[str, ...],
+) -> bool:
+    target = claim_spec.get("target", {})
+    if not isinstance(target, dict):
+        return False
+    args = tuple(str(arg) for arg in target.get("args", []))
+    family = str(target.get("family", ""))
+    return (
+        family in {"incidence", "collinear"}
+        and len(args) == 3
+        and args[0] == args[1]
+        and "collinear_refl_left" in proof_text
+        and set(selected_rule_ids).issubset(
+            {
+                "full2d_rule:incidence_collinearity:01",
+                "full2d_rule:incidence_collinearity:02",
+                "full2d_rule:incidence_collinearity:03",
+            }
+        )
+    )
+
+
+def _target_source_expr_for_have(claim_spec: dict[str, Any]) -> str:
+    target = claim_spec.get("target", {})
+    if not isinstance(target, dict):
+        return ""
+    source_expr = str(target.get("source_expr", "")).strip()
+    return source_expr
 
 
 def _available_roles(engine_outputs: dict[str, dict[str, Any]]) -> set[str]:
