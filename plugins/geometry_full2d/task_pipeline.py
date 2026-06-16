@@ -214,10 +214,12 @@ def execute_actual_task_pipeline_v0_4_3(
     )
 
     final_verify_payload = _final_verify_payload(
+        run_dir=run_dir,
         source_path=source_path,
         candidate_path=candidate_path,
         theorem_name=theorem_name,
         task_id=task_id,
+        baseline_id=baseline_id,
         extraction_ref=extraction_ref,
         extraction_payload=extraction_payload,
         provider_ref=provider_ref,
@@ -377,10 +379,12 @@ def _is_safe_reject_claim(claim_payload: dict[str, Any]) -> bool:
 
 def _final_verify_payload(
     *,
+    run_dir: Path,
     source_path: Path,
     candidate_path: Path,
     theorem_name: str,
     task_id: str,
+    baseline_id: str,
     extraction_ref: str,
     extraction_payload: dict[str, Any],
     provider_ref: str,
@@ -404,6 +408,34 @@ def _final_verify_payload(
         "proof_region_diff_hash": worker_payload["proof_region_diff_hash"],
         "generated_candidate_file_ref": worker_payload["generated_candidate_file_ref"],
     }
+    replay = _replayable_lean_compile_report(
+        run_dir=run_dir,
+        task_id=task_id,
+        baseline_id=baseline_id,
+        candidate_ref=str(worker_payload["generated_candidate_file_ref"]),
+    )
+    if replay is not None:
+        payload = _final_verify_payload_from_replayed_compile(
+            source_path=source_path,
+            candidate_path=candidate_path,
+            theorem_name=theorem_name,
+            task_id=task_id,
+            proof_use_provenance=provenance,
+            replay=replay,
+        )
+        passed = payload["proof_use_status"] == "final_theorem"
+        payload.update(
+            {
+                "status": "passed" if passed else "failed",
+                "final_status": "final_theorem" if passed else "measured_failure",
+                "provider_run_manifest_ref": provider_ref,
+                "engine_output_refs": list(engine_refs),
+                "compiler_result_refs": list(compiler_refs),
+                "lean_patch_candidate_ref": patch_ref,
+                "proof_worker_result_ref": worker_ref,
+            }
+        )
+        return payload
     report = FinalVerifyGate().verify_file(
         source_path.read_text(encoding="utf-8"),
         candidate_path,
@@ -425,6 +457,98 @@ def _final_verify_payload(
         }
     )
     return payload
+
+
+def _replayable_lean_compile_report(
+    *,
+    run_dir: Path,
+    task_id: str,
+    baseline_id: str,
+    candidate_ref: str,
+) -> dict[str, Any] | None:
+    record_path = run_dir / "actual_task_pipeline_runs" / f"{_safe_name(task_id)}__{_safe_name(baseline_id)}.json"
+    if not record_path.exists():
+        return None
+    try:
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    if not isinstance(record, dict):
+        return None
+    artifact_paths = record.get("artifact_paths")
+    final_verify_ref = record.get("final_verify_report_ref")
+    if not isinstance(artifact_paths, dict) or not isinstance(final_verify_ref, str):
+        return None
+    final_verify = _load_record_artifact(run_dir, artifact_paths, final_verify_ref)
+    if not isinstance(final_verify, dict):
+        return None
+    if final_verify.get("checked_candidate_file_ref") != candidate_ref:
+        return None
+    if final_verify.get("lean_status") != "passed":
+        return None
+    return {
+        "schema_version": "1.0.0",
+        "replay_kind": "same_candidate_hash_lean_compile",
+        "source_final_verify_report_ref": final_verify_ref,
+        "source_checked_candidate_file_ref": candidate_ref,
+        "source_lean_status": final_verify.get("lean_status"),
+        "source_lean_artifact_ref": final_verify.get("lean_artifact_ref"),
+    }
+
+
+def _final_verify_payload_from_replayed_compile(
+    *,
+    source_path: Path,
+    candidate_path: Path,
+    theorem_name: str,
+    task_id: str,
+    proof_use_provenance: dict[str, Any],
+    replay: dict[str, Any],
+) -> dict[str, Any]:
+    source_text = source_path.read_text(encoding="utf-8")
+    candidate_text = candidate_path.read_text(encoding="utf-8")
+    original_statement = extract_theorem_statement(source_text, theorem_name)
+    candidate_statement = extract_theorem_statement(candidate_text, theorem_name)
+    original_hash = hash_text(original_statement)
+    theorem_hash_unchanged = original_hash == hash_text(candidate_statement)
+    region_ok = FinalVerifyGate().region_guard.permits(source_text, candidate_text)
+    sorry_status = "failed" if contains_sorry(candidate_text) else "clean"
+    forbidden_status = "failed" if contains_forbidden_declaration(candidate_text) else "clean"
+    admitted_imports_ok = imports_are_admitted(candidate_text, ("MathAutoResearch", "Mathlib", "LeanGeo"))
+    toy_target_ok = not contains_local_toy_target(candidate_text)
+    provenance_ok = proof_use_provenance_valid(proof_use_provenance)
+    solver_backed_mode = bool(proof_use_provenance.get("solver_backed_mode"))
+    lean_status = str(replay.get("source_lean_status", "failed"))
+    passed = (
+        theorem_hash_unchanged
+        and region_ok
+        and lean_status == "passed"
+        and sorry_status == "clean"
+        and forbidden_status == "clean"
+        and admitted_imports_ok
+        and toy_target_ok
+        and provenance_ok
+    )
+    return {
+        "schema_version": "1.0.0",
+        "report_id": f"final_verify_replay:{hash_text(str(candidate_path))[:16]}",
+        "target_obligation_id": task_id,
+        "theorem_statement_hash": original_hash,
+        "protected_theorem_hash_unchanged": theorem_hash_unchanged and region_ok,
+        "lean_status": lean_status,
+        "forbidden_axiom_status": forbidden_status if admitted_imports_ok and toy_target_ok and provenance_ok else "failed",
+        "sorry_status": sorry_status,
+        "proof_use_status": "final_theorem" if passed else "not_allowed",
+        "lean_artifact_ref": str(candidate_path),
+        "proof_artifact_ref": str(candidate_path),
+        "proof_use_provenance_status": "passed" if provenance_ok else "failed",
+        "solver_backed_proof_status": "passed" if solver_backed_mode and passed else "failed" if solver_backed_mode else "not_applicable",
+        "protected_statement_hash_source": "source_problem" if solver_backed_mode else "original_file",
+        "checked_candidate_file_ref": _sha_file(candidate_path),
+        "proof_region_guard_status": "passed" if region_ok else "failed",
+        "lean_compile_replay_status": "passed_same_candidate_hash",
+        "lean_compile_replay": replay,
+    }
 
 
 def _measured_failure_final_verify_payload(
@@ -575,6 +699,21 @@ def _compile_direct_lean_baseline(
     if not engine_refs:
         raise ValueError("direct_lean_baseline_requires_disabled_engine_artifacts")
     proof_text, rule_ids = _direct_lean_proof_text(claim_payload)
+    proof_derivation_witnesses = [{"derivation_status": "direct_lean_baseline", "claim_spec_ref": claim_ref}]
+    proof_derivation_ref = _sha_text(
+        json.dumps(
+            {
+                "claim_spec_ref": claim_ref,
+                "proof_region_replacement_ref": _sha_text(proof_text),
+                "proof_derivation_witnesses": proof_derivation_witnesses,
+                "proof_derivation_input_refs": [claim_ref],
+                "selected_rule_ids": list(rule_ids),
+                "derivation_contract": "direct_lean_baseline_no_geometry_solver_v1",
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+    )
     compiler_ref, compiler_payload = _write_typed_json(
         run_dir,
         "compiler_result_direct_lean_baseline",
@@ -590,6 +729,9 @@ def _compile_direct_lean_baseline(
             "consumed_engine_output_refs": list(engine_refs),
             "input_engine_output_refs": list(engine_refs),
             "consumed_normalized_output_refs": [],
+            "proof_derivation_ref": proof_derivation_ref,
+            "proof_derivation_input_refs": [claim_ref],
+            "proof_derivation_witnesses": proof_derivation_witnesses,
             "consumed_rule_ids": list(rule_ids),
             "used_rule_ids": list(rule_ids),
             "used_rule_refs": list(rule_ids),
@@ -610,6 +752,8 @@ def _compile_direct_lean_baseline(
         compiler_ref=compiler_ref,
         rule_ids=rule_ids,
         proof_text=proof_text,
+        proof_derivation_ref=proof_derivation_ref,
+        proof_derivation_witnesses=proof_derivation_witnesses,
     )
     patch_ref, patch_payload = _write_typed_json(
         run_dir,
@@ -645,6 +789,8 @@ def _direct_lean_patch_payload(
     compiler_ref: str,
     rule_ids: tuple[str, ...],
     proof_text: str,
+    proof_derivation_ref: str,
+    proof_derivation_witnesses: list[dict[str, str]],
 ) -> dict[str, Any]:
     theorem_name = str(claim_payload["theorem_name"])
     return {
@@ -668,6 +814,9 @@ def _direct_lean_patch_payload(
         "provider_run_manifest_ref": provider_ref,
         "claim_spec_ref": claim_ref,
         "solver_dependency_refs": [provider_ref, *engine_refs, compiler_ref],
+        "proof_derivation_ref": proof_derivation_ref,
+        "proof_derivation_input_refs": [claim_ref],
+        "proof_derivation_witnesses": proof_derivation_witnesses,
         "raw_provider_output_used_as_proof": False,
         "status": "lean_patch_candidate",
         "proof_use_status": "lean_patch_candidate",
@@ -733,6 +882,25 @@ def _write_compiler_measured_failure_record(
     if not engine_refs:
         raise ValueError(f"measured_failure_requires_engine_output_refs:{failure_reason}")
     rule_id = "full2d_rule:measured_failure:no_normalized_engine_output"
+    proof_derivation_input_refs = engine_refs
+    proof_derivation_witnesses = [
+        {"derivation_status": "measured_failure", "engine_output_ref": ref, "failure_reason": failure_reason}
+        for ref in engine_refs
+    ]
+    proof_derivation_ref = _sha_text(
+        json.dumps(
+            {
+                "claim_spec_ref": claim_ref,
+                "failure_reason": failure_reason,
+                "proof_derivation_input_refs": list(proof_derivation_input_refs),
+                "proof_derivation_witnesses": proof_derivation_witnesses,
+                "selected_rule_ids": [rule_id],
+                "derivation_contract": "compiler_measured_failure_from_engine_outputs_v1",
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+    )
     compiler_ref, compiler_payload = _write_typed_json(
         run_dir,
         "compiler_result_measured_failure",
@@ -747,6 +915,9 @@ def _write_compiler_measured_failure_record(
             "consumed_engine_output_refs": list(engine_refs),
             "input_engine_output_refs": list(engine_refs),
             "consumed_normalized_output_refs": [],
+            "proof_derivation_ref": proof_derivation_ref,
+            "proof_derivation_input_refs": list(proof_derivation_input_refs),
+            "proof_derivation_witnesses": proof_derivation_witnesses,
             "consumed_rule_ids": [rule_id],
             "used_rule_ids": [],
             "used_rule_refs": [],
@@ -766,6 +937,9 @@ def _write_compiler_measured_failure_record(
         engine_refs=engine_refs,
         compiler_ref=compiler_ref,
         rule_id=rule_id,
+        proof_derivation_ref=proof_derivation_ref,
+        proof_derivation_input_refs=proof_derivation_input_refs,
+        proof_derivation_witnesses=proof_derivation_witnesses,
         failure_reason=failure_reason,
     )
     patch_ref, patch_payload = _write_typed_json(
@@ -918,6 +1092,9 @@ def _measured_failure_patch_payload(
     engine_refs: tuple[str, ...],
     compiler_ref: str,
     rule_id: str,
+    proof_derivation_ref: str,
+    proof_derivation_input_refs: tuple[str, ...],
+    proof_derivation_witnesses: list[dict[str, str]],
     failure_reason: str,
 ) -> dict[str, Any]:
     theorem_name = str(claim_payload["theorem_name"])
@@ -943,6 +1120,9 @@ def _measured_failure_patch_payload(
         "provider_run_manifest_ref": provider_ref,
         "claim_spec_ref": claim_ref,
         "solver_dependency_refs": [provider_ref, *engine_refs, compiler_ref],
+        "proof_derivation_ref": proof_derivation_ref,
+        "proof_derivation_input_refs": list(proof_derivation_input_refs),
+        "proof_derivation_witnesses": proof_derivation_witnesses,
         "raw_provider_output_used_as_proof": False,
         "status": "lean_patch_candidate",
         "proof_use_status": "lean_patch_candidate",
@@ -1102,6 +1282,12 @@ def _load_existing_frontend_artifacts(
             continue
         if extraction_payload.get("theorem_name") != theorem_name:
             continue
+        if extraction_payload.get("extraction_method") != "lean_elaborator_structured_theorem":
+            continue
+        if extraction_payload.get("semantic_extraction_authority") != "lean_elaborator":
+            continue
+        if extraction_payload.get("python_semantic_extraction_used") is not False:
+            continue
         if extraction_payload.get("source_theorem_ref") != source_ref:
             continue
         claim_task_id = claim_payload.get("task_id")
@@ -1188,7 +1374,9 @@ def _selected_implementations_hash() -> str:
         "plugins/geometry_full2d/proof.py",
         "plugins/geometry_full2d/run_records.py",
         "plugins/geometry_full2d/task_pipeline.py",
+        "plugins/geometry_full2d/claim_spec.py",
         "scripts/extract_geometry_full2d_theorem.py",
+        "lean/MathAutoResearch/GeometryFull2D/Extraction.lean",
         "src/math_auto_research/model_api/proof_worker.py",
         "src/math_auto_research/lean_integration/final_verify_gate.py",
         "src/math_auto_research/lean_integration/lean_port.py",

@@ -59,6 +59,7 @@ def run(engine_input: EngineInputFull2D, budget: ResourceBudget, context: RunCon
         checker_or_compiler_ref=f"AlgebraicCertificateCheckerFull2D:{payload_hash}",
         resource_usage_ref=context.resource_usage_ref,
         status="normalized_success",
+        normalized_output_payload=payload,
     )
 
 
@@ -98,7 +99,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
                     "full2d_rule:metric_equal_length:02",
                     "full2d_rule:metric_equal_length:03",
                 ),
-                lean_summary="a reversed equal-length hypothesis is normalized by equality symmetry into the requested target",
+                lean_summary="a reversed equal-length hypothesis is normalized through equality symmetry into the requested target",
             )
     if family == "metric" and "equal_length" in source_expr and len(args) == 4 and args[:2] == args[2:]:
         variables = tuple(dict.fromkeys(variable for point in args[:2] for variable in _variables_for_point(point)))
@@ -158,7 +159,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
         denominator_conditions=(),
         checker_result=checker_result,
         source_rule_ids=("full2d_rule:algebraic_coordinate:01", "full2d_rule:algebraic_coordinate:03"),
-        lean_summary="collinearity determinant has duplicate coordinate rows, so the exact polynomial goal reduces to zero",
+        lean_summary="collinearity determinant has duplicate coordinate rows, so the polynomial target reduces to zero",
     )
 
 

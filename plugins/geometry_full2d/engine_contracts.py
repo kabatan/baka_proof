@@ -88,6 +88,7 @@ class EngineOutputFull2D:
     checker_or_compiler_ref: str | None
     resource_usage_ref: str
     status: ENGINE_STATUS
+    normalized_output_payload: dict[str, Any] | None = None
     real_integration_evidence_ref: str | None = None
     proof_use_status: Literal["not_allowed"] = "not_allowed"
 
@@ -194,6 +195,15 @@ def validate_engine_output(output: EngineOutputFull2D) -> list[str]:
         errors.append("unknown_engine_role")
     if output.status not in {"normalized_success", "measured_failure", "diagnostic"}:
         errors.append("invalid_status")
+    if output.status == "normalized_success":
+        if not isinstance(output.normalized_output_payload, dict):
+            errors.append("normalized_success_missing_payload")
+        elif output.normalized_output_ref:
+            expected_hash = hash_ref(canonical_json(output.normalized_output_payload))
+            if output.raw_output_hash != expected_hash:
+                errors.append("normalized_payload_raw_hash_mismatch")
+            if f":{expected_hash}" not in output.normalized_output_ref:
+                errors.append("normalized_payload_ref_hash_mismatch")
     if output.proof_use_status != "not_allowed":
         errors.append("engine_output_proof_use_not_allowed")
     if output.real_integration_flag and not output.real_integration_evidence_ref:
@@ -209,15 +219,26 @@ def validate_engine_output(output: EngineOutputFull2D) -> list[str]:
 
 def validate_engine_semantic_output_payload(payload: dict[str, Any]) -> list[str]:
     errors: list[str] = []
-    forbidden_fields = sorted(FORBIDDEN_ENGINE_OUTPUT_FIELDS.intersection(payload))
-    if forbidden_fields:
-        errors.append(f"engine_output_forbidden_proof_fields:{','.join(forbidden_fields)}")
-    for key, value in payload.items():
-        if key in {"backend_identity", "checker_or_compiler_ref", "resource_usage_ref"}:
-            continue
-        if isinstance(value, str) and _looks_like_proof_text(value):
-            errors.append(f"engine_output_forbidden_proof_text:{key}")
+    _validate_semantic_payload_recursive(payload, "engine_output", errors)
     return sorted(set(errors))
+
+
+def _validate_semantic_payload_recursive(value: Any, path: str, errors: list[str]) -> None:
+    if isinstance(value, dict):
+        forbidden_fields = sorted(FORBIDDEN_ENGINE_OUTPUT_FIELDS.intersection(value))
+        if forbidden_fields:
+            errors.append(f"engine_output_forbidden_proof_fields:{path}:{','.join(forbidden_fields)}")
+        for key, child in value.items():
+            if key in {"backend_identity", "checker_or_compiler_ref", "resource_usage_ref"}:
+                continue
+            _validate_semantic_payload_recursive(child, f"{path}.{key}", errors)
+        return
+    if isinstance(value, (list, tuple)):
+        for index, item in enumerate(value):
+            _validate_semantic_payload_recursive(item, f"{path}[{index}]", errors)
+        return
+    if isinstance(value, str) and _looks_like_proof_text(value):
+        errors.append(f"engine_output_forbidden_proof_text:{path}")
 
 
 def detect_fixture_backend(backend_identity: str) -> bool:

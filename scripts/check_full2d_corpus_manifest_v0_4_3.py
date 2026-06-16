@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -57,7 +58,10 @@ def check_corpus_manifest_v0_4_3(corpus_root: Path) -> dict[str, Any]:
     provenance = Counter(str(task.get("provenance", "")) for task in positives)
     external_or_reviewed = provenance["external_formal"] + provenance["user_reviewed_human_curated"]
     synthetic = provenance["synthetic_generated"]
-    near_duplicates = sum(1 for task in positives if task.get("near_duplicate_group"))
+    structural_duplicate_summary = _structural_duplicate_summary(positives)
+    labeled_near_duplicates = sum(1 for task in positives if task.get("near_duplicate_group"))
+    structural_near_duplicates = int(structural_duplicate_summary["structural_near_duplicate_positive_count"])
+    near_duplicates = max(labeled_near_duplicates, structural_near_duplicates)
     families = Counter(str(task.get("theorem_family", "")) for task in positives)
 
     if not isinstance(manifest, dict):
@@ -99,6 +103,8 @@ def check_corpus_manifest_v0_4_3(corpus_root: Path) -> dict[str, Any]:
             "synthetic_positive_count": synthetic,
             "synthetic_positive_fraction": round(synthetic / len(positives), 6) if positives else None,
             "near_duplicate_positive_count": near_duplicates,
+            "labeled_near_duplicate_positive_count": labeled_near_duplicates,
+            **structural_duplicate_summary,
             "family_counts": dict(sorted(families.items())),
             "provenance_counts": dict(sorted(provenance.items())),
             "manifest_hash": canonical_manifest_hash(manifest) if isinstance(manifest, dict) else None,
@@ -116,11 +122,41 @@ def canonical_manifest_hash(manifest: dict[str, Any]) -> str:
 def _template_duplicate_errors(positives: list[dict[str, Any]]) -> list[str]:
     grouped: dict[tuple[str, str], int] = defaultdict(int)
     for task in positives:
-        grouped[(str(task.get("theorem_family", "")), str(task.get("template_id", "")))] += 1
+        grouped[(str(task.get("theorem_family", "")), _normalized_template_identity(task))] += 1
     offenders = [f"{family}:{template}:{count}" for (family, template), count in grouped.items() if template and count > 5]
     if offenders:
         return [f"exact_template_duplicate_max_gt_5:{','.join(offenders[:10])}"]
     return []
+
+
+def _structural_duplicate_summary(positives: list[dict[str, Any]]) -> dict[str, Any]:
+    grouped: dict[tuple[str, str], list[str]] = defaultdict(list)
+    for task in positives:
+        grouped[(str(task.get("theorem_family", "")), _normalized_template_identity(task))].append(str(task.get("task_id", "<missing>")))
+    duplicate_groups = [
+        {
+            "theorem_family": family,
+            "template_identity": identity,
+            "count": len(task_ids),
+            "examples": task_ids[:5],
+        }
+        for (family, identity), task_ids in sorted(grouped.items())
+        if identity and len(task_ids) > 1
+    ]
+    near_duplicate_count = sum(len(group["examples"]) + max(0, int(group["count"]) - len(group["examples"])) for group in duplicate_groups)
+    return {
+        "structural_near_duplicate_positive_count": near_duplicate_count,
+        "structural_near_duplicate_group_count": len(duplicate_groups),
+        "structural_near_duplicate_groups_sample": duplicate_groups[:10],
+    }
+
+
+def _normalized_template_identity(task: dict[str, Any]) -> str:
+    template = str(task.get("template_id", "")).strip()
+    # `template:Family:0001` is one template, not one template per counter.
+    template = re.sub(r"(?::|_|-)\d{3,}$", "", template)
+    template = re.sub(r"(?::|_|-)full2d-(?:positive|curated)-\d{3,}$", "", template, flags=re.IGNORECASE)
+    return template
 
 
 def _provenance_errors(positives: list[dict[str, Any]]) -> list[str]:

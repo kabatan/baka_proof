@@ -216,8 +216,12 @@ def validate_extraction_report_for_claimspec(report: dict[str, Any]) -> list[str
         return errors
     if report["regex_used_for_semantics"] is not False:
         errors.append("semantic_regex_not_allowed_for_claimspec")
-    if report["extraction_method"] != "lean_compilation_backed_exact_theorem":
+    if report["extraction_method"] != "lean_elaborator_structured_theorem":
         errors.append("unsupported_extraction_method_for_claimspec")
+    if report.get("semantic_extraction_authority") != "lean_elaborator":
+        errors.append("semantic_extraction_authority_not_lean_elaborator")
+    if report.get("python_semantic_extraction_used") is not False:
+        errors.append("python_semantic_extraction_used")
     classification = report["target_classification"]
     errors.extend(validate_target_classification(classification))
     if isinstance(classification, dict) and classification.get("classification_source") == "synthetic_python":

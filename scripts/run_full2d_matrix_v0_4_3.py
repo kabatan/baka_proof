@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import argparse
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 import hashlib
 import json
 import os
@@ -23,6 +23,9 @@ from plugins.geometry_full2d.task_pipeline import (  # noqa: E402
     _selected_implementations_hash,
     execute_actual_task_pipeline_v0_4_3,
 )
+
+REPORT_SAMPLE_LIMIT = 200
+VALIDATION_WORKERS = 16
 
 
 def main() -> int:
@@ -70,8 +73,7 @@ def run_matrix(config_path: Path, run_dir: Path, *, max_executions: int = 0, wor
         workers=workers,
     )
     records = _load_run_records(run_dir)
-    record_validation = _validate_records(records, run_dir, config_path, corpus_manifest)
-    valid_records = _valid_records(records, run_dir=run_dir, config_path=config_path, corpus_manifest=corpus_manifest)
+    record_validation, valid_records = _validate_records(records, run_dir, config_path, corpus_manifest)
     record_summary = _record_summary(valid_records, run_dir=run_dir, required_task_ids=matrix_task_ids, required_baselines=required_baselines)
     matrix_errors = list(errors)
     matrix_errors.extend(execution_report["errors"])
@@ -178,7 +180,8 @@ def _execute_missing_records(
             failed.extend(task_failures)
         else:
             grouped = _group_missing_by_task(selected_missing)
-            with ThreadPoolExecutor(max_workers=workers) as executor:
+            executor_cls = ProcessPoolExecutor if os.environ.get("FULL2D_MATRIX_EXECUTOR", "process") == "process" else ThreadPoolExecutor
+            with executor_cls(max_workers=workers) as executor:
                 futures = [
                     executor.submit(
                         _execute_missing_group,
@@ -211,8 +214,10 @@ def _execute_missing_records(
         "missing_record_count_before_execution": len(missing),
         "executed_record_count": len(executed),
         "failed_execution_count": len(failed),
-        "executed": executed,
-        "failed": failed,
+        "executed": executed[:REPORT_SAMPLE_LIMIT],
+        "executed_sample_truncated_count": max(0, len(executed) - REPORT_SAMPLE_LIMIT),
+        "failed": failed[:REPORT_SAMPLE_LIMIT],
+        "failed_sample_truncated_count": max(0, len(failed) - REPORT_SAMPLE_LIMIT),
         "errors": sorted(set(errors)),
     }
 
@@ -258,54 +263,67 @@ def _validate_records(
     run_dir: Path,
     config_path: Path,
     corpus_manifest: dict[str, Any] | None,
-) -> dict[str, Any]:
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     errors: list[str] = []
     expected_config_hash = _sha_file(config_path)
     expected_corpus_hash = canonical_manifest_hash(corpus_manifest) if isinstance(corpus_manifest, dict) else None
     expected_implementation_hash = _selected_implementations_hash()
     reports: list[dict[str, Any]] = []
-    for record in records:
-        source = f"{record.get('task_id', '<missing>')}:{record.get('baseline_id', '<missing>')}"
-        record_errors = validate_actual_task_pipeline_run(record, run_dir=run_dir)
-        if expected_config_hash and record.get("config_hash") != expected_config_hash:
-            record_errors.append("record_config_hash_mismatch")
-        if expected_corpus_hash and record.get("frozen_corpus_manifest_hash") != expected_corpus_hash:
-            record_errors.append("record_frozen_corpus_manifest_hash_mismatch")
-        if expected_implementation_hash and record.get("selected_implementations_hash") != expected_implementation_hash:
-            record_errors.append("record_selected_implementations_hash_mismatch")
-        reports.append({"source": source, "status": "passed" if not record_errors else "failed", "errors": sorted(set(record_errors))})
+    report_count = 0
+    valid_records: list[dict[str, Any]] = []
+    valid_count = 0
+    invalid_count = 0
+    with ThreadPoolExecutor(max_workers=VALIDATION_WORKERS) as executor:
+        futures = [
+            executor.submit(
+                _validate_record_for_matrix,
+                record,
+                run_dir,
+                expected_config_hash,
+                expected_corpus_hash,
+                expected_implementation_hash,
+            )
+            for record in records
+        ]
+        validation_results = [future.result() for future in as_completed(futures)]
+    validation_results.sort(key=lambda item: item[0])
+    for source, record, record_errors in validation_results:
+        report_count += 1
+        if len(reports) < REPORT_SAMPLE_LIMIT or record_errors:
+            reports.append({"source": source, "status": "passed" if not record_errors else "failed", "errors": sorted(set(record_errors))})
+        if record_errors:
+            invalid_count += 1
+        else:
+            valid_count += 1
+            valid_records.append(record)
         errors.extend(f"{source}:{error}" for error in record_errors)
     return {
         "record_count": len(records),
-        "valid_record_count": sum(1 for item in reports if item["status"] == "passed"),
-        "invalid_record_count": sum(1 for item in reports if item["status"] != "passed"),
+        "valid_record_count": valid_count,
+        "invalid_record_count": invalid_count,
+        "record_report_count": report_count,
         "record_reports": reports,
+        "record_report_sample_truncated_count": max(0, report_count - len(reports)),
         "errors": sorted(set(errors)),
-    }
+    }, valid_records
 
 
-def _valid_records(
-    records: list[dict[str, Any]],
-    *,
+def _validate_record_for_matrix(
+    record: dict[str, Any],
     run_dir: Path,
-    config_path: Path,
-    corpus_manifest: dict[str, Any] | None,
-) -> list[dict[str, Any]]:
-    expected_config_hash = _sha_file(config_path)
-    expected_corpus_hash = canonical_manifest_hash(corpus_manifest) if isinstance(corpus_manifest, dict) else None
-    expected_implementation_hash = _selected_implementations_hash()
-    valid: list[dict[str, Any]] = []
-    for record in records:
-        errors = validate_actual_task_pipeline_run(record, run_dir=run_dir)
-        if expected_config_hash and record.get("config_hash") != expected_config_hash:
-            errors.append("record_config_hash_mismatch")
-        if expected_corpus_hash and record.get("frozen_corpus_manifest_hash") != expected_corpus_hash:
-            errors.append("record_frozen_corpus_manifest_hash_mismatch")
-        if expected_implementation_hash and record.get("selected_implementations_hash") != expected_implementation_hash:
-            errors.append("record_selected_implementations_hash_mismatch")
-        if not errors:
-            valid.append(record)
-    return valid
+    expected_config_hash: str,
+    expected_corpus_hash: str | None,
+    expected_implementation_hash: str,
+) -> tuple[str, dict[str, Any], list[str]]:
+    source = f"{record.get('task_id', '<missing>')}:{record.get('baseline_id', '<missing>')}"
+    record_errors = validate_actual_task_pipeline_run(record, run_dir=run_dir)
+    if expected_config_hash and record.get("config_hash") != expected_config_hash:
+        record_errors.append("record_config_hash_mismatch")
+    if expected_corpus_hash and record.get("frozen_corpus_manifest_hash") != expected_corpus_hash:
+        record_errors.append("record_frozen_corpus_manifest_hash_mismatch")
+    if expected_implementation_hash and record.get("selected_implementations_hash") != expected_implementation_hash:
+        record_errors.append("record_selected_implementations_hash_mismatch")
+    return source, record, sorted(set(record_errors))
 
 
 def _record_summary(records: list[dict[str, Any]], *, run_dir: Path, required_task_ids: tuple[str, ...], required_baselines: tuple[str, ...]) -> dict[str, Any]:
@@ -348,18 +366,30 @@ def _valid_record_key_set(
     expected_config_hash = _sha_file(config_path)
     expected_corpus_hash = canonical_manifest_hash(corpus_manifest) if isinstance(corpus_manifest, dict) else None
     expected_implementation_hash = _selected_implementations_hash()
-    valid: set[tuple[str, str]] = set()
+    candidates: list[dict[str, Any]] = []
     for record in records:
-        errors = validate_actual_task_pipeline_run(record, run_dir=run_dir)
         if expected_config_hash and record.get("config_hash") != expected_config_hash:
-            errors.append("record_config_hash_mismatch")
+            continue
         if expected_corpus_hash and record.get("frozen_corpus_manifest_hash") != expected_corpus_hash:
-            errors.append("record_frozen_corpus_manifest_hash_mismatch")
+            continue
         if expected_implementation_hash and record.get("selected_implementations_hash") != expected_implementation_hash:
-            errors.append("record_selected_implementations_hash_mismatch")
-        if not errors:
-            valid.add((str(record.get("task_id")), str(record.get("baseline_id"))))
+            continue
+        candidates.append(record)
+    valid: set[tuple[str, str]] = set()
+    with ThreadPoolExecutor(max_workers=VALIDATION_WORKERS) as executor:
+        futures = [executor.submit(_existing_record_key_if_valid, record, run_dir) for record in candidates]
+        for future in as_completed(futures):
+            key = future.result()
+            if key is not None:
+                valid.add(key)
     return valid
+
+
+def _existing_record_key_if_valid(record: dict[str, Any], run_dir: Path) -> tuple[str, str] | None:
+    errors = validate_actual_task_pipeline_run(record, run_dir=run_dir)
+    if errors:
+        return None
+    return str(record.get("task_id")), str(record.get("baseline_id"))
 
 
 def _counted_certificate_engine_roles(records: list[dict[str, Any]], run_dir: Path) -> list[str]:

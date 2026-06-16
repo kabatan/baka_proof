@@ -5,6 +5,7 @@ import hashlib
 import json
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import replace
 from pathlib import Path
 from typing import Any
@@ -18,6 +19,8 @@ from plugins.geometry_full2d.compiler import compile_full2d_engine_outputs  # no
 
 
 THEOREM_NAME = "full2d_worker_selftest"
+REPORT_SAMPLE_LIMIT = 200
+WORKERS = 16
 
 
 def main() -> int:
@@ -31,13 +34,15 @@ def main() -> int:
     self_test = _run_self_test() if args.self_test else None
     if self_test:
         errors.extend(self_test["errors"])
-    scoped_reports = _check_run_records(run_dir, errors) if run_dir.exists() else []
+    scoped_report_summary = _check_run_records(run_dir, errors) if run_dir.exists() else {"reports": [], "report_count": 0, "sample_truncated_count": 0}
     report = {
         "schema_version": "1.0.0",
         "status": "passed" if not errors else "failed",
         "run_dir": str(run_dir),
         "self_test": self_test,
-        "scoped_reports": scoped_reports,
+        "scoped_reports": scoped_report_summary["reports"],
+        "scoped_report_count": scoped_report_summary["report_count"],
+        "scoped_report_sample_truncated_count": scoped_report_summary["sample_truncated_count"],
         "errors": sorted(set(errors)),
     }
     print(json.dumps(report, indent=2, sort_keys=True))
@@ -159,12 +164,29 @@ def _candidate_contract_errors(source_text: str, candidate_text: str) -> list[st
 def _patch_candidate():
     claim_spec = _claim_spec()
     engine_ref = "EngineOutputFull2D:" + _sha_text("worker-engine")
+    normalized_payload = {
+        "schema_version": "1.0.0",
+        "engine_role": "lean_proof_search",
+        "used_rule_ids": ["full2d_rule:incidence_collinearity:02"],
+        "steps": [
+            {
+                "step_id": "proof_worker_hardening_selftest:incidence",
+                "source_rule_id": "full2d_rule:incidence_collinearity:02",
+            }
+        ],
+    }
+    normalized_hash = _sha_json(normalized_payload)
+    normalized_ref = "LeanProofSearchTraceFull2D:" + normalized_hash
     engine_outputs = {
         engine_ref: {
             "schema_version": "1.0.0",
             "engine_role": "lean_proof_search",
+            "backend_identity": "proof_worker_hardening_selftest:semantic_rule_trace",
             "status": "normalized_success",
-            "normalized_output_ref": "LeanPatchCandidateFull2D:" + _sha_text("worker-normalized"),
+            "normalized_output_ref": normalized_ref,
+            "raw_output_hash": normalized_hash,
+            "normalized_output_payload": normalized_payload,
+            "checker_or_compiler_ref": "RuleRegistryFull2D:" + _sha_text("worker-rule-registry"),
             "proof_use_status": "not_allowed",
         }
     }
@@ -252,24 +274,34 @@ def _outside_marp_proof_region(text: str) -> str:
     return "\n".join(kept)
 
 
-def _check_run_records(run_dir: Path, errors: list[str]) -> list[dict[str, Any]]:
+def _check_run_records(run_dir: Path, errors: list[str]) -> dict[str, Any]:
     reports: list[dict[str, Any]] = []
-    for source, record in _iter_run_records(run_dir, errors):
-        if record.get("final_status") != "final_theorem":
-            continue
-        run_id = str(record.get("run_id", source))
-        artifact_paths = record.get("artifact_paths", {})
-        worker_ref = record.get("proof_worker_result_ref")
-        source_path = Path(str(record.get("source_theorem_path", "")))
-        if not source_path.is_absolute():
-            source_path = run_dir / source_path
-        worker_errors: list[str] = []
-        worker = _load_ref(worker_ref, artifact_paths, run_dir, worker_errors, run_id)
-        if worker is not None and source_path.exists():
-            worker_errors.extend(_validate_worker_result(worker, source_path.read_text(encoding="utf-8")))
-        reports.append({"source": source, "run_id": run_id, "status": "passed" if not worker_errors else "failed", "errors": worker_errors})
-        errors.extend(worker_errors)
-    return reports
+    report_count = 0
+    records = [(source, record) for source, record in _iter_run_records(run_dir, errors) if record.get("final_status") == "final_theorem"]
+    with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+        futures = [executor.submit(_validate_worker_record, source, record, run_dir) for source, record in records]
+        for future in as_completed(futures):
+            report, worker_errors = future.result()
+            report_count += 1
+            if len(reports) < REPORT_SAMPLE_LIMIT or worker_errors:
+                reports.append(report)
+            errors.extend(worker_errors)
+    reports.sort(key=lambda item: str(item.get("source", "")))
+    return {"reports": reports, "report_count": report_count, "sample_truncated_count": max(0, report_count - len(reports))}
+
+
+def _validate_worker_record(source: str, record: dict[str, Any], run_dir: Path) -> tuple[dict[str, Any], list[str]]:
+    run_id = str(record.get("run_id", source))
+    artifact_paths = record.get("artifact_paths", {})
+    worker_ref = record.get("proof_worker_result_ref")
+    source_path = Path(str(record.get("source_theorem_path", "")))
+    if not source_path.is_absolute():
+        source_path = run_dir / source_path
+    worker_errors: list[str] = []
+    worker = _load_ref(worker_ref, artifact_paths, run_dir, worker_errors, run_id)
+    if worker is not None and source_path.exists():
+        worker_errors.extend(_validate_worker_result(worker, source_path.read_text(encoding="utf-8")))
+    return {"source": source, "run_id": run_id, "status": "passed" if not worker_errors else "failed", "errors": worker_errors}, worker_errors
 
 
 def _iter_run_records(run_dir: Path, errors: list[str]) -> list[tuple[str, dict[str, Any]]]:
@@ -362,6 +394,11 @@ def _sha_file(path: Path) -> str:
 
 def _sha_text(text: str) -> str:
     return f"sha256:{hashlib.sha256(text.encode('utf-8')).hexdigest()}"
+
+
+def _sha_json(payload: dict[str, Any]) -> str:
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+    return _sha_text(encoded)
 
 
 if __name__ == "__main__":

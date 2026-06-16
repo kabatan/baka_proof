@@ -191,6 +191,7 @@ def validate_actual_task_pipeline_run(
 
     _validate_extraction_binding(record, loaded.get(record.lean_extraction_report_ref), source_path, errors)
     _validate_provider_binding(record, loaded.get(record.provider_run_manifest_ref), errors)
+    _validate_engine_output_bindings(record, loaded, errors)
     _validate_compiler_binding(record, loaded, errors)
     _validate_patch_binding(record, loaded.get(record.lean_patch_candidate_ref), errors)
     _validate_worker_binding(record, loaded.get(record.proof_worker_result_ref), errors)
@@ -257,6 +258,12 @@ def _validate_extraction_binding(
         errors.append(f"{label}:extraction_source_theorem_path_mismatch")
     if extraction.get("source_theorem_preproved") is True:
         errors.append(f"{label}:extraction_source_theorem_already_preproved")
+    if extraction.get("extraction_method") != "lean_elaborator_structured_theorem":
+        errors.append(f"{label}:extraction_method_not_lean_elaborator_structured")
+    if extraction.get("semantic_extraction_authority") != "lean_elaborator":
+        errors.append(f"{label}:extraction_semantic_authority_not_lean")
+    if extraction.get("python_semantic_extraction_used") is not False:
+        errors.append(f"{label}:extraction_python_semantic_used")
 
 
 def _validate_provider_binding(
@@ -277,6 +284,25 @@ def _validate_provider_binding(
     missing = sorted(set(record.engine_output_refs) - provider_engine_refs)
     if missing:
         errors.append(f"{label}:provider_missing_engine_output_refs:{','.join(missing)}")
+
+
+def _validate_engine_output_bindings(
+    record: ActualTaskPipelineRunV1,
+    loaded: dict[str, dict[str, Any]],
+    errors: list[str],
+) -> None:
+    label = record.run_id
+    for engine_ref in record.engine_output_refs:
+        engine = loaded.get(engine_ref)
+        if engine is None:
+            continue
+        if engine.get("status") == "normalized_success":
+            if not isinstance(engine.get("normalized_output_payload"), dict):
+                errors.append(f"{label}:engine_normalized_success_missing_payload:{engine_ref}")
+            if not isinstance(engine.get("normalized_output_ref"), str):
+                errors.append(f"{label}:engine_normalized_success_missing_ref:{engine_ref}")
+        if engine.get("proof_use_status") != "not_allowed":
+            errors.append(f"{label}:engine_proof_use_status_not_allowed:{engine_ref}")
 
 
 def _validate_compiler_binding(

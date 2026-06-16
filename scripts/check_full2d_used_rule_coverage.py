@@ -18,6 +18,7 @@ MIN_FAMILIES = 15
 MIN_OUTSIDE_INCIDENCE = 8
 MIN_SIDE_CONDITION_FAMILIES = 5
 MIN_CONSTRUCTION_FAMILIES = 4
+REPORT_SAMPLE_LIMIT = 200
 
 RULE_LIST_KEYS = (
     "used_rule_refs",
@@ -59,6 +60,7 @@ def _build_used_rule_report(
     counted = 0
     used_rules: set[str] = set()
     certificate_bound_rules: dict[str, list[str]] = {}
+    certificate_bound_rule_record_count = 0
     for source, record in records:
         if record.get("final_status") != "final_theorem":
             continue
@@ -85,7 +87,9 @@ def _build_used_rule_report(
             errors.append(f"{label}:unknown_rule_refs:{','.join(unknown)}")
         known_bound = [rule for rule in bound if rule in registry_by_id]
         used_rules.update(known_bound)
-        certificate_bound_rules[label] = known_bound
+        certificate_bound_rule_record_count += 1
+        if len(certificate_bound_rules) < REPORT_SAMPLE_LIMIT or not known_bound:
+            certificate_bound_rules[label] = known_bound
     families = {registry_by_id[rule].family for rule in used_rules if rule in registry_by_id}
     outside_identity = {family for family in families if not family.startswith(IDENTITY_FAMILY_PREFIXES)}
     side_condition_families = {
@@ -117,7 +121,9 @@ def _build_used_rule_report(
         "construction_family_count": len(construction_families),
         "used_rule_refs": sorted(used_rules),
         "used_rule_families": sorted(families),
+        "certificate_bound_rule_record_count": certificate_bound_rule_record_count,
         "certificate_bound_rules": certificate_bound_rules,
+        "certificate_bound_rule_sample_truncated_count": max(0, certificate_bound_rule_record_count - len(certificate_bound_rules)),
         "registry_hash": registry.registry_hash(),
     }
 

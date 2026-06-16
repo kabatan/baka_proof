@@ -16,6 +16,8 @@ from scripts.extract_geometry_full2d_theorem import (  # noqa: E402
     validate_lean_extraction_report_full2d,
 )
 
+REPORT_SAMPLE_LIMIT = 200
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -28,7 +30,7 @@ def main() -> int:
     errors: list[str] = []
     corpus_report = _check_corpus_root(corpus_root, errors)
     smoke_report = _run_extractor_smoke(errors)
-    scoped_reports = _check_run_scoped_extractions(run_dir, errors)
+    scoped_report_summary = _check_run_scoped_extractions(run_dir, errors)
     report = {
         "schema_version": "1.0.0",
         "status": "passed" if not errors else "failed",
@@ -36,7 +38,9 @@ def main() -> int:
         "run_dir": str(run_dir),
         "corpus_report": corpus_report,
         "extractor_smoke": smoke_report,
-        "scoped_reports": scoped_reports,
+        "scoped_reports": scoped_report_summary["reports"],
+        "scoped_report_count": scoped_report_summary["report_count"],
+        "scoped_report_sample_truncated_count": scoped_report_summary["sample_truncated_count"],
         "errors": sorted(set(errors)),
     }
     print(json.dumps(report, indent=2, sort_keys=True))
@@ -103,10 +107,11 @@ def _run_extractor_smoke(errors: list[str]) -> dict[str, Any]:
         }
 
 
-def _check_run_scoped_extractions(run_dir: Path, errors: list[str]) -> list[dict[str, Any]]:
+def _check_run_scoped_extractions(run_dir: Path, errors: list[str]) -> dict[str, Any]:
     reports: list[dict[str, Any]] = []
+    report_count = 0
     if not run_dir.exists():
-        return reports
+        return {"reports": reports, "report_count": report_count, "sample_truncated_count": 0}
     for source, payload in _iter_run_records(run_dir, errors):
         if not isinstance(payload, dict):
             continue
@@ -119,19 +124,24 @@ def _check_run_scoped_extractions(run_dir: Path, errors: list[str]) -> list[dict
         if not isinstance(extraction_ref, str) or not isinstance(artifact_paths, dict):
             issue = f"{run_id}:missing_extraction_ref_or_artifact_paths"
             errors.append(issue)
+            report_count += 1
             reports.append({"source": source, "run_id": run_id, "status": "failed", "errors": [issue]})
             continue
         extraction_path_value = artifact_paths.get(extraction_ref)
         if not isinstance(extraction_path_value, str):
             issue = f"{run_id}:missing_extraction_artifact_path:{extraction_ref}"
             errors.append(issue)
+            report_count += 1
             reports.append({"source": source, "run_id": run_id, "status": "failed", "errors": [issue]})
             continue
         extraction_path = _resolve_path(extraction_path_value, run_dir)
         report_errors = _validate_scoped_report(payload, extraction_path, final_status)
-        reports.append({"source": source, "run_id": run_id, "status": "passed" if not report_errors else "failed", "errors": report_errors})
+        report_count += 1
+        report = {"source": source, "run_id": run_id, "status": "passed" if not report_errors else "failed", "errors": report_errors}
+        if len(reports) < REPORT_SAMPLE_LIMIT or report_errors:
+            reports.append(report)
         errors.extend(report_errors)
-    return reports
+    return {"reports": reports, "report_count": report_count, "sample_truncated_count": max(0, report_count - len(reports))}
 
 
 def _validate_scoped_report(record: dict[str, Any], extraction_path: Path, final_status: str) -> list[str]:

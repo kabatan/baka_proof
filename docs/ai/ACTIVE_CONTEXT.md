@@ -2,9 +2,9 @@
 title: Guardian Active Context — GeometryFull2D v0.4.3
 context_id: MARP-GEOLEAN-ACTIVE-CONTEXT-008
 version: v0.4.3-real-full2d-recovery
-status: V04_3_AUTHORITY_INSTALLED_IMPLEMENTATION_NOT_STARTED
+status: V04_3_RELEASE_BLOCKED_STRICT_SPEC_VERIFICATION
 created: 2026-06-15
-last_updated: 2026-06-15
+last_updated: 2026-06-16
 base_spec: MARP-GEOLEAN-BASE-008
 plan: MARP-GEOLEAN-PLAN-008
 acceptance: MARP-GEOLEAN-ACCEPTANCE-008
@@ -21,7 +21,7 @@ Guardian Lane is active for the GeometryFull2D v0.4.3 real pipeline recovery tra
 Current mission:
 
 ```text
-Implement V0.4.3_GEOMETRY_FULL2D_REAL_PIPELINE_READY under MARP-GEOLEAN-BASE-008 / PLAN-008 / ACCEPTANCE-008.
+Implement V0.4.3_GEOMETRY_FULL2D_REAL_PIPELINE_READY under MARP-GEOLEAN-BASE-008 / PLAN-008 / ACCEPTANCE-008, currently blocked by strict corpus duplicate and direct-lemma success ceilings.
 ```
 
 The v0.4.2 track is superseded as active release authority. It remains evidence and a regression source only; it is not valid v0.4.3 completion evidence.
@@ -36,7 +36,7 @@ Import evidence is recorded in:
 docs/ai/changes/geometry-full2d-v0_4_3/evidence/v0_4_3_bundle_import.md
 ```
 
-Before editing implementation code, read the current Plan task, required R-IDs/source anchors, admitted ReadSet, and changed files. Keep claim scope below release completion until final acceptance passes.
+Before editing implementation code, read the current Plan task, required R-IDs/source anchors, admitted ReadSet, changed files, and the current blocker report. Keep claim scope below release completion until final acceptance passes.
 
 ## Read First
 
@@ -48,15 +48,16 @@ Before editing implementation code, read the current Plan task, required R-IDs/s
 6. `docs/ai/changes/geometry-full2d-v0_4_3/SOURCE_MAP.md`
 7. `docs/ai/changes/geometry-full2d-v0_4_3/README.md`
 8. `docs/ai/changes/geometry-full2d-v0_4_3/CODEX_HANDOFF.md`
-9. Current Plan work package and required R-IDs.
-10. Files in the admitted ReadSet before editing.
+9. `docs/ai/changes/geometry-full2d-v0_4_3/evidence/v0_4_3_release_blocker_report.md`
+10. Current Plan work package and required R-IDs.
+11. Files in the admitted ReadSet before editing.
 
 ## Current Task Pointer
 
 Current task:
 
 ```text
-WP-00 — Install authority and freeze old claims
+WP-11 / WP-13 / WP-14 / WP-21 — resolve strict corpus duplicate and direct-lemma release blockers
 ```
 
 Completed preparation:
@@ -70,12 +71,18 @@ v0.4.3 debt ledger initialized.
 scripts/check_active_guardian_spec_v0_4_3.py added for authority checks.
 ```
 
-Implementation work for WP-01 and later has not started under v0.4.3 in this import step.
+Implementation progressed through substantial v0.4.3 hardening, Lean elaborator extraction, matrix-run infrastructure, and strict checker updates. Release closure is blocked by strict corpus and metrics evidence, not by Lean bootstrap or browser/environment state.
 
 Open ReleaseBlocker / WorkDebt items are recorded in:
 
 ```text
 docs/ai/changes/geometry-full2d-v0_4_3/debt/debt_ledger.jsonl
+```
+
+Current blocker report:
+
+```text
+docs/ai/changes/geometry-full2d-v0_4_3/evidence/v0_4_3_release_blocker_report.md
 ```
 
 ## Non-Negotiables
@@ -103,8 +110,7 @@ docs/ai/changes/geometry-full2d-v0_4_3/evidence/
 Allowed:
 
 ```text
-MARP-GEOLEAN-BASE-008 / PLAN-008 / ACCEPTANCE-008 are installed as the active user-approved v0.4.3 Guardian authority set.
-The repository is prepared to resume implementation from WP-00 under the v0.4.3 plan.
+The v0.4.3 implementation contains substantial real-pipeline hardening, Lean elaborator extraction, matrix-run infrastructure, and strict blocker checkers, but release closure is blocked by corpus duplicate and direct-lemma success ceilings.
 ```
 
 Not allowed yet:

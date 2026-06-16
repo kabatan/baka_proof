@@ -160,12 +160,29 @@ def _claim_spec() -> dict[str, Any]:
 
 def _engine_outputs() -> dict[str, dict[str, Any]]:
     engine_ref = "EngineOutputFull2D:" + _sha_text("engine")
+    normalized_payload = {
+        "schema_version": "1.0.0",
+        "engine_role": "lean_proof_search",
+        "used_rule_ids": ["full2d_rule:incidence_collinearity:02"],
+        "steps": [
+            {
+                "step_id": "compiler_input_isolation_selftest:incidence",
+                "source_rule_id": "full2d_rule:incidence_collinearity:02",
+            }
+        ],
+    }
+    normalized_hash = _sha_json(normalized_payload)
+    normalized_ref = "LeanProofSearchTraceFull2D:" + normalized_hash
     return {
         engine_ref: {
             "schema_version": "1.0.0",
             "engine_role": "lean_proof_search",
+            "backend_identity": "compiler_input_isolation_selftest:semantic_rule_trace",
             "status": "normalized_success",
-            "normalized_output_ref": "LeanProofSearchTraceFull2D:" + _sha_text("normalized"),
+            "normalized_output_ref": normalized_ref,
+            "raw_output_hash": normalized_hash,
+            "normalized_output_payload": normalized_payload,
+            "checker_or_compiler_ref": "RuleRegistryFull2D:" + _sha_text("rule-registry"),
             "proof_use_status": "not_allowed",
         }
     }
@@ -173,6 +190,11 @@ def _engine_outputs() -> dict[str, dict[str, Any]]:
 
 def _sha_text(text: str) -> str:
     return f"sha256:{hashlib.sha256(text.encode('utf-8')).hexdigest()}"
+
+
+def _sha_json(payload: dict[str, Any]) -> str:
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+    return _sha_text(encoded)
 
 
 if __name__ == "__main__":

@@ -8,6 +8,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -28,6 +29,10 @@ except ModuleNotFoundError:  # pragma: no cover - used when imported as scripts.
 ROOT = Path(__file__).resolve().parents[1]
 TARGET_LIBRARY = "GeometryFull2DTarget:1.0.0"
 _LEAN_COMPILE_CACHE: dict[tuple[str, str], dict[str, Any]] = {}
+_LEAN_EXTRACTOR_CACHE: dict[tuple[str, str, str], dict[str, Any]] = {}
+_EXTRACTION_OLEAN_READY = False
+_EXTRACTION_METHOD = "lean_elaborator_structured_theorem"
+_EXTRACTION_MARKER = "FULL2D_EXTRACTION_JSON:"
 
 
 def main() -> int:
@@ -65,19 +70,19 @@ def extract_theorem(
     lean_file = _resolve_existing(lean_file)
     text = lean_file.read_text(encoding="utf-8")
     theorem_source = _extract_theorem_source(text, theorem_name)
+    theorem_header_hash = _sha256_text(_theorem_header_for_cache(theorem_source))
     source_file_ref = _file_sha256(lean_file)
     source_statement_hash = _sha256_text(theorem_source)
-    compile_report = _compile_lean_file(lean_file)
+    compile_report = _run_lean_semantic_extractor(lean_file, theorem_name, theorem_header_hash)
     preproved = _looks_preproved(theorem_source)
-    target_classification = _target_classification(target_status)
-    canonical_statement = _canonical_statement(
+    lean_structured = _canonicalize_lean_structured_output(
+        compile_report["structured_output"],
         lean_file,
         theorem_name,
-        theorem_source,
         source_statement_hash,
-        grammar_family,
-        target_classification,
     )
+    target_classification = lean_structured["target_classification"]
+    canonical_statement = lean_structured["canonical_statement"]
     unsigned = {
         "schema_version": "1.0.0",
         "task_id": task_id,
@@ -86,19 +91,17 @@ def extract_theorem(
         "source_theorem_path": str(lean_file),
         "theorem_name": theorem_name,
         "source_statement_hash": source_statement_hash,
-        "elaborated_expr_hash": _sha256_text(
-            json.dumps(
-                {
-                    "lean_compile_status": compile_report["status"],
-                    "source_statement_hash": source_statement_hash,
-                    "theorem_name": theorem_name,
-                },
-                sort_keys=True,
-            )
-        ),
+        "elaborated_expr_hash": _sha256_text(_canonical_json(compile_report["structured_output"])),
         "canonical_statement": canonical_statement,
         "target_classification": target_classification,
-        "extraction_method": "lean_compilation_backed_exact_theorem",
+        "extraction_method": _EXTRACTION_METHOD,
+        "semantic_extraction_authority": "lean_elaborator",
+        "lean_semantic_extractor_ref": compile_report["lean_semantic_extractor_ref"],
+        "lean_semantic_extractor_cache_status": compile_report.get("cache_status"),
+        "lean_semantic_extractor_cache_key": compile_report.get("cache_key"),
+        "lean_semantic_extractor_stdout_hash": _sha256_text(compile_report["stdout"]),
+        "lean_semantic_extractor_stderr_hash": _sha256_text(compile_report["stderr"]),
+        "python_semantic_extraction_used": False,
         "regex_used_for_semantics": False,
         "regex_used_for_source_location": True,
         "dropped_assumptions": [],
@@ -140,8 +143,14 @@ def validate_lean_extraction_report_full2d(payload: dict[str, Any], *, lean_file
             errors.append(f"{key}_not_sha256")
     if payload.get("regex_used_for_semantics") is not False:
         errors.append("regex_used_for_semantics_not_false")
-    if payload.get("extraction_method") != "lean_compilation_backed_exact_theorem":
-        errors.append("extraction_method_not_per_theorem")
+    if payload.get("extraction_method") != _EXTRACTION_METHOD:
+        errors.append("extraction_method_not_lean_elaborator_structured_theorem")
+    if payload.get("semantic_extraction_authority") != "lean_elaborator":
+        errors.append("semantic_extraction_authority_not_lean_elaborator")
+    if payload.get("python_semantic_extraction_used") is not False:
+        errors.append("python_semantic_extraction_used")
+    if not _is_sha256(payload.get("lean_semantic_extractor_ref")):
+        errors.append("lean_semantic_extractor_ref_not_sha256")
     if payload.get("lean_compile_status") != "passed":
         errors.append("lean_compile_not_passed")
     classification = payload.get("target_classification")
@@ -152,6 +161,8 @@ def validate_lean_extraction_report_full2d(payload: dict[str, Any], *, lean_file
             errors.append("target_classification_grammar_mismatch")
         if classification.get("target_status") == "in_target_positive" and classification.get("relation_to_goal") != "exact_goal":
             errors.append("positive_relation_not_exact_goal")
+        if classification.get("classification_source") != "lean_elaborator_structured_theorem":
+            errors.append("target_classification_not_lean_elaborator")
     canonical = payload.get("canonical_statement")
     if not isinstance(canonical, dict):
         errors.append("canonical_statement_not_object")
@@ -170,6 +181,334 @@ def validate_lean_extraction_report_full2d(payload: dict[str, Any], *, lean_file
         if _sha256_text(theorem_source) != payload.get("source_statement_hash"):
             errors.append("source_statement_hash_mismatch")
     return sorted(set(errors))
+
+
+def _run_lean_semantic_extractor(lean_file: Path, theorem_name: str, theorem_header_hash: str) -> dict[str, Any]:
+    disk_cache_key = _lean_extraction_cache_key(theorem_name, theorem_header_hash)
+    disk_cache_path = _lean_extraction_cache_path(disk_cache_key)
+    cached_payload = _read_lean_extraction_cache(disk_cache_path)
+    if cached_payload is not None:
+        structured = cached_payload["structured_output"]
+        encoded = _canonical_json(structured)
+        return {
+            "command": ["lean_extractor_disk_cache", str(disk_cache_path)],
+            "returncode": 0,
+            "status": "passed",
+            "stdout": encoded,
+            "stderr": "",
+            "structured_output": structured,
+            "lean_semantic_extractor_ref": _sha256_text(encoded),
+            "cache_status": "disk_hit",
+            "cache_key": disk_cache_key,
+        }
+    cache_key = (str(lean_file.resolve()), _file_sha256(lean_file), theorem_name)
+    if cache_key in _LEAN_EXTRACTOR_CACHE:
+        cached = dict(_LEAN_EXTRACTOR_CACHE[cache_key])
+        cached["cache_status"] = "hit"
+        cached["cache_key"] = disk_cache_key
+        return cached
+    _ensure_local_lean_artifacts()
+    _ensure_extraction_olean()
+    source = lean_file.read_text(encoding="utf-8")
+    command = [_lean(), "--stdin", "--json"]
+    extractor_source = (
+        source.rstrip()
+        + "\n\n"
+        + "open MathAutoResearch.GeometryFull2D\n"
+        + "open MathAutoResearch.GeometryFull2D.Extraction\n"
+        + f"#full2d_extract {theorem_name}\n"
+    )
+    completed = subprocess.run(
+        command,
+        cwd=ROOT,
+        input=extractor_source,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+        env=_direct_lean_env(),
+    )
+    structured_output = _parse_lean_extraction_json(completed.stdout)
+    report = {
+        "command": command,
+        "returncode": completed.returncode,
+        "status": "passed" if completed.returncode == 0 and structured_output is not None else "failed",
+        "stdout": completed.stdout,
+        "stderr": completed.stderr,
+        "structured_output": structured_output or {},
+        "lean_semantic_extractor_ref": _sha256_text(_canonical_json(structured_output or {})),
+        "cache_status": "miss",
+        "cache_key": disk_cache_key,
+    }
+    if report["status"] == "passed":
+        _write_lean_extraction_cache(disk_cache_path, theorem_name, theorem_header_hash, structured_output or {})
+    _LEAN_EXTRACTOR_CACHE[cache_key] = dict(report)
+    return report
+
+
+def _ensure_extraction_olean() -> None:
+    global _EXTRACTION_OLEAN_READY
+    if _EXTRACTION_OLEAN_READY:
+        return
+    source = ROOT / "lean" / "MathAutoResearch" / "GeometryFull2D" / "Extraction.lean"
+    output = ROOT / ".lake" / "build" / "lib" / "MathAutoResearch" / "GeometryFull2D" / "Extraction.olean"
+    ilean = ROOT / ".lake" / "build" / "lib" / "MathAutoResearch" / "GeometryFull2D" / "Extraction.ilean"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    if _extraction_olean_is_current(source, output):
+        _EXTRACTION_OLEAN_READY = True
+        return
+    lock_path = output.with_suffix(output.suffix + ".lock")
+    lock_fd = _acquire_extraction_build_lock(lock_path)
+    try:
+        if _extraction_olean_is_current(source, output):
+            _EXTRACTION_OLEAN_READY = True
+            return
+        _build_extraction_olean(source, output, ilean)
+        _EXTRACTION_OLEAN_READY = True
+    finally:
+        _release_extraction_build_lock(lock_fd, lock_path)
+
+
+def _extraction_olean_is_current(source: Path, output: Path) -> bool:
+    if not output.exists() or not source.exists():
+        return False
+    try:
+        return output.stat().st_mtime >= source.stat().st_mtime
+    except OSError:
+        return False
+
+
+def _build_extraction_olean(source: Path, output: Path, ilean: Path) -> None:
+    command = [_lean(), "-o", str(output), "-i", str(ilean), str(source)]
+    completed = subprocess.run(
+        command,
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+        env=_direct_lean_env(),
+    )
+    if completed.returncode != 0:
+        raise RuntimeError(f"lean_extraction_olean_build_failed:{completed.stderr[-2000:]}")
+
+
+def _acquire_extraction_build_lock(lock_path: Path, *, timeout_seconds: float = 180.0) -> int:
+    deadline = time.monotonic() + timeout_seconds
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    while True:
+        try:
+            fd = os.open(str(lock_path), os.O_CREAT | os.O_EXCL | os.O_RDWR)
+            os.write(fd, str(os.getpid()).encode("ascii", errors="ignore"))
+            return fd
+        except FileExistsError:
+            if _lock_is_stale(lock_path):
+                try:
+                    lock_path.unlink()
+                    continue
+                except OSError:
+                    pass
+            if time.monotonic() >= deadline:
+                raise RuntimeError(f"lean_extraction_olean_build_lock_timeout:{lock_path}")
+            time.sleep(0.2)
+
+
+def _release_extraction_build_lock(fd: int, lock_path: Path) -> None:
+    try:
+        os.close(fd)
+    finally:
+        try:
+            lock_path.unlink()
+        except FileNotFoundError:
+            pass
+
+
+def _lock_is_stale(lock_path: Path, *, stale_seconds: float = 600.0) -> bool:
+    try:
+        return time.time() - lock_path.stat().st_mtime > stale_seconds
+    except OSError:
+        return False
+
+
+def _parse_lean_extraction_json(stdout: str) -> dict[str, Any] | None:
+    parsed = _parse_all_lean_extraction_json(stdout)
+    return parsed[0] if parsed else None
+
+
+def _parse_all_lean_extraction_json(stdout: str) -> list[dict[str, Any]]:
+    parsed_outputs: list[dict[str, Any]] = []
+    for line in stdout.splitlines():
+        try:
+            message = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        data = message.get("data") if isinstance(message, dict) else None
+        if not isinstance(data, str) or _EXTRACTION_MARKER not in data:
+            continue
+        encoded = data.split(_EXTRACTION_MARKER, 1)[1].strip()
+        try:
+            parsed = json.loads(encoded)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(parsed, dict):
+            parsed_outputs.append(parsed)
+    return parsed_outputs
+
+
+def _lean_extraction_cache_key(theorem_name: str, theorem_header_hash: str) -> str:
+    extractor_hash = _file_sha256(ROOT / "lean" / "MathAutoResearch" / "GeometryFull2D" / "Extraction.lean")
+    return _sha256_text(_canonical_json({"theorem_name": theorem_name, "theorem_header_hash": theorem_header_hash, "extractor_hash": extractor_hash}))
+
+
+def _lean_extraction_cache_path(cache_key: str) -> Path:
+    return ROOT / ".cache" / "geometry_full2d_lean_extraction" / f"{cache_key[7:]}.json"
+
+
+def _read_lean_extraction_cache(path: Path) -> dict[str, Any] | None:
+    if not path.exists():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    if not isinstance(payload, dict) or not isinstance(payload.get("structured_output"), dict):
+        return None
+    return payload
+
+
+def _write_lean_extraction_cache(path: Path, theorem_name: str, theorem_header_hash: str, structured_output: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "schema_version": "1.0.0",
+        "theorem_name": theorem_name,
+        "theorem_header_hash": theorem_header_hash,
+        "structured_output": structured_output,
+    }
+    path.write_text(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
+
+
+def _canonicalize_lean_structured_output(
+    raw: dict[str, Any],
+    lean_file: Path,
+    theorem_name: str,
+    source_statement_hash: str,
+) -> dict[str, Any]:
+    if raw.get("semantic_extraction_authority") != "lean_elaborator":
+        raise ValueError("lean_structured_output_missing_elaborator_authority")
+    if raw.get("theorem_name") != theorem_name:
+        raise ValueError(f"lean_structured_theorem_name_mismatch:{raw.get('theorem_name')}:{theorem_name}")
+    objects = [_canonicalize_object(item, theorem_name) for item in _require_list(raw, "objects")]
+    hypotheses = [_canonicalize_predicate(item, theorem_name, "hypothesis") for item in _require_list(raw, "hypotheses")]
+    target = _canonicalize_target(_require_dict(raw, "target"), theorem_name)
+    side_conditions = _canonicalize_side_conditions(_require_dict(raw, "side_conditions"))
+    relation = _require_dict(raw, "relation_to_goal")
+    target_classification = _require_dict(raw, "target_classification")
+    canonical_statement = {
+        "schema_version": "1.0.0",
+        "theorem_name": theorem_name,
+        "source_file": lean_file.relative_to(ROOT).as_posix() if _is_relative_to(lean_file, ROOT) else str(lean_file),
+        "source_statement_hash": source_statement_hash,
+        "lean_context_hash": _lean_context_hash(),
+        "target_library": TARGET_LIBRARY,
+        "objects": objects,
+        "hypotheses": hypotheses,
+        "target": target,
+        "side_conditions": side_conditions,
+        "relation_to_goal": {
+            "kind": str(relation.get("kind")),
+            "direction_needed": str(relation.get("direction_needed")),
+            "direction_available": str(relation.get("direction_available")),
+        },
+    }
+    return {
+        "canonical_statement": canonical_statement,
+        "target_classification": {
+            "target_status": str(target_classification.get("target_status")),
+            "grammar_id": str(target_classification.get("grammar_id")),
+            "relation_to_goal": str(target_classification.get("relation_to_goal")),
+            "unsupported_constructs": [
+                str(item) for item in target_classification.get("unsupported_constructs", [])
+            ],
+            "classification_source": str(target_classification.get("classification_source")),
+        },
+    }
+
+
+def _canonicalize_object(item: Any, theorem_name: str) -> dict[str, Any]:
+    if not isinstance(item, dict):
+        raise ValueError("lean_object_not_object")
+    source_expr = str(item.get("source_expr", ""))
+    kind = str(item.get("kind", ""))
+    object_id = str(item.get("object_id", ""))
+    return {
+        "object_id": object_id,
+        "kind": kind,
+        "source_expr": source_expr,
+        "source_expr_hash": _sha256_text(f"{theorem_name}:object:{object_id}:{kind}:{source_expr}"),
+        "canonical_name": str(item.get("canonical_name", source_expr)),
+    }
+
+
+def _canonicalize_predicate(item: Any, theorem_name: str, label: str) -> dict[str, Any]:
+    if not isinstance(item, dict):
+        raise ValueError(f"lean_{label}_not_object")
+    source_expr = str(item.get("source_expr", ""))
+    predicate_id = str(item.get("predicate_id", f"{label}:unknown"))
+    args = [str(arg) for arg in item.get("args", [])]
+    family = str(item.get("family", "target_outside"))
+    return {
+        "predicate_id": predicate_id,
+        "family": family,
+        "args": args,
+        "polarity": str(item.get("polarity", "positive")),
+        "source_expr": source_expr,
+        "source_expr_hash": _sha256_text(f"{theorem_name}:{label}:{predicate_id}:{source_expr}"),
+        "canonical_expr_hash": _sha256_text(
+            _canonical_json({"theorem_name": theorem_name, "label": label, "family": family, "args": args, "source_expr": source_expr})
+        ),
+    }
+
+
+def _canonicalize_target(item: dict[str, Any], theorem_name: str) -> dict[str, Any]:
+    source_expr = str(item.get("source_expr", ""))
+    args = [str(arg) for arg in item.get("args", [])]
+    family = str(item.get("family", "target_outside"))
+    return {
+        "predicate_or_shape_id": str(item.get("predicate_or_shape_id", f"goal:{theorem_name}")),
+        "family": family,
+        "args": args,
+        "source_expr": source_expr,
+        "source_expr_hash": _sha256_text(f"{theorem_name}:target:{source_expr}"),
+        "canonical_expr_hash": _sha256_text(
+            _canonical_json({"theorem_name": theorem_name, "target_family": family, "args": args, "source_expr": source_expr})
+        ),
+    }
+
+
+def _canonicalize_side_conditions(item: dict[str, Any]) -> dict[str, list[str]]:
+    return {
+        "nondegeneracy": [str(value) for value in item.get("nondegeneracy", [])],
+        "orientation": [str(value) for value in item.get("orientation", [])],
+        "existence": [str(value) for value in item.get("existence", [])],
+        "uniqueness": [str(value) for value in item.get("uniqueness", [])],
+        "order_cases": [str(value) for value in item.get("order_cases", [])],
+    }
+
+
+def _require_dict(payload: dict[str, Any], key: str) -> dict[str, Any]:
+    value = payload.get(key)
+    if not isinstance(value, dict):
+        raise ValueError(f"lean_structured_{key}_not_object")
+    return value
+
+
+def _require_list(payload: dict[str, Any], key: str) -> list[Any]:
+    value = payload.get(key)
+    if not isinstance(value, list):
+        raise ValueError(f"lean_structured_{key}_not_list")
+    return value
 
 
 def _compile_lean_file(lean_file: Path) -> dict[str, Any]:
@@ -252,216 +591,6 @@ def _needs_lake_fallback(stderr: str) -> bool:
     return "unknown module prefix" in stderr or "object file" in stderr or "No directory" in stderr
 
 
-def _canonical_statement(
-    lean_file: Path,
-    theorem_name: str,
-    theorem_source: str,
-    source_statement_hash: str,
-    grammar_family: str,
-    target_classification: dict[str, Any],
-) -> dict[str, Any]:
-    objects, hypotheses, side_conditions = _statement_parts(theorem_name, theorem_source)
-    target_expr = _target_expr(theorem_source)
-    family = _family_from_target(target_expr, grammar_family)
-    target_args = _target_args(target_expr, objects)
-    source_expr_hash = _sha256_text(f"{theorem_name}:target:{target_expr}")
-    return {
-        "schema_version": "1.0.0",
-        "theorem_name": theorem_name,
-        "source_file": lean_file.relative_to(ROOT).as_posix() if _is_relative_to(lean_file, ROOT) else str(lean_file),
-        "source_statement_hash": source_statement_hash,
-        "lean_context_hash": _lean_context_hash(),
-        "target_library": TARGET_LIBRARY,
-        "objects": objects,
-        "hypotheses": hypotheses,
-        "target": {
-            "predicate_or_shape_id": f"goal:{theorem_name}",
-            "family": family,
-            "args": target_args,
-            "source_expr": target_expr,
-            "source_expr_hash": source_expr_hash,
-            "canonical_expr_hash": _sha256_text(f"canonical:{source_expr_hash}"),
-        },
-        "side_conditions": side_conditions,
-        "relation_to_goal": {
-            "kind": target_classification["relation_to_goal"],
-            "direction_needed": "equivalence" if target_classification["relation_to_goal"] == "exact_goal" else "not_applicable",
-            "direction_available": "lean_elaborated_exact"
-            if target_classification["relation_to_goal"] == "exact_goal"
-            else "not_applicable",
-        },
-    }
-
-
-def _target_classification(target_status: str) -> dict[str, Any]:
-    relation = "exact_goal" if target_status == "in_target_positive" else target_status
-    unsupported = [] if target_status == "in_target_positive" else [target_status]
-    return {
-        "target_status": target_status,
-        "grammar_id": "GeometryFull2DTheoremGrammarV1",
-        "relation_to_goal": relation,
-        "unsupported_constructs": unsupported,
-        "classification_source": "lean_compilation_backed_exact_theorem",
-    }
-
-
-def _statement_parts(theorem_name: str, theorem_source: str) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, list[str]]]:
-    header = theorem_source.split(":= by", 1)[0]
-    object_kinds = {
-        "Point",
-        "Line",
-        "Circle",
-        "Segment",
-        "Ray",
-        "Triangle",
-        "Reflection",
-        "Rotation",
-        "Homothety",
-        "Inversion",
-        "SpiralSimilarity",
-    }
-    objects: list[dict[str, Any]] = []
-    hypotheses: list[dict[str, Any]] = []
-    side_conditions = {
-        "nondegeneracy": [],
-        "orientation": [],
-        "existence": [],
-        "uniqueness": [],
-        "order_cases": [],
-    }
-    for binder in re.findall(r"\(([^()]*)\)", header):
-        if ":" not in binder:
-            continue
-        names_text, type_expr = binder.split(":", 1)
-        names = [name.strip() for name in names_text.split() if name.strip()]
-        type_expr = type_expr.strip()
-        simple_type = type_expr.split()[0] if type_expr.split() else type_expr
-        if simple_type in object_kinds:
-            for name in names:
-                if name.startswith("_"):
-                    continue
-                objects.append(
-                    {
-                        "object_id": f"{simple_type.lower()}:{name}",
-                        "kind": simple_type,
-                        "source_expr": name,
-                        "source_expr_hash": _sha256_text(f"{theorem_name}:object:{name}:{simple_type}"),
-                        "canonical_name": name,
-                    }
-                )
-            continue
-        for name in names or [f"hyp{len(hypotheses)}"]:
-            hypothesis = {
-                "predicate_id": f"hyp:{name}",
-                "family": _family_from_target(type_expr, "incidence"),
-                "args": _args_from_expr(type_expr, objects),
-                "polarity": "positive",
-                "source_expr": type_expr,
-                "source_expr_hash": _sha256_text(f"{theorem_name}:hypothesis:{name}:{type_expr}"),
-                "canonical_expr_hash": _sha256_text(f"{theorem_name}:canonical_hypothesis:{type_expr}"),
-            }
-            hypotheses.append(hypothesis)
-            lowered = type_expr.lower()
-            if "≠" in type_expr or "!=" in type_expr or "ne " in lowered:
-                side_conditions["nondegeneracy"].append(_canonical_condition(type_expr, objects))
-            if "between" in lowered:
-                side_conditions["order_cases"].append(type_expr)
-            if "exists" in lowered or "∃" in type_expr:
-                side_conditions["existence"].append(type_expr)
-            if "unique" in lowered or "∃!" in type_expr:
-                side_conditions["uniqueness"].append(type_expr)
-    if not objects:
-        objects.append(
-            {
-                "object_id": f"theorem:{theorem_name}",
-                "kind": "TheoremGoal",
-                "source_expr": theorem_name,
-                "source_expr_hash": _sha256_text(f"{theorem_name}:implicit-goal-object"),
-                "canonical_name": theorem_name,
-            }
-        )
-    return objects, hypotheses, side_conditions
-
-
-def _target_expr(theorem_source: str) -> str:
-    header = theorem_source.split(":= by", 1)[0]
-    depth = 0
-    target_start = None
-    for index, char in enumerate(header):
-        if char == "(":
-            depth += 1
-        elif char == ")":
-            depth = max(0, depth - 1)
-        elif char == ":" and depth == 0:
-            target_start = index + 1
-    if target_start is None:
-        return header.strip()
-    return header[target_start:].strip()
-
-
-def _target_args(target_expr: str, objects: list[dict[str, Any]]) -> list[str]:
-    name_to_id = {str(obj["canonical_name"]): str(obj["object_id"]) for obj in objects}
-    tokens = re.findall(r"\b[A-Za-z][A-Za-z0-9_]*\b", target_expr)
-    return [name_to_id[token] for token in tokens if token in name_to_id]
-
-
-def _args_from_expr(expr: str, objects: list[dict[str, Any]]) -> list[str]:
-    return _target_args(expr, objects)
-
-
-def _canonical_condition(expr: str, objects: list[dict[str, Any]]) -> str:
-    if "≠" in expr:
-        left, right = expr.split("≠", 1)
-        operator = "!="
-    elif "!=" in expr:
-        left, right = expr.split("!=", 1)
-        operator = "!="
-    else:
-        return expr
-    name_to_id = {str(obj["canonical_name"]): str(obj["object_id"]) for obj in objects}
-    left_ref = name_to_id.get(left.strip(), left.strip())
-    right_ref = name_to_id.get(right.strip(), right.strip())
-    return f"{left_ref} {operator} {right_ref}"
-
-
-def _family_from_target(target_expr: str, grammar_family: str) -> str:
-    lowered = target_expr.lower()
-    if "rotation_preserves_collinear" in lowered:
-        return "transformation"
-    if (
-        "constructed_circle_point" in lowered
-        or "constructed_line_circle_point" in lowered
-        or "constructed_center_point" in lowered
-    ):
-        return "construction"
-    if "collinear" in lowered or "on_line" in lowered:
-        return "incidence"
-    if (
-        "length_le" in lowered
-        or "length_lt" in lowered
-        or "area_le" in lowered
-        or "area_lt" in lowered
-        or "ratio_le" in lowered
-        or "ratio_lt" in lowered
-        or "≤" in target_expr
-        or "<" in target_expr
-    ):
-        return "inequality"
-    if "equal_length" in lowered or "length" in lowered or "ratio" in lowered or "area" in lowered:
-        return "metric"
-    if "angle" in lowered or "cyclic" in lowered:
-        return "angle"
-    if "midpoint" in lowered:
-        return "construction"
-    if "between" in lowered:
-        return "order"
-    if "reflection" in lowered or "rotation" in lowered or "homothety" in lowered or "inversion" in lowered:
-        return "transformation"
-    if "le" in lowered or "lt" in lowered:
-        return "inequality"
-    return _family_from_grammar(grammar_family)
-
-
 def _extract_theorem_source(text: str, theorem_name: str) -> str:
     theorem_re = re.compile(rf"(?m)^\s*theorem\s+{re.escape(theorem_name)}\b")
     match = theorem_re.search(text)
@@ -472,31 +601,18 @@ def _extract_theorem_source(text: str, theorem_name: str) -> str:
     return text[match.start() : end].strip() + "\n"
 
 
+def _theorem_header_for_cache(theorem_source: str) -> str:
+    if ":= by" in theorem_source:
+        return theorem_source.split(":= by", 1)[0].strip()
+    if ":=" in theorem_source:
+        return theorem_source.split(":=", 1)[0].strip()
+    return theorem_source.strip()
+
+
 def _looks_preproved(theorem_source: str) -> bool:
     if "sorry" in theorem_source:
         return False
     return ":= by" in theorem_source or ":=" in theorem_source
-
-
-def _family_from_grammar(grammar_family: str) -> str:
-    known = {
-        "incidence",
-        "collinear",
-        "parallel",
-        "perpendicular",
-        "midpoint",
-        "concyclic",
-        "equal_length",
-        "metric",
-        "angle",
-        "triangle",
-        "circle",
-        "construction",
-        "transformation",
-        "order",
-        "inequality",
-    }
-    return grammar_family if grammar_family in known else "incidence"
 
 
 def _lean_context_hash() -> str:

@@ -57,6 +57,7 @@ def run(engine_input: EngineInputFull2D, budget: ResourceBudget, context: RunCon
         checker_or_compiler_ref=f"MetricAngleTraceCheckerFull2D:{payload_hash}",
         resource_usage_ref=context.resource_usage_ref,
         status="normalized_success",
+        normalized_output_payload=payload,
     )
 
 
@@ -109,7 +110,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
                 "full2d_rule:angle_chase:03",
             ),
             checker_result="passed",
-            lean_summary="identical directed-angle expressions are equal modulo pi by reflexivity",
+            lean_summary="identical directed-angle expressions are equal modulo pi through reflexivity",
         )
     if family not in {"incidence", "collinear"} or len(args) != 3:
         return None

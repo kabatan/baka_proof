@@ -56,6 +56,7 @@ def run(engine_input: EngineInputFull2D, budget: ResourceBudget, context: RunCon
         checker_or_compiler_ref=f"PortfolioPolicyCheckerFull2D:{payload_hash}",
         resource_usage_ref=context.resource_usage_ref,
         status="normalized_success",
+        normalized_output_payload=payload,
     )
 
 

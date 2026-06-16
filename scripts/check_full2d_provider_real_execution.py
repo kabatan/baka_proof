@@ -6,6 +6,7 @@ import hashlib
 import json
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -35,6 +36,8 @@ DISABLED_BY_BASELINE = {
     "B6": {"algebraic_geometry"},
     "B7": {"order_case"},
 }
+REPORT_SAMPLE_LIMIT = 200
+WORKERS = 16
 
 
 def main() -> int:
@@ -48,13 +51,15 @@ def main() -> int:
     self_test_report = _run_self_test() if args.self_test else None
     if self_test_report:
         errors.extend(self_test_report["errors"])
-    scoped_reports = _check_run_provider_records(run_dir, errors) if run_dir.exists() else []
+    scoped_report_summary = _check_run_provider_records(run_dir, errors) if run_dir.exists() else {"reports": [], "report_count": 0, "sample_truncated_count": 0}
     report = {
         "schema_version": "1.0.0",
         "status": "passed" if not errors else "failed",
         "run_dir": str(run_dir),
         "self_test": self_test_report,
-        "scoped_reports": scoped_reports,
+        "scoped_reports": scoped_report_summary["reports"],
+        "scoped_report_count": scoped_report_summary["report_count"],
+        "scoped_report_sample_truncated_count": scoped_report_summary["sample_truncated_count"],
         "errors": sorted(set(errors)),
     }
     print(json.dumps(report, indent=2, sort_keys=True))
@@ -81,36 +86,42 @@ def _run_self_test() -> dict[str, Any]:
     return {"status": "passed" if not errors else "failed", "cases": cases, "errors": errors}
 
 
-def _check_run_provider_records(run_dir: Path, errors: list[str]) -> list[dict[str, Any]]:
+def _check_run_provider_records(run_dir: Path, errors: list[str]) -> dict[str, Any]:
     reports: list[dict[str, Any]] = []
-    for source, record in _iter_run_records(run_dir, errors):
-        if record.get("final_status") != "final_theorem":
-            continue
-        run_id = str(record.get("run_id", source))
-        manifest_ref = record.get("provider_run_manifest_ref")
-        artifact_paths = record.get("artifact_paths", {})
-        if not isinstance(manifest_ref, str) or not isinstance(artifact_paths, dict):
-            issue = f"{run_id}:missing_provider_manifest_ref_or_artifact_paths"
-            errors.append(issue)
-            reports.append({"source": source, "run_id": run_id, "status": "failed", "errors": [issue]})
-            continue
-        manifest_path_value = artifact_paths.get(manifest_ref)
-        if not isinstance(manifest_path_value, str):
-            issue = f"{run_id}:missing_provider_manifest_artifact_path:{manifest_ref}"
-            errors.append(issue)
-            reports.append({"source": source, "run_id": run_id, "status": "failed", "errors": [issue]})
-            continue
-        payload = {
-            "manifest_ref": manifest_ref,
-            "manifest": _read_json(_resolve_path(manifest_path_value, run_dir), []),
-            "artifact_paths": artifact_paths,
-            "engine_output_refs": record.get("engine_output_refs", []),
-            "expected_engine_roles": sorted(_expected_engine_roles(record)),
-        }
-        provider_errors = _validate_provider_run_payload(payload, run_dir)
-        reports.append({"source": source, "run_id": run_id, "status": "passed" if not provider_errors else "failed", "errors": provider_errors})
-        errors.extend(provider_errors)
-    return reports
+    report_count = 0
+    records = [(source, record) for source, record in _iter_run_records(run_dir, errors) if record.get("final_status") == "final_theorem"]
+    with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+        futures = [executor.submit(_validate_provider_record, source, record, run_dir) for source, record in records]
+        for future in as_completed(futures):
+            report, provider_errors = future.result()
+            report_count += 1
+            if len(reports) < REPORT_SAMPLE_LIMIT or provider_errors:
+                reports.append(report)
+            errors.extend(provider_errors)
+    reports.sort(key=lambda item: str(item.get("source", "")))
+    return {"reports": reports, "report_count": report_count, "sample_truncated_count": max(0, report_count - len(reports))}
+
+
+def _validate_provider_record(source: str, record: dict[str, Any], run_dir: Path) -> tuple[dict[str, Any], list[str]]:
+    run_id = str(record.get("run_id", source))
+    manifest_ref = record.get("provider_run_manifest_ref")
+    artifact_paths = record.get("artifact_paths", {})
+    if not isinstance(manifest_ref, str) or not isinstance(artifact_paths, dict):
+        issue = f"{run_id}:missing_provider_manifest_ref_or_artifact_paths"
+        return {"source": source, "run_id": run_id, "status": "failed", "errors": [issue]}, [issue]
+    manifest_path_value = artifact_paths.get(manifest_ref)
+    if not isinstance(manifest_path_value, str):
+        issue = f"{run_id}:missing_provider_manifest_artifact_path:{manifest_ref}"
+        return {"source": source, "run_id": run_id, "status": "failed", "errors": [issue]}, [issue]
+    payload = {
+        "manifest_ref": manifest_ref,
+        "manifest": _read_json(_resolve_path(manifest_path_value, run_dir), []),
+        "artifact_paths": artifact_paths,
+        "engine_output_refs": record.get("engine_output_refs", []),
+        "expected_engine_roles": sorted(_expected_engine_roles(record)),
+    }
+    provider_errors = _validate_provider_run_payload(payload, run_dir)
+    return {"source": source, "run_id": run_id, "status": "passed" if not provider_errors else "failed", "errors": provider_errors}, provider_errors
 
 
 def _build_provider_run_payload(artifact_root: Path) -> dict[str, Any]:

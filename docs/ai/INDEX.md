@@ -3,7 +3,7 @@ title: AI Documentation Index
 version: v0.3
 status: ACTIVE
 created: 2026-06-11
-last_updated: 2026-06-15
+last_updated: 2026-06-16
 purpose: Index active Guardian and AI-operation documents in this workspace.
 authority: Navigation and classification only; individual Base Spec and Plan files declare their own authority.
 ---
@@ -20,7 +20,7 @@ authority: Navigation and classification only; individual Base Spec and Plan fil
 
 Purpose: Guardian-managed v0.4.3 real pipeline recovery track for a solver-backed GeometryFull2D Lean automated prover.
 
-Status: v0.4.3 integrated research-agent bundle imported, hash-verified, and installed as the active user-approved Guardian authority set. Implementation can resume from WP-00. No v0.4.3 completion claim is made.
+Status: v0.4.3 integrated research-agent bundle imported, hash-verified, and installed as the active user-approved Guardian authority set. Implementation has advanced through real-pipeline hardening and matrix-run infrastructure, but strict spec verification currently blocks release closure on corpus duplicate and direct-lemma success ceilings. No v0.4.3 completion claim is made.
 
 Primary documents:
 
@@ -33,6 +33,7 @@ Primary documents:
 - `docs/ai/changes/geometry-full2d-v0_4_3/CODEX_HANDOFF.md` — implementation handoff.
 - `docs/ai/changes/geometry-full2d-v0_4_3/README.md` — change-local index.
 - `docs/ai/changes/geometry-full2d-v0_4_3/evidence/` — import and implementation evidence.
+- `docs/ai/changes/geometry-full2d-v0_4_3/evidence/v0_4_3_release_blocker_report.md` — current release blocker report.
 - `docs/ai/changes/geometry-full2d-v0_4_3/debt/debt_ledger.jsonl` — debt ledger.
 
 ## Superseded Geometry Tracks

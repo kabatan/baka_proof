@@ -55,6 +55,7 @@ def run(engine_input: EngineInputFull2D, budget: ResourceBudget, context: RunCon
         checker_or_compiler_ref=f"RuleRegistryFull2D:{build_rule_registry_full2d().registry_hash()}",
         resource_usage_ref=context.resource_usage_ref,
         status="normalized_success",
+        normalized_output_payload=payload,
     )
 
 

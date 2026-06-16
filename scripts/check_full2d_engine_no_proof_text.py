@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -30,6 +31,8 @@ FORBIDDEN_SOURCE_TOKENS = (
     "theorem_name_dispatch",
     "LeanPatchCandidateFull2D",
 )
+REPORT_SAMPLE_LIMIT = 200
+WORKERS = 16
 
 
 def main() -> int:
@@ -43,14 +46,16 @@ def main() -> int:
     if self_test:
         errors.extend(self_test["errors"])
     source_report = _scan_engine_sources(errors)
-    scoped_reports = _check_run_engine_outputs(run_dir, errors) if run_dir.exists() else []
+    scoped_report_summary = _check_run_engine_outputs(run_dir, errors) if run_dir.exists() else {"reports": [], "report_count": 0, "sample_truncated_count": 0}
     report = {
         "schema_version": "1.0.0",
         "status": "passed" if not errors else "failed",
         "run_dir": str(run_dir),
         "self_test": self_test,
         "source_report": source_report,
-        "scoped_reports": scoped_reports,
+        "scoped_reports": scoped_report_summary["reports"],
+        "scoped_report_count": scoped_report_summary["report_count"],
+        "scoped_report_sample_truncated_count": scoped_report_summary["sample_truncated_count"],
         "errors": sorted(set(errors)),
     }
     print(json.dumps(report, indent=2, sort_keys=True))
@@ -105,21 +110,31 @@ def _scan_engine_sources(errors: list[str]) -> dict[str, Any]:
     return {"status": "passed" if not any(report["errors"] for report in reports) else "failed", "reports": reports}
 
 
-def _check_run_engine_outputs(run_dir: Path, errors: list[str]) -> list[dict[str, Any]]:
+def _check_run_engine_outputs(run_dir: Path, errors: list[str]) -> dict[str, Any]:
     reports: list[dict[str, Any]] = []
-    for source, record in _iter_run_records(run_dir, errors):
-        if record.get("final_status") != "final_theorem":
-            continue
-        run_id = str(record.get("run_id", source))
-        artifact_paths = record.get("artifact_paths", {})
-        record_errors: list[str] = []
-        for ref in record.get("engine_output_refs", []):
-            payload = _load_ref(ref, artifact_paths, run_dir, record_errors, run_id)
-            if payload is not None:
-                record_errors.extend(validate_engine_semantic_output_payload(payload))
-        reports.append({"source": source, "run_id": run_id, "status": "passed" if not record_errors else "failed", "errors": record_errors})
-        errors.extend(record_errors)
-    return reports
+    report_count = 0
+    records = [(source, record) for source, record in _iter_run_records(run_dir, errors) if record.get("final_status") == "final_theorem"]
+    with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+        futures = [executor.submit(_validate_engine_semantic_record, source, record, run_dir) for source, record in records]
+        for future in as_completed(futures):
+            report, record_errors = future.result()
+            report_count += 1
+            if len(reports) < REPORT_SAMPLE_LIMIT or record_errors:
+                reports.append(report)
+            errors.extend(record_errors)
+    reports.sort(key=lambda item: str(item.get("source", "")))
+    return {"reports": reports, "report_count": report_count, "sample_truncated_count": max(0, report_count - len(reports))}
+
+
+def _validate_engine_semantic_record(source: str, record: dict[str, Any], run_dir: Path) -> tuple[dict[str, Any], list[str]]:
+    run_id = str(record.get("run_id", source))
+    artifact_paths = record.get("artifact_paths", {})
+    record_errors: list[str] = []
+    for ref in record.get("engine_output_refs", []):
+        payload = _load_ref(ref, artifact_paths, run_dir, record_errors, run_id)
+        if payload is not None:
+            record_errors.extend(validate_engine_semantic_output_payload(payload))
+    return {"source": source, "run_id": run_id, "status": "passed" if not record_errors else "failed", "errors": record_errors}, record_errors
 
 
 def _iter_run_records(run_dir: Path, errors: list[str]) -> list[tuple[str, dict[str, Any]]]:

@@ -6,6 +6,7 @@ import hashlib
 import json
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -18,6 +19,9 @@ from plugins.geometry_full2d.run_records import (  # noqa: E402
     content_addressed_typed_ref,
     validate_actual_task_pipeline_run,
 )
+
+REPORT_SAMPLE_LIMIT = 200
+VALIDATION_WORKERS = 16
 
 
 def main() -> int:
@@ -34,18 +38,24 @@ def main() -> int:
         errors.extend(self_test_report["errors"])
 
     record_reports: list[dict[str, Any]] = []
+    record_report_count = 0
+    valid_record_count = 0
+    invalid_record_count = 0
     if run_dir.exists():
-        for source, payload in _iter_run_records(run_dir, errors):
-            record_errors = validate_actual_task_pipeline_run(payload, run_dir=run_dir)
-            record_reports.append(
-                {
-                    "source": source,
-                    "run_id": payload.get("run_id") if isinstance(payload, dict) else None,
-                    "status": "passed" if not record_errors else "failed",
-                    "errors": record_errors,
-                }
-            )
-            errors.extend(f"{source}:{error}" for error in record_errors)
+        records = _iter_run_records(run_dir, errors)
+        with ThreadPoolExecutor(max_workers=VALIDATION_WORKERS) as executor:
+            futures = [executor.submit(_validate_record_report, source, payload, run_dir) for source, payload in records]
+            validation_results = [future.result() for future in as_completed(futures)]
+        validation_results.sort(key=lambda item: item[0])
+        for _source, report, record_errors in validation_results:
+            record_report_count += 1
+            if record_errors:
+                invalid_record_count += 1
+            else:
+                valid_record_count += 1
+            if len(record_reports) < REPORT_SAMPLE_LIMIT or record_errors:
+                record_reports.append(report)
+            errors.extend(f"{report['source']}:{error}" for error in record_errors)
     elif not args.self_test:
         errors.append(f"run_dir_missing:{run_dir}")
 
@@ -53,8 +63,12 @@ def main() -> int:
         "schema_version": "1.0.0",
         "status": "passed" if not errors else "failed",
         "run_dir": str(run_dir),
-        "record_count": len(record_reports),
+        "record_count": record_report_count,
+        "valid_record_count": valid_record_count,
+        "invalid_record_count": invalid_record_count,
+        "record_report_count": record_report_count,
         "record_reports": record_reports,
+        "record_report_sample_truncated_count": max(0, record_report_count - len(record_reports)),
         "self_test": self_test_report,
         "errors": sorted(set(errors)),
     }
@@ -86,6 +100,17 @@ def _iter_run_records(run_dir: Path, errors: list[str]) -> list[tuple[str, dict[
                 continue
             records.append((f"actual_task_pipeline_runs.jsonl:{index}", payload))
     return records
+
+
+def _validate_record_report(source: str, payload: dict[str, Any], run_dir: Path) -> tuple[str, dict[str, Any], list[str]]:
+    record_errors = validate_actual_task_pipeline_run(payload, run_dir=run_dir)
+    report = {
+        "source": source,
+        "run_id": payload.get("run_id") if isinstance(payload, dict) else None,
+        "status": "passed" if not record_errors else "failed",
+        "errors": record_errors,
+    }
+    return source, report, record_errors
 
 
 def _run_self_test() -> dict[str, Any]:
@@ -136,11 +161,15 @@ def _build_valid_selftest_record(root: Path) -> dict[str, Any]:
         "source_theorem_path": str(source_path),
         "source_theorem_ref": source_ref,
         "source_theorem_preproved": False,
+        "extraction_method": "lean_elaborator_structured_theorem",
+        "semantic_extraction_authority": "lean_elaborator",
+        "python_semantic_extraction_used": False,
         "target_classification": {
             "target_status": "in_target_positive",
             "grammar_id": "GeometryFull2DTheoremGrammarV1",
             "relation_to_goal": "exact_goal",
             "unsupported_constructs": [],
+            "classification_source": "lean_elaborator_structured_theorem",
         },
     }
     extraction_ref = _write_typed_json(artifacts, "extraction.json", "GeometryFull2DExtraction", "report_id", extraction_payload, root, artifact_paths)
@@ -154,12 +183,21 @@ def _build_valid_selftest_record(root: Path) -> dict[str, Any]:
     }
     claim_ref = _write_typed_json(artifacts, "claim_spec.json", "GeometryFull2DClaimSpec", "claim_id", claim_payload, root, artifact_paths)
 
+    normalized_payload = {
+        "schema_version": "1.0.0",
+        "trace_id": "selftest-trace",
+        "used_rule_ids": ["full2d_rule:incidence_collinearity:02"],
+        "proof_use_status": "not_allowed",
+    }
+    normalized_payload_hash = _sha256_text(json.dumps(normalized_payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True))
     engine_payload = {
         "schema_version": "1.0.0",
         "task_id": task_id,
         "claim_spec_ref": claim_ref,
         "engine_role": "synthetic_closure",
         "status": "normalized_success",
+        "normalized_output_ref": f"Full2DTraceV1:{normalized_payload_hash}",
+        "normalized_output_payload": normalized_payload,
         "proof_use_status": "not_allowed",
     }
     engine_ref = _write_typed_json(artifacts, "engine_output.json", "SyntheticClosureTraceFull2D", "output_id", engine_payload, root, artifact_paths)

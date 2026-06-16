@@ -11,6 +11,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 CHANGE_DIR = ROOT / "docs" / "ai" / "changes" / "geometry-full2d-v0_4_3"
 DEBT_LEDGER = CHANGE_DIR / "debt" / "debt_ledger.jsonl"
+REPORT_SAMPLE_LIMIT = 200
+CLAIM_CEILING = "V0.4.3_GEOMETRY_FULL2D_REAL_PIPELINE_READY"
 
 
 def main() -> int:
@@ -57,6 +59,7 @@ def check_release_acceptance(config_path: Path, output_path: Path) -> dict[str, 
         "hard_blockers": hard_blockers,
         "release_blockers": release_blockers,
         "work_debt_open": work_debt_open,
+        "claim_ceiling": CLAIM_CEILING,
         "debt_ledger": {
             "path": str(DEBT_LEDGER),
             "sha256": _sha_file(DEBT_LEDGER) if DEBT_LEDGER.exists() else None,
@@ -76,6 +79,7 @@ def _run_checks(config_path: Path, run_dir: Path) -> dict[str, dict[str, Any]]:
         "active_guardian_spec": [sys.executable, "scripts/check_active_guardian_spec_v0_4_3.py"],
         "no_v042_template_release_path": [sys.executable, "scripts/check_no_v042_template_release_path.py"],
         "actual_task_pipeline_runs": [sys.executable, "scripts/check_actual_task_pipeline_runs.py", "--run-dir", str(run_dir), "--self-test"],
+        "engine_challenge_suite": [sys.executable, "scripts/check_full2d_engine_challenge_suite.py", "--all-engines"],
         "engine_real_execution": [sys.executable, "scripts/check_full2d_engine_real_execution.py", "--run-dir", str(run_dir), "--self-test"],
         "engine_no_proof_text": [sys.executable, "scripts/check_full2d_engine_no_proof_text.py", "--run-dir", str(run_dir), "--self-test"],
         "extraction_corpus": [sys.executable, "scripts/check_full2d_extraction_corpus.py", "--corpus-root", "benchmarks/geometry_full2d", "--run-dir", str(run_dir)],
@@ -121,6 +125,7 @@ def _summaries(checks: dict[str, dict[str, Any]], debt_entries: list[dict[str, A
     metrics = _report(checks, "metrics")
     used_rule = _report(checks, "used_rule_coverage")
     engine_real = _report(checks, "engine_real_execution")
+    engine_challenge = _report(checks, "engine_challenge_suite")
     matrix = _report(checks, "matrix_run")
     actual = _report(checks, "actual_task_pipeline_runs")
     corpus = _report(checks, "corpus_manifest")
@@ -134,7 +139,7 @@ def _summaries(checks: dict[str, dict[str, Any]], debt_entries: list[dict[str, A
         "metrics_summary": metrics.get("metrics_summary", {}),
         "advantage_summary": metrics.get("advantage_summary", {}),
         "used_rule_coverage_summary": used_rule.get("used_rule_coverage_report", {}),
-        "engine_usage_summary": _engine_usage_summary(engine_real, matrix),
+        "engine_usage_summary": _engine_usage_summary(engine_real, engine_challenge, matrix),
         "measured_failure_summary": metrics.get("measured_failure_summary", {}),
         "corpus_summary": corpus.get("corpus_summary", {}),
         "actual_pipeline_run_summary": matrix.get("actual_task_pipeline_run_summary", actual),
@@ -177,7 +182,7 @@ def _derived_blockers(summaries: dict[str, Any], checks: dict[str, dict[str, Any
     return blockers
 
 
-def _engine_usage_summary(engine_real: dict[str, Any], matrix: dict[str, Any]) -> dict[str, Any]:
+def _engine_usage_summary(engine_real: dict[str, Any], engine_challenge: dict[str, Any], matrix: dict[str, Any]) -> dict[str, Any]:
     source_report = engine_real.get("source_report", {})
     reports = source_report.get("reports", []) if isinstance(source_report, dict) else []
     roles = [report.get("engine_role") for report in reports if isinstance(report, dict) and report.get("status") == "passed"]
@@ -187,16 +192,36 @@ def _engine_usage_summary(engine_real: dict[str, Any], matrix: dict[str, Any]) -
         counted_roles = [str(role) for role in actual_summary["counted_certificate_engine_roles"]]
     return {
         "release_engine_roles_with_challenge_pass": roles,
+        "challenge_suite_status": engine_challenge.get("status"),
+        "challenge_suite_roles": _challenge_suite_roles(engine_challenge),
         "counted_certificate_engine_roles": counted_roles,
         "matrix_status": matrix.get("status"),
     }
 
 
+def _challenge_suite_roles(engine_challenge: dict[str, Any]) -> list[str]:
+    roles: list[str] = []
+    for key in ("reports", "engine_reports", "challenge_reports"):
+        items = engine_challenge.get(key)
+        if not isinstance(items, list):
+            continue
+        for item in items:
+            if isinstance(item, dict) and item.get("engine_role"):
+                roles.append(str(item["engine_role"]))
+    return sorted(set(roles))
+
+
 def _causal_chain_summary(actual_report: dict[str, Any]) -> dict[str, Any]:
+    reports = actual_report.get("record_reports", [])
+    report_sample = reports[:REPORT_SAMPLE_LIMIT] if isinstance(reports, list) else []
     return {
         "record_count": actual_report.get("record_count", 0),
+        "valid_record_count": actual_report.get("valid_record_count"),
+        "invalid_record_count": actual_report.get("invalid_record_count"),
+        "record_report_count": actual_report.get("record_report_count", len(report_sample)),
+        "record_report_sample_truncated_count": actual_report.get("record_report_sample_truncated_count", 0),
         "self_test_status": actual_report.get("self_test", {}).get("status") if isinstance(actual_report.get("self_test"), dict) else None,
-        "record_reports": actual_report.get("record_reports", []),
+        "record_reports_sample": report_sample,
     }
 
 
@@ -231,15 +256,53 @@ def _checked_rids() -> list[str]:
         "R-REF-004",
         "R-REF-005",
         "R-EXT-001",
+        "R-EXT-002",
+        "R-EXT-003",
+        "R-EXT-004",
+        "R-EXT-005",
+        "R-EXT-006",
+        "R-EXT-007",
         "R-CLAIM-001",
+        "R-CLAIM-002",
+        "R-CLAIM-003",
         "R-PROV-001",
+        "R-PROV-002",
+        "R-PROV-003",
+        "R-PROV-004",
         "R-ENG-001",
+        "R-ENG-002",
+        "R-ENG-003",
+        "R-ENG-004",
         "R-COMP-001",
+        "R-COMP-002",
+        "R-COMP-003",
+        "R-COMP-004",
         "R-PROOF-001",
+        "R-PROOF-002",
+        "R-PROOF-003",
+        "R-PROOF-004",
+        "R-PROOF-005",
         "R-CORPUS-001",
+        "R-CORPUS-002",
+        "R-CORPUS-003",
+        "R-CORPUS-004",
+        "R-CORPUS-005",
+        "R-CORPUS-006",
+        "R-CORPUS-007",
         "R-MET-001",
+        "R-MET-002",
+        "R-MET-003",
+        "R-MET-004",
+        "R-MET-005",
         "R-ADV-001",
+        "R-ADV-002",
+        "R-ADV-003",
+        "R-ADV-004",
+        "R-ADV-005",
         "R-DEBT-001",
+        "R-DEBT-002",
+        "R-DEBT-003",
+        "R-DEBT-004",
     ]
 
 

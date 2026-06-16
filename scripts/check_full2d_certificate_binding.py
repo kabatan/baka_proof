@@ -6,6 +6,7 @@ import hashlib
 import json
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -39,6 +40,8 @@ IDENTITY_FIELDS = {
     "payload_sha256",
     "artifact_sha256",
 }
+REPORT_SAMPLE_LIMIT = 200
+WORKERS = 16
 
 
 def main() -> int:
@@ -52,13 +55,15 @@ def main() -> int:
     self_test = _run_self_test() if args.self_test else None
     if self_test:
         errors.extend(self_test["errors"])
-    scoped_reports = _check_run_records(run_dir, errors) if run_dir.exists() else []
+    scoped_report_summary = _check_run_records(run_dir, errors) if run_dir.exists() else {"reports": [], "report_count": 0, "sample_truncated_count": 0}
     report = {
         "schema_version": "1.0.0",
         "status": "passed" if not errors else "failed",
         "run_dir": str(run_dir),
         "self_test": self_test,
-        "scoped_reports": scoped_reports,
+        "scoped_reports": scoped_report_summary["reports"],
+        "scoped_report_count": scoped_report_summary["report_count"],
+        "scoped_report_sample_truncated_count": scoped_report_summary["sample_truncated_count"],
         "errors": sorted(set(errors)),
     }
     print(json.dumps(report, indent=2, sort_keys=True))
@@ -357,37 +362,51 @@ def _validate_binding_payload(payload: dict[str, Any]) -> list[str]:
     return sorted(set(errors))
 
 
-def _check_run_records(run_dir: Path, errors: list[str]) -> list[dict[str, Any]]:
+def _check_run_records(run_dir: Path, errors: list[str]) -> dict[str, Any]:
     reports: list[dict[str, Any]] = []
-    for source, record in _iter_run_records(run_dir, errors):
-        if record.get("final_status") != "final_theorem":
-            continue
-        run_id = str(record.get("run_id", source))
-        artifact_paths = _resolve_record_artifact_paths(record.get("artifact_paths", {}), run_dir)
-        certificate = _load_ref(record.get("solver_backed_certificate_ref"), artifact_paths, errors, run_id)
-        if certificate is None:
-            reports.append({"source": source, "run_id": run_id, "status": "failed", "errors": [f"{run_id}:missing_certificate"]})
-            continue
-        payload = {
-            "source_theorem_ref": record.get("source_theorem_ref"),
-            "lean_extraction_report_ref": record.get("lean_extraction_report_ref"),
-            "claim_spec_ref": record.get("claim_spec_ref"),
-            "provider_run_manifest_ref": record.get("provider_run_manifest_ref"),
-            "engine_output_refs": record.get("engine_output_refs", []),
-            "compiler_result_refs": record.get("compiler_result_refs", []),
-            "lean_patch_candidate_ref": record.get("lean_patch_candidate_ref"),
-            "proof_worker_result_ref": record.get("proof_worker_result_ref"),
-            "generated_candidate_file_ref": record.get("generated_candidate_file_ref"),
-            "final_verify_report_ref": record.get("final_verify_report_ref"),
-            "solver_backed_certificate_ref": record.get("solver_backed_certificate_ref"),
-            "checked_candidate_file_ref": record.get("generated_candidate_file_ref"),
-            "artifact_paths": artifact_paths,
-            "certificate": certificate,
-        }
-        record_errors = _validate_binding_payload(payload)
-        reports.append({"source": source, "run_id": run_id, "status": "passed" if not record_errors else "failed", "errors": record_errors})
-        errors.extend(f"{run_id}:{error}" for error in record_errors)
-    return reports
+    report_count = 0
+    records = [(source, record) for source, record in _iter_run_records(run_dir, errors) if record.get("final_status") == "final_theorem"]
+    with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+        futures = [executor.submit(_validate_certificate_record, source, record, run_dir) for source, record in records]
+        for future in as_completed(futures):
+            report, record_errors = future.result()
+            report_count += 1
+            if len(reports) < REPORT_SAMPLE_LIMIT or record_errors:
+                reports.append(report)
+            errors.extend(record_errors)
+    reports.sort(key=lambda item: str(item.get("source", "")))
+    return {"reports": reports, "report_count": report_count, "sample_truncated_count": max(0, report_count - len(reports))}
+
+
+def _validate_certificate_record(source: str, record: dict[str, Any], run_dir: Path) -> tuple[dict[str, Any], list[str]]:
+    run_id = str(record.get("run_id", source))
+    local_errors: list[str] = []
+    artifact_paths = _resolve_record_artifact_paths(record.get("artifact_paths", {}), run_dir)
+    certificate = _load_ref(record.get("solver_backed_certificate_ref"), artifact_paths, local_errors, run_id)
+    if certificate is None:
+        issue = f"{run_id}:missing_certificate"
+        local_errors.append(issue)
+        return {"source": source, "run_id": run_id, "status": "failed", "errors": [issue]}, local_errors
+    payload = {
+        "source_theorem_ref": record.get("source_theorem_ref"),
+        "lean_extraction_report_ref": record.get("lean_extraction_report_ref"),
+        "claim_spec_ref": record.get("claim_spec_ref"),
+        "provider_run_manifest_ref": record.get("provider_run_manifest_ref"),
+        "engine_output_refs": record.get("engine_output_refs", []),
+        "compiler_result_refs": record.get("compiler_result_refs", []),
+        "lean_patch_candidate_ref": record.get("lean_patch_candidate_ref"),
+        "proof_worker_result_ref": record.get("proof_worker_result_ref"),
+        "generated_candidate_file_ref": record.get("generated_candidate_file_ref"),
+        "final_verify_report_ref": record.get("final_verify_report_ref"),
+        "solver_backed_certificate_ref": record.get("solver_backed_certificate_ref"),
+        "checked_candidate_file_ref": record.get("generated_candidate_file_ref"),
+        "artifact_paths": artifact_paths,
+        "certificate": certificate,
+    }
+    record_errors = _validate_binding_payload(payload)
+    prefixed_errors = [f"{run_id}:{error}" for error in record_errors]
+    all_errors = [*local_errors, *prefixed_errors]
+    return {"source": source, "run_id": run_id, "status": "passed" if not all_errors else "failed", "errors": all_errors}, all_errors
 
 
 def _claim_spec(source_statement_hash: str, source_path: Path) -> dict[str, Any]:

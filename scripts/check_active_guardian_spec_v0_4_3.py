@@ -226,7 +226,11 @@ def main() -> int:
             errors.append("active_context_plan_missing")
         if "V0.4.3_GEOMETRY_FULL2D_REAL_PIPELINE_READY" not in text:
             errors.append("active_context_claim_target_missing")
-        if "Implementation work for WP-01 and later has not started" not in text:
+        claim_ceiling_markers = (
+            "Implementation work for WP-01 and later has not started",
+            "strict blocker checkers, but release closure is blocked",
+        )
+        if not any(marker in text for marker in claim_ceiling_markers):
             errors.append("active_context_claim_ceiling_missing")
 
     if index.exists():

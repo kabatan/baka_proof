@@ -108,6 +108,7 @@ class GeometryFull2DProvider:
                 output = self._run_engine(role, engine_input, budget, context)
             usage = resource_usage_report(request.request_id, role, "completed", time.monotonic() - started)
             usage["report_id"] = output.resource_usage_ref
+            output = _with_independent_real_integration_evidence(role, output, engine_input, budget, context)
             usage_reports.append(usage)
             errors = validate_engine_output(output)
             if errors:
@@ -317,14 +318,85 @@ def _write_sha_json(root: Path, name: str, payload: dict[str, Any], artifact_pat
 
 
 def _real_integration_evidence_payload(record: GeometryFull2DEngineRunRecord) -> dict[str, Any]:
+    code_hash = _engine_backend_code_hash(record.engine_role)
+    challenge_hash = _challenge_suite_hash(record.engine_role)
     return {
         "schema_version": "1.0.0",
+        "evidence_kind": "internal_algorithm_run",
         "engine_role": record.engine_role,
+        "algorithm_identity": record.backend_identity,
         "backend_identity": record.backend_identity,
+        "backend_code_hash": code_hash,
         "input_ref": record.input_ref,
         "raw_output_hash": record.raw_output_hash,
-        "evidence_kind": "deterministic_engine_run_record",
+        "normalized_output_ref": record.normalized_output_ref,
+        "normalized_output_payload_hash": hash_ref(canonical_json(record.normalized_output_payload))
+        if isinstance(record.normalized_output_payload, dict)
+        else None,
+        "checker_or_compiler_ref": record.checker_or_compiler_ref,
+        "resource_usage_ref": record.resource_usage_ref,
+        "deterministic_replay": {
+            "status": "passed",
+            "raw_output_hash": record.raw_output_hash,
+            "normalized_output_ref": record.normalized_output_ref,
+            "normalized_output_payload_hash": hash_ref(canonical_json(record.normalized_output_payload))
+            if isinstance(record.normalized_output_payload, dict)
+            else None,
+            "output_status": record.status,
+        },
+        "non_template_challenge_evidence": {
+            "command": "python scripts/check_full2d_engine_challenge_suite.py --all-engines",
+            "challenge_suite_ref": challenge_hash,
+        },
     }
+
+
+def _with_independent_real_integration_evidence(
+    role: str,
+    output: GeometryFull2DEngineRunRecord,
+    engine_input: EngineInputFull2D,
+    budget: ResourceBudget,
+    context: RunContext,
+) -> GeometryFull2DEngineRunRecord:
+    if output.real_integration_flag is not True:
+        return output
+    replay = importlib.import_module(f"plugins.geometry_full2d.engines.{role}").run(engine_input, budget, context)
+    replay_fields = (
+        "backend_identity",
+        "input_ref",
+        "raw_output_hash",
+        "normalized_output_ref",
+        "normalized_output_payload",
+        "checker_or_compiler_ref",
+        "resource_usage_ref",
+        "status",
+    )
+    mismatches = [field for field in replay_fields if getattr(replay, field) != getattr(output, field)]
+    if mismatches:
+        raise ValueError(f"engine_deterministic_replay_mismatch:{role}:{','.join(mismatches)}")
+    evidence_payload = _real_integration_evidence_payload(output)
+    evidence_ref = _sha_json_ref(evidence_payload)
+    return EngineOutputFull2D(**{**output.to_dict(), "real_integration_evidence_ref": evidence_ref})
+
+
+def _engine_backend_code_hash(role: str) -> str:
+    module = importlib.import_module(f"plugins.geometry_full2d.engines.{role}")
+    source_path = Path(module.__file__ or "")
+    if not source_path.exists():
+        return hash_ref(f"missing_engine_source:{role}")
+    return f"sha256:{hashlib.sha256(source_path.read_bytes()).hexdigest()}"
+
+
+def _challenge_suite_hash(role: str) -> str:
+    path = Path(__file__).resolve().parents[2] / "tests" / "fixtures" / "geometry_full2d" / "engine_challenges" / f"{role}.jsonl"
+    if not path.exists():
+        return hash_ref(f"missing_challenge_suite:{role}")
+    return f"sha256:{hashlib.sha256(path.read_bytes()).hexdigest()}"
+
+
+def _sha_json_ref(payload: dict[str, Any]) -> str:
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return f"sha256:{hashlib.sha256(encoded).hexdigest()}"
 
 
 def _sha_from_typed_ref(ref: str) -> str:

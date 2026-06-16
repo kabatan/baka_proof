@@ -5,6 +5,7 @@ import copy
 import json
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -19,6 +20,9 @@ from plugins.geometry_full2d.claim_spec import (  # noqa: E402
 )
 from scripts.extract_geometry_full2d_theorem import extract_theorem  # noqa: E402
 
+REPORT_SAMPLE_LIMIT = 200
+WORKERS = 16
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -31,13 +35,15 @@ def main() -> int:
     self_test_report = _run_self_test() if args.self_test else None
     if self_test_report:
         errors.extend(self_test_report["errors"])
-    scoped_reports = _check_run_claimspecs(run_dir, errors) if run_dir.exists() else []
+    scoped_report_summary = _check_run_claimspecs(run_dir, errors) if run_dir.exists() else {"reports": [], "report_count": 0, "sample_truncated_count": 0}
     report = {
         "schema_version": "1.0.0",
         "status": "passed" if not errors else "failed",
         "run_dir": str(run_dir),
         "self_test": self_test_report,
-        "scoped_reports": scoped_reports,
+        "scoped_reports": scoped_report_summary["reports"],
+        "scoped_report_count": scoped_report_summary["report_count"],
+        "scoped_report_sample_truncated_count": scoped_report_summary["sample_truncated_count"],
         "errors": sorted(set(errors)),
     }
     print(json.dumps(report, indent=2, sort_keys=True))
@@ -73,31 +79,36 @@ def _run_self_test() -> dict[str, Any]:
     return {"status": "passed" if not errors else "failed", "cases": cases, "errors": errors}
 
 
-def _check_run_claimspecs(run_dir: Path, errors: list[str]) -> list[dict[str, Any]]:
+def _check_run_claimspecs(run_dir: Path, errors: list[str]) -> dict[str, Any]:
     reports: list[dict[str, Any]] = []
-    for source, record in _iter_run_records(run_dir, errors):
-        final_status = record.get("final_status")
-        if final_status != "final_theorem":
-            continue
-        run_id = str(record.get("run_id", source))
-        claim_ref = record.get("claim_spec_ref")
-        artifact_paths = record.get("artifact_paths", {})
-        if not isinstance(claim_ref, str) or not isinstance(artifact_paths, dict):
-            issue = f"{run_id}:missing_claim_spec_ref_or_artifact_paths"
-            errors.append(issue)
-            reports.append({"source": source, "run_id": run_id, "status": "failed", "errors": [issue]})
-            continue
-        claim_path_value = artifact_paths.get(claim_ref)
-        if not isinstance(claim_path_value, str):
-            issue = f"{run_id}:missing_claim_spec_artifact_path:{claim_ref}"
-            errors.append(issue)
-            reports.append({"source": source, "run_id": run_id, "status": "failed", "errors": [issue]})
-            continue
-        claim_path = _resolve_path(claim_path_value, run_dir)
-        claim_errors = _validate_claimspec_artifact(run_id, claim_ref, claim_path)
-        reports.append({"source": source, "run_id": run_id, "status": "passed" if not claim_errors else "failed", "errors": claim_errors})
-        errors.extend(claim_errors)
-    return reports
+    report_count = 0
+    records = [(source, record) for source, record in _iter_run_records(run_dir, errors) if record.get("final_status") == "final_theorem"]
+    with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+        futures = [executor.submit(_validate_claimspec_record, source, record, run_dir) for source, record in records]
+        for future in as_completed(futures):
+            report, claim_errors = future.result()
+            report_count += 1
+            if len(reports) < REPORT_SAMPLE_LIMIT or claim_errors:
+                reports.append(report)
+            errors.extend(claim_errors)
+    reports.sort(key=lambda item: str(item.get("source", "")))
+    return {"reports": reports, "report_count": report_count, "sample_truncated_count": max(0, report_count - len(reports))}
+
+
+def _validate_claimspec_record(source: str, record: dict[str, Any], run_dir: Path) -> tuple[dict[str, Any], list[str]]:
+    run_id = str(record.get("run_id", source))
+    claim_ref = record.get("claim_spec_ref")
+    artifact_paths = record.get("artifact_paths", {})
+    if not isinstance(claim_ref, str) or not isinstance(artifact_paths, dict):
+        issue = f"{run_id}:missing_claim_spec_ref_or_artifact_paths"
+        return {"source": source, "run_id": run_id, "status": "failed", "errors": [issue]}, [issue]
+    claim_path_value = artifact_paths.get(claim_ref)
+    if not isinstance(claim_path_value, str):
+        issue = f"{run_id}:missing_claim_spec_artifact_path:{claim_ref}"
+        return {"source": source, "run_id": run_id, "status": "failed", "errors": [issue]}, [issue]
+    claim_path = _resolve_path(claim_path_value, run_dir)
+    claim_errors = _validate_claimspec_artifact(run_id, claim_ref, claim_path)
+    return {"source": source, "run_id": run_id, "status": "passed" if not claim_errors else "failed", "errors": claim_errors}, claim_errors
 
 
 def _validate_claimspec_artifact(run_id: str, claim_ref: str, claim_path: Path) -> list[str]:

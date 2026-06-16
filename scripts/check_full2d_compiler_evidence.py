@@ -5,6 +5,7 @@ import copy
 import json
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -21,6 +22,9 @@ from plugins.geometry_full2d.compiler import (  # noqa: E402
 from plugins.geometry_full2d.provider import GeometryFull2DProvider, GeometryFull2DSolveRequest  # noqa: E402
 from scripts.extract_geometry_full2d_theorem import extract_theorem  # noqa: E402
 
+REPORT_SAMPLE_LIMIT = 200
+WORKERS = 16
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -33,13 +37,15 @@ def main() -> int:
     self_test = _run_self_test() if args.self_test else None
     if self_test:
         errors.extend(self_test["errors"])
-    scoped_reports = _check_run_records(run_dir, errors) if run_dir.exists() else []
+    scoped_report_summary = _check_run_records(run_dir, errors) if run_dir.exists() else {"reports": [], "report_count": 0, "sample_truncated_count": 0}
     report = {
         "schema_version": "1.0.0",
         "status": "passed" if not errors else "failed",
         "run_dir": str(run_dir),
         "self_test": self_test,
-        "scoped_reports": scoped_reports,
+        "scoped_reports": scoped_report_summary["reports"],
+        "scoped_report_count": scoped_report_summary["report_count"],
+        "scoped_report_sample_truncated_count": scoped_report_summary["sample_truncated_count"],
         "errors": sorted(set(errors)),
     }
     print(json.dumps(report, indent=2, sort_keys=True))
@@ -185,37 +191,45 @@ def _validate_written_artifacts(payload: dict[str, Any]) -> list[str]:
     return errors
 
 
-def _check_run_records(run_dir: Path, errors: list[str]) -> list[dict[str, Any]]:
+def _check_run_records(run_dir: Path, errors: list[str]) -> dict[str, Any]:
     reports: list[dict[str, Any]] = []
-    for source, record in _iter_run_records(run_dir, errors):
-        if record.get("final_status") != "final_theorem":
-            continue
-        run_id = str(record.get("run_id", source))
-        artifact_paths = record.get("artifact_paths", {})
-        if not isinstance(artifact_paths, dict):
-            issue = f"{run_id}:artifact_paths_not_object"
-            errors.append(issue)
-            reports.append({"source": source, "run_id": run_id, "status": "failed", "errors": [issue]})
-            continue
-        engine_refs = set(str(ref) for ref in record.get("engine_output_refs", ()))
-        compiler_errors: list[str] = []
-        for compiler_ref in record.get("compiler_result_refs", ()):
-            compiler = _load_ref(compiler_ref, artifact_paths, run_dir, compiler_errors, run_id)
-            if compiler is not None:
-                compiler_errors.extend(validate_compiler_result_full2d(compiler, available_engine_output_refs=engine_refs))
-        patch = _load_ref(record.get("lean_patch_candidate_ref"), artifact_paths, run_dir, compiler_errors, run_id)
-        if patch is not None:
-            compiler_refs = set(str(ref) for ref in record.get("compiler_result_refs", ()))
-            compiler_errors.extend(
-                validate_lean_patch_candidate_full2d(
-                    patch,
-                    available_compiler_result_refs=compiler_refs,
-                    available_engine_output_refs=engine_refs,
-                )
+    report_count = 0
+    records = [(source, record) for source, record in _iter_run_records(run_dir, errors) if record.get("final_status") == "final_theorem"]
+    with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+        futures = [executor.submit(_validate_compiler_record, source, record, run_dir) for source, record in records]
+        for future in as_completed(futures):
+            report, compiler_errors = future.result()
+            report_count += 1
+            if len(reports) < REPORT_SAMPLE_LIMIT or compiler_errors:
+                reports.append(report)
+            errors.extend(compiler_errors)
+    reports.sort(key=lambda item: str(item.get("source", "")))
+    return {"reports": reports, "report_count": report_count, "sample_truncated_count": max(0, report_count - len(reports))}
+
+
+def _validate_compiler_record(source: str, record: dict[str, Any], run_dir: Path) -> tuple[dict[str, Any], list[str]]:
+    run_id = str(record.get("run_id", source))
+    artifact_paths = record.get("artifact_paths", {})
+    if not isinstance(artifact_paths, dict):
+        issue = f"{run_id}:artifact_paths_not_object"
+        return {"source": source, "run_id": run_id, "status": "failed", "errors": [issue]}, [issue]
+    engine_refs = set(str(ref) for ref in record.get("engine_output_refs", ()))
+    compiler_errors: list[str] = []
+    for compiler_ref in record.get("compiler_result_refs", ()):
+        compiler = _load_ref(compiler_ref, artifact_paths, run_dir, compiler_errors, run_id)
+        if compiler is not None:
+            compiler_errors.extend(validate_compiler_result_full2d(compiler, available_engine_output_refs=engine_refs))
+    patch = _load_ref(record.get("lean_patch_candidate_ref"), artifact_paths, run_dir, compiler_errors, run_id)
+    if patch is not None:
+        compiler_refs = set(str(ref) for ref in record.get("compiler_result_refs", ()))
+        compiler_errors.extend(
+            validate_lean_patch_candidate_full2d(
+                patch,
+                available_compiler_result_refs=compiler_refs,
+                available_engine_output_refs=engine_refs,
             )
-        reports.append({"source": source, "run_id": run_id, "status": "passed" if not compiler_errors else "failed", "errors": compiler_errors})
-        errors.extend(compiler_errors)
-    return reports
+        )
+    return {"source": source, "run_id": run_id, "status": "passed" if not compiler_errors else "failed", "errors": compiler_errors}, compiler_errors
 
 
 def _load_engine_outputs(engine_refs: list[str], artifact_paths: dict[str, str]) -> dict[str, dict[str, Any]]:

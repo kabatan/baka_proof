@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -11,6 +12,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from plugins.geometry_full2d.run_records import validate_actual_task_pipeline_run  # noqa: E402
+
+REPORT_SAMPLE_LIMIT = 200
+VALIDATION_WORKERS = 16
 
 
 def main() -> int:
@@ -29,9 +33,19 @@ def check_matrix_evidence(run_dir: Path) -> dict[str, Any]:
     baseline_report = _read_json(run_dir / "baseline_comparability_report.json", errors)
     records = _iter_run_records(run_dir, errors)
     record_reports = []
-    for source, record in records:
-        record_errors = validate_actual_task_pipeline_run(record, run_dir=run_dir)
-        record_reports.append({"source": source, "status": "passed" if not record_errors else "failed", "errors": record_errors})
+    valid_record_count = 0
+    invalid_record_count = 0
+    with ThreadPoolExecutor(max_workers=VALIDATION_WORKERS) as executor:
+        futures = [executor.submit(_validate_record_report, source, record, run_dir) for source, record in records]
+        validation_results = [future.result() for future in as_completed(futures)]
+    validation_results.sort(key=lambda item: item[0])
+    for _source, report, record_errors in validation_results:
+        if record_errors:
+            invalid_record_count += 1
+        else:
+            valid_record_count += 1
+        if len(record_reports) < REPORT_SAMPLE_LIMIT or record_errors:
+            record_reports.append(report)
         errors.extend(record_errors)
     if matrix_summary is None:
         errors.append("missing_matrix_summary")
@@ -58,11 +72,15 @@ def check_matrix_evidence(run_dir: Path) -> dict[str, Any]:
         "run_dir": str(run_dir),
         "matrix_evidence_summary": {
             "record_count": len(records),
+            "valid_record_count": valid_record_count,
+            "invalid_record_count": invalid_record_count,
             "final_theorem_record_count": final_count,
             "matrix_summary_present": matrix_summary is not None,
             "baseline_comparability_report_present": baseline_report is not None,
         },
+        "record_report_count": len(records),
         "record_reports": record_reports,
+        "record_report_sample_truncated_count": max(0, len(records) - len(record_reports)),
         "errors": sorted(set(errors)),
     }
 
@@ -88,6 +106,17 @@ def _iter_run_records(run_dir: Path, errors: list[str]) -> list[tuple[str, dict[
             if isinstance(payload, dict):
                 records.append((f"actual_task_pipeline_runs.jsonl:{index}", payload))
     return records
+
+
+def _validate_record_report(source: str, record: dict[str, Any], run_dir: Path) -> tuple[str, dict[str, Any], list[str]]:
+    record_errors = validate_actual_task_pipeline_run(record, run_dir=run_dir)
+    report = {
+        "source": source,
+        "run_id": record.get("run_id") if isinstance(record, dict) else None,
+        "status": "passed" if not record_errors else "failed",
+        "errors": record_errors,
+    }
+    return source, report, record_errors
 
 
 def _read_json(path: Path, errors: list[str]) -> dict[str, Any] | None:
