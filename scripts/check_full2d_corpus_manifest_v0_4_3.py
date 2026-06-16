@@ -130,24 +130,43 @@ def _template_duplicate_errors(positives: list[dict[str, Any]]) -> list[str]:
 
 
 def _structural_duplicate_summary(positives: list[dict[str, Any]]) -> dict[str, Any]:
-    grouped: dict[tuple[str, str], list[str]] = defaultdict(list)
+    template_grouped: dict[tuple[str, str], list[str]] = defaultdict(list)
+    statement_grouped: dict[tuple[str, str], list[str]] = defaultdict(list)
     for task in positives:
-        grouped[(str(task.get("theorem_family", "")), _normalized_template_identity(task))].append(str(task.get("task_id", "<missing>")))
-    duplicate_groups = [
+        family = str(task.get("theorem_family", ""))
+        task_id = str(task.get("task_id", "<missing>"))
+        template_grouped[(family, _normalized_template_identity(task))].append(task_id)
+        statement_grouped[(family, _normalized_statement_shape(task))].append(task_id)
+    template_duplicate_groups = [
         {
             "theorem_family": family,
             "template_identity": identity,
             "count": len(task_ids),
             "examples": task_ids[:5],
         }
-        for (family, identity), task_ids in sorted(grouped.items())
+        for (family, identity), task_ids in sorted(template_grouped.items())
         if identity and len(task_ids) > 1
     ]
-    near_duplicate_count = sum(len(group["examples"]) + max(0, int(group["count"]) - len(group["examples"])) for group in duplicate_groups)
+    statement_duplicate_groups = [
+        {
+            "theorem_family": family,
+            "statement_shape": shape,
+            "count": len(task_ids),
+            "examples": task_ids[:5],
+        }
+        for (family, shape), task_ids in sorted(statement_grouped.items())
+        if shape and len(task_ids) > 1
+    ]
+    template_near_duplicate_count = _duplicate_task_count(template_duplicate_groups)
+    statement_near_duplicate_count = _duplicate_task_count(statement_duplicate_groups)
+    near_duplicate_count = max(template_near_duplicate_count, statement_near_duplicate_count)
     return {
         "structural_near_duplicate_positive_count": near_duplicate_count,
-        "structural_near_duplicate_group_count": len(duplicate_groups),
-        "structural_near_duplicate_groups_sample": duplicate_groups[:10],
+        "template_near_duplicate_positive_count": template_near_duplicate_count,
+        "statement_shape_near_duplicate_positive_count": statement_near_duplicate_count,
+        "structural_near_duplicate_group_count": max(len(template_duplicate_groups), len(statement_duplicate_groups)),
+        "template_near_duplicate_groups_sample": template_duplicate_groups[:10],
+        "statement_shape_near_duplicate_groups_sample": statement_duplicate_groups[:10],
     }
 
 
@@ -157,6 +176,43 @@ def _normalized_template_identity(task: dict[str, Any]) -> str:
     template = re.sub(r"(?::|_|-)\d{3,}$", "", template)
     template = re.sub(r"(?::|_|-)full2d-(?:positive|curated)-\d{3,}$", "", template, flags=re.IGNORECASE)
     return template
+
+
+def _normalized_statement_shape(task: dict[str, Any]) -> str:
+    lean_file = task.get("lean_file")
+    theorem_name = str(task.get("theorem_name", ""))
+    if not isinstance(lean_file, str) or not theorem_name:
+        return ""
+    path = Path(lean_file)
+    if not path.is_absolute():
+        path = ROOT / path
+    if not path.exists():
+        return ""
+    try:
+        text = path.read_text(encoding="utf-8")
+    except Exception:
+        return ""
+    source = _extract_theorem_source(text, theorem_name)
+    if not source:
+        return ""
+    header = source.split(":= by", 1)[0]
+    header = re.sub(rf"\btheorem\s+{re.escape(theorem_name)}\b", "theorem _", header)
+    header = re.sub(r"\s+", " ", header).strip()
+    return header
+
+
+def _extract_theorem_source(text: str, theorem_name: str) -> str:
+    marker = f"theorem {theorem_name}"
+    start = text.find(marker)
+    if start < 0:
+        return ""
+    next_match = re.search(r"\n\s*theorem\s+\w+", text[start + len(marker) :])
+    end = len(text) if next_match is None else start + len(marker) + next_match.start()
+    return text[start:end].strip()
+
+
+def _duplicate_task_count(groups: list[dict[str, Any]]) -> int:
+    return sum(len(group["examples"]) + max(0, int(group["count"]) - len(group["examples"])) for group in groups)
 
 
 def _provenance_errors(positives: list[dict[str, Any]]) -> list[str]:
