@@ -27,7 +27,9 @@ The v0.4.3 integrated bundle replaces the prior v0.4.3 / v0.4.3A split. Anti-gam
 ## Evidence and Debt
 
 - `evidence/v0_4_3_bundle_import.md` — import evidence, hash verification, installed mapping, and claim ceiling.
-- `evidence/v0_4_3_release_blocker_report.md` — current strict verification blocker report.
+- `evidence/v0_4_3_release_blocker_report.md` — historical strict verification blocker report from before final remediation.
+- `evidence/release_acceptance_report.json` — final v0.4.3 release acceptance evidence.
+- `CLOSURE.md` — final closure claim and non-claims.
 - `evidence/bundle_sha256sums.txt` — original bundle hash manifest.
 - `debt/debt_ledger.jsonl` — v0.4.3 debt ledger. Open entries block closure.
 
@@ -39,4 +41,4 @@ python scripts/check_active_guardian_spec_v0_4_3.py
 
 ## Claim Ceiling
 
-This directory being installed means implementation can proceed under v0.4.3. The current implementation is not release-ready: strict verification blocks closure on corpus duplicate and direct-lemma success ceilings. It does not mean the pipeline is complete, source-faithful, or production-safe.
+Final release acceptance has passed for the scoped claim `V0.4.3_GEOMETRY_FULL2D_REAL_PIPELINE_READY`. This does not mean the pipeline is natural-language source-faithful, TongGeometry model-backed, production-safe, or correct outside `GeometryFull2DTarget:1.0.0`.

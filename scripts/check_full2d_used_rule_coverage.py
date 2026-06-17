@@ -28,6 +28,13 @@ RULE_LIST_KEYS = (
     "coverage_rule_ids",
 )
 IDENTITY_FAMILY_PREFIXES = ("incidence", "incidence_collinearity")
+CONSTRUCTION_FAMILIES = {
+    "construction_center",
+    "construction_circle",
+    "construction_intersection",
+    "construction_line",
+    "midpoint_segment",
+}
 
 
 def main() -> int:
@@ -97,7 +104,11 @@ def _build_used_rule_report(
         for rule in used_rules
         if rule in registry_by_id and registry_by_id[rule].required_side_conditions
     }
-    construction_families = {family for family in families if family.startswith("construction")}
+    construction_families = {
+        family
+        for family in families
+        if family.startswith("construction") or family in CONSTRUCTION_FAMILIES
+    }
     if counted == 0:
         errors.append("no_counted_final_theorem_records_for_used_rule_coverage")
     if len(used_rules) < MIN_RULES:
