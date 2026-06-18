@@ -44,7 +44,7 @@ The v0.4.5 closure is invalidated as a false-positive checker-passing scaffold. 
 Current task:
 
 ```text
-WP-09 — Compiler from SelectedSolverDerivation only.
+WP-10 — Provider-selector-compiler integration.
 ```
 
 Completed preparation:
@@ -95,9 +95,15 @@ WP-08 RuleRegistry implemented:
   - identity/direct-facade helper rules are present only as non-counted helpers;
   - `check_full2d_rule_registry_v0_5.py --self-test` rejects counted identity and naked-target rule registries.
 WP-08 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp08_rule_registry_evidence.md.
+WP-09 compiler input isolation implemented:
+  - release compiler CLI accepts ClaimSpec, SelectedSolverDerivationV2, RuleRegistry, and side-condition checker refs;
+  - proof-decision behavior is isolated from forbidden corpus/task/family/template/shape metadata;
+  - compiler taint checker shows forbidden metadata-only mutations do not change proof-decision output while selected-derivation mutations do;
+  - proof-from-shape compiler and rule-list artifact synthesis red cases remain rejected.
+WP-09 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp09_compiler_input_isolation_evidence.md.
 ```
 
-Implementation work proceeds from WP-09. No counted corpus or release completion is claimed before WP-10A and WP-14.
+Implementation work proceeds from WP-10. No counted corpus or release completion is claimed before WP-10A and WP-14.
 
 ## Non-Negotiables
 
@@ -124,6 +130,7 @@ WP-05 extraction gate has local evidence.
 WP-06 provider boundary and engine-output gates have local evidence.
 WP-07 independent solver checker gates have local evidence.
 WP-08 RuleRegistry gate has local evidence.
+WP-09 compiler input isolation and taint gates have local evidence.
 ```
 
 Not allowed yet:

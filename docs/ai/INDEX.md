@@ -20,7 +20,7 @@ authority: Navigation and classification only; individual Base Spec and Plan fil
 
 Purpose: Guardian-managed v0.5 reviewed-strict recovery track for the GeometryFull2D real solver-causal full pipeline.
 
-Status: imported from the reviewed-strict research-agent bundle and installed as the active user-approved Guardian authority set. WP-01 through WP-08 gates are implemented; implementation proceeds from WP-09. No v0.5 release completion is claimed.
+Status: imported from the reviewed-strict research-agent bundle and installed as the active user-approved Guardian authority set. WP-01 through WP-09 gates are implemented; implementation proceeds from WP-10. No v0.5 release completion is claimed.
 
 Primary documents:
 

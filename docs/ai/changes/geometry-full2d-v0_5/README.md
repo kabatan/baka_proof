@@ -28,6 +28,7 @@ Review evidence:
 - `evidence/wp06_provider_boundary_evidence.md`
 - `evidence/wp07_independent_solver_checkers_evidence.md`
 - `evidence/wp08_rule_registry_evidence.md`
+- `evidence/wp09_compiler_input_isolation_evidence.md`
 
 First checks:
 
