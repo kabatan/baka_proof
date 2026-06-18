@@ -1,0 +1,9 @@
+{
+  "corpus_id": "geometry_full2d_governed:v0_4_5",
+  "manifest_hash": "sha256:ccbe19f8703c6533f9921fcdaaa95edcfe4bf34000d88a397ae97749410e6552",
+  "projection_release_policy": "projection_tasks_never_counted",
+  "schema_version": "GeometryFull2DCorpusManifestV3",
+  "status": "pre_implementation_scaffold",
+  "target_library": "GeometryFull2DTarget:1.0.0",
+  "tasks": []
+}

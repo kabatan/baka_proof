@@ -1,0 +1,22 @@
+{
+  "allowed_predicates": [
+    "collinear",
+    "between",
+    "parallel",
+    "perpendicular",
+    "equal_length",
+    "directed_angle_eq_mod_pi",
+    "length_le"
+  ],
+  "forbidden_fields": [
+    "expected_proof_lemma",
+    "proof_template",
+    "engine_role",
+    "rule_id",
+    "solver_fact",
+    "baseline_outcome"
+  ],
+  "grammar_id": "geometry_full2d_v0_4_5_pre_freeze_grammar",
+  "schema_version": "SealedChallengeGrammarV1",
+  "status": "pre_implementation_static_only"
+}
