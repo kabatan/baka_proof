@@ -1,0 +1,131 @@
+{
+  "config": "configs\\benchmark_runs\\geometry_full2d_v0_4_5.yaml",
+  "implementation_paths": [
+    {
+      "path": "configs/benchmark_runs/geometry_full2d_v0_4_5.yaml",
+      "sha256": "sha256:81401a61cd384d9eb0a912b0c8a01848d01895dab3795fc771220563f2dbe5dc"
+    },
+    {
+      "path": "plugins/geometry_full2d_v0_4_5/__init__.py",
+      "sha256": "sha256:f7163ac5567971799a8e3b6302f7c90af2f091c11abfc5c7bdd9a6c1ffc41522"
+    },
+    {
+      "path": "plugins/geometry_full2d_v0_4_5/compiler.py",
+      "sha256": "sha256:9452e805d6dad9d1b0af5065b138d03ddd95ee1d647e6fdb878599c2ee869472"
+    },
+    {
+      "path": "plugins/geometry_full2d_v0_4_5/provider.py",
+      "sha256": "sha256:59b8f73768c3d7312a479a750e729f7206450089c1a91e33a5caf4f0c46a52a1"
+    },
+    {
+      "path": "plugins/geometry_full2d_v0_4_5/rule_registry.py",
+      "sha256": "sha256:0df74ad50b08e4494903171fef6c2c4ff5edf9be92e17781fb3ded96673b99af"
+    },
+    {
+      "path": "scripts/check_active_guardian_spec_v0_4_5.py",
+      "sha256": "sha256:d474d7de177065d58226d6a9026bc91be592f737ebd8d496ea3220f55bff55fc"
+    },
+    {
+      "path": "scripts/check_compiler_taint_v0_4_5.py",
+      "sha256": "sha256:b457fa99e8056197b00ad7f21d682d04c1affab3a93910ddf14722b85d91ce9e"
+    },
+    {
+      "path": "scripts/check_corpus_no_proof_coupling_v0_4_5.py",
+      "sha256": "sha256:7c82d650b7dcfdaf7bf1cfbb93d5f9bbc9ddd6d605621b1b8a8f1a8feb465c11"
+    },
+    {
+      "path": "scripts/check_counted_sources_sorry_only_v0_4_5.py",
+      "sha256": "sha256:b93bafc24dc3ef6f7a27de49b224188635ed9d74159fedaeccd37850142c57b7"
+    },
+    {
+      "path": "scripts/check_engine_output_not_from_compiler_rules_v0_4_5.py",
+      "sha256": "sha256:1673bea30f137327f05247e4876ebedeedb9cdf98429763146c8c9c7e544be2e"
+    },
+    {
+      "path": "scripts/check_external_source_availability_v0_4_5.py",
+      "sha256": "sha256:4671367e349f9c96e4e7538d9aae0c431357fead94f0793da3812dbde3b1c510"
+    },
+    {
+      "path": "scripts/check_full2d_claimspec_v0_4_5.py",
+      "sha256": "sha256:b8655855484490d31c40e33a83a71d771e67a40b7722ffae77b6b3db457a190e"
+    },
+    {
+      "path": "scripts/check_full2d_compiler_evidence_v0_4_5.py",
+      "sha256": "sha256:4cf36ba429bd4dc6657e518bd30aa2b524cf61354d9991f716a7767ed5070207"
+    },
+    {
+      "path": "scripts/check_full2d_compiler_input_isolation_v0_4_5.py",
+      "sha256": "sha256:df429bec7f4f379850e48b4981f1457458485e98e3019d3faf26c8bd433b6be0"
+    },
+    {
+      "path": "scripts/check_full2d_corpus_manifest_v0_4_5.py",
+      "sha256": "sha256:13066aa44ddeecf15a190892f5001c776916abf7ee0dd904156ec0d31417b441"
+    },
+    {
+      "path": "scripts/check_full2d_engine_challenge_suite_v0_4_5.py",
+      "sha256": "sha256:2792a956735b194e12d0b901aa94aa79c74b4869accebf3f2d4ee2301523ad83"
+    },
+    {
+      "path": "scripts/check_full2d_engine_no_proof_text_v0_4_5.py",
+      "sha256": "sha256:2142cd339d6b3adb92d6a729dc67b7603e0b28c2a4b72c0421683d00686a70f6"
+    },
+    {
+      "path": "scripts/check_full2d_engine_real_execution_v0_4_5.py",
+      "sha256": "sha256:f326224c774a6aac92f5d30b16cfaf68ba0e0d2860b5d4a98fddabaee33d8466"
+    },
+    {
+      "path": "scripts/check_full2d_extraction_corpus_v0_4_5.py",
+      "sha256": "sha256:529969b963eae2bdcbfcccbebe3ee4c501b673b97058842e044b0f472a87e213"
+    },
+    {
+      "path": "scripts/check_full2d_implementation_freeze_v0_4_5.py",
+      "sha256": "sha256:5c0a159cd8b1c6210657cc377fadcb6a4f051d6dac25231060b9581f89a47e6e"
+    },
+    {
+      "path": "scripts/check_full2d_rule_registry_v0_4_5.py",
+      "sha256": "sha256:6718bfb5603e29ab093e3a4ca1bcecb8d4593a47ea7f33b9a92af9a15bee5b3f"
+    },
+    {
+      "path": "scripts/check_full2d_used_rule_coverage_v0_4_5.py",
+      "sha256": "sha256:f5453059687a8b788a5784d524021c609a4650fd15decf8562bdb208f1498d7a"
+    },
+    {
+      "path": "scripts/check_goal_preservation_reports_v0_4_5.py",
+      "sha256": "sha256:271cf32719c8db38c934a3b26b17feaea89261303c2504430aa7db9f77856a6e"
+    },
+    {
+      "path": "scripts/check_release_path_forbidden_shortcuts_v0_4_5.py",
+      "sha256": "sha256:358ccb6b13c48f7bb73fe959984c8c386907b0407399cde45abcc191c2dfb9dc"
+    },
+    {
+      "path": "scripts/check_sealed_challenge_generator_independence_v0_4_5.py",
+      "sha256": "sha256:d310735dc30697d64e52339c9c9a08491c6a8ca33cea6949f9c4878a28453e64"
+    },
+    {
+      "path": "scripts/check_sealed_challenge_manifest_v0_4_5.py",
+      "sha256": "sha256:c636a07512744e1eb073f156a8fe2d192454dbf730787365374f6b735bcf35d7"
+    },
+    {
+      "path": "scripts/check_selected_solver_derivation_v0_4_5.py",
+      "sha256": "sha256:1eb5e962ad8aa959c90e51a1f4a8bb5f910224adee1729178f42c592141222cc"
+    },
+    {
+      "path": "scripts/check_solver_fact_independent_checkers_v0_4_5.py",
+      "sha256": "sha256:b7dcc9f1b3235c1dec34fda208bb6b865094372477ff8ec860fa10c8e70549e6"
+    },
+    {
+      "path": "scripts/extract_full2d_theorem_v0_4_5.py",
+      "sha256": "sha256:0c599798baeeb79e59e632b7f0714440f4556ebd48b0a5e5a55ffa527102c25a"
+    },
+    {
+      "path": "scripts/generate_sealed_challenges_v0_4_5.py",
+      "sha256": "sha256:02cf743a1829a767336d6348e83f2eeaf5aa6982ababc48f3827d5547c207a00"
+    },
+    {
+      "path": "scripts/import_external_goal_preserved_v0_4_5.py",
+      "sha256": "sha256:8d2e2b5d9626a4e76a7e67ded9d6d3f4adcd7764e0accb875482cc41ac6685ea"
+    }
+  ],
+  "schema_version": "ImplementationFreezeV1",
+  "selected_implementation_hash": "sha256:32a03d60cb1cb0285792a8f2310caa4a385a62aeb63b0d5c43b71967d1fc4284"
+}
