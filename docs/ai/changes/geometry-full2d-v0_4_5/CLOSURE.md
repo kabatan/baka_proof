@@ -2,7 +2,7 @@
 title: "Closure — GeometryFull2D v0.4.5"
 base_spec: "MARP-GEOLEAN-BASE-010"
 plan_id: "MARP-GEOLEAN-PLAN-010"
-status: "CLOSED_RELEASE_ACCEPTANCE_PASSED"
+status: "INVALIDATED_FALSE_POSITIVE_CLOSURE_BY_MARP-GEOLEAN-BASE-011"
 ---
 
 # Closure

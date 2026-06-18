@@ -2,7 +2,7 @@
 title: "Guardian Plan — GeometryFull2D v0.4.5 Real Solver-Causal Full Pipeline"
 plan_id: "MARP-GEOLEAN-PLAN-010"
 base_spec: "MARP-GEOLEAN-BASE-010"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-PLAN-011_FALSE_POSITIVE_CLOSURE"
 revision: "reviewed-2026-06-18-no-shortcuts"
 ---
 

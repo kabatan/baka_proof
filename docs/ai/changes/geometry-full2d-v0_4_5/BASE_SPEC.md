@@ -1,7 +1,7 @@
 ---
 title: "Guardian Base Spec — GeometryFull2D v0.4.5 Real Solver-Causal Full Pipeline"
 spec_id: "MARP-GEOLEAN-BASE-010"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-011_FALSE_POSITIVE_CLOSURE"
 target_repo: "kabatan/baka_proof"
 revision: "reviewed-2026-06-18-no-shortcuts"
 supersedes_when_approved:

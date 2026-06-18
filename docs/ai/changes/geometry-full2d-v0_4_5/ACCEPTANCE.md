@@ -3,7 +3,7 @@ title: "Guardian Acceptance — GeometryFull2D v0.4.5 Real Solver-Causal Full Pi
 acceptance_id: "MARP-GEOLEAN-ACCEPTANCE-010"
 base_spec: "MARP-GEOLEAN-BASE-010"
 plan: "MARP-GEOLEAN-PLAN-010"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-ACCEPTANCE-011_FALSE_POSITIVE_CLOSURE"
 revision: "reviewed-2026-06-18-no-shortcuts"
 ---
 
