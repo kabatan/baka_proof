@@ -72,7 +72,12 @@ def main() -> int:
 
     for rel in REQUIRED_AUTHORITY_FILES:
         _expect_file(errors, ACTIVE_CHANGE_DIR / rel)
-    for required in [active_context, index, ROOT / "scripts" / "check_active_guardian_spec.py"]:
+    for required in [
+        active_context,
+        index,
+        ROOT / "scripts" / "check_active_guardian_spec.py",
+        ROOT / "scripts" / "check_v0_4_5_spec_plan_consistency.py",
+    ]:
         _expect_file(errors, required)
 
     records = _base_spec_records()
@@ -116,6 +121,7 @@ def main() -> int:
         index: (ACTIVE_BASE_ID, ACTIVE_PLAN_ID, ACTIVE_ACCEPTANCE_ID, "geometry-full2d-v0_4_5", "geometry-full2d-v0_4_4", "not active v0.4.5 release authority"),
         ACTIVE_CHANGE_DIR / "evidence" / "v0_4_5_bundle_import.md": ("All listed files matched", "No implementation work beyond Guardian authority installation is claimed"),
         ROOT / "scripts" / "check_active_guardian_spec.py": ("check_active_guardian_spec_v0_4_5",),
+        ROOT / "scripts" / "check_v0_4_5_spec_plan_consistency.py": ("sealed challenges", "external source availability", "baseline checks"),
     }.items():
         text = _read(path) if path.exists() else ""
         for needle in needles:

@@ -209,7 +209,9 @@ source_ref_only
 
 The report must include `SourceGoalASTV1`, `TranslatedGoalASTV1`, a mapping table, and a checker proof or deterministic checker transcript. It must reject dropped hypotheses, unsupported losses, arity changes, predicate-family changes without formal equivalence, and target simplification.
 
-If an external source is unavailable or insufficient after reproducible discovery, Codex must record `ExternalSourceAvailabilityReportV1`. The ExternalGoalPreserved floor may then be reduced only by the number of unavailable tasks and the deficit must be replaced by additional `SealedPostImplementationChallenge` tasks. This prevents environment/source availability from becoming a nonessential HardBlocker while preserving the total counted corpus and challenge strength.
+If an external source is unavailable or insufficient after reproducible discovery, Codex must record `ExternalSourceAvailabilityReportV1`. The report must be produced by an availability checker independent of the corpus importer. It must include the source registry entry, local paths and URLs checked, command transcripts or HTTP/status evidence, timestamps, retry policy, and the exact reason each candidate source goal was unavailable or inadmissible.
+
+Availability must not be self-declared by Codex or by the corpus generator. If a usable local or fetched source goal exists, it must be counted or explicitly rejected by `GoalPreservationReportV2`; it cannot be hidden to make the external floor easier. The ExternalGoalPreserved floor may be reduced only by the number of checker-proven unavailable tasks, and the deficit must be replaced by additional `SealedPostImplementationChallenge` tasks. This prevents environment/source availability from becoming a nonessential HardBlocker while preserving the total counted corpus and challenge strength.
 
 ### DR-010-008 — Sealed challenges are independent of the compiler
 
@@ -225,6 +227,8 @@ A `SealedPostImplementationChallenge` is valid only if:
 ```
 
 If the code changes after sealing, the challenge becomes stale. That is a ReleaseBlocker but not a HardBlocker.
+
+Pre-freeze challenge grammar, generator code, dry-run examples, or smoke challenges may be built before implementation freeze, but they are not counted release positives. Counted sealed challenges must be generated after the selected implementation hash is frozen and before extraction, ClaimSpec generation, actual runs, matrix metrics, and final release acceptance are computed for the release corpus.
 
 ### DR-010-009 — Direct/facade lemma successes are sharply limited
 
@@ -335,6 +339,27 @@ one-step facade-lemma theorem fraction <= 0.05
 ```
 
 UserReviewedGoal has no required floor. If present, every such task must have a valid `ReviewManifestV1`.
+
+Definitions used by corpus, metrics, and acceptance checkers:
+
+```text
+available_external_goal_preserved_count_after_discovery =
+  number of candidate external goals proven available by ExternalSourceAvailabilityReportV1.
+
+admitted_external_goal_preserved_count =
+  number of counted ExternalGoalPreserved positives accepted by GoalPreservationReportV2.
+
+external_goal_preserved_deficit =
+  max(0, 700 - admitted_external_goal_preserved_count).
+
+admitted_external_goal_preserved_success_count =
+  B2 final theorem successes among admitted ExternalGoalPreserved tasks.
+
+external_success_deficit =
+  max(0, min(500, admitted_external_goal_preserved_count) - admitted_external_goal_preserved_success_count).
+```
+
+`available_external_goal_preserved_count_after_discovery` and `admitted_external_goal_preserved_count` must be computed by independent checkers. They must not be copied from corpus generator metadata.
 
 ### 4.2 Positive families
 
@@ -616,6 +641,7 @@ mutation_rerun_summary
 proof_from_shape_static_analysis_summary
 selected_solver_derivation_summary
 external_source_availability_summary
+sealed_challenge_freeze_summary
 ```
 
 ## 9. Required failure regressions

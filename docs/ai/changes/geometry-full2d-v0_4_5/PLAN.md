@@ -29,12 +29,13 @@ docs/ai/changes/geometry-full2d-v0_4_5/
 2. Mark v0.4.4 docs and closure as superseded, not deleted.
 3. Create `scripts/check_active_guardian_spec_v0_4_5.py`.
 4. Create `docs/ai/changes/geometry-full2d-v0_4_5/debt/debt_ledger.jsonl`.
-5. Create `scripts/check_release_path_forbidden_shortcuts_v0_4_5.py` and make it a final-release prerequisite.
+5. Register `scripts/check_release_path_forbidden_shortcuts_v0_4_5.py` as a required release-path checker in Plan and Acceptance. The checker is implemented in WP-01; WP-00 must not require run artifacts that cannot exist before implementation work starts.
 
 ### Acceptance
 
 ```bash
 python scripts/check_active_guardian_spec_v0_4_5.py
+python scripts/check_v0_4_5_spec_plan_consistency.py
 ```
 
 Must report only `MARP-GEOLEAN-BASE-010` active.
@@ -67,7 +68,21 @@ docs/ai/changes/geometry-full2d-v0_4_5/evidence/shortcut_audit.md
 
 ### Acceptance
 
-`check_release_path_forbidden_shortcuts_v0_4_5.py` must fail on copied v0.4.4 shortcut fixtures and pass on the new release path. The checker must inspect static source and at least one actual release run artifact.
+```bash
+python scripts/check_release_path_forbidden_shortcuts_v0_4_5.py --static-only
+```
+
+The static mode must fail on copied v0.4.4 shortcut fixtures and pass only when the new release entrypoints do not import or call known shortcut paths. It must inspect source files, imports, direct call targets, and forbidden implementation signatures.
+
+The full mode is a final-release gate in WP-13:
+
+```bash
+python scripts/check_release_path_forbidden_shortcuts_v0_4_5.py \
+  --config configs/benchmark_runs/geometry_full2d_v0_4_5.yaml \
+  --run-dir runs/geometry_full2d_v0_4_5
+```
+
+Full mode must additionally inspect actual release run artifacts. WP-01 must not block on dynamic run evidence that cannot exist yet.
 
 ## WP-02 — Corpus v0.4.5
 
@@ -81,6 +96,7 @@ benchmarks/geometry_full2d_v0_4_5/
   external_sources/
   sealed_challenges/
   regression_fixtures/
+  metadata/external_source_registry.json
 ```
 
 ### 2.2 Corpus categories
@@ -121,10 +137,12 @@ Rules:
 - report must prove exact, formal equivalence, or machine-checked structure-preserving translation;
 - projection or easier derived goal must be category `ProjectionNonCounted`;
 - if external sources are unavailable/insufficient, create `ExternalSourceAvailabilityReportV1` and fill the deficit with additional sealed challenges.
+- availability must be checked by an independent checker against `metadata/external_source_registry.json`; the importer cannot self-declare sources unavailable;
+- a local or fetched source goal that exists must either become an admitted `ExternalGoalPreserved` task or receive a concrete `GoalPreservationReportV2` rejection reason.
 
 The importer must not write proof text, expected proof lemma, expected engine role, expected rule ids, or expected baseline outcome.
 
-### 2.4 Sealed challenge generation
+### 2.4 Sealed challenge grammar and generator
 
 Implement:
 
@@ -137,6 +155,8 @@ python scripts/generate_sealed_challenges_v0_4_5.py \
 
 Rules:
 
+- WP-02 implements the grammar, generator, and static independence checks only;
+- WP-02 must not generate counted release sealed challenges because provider/compiler/rule-registry code is not frozen yet;
 - generator imports no provider/compiler/rule_registry/proof_worker/matrix/release-checker code;
 - generated Lean files contain theorem statements and sorry-only proof regions;
 - generator writes no expected proof lemma, proof template, engine role, rule id, solver fact, proof hint, or baseline outcome;
@@ -149,10 +169,12 @@ Rules:
 python scripts/check_full2d_corpus_manifest_v0_4_5.py --corpus-root benchmarks/geometry_full2d_v0_4_5
 python scripts/check_goal_preservation_reports_v0_4_5.py --corpus-root benchmarks/geometry_full2d_v0_4_5
 python scripts/check_external_source_availability_v0_4_5.py --corpus-root benchmarks/geometry_full2d_v0_4_5
-python scripts/check_sealed_challenge_manifest_v0_4_5.py --corpus-root benchmarks/geometry_full2d_v0_4_5
+python scripts/check_sealed_challenge_generator_independence_v0_4_5.py --corpus-root benchmarks/geometry_full2d_v0_4_5 --static-only
 python scripts/check_counted_sources_sorry_only_v0_4_5.py --corpus-root benchmarks/geometry_full2d_v0_4_5
 python scripts/check_corpus_no_proof_coupling_v0_4_5.py --corpus-root benchmarks/geometry_full2d_v0_4_5
 ```
+
+The final sealed challenge manifest is checked in WP-07A after implementation freeze.
 
 ## WP-03 — Lean extraction v0.4.5
 
@@ -351,6 +373,34 @@ python scripts/check_full2d_compiler_evidence_v0_4_5.py --run-dir runs/geometry_
 python scripts/check_selected_solver_derivation_v0_4_5.py --run-dir runs/geometry_full2d_v0_4_5 --self-test
 ```
 
+## WP-07A — Implementation freeze and sealed challenge finalization
+
+### Purpose
+
+Generate counted `SealedPostImplementationChallenge` tasks only after the provider, engine, compiler, and rule-registry release code is frozen.
+
+### Tasks
+
+1. Compute a selected implementation hash over provider, engine, rule registry, compiler, proof worker, matrix, release checker, and checker code that can affect release behavior.
+2. Run the sealed challenge generator with `--after-implementation-freeze`.
+3. Write a sealed challenge manifest binding every counted sealed challenge to the selected implementation hash and grammar hash.
+4. Re-run corpus, sorry-only, no-proof-coupling, extraction, and ClaimSpec checks over the final corpus.
+5. Record any post-seal implementation code change as a ReleaseBlocker until challenges are regenerated and revalidated.
+
+### Acceptance
+
+```bash
+python scripts/freeze_full2d_v0_4_5_implementation.py --config configs/benchmark_runs/geometry_full2d_v0_4_5.yaml
+python scripts/generate_sealed_challenges_v0_4_5.py --after-implementation-freeze --grammar benchmarks/geometry_full2d_v0_4_5/metadata/sealed_challenge_grammar.json --output-root benchmarks/geometry_full2d_v0_4_5
+python scripts/check_full2d_implementation_freeze_v0_4_5.py --config configs/benchmark_runs/geometry_full2d_v0_4_5.yaml --corpus-root benchmarks/geometry_full2d_v0_4_5
+python scripts/check_sealed_challenge_manifest_v0_4_5.py --corpus-root benchmarks/geometry_full2d_v0_4_5 --expect-current-implementation-hash
+python scripts/check_full2d_corpus_manifest_v0_4_5.py --corpus-root benchmarks/geometry_full2d_v0_4_5
+python scripts/check_full2d_extraction_corpus_v0_4_5.py --corpus-root benchmarks/geometry_full2d_v0_4_5 --run-dir runs/geometry_full2d_v0_4_5
+python scripts/check_full2d_claimspec_v0_4_5.py --run-dir runs/geometry_full2d_v0_4_5 --self-test
+```
+
+WP-08 and later may not run release matrix work until this WP passes.
+
 ## WP-08 — ActualTaskPipelineRunV3
 
 Implement:
@@ -366,6 +416,7 @@ python scripts/run_full2d_actual_task_v0_4_5.py \
 
 Rules:
 
+- run only after WP-07A finalizes the sealed challenge corpus;
 - no batch candidate file that bypasses per-task proof worker evidence;
 - no source theorem with pre-existing proof;
 - no synthetic final verify report;
@@ -435,7 +486,7 @@ Acceptance:
 ```bash
 python scripts/check_full2d_baseline_comparability_v0_4_5.py --run-dir runs/geometry_full2d_v0_4_5
 python scripts/check_full2d_matrix_evidence_v0_4_5.py --run-dir runs/geometry_full2d_v0_4_5
-python scripts/check_no_family_coded_baseline_v0_4_5.py
+python scripts/check_no_family_coded_baseline_v0_4_5.py --config configs/benchmark_runs/geometry_full2d_v0_4_5.yaml --run-dir runs/geometry_full2d_v0_4_5
 ```
 
 ## WP-11 — Metrics
@@ -464,6 +515,8 @@ advantage summary
 measured failure summary
 ```
 
+The B6 advantage subset is exactly the algebraic/metric/angle/inequality subset from Base Spec section 7. It must not be narrowed to only algebraic or metric tasks.
+
 ## WP-12 — Regression failure suite
 
 Implement fixtures that must fail:
@@ -480,6 +533,9 @@ stale sealed challenge
 pre-proved source theorem
 selected solver derivation constructed from ClaimSpec alone
 compiler still succeeds after selected solver artifact deletion
+mutation rerun checker that only reads booleans
+engine emits unchecked target fact with no rule trace/certificate/checker artifact
+provider/engine imports compiler or proof-generation module
 ```
 
 Acceptance:
@@ -499,6 +555,8 @@ python scripts/check_release_acceptance_v0_4_5.py \
 ```
 
 This command must invoke or verify all WP acceptance commands.
+
+It must fail closed if any required checker is missing, returns a placeholder report, lacks negative self-tests for its shortcut class, or reports success without current hash binding.
 
 Release passes only if:
 
