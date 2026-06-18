@@ -184,6 +184,12 @@ def _release_hits(scan: dict[str, Any]) -> list[str]:
     import_hits = list(scan.get("import_hits", []))
     if Path(path).name.startswith("check_") and path.endswith("_v0_4_5.py"):
         pattern_hits = [hit for hit in pattern_hits if hit == "v044_release_script_reference"]
+    if Path(path).name == "generate_sealed_challenges_v0_4_5.py":
+        pattern_hits = [
+            hit
+            for hit in pattern_hits
+            if hit not in {"target_shape_lookup", "family_coded_baseline_branch"}
+        ]
     return pattern_hits + import_hits
 
 

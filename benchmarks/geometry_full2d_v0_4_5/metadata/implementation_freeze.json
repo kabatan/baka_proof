@@ -26,12 +26,16 @@
       "sha256": "sha256:d474d7de177065d58226d6a9026bc91be592f737ebd8d496ea3220f55bff55fc"
     },
     {
+      "path": "scripts/check_actual_task_pipeline_runs_v0_4_5.py",
+      "sha256": "sha256:d24da655b80b1a473796df1b092570d4e87b4f836931760411931f85bb72cac8"
+    },
+    {
       "path": "scripts/check_compiler_taint_v0_4_5.py",
       "sha256": "sha256:b457fa99e8056197b00ad7f21d682d04c1affab3a93910ddf14722b85d91ce9e"
     },
     {
       "path": "scripts/check_corpus_no_proof_coupling_v0_4_5.py",
-      "sha256": "sha256:7c82d650b7dcfdaf7bf1cfbb93d5f9bbc9ddd6d605621b1b8a8f1a8feb465c11"
+      "sha256": "sha256:6a26d5d52af1c02d12f53c7b799ebd03963f01b6350b69c38983f8809c73b75e"
     },
     {
       "path": "scripts/check_counted_sources_sorry_only_v0_4_5.py",
@@ -44,6 +48,10 @@
     {
       "path": "scripts/check_external_source_availability_v0_4_5.py",
       "sha256": "sha256:4671367e349f9c96e4e7538d9aae0c431357fead94f0793da3812dbde3b1c510"
+    },
+    {
+      "path": "scripts/check_full2d_baseline_comparability_v0_4_5.py",
+      "sha256": "sha256:bee1ee64ecc8a102bff4e8f980f41d1137bd50796a83f76e77837ae48c1a21cf"
     },
     {
       "path": "scripts/check_full2d_claimspec_v0_4_5.py",
@@ -75,11 +83,19 @@
     },
     {
       "path": "scripts/check_full2d_extraction_corpus_v0_4_5.py",
-      "sha256": "sha256:529969b963eae2bdcbfcccbebe3ee4c501b673b97058842e044b0f472a87e213"
+      "sha256": "sha256:ea8462cabf3812b421a4b577e091495b4a76f40fb217dc7febaf8eb4e9b0b118"
     },
     {
       "path": "scripts/check_full2d_implementation_freeze_v0_4_5.py",
       "sha256": "sha256:5c0a159cd8b1c6210657cc377fadcb6a4f051d6dac25231060b9581f89a47e6e"
+    },
+    {
+      "path": "scripts/check_full2d_matrix_evidence_v0_4_5.py",
+      "sha256": "sha256:4f6a475655241fafdc7dfb2e5d331c93cd7a716cfc4497a3cc1f64cbe8549793"
+    },
+    {
+      "path": "scripts/check_full2d_metrics_v0_4_5.py",
+      "sha256": "sha256:95cfc09f60f2983093fe36a799c048dd95ef3b7746bf37c92443eaddc71ff096"
     },
     {
       "path": "scripts/check_full2d_rule_registry_v0_4_5.py",
@@ -94,8 +110,16 @@
       "sha256": "sha256:271cf32719c8db38c934a3b26b17feaea89261303c2504430aa7db9f77856a6e"
     },
     {
+      "path": "scripts/check_no_family_coded_baseline_v0_4_5.py",
+      "sha256": "sha256:d9e53f151ef92c3607c89eb59ba782879d846ebe6335469886bdadfcc7b13ab2"
+    },
+    {
+      "path": "scripts/check_release_acceptance_v0_4_5.py",
+      "sha256": "sha256:8ea2fd4ddb7e3a51fae036fc0f39fa2cddb7195fec9d0c786dd4fe22d5992bce"
+    },
+    {
       "path": "scripts/check_release_path_forbidden_shortcuts_v0_4_5.py",
-      "sha256": "sha256:358ccb6b13c48f7bb73fe959984c8c386907b0407399cde45abcc191c2dfb9dc"
+      "sha256": "sha256:1745ff837432879bab82a7dc3fd572cfbc14a34bfc4b580de02a658eac844655"
     },
     {
       "path": "scripts/check_sealed_challenge_generator_independence_v0_4_5.py",
@@ -110,6 +134,10 @@
       "sha256": "sha256:1eb5e962ad8aa959c90e51a1f4a8bb5f910224adee1729178f42c592141222cc"
     },
     {
+      "path": "scripts/check_solver_causality_reports_v0_4_5.py",
+      "sha256": "sha256:2a6a48c873f95a35c013ce01e6bb433b3e354ccb4a40a1cb55541491107f9803"
+    },
+    {
       "path": "scripts/check_solver_fact_independent_checkers_v0_4_5.py",
       "sha256": "sha256:b7dcc9f1b3235c1dec34fda208bb6b865094372477ff8ec860fa10c8e70549e6"
     },
@@ -119,13 +147,25 @@
     },
     {
       "path": "scripts/generate_sealed_challenges_v0_4_5.py",
-      "sha256": "sha256:02cf743a1829a767336d6348e83f2eeaf5aa6982ababc48f3827d5547c207a00"
+      "sha256": "sha256:abae96719851a9809a99d46043d558440ac8d31691ef3a640d903f01e4025e8b"
     },
     {
       "path": "scripts/import_external_goal_preserved_v0_4_5.py",
       "sha256": "sha256:8d2e2b5d9626a4e76a7e67ded9d6d3f4adcd7764e0accb875482cc41ac6685ea"
+    },
+    {
+      "path": "scripts/run_full2d_actual_task_v0_4_5.py",
+      "sha256": "sha256:8f34cfe87a39e7fcdb2c952ae68b1258ee43f2548966f647a23daf44727eaf8d"
+    },
+    {
+      "path": "scripts/run_full2d_matrix_v0_4_5.py",
+      "sha256": "sha256:1c59f22e3ac707e8eb88e2255f5b367209f728f20fca845ad1e523daa1b78833"
+    },
+    {
+      "path": "scripts/run_solver_causality_mutations_v0_4_5.py",
+      "sha256": "sha256:c35fb50609033557ef20929211f346028077a2b8205f055d630110fd2bbeec46"
     }
   ],
   "schema_version": "ImplementationFreezeV1",
-  "selected_implementation_hash": "sha256:32a03d60cb1cb0285792a8f2310caa4a385a62aeb63b0d5c43b71967d1fc4284"
+  "selected_implementation_hash": "sha256:2ac5e9987229fcff8c523a54278400b07e0d2ecbc763a5ed4b947fd23684927c"
 }

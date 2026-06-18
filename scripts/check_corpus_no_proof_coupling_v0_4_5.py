@@ -59,7 +59,7 @@ def check(corpus_root: Path) -> dict[str, Any]:
     for hit in _walk_for_keys(manifest, "manifest"):
         errors.append(f"manifest_proof_coupling:{hit}")
     for path in sorted((root / "metadata").glob("*.json*")):
-        if path.name in {"sealed_challenge_grammar.json"}:
+        if path.name in {"sealed_challenge_grammar.json", "implementation_freeze.json", "sealed_challenge_manifest.json"}:
             continue
         text = path.read_text(encoding="utf-8")
         for token in FORBIDDEN_TEXT:

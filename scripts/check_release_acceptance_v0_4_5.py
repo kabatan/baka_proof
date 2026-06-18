@@ -34,6 +34,8 @@ def main() -> int:
         "shortcut_static": [sys.executable, "scripts/check_release_path_forbidden_shortcuts_v0_4_5.py", "--static-only"],
         "corpus_manifest": [sys.executable, "scripts/check_full2d_corpus_manifest_v0_4_5.py", "--corpus-root", corpus_root],
         "actual_pipeline": [sys.executable, "scripts/check_actual_task_pipeline_runs_v0_4_5.py", "--run-dir", run_dir, "--self-test"],
+        "matrix": [sys.executable, "scripts/run_full2d_matrix_v0_4_5.py", "--config", args.config, "--run-dir", run_dir, "--execute-all"],
+        "causality_mutations": [sys.executable, "scripts/run_solver_causality_mutations_v0_4_5.py", "--run-dir", run_dir, "--all-b2-successes"],
         "solver_causality": [sys.executable, "scripts/check_solver_causality_reports_v0_4_5.py", "--run-dir", run_dir, "--self-test"],
         "metrics": [sys.executable, "scripts/check_full2d_metrics_v0_4_5.py", "--run-dir", run_dir],
         "regressions": [sys.executable, "scripts/check_v0_4_5_regression_failures.py"],
@@ -53,6 +55,10 @@ def main() -> int:
     metrics = results["metrics"]["report"]
     if isinstance(metrics, dict) and metrics.get("B2_success_count", 0) == 0:
         blockers.append("K-020_no_B2_successes")
+    if isinstance(metrics, dict) and metrics.get("solver_causal_success_fraction") != 1.0:
+        blockers.append("K-020_solver_causal_success_fraction")
+    if isinstance(metrics, dict) and metrics.get("destructive_rerun_success_fraction") != 1.0:
+        blockers.append("K-020_destructive_rerun_success_fraction")
     report = {
         "schema_version": "release_acceptance_v0_4_5_report_1",
         "status": "passed" if not blockers else "failed",
