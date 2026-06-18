@@ -74,6 +74,7 @@ RULE_FAMILIES = [
     "inequality_length",
     "inequality_power",
 ]
+EXTRACTION_BATCH_SIZE = 100
 
 
 def main() -> int:
@@ -252,47 +253,48 @@ def build_batch_extraction_reports(corpus_root: Path, run_dir: Path, tasks: list
         if not lean_file.exists():
             errors.append(f"lean_file_missing:{lean_file}")
         else:
-            batch = run_lean_extractor_batch(lean_file, [str(task["theorem_name"]) for task in group], run_dir=run_dir)
-            errors.extend(batch["errors"])
-            extracted = batch["extracted"]
-            for task in group:
-                theorem_name = str(task["theorem_name"])
-                raw_structured = extracted.get(theorem_name)
-                if raw_structured is None:
-                    errors.append(f"{task['task_id']}:missing_lean_extractor_output")
-                else:
-                    theorem_source = _extract_theorem_source(lean_file.read_text(encoding="utf-8"), theorem_name)
-                    source_statement_hash = _sha256_text(theorem_source)
-                    canonical = _canonicalize_lean_structured_output(raw_structured, lean_file, theorem_name, source_statement_hash)
-                    raw = {
-                        "theorem_name": theorem_name,
-                        "source_file_ref": _file_sha256(lean_file),
-                        "source_statement_hash": source_statement_hash,
-                        "elaborated_expr_hash": sha256_text(canonical_json(raw_structured)),
-                        "target_classification": canonical["target_classification"],
-                        "canonical_statement": canonical["canonical_statement"],
-                        "source_theorem_preproved": False,
-                        "extraction_method": "lean_elaborator_structured_theorem",
-                        "semantic_extraction_authority": "lean_elaborator",
-                        "python_semantic_extraction_used": False,
-                        "regex_used_for_semantics": False,
-                        "regex_used_for_source_location": True,
-                        "lean_command": batch["command"],
-                        "lean_semantic_extractor_ref": sha256_text(canonical_json(raw_structured)),
-                        "lean_semantic_extractor_cache_key": _lean_extraction_cache_key(
-                            theorem_name,
-                            _sha256_text(_theorem_header_for_cache(theorem_source)),
-                        ),
-                        "lean_semantic_extractor_cache_status": "batch_fresh",
-                        "lean_stdout_hash": sha256_text(batch["stdout"]),
-                        "lean_stderr_hash": sha256_text(batch["stderr"]),
-                    }
-                    report = normalize_extraction_report(raw, task, lean_file)
-                    report_ref = str(report["content_sha256"])
-                    task_id = str(task["task_id"])
-                    report_refs[task_id] = report_ref
-                    reports[task_id] = report
-                    write_json(output_dir / f"{safe_id(str(task['task_id']))}.json", report)
+            for group_chunk in chunks(group, EXTRACTION_BATCH_SIZE):
+                batch = run_lean_extractor_batch(lean_file, [str(task["theorem_name"]) for task in group_chunk], run_dir=run_dir)
+                errors.extend(batch["errors"])
+                extracted = batch["extracted"]
+                for task in group_chunk:
+                    theorem_name = str(task["theorem_name"])
+                    raw_structured = extracted.get(theorem_name)
+                    if raw_structured is None:
+                        errors.append(f"{task['task_id']}:missing_lean_extractor_output")
+                    else:
+                        theorem_source = _extract_theorem_source(lean_file.read_text(encoding="utf-8"), theorem_name)
+                        source_statement_hash = _sha256_text(theorem_source)
+                        canonical = _canonicalize_lean_structured_output(raw_structured, lean_file, theorem_name, source_statement_hash)
+                        raw = {
+                            "theorem_name": theorem_name,
+                            "source_file_ref": _file_sha256(lean_file),
+                            "source_statement_hash": source_statement_hash,
+                            "elaborated_expr_hash": sha256_text(canonical_json(raw_structured)),
+                            "target_classification": canonical["target_classification"],
+                            "canonical_statement": canonical["canonical_statement"],
+                            "source_theorem_preproved": False,
+                            "extraction_method": "lean_elaborator_structured_theorem",
+                            "semantic_extraction_authority": "lean_elaborator",
+                            "python_semantic_extraction_used": False,
+                            "regex_used_for_semantics": False,
+                            "regex_used_for_source_location": True,
+                            "lean_command": batch["command"],
+                            "lean_semantic_extractor_ref": sha256_text(canonical_json(raw_structured)),
+                            "lean_semantic_extractor_cache_key": _lean_extraction_cache_key(
+                                theorem_name,
+                                _sha256_text(_theorem_header_for_cache(theorem_source)),
+                            ),
+                            "lean_semantic_extractor_cache_status": "batch_fresh",
+                            "lean_stdout_hash": sha256_text(batch["stdout"]),
+                            "lean_stderr_hash": sha256_text(batch["stderr"]),
+                        }
+                        report = normalize_extraction_report(raw, task, lean_file)
+                        report_ref = str(report["content_sha256"])
+                        task_id = str(task["task_id"])
+                        report_refs[task_id] = report_ref
+                        reports[task_id] = report
+                        write_json(output_dir / f"{safe_id(str(task['task_id']))}.json", report)
     index = {
         "schema_version": "GeometryFull2DExtractionCorpusIndexV05",
         "corpus_manifest_hash": manifest_hash(corpus_root),
@@ -404,7 +406,7 @@ def run_lean_extractor_batch(lean_file: Path, theorem_names: list[str], *, run_d
 def write_command_log(run_dir: Path | None, lean_file: Path, payload_without_id: dict[str, Any]) -> str | None:
     if run_dir is None:
         return None
-    rel = safe_id(lean_file.name + "__" + sha256_file(lean_file)[7:19])
+    rel = safe_id(lean_file.name + "__" + sha256_file(lean_file)[7:19] + "__" + sha256_text(canonical_json(payload_without_id))[7:15])
     ref, _ = write_artifact(
         run_dir,
         Path("command_logs") / "lean_extraction" / f"{rel}.json",
@@ -412,6 +414,10 @@ def write_command_log(run_dir: Path | None, lean_file: Path, payload_without_id:
         id_field="command_log_id",
     )
     return ref
+
+
+def chunks(items: list[dict[str, Any]], size: int) -> list[list[dict[str, Any]]]:
+    return [items[index : index + size] for index in range(0, len(items), size)]
 
 
 def build_candidate_batch(run_dir: Path, tasks: list[dict[str, Any]], upstreams: dict[str, dict[str, Any]]) -> dict[str, Any]:
