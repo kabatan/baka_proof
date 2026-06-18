@@ -17,15 +17,26 @@ from scripts.geometry_full2d_v0_5_contracts import REQUIRED_CHECKER_COMMANDS
 
 
 IMPLEMENTATION_PATHS = [
+    "plugins/geometry_full2d/provider.py",
     "plugins/geometry_full2d/provider_cli.py",
     "plugins/geometry_full2d/engine_contracts.py",
     "plugins/geometry_full2d/rule_registry.py",
     "plugins/geometry_full2d/compiler_v0_5.py",
     "plugins/geometry_full2d/proof_worker_v0_5.py",
+    "plugins/geometry_full2d/engines/algebraic_geometry.py",
+    "plugins/geometry_full2d/engines/construction_search.py",
+    "plugins/geometry_full2d/engines/inequality.py",
+    "plugins/geometry_full2d/engines/lean_proof_search.py",
+    "plugins/geometry_full2d/engines/metric_angle.py",
+    "plugins/geometry_full2d/engines/order_case.py",
+    "plugins/geometry_full2d/engines/portfolio_coordinator.py",
     "plugins/geometry_full2d/engines/synthetic_closure.py",
+    "plugins/geometry_full2d/engines/transformation.py",
     "scripts/geometry_full2d_v0_5_independent_checkers.py",
     "scripts/geometry_full2d_v0_5_schemas.py",
     "scripts/geometry_full2d_v0_5_extraction.py",
+    "scripts/run_full2d_matrix_v0_5.py",
+    "scripts/run_solver_causality_mutations_v0_5.py",
 ]
 CONFIG_PATHS = [
     "configs/benchmark_runs/geometry_full2d_v0_5.yaml",
