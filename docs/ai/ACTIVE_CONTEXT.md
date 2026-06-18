@@ -44,7 +44,7 @@ The v0.4.5 closure is invalidated as a false-positive checker-passing scaffold. 
 Current task:
 
 ```text
-WP-06 — Provider / engine stage boundary.
+WP-07 — Independent solver checkers.
 ```
 
 Completed preparation:
@@ -77,9 +77,15 @@ WP-05 structured Lean extraction gate implemented:
   - LeanExtractionReportFull2D normalization;
   - stale, handwritten, Python-classified, pre-proved, and incomplete/smoke-only extraction rejection.
 WP-05 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp05_extraction_gate_evidence.md.
+WP-06 provider / engine stage boundary implemented:
+  - separate `python -m plugins.geometry_full2d.provider_cli` stage;
+  - provider/engine downstream-import boundary checker;
+  - v0.5 engine output checker;
+  - provider/engine release path no longer imports run records or rule registry.
+WP-06 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp06_provider_boundary_evidence.md.
 ```
 
-Implementation work proceeds from WP-06. No counted corpus or release completion is claimed before WP-10A and WP-14.
+Implementation work proceeds from WP-07. No counted corpus or release completion is claimed before WP-10A and WP-14.
 
 ## Non-Negotiables
 
@@ -103,6 +109,7 @@ Allowed:
 ```text
 MARP-GEOLEAN-BASE-011 / PLAN-011 / ACCEPTANCE-011 are active; WP-01 through WP-04 implementation gates have local evidence.
 WP-05 extraction gate has local evidence.
+WP-06 provider boundary and engine-output gates have local evidence.
 ```
 
 Not allowed yet:

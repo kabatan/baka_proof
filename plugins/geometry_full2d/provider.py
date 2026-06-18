@@ -23,7 +23,6 @@ from plugins.geometry_full2d.engine_contracts import (
     resource_usage_report,
     validate_engine_output,
 )
-from plugins.geometry_full2d.run_records import content_addressed_typed_ref
 
 
 @dataclass(frozen=True)
@@ -401,6 +400,11 @@ def _sha_json_ref(payload: dict[str, Any]) -> str:
 
 def _sha_from_typed_ref(ref: str) -> str:
     return "sha256:" + ref.rsplit("sha256:", 1)[1]
+
+
+def content_addressed_typed_ref(prefix: str, payload_without_identity: dict[str, Any]) -> str:
+    encoded = json.dumps(payload_without_identity, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+    return f"{prefix}:sha256:{hashlib.sha256(encoded.encode('utf-8')).hexdigest()}"
 
 
 def _without_identity(payload: dict[str, Any]) -> dict[str, Any]:

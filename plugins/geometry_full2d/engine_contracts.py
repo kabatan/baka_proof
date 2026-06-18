@@ -257,3 +257,7 @@ def canonical_json(payload: Any) -> str:
 
 def hash_ref(text: str) -> str:
     return f"sha256:{hashlib.sha256(text.encode('utf-8')).hexdigest()}"
+
+
+def independent_checker_ref(engine_role: str) -> str:
+    return f"IndependentCheckerFull2D:{engine_role}:{hash_ref('geometry_full2d_independent_checker:' + engine_role)[7:]}"

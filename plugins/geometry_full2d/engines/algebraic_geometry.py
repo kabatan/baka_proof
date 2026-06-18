@@ -10,8 +10,8 @@ from plugins.geometry_full2d.engine_contracts import (
     RunContext,
     canonical_json,
     hash_ref,
+    independent_checker_ref,
 )
-from plugins.geometry_full2d.rule_registry import build_rule_registry_full2d
 
 ENGINE_ROLE = "algebraic_geometry"
 BACKEND_IDENTITY = "geometry_full2d.algebraic_geometry:exact_symbolic_checker:v0_4_2"
@@ -216,7 +216,7 @@ def _measured_failure(engine_input: EngineInputFull2D, context: RunContext, reas
         input_ref=engine_input.input_ref(),
         raw_output_hash=hash_ref(canonical_json(payload)),
         normalized_output_ref=None,
-        checker_or_compiler_ref=f"RuleRegistryFull2D:{build_rule_registry_full2d().registry_hash()}",
+        checker_or_compiler_ref=independent_checker_ref(ENGINE_ROLE),
         resource_usage_ref=context.resource_usage_ref,
         status="measured_failure",
     )
