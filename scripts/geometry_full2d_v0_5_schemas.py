@@ -164,11 +164,34 @@ def _validate_actual_task_run(payload: dict[str, Any], errors: list[str]) -> Non
 
 
 def _validate_extraction(payload: dict[str, Any], errors: list[str]) -> None:
-    _require(payload, ["theorem_id", "source_theorem_preproved", "target_classification"], errors)
+    _require(
+        payload,
+        [
+            "theorem_id",
+            "source_theorem_preproved",
+            "target_classification",
+            "extraction_method",
+            "semantic_extraction_authority",
+            "python_semantic_extraction_used",
+            "regex_used_for_semantics",
+        ],
+        errors,
+    )
     if payload.get("source_theorem_preproved") is not False:
         errors.append("source_theorem_preproved")
     for key in ["source_file_hash", "theorem_statement_hash", "elaborated_expression_hash"]:
         _require_ref(payload, key, errors)
+    if payload.get("extraction_method") != "lean_elaborator_structured_theorem":
+        errors.append("extraction_method_not_lean_elaborator_structured_theorem")
+    if payload.get("semantic_extraction_authority") != "lean_elaborator":
+        errors.append("semantic_extraction_authority_not_lean_elaborator")
+    if payload.get("python_semantic_extraction_used") is not False:
+        errors.append("python_semantic_extraction_used")
+    if payload.get("regex_used_for_semantics") is not False:
+        errors.append("regex_used_for_semantics")
+    classification = payload.get("target_classification")
+    if isinstance(classification, dict) and classification.get("classification_source") not in {None, "lean_elaborator_structured_theorem"}:
+        errors.append("target_classification_not_lean_elaborator")
 
 
 def _validate_claim_spec(payload: dict[str, Any], errors: list[str]) -> None:
@@ -391,7 +414,11 @@ def positive_fixtures() -> dict[str, dict[str, Any]]:
             "source_file_hash": ref,
             "theorem_statement_hash": ref,
             "elaborated_expression_hash": ref,
-            "target_classification": {"kind": "geometry_full2d"},
+            "target_classification": {"kind": "geometry_full2d", "classification_source": "lean_elaborator_structured_theorem"},
+            "extraction_method": "lean_elaborator_structured_theorem",
+            "semantic_extraction_authority": "lean_elaborator",
+            "python_semantic_extraction_used": False,
+            "regex_used_for_semantics": False,
         },
         "GeometryFull2DClaimSpec": {"schema_version": "GeometryFull2DClaimSpec", "claim_id": "c", "objects": [], "hypotheses": [], "target": {"kind": "target"}},
         "ProviderRunManifestFull2D": {"schema_version": "ProviderRunManifestFull2D", "manifest_id": "m", "provider_stage_run_id": "p", "claim_spec_ref": ref, "engine_output_refs": [ref], "imports": []},

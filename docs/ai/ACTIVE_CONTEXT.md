@@ -44,7 +44,7 @@ The v0.4.5 closure is invalidated as a false-positive checker-passing scaffold. 
 Current task:
 
 ```text
-WP-05 — Structured Lean extraction per theorem.
+WP-06 — Provider / engine stage boundary.
 ```
 
 Completed preparation:
@@ -72,9 +72,14 @@ WP-04 corpus system implemented:
   - sealed holdout generator blocked from counted generation before freeze;
   - corpus independence, statement diversity, and goal-preservation replay checkers.
 WP-04 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp04_corpus_system_evidence.md.
+WP-05 structured Lean extraction gate implemented:
+  - v0.5 extraction builder/checker;
+  - LeanExtractionReportFull2D normalization;
+  - stale, handwritten, Python-classified, pre-proved, and incomplete/smoke-only extraction rejection.
+WP-05 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp05_extraction_gate_evidence.md.
 ```
 
-Implementation work proceeds from WP-05. No counted corpus or release completion is claimed before WP-10A and WP-14.
+Implementation work proceeds from WP-06. No counted corpus or release completion is claimed before WP-10A and WP-14.
 
 ## Non-Negotiables
 
@@ -97,6 +102,7 @@ Allowed:
 
 ```text
 MARP-GEOLEAN-BASE-011 / PLAN-011 / ACCEPTANCE-011 are active; WP-01 through WP-04 implementation gates have local evidence.
+WP-05 extraction gate has local evidence.
 ```
 
 Not allowed yet:

@@ -24,6 +24,7 @@ Review evidence:
 - `evidence/wp01_wp02_redcase_acceptance_harness.md`
 - `evidence/wp03_schema_validator_evidence.md`
 - `evidence/wp04_corpus_system_evidence.md`
+- `evidence/wp05_extraction_gate_evidence.md`
 
 First checks:
 
