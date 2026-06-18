@@ -44,7 +44,7 @@ The v0.4.5 closure is invalidated as a false-positive checker-passing scaffold. 
 Current task:
 
 ```text
-WP-10A — Implementation freeze and counted corpus materialization.
+WP-11 — Actual matrix execution and baselines.
 ```
 
 Completed preparation:
@@ -107,9 +107,15 @@ WP-10 ProofWorker and FinalVerifyGate implemented:
   - v0.5 FinalVerifyGate runs `lake env lean`, checks theorem statement unchanged, no sorry, no forbidden declarations, no toy target definitions, admitted imports only, and proof-use provenance;
   - `check_proof_worker_final_verify_v0_5.py --self-test` rejects pre-proved sources, non-region patches, changed theorem statements, sorry, forbidden declarations, toy targets, and non-admitted imports.
 WP-10 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp10_proof_worker_final_verify_evidence.md.
+WP-10A implementation freeze and counted corpus materialization completed for the current implementation hash:
+  - freeze manifest binds implementation git head, implementation file hashes, checker hashes, config hash, corpus-tool hashes, and release entrypoints;
+  - counted SealedAdversarialHoldout corpus generated after freeze with 1200 counted sealed tasks and 300 negative target-outside/malformed tasks;
+  - corpus independence, statement diversity, goal preservation, checker-suppression, and red-case checks pass;
+  - fail-closed release probe reports corpus_summary and corpus_statement_diversity_summary as passed, while WP-11+ blockers remain.
+WP-10A evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp10a_freeze_corpus_evidence.md.
 ```
 
-Implementation work proceeds from WP-10A. No counted corpus or release completion is claimed before WP-10A and WP-14.
+Implementation work proceeds from WP-11. The WP-10A freeze must be regenerated after later changes to provider, compiler, rule registry, proof worker, final verifier, matrix runner, release checker, corpus generator, or checker code.
 
 ## Non-Negotiables
 
@@ -138,6 +144,7 @@ WP-07 independent solver checker gates have local evidence.
 WP-08 RuleRegistry gate has local evidence.
 WP-09 compiler input isolation and taint gates have local evidence.
 WP-10 ProofWorker and FinalVerifyGate gates have local evidence.
+WP-10A freeze and counted corpus gates have local evidence for the current implementation hash.
 ```
 
 Not allowed yet:

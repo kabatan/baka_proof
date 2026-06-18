@@ -30,6 +30,7 @@ Review evidence:
 - `evidence/wp08_rule_registry_evidence.md`
 - `evidence/wp09_compiler_input_isolation_evidence.md`
 - `evidence/wp10_proof_worker_final_verify_evidence.md`
+- `evidence/wp10a_freeze_corpus_evidence.md`
 
 First checks:
 

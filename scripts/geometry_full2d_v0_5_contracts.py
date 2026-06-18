@@ -94,7 +94,14 @@ REQUIRED_CHECKER_COMMANDS: dict[str, list[str]] = {
     "acceptance_coverage": [sys.executable, "scripts/check_acceptance_coverage_v0_5.py"],
     "no_checker_whitelist": [sys.executable, "scripts/check_no_checker_whitelist_v0_5.py"],
     "schema_validators": [sys.executable, "scripts/check_schema_validators_v0_5.py", "--self-test"],
-    "corpus_independence": [sys.executable, "scripts/check_corpus_independence_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5"],
+    "corpus_independence": [
+        sys.executable,
+        "scripts/check_corpus_independence_v0_5.py",
+        "--corpus-root",
+        "benchmarks/geometry_full2d_v0_5",
+        "--freeze-manifest",
+        "benchmarks/geometry_full2d_v0_5/freeze_manifest.json",
+    ],
     "corpus_statement_diversity": [sys.executable, "scripts/check_corpus_statement_diversity_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5"],
     "goal_preservation": [sys.executable, "scripts/check_goal_preservation_reports_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5"],
     "extraction": [sys.executable, "scripts/check_full2d_extraction_corpus_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5", "--run-dir", "runs/geometry_full2d_v0_5"],
@@ -638,6 +645,71 @@ def independent_checker_summary(command_results: dict[str, Any]) -> dict[str, An
     }
 
 
+def corpus_summary(corpus_root: Path, command_results: dict[str, Any]) -> dict[str, Any]:
+    manifest_path = corpus_root / "corpus_manifest.json"
+    tasks: list[dict[str, Any]] = []
+    if manifest_path.exists():
+        payload = read_json(manifest_path)
+        raw_tasks = payload.get("tasks", [])
+        tasks = raw_tasks if isinstance(raw_tasks, list) else []
+    counted = [task for task in tasks if isinstance(task, dict) and task.get("counted_positive") is True]
+    negatives = [task for task in tasks if isinstance(task, dict) and task.get("source_type") == "NegativeTargetOutsideMalformed"]
+    sealed = [task for task in counted if task.get("source_type") == "SealedAdversarialHoldout"]
+    external = [task for task in counted if task.get("source_type") == "ExternalGoalPreserved"]
+    projection_counted = [task for task in counted if task.get("projection") is True]
+    user_review_missing = [
+        task
+        for task in counted
+        if task.get("source_type") == "UserReviewedGoal" and not task.get("review_manifest_ref")
+    ]
+    goal_report = command_report(command_results, "goal_preservation")
+    discovered_external = int(goal_report.get("discovered_machine_checkable_external_goal_preserved_count", len(external)))
+    errors: list[str] = []
+    if len(counted) < 1200:
+        errors.append("counted_positive_formal_lean_tasks_lt_1200")
+    if len(negatives) < 300:
+        errors.append("negative_target_outside_malformed_tasks_lt_300")
+    if len(sealed) < 700:
+        errors.append("sealed_adversarial_holdout_count_lt_700")
+    if len(external) < min(300, discovered_external):
+        errors.append("external_goal_preserved_count_below_discovered_floor")
+    if user_review_missing:
+        errors.append("user_reviewed_goal_without_review_manifest_count_nonzero")
+    if projection_counted:
+        errors.append("projection_non_counted_positive_count_nonzero")
+    if not command_passed(command_results, "corpus_independence"):
+        errors.append("corpus_independence_failed")
+    if not command_passed(command_results, "goal_preservation"):
+        errors.append("goal_preservation_failed")
+    return {
+        "status": "passed" if not errors else "failed",
+        "errors": errors,
+        "counted_positive_formal_lean_tasks": len(counted),
+        "negative_target_outside_malformed_tasks": len(negatives),
+        "sealed_adversarial_holdout_count": len(sealed),
+        "external_goal_preserved_count": len(external),
+        "discovered_machine_checkable_external_goal_preserved_count": discovered_external,
+        "user_reviewed_goal_without_review_manifest_count": len(user_review_missing),
+        "projection_non_counted_positive_count": len(projection_counted),
+        "task_count": len(tasks),
+    }
+
+
+def corpus_statement_diversity_summary(command_results: dict[str, Any]) -> dict[str, Any]:
+    report = command_report(command_results, "corpus_statement_diversity")
+    errors = list(report.get("errors", [])) if isinstance(report.get("errors"), list) else []
+    return {
+        "status": "passed" if command_passed(command_results, "corpus_statement_diversity") else "failed",
+        "errors": errors,
+        "unique_normalized_theorem_skeletons": report.get("unique_normalized_theorem_skeletons", 0),
+        "max_exact_skeleton_duplicate": report.get("max_exact_skeleton_duplicate", 0),
+        "used_relation_families": report.get("used_relation_families", 0),
+        "construction_case_certificate_required_tasks": report.get("construction_case_certificate_required_tasks", 0),
+        "non_target_intermediate_required_tasks": report.get("non_target_intermediate_required_tasks", 0),
+        "counted_positive_count": report.get("counted_positive_count", 0),
+    }
+
+
 def rule_registry_summary(command_results: dict[str, Any]) -> dict[str, Any]:
     report = command_report(command_results, "rule_registry")
     positive = report.get("positive") if isinstance(report.get("positive"), dict) else {}
@@ -695,7 +767,20 @@ def build_fail_closed_release_report(
         release_blockers.add("K-010")
     if not command_passed(command_results, "proof_worker_final_verify"):
         release_blockers.add("K-032")
+    if not command_passed(command_results, "corpus_independence"):
+        release_blockers.update({"K-013", "K-014", "K-015"})
+    if not command_passed(command_results, "goal_preservation"):
+        release_blockers.add("K-016")
+    if not command_passed(command_results, "corpus_statement_diversity"):
+        release_blockers.add("K-029")
     release_blockers.update({"K-011", "K-012", "K-018", "K-019", "K-021", "K-022", "K-024", "K-025", "K-033"})
+
+    corpus = corpus_summary(DEFAULT_CORPUS_ROOT, command_results)
+    diversity = corpus_statement_diversity_summary(command_results)
+    if corpus["status"] != "passed":
+        release_blockers.update({"K-001", "K-013", "K-014", "K-029"})
+    if diversity["status"] != "passed":
+        release_blockers.add("K-029")
 
     report = {
         "schema_version": "GeometryFull2DReleaseAcceptanceV05",
@@ -704,8 +789,8 @@ def build_fail_closed_release_report(
         "checked_requirements": sorted(K_BLOCKERS),
         "checker_coverage_matrix": coverage,
         "red_case_summary": red_case_report if isinstance(red_case_report, dict) else {"status": "failed", "all_rejected": False},
-        "corpus_summary": {"status": "failed", "counted_positive_formal_lean_tasks": 0, "negative_target_outside_malformed_tasks": 0, "sealed_adversarial_holdout_count": 0},
-        "corpus_statement_diversity_summary": {"status": "failed", "unique_normalized_theorem_skeletons": 0},
+        "corpus_summary": corpus,
+        "corpus_statement_diversity_summary": diversity,
         "extraction_summary": placeholder_summary("extraction"),
         "provider_stage_boundary_summary": placeholder_summary("provider_stage_boundary"),
         "engine_output_summary": placeholder_summary("engine_outputs"),

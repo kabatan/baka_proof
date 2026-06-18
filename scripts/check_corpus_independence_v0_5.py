@@ -19,7 +19,8 @@ def main() -> int:
     parser.add_argument("--freeze-manifest")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
-    report = self_test_report() if args.self_test else check_corpus_independence(ROOT / args.corpus_root)
+    freeze = ROOT / args.freeze_manifest if args.freeze_manifest else None
+    report = self_test_report() if args.self_test else check_corpus_independence(ROOT / args.corpus_root, freeze_manifest=freeze)
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["status"] == "passed" else 1
 

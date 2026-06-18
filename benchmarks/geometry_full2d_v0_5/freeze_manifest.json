@@ -1,0 +1,226 @@
+{
+  "admitted_release_entrypoints": {
+    "release_acceptance": "scripts/check_release_acceptance_v0_5.py",
+    "required_checker_commands": {
+      "acceptance_coverage": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_acceptance_coverage_v0_5.py"
+      ],
+      "active_guardian_spec": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_active_guardian_spec_v0_5.py"
+      ],
+      "baseline_comparability": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_baseline_comparability_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5"
+      ],
+      "causality_mutations": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/run_solver_causality_mutations_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5",
+        "--all-b2-successes",
+        "--fresh-reruns"
+      ],
+      "closure_claim_ceiling": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_closure_claim_ceiling_v0_5.py",
+        "--change-dir",
+        "docs/ai/changes/geometry-full2d-v0_5",
+        "--release-report",
+        "docs/ai/changes/geometry-full2d-v0_5/evidence/release_acceptance_report.json",
+        "--closure",
+        "docs/ai/changes/geometry-full2d-v0_5/CLOSURE.md",
+        "--allow-missing-closure"
+      ],
+      "compiler_input_isolation": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_compiler_input_isolation_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5",
+        "--self-test"
+      ],
+      "compiler_taint": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_compiler_taint_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5"
+      ],
+      "corpus_independence": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_corpus_independence_v0_5.py",
+        "--corpus-root",
+        "benchmarks/geometry_full2d_v0_5",
+        "--freeze-manifest",
+        "benchmarks/geometry_full2d_v0_5/freeze_manifest.json"
+      ],
+      "corpus_statement_diversity": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_corpus_statement_diversity_v0_5.py",
+        "--corpus-root",
+        "benchmarks/geometry_full2d_v0_5"
+      ],
+      "debt_ledger": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_debt_ledger_v0_5.py",
+        "--change-dir",
+        "docs/ai/changes/geometry-full2d-v0_5"
+      ],
+      "engine_contribution": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_engine_contribution_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5"
+      ],
+      "engine_outputs": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_engine_outputs_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5"
+      ],
+      "extraction": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_extraction_corpus_v0_5.py",
+        "--corpus-root",
+        "benchmarks/geometry_full2d_v0_5",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5"
+      ],
+      "goal_preservation": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_goal_preservation_reports_v0_5.py",
+        "--corpus-root",
+        "benchmarks/geometry_full2d_v0_5"
+      ],
+      "independent_solver_checkers": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_independent_solver_checkers_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5",
+        "--self-test"
+      ],
+      "matrix": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/run_full2d_matrix_v0_5.py",
+        "--config",
+        "configs/benchmark_runs/geometry_full2d_v0_5.yaml",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5",
+        "--execute-all-baselines",
+        "--fresh-run"
+      ],
+      "metrics": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_metrics_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5"
+      ],
+      "no_checker_whitelist": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_no_checker_whitelist_v0_5.py"
+      ],
+      "proof_worker_final_verify": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_proof_worker_final_verify_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5",
+        "--self-test"
+      ],
+      "provider_stage_boundary": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_provider_stage_boundary_v0_5.py",
+        "--self-test"
+      ],
+      "red_cases": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/run_red_cases_v0_5.py",
+        "--expect-failure"
+      ],
+      "rule_registry": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_rule_registry_v0_5.py",
+        "--self-test"
+      ],
+      "schema_validators": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_schema_validators_v0_5.py",
+        "--self-test"
+      ],
+      "solver_causality": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_solver_causality_reports_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5",
+        "--self-test"
+      ],
+      "used_rule_coverage": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_used_rule_coverage_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5"
+      ]
+    }
+  },
+  "checker_file_hashes": {
+    "scripts/check_acceptance_coverage_v0_5.py": "sha256:f14a9721f6b1a6074b23c654f833e6b911411a28c634b2f11d1e5c7a77b6977c",
+    "scripts/check_active_guardian_spec_v0_5.py": "sha256:f9244d4eebba2835f6623da8343d823b63084897e58ee9ece28b149ede305a61",
+    "scripts/check_closure_claim_ceiling_v0_5.py": "sha256:fc589b6bcafab25fa6f5916eb2a1768e3d272163d49abfb3e7aafad24714eac0",
+    "scripts/check_compiler_input_isolation_v0_5.py": "sha256:27dd57af5c3b77e73bdc6dcf0841665b1100ec8443e30a11ff859ec8422d38ec",
+    "scripts/check_compiler_taint_v0_5.py": "sha256:7974466f21e1e83e17390b2ba63edc444a2d00e9c80523b9c256a40046b817bf",
+    "scripts/check_corpus_independence_v0_5.py": "sha256:acff80b4fcfa4c3f2da29a0e535fc3167f78188f9ac1a471ecf81af2ff915009",
+    "scripts/check_corpus_statement_diversity_v0_5.py": "sha256:521976ec79f43ae107734fdc761f2d3947717e0bb877fa5a5833fad7a6e124e6",
+    "scripts/check_debt_ledger_v0_5.py": "sha256:263b50e6e81713a1bfbfb7c3482c0658132fd22974512366ed87c6e49f730894",
+    "scripts/check_engine_outputs_v0_5.py": "sha256:f92b816580cb6c24f642ba21e925b826eca1a01569ecb8e2dd5b636b7bc80770",
+    "scripts/check_full2d_baseline_comparability_v0_5.py": "sha256:164dc808f88d6634137119151c55919a44daece55710505780d365881d852643",
+    "scripts/check_full2d_engine_contribution_v0_5.py": "sha256:bb2a4ff934972d19a2fc077851c0a05e9f7fe3fa62d763e3df458fb3fa220394",
+    "scripts/check_full2d_extraction_corpus_v0_5.py": "sha256:0104016137fcbfeae05932d9b7b2bdbc1d74c48fb43400f673bab2a615e16711",
+    "scripts/check_full2d_metrics_v0_5.py": "sha256:cf9e2e914d277e6c3263bce399ad35f420298bc35f929509983643948f244e92",
+    "scripts/check_full2d_rule_registry_v0_5.py": "sha256:062d56e1c99aa4d85b5cbf5a44d870360221ed2ac06df3bc8bde64a12bedfea4",
+    "scripts/check_full2d_used_rule_coverage_v0_5.py": "sha256:f1dc1b75a501640b2ed6a7260da0d8b9357295b8e9cd67e481400f870fc740cc",
+    "scripts/check_goal_preservation_reports_v0_5.py": "sha256:6a42fde456161baa480581b7431bf7b0c9bf2f902f676a7a0b1b1686d42116e6",
+    "scripts/check_independent_solver_checkers_v0_5.py": "sha256:e31d43b71fe43e25b86a8ceb167dee9e407f25028a96a2b9221f25aefbb0a97d",
+    "scripts/check_no_checker_whitelist_v0_5.py": "sha256:540bf966ec92c97a551837bd4809cd5cd7935a2e1c27dccb6820ce80598b7969",
+    "scripts/check_proof_worker_final_verify_v0_5.py": "sha256:8abcf1c986badab6b26a4cac87ee551000b54c212e77f27f4617f93cc7d97b87",
+    "scripts/check_provider_stage_boundary_v0_5.py": "sha256:3f673d3bcacb9f3892a7600d10b1d6e65afc2900b56329dfc9d9d988ea2ae74b",
+    "scripts/check_release_acceptance_v0_5.py": "sha256:9d45ede3105b080d91748060e02371391417c1406a966ae1a1195c177f529061",
+    "scripts/check_schema_validators_v0_5.py": "sha256:6d61353ca0900741ac3a9e4d0724cae958a2976ee62d9fd87669de319d7898d1",
+    "scripts/check_solver_causality_reports_v0_5.py": "sha256:6c3184839dbc16d0b23eeaac5aa36b588cf456ccdf6b24acac9988c0616cdc4c",
+    "scripts/run_full2d_matrix_v0_5.py": "sha256:fb32392d63300f6911ccca4c98e22d30282da0f707ef724034596198c4955eb1",
+    "scripts/run_red_cases_v0_5.py": "sha256:26f62f4d7f71a7ad45aae6357cc37a82be30a8c2161de6b50248dea0fcad0c77",
+    "scripts/run_solver_causality_mutations_v0_5.py": "sha256:e98ca5d498537dae30baedfc529c3350e97c5e9add0b07125fc99b1c99f5e0de"
+  },
+  "checker_hashes": "sha256:df3712bd8bca8610f2ae5a6e0f6f102ca12f5607e1e79dafe0288ad848b44e7a",
+  "config_hash": "sha256:69536ec79ae476bb307d974799509ca0389f3b46a1a813ac95bee854afadd79d",
+  "config_hashes": {
+    "configs/benchmark_runs/geometry_full2d_v0_5.yaml": "sha256:f4b9b2f2075b74c663bce0845d0214454b5c1bdbf0ec215f2b95bda5f81baa4f"
+  },
+  "content_sha256": "sha256:43bcb43a050b9a66085baaa3a699acf0b7b0ad36da988bfb12502034c6da7a12",
+  "corpus_tool_hash": "sha256:941b9b38d876eb39dfdd7df0f5e850843a9f0eb9854606dbf3948c609447006e",
+  "corpus_tool_hashes": {
+    "scripts/create_freeze_manifest_v0_5.py": "sha256:6ec7a132c894638bdeb89b2cafd49eaa78b162923432877aeb8dff8cffa47857",
+    "scripts/discover_external_goal_sources_v0_5.py": "sha256:0b96a72bc532b94a9b1631e9ac6252dfa54efa11b75e82dd81333b8f93f30aad",
+    "scripts/generate_sealed_adversarial_holdout_v0_5.py": "sha256:c75a28e00b27d415457a3f828a3e89b9f64e0d1fad58b548dc169eccec4828cb",
+    "scripts/geometry_full2d_v0_5_corpus.py": "sha256:9fe24c802e04f31b1b88b13ec9237a45a1a72677a27f954b9078c34d676e2749",
+    "scripts/import_external_goal_preserved_v0_5.py": "sha256:9ea69f4899d9250ed38b18b713d609bc3d1c5b640f136a0520e2303b2f9a3882"
+  },
+  "errors": [],
+  "freeze_id": "sha256:43bcb43a050b9a66085baaa3a699acf0b7b0ad36da988bfb12502034c6da7a12",
+  "freeze_policy": "any later change to provider, compiler, rule registry, proof worker, final verifier, matrix runner, release checker, corpus generator, or checker code invalidates this manifest",
+  "implementation_file_hashes": {
+    "plugins/geometry_full2d/compiler_v0_5.py": "sha256:254f2b3720ff6b1a5daf1937bfb2ddbdebd14e5084977fbb7accb1a16f32c862",
+    "plugins/geometry_full2d/engine_contracts.py": "sha256:f22da402b7c7aab84a1c8ebfeab759133a7d2bb6d0f7654757a1b4920cb98e1b",
+    "plugins/geometry_full2d/engines/synthetic_closure.py": "sha256:19773b791321884f9815a048b2d87928ce6269b0cfa1d938b431a0b508bb4066",
+    "plugins/geometry_full2d/proof_worker_v0_5.py": "sha256:1759c975fb3f00b527078ed0d09acef1fec3af4c6591948ebedc44038c4ca191",
+    "plugins/geometry_full2d/provider_cli.py": "sha256:4be43e35b7f4f79589583783aaaacb0bbcef44b8963d8d69526075304783fe90",
+    "plugins/geometry_full2d/rule_registry.py": "sha256:1804992b43053bf7540e1ddfb6ccfba5a28d7a9ffda1dd1259ce88f1f1bafb39",
+    "scripts/geometry_full2d_v0_5_extraction.py": "sha256:7eb38e9dfaa57f2bcebbea6f03bc1657c74c66eaa61678a0b8ddc69a31bc44f9",
+    "scripts/geometry_full2d_v0_5_independent_checkers.py": "sha256:8232f3108feb242d12c86e9931c4a6bc61085f9861c3b0aa1c6fc8f5d1a1fd00",
+    "scripts/geometry_full2d_v0_5_schemas.py": "sha256:e28ecf72240d5b4cf71321f369b4c2626bdd1e7645c474581e07379184881fce"
+  },
+  "implementation_git_head": "db3d093117b413877b91cb804b2a3874a3d4352d",
+  "schema_version": "GeometryFull2DImplementationFreezeManifestV05",
+  "selected_implementation_hash": "sha256:d030e5ae70eb630b5c7690fe615bf5707f3bbdd35610fb535881dd82b14f12ce",
+  "status": "passed"
+}

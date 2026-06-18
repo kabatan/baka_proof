@@ -59,6 +59,47 @@ SEALED_REQUIRED_METADATA_KEYS = {
     "freeze_hash",
     "challenge_manifest_hash",
 }
+RELATION_FAMILIES = [
+    "collinear",
+    "parallel",
+    "perpendicular",
+    "concyclic",
+    "between",
+    "same_side",
+    "equal_length",
+    "angle_eq",
+    "circle_tangent",
+    "midpoint",
+    "reflection_image",
+    "length_le",
+]
+GOAL_SHAPES = [
+    "{r1} {a} {b} {c}",
+    "{r1} {a} {b} {c} -> {r2} {d} {e} {f}",
+    "{r1} {a} {b} {c} -> {r2} {d} {e} {f} -> {r3} {g} {h} {i}",
+    "({r1} {a} {b} {c}) /\\ ({r2} {d} {e} {f})",
+    "({r1} {a} {b} {c}) \\/ ({r2} {d} {e} {f})",
+    "({r1} {a} {b} {c}) -> ({r2} {d} {e} {f}) /\\ ({r3} {g} {h} {i})",
+    "({r1} {a} {b} {c}) /\\ ({r2} {d} {e} {f}) -> {r3} {g} {h} {i}",
+    "not ({r1} {a} {b} {c}) -> {r2} {d} {e} {f}",
+    "{r1} {a} {b} {c} -> not ({r2} {d} {e} {f}) -> {r3} {g} {h} {i}",
+    "({r1} {a} {b} {c} <-> {r2} {d} {e} {f})",
+    "({r1} {a} {b} {c}) -> ({r2} {a} {d} {g}) -> ({r3} {c} {f} {i})",
+    "({r1} {a} {b} {c}) /\\ ({r2} {a} {d} {g}) /\\ ({r3} {c} {f} {i})",
+    "{r1} {a} {b} {c} -> {r2} {c} {b} {a}",
+    "{r1} {a} {b} {c} -> {r2} {d} {e} {f} -> {r1} {g} {h} {i}",
+    "({r1} {a} {b} {c}) -> ({r2} {d} {e} {f} \\/ {r3} {g} {h} {i})",
+    "(({r1} {a} {b} {c}) /\\ ({r2} {d} {e} {f})) -> ({r3} {g} {h} {i} \\/ {r4} {j} {k} {l})",
+    "{r1} {a} {b} {c} -> {r2} {d} {e} {f} -> {r3} {g} {h} {i} -> {r4} {j} {k} {l}",
+    "not ({r1} {a} {b} {c} /\\ {r2} {d} {e} {f}) -> {r3} {g} {h} {i}",
+    "({r1} {a} {b} {c} -> {r2} {d} {e} {f}) -> ({r3} {g} {h} {i})",
+    "({r1} {a} {b} {c} \\/ {r2} {d} {e} {f}) -> ({r3} {g} {h} {i} \\/ {r4} {j} {k} {l})",
+    "{r1} {a} {b} {c} -> ({r2} {d} {e} {f} <-> {r3} {g} {h} {i})",
+    "({r1} {a} {b} {c} <-> {r2} {d} {e} {f}) -> {r3} {g} {h} {i}",
+    "({r1} {a} {b} {c}) -> ({r2} {d} {e} {f}) -> not ({r3} {g} {h} {i})",
+    "not ({r1} {a} {b} {c}) \\/ ({r2} {d} {e} {f})",
+    "({r1} {a} {b} {c}) /\\ not ({r2} {d} {e} {f}) -> {r3} {g} {h} {i}",
+]
 
 
 def sha256_text(text: str) -> str:
@@ -132,8 +173,8 @@ def manifest_tasks(corpus_root: Path) -> list[dict[str, Any]]:
 
 
 def normalized_skeleton(statement: str) -> str:
-    text = re.sub(r"\b[A-Z][A-Za-z0-9_']*\b", "P", statement)
-    text = re.sub(r"\b[a-z][A-Za-z0-9_']*\b", "x", text)
+    text = re.sub(r"\btheorem\s+[A-Za-z0-9_'.-]+", "theorem _", statement)
+    text = re.sub(r"\b[A-Z][A-Za-z0-9_']*\b", "P", text)
     text = re.sub(r"\s+", " ", text)
     return text.strip()
 
@@ -144,6 +185,51 @@ def generator_source_hash() -> str:
         parts.append(path.relative_to(ROOT).as_posix())
         parts.append(path.read_text(encoding="utf-8"))
     return sha256_text("\n".join(parts))
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return "sha256:" + digest.hexdigest()
+
+
+def validate_freeze_manifest(freeze_manifest: Path) -> list[str]:
+    errors: list[str] = []
+    if not freeze_manifest.exists():
+        return ["freeze_manifest_missing"]
+    manifest = read_json(freeze_manifest)
+    if manifest.get("schema_version") != "GeometryFull2DImplementationFreezeManifestV05":
+        errors.append("freeze_manifest_schema_version_invalid")
+    implementation_hashes = manifest.get("implementation_file_hashes", {})
+    checker_hashes = manifest.get("checker_file_hashes", {})
+    corpus_hashes = manifest.get("corpus_tool_hashes", {})
+    config_hashes = manifest.get("config_hashes", {})
+    for bucket_name, bucket in [
+        ("implementation", implementation_hashes),
+        ("checker", checker_hashes),
+        ("corpus_tool", corpus_hashes),
+        ("config", config_hashes),
+    ]:
+        if not isinstance(bucket, dict) or not bucket:
+            errors.append(f"freeze_manifest_{bucket_name}_hashes_missing")
+            continue
+        for rel_path, expected in sorted(bucket.items()):
+            path = ROOT / rel_path
+            if not path.exists():
+                errors.append(f"freeze_manifest_bound_file_missing:{rel_path}")
+                continue
+            actual = file_sha256(path)
+            if actual != expected:
+                errors.append(f"freeze_manifest_hash_mismatch:{rel_path}")
+    expected_impl_hash = sha256_text(json.dumps(implementation_hashes, sort_keys=True, separators=(",", ":")))
+    if manifest.get("selected_implementation_hash") != expected_impl_hash:
+        errors.append("freeze_manifest_selected_implementation_hash_mismatch")
+    entrypoints = manifest.get("admitted_release_entrypoints", {})
+    if not isinstance(entrypoints, dict) or "check_release_acceptance_v0_5.py" not in json.dumps(entrypoints, sort_keys=True):
+        errors.append("freeze_manifest_release_entrypoints_missing")
+    return sorted(set(errors))
 
 
 def iter_key_paths(value: Any, prefix: str = "") -> list[tuple[str, str]]:
@@ -326,19 +412,53 @@ def import_goal_preserved(registry: Path, corpus_root: Path) -> dict[str, Any]:
     }
 
 
-def generate_sealed_holdout(output_root: Path, count: int, seed: int, freeze_manifest: Path | None, *, counted: bool) -> dict[str, Any]:
+def holdout_goal(index: int) -> str:
+    shape = GOAL_SHAPES[index % len(GOAL_SHAPES)]
+    relations = [RELATION_FAMILIES[(index + offset * 3) % len(RELATION_FAMILIES)] for offset in range(4)]
+    names = [chr(ord("A") + ((index + offset * 2) % 26)) for offset in range(12)]
+    return shape.format(
+        r1=relations[0],
+        r2=relations[1],
+        r3=relations[2],
+        r4=relations[3],
+        a=names[0],
+        b=names[1],
+        c=names[2],
+        d=names[3],
+        e=names[4],
+        f=names[5],
+        g=names[6],
+        h=names[7],
+        i=names[8],
+        j=names[9],
+        k=names[10],
+        l=names[11],
+    )
+
+
+def generate_sealed_holdout(
+    output_root: Path,
+    count: int,
+    seed: int,
+    freeze_manifest: Path | None,
+    *,
+    counted: bool,
+    negative_count: int = 0,
+) -> dict[str, Any]:
     if counted and (freeze_manifest is None or not freeze_manifest.exists()):
         return {"schema_version": "SealedAdversarialHoldoutGenerationV05", "status": "failed", "errors": ["counted_generation_requires_freeze_manifest"]}
+    freeze_errors = validate_freeze_manifest(freeze_manifest) if counted and freeze_manifest is not None else []
+    if freeze_errors:
+        return {"schema_version": "SealedAdversarialHoldoutGenerationV05", "status": "failed", "errors": freeze_errors}
     rng = random.Random(seed)
-    relations = ["collinear", "parallel", "perpendicular", "congruent", "angle_eq", "between", "same_side", "circle"]
     tasks: list[dict[str, Any]] = []
+    challenge_manifest_hash = sha256_text(f"{seed}:{count}:{negative_count}:sealed_adversarial_holdout_v0_5")
+    freeze_hash = sha256_text(freeze_manifest.read_text(encoding="utf-8")) if freeze_manifest and freeze_manifest.exists() else None
     for index in range(count):
-        relation = relations[index % len(relations)]
-        a = chr(ord("A") + (index % 20))
-        b = chr(ord("A") + ((index + 3) % 20))
-        c = chr(ord("A") + ((index + 7) % 20))
         marker = rng.randint(1000, 9999)
-        statement = f"theorem sealed_{index}_{marker} : {relation} {a} {b} {c} := by sorry"
+        goal = holdout_goal(index)
+        statement = f"theorem sealed_{index}_{marker} : {goal} := by sorry"
+        relation = RELATION_FAMILIES[index % len(RELATION_FAMILIES)]
         tasks.append(
             {
                 "task_id": f"sealed_holdout_{index:04d}",
@@ -353,18 +473,48 @@ def generate_sealed_holdout(output_root: Path, count: int, seed: int, freeze_man
                     "seed": seed,
                     "generator_hash": generator_source_hash(),
                     "grammar_hash": sha256_text("v0_5_declarative_geometry_holdout_grammar"),
-                    "freeze_hash": sha256_text(freeze_manifest.read_text(encoding="utf-8")) if freeze_manifest and freeze_manifest.exists() else None,
-                    "challenge_manifest_hash": sha256_text(f"{seed}:{count}:{index}"),
+                    "freeze_hash": freeze_hash,
+                    "challenge_manifest_hash": challenge_manifest_hash,
                 },
             }
         )
-    manifest = {"schema_version": "GeometryFull2DCorpusManifestV05", "status": "generated_sealed_holdout", "tasks": tasks}
+    for index in range(negative_count):
+        goal = f"malformed_outside_relation_{index % 37} X{index} Y{index}"
+        statement = f"theorem negative_target_outside_{index:04d} : {goal} := by sorry"
+        tasks.append(
+            {
+                "task_id": f"negative_target_outside_{index:04d}",
+                "source_type": "NegativeTargetOutsideMalformed",
+                "counted_positive": False,
+                "formal_statement": statement,
+                "normalized_skeleton": normalized_skeleton(statement),
+                "relation_families": ["target_outside"],
+                "requires_construction_case_certificate": False,
+                "requires_non_target_intermediate": False,
+                "metadata": {"negative_kind": "target_outside_or_malformed"},
+            }
+        )
+    manifest = {
+        "schema_version": "GeometryFull2DCorpusManifestV05",
+        "status": "generated_sealed_holdout",
+        "freeze_manifest_ref": file_sha256(freeze_manifest) if freeze_manifest and freeze_manifest.exists() else None,
+        "tasks": tasks,
+    }
     write_json(output_root / "corpus_manifest.json", manifest)
-    return {"schema_version": "SealedAdversarialHoldoutGenerationV05", "status": "passed", "counted": counted, "task_count": len(tasks)}
+    return {
+        "schema_version": "SealedAdversarialHoldoutGenerationV05",
+        "status": "passed",
+        "counted": counted,
+        "task_count": len(tasks),
+        "sealed_task_count": count,
+        "negative_task_count": negative_count,
+    }
 
 
-def check_corpus_independence(corpus_root: Path) -> dict[str, Any]:
+def check_corpus_independence(corpus_root: Path, freeze_manifest: Path | None = None) -> dict[str, Any]:
     errors: list[str] = [f"sealed_generator_source:{error}" for error in check_sealed_generator_source_independence()]
+    if freeze_manifest is not None:
+        errors.extend(f"freeze_manifest:{error}" for error in validate_freeze_manifest(freeze_manifest))
     manifest = load_manifest(corpus_root)
     tasks = manifest.get("tasks", [])
     if not isinstance(tasks, list) or not tasks:
@@ -393,6 +543,10 @@ def check_corpus_independence(corpus_root: Path) -> dict[str, Any]:
             errors.append(f"{task.get('task_id', index)}:user_reviewed_goal_missing_review_manifest")
         if task.get("source_type") == "SealedAdversarialHoldout" and metadata.get("freeze_hash") in {None, ""}:
             errors.append(f"{task.get('task_id', index)}:sealed_holdout_missing_freeze_hash")
+        if task.get("source_type") == "SealedAdversarialHoldout" and freeze_manifest is not None and freeze_manifest.exists():
+            expected_freeze_hash = sha256_text(freeze_manifest.read_text(encoding="utf-8"))
+            if metadata.get("freeze_hash") != expected_freeze_hash:
+                errors.append(f"{task.get('task_id', index)}:sealed_holdout_freeze_hash_mismatch")
         if task.get("source_type") == "SealedAdversarialHoldout":
             missing_metadata = sorted(SEALED_REQUIRED_METADATA_KEYS - set(metadata))
             if missing_metadata:
