@@ -2,6 +2,7 @@
 title: "Active Context Seed — GeometryFull2D v0.4.4 Reviewed"
 base_spec: "MARP-GEOLEAN-BASE-009"
 revision: "reviewed-2026-06-18"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-010"
 ---
 
 claim_target: "V0.4.4_GEOMETRY_FULL2D_REAL_SOLVER_CAUSAL_PIPELINE_READY"

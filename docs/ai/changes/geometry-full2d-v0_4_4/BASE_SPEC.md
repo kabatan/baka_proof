@@ -2,7 +2,7 @@
 title: "Guardian Base Spec — Geometry × Lean Full2D Real Solver-Causal Pipeline v0.4.4 Reviewed"
 spec_id: "MARP-GEOLEAN-BASE-009"
 revision: "reviewed-2026-06-18"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-010"
 target_repo: "kabatan/baka_proof"
 created: "2026-06-18"
 supersedes_when_approved:

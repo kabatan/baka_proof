@@ -1,6 +1,6 @@
 ---
 title: "GeometryFull2D v0.4.4 Guardian Track"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-010"
 base_spec: "MARP-GEOLEAN-BASE-009"
 plan: "MARP-GEOLEAN-PLAN-009"
 acceptance: "MARP-GEOLEAN-ACCEPTANCE-009"
@@ -9,7 +9,9 @@ created: "2026-06-18"
 
 # GeometryFull2D v0.4.4 Guardian Track
 
-This directory contains the active Guardian authority set for the v0.4.4 real solver-causal Full2D pipeline track.
+This directory contains the historical Guardian authority set for the v0.4.4 real solver-causal Full2D pipeline track.
+
+The v0.4.4 track is superseded by `MARP-GEOLEAN-BASE-010` for new release work. Its closure and release report remain historical evidence and regression material, but they are not active v0.4.5 release authority.
 
 The v0.4.4 reviewed bundle supersedes v0.4.3 for new release work. v0.4.3 evidence remains historical and may be used only as regression or negative evidence unless it satisfies this v0.4.4 authority set.
 

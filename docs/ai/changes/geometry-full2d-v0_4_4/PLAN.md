@@ -3,7 +3,7 @@ title: "Guardian Plan — GeometryFull2D v0.4.4 Real Solver-Causal Pipeline Revi
 plan_id: "MARP-GEOLEAN-PLAN-009"
 base_spec: "MARP-GEOLEAN-BASE-009"
 revision: "reviewed-2026-06-18"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-PLAN-010"
 ---
 
 # Guardian Plan — GeometryFull2D v0.4.4 Real Solver-Causal Pipeline Reviewed

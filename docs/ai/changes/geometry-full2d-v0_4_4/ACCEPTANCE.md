@@ -4,7 +4,7 @@ acceptance_id: "MARP-GEOLEAN-ACCEPTANCE-009"
 base_spec: "MARP-GEOLEAN-BASE-009"
 plan: "MARP-GEOLEAN-PLAN-009"
 revision: "reviewed-2026-06-18"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-ACCEPTANCE-010"
 ---
 
 # Guardian Acceptance — GeometryFull2D v0.4.4 Reviewed
