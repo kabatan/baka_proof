@@ -1,0 +1,29 @@
+{
+  "matrix_id": "geometry_full2d_v0_4_4",
+  "benchmark_corpus_root": "benchmarks/geometry_full2d_v0_4_4",
+  "output_root": "runs/geometry_full2d_v0_4_4",
+  "spec_id": "MARP-GEOLEAN-BASE-009",
+  "plan_id": "MARP-GEOLEAN-PLAN-009",
+  "acceptance_id": "MARP-GEOLEAN-ACCEPTANCE-009",
+  "release_acceptance_script": "scripts/check_release_acceptance_v0_4_4.py",
+  "matrix_runner": "scripts/run_full2d_matrix_v0_4_4.py",
+  "counted_release_corpus_policy": {
+    "projection_paths_forbidden": true,
+    "projection_labels_counted_as_success_forbidden": true,
+    "old_v0_4_3_corpus_root_forbidden": "benchmarks/geometry_full2d",
+    "required_corpus_root": "benchmarks/geometry_full2d_v0_4_4"
+  },
+  "baselines": [
+    {"id": "B1", "kind": "compiler_only", "solver_enabled": false, "provider_enabled": false},
+    {"id": "B2", "kind": "solver_backed", "solver_enabled": true, "provider_enabled": false},
+    {"id": "B5", "kind": "retrieval_augmented", "solver_enabled": true, "provider_enabled": false},
+    {"id": "B6", "kind": "ablation_no_retrieval", "solver_enabled": true, "provider_enabled": false},
+    {"id": "B7", "kind": "certified_fallback", "solver_enabled": true, "provider_enabled": false}
+  ],
+  "conditional_model_baseline": {
+    "id": "B8",
+    "kind": "model_provider",
+    "enabled": false,
+    "activation_requires_explicit_real_provider_credentials": true
+  }
+}
