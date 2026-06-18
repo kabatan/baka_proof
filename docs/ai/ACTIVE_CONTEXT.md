@@ -44,7 +44,7 @@ The v0.4.5 closure is invalidated as a false-positive checker-passing scaffold. 
 Current task:
 
 ```text
-WP-04 — Corpus system without proof coupling.
+WP-05 — Structured Lean extraction per theorem.
 ```
 
 Completed preparation:
@@ -66,9 +66,15 @@ WP-01 red-case suite implemented with 19 executable red cases, each with static-
 WP-02 fail-closed acceptance harness, K coverage checker, and checker-suppression guard implemented.
 WP-02 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp01_wp02_redcase_acceptance_harness.md and wp02_release_acceptance_smoke.json.
 WP-03 schema validators implemented with positive/negative self-tests for required v0.5 artifact schemas.
+WP-04 corpus system implemented:
+  - external goal source discovery wrapper;
+  - exact goal-preserved import with content-addressed preservation artifacts;
+  - sealed holdout generator blocked from counted generation before freeze;
+  - corpus independence, statement diversity, and goal-preservation replay checkers.
+WP-04 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp04_corpus_system_evidence.md.
 ```
 
-Implementation work for WP-04 and later has not started.
+Implementation work proceeds from WP-05. No counted corpus or release completion is claimed before WP-10A and WP-14.
 
 ## Non-Negotiables
 
@@ -90,7 +96,7 @@ docs/ai/changes/geometry-full2d-v0_5/evidence/
 Allowed:
 
 ```text
-MARP-GEOLEAN-BASE-011 / PLAN-011 / ACCEPTANCE-011 are installed as the active v0.5 Guardian authority set, and recovery implementation can begin from WP-00/WP-01.
+MARP-GEOLEAN-BASE-011 / PLAN-011 / ACCEPTANCE-011 are active; WP-01 through WP-04 implementation gates have local evidence.
 ```
 
 Not allowed yet:

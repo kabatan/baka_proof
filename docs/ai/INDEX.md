@@ -20,7 +20,7 @@ authority: Navigation and classification only; individual Base Spec and Plan fil
 
 Purpose: Guardian-managed v0.5 reviewed-strict recovery track for the GeometryFull2D real solver-causal full pipeline.
 
-Status: imported from the reviewed-strict research-agent bundle and installed as the active user-approved Guardian authority set. WP-01/WP-03 bootstrap gates are implemented; implementation proceeds from WP-04. No v0.5 release completion is claimed.
+Status: imported from the reviewed-strict research-agent bundle and installed as the active user-approved Guardian authority set. WP-01 through WP-04 gates are implemented; implementation proceeds from WP-05. No v0.5 release completion is claimed.
 
 Primary documents:
 
@@ -35,7 +35,7 @@ Primary documents:
 - `docs/ai/changes/geometry-full2d-v0_5/SELF_REVIEW_LOG.md` — reviewed bundle self-review log.
 - `docs/ai/changes/geometry-full2d-v0_5/FAILURE_ANALYSIS.md` — false-positive closure analysis.
 - `docs/ai/changes/geometry-full2d-v0_5/README.md` — change-local index.
-- `docs/ai/changes/geometry-full2d-v0_5/evidence/` — import and post-admission review evidence.
+- `docs/ai/changes/geometry-full2d-v0_5/evidence/` — import, review, and WP implementation evidence.
 - `docs/ai/changes/geometry-full2d-v0_5/debt/debt_ledger.jsonl` — debt ledger.
 
 First commands:
