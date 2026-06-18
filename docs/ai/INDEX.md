@@ -35,7 +35,7 @@ Primary documents:
 - `docs/ai/changes/geometry-full2d-v0_5/SELF_REVIEW_LOG.md` — reviewed bundle self-review log.
 - `docs/ai/changes/geometry-full2d-v0_5/FAILURE_ANALYSIS.md` — false-positive closure analysis.
 - `docs/ai/changes/geometry-full2d-v0_5/README.md` — change-local index.
-- `docs/ai/changes/geometry-full2d-v0_5/evidence/` — import evidence.
+- `docs/ai/changes/geometry-full2d-v0_5/evidence/` — import and post-admission review evidence.
 - `docs/ai/changes/geometry-full2d-v0_5/debt/debt_ledger.jsonl` — debt ledger.
 
 First commands:

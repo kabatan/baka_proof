@@ -27,5 +27,7 @@ The red-case suite describes failure classes, not one historical implementation.
 | TargetShapeMenuCorpus | Corpus has fixed target menu with low skeleton diversity | K-014/K-029 |
 | GoalPreservationSelfAttestation | Generator self-declares goal preservation | K-016 |
 | ProviderImportsCompiler | Provider imports compiler/proof modules | K-031 |
+| B8SilentlyOmitted | Conditional B8 is omitted without checked not-applicable evidence | K-024/K-033 |
+| ClosureOverclaimsReadiness | Closure claims natural-language fidelity, open-problem solving, model-backed readiness, production safety, or out-of-target correctness | K-028 |
 
 A red case is considered rejected only when the production release checker fails it for the expected blocker. Separate toy validators do not count.

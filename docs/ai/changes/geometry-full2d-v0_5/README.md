@@ -17,6 +17,11 @@ Read first:
 
 The v0.4.5 closure is invalidated as a false-positive closure and retained only as negative evidence.
 
+Review evidence:
+
+- `evidence/v0_5_bundle_import.md`
+- `evidence/v0_5_post_admission_review_loop.md`
+
 First checks:
 
 ```bash

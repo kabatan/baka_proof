@@ -41,6 +41,7 @@ REQUIRED_AUTHORITY_FILES = (
     "FAILURE_ANALYSIS.md",
     "README.md",
     "evidence/v0_5_bundle_import.md",
+    "evidence/v0_5_post_admission_review_loop.md",
     "evidence/bundle_sha256sums.txt",
     "debt/debt_ledger.jsonl",
 )
@@ -58,6 +59,10 @@ REQUIRED_TERMS = (
     "stale evidence",
     "fresh release run directory",
     "B1, B2, B5, B6, B7",
+    "Conditional B8 is not an escape hatch",
+    "StageFailureReportV1",
+    "DisabledStageReportV1",
+    "check_closure_claim_ceiling_v0_5.py",
 )
 
 

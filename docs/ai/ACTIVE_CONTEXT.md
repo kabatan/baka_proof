@@ -44,7 +44,7 @@ The v0.4.5 closure is invalidated as a false-positive checker-passing scaffold. 
 Current task:
 
 ```text
-WP-00 — Install v0.5 authority and quarantine old paths.
+Post-admission Base Spec / Plan / Acceptance review loop. After this review is committed, implementation resumes at WP-01 red cases and WP-02 acceptance harness.
 ```
 
 Completed preparation:
@@ -55,6 +55,13 @@ Bundle self-consistency check passed.
 Active context and index updated to point to v0.5.
 v0.4.5 Guardian authority and closure marked superseded/invalidated as false-positive closure evidence.
 v0.5 debt ledger initialized.
+Post-admission review loop found fixable Plan/Base/Acceptance alignment gaps and patched them:
+  - full Base Spec floor/threshold decision checks;
+  - matrix execution before causality, metrics after causality;
+  - sealed holdout after implementation freeze;
+  - no empty-premise target fact counted success;
+  - explicit disabled/failing baseline reports;
+  - conditional B8 and closure claim ceiling checks.
 ```
 
 Implementation work for WP-01 and later has not started.

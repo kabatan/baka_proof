@@ -162,6 +162,18 @@ The rerun must invoke the compiler, ProofWorker, and FinalVerifyGate. A mutation
 
 B1, B2, B5, B6, B7, and conditional B8 must run through the same actual task pipeline for every counted task. Baselines may differ only by declared disabled components in config. Success/failure cannot be decided by theorem family or corpus label.
 
+Conditional B8 is not an escape hatch. The release config must explicitly resolve B8 as one of:
+
+```text
+B8_ENABLED:
+  model/provider baseline is configured and must run for every counted task.
+
+B8_NOT_APPLICABLE:
+  model/provider baseline is not configured for this release; the report must record the concrete reason and checker evidence.
+```
+
+If B8 is enabled in config, missing B8 records are `K-033`. If B8 is not applicable, the report must still prove that B1, B2, B5, B6, and B7 ran for every counted task and that no B2 metric was computed from B8 availability, family labels, target shape, or model self-report.
+
 ### DR-011-007 — Corpus is independent of proof implementation
 
 Counted positives may be only:
@@ -225,10 +237,10 @@ A separate versioned implementation namespace may be used internally, but releas
 The release runner must enforce stage order:
 
 ```text
-extract -> claimspec -> provider -> independent solver checkers -> selected derivation -> compiler -> proof worker -> final verify -> certificate -> causality reruns -> matrix/metrics
+extract -> claimspec -> provider -> independent solver checkers -> selected derivation -> compiler -> proof worker -> final verify -> certificate -> matrix record materialization -> causality reruns -> metrics/summaries
 ```
 
-A downstream stage may read only upstream content-addressed artifacts. Provider must not read compiler outputs. Compiler must not read matrix/corpus labels. Matrix must not synthesize task outcomes.
+A downstream stage may read only upstream content-addressed artifacts. Provider must not read compiler outputs. Compiler must not read matrix/corpus labels. Matrix must not synthesize task outcomes. Matrix execution materializes one actual task/baseline record per counted task and required baseline through FinalVerify or a content-addressed measured failure report. Solver causality then reruns every counted B2 final theorem success discovered by those records. Metrics and summaries are computed only after causality reports exist.
 
 ## 4. Required artifact schemas
 
@@ -265,6 +277,28 @@ ActualTaskPipelineRunV4:
 
 All refs must resolve to artifacts whose content hash matches the ref.
 
+For `final_theorem` records, stage refs must resolve to the successful stage artifact types named by the fields. For `measured_failure` records, a stage that cannot run because a baseline intentionally disables an upstream component or because an earlier real stage failed must write a content-addressed `StageFailureReportV1` or `DisabledStageReportV1`; downstream refs may point to those reports instead of fake successful artifacts. Null refs are allowed only before the stage is reached inside an in-progress run and are forbidden in final release records. A `final_theorem` status may come only from `FinalVerifyReportFull2D`. A measured failure may come from either `FinalVerifyReportFull2D` or a content-addressed stage failure/disabled report, never from family labels, target shape, or expected outcome metadata.
+
+```yaml
+StageFailureReportV1:
+  schema_version: "StageFailureReportV1"
+  stage: "provider | independent_checker | compiler | proof_worker | final_verify | causality"
+  input_refs: ["sha256:..."]
+  command_log_ref: "sha256:..."
+  failure_kind: "real_execution_failure | validation_rejected | resource_exhausted | unsupported_after_disabled_component"
+  failure_reason: "..."
+  git_head: "..."
+  selected_implementation_hash: "sha256:..."
+
+DisabledStageReportV1:
+  schema_version: "DisabledStageReportV1"
+  baseline_id: "B1 | B5 | B6 | B7 | B8"
+  disabled_component: "..."
+  config_ref: "sha256:..."
+  upstream_input_refs: ["sha256:..."]
+  reason: "declared baseline ablation only"
+```
+
 ### 4.2 EngineOutputFull2D
 
 ```yaml
@@ -286,6 +320,8 @@ EngineOutputFull2D:
 ```
 
 Selected artifacts must be semantic and independently checkable. Engine output cannot contain Lean proof snippets, rule-to-proof mappings, target theorem names for proof generation, or compiler-selected rule lists.
+
+The `synthetic_closure` engine role name does not permit synthetic proof closure, target-fact emission, proof-from-shape behavior, or report-shaped success. Counted `synthetic_closure` contribution must be replayable from original hypotheses and independently checked like every other engine output.
 
 ### 4.3 SelectedSolverDerivationV2
 
@@ -419,6 +455,8 @@ B2 - B7 order/case subset advantage >= 0.05 when subset exists
 B8 only when model provider is enabled; otherwise report not_applicable_model_provider_not_used
 ```
 
+The B8 applicability decision must be emitted in `baseline_comparability_summary.conditional_b8_resolution` and independently checked. The checker must fail if B8 is silently omitted, if B8 is disabled only to simplify release execution, or if B8 status changes counted B2 success/failure.
+
 ## 7. Required red cases
 
 Final release must dynamically generate and reject at least these classes:
@@ -441,6 +479,8 @@ RedCase_StaleEvidenceReplay
 RedCase_TargetShapeMenuCorpus
 RedCase_GoalPreservationSelfAttestation
 RedCase_ProviderImportsCompiler
+RedCase_B8SilentlyOmitted
+RedCase_ClosureOverclaimsReadiness
 ```
 
 A red case passes only if release acceptance rejects it for the expected K blocker.
@@ -471,3 +511,5 @@ It must fail unless all hold:
 - DebtLedger has no open entries;
 - closure does not exceed evidence.
 ```
+
+Closure is a separate artifact from the release report. The final release command must emit a machine-readable `closure_claim_ceiling` even before `CLOSURE.md` exists. After `CLOSURE.md` is written, `check_closure_claim_ceiling_v0_5.py` must compare the closure against the release report and fail on any claim beyond `V0.5_GEOMETRY_FULL2D_REAL_SOLVER_CAUSAL_FULL_PIPELINE_READY` or any missing required non-claim.

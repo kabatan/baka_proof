@@ -46,6 +46,7 @@ measured_failure_summary
 debt_ledger_summary
 freshness_summary
 closure_claim_ceiling
+closure_claim_ceiling_summary
 ```
 
 ## 2. K blockers
@@ -88,6 +89,8 @@ K-033 Matrix not all-baselines
 
 Every K blocker must map to at least one executed checker in `checker_coverage_matrix`.
 
+Existing K blockers must enforce the corresponding Base Spec floors verbatim. In particular, K-019 covers used concrete non-identity rules and used rule families, K-022 covers construction/case/certificate evidence and required-task floors, K-025 covers all release and baseline threshold failures, and K-029 covers all corpus count and statement-diversity floors. A checker that only enforces the subset listed in this Acceptance file is incomplete under K-002.
+
 ## 3. Required checker commands
 
 The final release checker must execute or directly invoke equivalent library functions for all of:
@@ -116,6 +119,7 @@ python scripts/check_full2d_metrics_v0_5.py --run-dir runs/geometry_full2d_v0_5
 python scripts/check_full2d_used_rule_coverage_v0_5.py --run-dir runs/geometry_full2d_v0_5
 python scripts/check_full2d_engine_contribution_v0_5.py --run-dir runs/geometry_full2d_v0_5
 python scripts/check_debt_ledger_v0_5.py --change-dir docs/ai/changes/geometry-full2d-v0_5
+python scripts/check_closure_claim_ceiling_v0_5.py --change-dir docs/ai/changes/geometry-full2d-v0_5 --release-report docs/ai/changes/geometry-full2d-v0_5/evidence/release_acceptance_report.json --closure docs/ai/changes/geometry-full2d-v0_5/CLOSURE.md --allow-missing-closure
 ```
 
 The final checker must fail if any command is omitted, returns nonzero, emits stale evidence, or is not represented in the release report.
@@ -127,16 +131,38 @@ The final checker must explicitly enforce:
 ```text
 - red_case_summary.all_rejected == true
 - checker_coverage_matrix covers K-001..K-033
+- corpus_summary.counted_positive_formal_lean_tasks >= 1200
+- corpus_summary.negative_target_outside_malformed_tasks >= 300
+- corpus_summary.sealed_adversarial_holdout_count >= 700
+- corpus_summary.external_goal_preserved_count >= min(300, corpus_summary.discovered_machine_checkable_external_goal_preserved_count)
+- corpus_summary.user_reviewed_goal_without_review_manifest_count == 0
+- corpus_summary.projection_non_counted_positive_count == 0
 - corpus_statement_diversity_summary.unique_normalized_theorem_skeletons >= 150
 - corpus_statement_diversity_summary.max_exact_skeleton_duplicate <= 8
+- corpus_statement_diversity_summary.used_relation_families >= 8
+- corpus_statement_diversity_summary.construction_case_certificate_required_tasks >= 350
+- corpus_statement_diversity_summary.non_target_intermediate_required_tasks >= 600
 - actual_pipeline_run_summary has every counted task x every required baseline
 - solver_causality_summary.live_destructive_rerun_fraction == 1.0
 - solver_causality_summary.precomputed_report_fraction == 0
 - metrics_summary.B2_final_theorem_rate >= 0.70
 - metrics_summary.B2_solver_causal_rate >= 0.70
+- metrics_summary.B2_destructive_causality_pass_rate == 1.0
 - metrics_summary.direct_wrapped_facade_fraction <= 0.10
 - metrics_summary.non_target_intermediate_fraction >= 0.50
+- metrics_summary.construction_case_certificate_success_fraction >= 0.40
+- used_rule_coverage_summary.used_concrete_non_identity_rules >= 25
+- used_rule_coverage_summary.used_rule_families >= 10
 - engine_contribution_summary.every_release_engine_role_contributed == true
+- baseline_comparability_summary.B2_minus_B1_overall_advantage >= 0.15
+- baseline_comparability_summary.B2_minus_B5_construction_subset_advantage >= 0.10 when construction subset exists
+- baseline_comparability_summary.B2_minus_B6_algebraic_metric_subset_advantage >= 0.10 when algebraic/metric subset exists
+- baseline_comparability_summary.B2_minus_B7_order_case_subset_advantage >= 0.05 when order/case subset exists
+- baseline_comparability_summary.conditional_b8_resolution_valid == true
 - freshness_summary.current_git_head_bound == true
 - debt_ledger_summary.open_entries == []
+- closure_claim_ceiling.allowed_final_claim == "V0.5_GEOMETRY_FULL2D_REAL_SOLVER_CAUSAL_FULL_PIPELINE_READY"
+- closure_claim_ceiling.forbidden_claims_present == []
 ```
+
+After `CLOSURE.md` is written, `check_closure_claim_ceiling_v0_5.py` must be rerun without `--allow-missing-closure`. A closure that omits required non-claims or exceeds the release report evidence is K-028.
