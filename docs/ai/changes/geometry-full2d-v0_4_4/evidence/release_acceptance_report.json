@@ -1,0 +1,3090 @@
+{
+  "actual_pipeline_run_summary": {
+    "matrix_record_counts": {
+      "B1": {
+        "final_theorem": 500,
+        "measured_failure": 2850,
+        "record_count": 3350,
+        "success_rate": 0.14925373134328357
+      },
+      "B2": {
+        "final_theorem": 3350,
+        "measured_failure": 0,
+        "record_count": 3350,
+        "success_rate": 1.0
+      },
+      "B5": {
+        "final_theorem": 2900,
+        "measured_failure": 450,
+        "record_count": 3350,
+        "success_rate": 0.8656716417910447
+      },
+      "B6": {
+        "final_theorem": 1800,
+        "measured_failure": 1550,
+        "record_count": 3350,
+        "success_rate": 0.5373134328358209
+      },
+      "B7": {
+        "final_theorem": 3100,
+        "measured_failure": 250,
+        "record_count": 3350,
+        "success_rate": 0.9253731343283582
+      }
+    },
+    "record_count": 16750
+  },
+  "advantage_summary": {
+    "B2_minus_B1_overall": {
+      "a_count": 3350,
+      "a_success_rate": 1.0,
+      "advantage": 0.8507462686567164,
+      "b_count": 3350,
+      "b_success_rate": 0.14925373134328357,
+      "baseline_a": "B2",
+      "baseline_b": "B1",
+      "families": [
+        "Algebraic250",
+        "AngleCyclic450",
+        "Construction450",
+        "Full2DCore500",
+        "HardHoldout50",
+        "IncidenceParallelPerp350",
+        "Inequality150",
+        "MetricRatioArea350",
+        "OlympiadStyle300",
+        "OrderCase250",
+        "Transformation250"
+      ]
+    },
+    "B2_minus_B5_construction_subset": {
+      "a_count": 450,
+      "a_success_rate": 1.0,
+      "advantage": 1.0,
+      "b_count": 450,
+      "b_success_rate": 0.0,
+      "baseline_a": "B2",
+      "baseline_b": "B5",
+      "families": [
+        "Construction450"
+      ]
+    },
+    "B2_minus_B6_algebraic_metric_subset": {
+      "a_count": 1550,
+      "a_success_rate": 1.0,
+      "advantage": 1.0,
+      "b_count": 1550,
+      "b_success_rate": 0.0,
+      "baseline_a": "B2",
+      "baseline_b": "B6",
+      "families": [
+        "Algebraic250",
+        "AngleCyclic450",
+        "HardHoldout50",
+        "Inequality150",
+        "MetricRatioArea350",
+        "OlympiadStyle300"
+      ]
+    },
+    "B2_minus_B7_order_case_subset": {
+      "a_count": 250,
+      "a_success_rate": 1.0,
+      "advantage": 1.0,
+      "b_count": 250,
+      "b_success_rate": 0.0,
+      "baseline_a": "B2",
+      "baseline_b": "B7",
+      "families": [
+        "OrderCase250"
+      ]
+    },
+    "B8": {
+      "status": "not_applicable_model_provider_not_used"
+    }
+  },
+  "b8_applicability": "not_applicable_model_provider_not_used",
+  "baseline_comparability_summary": {
+    "baselines": [
+      "B1",
+      "B2",
+      "B5",
+      "B6",
+      "B7"
+    ],
+    "conditional_model_baseline": {
+      "id": "B8",
+      "status": "not_applicable_model_provider_not_used"
+    },
+    "shared_config_hash": "sha256:d96c3c8d4a124413f210f64c50bb879f8039ad52f14b6c29f17ba02c0d7c1da2",
+    "shared_corpus_manifest_hash": "sha256:521ad6ecfa187802f152d9bd718202701daf0f1d1bd82e72d2d2214f37079789"
+  },
+  "challenge_suite_summary": {
+    "algebraic_geometry": {
+      "challenge_count": 30,
+      "normalized_success_count": 30,
+      "required_challenge_count": 30,
+      "required_normalized_success_count": 15
+    },
+    "construction_search": {
+      "challenge_count": 50,
+      "normalized_success_count": 50,
+      "required_challenge_count": 50,
+      "required_normalized_success_count": 25
+    },
+    "inequality": {
+      "challenge_count": 30,
+      "normalized_success_count": 30,
+      "required_challenge_count": 30,
+      "required_normalized_success_count": 10
+    },
+    "lean_proof_search": {
+      "challenge_count": 50,
+      "normalized_success_count": 50,
+      "required_challenge_count": 50,
+      "required_normalized_success_count": 25
+    },
+    "metric_angle": {
+      "challenge_count": 40,
+      "normalized_success_count": 40,
+      "required_challenge_count": 40,
+      "required_normalized_success_count": 20
+    },
+    "order_case": {
+      "challenge_count": 30,
+      "normalized_success_count": 30,
+      "required_challenge_count": 30,
+      "required_normalized_success_count": 15
+    },
+    "portfolio_coordinator": {
+      "challenge_count": 8,
+      "normalized_success_count": 8,
+      "required_challenge_count": 8,
+      "required_normalized_success_count": 8
+    },
+    "synthetic_closure": {
+      "challenge_count": 50,
+      "normalized_success_count": 50,
+      "required_challenge_count": 50,
+      "required_normalized_success_count": 30
+    },
+    "transformation": {
+      "challenge_count": 30,
+      "normalized_success_count": 30,
+      "required_challenge_count": 30,
+      "required_normalized_success_count": 10
+    }
+  },
+  "checked_rids": [
+    "DR-009-001",
+    "DR-009-002",
+    "DR-009-003",
+    "DR-009-004",
+    "DR-009-005",
+    "I-009-001",
+    "I-009-002",
+    "I-009-003",
+    "K-001",
+    "K-002",
+    "K-003",
+    "K-004",
+    "K-005",
+    "K-006",
+    "K-007",
+    "K-008",
+    "K-009",
+    "K-010",
+    "K-011",
+    "K-012",
+    "K-013",
+    "K-014",
+    "K-015",
+    "K-016",
+    "K-017",
+    "K-018",
+    "K-019",
+    "K-020",
+    "K-021",
+    "K-022",
+    "K-023",
+    "K-024",
+    "K-025",
+    "K-026",
+    "K-027",
+    "WP09",
+    "WP10",
+    "WP11",
+    "WP12",
+    "WP13",
+    "WP14",
+    "WP15",
+    "WP16",
+    "WP17"
+  ],
+  "claim_ceiling": "V0.4.4_GEOMETRY_FULL2D_REAL_SOLVER_CAUSAL_PIPELINE_READY",
+  "closure_allowed": true,
+  "command_results": {
+    "active_guardian_spec": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_active_guardian_spec_v0_4_4.py"
+      ],
+      "parsed_stdout": {
+        "active_base_spec_path": "docs/ai/changes/geometry-full2d-v0_4_4/BASE_SPEC.md",
+        "active_geometry_base_spec": "MARP-GEOLEAN-BASE-009",
+        "base_specs": [
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-full2d-v0_4_2/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-007",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-008"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-full2d-v0_4_3/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-008",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-009"
+          },
+          {
+            "active": true,
+            "path": "docs/ai/changes/geometry-full2d-v0_4_4/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-009",
+            "status": "USER_APPROVED_ACTIVE"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-003",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/ACCEPTANCE_MATRIX.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          }
+        ],
+        "status": "passed",
+        "superseded_geometry_base_spec": "MARP-GEOLEAN-BASE-008"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"active_base_spec_path\": \"docs/ai/changes/geometry-full2d-v0_4_4/BASE_SPEC.md\",\n  \"active_geometry_base_spec\": \"MARP-GEOLEAN-BASE-009\",\n  \"base_specs\": [\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-full2d-v0_4_2/BASE_SPEC.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-007\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-008\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-full2d-v0_4_3/BASE_SPEC.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-008\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-009\"\n    },\n    {\n      \"active\": true,\n      \"path\": \"docs/ai/changes/geometry-full2d-v0_4_4/BASE_SPEC.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-009\",\n      \"status\": \"USER_APPROVED_ACTIVE\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3/BASE_SPEC.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-003\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/ACCEPTANCE_MATRIX.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    },\n    {\n      \"active\": false,\n      \"path\": \"docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md\",\n      \"spec_id\": \"MARP-GEOLEAN-BASE-004\",\n      \"status\": \"SUPERSEDED_BY_MARP-GEOLEAN-BASE-007\"\n    }\n  ],\n  \"status\": \"passed\",\n  \"superseded_geometry_base_spec\": \"MARP-GEOLEAN-BASE-008\"\n}\n"
+    },
+    "actual_pipeline": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_actual_task_pipeline_runs_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "--self-test"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "record_count": 16750,
+        "record_reports": [
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0000:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0000__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0000:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0000__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0000:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0000__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0000:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0000__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0000:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0000__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0001:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0001__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0001:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0001__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0001:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0001__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0001:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0001__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0001:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0001__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0002:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0002__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0002:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0002__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0002:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0002__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0002:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0002__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0002:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0002__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0003:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0003__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0003:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0003__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0003:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0003__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0003:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0003__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0003:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0003__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0004:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0004__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0004:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0004__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0004:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0004__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0004:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0004__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0004:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0004__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0005:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0005__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0005:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0005__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0005:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0005__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0005:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0005__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0005:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0005__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0006:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0006__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0006:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0006__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0006:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0006__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0006:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0006__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0006:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0006__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0007:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0007__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0007:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0007__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0007:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0007__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0007:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0007__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0007:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0007__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0008:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0008__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0008:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0008__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0008:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0008__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0008:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0008__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0008:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0008__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0009:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0009__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0009:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0009__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0009:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0009__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0009:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0009__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0009:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0009__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0010:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0010__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0010:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0010__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0010:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0010__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0010:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0010__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0010:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0010__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0011:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0011__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0011:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0011__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0011:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0011__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0011:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0011__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0011:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0011__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0012:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0012__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0012:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0012__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0012:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0012__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0012:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0012__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0012:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0012__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0013:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0013__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0013:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0013__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0013:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0013__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0013:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0013__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0013:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0013__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0014:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0014__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0014:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0014__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0014:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0014__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0014:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0014__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0014:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0014__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0015:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0015__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0015:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0015__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0015:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0015__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0015:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0015__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0015:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0015__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0016:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0016__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0016:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0016__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0016:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0016__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0016:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0016__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0016:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0016__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0017:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0017__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0017:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0017__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0017:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0017__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0017:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0017__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0017:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0017__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0018:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0018__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0018:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0018__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0018:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0018__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0018:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0018__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0018:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0018__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0019:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0019__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0019:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0019__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0019:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0019__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0019:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0019__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0019:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0019__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0020:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0020__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0020:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0020__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0020:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0020__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0020:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0020__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0020:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0020__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0021:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0021__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0021:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0021__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0021:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0021__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0021:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0021__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0021:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0021__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0022:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0022__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0022:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0022__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0022:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0022__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0022:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0022__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0022:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0022__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0023:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0023__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0023:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0023__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0023:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0023__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0023:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0023__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0023:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0023__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0024:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0024__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0024:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0024__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0024:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0024__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0024:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0024__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0024:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0024__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0025:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0025__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0025:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0025__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0025:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0025__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0025:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0025__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0025:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0025__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0026:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0026__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0026:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0026__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0026:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0026__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0026:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0026__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0026:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0026__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0027:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0027__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0027:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0027__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0027:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0027__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0027:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0027__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0027:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0027__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0028:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0028__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0028:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0028__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0028:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0028__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0028:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0028__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0028:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0028__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0029:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0029__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0029:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0029__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0029:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0029__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0029:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0029__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0029:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0029__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0030:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0030__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0030:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0030__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0030:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0030__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0030:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0030__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0030:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0030__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0031:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0031__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0031:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0031__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0031:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0031__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0031:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0031__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0031:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0031__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0032:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0032__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0032:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0032__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0032:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0032__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0032:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0032__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0032:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0032__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0033:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0033__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0033:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0033__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0033:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0033__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0033:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0033__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0033:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0033__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0034:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0034__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0034:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0034__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0034:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0034__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0034:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0034__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0034:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0034__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0035:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0035__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0035:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0035__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0035:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0035__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0035:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0035__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0035:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0035__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0036:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0036__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0036:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0036__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0036:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0036__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0036:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0036__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0036:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0036__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0037:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0037__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0037:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0037__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0037:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0037__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0037:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0037__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0037:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0037__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0038:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0038__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0038:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0038__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0038:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0038__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0038:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0038__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0038:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0038__B7.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0039:B1",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0039__B1.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0039:B2",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0039__B2.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0039:B5",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0039__B5.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0039:B6",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0039__B6.json",
+            "status": "passed"
+          },
+          {
+            "errors": [],
+            "run_id": "actual_full2d_run:v0_4_4:v044-positive-0039:B7",
+            "source": "actual_task_pipeline_runs_v0_4_4/v044-positive-0039__B7.json",
+            "status": "passed"
+          }
+        ],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "schema_version": "actual_task_pipeline_runs_v0_4_4_report_1",
+        "self_test": {
+          "cases": [
+            {
+              "case": "valid",
+              "errors": [],
+              "status": "passed"
+            },
+            {
+              "case": "missing_causality_artifact",
+              "errors": [
+                "actual_full2d_run:v0_4_4:selftest:B2:missing_artifact_path:SolverCausalityReportV1:sha256:89ff63beee39578ccc7b7189c4c82d24d4ad38314c8e0ab6e21b105fb0dcbc92"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "old_schema",
+              "errors": [
+                "schema_version_not_ActualTaskPipelineRunV2"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "stale_chain",
+              "errors": [
+                "actual_full2d_run:v0_4_4:selftest:B2:causal_chain_hash_mismatch"
+              ],
+              "status": "failed_as_expected"
+            },
+            {
+              "case": "no_solver_necessity",
+              "errors": [
+                "actual_full2d_run:v0_4_4:selftest:B2:certificate_solver_causality_report_ref_mismatch",
+                "actual_full2d_run:v0_4_4:selftest:B2:final_success_without_solver_causal_necessity",
+                "actual_full2d_run:v0_4_4:selftest:B2:final_verify_causality_ref_mismatch"
+              ],
+              "status": "failed_as_expected"
+            }
+          ],
+          "errors": [],
+          "status": "passed"
+        },
+        "status": "passed",
+        "valid_record_count": 16750
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "044-positive-0039:B5\",\n      \"source\": \"actual_task_pipeline_runs_v0_4_4/v044-positive-0039__B5.json\",\n      \"status\": \"passed\"\n    },\n    {\n      \"errors\": [],\n      \"run_id\": \"actual_full2d_run:v0_4_4:v044-positive-0039:B6\",\n      \"source\": \"actual_task_pipeline_runs_v0_4_4/v044-positive-0039__B6.json\",\n      \"status\": \"passed\"\n    },\n    {\n      \"errors\": [],\n      \"run_id\": \"actual_full2d_run:v0_4_4:v044-positive-0039:B7\",\n      \"source\": \"actual_task_pipeline_runs_v0_4_4/v044-positive-0039__B7.json\",\n      \"status\": \"passed\"\n    }\n  ],\n  \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\geometry_full2d_v0_4_4\",\n  \"schema_version\": \"actual_task_pipeline_runs_v0_4_4_report_1\",\n  \"self_test\": {\n    \"cases\": [\n      {\n        \"case\": \"valid\",\n        \"errors\": [],\n        \"status\": \"passed\"\n      },\n      {\n        \"case\": \"missing_causality_artifact\",\n        \"errors\": [\n          \"actual_full2d_run:v0_4_4:selftest:B2:missing_artifact_path:SolverCausalityReportV1:sha256:89ff63beee39578ccc7b7189c4c82d24d4ad38314c8e0ab6e21b105fb0dcbc92\"\n        ],\n        \"status\": \"failed_as_expected\"\n      },\n      {\n        \"case\": \"old_schema\",\n        \"errors\": [\n          \"schema_version_not_ActualTaskPipelineRunV2\"\n        ],\n        \"status\": \"failed_as_expected\"\n      },\n      {\n        \"case\": \"stale_chain\",\n        \"errors\": [\n          \"actual_full2d_run:v0_4_4:selftest:B2:causal_chain_hash_mismatch\"\n        ],\n        \"status\": \"failed_as_expected\"\n      },\n      {\n        \"case\": \"no_solver_necessity\",\n        \"errors\": [\n          \"actual_full2d_run:v0_4_4:selftest:B2:certificate_solver_causality_report_ref_mismatch\",\n          \"actual_full2d_run:v0_4_4:selftest:B2:final_success_without_solver_causal_necessity\",\n          \"actual_full2d_run:v0_4_4:selftest:B2:final_verify_causality_ref_mismatch\"\n        ],\n        \"status\": \"failed_as_expected\"\n      }\n    ],\n    \"errors\": [],\n    \"status\": \"passed\"\n  },\n  \"status\": \"passed\",\n  \"valid_record_count\": 16750\n}\n"
+    },
+    "anti_v043_projection_regression": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_anti_v043_projection_regression.py"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "old_manifest": "benchmarks\\geometry_full2d\\corpus_manifest.json",
+        "old_manifest_projection_detected": true,
+        "projection_counted_fixture_rejection_errors": [
+          "task[0] has projection markers but is counted or positive"
+        ],
+        "renamed_wrapper_hits": [
+          "run_full2d_matrix_v0_4_3"
+        ],
+        "schema_version": "geometry_full2d_anti_v043_projection_regression_1",
+        "stale_projection_generator_hits": [
+          "generate_full2d_external_projection_corpus"
+        ],
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"old_manifest\": \"benchmarks\\\\geometry_full2d\\\\corpus_manifest.json\",\n  \"old_manifest_projection_detected\": true,\n  \"projection_counted_fixture_rejection_errors\": [\n    \"task[0] has projection markers but is counted or positive\"\n  ],\n  \"renamed_wrapper_hits\": [\n    \"run_full2d_matrix_v0_4_3\"\n  ],\n  \"schema_version\": \"geometry_full2d_anti_v043_projection_regression_1\",\n  \"stale_projection_generator_hits\": [\n    \"generate_full2d_external_projection_corpus\"\n  ],\n  \"status\": \"passed\"\n}\n"
+    },
+    "challenge_suite": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_engine_challenge_suite_v0_4_4.py",
+        "--all-engines"
+      ],
+      "parsed_stdout": {
+        "engine_summaries": {
+          "algebraic_geometry": {
+            "challenge_count": 30,
+            "normalized_success_count": 30,
+            "required_challenge_count": 30,
+            "required_normalized_success_count": 15
+          },
+          "construction_search": {
+            "challenge_count": 50,
+            "normalized_success_count": 50,
+            "required_challenge_count": 50,
+            "required_normalized_success_count": 25
+          },
+          "inequality": {
+            "challenge_count": 30,
+            "normalized_success_count": 30,
+            "required_challenge_count": 30,
+            "required_normalized_success_count": 10
+          },
+          "lean_proof_search": {
+            "challenge_count": 50,
+            "normalized_success_count": 50,
+            "required_challenge_count": 50,
+            "required_normalized_success_count": 25
+          },
+          "metric_angle": {
+            "challenge_count": 40,
+            "normalized_success_count": 40,
+            "required_challenge_count": 40,
+            "required_normalized_success_count": 20
+          },
+          "order_case": {
+            "challenge_count": 30,
+            "normalized_success_count": 30,
+            "required_challenge_count": 30,
+            "required_normalized_success_count": 15
+          },
+          "portfolio_coordinator": {
+            "challenge_count": 8,
+            "normalized_success_count": 8,
+            "required_challenge_count": 8,
+            "required_normalized_success_count": 8
+          },
+          "synthetic_closure": {
+            "challenge_count": 50,
+            "normalized_success_count": 50,
+            "required_challenge_count": 50,
+            "required_normalized_success_count": 30
+          },
+          "transformation": {
+            "challenge_count": 30,
+            "normalized_success_count": 30,
+            "required_challenge_count": 30,
+            "required_normalized_success_count": 10
+          }
+        },
+        "errors": [],
+        "schema_version": "engine_challenge_suite_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"engine_summaries\": {\n    \"algebraic_geometry\": {\n      \"challenge_count\": 30,\n      \"normalized_success_count\": 30,\n      \"required_challenge_count\": 30,\n      \"required_normalized_success_count\": 15\n    },\n    \"construction_search\": {\n      \"challenge_count\": 50,\n      \"normalized_success_count\": 50,\n      \"required_challenge_count\": 50,\n      \"required_normalized_success_count\": 25\n    },\n    \"inequality\": {\n      \"challenge_count\": 30,\n      \"normalized_success_count\": 30,\n      \"required_challenge_count\": 30,\n      \"required_normalized_success_count\": 10\n    },\n    \"lean_proof_search\": {\n      \"challenge_count\": 50,\n      \"normalized_success_count\": 50,\n      \"required_challenge_count\": 50,\n      \"required_normalized_success_count\": 25\n    },\n    \"metric_angle\": {\n      \"challenge_count\": 40,\n      \"normalized_success_count\": 40,\n      \"required_challenge_count\": 40,\n      \"required_normalized_success_count\": 20\n    },\n    \"order_case\": {\n      \"challenge_count\": 30,\n      \"normalized_success_count\": 30,\n      \"required_challenge_count\": 30,\n      \"required_normalized_success_count\": 15\n    },\n    \"portfolio_coordinator\": {\n      \"challenge_count\": 8,\n      \"normalized_success_count\": 8,\n      \"required_challenge_count\": 8,\n      \"required_normalized_success_count\": 8\n    },\n    \"synthetic_closure\": {\n      \"challenge_count\": 50,\n      \"normalized_success_count\": 50,\n      \"required_challenge_count\": 50,\n      \"required_normalized_success_count\": 30\n    },\n    \"transformation\": {\n      \"challenge_count\": 30,\n      \"normalized_success_count\": 30,\n      \"required_challenge_count\": 30,\n      \"required_normalized_success_count\": 10\n    }\n  },\n  \"errors\": [],\n  \"schema_version\": \"engine_challenge_suite_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "claimspec": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_claimspec_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "--self-test"
+      ],
+      "parsed_stdout": {
+        "claim_spec_count": 3350,
+        "errors": [],
+        "expected_positive_count": 3350,
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "schema_version": "full2d_claimspec_v0_4_4_report_1",
+        "self_test": {
+          "errors": [],
+          "status": "passed"
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"claim_spec_count\": 3350,\n  \"errors\": [],\n  \"expected_positive_count\": 3350,\n  \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\geometry_full2d_v0_4_4\",\n  \"schema_version\": \"full2d_claimspec_v0_4_4_report_1\",\n  \"self_test\": {\n    \"errors\": [],\n    \"status\": \"passed\"\n  },\n  \"status\": \"passed\"\n}\n"
+    },
+    "compiler_evidence": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_compiler_evidence_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "--self-test"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "record_count": 16750,
+        "schema_version": "compiler_evidence_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"record_count\": 16750,\n  \"schema_version\": \"compiler_evidence_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "compiler_input_isolation": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_compiler_input_isolation_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "--self-test"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "record_count": 16750,
+        "schema_version": "compiler_input_isolation_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"record_count\": 16750,\n  \"schema_version\": \"compiler_input_isolation_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "corpus_manifest": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_corpus_manifest_v0_4_4.py",
+        "--corpus-root",
+        "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d_v0_4_4"
+      ],
+      "parsed_stdout": {
+        "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d_v0_4_4",
+        "corpus_summary": {
+          "category_counts": {
+            "ExternalGoalPreserved": 700,
+            "NegativeTargetOutsideMalformed": 500,
+            "ProjectionNonCounted": 12,
+            "SealedSolverChallenge": 2650
+          },
+          "manifest_hash": "sha256:521ad6ecfa187802f152d9bd718202701daf0f1d1bd82e72d2d2214f37079789",
+          "negative_count": 500,
+          "positive_category_counts": {
+            "ExternalGoalPreserved": 700,
+            "SealedSolverChallenge": 2650
+          },
+          "positive_count": 3350,
+          "projection_counted_positive_count": 0,
+          "target_shape_duplicate_gt_5_count": 0,
+          "task_count": 3862
+        },
+        "errors": [],
+        "family_floor_summary": {
+          "Algebraic250": {
+            "actual": 250,
+            "passed": true,
+            "required": 250
+          },
+          "AngleCyclic450": {
+            "actual": 450,
+            "passed": true,
+            "required": 450
+          },
+          "Construction450": {
+            "actual": 450,
+            "passed": true,
+            "required": 450
+          },
+          "Full2DCore500": {
+            "actual": 500,
+            "passed": true,
+            "required": 500
+          },
+          "HardHoldout50": {
+            "actual": 50,
+            "passed": true,
+            "required": 50
+          },
+          "IncidenceParallelPerp350": {
+            "actual": 350,
+            "passed": true,
+            "required": 350
+          },
+          "Inequality150": {
+            "actual": 150,
+            "passed": true,
+            "required": 150
+          },
+          "MetricRatioArea350": {
+            "actual": 350,
+            "passed": true,
+            "required": 350
+          },
+          "OlympiadStyle300": {
+            "actual": 300,
+            "passed": true,
+            "required": 300
+          },
+          "OrderCase250": {
+            "actual": 250,
+            "passed": true,
+            "required": 250
+          },
+          "Transformation250": {
+            "actual": 250,
+            "passed": true,
+            "required": 250
+          }
+        },
+        "schema_version": "geometry_full2d_corpus_manifest_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"corpus_root\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\benchmarks\\\\geometry_full2d_v0_4_4\",\n  \"corpus_summary\": {\n    \"category_counts\": {\n      \"ExternalGoalPreserved\": 700,\n      \"NegativeTargetOutsideMalformed\": 500,\n      \"ProjectionNonCounted\": 12,\n      \"SealedSolverChallenge\": 2650\n    },\n    \"manifest_hash\": \"sha256:521ad6ecfa187802f152d9bd718202701daf0f1d1bd82e72d2d2214f37079789\",\n    \"negative_count\": 500,\n    \"positive_category_counts\": {\n      \"ExternalGoalPreserved\": 700,\n      \"SealedSolverChallenge\": 2650\n    },\n    \"positive_count\": 3350,\n    \"projection_counted_positive_count\": 0,\n    \"target_shape_duplicate_gt_5_count\": 0,\n    \"task_count\": 3862\n  },\n  \"errors\": [],\n  \"family_floor_summary\": {\n    \"Algebraic250\": {\n      \"actual\": 250,\n      \"passed\": true,\n      \"required\": 250\n    },\n    \"AngleCyclic450\": {\n      \"actual\": 450,\n      \"passed\": true,\n      \"required\": 450\n    },\n    \"Construction450\": {\n      \"actual\": 450,\n      \"passed\": true,\n      \"required\": 450\n    },\n    \"Full2DCore500\": {\n      \"actual\": 500,\n      \"passed\": true,\n      \"required\": 500\n    },\n    \"HardHoldout50\": {\n      \"actual\": 50,\n      \"passed\": true,\n      \"required\": 50\n    },\n    \"IncidenceParallelPerp350\": {\n      \"actual\": 350,\n      \"passed\": true,\n      \"required\": 350\n    },\n    \"Inequality150\": {\n      \"actual\": 150,\n      \"passed\": true,\n      \"required\": 150\n    },\n    \"MetricRatioArea350\": {\n      \"actual\": 350,\n      \"passed\": true,\n      \"required\": 350\n    },\n    \"OlympiadStyle300\": {\n      \"actual\": 300,\n      \"passed\": true,\n      \"required\": 300\n    },\n    \"OrderCase250\": {\n      \"actual\": 250,\n      \"passed\": true,\n      \"required\": 250\n    },\n    \"Transformation250\": {\n      \"actual\": 250,\n      \"passed\": true,\n      \"required\": 250\n    }\n  },\n  \"schema_version\": \"geometry_full2d_corpus_manifest_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "engine_contribution": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_engine_contribution_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4"
+      ],
+      "parsed_stdout": {
+        "checked_b2_successes": 3350,
+        "engine_contribution_summary": {
+          "algebraic_geometry": 600,
+          "construction_search": 450,
+          "inequality": 450,
+          "lean_proof_search": 500,
+          "metric_angle": 500,
+          "order_case": 600,
+          "transformation": 250
+        },
+        "errors": [],
+        "required_engine_roles": [
+          "algebraic_geometry",
+          "construction_search",
+          "inequality",
+          "lean_proof_search",
+          "metric_angle",
+          "order_case",
+          "transformation"
+        ],
+        "schema_version": "full2d_engine_contribution_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"checked_b2_successes\": 3350,\n  \"engine_contribution_summary\": {\n    \"algebraic_geometry\": 600,\n    \"construction_search\": 450,\n    \"inequality\": 450,\n    \"lean_proof_search\": 500,\n    \"metric_angle\": 500,\n    \"order_case\": 600,\n    \"transformation\": 250\n  },\n  \"errors\": [],\n  \"required_engine_roles\": [\n    \"algebraic_geometry\",\n    \"construction_search\",\n    \"inequality\",\n    \"lean_proof_search\",\n    \"metric_angle\",\n    \"order_case\",\n    \"transformation\"\n  ],\n  \"schema_version\": \"full2d_engine_contribution_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "engine_no_proof_text": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_engine_no_proof_text_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "--self-test"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "record_count": 16750,
+        "schema_version": "engine_no_proof_text_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"record_count\": 16750,\n  \"schema_version\": \"engine_no_proof_text_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "engine_real_execution": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_engine_real_execution_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "--self-test"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "record_count": 16750,
+        "schema_version": "engine_real_execution_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"record_count\": 16750,\n  \"schema_version\": \"engine_real_execution_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "extraction_corpus": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_extraction_corpus_v0_4_4.py",
+        "--corpus-root",
+        "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d_v0_4_4",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "expected_positive_count": 3350,
+        "report_count": 3350,
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "schema_version": "full2d_extraction_corpus_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"expected_positive_count\": 3350,\n  \"report_count\": 3350,\n  \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\geometry_full2d_v0_4_4\",\n  \"schema_version\": \"full2d_extraction_corpus_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "final_verify": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_final_verify_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "--self-test"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "record_count": 16750,
+        "schema_version": "final_verify_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"record_count\": 16750,\n  \"schema_version\": \"final_verify_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "goal_preservation": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_goal_preservation_reports.py",
+        "--corpus-root",
+        "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d_v0_4_4"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "external_goal_preserved_task_count": 700,
+        "report_count": 700,
+        "schema_version": "goal_preservation_reports_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"external_goal_preserved_task_count\": 700,\n  \"report_count\": 700,\n  \"schema_version\": \"goal_preservation_reports_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "matrix": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/run_full2d_matrix_v0_4_4.py",
+        "--config",
+        "C:\\Users\\bakat\\work\\AI_math_research\\configs\\benchmark_runs\\geometry_full2d_v0_4_4.yaml",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "--execute-all"
+      ],
+      "parsed_stdout": {
+        "baseline_counts": {
+          "B1": {
+            "final_theorem": 500,
+            "measured_failure": 2850,
+            "record_count": 3350,
+            "success_rate": 0.14925373134328357
+          },
+          "B2": {
+            "final_theorem": 3350,
+            "measured_failure": 0,
+            "record_count": 3350,
+            "success_rate": 1.0
+          },
+          "B5": {
+            "final_theorem": 2900,
+            "measured_failure": 450,
+            "record_count": 3350,
+            "success_rate": 0.8656716417910447
+          },
+          "B6": {
+            "final_theorem": 1800,
+            "measured_failure": 1550,
+            "record_count": 3350,
+            "success_rate": 0.5373134328358209
+          },
+          "B7": {
+            "final_theorem": 3100,
+            "measured_failure": 250,
+            "record_count": 3350,
+            "success_rate": 0.9253731343283582
+          }
+        },
+        "baselines": [
+          "B1",
+          "B2",
+          "B5",
+          "B6",
+          "B7"
+        ],
+        "conditional_model_baseline": {
+          "id": "B8",
+          "status": "not_applicable_model_provider_not_used"
+        },
+        "config_hash": "sha256:d96c3c8d4a124413f210f64c50bb879f8039ad52f14b6c29f17ba02c0d7c1da2",
+        "config_path": "configs\\benchmark_runs\\geometry_full2d_v0_4_4.yaml",
+        "corpus_manifest_hash": "sha256:521ad6ecfa187802f152d9bd718202701daf0f1d1bd82e72d2d2214f37079789",
+        "corpus_root": "benchmarks\\geometry_full2d_v0_4_4",
+        "errors": [],
+        "family_counts": {
+          "B1": {
+            "Algebraic250": {
+              "final_theorem": 0,
+              "measured_failure": 250,
+              "records": 250
+            },
+            "AngleCyclic450": {
+              "final_theorem": 0,
+              "measured_failure": 450,
+              "records": 450
+            },
+            "Construction450": {
+              "final_theorem": 0,
+              "measured_failure": 450,
+              "records": 450
+            },
+            "Full2DCore500": {
+              "final_theorem": 500,
+              "measured_failure": 0,
+              "records": 500
+            },
+            "HardHoldout50": {
+              "final_theorem": 0,
+              "measured_failure": 50,
+              "records": 50
+            },
+            "IncidenceParallelPerp350": {
+              "final_theorem": 0,
+              "measured_failure": 350,
+              "records": 350
+            },
+            "Inequality150": {
+              "final_theorem": 0,
+              "measured_failure": 150,
+              "records": 150
+            },
+            "MetricRatioArea350": {
+              "final_theorem": 0,
+              "measured_failure": 350,
+              "records": 350
+            },
+            "OlympiadStyle300": {
+              "final_theorem": 0,
+              "measured_failure": 300,
+              "records": 300
+            },
+            "OrderCase250": {
+              "final_theorem": 0,
+              "measured_failure": 250,
+              "records": 250
+            },
+            "Transformation250": {
+              "final_theorem": 0,
+              "measured_failure": 250,
+              "records": 250
+            }
+          },
+          "B2": {
+            "Algebraic250": {
+              "final_theorem": 250,
+              "measured_failure": 0,
+              "records": 250
+            },
+            "AngleCyclic450": {
+              "final_theorem": 450,
+              "measured_failure": 0,
+              "records": 450
+            },
+            "Construction450": {
+              "final_theorem": 450,
+              "measured_failure": 0,
+              "records": 450
+            },
+            "Full2DCore500": {
+              "final_theorem": 500,
+              "measured_failure": 0,
+              "records": 500
+            },
+            "HardHoldout50": {
+              "final_theorem": 50,
+              "measured_failure": 0,
+              "records": 50
+            },
+            "IncidenceParallelPerp350": {
+              "final_theorem": 350,
+              "measured_failure": 0,
+              "records": 350
+            },
+            "Inequality150": {
+              "final_theorem": 150,
+              "measured_failure": 0,
+              "records": 150
+            },
+            "MetricRatioArea350": {
+              "final_theorem": 350,
+              "measured_failure": 0,
+              "records": 350
+            },
+            "OlympiadStyle300": {
+              "final_theorem": 300,
+              "measured_failure": 0,
+              "records": 300
+            },
+            "OrderCase250": {
+              "final_theorem": 250,
+              "measured_failure": 0,
+              "records": 250
+            },
+            "Transformation250": {
+              "final_theorem": 250,
+              "measured_failure": 0,
+              "records": 250
+            }
+          },
+          "B5": {
+            "Algebraic250": {
+              "final_theorem": 250,
+              "measured_failure": 0,
+              "records": 250
+            },
+            "AngleCyclic450": {
+              "final_theorem": 450,
+              "measured_failure": 0,
+              "records": 450
+            },
+            "Construction450": {
+              "final_theorem": 0,
+              "measured_failure": 450,
+              "records": 450
+            },
+            "Full2DCore500": {
+              "final_theorem": 500,
+              "measured_failure": 0,
+              "records": 500
+            },
+            "HardHoldout50": {
+              "final_theorem": 50,
+              "measured_failure": 0,
+              "records": 50
+            },
+            "IncidenceParallelPerp350": {
+              "final_theorem": 350,
+              "measured_failure": 0,
+              "records": 350
+            },
+            "Inequality150": {
+              "final_theorem": 150,
+              "measured_failure": 0,
+              "records": 150
+            },
+            "MetricRatioArea350": {
+              "final_theorem": 350,
+              "measured_failure": 0,
+              "records": 350
+            },
+            "OlympiadStyle300": {
+              "final_theorem": 300,
+              "measured_failure": 0,
+              "records": 300
+            },
+            "OrderCase250": {
+              "final_theorem": 250,
+              "measured_failure": 0,
+              "records": 250
+            },
+            "Transformation250": {
+              "final_theorem": 250,
+              "measured_failure": 0,
+              "records": 250
+            }
+          },
+          "B6": {
+            "Algebraic250": {
+              "final_theorem": 0,
+              "measured_failure": 250,
+              "records": 250
+            },
+            "AngleCyclic450": {
+              "final_theorem": 0,
+              "measured_failure": 450,
+              "records": 450
+            },
+            "Construction450": {
+              "final_theorem": 450,
+              "measured_failure": 0,
+              "records": 450
+            },
+            "Full2DCore500": {
+              "final_theorem": 500,
+              "measured_failure": 0,
+              "records": 500
+            },
+            "HardHoldout50": {
+              "final_theorem": 0,
+              "measured_failure": 50,
+              "records": 50
+            },
+            "IncidenceParallelPerp350": {
+              "final_theorem": 350,
+              "measured_failure": 0,
+              "records": 350
+            },
+            "Inequality150": {
+              "final_theorem": 0,
+              "measured_failure": 150,
+              "records": 150
+            },
+            "MetricRatioArea350": {
+              "final_theorem": 0,
+              "measured_failure": 350,
+              "records": 350
+            },
+            "OlympiadStyle300": {
+              "final_theorem": 0,
+              "measured_failure": 300,
+              "records": 300
+            },
+            "OrderCase250": {
+              "final_theorem": 250,
+              "measured_failure": 0,
+              "records": 250
+            },
+            "Transformation250": {
+              "final_theorem": 250,
+              "measured_failure": 0,
+              "records": 250
+            }
+          },
+          "B7": {
+            "Algebraic250": {
+              "final_theorem": 250,
+              "measured_failure": 0,
+              "records": 250
+            },
+            "AngleCyclic450": {
+              "final_theorem": 450,
+              "measured_failure": 0,
+              "records": 450
+            },
+            "Construction450": {
+              "final_theorem": 450,
+              "measured_failure": 0,
+              "records": 450
+            },
+            "Full2DCore500": {
+              "final_theorem": 500,
+              "measured_failure": 0,
+              "records": 500
+            },
+            "HardHoldout50": {
+              "final_theorem": 50,
+              "measured_failure": 0,
+              "records": 50
+            },
+            "IncidenceParallelPerp350": {
+              "final_theorem": 350,
+              "measured_failure": 0,
+              "records": 350
+            },
+            "Inequality150": {
+              "final_theorem": 150,
+              "measured_failure": 0,
+              "records": 150
+            },
+            "MetricRatioArea350": {
+              "final_theorem": 350,
+              "measured_failure": 0,
+              "records": 350
+            },
+            "OlympiadStyle300": {
+              "final_theorem": 300,
+              "measured_failure": 0,
+              "records": 300
+            },
+            "OrderCase250": {
+              "final_theorem": 0,
+              "measured_failure": 250,
+              "records": 250
+            },
+            "Transformation250": {
+              "final_theorem": 250,
+              "measured_failure": 0,
+              "records": 250
+            }
+          }
+        },
+        "positive_task_count": 3350,
+        "run_dir": "runs\\geometry_full2d_v0_4_4",
+        "run_records_hash": "sha256:5b98e989c7c2fd902b3efe1979d804b5bab6362dde3c22ab7ebbaea3f83f3917",
+        "runner_reports": [],
+        "schema_version": "Full2DMatrixSummaryV044",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": " \"records\": 350\n      },\n      \"OlympiadStyle300\": {\n        \"final_theorem\": 0,\n        \"measured_failure\": 300,\n        \"records\": 300\n      },\n      \"OrderCase250\": {\n        \"final_theorem\": 250,\n        \"measured_failure\": 0,\n        \"records\": 250\n      },\n      \"Transformation250\": {\n        \"final_theorem\": 250,\n        \"measured_failure\": 0,\n        \"records\": 250\n      }\n    },\n    \"B7\": {\n      \"Algebraic250\": {\n        \"final_theorem\": 250,\n        \"measured_failure\": 0,\n        \"records\": 250\n      },\n      \"AngleCyclic450\": {\n        \"final_theorem\": 450,\n        \"measured_failure\": 0,\n        \"records\": 450\n      },\n      \"Construction450\": {\n        \"final_theorem\": 450,\n        \"measured_failure\": 0,\n        \"records\": 450\n      },\n      \"Full2DCore500\": {\n        \"final_theorem\": 500,\n        \"measured_failure\": 0,\n        \"records\": 500\n      },\n      \"HardHoldout50\": {\n        \"final_theorem\": 50,\n        \"measured_failure\": 0,\n        \"records\": 50\n      },\n      \"IncidenceParallelPerp350\": {\n        \"final_theorem\": 350,\n        \"measured_failure\": 0,\n        \"records\": 350\n      },\n      \"Inequality150\": {\n        \"final_theorem\": 150,\n        \"measured_failure\": 0,\n        \"records\": 150\n      },\n      \"MetricRatioArea350\": {\n        \"final_theorem\": 350,\n        \"measured_failure\": 0,\n        \"records\": 350\n      },\n      \"OlympiadStyle300\": {\n        \"final_theorem\": 300,\n        \"measured_failure\": 0,\n        \"records\": 300\n      },\n      \"OrderCase250\": {\n        \"final_theorem\": 0,\n        \"measured_failure\": 250,\n        \"records\": 250\n      },\n      \"Transformation250\": {\n        \"final_theorem\": 250,\n        \"measured_failure\": 0,\n        \"records\": 250\n      }\n    }\n  },\n  \"positive_task_count\": 3350,\n  \"run_dir\": \"runs\\\\geometry_full2d_v0_4_4\",\n  \"run_records_hash\": \"sha256:5b98e989c7c2fd902b3efe1979d804b5bab6362dde3c22ab7ebbaea3f83f3917\",\n  \"runner_reports\": [],\n  \"schema_version\": \"Full2DMatrixSummaryV044\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "matrix_evidence": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_matrix_evidence_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "expected_baselines": [
+          "B1",
+          "B2",
+          "B5",
+          "B6",
+          "B7"
+        ],
+        "expected_positive_tasks": 3350,
+        "schema_version": "matrix_evidence_v0_4_4_report_1",
+        "status": "passed",
+        "summary_path": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4\\matrix_summary_v0_4_4.json"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"expected_baselines\": [\n    \"B1\",\n    \"B2\",\n    \"B5\",\n    \"B6\",\n    \"B7\"\n  ],\n  \"expected_positive_tasks\": 3350,\n  \"schema_version\": \"matrix_evidence_v0_4_4_report_1\",\n  \"status\": \"passed\",\n  \"summary_path\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\geometry_full2d_v0_4_4\\\\matrix_summary_v0_4_4.json\"\n}\n"
+    },
+    "metrics": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_metrics_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4"
+      ],
+      "parsed_stdout": {
+        "advantage_summary": {
+          "B2_minus_B1_overall": {
+            "a_count": 3350,
+            "a_success_rate": 1.0,
+            "advantage": 0.8507462686567164,
+            "b_count": 3350,
+            "b_success_rate": 0.14925373134328357,
+            "baseline_a": "B2",
+            "baseline_b": "B1",
+            "families": [
+              "Algebraic250",
+              "AngleCyclic450",
+              "Construction450",
+              "Full2DCore500",
+              "HardHoldout50",
+              "IncidenceParallelPerp350",
+              "Inequality150",
+              "MetricRatioArea350",
+              "OlympiadStyle300",
+              "OrderCase250",
+              "Transformation250"
+            ]
+          },
+          "B2_minus_B5_construction_subset": {
+            "a_count": 450,
+            "a_success_rate": 1.0,
+            "advantage": 1.0,
+            "b_count": 450,
+            "b_success_rate": 0.0,
+            "baseline_a": "B2",
+            "baseline_b": "B5",
+            "families": [
+              "Construction450"
+            ]
+          },
+          "B2_minus_B6_algebraic_metric_subset": {
+            "a_count": 1550,
+            "a_success_rate": 1.0,
+            "advantage": 1.0,
+            "b_count": 1550,
+            "b_success_rate": 0.0,
+            "baseline_a": "B2",
+            "baseline_b": "B6",
+            "families": [
+              "Algebraic250",
+              "AngleCyclic450",
+              "HardHoldout50",
+              "Inequality150",
+              "MetricRatioArea350",
+              "OlympiadStyle300"
+            ]
+          },
+          "B2_minus_B7_order_case_subset": {
+            "a_count": 250,
+            "a_success_rate": 1.0,
+            "advantage": 1.0,
+            "b_count": 250,
+            "b_success_rate": 0.0,
+            "baseline_a": "B2",
+            "baseline_b": "B7",
+            "families": [
+              "OrderCase250"
+            ]
+          },
+          "B8": {
+            "status": "not_applicable_model_provider_not_used"
+          }
+        },
+        "b2_overall": {
+          "final_theorem": 3350,
+          "positive_task_count": 3350,
+          "required_rate": 0.85,
+          "success_rate": 1.0
+        },
+        "category_success_summary": {
+          "ExternalGoalPreserved": 700,
+          "SealedSolverChallenge": 2650
+        },
+        "errors": [],
+        "family_floor_summary": {
+          "Algebraic250": {
+            "expected_count": 250,
+            "final_theorem": 250,
+            "passed": true,
+            "record_count": 250,
+            "required_rate": 0.75,
+            "success_rate": 1.0
+          },
+          "AngleCyclic450": {
+            "expected_count": 450,
+            "final_theorem": 450,
+            "passed": true,
+            "record_count": 450,
+            "required_rate": 0.9,
+            "success_rate": 1.0
+          },
+          "Construction450": {
+            "expected_count": 450,
+            "final_theorem": 450,
+            "passed": true,
+            "record_count": 450,
+            "required_rate": 0.85,
+            "success_rate": 1.0
+          },
+          "Full2DCore500": {
+            "expected_count": 500,
+            "final_theorem": 500,
+            "passed": true,
+            "record_count": 500,
+            "required_rate": 0.95,
+            "success_rate": 1.0
+          },
+          "HardHoldout50": {
+            "expected_count": 50,
+            "final_theorem": 50,
+            "passed": true,
+            "record_count": 50,
+            "required_rate": 0.5,
+            "success_rate": 1.0
+          },
+          "IncidenceParallelPerp350": {
+            "expected_count": 350,
+            "final_theorem": 350,
+            "passed": true,
+            "record_count": 350,
+            "required_rate": 0.92,
+            "success_rate": 1.0
+          },
+          "Inequality150": {
+            "expected_count": 150,
+            "final_theorem": 150,
+            "passed": true,
+            "record_count": 150,
+            "required_rate": 0.7,
+            "success_rate": 1.0
+          },
+          "MetricRatioArea350": {
+            "expected_count": 350,
+            "final_theorem": 350,
+            "passed": true,
+            "record_count": 350,
+            "required_rate": 0.85,
+            "success_rate": 1.0
+          },
+          "OlympiadStyle300": {
+            "expected_count": 300,
+            "final_theorem": 300,
+            "passed": true,
+            "record_count": 300,
+            "required_rate": 0.65,
+            "success_rate": 1.0
+          },
+          "OrderCase250": {
+            "expected_count": 250,
+            "final_theorem": 250,
+            "passed": true,
+            "record_count": 250,
+            "required_rate": 0.75,
+            "success_rate": 1.0
+          },
+          "Transformation250": {
+            "expected_count": 250,
+            "final_theorem": 250,
+            "passed": true,
+            "record_count": 250,
+            "required_rate": 0.8,
+            "success_rate": 1.0
+          }
+        },
+        "schema_version": "full2d_metrics_v0_4_4_report_1",
+        "solver_causal_success_fraction": 1.0,
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "0,\n      \"final_theorem\": 450,\n      \"passed\": true,\n      \"record_count\": 450,\n      \"required_rate\": 0.9,\n      \"success_rate\": 1.0\n    },\n    \"Construction450\": {\n      \"expected_count\": 450,\n      \"final_theorem\": 450,\n      \"passed\": true,\n      \"record_count\": 450,\n      \"required_rate\": 0.85,\n      \"success_rate\": 1.0\n    },\n    \"Full2DCore500\": {\n      \"expected_count\": 500,\n      \"final_theorem\": 500,\n      \"passed\": true,\n      \"record_count\": 500,\n      \"required_rate\": 0.95,\n      \"success_rate\": 1.0\n    },\n    \"HardHoldout50\": {\n      \"expected_count\": 50,\n      \"final_theorem\": 50,\n      \"passed\": true,\n      \"record_count\": 50,\n      \"required_rate\": 0.5,\n      \"success_rate\": 1.0\n    },\n    \"IncidenceParallelPerp350\": {\n      \"expected_count\": 350,\n      \"final_theorem\": 350,\n      \"passed\": true,\n      \"record_count\": 350,\n      \"required_rate\": 0.92,\n      \"success_rate\": 1.0\n    },\n    \"Inequality150\": {\n      \"expected_count\": 150,\n      \"final_theorem\": 150,\n      \"passed\": true,\n      \"record_count\": 150,\n      \"required_rate\": 0.7,\n      \"success_rate\": 1.0\n    },\n    \"MetricRatioArea350\": {\n      \"expected_count\": 350,\n      \"final_theorem\": 350,\n      \"passed\": true,\n      \"record_count\": 350,\n      \"required_rate\": 0.85,\n      \"success_rate\": 1.0\n    },\n    \"OlympiadStyle300\": {\n      \"expected_count\": 300,\n      \"final_theorem\": 300,\n      \"passed\": true,\n      \"record_count\": 300,\n      \"required_rate\": 0.65,\n      \"success_rate\": 1.0\n    },\n    \"OrderCase250\": {\n      \"expected_count\": 250,\n      \"final_theorem\": 250,\n      \"passed\": true,\n      \"record_count\": 250,\n      \"required_rate\": 0.75,\n      \"success_rate\": 1.0\n    },\n    \"Transformation250\": {\n      \"expected_count\": 250,\n      \"final_theorem\": 250,\n      \"passed\": true,\n      \"record_count\": 250,\n      \"required_rate\": 0.8,\n      \"success_rate\": 1.0\n    }\n  },\n  \"schema_version\": \"full2d_metrics_v0_4_4_report_1\",\n  \"solver_causal_success_fraction\": 1.0,\n  \"status\": \"passed\"\n}\n"
+    },
+    "no_projection_release_path": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_no_projection_release_path_v0_4_4.py"
+      ],
+      "parsed_stdout": {
+        "checked_entrypoints": [
+          "configs\\benchmark_runs\\geometry_full2d_v0_4_4.yaml",
+          "scripts\\run_full2d_matrix_v0_4_4.py",
+          "scripts\\check_release_acceptance_v0_4_4.py"
+        ],
+        "errors": [],
+        "inspected": {
+          "configs\\benchmark_runs\\geometry_full2d_v0_4_4.yaml": {
+            "config_summary": {
+              "baselines": [
+                "B1",
+                "B2",
+                "B5",
+                "B6",
+                "B7"
+              ],
+              "benchmark_corpus_root": "benchmarks/geometry_full2d_v0_4_4",
+              "conditional_model_baseline": "B8",
+              "matrix_id": "geometry_full2d_v0_4_4"
+            },
+            "imports": [],
+            "sha256": "d96c3c8d4a124413f210f64c50bb879f8039ad52f14b6c29f17ba02c0d7c1da2"
+          },
+          "scripts\\check_release_acceptance_v0_4_4.py": {
+            "config_summary": null,
+            "imports": [
+              "__future__",
+              "argparse",
+              "collections",
+              "hashlib",
+              "json",
+              "os",
+              "pathlib",
+              "scripts.full2d_v0_4_4_corpus_lib",
+              "scripts.full2d_v0_4_4_run_checks",
+              "subprocess",
+              "sys",
+              "typing"
+            ],
+            "sha256": "276dbbac037dbf603887a6f49a39c0944a942c9efef87af4e6da9898be58baca"
+          },
+          "scripts\\run_full2d_matrix_v0_4_4.py": {
+            "config_summary": null,
+            "imports": [
+              "__future__",
+              "argparse",
+              "collections",
+              "hashlib",
+              "json",
+              "os",
+              "pathlib",
+              "scripts.full2d_v0_4_4_corpus_lib",
+              "scripts.full2d_v0_4_4_run_checks",
+              "subprocess",
+              "sys",
+              "typing"
+            ],
+            "sha256": "c0c8882bd8f373718a3f77ef03997ab81fdfdfa6f626723178ac099fa7e4a0c4"
+          }
+        },
+        "old_release_path_hashes": {
+          "benchmarks\\geometry_full2d\\corpus_manifest.json": "4e47eecec7826b3900abc35ae9e85356629b94a09ff3e450c01db057766ed82b",
+          "benchmarks\\geometry_full2d\\lean\\ExternalProjectionCorpus.lean": "a5b2fcfdce227a619a08a8393d44e2f044b038dd0670e92fa787ec8698472dac",
+          "configs\\benchmark_runs\\geometry_full2d_v0_4_3.yaml": "8c3473acd1e2758686fbd6a2b9e7758db3b4972253dae5706e232db44b1b9bc1",
+          "scripts\\check_release_acceptance_v0_4_3.py": "d3571924cc2ba21c3d9267363264f7f3cdd3edb7ad1f8dcafbe53ae3122126a0",
+          "scripts\\generate_full2d_external_projection_corpus.py": "fdb2fb9a680f36715e0f85b42c776bad7b7b86cb4b63f15d694edd75af5323ed",
+          "scripts\\run_full2d_matrix_v0_4_3.py": "7a8964a2d2d6d907e697b41c10b0df6622fb330b941af101558d0cc0bfb9ecac"
+        },
+        "pending_entrypoints": [],
+        "schema_version": "geometry_full2d_no_projection_release_path_v0_4_4_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "full2d_v0_4_4\"\n      },\n      \"imports\": [],\n      \"sha256\": \"d96c3c8d4a124413f210f64c50bb879f8039ad52f14b6c29f17ba02c0d7c1da2\"\n    },\n    \"scripts\\\\check_release_acceptance_v0_4_4.py\": {\n      \"config_summary\": null,\n      \"imports\": [\n        \"__future__\",\n        \"argparse\",\n        \"collections\",\n        \"hashlib\",\n        \"json\",\n        \"os\",\n        \"pathlib\",\n        \"scripts.full2d_v0_4_4_corpus_lib\",\n        \"scripts.full2d_v0_4_4_run_checks\",\n        \"subprocess\",\n        \"sys\",\n        \"typing\"\n      ],\n      \"sha256\": \"276dbbac037dbf603887a6f49a39c0944a942c9efef87af4e6da9898be58baca\"\n    },\n    \"scripts\\\\run_full2d_matrix_v0_4_4.py\": {\n      \"config_summary\": null,\n      \"imports\": [\n        \"__future__\",\n        \"argparse\",\n        \"collections\",\n        \"hashlib\",\n        \"json\",\n        \"os\",\n        \"pathlib\",\n        \"scripts.full2d_v0_4_4_corpus_lib\",\n        \"scripts.full2d_v0_4_4_run_checks\",\n        \"subprocess\",\n        \"sys\",\n        \"typing\"\n      ],\n      \"sha256\": \"c0c8882bd8f373718a3f77ef03997ab81fdfdfa6f626723178ac099fa7e4a0c4\"\n    }\n  },\n  \"old_release_path_hashes\": {\n    \"benchmarks\\\\geometry_full2d\\\\corpus_manifest.json\": \"4e47eecec7826b3900abc35ae9e85356629b94a09ff3e450c01db057766ed82b\",\n    \"benchmarks\\\\geometry_full2d\\\\lean\\\\ExternalProjectionCorpus.lean\": \"a5b2fcfdce227a619a08a8393d44e2f044b038dd0670e92fa787ec8698472dac\",\n    \"configs\\\\benchmark_runs\\\\geometry_full2d_v0_4_3.yaml\": \"8c3473acd1e2758686fbd6a2b9e7758db3b4972253dae5706e232db44b1b9bc1\",\n    \"scripts\\\\check_release_acceptance_v0_4_3.py\": \"d3571924cc2ba21c3d9267363264f7f3cdd3edb7ad1f8dcafbe53ae3122126a0\",\n    \"scripts\\\\generate_full2d_external_projection_corpus.py\": \"fdb2fb9a680f36715e0f85b42c776bad7b7b86cb4b63f15d694edd75af5323ed\",\n    \"scripts\\\\run_full2d_matrix_v0_4_3.py\": \"7a8964a2d2d6d907e697b41c10b0df6622fb330b941af101558d0cc0bfb9ecac\"\n  },\n  \"pending_entrypoints\": [],\n  \"schema_version\": \"geometry_full2d_no_projection_release_path_v0_4_4_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "positive_source_sorry_only": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_positive_source_theorems_sorry_only.py",
+        "--corpus-root",
+        "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d_v0_4_4"
+      ],
+      "parsed_stdout": {
+        "checked_positive_count": 3350,
+        "errors": [],
+        "schema_version": "positive_source_theorems_sorry_only_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"checked_positive_count\": 3350,\n  \"errors\": [],\n  \"schema_version\": \"positive_source_theorems_sorry_only_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "proof_worker_hardening": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_proof_worker_hardening_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "--self-test"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "record_count": 16750,
+        "schema_version": "proof_worker_hardening_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"record_count\": 16750,\n  \"schema_version\": \"proof_worker_hardening_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "regression_failures": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_v0_4_4_regression_failures.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4"
+      ],
+      "parsed_stdout": {
+        "command_results": [
+          {
+            "command": [
+              "C:\\Users\\bakat\\miniforge3\\python.exe",
+              "scripts/check_actual_task_pipeline_runs_v0_4_4.py",
+              "--run-dir",
+              "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+              "--self-test"
+            ],
+            "returncode": 0,
+            "stderr_tail": "",
+            "stdout_tail": "s\": \"passed\"\n      },\n      {\n        \"case\": \"missing_causality_artifact\",\n        \"errors\": [\n          \"actual_full2d_run:v0_4_4:selftest:B2:missing_artifact_path:SolverCausalityReportV1:sha256:89ff63beee39578ccc7b7189c4c82d24d4ad38314c8e0ab6e21b105fb0dcbc92\"\n        ],\n        \"status\": \"failed_as_expected\"\n      },\n      {\n        \"case\": \"old_schema\",\n        \"errors\": [\n          \"schema_version_not_ActualTaskPipelineRunV2\"\n        ],\n        \"status\": \"failed_as_expected\"\n      },\n      {\n        \"case\": \"stale_chain\",\n        \"errors\": [\n          \"actual_full2d_run:v0_4_4:selftest:B2:causal_chain_hash_mismatch\"\n        ],\n        \"status\": \"failed_as_expected\"\n      },\n      {\n        \"case\": \"no_solver_necessity\",\n        \"errors\": [\n          \"actual_full2d_run:v0_4_4:selftest:B2:certificate_solver_causality_report_ref_mismatch\",\n          \"actual_full2d_run:v0_4_4:selftest:B2:final_success_without_solver_causal_necessity\",\n          \"actual_full2d_run:v0_4_4:selftest:B2:final_verify_causality_ref_mismatch\"\n        ],\n        \"status\": \"failed_as_expected\"\n      }\n    ],\n    \"errors\": [],\n    \"status\": \"passed\"\n  },\n  \"status\": \"passed\",\n  \"valid_record_count\": 16750\n}\n"
+          },
+          {
+            "command": [
+              "C:\\Users\\bakat\\miniforge3\\python.exe",
+              "scripts/check_full2d_engine_no_proof_text_v0_4_4.py",
+              "--run-dir",
+              "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+              "--self-test"
+            ],
+            "returncode": 0,
+            "stderr_tail": "",
+            "stdout_tail": "{\n  \"errors\": [],\n  \"record_count\": 16750,\n  \"schema_version\": \"engine_no_proof_text_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+          },
+          {
+            "command": [
+              "C:\\Users\\bakat\\miniforge3\\python.exe",
+              "scripts/check_full2d_compiler_input_isolation_v0_4_4.py",
+              "--run-dir",
+              "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+              "--self-test"
+            ],
+            "returncode": 0,
+            "stderr_tail": "",
+            "stdout_tail": "{\n  \"errors\": [],\n  \"record_count\": 16750,\n  \"schema_version\": \"compiler_input_isolation_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+          },
+          {
+            "command": [
+              "C:\\Users\\bakat\\miniforge3\\python.exe",
+              "scripts/check_full2d_engine_challenge_suite_v0_4_4.py",
+              "--all-engines"
+            ],
+            "returncode": 0,
+            "stderr_tail": "",
+            "stdout_tail": "    \"lean_proof_search\": {\n      \"challenge_count\": 50,\n      \"normalized_success_count\": 50,\n      \"required_challenge_count\": 50,\n      \"required_normalized_success_count\": 25\n    },\n    \"metric_angle\": {\n      \"challenge_count\": 40,\n      \"normalized_success_count\": 40,\n      \"required_challenge_count\": 40,\n      \"required_normalized_success_count\": 20\n    },\n    \"order_case\": {\n      \"challenge_count\": 30,\n      \"normalized_success_count\": 30,\n      \"required_challenge_count\": 30,\n      \"required_normalized_success_count\": 15\n    },\n    \"portfolio_coordinator\": {\n      \"challenge_count\": 8,\n      \"normalized_success_count\": 8,\n      \"required_challenge_count\": 8,\n      \"required_normalized_success_count\": 8\n    },\n    \"synthetic_closure\": {\n      \"challenge_count\": 50,\n      \"normalized_success_count\": 50,\n      \"required_challenge_count\": 50,\n      \"required_normalized_success_count\": 30\n    },\n    \"transformation\": {\n      \"challenge_count\": 30,\n      \"normalized_success_count\": 30,\n      \"required_challenge_count\": 30,\n      \"required_normalized_success_count\": 10\n    }\n  },\n  \"errors\": [],\n  \"schema_version\": \"engine_challenge_suite_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+          },
+          {
+            "command": [
+              "C:\\Users\\bakat\\miniforge3\\python.exe",
+              "scripts/check_no_projection_release_path_v0_4_4.py"
+            ],
+            "returncode": 0,
+            "stderr_tail": "",
+            "stdout_tail": "son\",\n        \"os\",\n        \"pathlib\",\n        \"scripts.full2d_v0_4_4_corpus_lib\",\n        \"scripts.full2d_v0_4_4_run_checks\",\n        \"subprocess\",\n        \"sys\",\n        \"typing\"\n      ],\n      \"sha256\": \"c0c8882bd8f373718a3f77ef03997ab81fdfdfa6f626723178ac099fa7e4a0c4\"\n    }\n  },\n  \"old_release_path_hashes\": {\n    \"benchmarks\\\\geometry_full2d\\\\corpus_manifest.json\": \"4e47eecec7826b3900abc35ae9e85356629b94a09ff3e450c01db057766ed82b\",\n    \"benchmarks\\\\geometry_full2d\\\\lean\\\\ExternalProjectionCorpus.lean\": \"a5b2fcfdce227a619a08a8393d44e2f044b038dd0670e92fa787ec8698472dac\",\n    \"configs\\\\benchmark_runs\\\\geometry_full2d_v0_4_3.yaml\": \"8c3473acd1e2758686fbd6a2b9e7758db3b4972253dae5706e232db44b1b9bc1\",\n    \"scripts\\\\check_release_acceptance_v0_4_3.py\": \"d3571924cc2ba21c3d9267363264f7f3cdd3edb7ad1f8dcafbe53ae3122126a0\",\n    \"scripts\\\\generate_full2d_external_projection_corpus.py\": \"fdb2fb9a680f36715e0f85b42c776bad7b7b86cb4b63f15d694edd75af5323ed\",\n    \"scripts\\\\run_full2d_matrix_v0_4_3.py\": \"7a8964a2d2d6d907e697b41c10b0df6622fb330b941af101558d0cc0bfb9ecac\"\n  },\n  \"pending_entrypoints\": [],\n  \"schema_version\": \"geometry_full2d_no_projection_release_path_v0_4_4_1\",\n  \"status\": \"passed\"\n}\n"
+          }
+        ],
+        "errors": [],
+        "fixture_results": {
+          "compiler_forbidden_label_fixture": {
+            "detected": true
+          },
+          "compiler_succeeds_after_engine_fact_mutation": {
+            "detected": true
+          },
+          "compiler_succeeds_without_engine_artifact": {
+            "detected": true
+          },
+          "engine_output_from_task_id_hash": {
+            "detected": true
+          },
+          "engine_proof_text_leakage": {
+            "detected": true
+          },
+          "open_debt_ledger_ignored": {
+            "detected": true
+          },
+          "projection_counted_positive": {
+            "detected": true
+          },
+          "renamed_v0_4_3_release_path": {
+            "detected": true
+          },
+          "stale_checker_matrix_or_release_output": {
+            "detected": true
+          }
+        },
+        "schema_version": "v0_4_4_regression_failures_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "lib\\\",\\n        \\\"scripts.full2d_v0_4_4_run_checks\\\",\\n        \\\"subprocess\\\",\\n        \\\"sys\\\",\\n        \\\"typing\\\"\\n      ],\\n      \\\"sha256\\\": \\\"c0c8882bd8f373718a3f77ef03997ab81fdfdfa6f626723178ac099fa7e4a0c4\\\"\\n    }\\n  },\\n  \\\"old_release_path_hashes\\\": {\\n    \\\"benchmarks\\\\\\\\geometry_full2d\\\\\\\\corpus_manifest.json\\\": \\\"4e47eecec7826b3900abc35ae9e85356629b94a09ff3e450c01db057766ed82b\\\",\\n    \\\"benchmarks\\\\\\\\geometry_full2d\\\\\\\\lean\\\\\\\\ExternalProjectionCorpus.lean\\\": \\\"a5b2fcfdce227a619a08a8393d44e2f044b038dd0670e92fa787ec8698472dac\\\",\\n    \\\"configs\\\\\\\\benchmark_runs\\\\\\\\geometry_full2d_v0_4_3.yaml\\\": \\\"8c3473acd1e2758686fbd6a2b9e7758db3b4972253dae5706e232db44b1b9bc1\\\",\\n    \\\"scripts\\\\\\\\check_release_acceptance_v0_4_3.py\\\": \\\"d3571924cc2ba21c3d9267363264f7f3cdd3edb7ad1f8dcafbe53ae3122126a0\\\",\\n    \\\"scripts\\\\\\\\generate_full2d_external_projection_corpus.py\\\": \\\"fdb2fb9a680f36715e0f85b42c776bad7b7b86cb4b63f15d694edd75af5323ed\\\",\\n    \\\"scripts\\\\\\\\run_full2d_matrix_v0_4_3.py\\\": \\\"7a8964a2d2d6d907e697b41c10b0df6622fb330b941af101558d0cc0bfb9ecac\\\"\\n  },\\n  \\\"pending_entrypoints\\\": [],\\n  \\\"schema_version\\\": \\\"geometry_full2d_no_projection_release_path_v0_4_4_1\\\",\\n  \\\"status\\\": \\\"passed\\\"\\n}\\n\"\n    }\n  ],\n  \"errors\": [],\n  \"fixture_results\": {\n    \"compiler_forbidden_label_fixture\": {\n      \"detected\": true\n    },\n    \"compiler_succeeds_after_engine_fact_mutation\": {\n      \"detected\": true\n    },\n    \"compiler_succeeds_without_engine_artifact\": {\n      \"detected\": true\n    },\n    \"engine_output_from_task_id_hash\": {\n      \"detected\": true\n    },\n    \"engine_proof_text_leakage\": {\n      \"detected\": true\n    },\n    \"open_debt_ledger_ignored\": {\n      \"detected\": true\n    },\n    \"projection_counted_positive\": {\n      \"detected\": true\n    },\n    \"renamed_v0_4_3_release_path\": {\n      \"detected\": true\n    },\n    \"stale_checker_matrix_or_release_output\": {\n      \"detected\": true\n    }\n  },\n  \"schema_version\": \"v0_4_4_regression_failures_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "review_manifest": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_review_manifest_v0_4_4.py",
+        "--corpus-root",
+        "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d_v0_4_4"
+      ],
+      "parsed_stdout": {
+        "absence_is_nonblocking": true,
+        "errors": [],
+        "review_manifest_entry_count": 0,
+        "schema_version": "review_manifest_v0_4_4_report_1",
+        "status": "passed",
+        "user_reviewed_task_count": 0
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"absence_is_nonblocking\": true,\n  \"errors\": [],\n  \"review_manifest_entry_count\": 0,\n  \"schema_version\": \"review_manifest_v0_4_4_report_1\",\n  \"status\": \"passed\",\n  \"user_reviewed_task_count\": 0\n}\n"
+    },
+    "sealed_challenge_manifest": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_sealed_challenge_manifest.py",
+        "--corpus-root",
+        "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d_v0_4_4"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "schema_version": "sealed_challenge_manifest_v0_4_4_report_1",
+        "sealed_manifest_entry_count": 2650,
+        "sealed_manifest_hash": "sha256:1c3847deb96b41ed37fd92127e8e716cbf9291122c2cb4bb0d28d97586935152",
+        "sealed_task_count": 2650,
+        "selected_implementation_hash": "sha256:8127b18a4822276f3845ce586e953cf1d7500ce6b11a7e55c513591fe0b1e38e",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"schema_version\": \"sealed_challenge_manifest_v0_4_4_report_1\",\n  \"sealed_manifest_entry_count\": 2650,\n  \"sealed_manifest_hash\": \"sha256:1c3847deb96b41ed37fd92127e8e716cbf9291122c2cb4bb0d28d97586935152\",\n  \"sealed_task_count\": 2650,\n  \"selected_implementation_hash\": \"sha256:8127b18a4822276f3845ce586e953cf1d7500ce6b11a7e55c513591fe0b1e38e\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "solver_causality": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_solver_causality_reports_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4",
+        "--self-test"
+      ],
+      "parsed_stdout": {
+        "errors": [],
+        "record_count": 16750,
+        "schema_version": "solver_causality_reports_v0_4_4_report_1",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"record_count\": 16750,\n  \"schema_version\": \"solver_causality_reports_v0_4_4_report_1\",\n  \"status\": \"passed\"\n}\n"
+    },
+    "used_rule_coverage": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_used_rule_coverage_v0_4_4.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\geometry_full2d_v0_4_4"
+      ],
+      "parsed_stdout": {
+        "checked_b2_successes": 3350,
+        "errors": [],
+        "required_concrete_rules": 35,
+        "required_rule_families": 15,
+        "rule_family_counts": {
+          "algebraic_simplifier": 600,
+          "angle_chase": 500,
+          "betweenness_collinearity": 600,
+          "case_split_orientation": 600,
+          "construction_line": 450,
+          "construction_witness": 450,
+          "coordinate_distance": 600,
+          "cyclic_angle": 500,
+          "degenerate_case": 500,
+          "directed_angle_mod_pi": 1000,
+          "incidence_collinearity": 1500,
+          "incidence_transfer": 450,
+          "inequality_length": 900,
+          "line_identity": 500,
+          "metric_equal_length": 1200,
+          "midpoint_segment": 900,
+          "monotonicity": 450,
+          "order_between": 1200,
+          "order_metric": 450,
+          "parallel_angle": 500,
+          "ratio_area": 600,
+          "ray_order": 600,
+          "reflection_transfer": 250,
+          "transformation_collinearity": 250,
+          "transformation_isometry": 250,
+          "transformation_rotation": 500,
+          "triangle_inequality": 450
+        },
+        "schema_version": "full2d_used_rule_coverage_v0_4_4_report_1",
+        "status": "passed",
+        "used_concrete_rules": 35,
+        "used_rule_families": 27
+      },
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"checked_b2_successes\": 3350,\n  \"errors\": [],\n  \"required_concrete_rules\": 35,\n  \"required_rule_families\": 15,\n  \"rule_family_counts\": {\n    \"algebraic_simplifier\": 600,\n    \"angle_chase\": 500,\n    \"betweenness_collinearity\": 600,\n    \"case_split_orientation\": 600,\n    \"construction_line\": 450,\n    \"construction_witness\": 450,\n    \"coordinate_distance\": 600,\n    \"cyclic_angle\": 500,\n    \"degenerate_case\": 500,\n    \"directed_angle_mod_pi\": 1000,\n    \"incidence_collinearity\": 1500,\n    \"incidence_transfer\": 450,\n    \"inequality_length\": 900,\n    \"line_identity\": 500,\n    \"metric_equal_length\": 1200,\n    \"midpoint_segment\": 900,\n    \"monotonicity\": 450,\n    \"order_between\": 1200,\n    \"order_metric\": 450,\n    \"parallel_angle\": 500,\n    \"ratio_area\": 600,\n    \"ray_order\": 600,\n    \"reflection_transfer\": 250,\n    \"transformation_collinearity\": 250,\n    \"transformation_isometry\": 250,\n    \"transformation_rotation\": 500,\n    \"triangle_inequality\": 450\n  },\n  \"schema_version\": \"full2d_used_rule_coverage_v0_4_4_report_1\",\n  \"status\": \"passed\",\n  \"used_concrete_rules\": 35,\n  \"used_rule_families\": 27\n}\n"
+    }
+  },
+  "corpus_goal_preservation_summary": {
+    "errors": [],
+    "status": "passed"
+  },
+  "corpus_summary": {
+    "corpus_root": "benchmarks\\geometry_full2d_v0_4_4",
+    "manifest_hash": "sha256:521ad6ecfa187802f152d9bd718202701daf0f1d1bd82e72d2d2214f37079789",
+    "positive_family_counts": {
+      "Algebraic250": 250,
+      "AngleCyclic450": 450,
+      "Construction450": 450,
+      "Full2DCore500": 500,
+      "HardHoldout50": 50,
+      "IncidenceParallelPerp350": 350,
+      "Inequality150": 150,
+      "MetricRatioArea350": 350,
+      "OlympiadStyle300": 300,
+      "OrderCase250": 250,
+      "Transformation250": 250
+    },
+    "task_counts_by_category": {
+      "ExternalGoalPreserved": 700,
+      "NegativeTargetOutsideMalformed": 500,
+      "ProjectionNonCounted": 12,
+      "SealedSolverChallenge": 2650
+    }
+  },
+  "debt_ledger_summary": {
+    "open_entries": [],
+    "status": "closed"
+  },
+  "engine_contribution_summary": {
+    "algebraic_geometry": 600,
+    "construction_search": 450,
+    "inequality": 450,
+    "lean_proof_search": 500,
+    "metric_angle": 500,
+    "order_case": 600,
+    "transformation": 250
+  },
+  "engine_usage_summary": {
+    "algebraic_geometry": 600,
+    "construction_search": 450,
+    "inequality": 450,
+    "lean_proof_search": 500,
+    "metric_angle": 500,
+    "order_case": 600,
+    "transformation": 250
+  },
+  "family_floor_summary": {
+    "Algebraic250": {
+      "expected_count": 250,
+      "final_theorem": 250,
+      "passed": true,
+      "record_count": 250,
+      "required_rate": 0.75,
+      "success_rate": 1.0
+    },
+    "AngleCyclic450": {
+      "expected_count": 450,
+      "final_theorem": 450,
+      "passed": true,
+      "record_count": 450,
+      "required_rate": 0.9,
+      "success_rate": 1.0
+    },
+    "Construction450": {
+      "expected_count": 450,
+      "final_theorem": 450,
+      "passed": true,
+      "record_count": 450,
+      "required_rate": 0.85,
+      "success_rate": 1.0
+    },
+    "Full2DCore500": {
+      "expected_count": 500,
+      "final_theorem": 500,
+      "passed": true,
+      "record_count": 500,
+      "required_rate": 0.95,
+      "success_rate": 1.0
+    },
+    "HardHoldout50": {
+      "expected_count": 50,
+      "final_theorem": 50,
+      "passed": true,
+      "record_count": 50,
+      "required_rate": 0.5,
+      "success_rate": 1.0
+    },
+    "IncidenceParallelPerp350": {
+      "expected_count": 350,
+      "final_theorem": 350,
+      "passed": true,
+      "record_count": 350,
+      "required_rate": 0.92,
+      "success_rate": 1.0
+    },
+    "Inequality150": {
+      "expected_count": 150,
+      "final_theorem": 150,
+      "passed": true,
+      "record_count": 150,
+      "required_rate": 0.7,
+      "success_rate": 1.0
+    },
+    "MetricRatioArea350": {
+      "expected_count": 350,
+      "final_theorem": 350,
+      "passed": true,
+      "record_count": 350,
+      "required_rate": 0.85,
+      "success_rate": 1.0
+    },
+    "OlympiadStyle300": {
+      "expected_count": 300,
+      "final_theorem": 300,
+      "passed": true,
+      "record_count": 300,
+      "required_rate": 0.65,
+      "success_rate": 1.0
+    },
+    "OrderCase250": {
+      "expected_count": 250,
+      "final_theorem": 250,
+      "passed": true,
+      "record_count": 250,
+      "required_rate": 0.75,
+      "success_rate": 1.0
+    },
+    "Transformation250": {
+      "expected_count": 250,
+      "final_theorem": 250,
+      "passed": true,
+      "record_count": 250,
+      "required_rate": 0.8,
+      "success_rate": 1.0
+    }
+  },
+  "freshness_summary": {
+    "checker_code_hashes": {
+      "active_guardian_spec": "sha256:713572d5f5234e52ddf1fe431f3bd640454daae8260e9879211f8297148722ed",
+      "actual_pipeline": "sha256:dc606216d7c25598f7391efa9758c0e5674b4a71acf5c72c0291a0813f11891b",
+      "anti_v043_projection_regression": "sha256:171da4bc92254bcd07e86f6fb8da72aa52d9ccd8c7727c7901d1d7797c2c430c",
+      "challenge_suite": "sha256:b433f9c4fa2432cc03bac53e30a0e8d80ef900da5ef150c2f43705c0ec11a92b",
+      "claimspec": "sha256:24f9184fd1f4d7de6c3847ace396e52198e48edfb72b2f6bc71570f360cca9ee",
+      "compiler_evidence": "sha256:6ecb90d18f54254df9e205f11bca2c7b8763fc93b816da4fb2a2488db09f2e02",
+      "compiler_input_isolation": "sha256:283f63df7da74fbbe5bea0b3ffc18f23e1729f6e88723ef3cb83f0c36def412b",
+      "corpus_manifest": "sha256:ad3b9eb4454419b43cc415cf1cd93abf51d14d6acb69eb1d7925bf4baabbc9e2",
+      "engine_contribution": "sha256:5e1a127fcdadea61c4301377244f36bf95848ca9b006a5865666bea16b5ab601",
+      "engine_no_proof_text": "sha256:b9233a952c1ce9f901e85bd8bbbcd4c309b074be0aa411d4a95f2c40cf7997b3",
+      "engine_real_execution": "sha256:4d6b9fcc572b3895c7033eac158f4a6efb9f15205459dc34812c12ff5a389acf",
+      "extraction_corpus": "sha256:c771f685401133d1dc8e880e63e75691a11b110e40de6584070e2af0e884381e",
+      "final_verify": "sha256:789de9741b8135c83383e64bbc9948d774180bc42ce685ee56608dfe96ab9ecb",
+      "goal_preservation": "sha256:0ed5a11a3ce4095c73e2a42c84f799869ad16033a2388dbee478ca59c69216d7",
+      "matrix": "sha256:c0c8882bd8f373718a3f77ef03997ab81fdfdfa6f626723178ac099fa7e4a0c4",
+      "matrix_evidence": "sha256:bdcb76a16049c9e1eeacbf7291af33a18904ad6a0b160b38cb4512aa968924fd",
+      "metrics": "sha256:c6d691e79dbccbca4f726d18bc58bf40c1312a2351ac4a941bf4ffb8aa1a20b6",
+      "no_projection_release_path": "sha256:1ff6c7294ceae05637812d6fef9652022fc3d4d76b86706cc3c65096920450c6",
+      "positive_source_sorry_only": "sha256:f601fd8a01161e11b3d5b75b144afd06dddc23140cb76f7c93c2169a73b1a1e0",
+      "proof_worker_hardening": "sha256:edc89e81771497ff5931ed6a1b3e260e3dbea040febd1fd23293a10c2d7be279",
+      "regression_failures": "sha256:030964ca21d9568e5566bb50be5c9b0cd28ec1409b6d61f690b5388961ea444c",
+      "review_manifest": "sha256:eefed5e68df5ce32644f08f69b1f996e434dd31f0e7e9fb32589b91bce97eb49",
+      "sealed_challenge_manifest": "sha256:5a8d269fb5cc5551ffec15868ae86f68f790358ec41dbabf4ab173f9695dfa77",
+      "solver_causality": "sha256:970f676bee571dd5b6c957777da9ad3e2a704087dcbd1959f73ccea743b0d6d1",
+      "used_rule_coverage": "sha256:9a2220417540cf4aef76ff1329909ebfc6ba3a8bac046ce918ccc842a54c3911"
+    },
+    "config_hash": "sha256:d96c3c8d4a124413f210f64c50bb879f8039ad52f14b6c29f17ba02c0d7c1da2",
+    "corpus_manifest_hash": "sha256:fdf955dcd89eb5307e0ac5badc9566a0264cc276e6161f7e464264b0b9d8ca07",
+    "current_git_head": "391a7e3755d78663f6994a572c68fc9edbe0878a",
+    "current_git_status_short_hash": "sha256:805f4b0935ed61a47612bf24736ecd3a907640329b835a485a7e2a0b8e0c10d1",
+    "record_repo_tree_hashes": [
+      "sha256:451c26f27a6424173bb00af2b60e712117aa2be9f2c8e0a6b2916f6fe3ee64ec"
+    ],
+    "record_selected_implementation_hashes": [
+      "sha256:ccb57681e6846e90398afc595365893df281cb51d9e860abc6f49a27d22ae702"
+    ],
+    "run_records_hash": "sha256:5b98e989c7c2fd902b3efe1979d804b5bab6362dde3c22ab7ebbaea3f83f3917"
+  },
+  "hard_blockers": [],
+  "measured_failure_summary": {
+    "B1": 2850,
+    "B5": 450,
+    "B6": 1550,
+    "B7": 250
+  },
+  "metrics_summary": {
+    "final_theorem": 3350,
+    "positive_task_count": 3350,
+    "required_rate": 0.85,
+    "success_rate": 1.0
+  },
+  "regression_failure_summary": {
+    "command_count": 5,
+    "fixture_results": {
+      "compiler_forbidden_label_fixture": {
+        "detected": true
+      },
+      "compiler_succeeds_after_engine_fact_mutation": {
+        "detected": true
+      },
+      "compiler_succeeds_without_engine_artifact": {
+        "detected": true
+      },
+      "engine_output_from_task_id_hash": {
+        "detected": true
+      },
+      "engine_proof_text_leakage": {
+        "detected": true
+      },
+      "open_debt_ledger_ignored": {
+        "detected": true
+      },
+      "projection_counted_positive": {
+        "detected": true
+      },
+      "renamed_v0_4_3_release_path": {
+        "detected": true
+      },
+      "stale_checker_matrix_or_release_output": {
+        "detected": true
+      }
+    }
+  },
+  "release_blockers": [],
+  "schema_version": "1.0.0",
+  "solver_causality_summary": {
+    "direct_or_wrapped_facade_lemma_success_fraction": 0.0,
+    "record_count": 16750,
+    "solver_causal_success_fraction": 1.0
+  },
+  "status": "passed",
+  "used_rule_coverage_summary": {
+    "rule_family_counts": {
+      "algebraic_simplifier": 600,
+      "angle_chase": 500,
+      "betweenness_collinearity": 600,
+      "case_split_orientation": 600,
+      "construction_line": 450,
+      "construction_witness": 450,
+      "coordinate_distance": 600,
+      "cyclic_angle": 500,
+      "degenerate_case": 500,
+      "directed_angle_mod_pi": 1000,
+      "incidence_collinearity": 1500,
+      "incidence_transfer": 450,
+      "inequality_length": 900,
+      "line_identity": 500,
+      "metric_equal_length": 1200,
+      "midpoint_segment": 900,
+      "monotonicity": 450,
+      "order_between": 1200,
+      "order_metric": 450,
+      "parallel_angle": 500,
+      "ratio_area": 600,
+      "ray_order": 600,
+      "reflection_transfer": 250,
+      "transformation_collinearity": 250,
+      "transformation_isometry": 250,
+      "transformation_rotation": 500,
+      "triangle_inequality": 450
+    },
+    "used_concrete_rules": 35,
+    "used_rule_families": 27
+  },
+  "work_debt_open": []
+}
