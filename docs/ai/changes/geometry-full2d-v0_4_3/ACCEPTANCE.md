@@ -1,7 +1,7 @@
 ---
 title: "Guardian Acceptance Spec — Geometry × Lean Full2D Real Pipeline Recovery v0.4.3 Integrated"
 acceptance_id: "MARP-GEOLEAN-ACCEPTANCE-008"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-ACCEPTANCE-009"
 base_spec: "MARP-GEOLEAN-BASE-008"
 plan: "MARP-GEOLEAN-PLAN-008"
 created: "2026-06-15"

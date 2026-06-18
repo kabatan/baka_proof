@@ -1,6 +1,6 @@
 ---
 title: "Source Map — GeometryFull2D v0.4.3 Real Pipeline Recovery"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-009"
 ---
 
 # Source Map — v0.4.3

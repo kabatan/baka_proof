@@ -1,4 +1,12 @@
+---
+title: "Codex Handoff — GeometryFull2D v0.4.3 Real Pipeline Recovery"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-009"
+base_spec: "MARP-GEOLEAN-BASE-008"
+---
+
 # Codex Handoff — GeometryFull2D v0.4.3 Real Pipeline Recovery
+
+This handoff is historical. Do not use it as active implementation authority for v0.4.4 work.
 
 You are implementing `MARP-GEOLEAN-BASE-008` and `MARP-GEOLEAN-PLAN-008` in `kabatan/baka_proof`.
 

@@ -1,7 +1,7 @@
 ---
 title: "Guardian Base Spec — Geometry × Lean Full2D Real Pipeline Recovery v0.4.3 Integrated"
 spec_id: "MARP-GEOLEAN-BASE-008"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-009"
 target_repo: "kabatan/baka_proof"
 created: "2026-06-15"
 supersedes_when_approved:

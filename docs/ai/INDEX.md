@@ -1,9 +1,9 @@
 ---
 title: AI Documentation Index
-version: v0.3
+version: v0.4.4
 status: ACTIVE
 created: 2026-06-11
-last_updated: 2026-06-16
+last_updated: 2026-06-18
 purpose: Index active Guardian and AI-operation documents in this workspace.
 authority: Navigation and classification only; individual Base Spec and Plan files declare their own authority.
 ---
@@ -16,35 +16,52 @@ authority: Navigation and classification only; individual Base Spec and Plan fil
 
 ## Active Change
 
-### geometry-full2d-v0_4_3
+### geometry-full2d-v0_4_4
 
-Purpose: Guardian-managed v0.4.3 real pipeline recovery track for a solver-backed GeometryFull2D Lean automated prover.
+Purpose: Guardian-managed v0.4.4 real solver-causal Full2D pipeline track for a GeometryFull2D Lean automated prover.
 
-Status: v0.4.3 integrated research-agent bundle imported, hash-verified, and installed as the active user-approved Guardian authority set. Implementation has advanced through real-pipeline hardening and matrix-run infrastructure, but strict spec verification currently blocks release closure on corpus duplicate and direct-lemma success ceilings. No v0.4.3 completion claim is made.
+Status: reviewed research-agent bundle imported, hash-checked, self-consistency checked, and installed as the active user-approved Guardian authority set. Implementation work for WP01 and later has not started.
 
 Primary documents:
 
-- `docs/ai/changes/geometry-full2d-v0_4_3/BASE_SPEC.md` — correctness authority for `MARP-GEOLEAN-BASE-008`.
-- `docs/ai/changes/geometry-full2d-v0_4_3/PLAN.md` — execution contract for `MARP-GEOLEAN-PLAN-008`.
-- `docs/ai/changes/geometry-full2d-v0_4_3/ACCEPTANCE.md` — acceptance authority for `MARP-GEOLEAN-ACCEPTANCE-008`.
-- `docs/ai/changes/geometry-full2d-v0_4_3/REAL_PIPELINE_INVARIANTS.md` — anti-template and causal evidence invariants.
-- `docs/ai/changes/geometry-full2d-v0_4_3/REFACTOR_DIRECTIVE.md` — repository refactor directive.
-- `docs/ai/changes/geometry-full2d-v0_4_3/SOURCE_MAP.md` — traceability aid.
-- `docs/ai/changes/geometry-full2d-v0_4_3/CODEX_HANDOFF.md` — implementation handoff.
-- `docs/ai/changes/geometry-full2d-v0_4_3/README.md` — change-local index.
-- `docs/ai/changes/geometry-full2d-v0_4_3/evidence/` — import and implementation evidence.
-- `docs/ai/changes/geometry-full2d-v0_4_3/evidence/v0_4_3_release_blocker_report.md` — current release blocker report.
-- `docs/ai/changes/geometry-full2d-v0_4_3/debt/debt_ledger.jsonl` — debt ledger.
+- `docs/ai/changes/geometry-full2d-v0_4_4/BASE_SPEC.md` — correctness authority for `MARP-GEOLEAN-BASE-009`.
+- `docs/ai/changes/geometry-full2d-v0_4_4/PLAN.md` — execution contract for `MARP-GEOLEAN-PLAN-009`.
+- `docs/ai/changes/geometry-full2d-v0_4_4/ACCEPTANCE.md` — acceptance authority for `MARP-GEOLEAN-ACCEPTANCE-009`.
+- `docs/ai/changes/geometry-full2d-v0_4_4/REAL_PIPELINE_INVARIANTS.md` — release-critical invariants.
+- `docs/ai/changes/geometry-full2d-v0_4_4/REFACTOR_DIRECTIVE.md` — v0.4.3 release-path quarantine and replacement directive.
+- `docs/ai/changes/geometry-full2d-v0_4_4/SOURCE_MAP.md` — traceability aid.
+- `docs/ai/changes/geometry-full2d-v0_4_4/CODEX_HANDOFF.md` — implementation handoff.
+- `docs/ai/changes/geometry-full2d-v0_4_4/SELF_REVIEW_LOG.md` — reviewed bundle self-review log.
+- `docs/ai/changes/geometry-full2d-v0_4_4/FAILURE_ANALYSIS.md` — failure analysis motivating v0.4.4.
+- `docs/ai/changes/geometry-full2d-v0_4_4/README.md` — change-local index.
+- `docs/ai/changes/geometry-full2d-v0_4_4/evidence/` — import and implementation evidence.
+- `docs/ai/changes/geometry-full2d-v0_4_4/debt/debt_ledger.jsonl` — debt ledger.
+
+First command:
+
+```bash
+python scripts/check_active_guardian_spec_v0_4_4.py
+```
 
 ## Superseded Geometry Tracks
 
-These tracks are retained as historical evidence, negative evidence, and safety background. They are not active release authority for new v0.4.3 work.
+These tracks are retained as historical evidence, negative evidence, and safety background. They are not active v0.4.4 release authority for new work.
+
+### geometry-full2d-v0_4_3
+
+Purpose: Previous integrated real-pipeline track.
+
+Status: v0.4.3 release acceptance passed for its scoped claim, but it is superseded by `MARP-GEOLEAN-BASE-009`; retained as historical evidence and as a regression source. It is not active v0.4.4 release authority.
+
+Location:
+
+- `docs/ai/changes/geometry-full2d-v0_4_3/`
 
 ### geometry-full2d-v0_4_2
 
 Purpose: Previous governed Full2D implementation track.
 
-Status: superseded by `MARP-GEOLEAN-BASE-008`; retained only as evidence and as the regression source for the v0.4.3 anti-v0.4.2 checks. v0.4.2 release reports are not active v0.4.3 release evidence.
+Status: superseded by later GeometryFull2D tracks; retained only as evidence and as a regression source. v0.4.2 release reports are not active release evidence.
 
 Location:
 
@@ -54,7 +71,7 @@ Location:
 
 Purpose: Original Guardian-managed implementation track for the geometry x Lean v0.3 mathematical auto-research pipeline.
 
-Status: superseded by `MARP-GEOLEAN-BASE-008`; retained for historical evidence only.
+Status: superseded by later GeometryFull2D tracks; retained for historical evidence only.
 
 Location:
 
@@ -64,7 +81,7 @@ Location:
 
 Purpose: v0.3A recovery track for real provider integration and limited real LeanGeo corpus evidence.
 
-Status: superseded by `MARP-GEOLEAN-BASE-008`; retained for historical evidence only.
+Status: superseded by later GeometryFull2D tracks; retained for historical evidence only.
 
 Locations:
 
@@ -76,7 +93,7 @@ Locations:
 
 Purpose: Full v0.3 experiment-ready rebase track, later amended by v0.3A and v0.3B patches.
 
-Status: v0.3B solver-backed readiness evidence is retained, but this track is superseded by `MARP-GEOLEAN-BASE-008` for new release work.
+Status: superseded by later GeometryFull2D tracks; retained for historical evidence only.
 
 Location:
 
@@ -98,4 +115,4 @@ Location:
 
 ## Source Mirrors
 
-- `docs/architecture/geometry_lean_pipeline.md` — mirror of the earlier user-provided v0.3 project plan. It is no longer the active v0.4.3 authority.
+- `docs/architecture/geometry_lean_pipeline.md` — mirror of the earlier user-provided v0.3 project plan. It is no longer the active v0.4.4 authority.

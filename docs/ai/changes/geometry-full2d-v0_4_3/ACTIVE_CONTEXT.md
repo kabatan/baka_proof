@@ -1,6 +1,6 @@
 ---
 title: "Active Context Seed — GeometryFull2D v0.4.3"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-009"
 ---
 
 # Active Context Seed — v0.4.3

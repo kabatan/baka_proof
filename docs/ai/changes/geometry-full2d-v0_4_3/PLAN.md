@@ -1,7 +1,7 @@
 ---
 title: "Guardian Plan — Geometry × Lean Full2D Real Pipeline Recovery v0.4.3 Integrated"
 plan_id: "MARP-GEOLEAN-PLAN-008"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-PLAN-009"
 base_spec: "MARP-GEOLEAN-BASE-008"
 created: "2026-06-15"
 ---
