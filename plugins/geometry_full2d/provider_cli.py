@@ -21,24 +21,54 @@ def main() -> int:
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--request-id", default="geometry_full2d_provider_cli")
     parser.add_argument("--claim-spec-ref")
+    parser.add_argument("--task-id")
+    parser.add_argument("--baseline-id", default="B2")
+    parser.add_argument("--disabled-component", default="none")
+    parser.add_argument("--disabled-engine-role", action="append", default=[])
     args = parser.parse_args()
-    report = run_provider_cli(Path(args.claim_spec_json), Path(args.output_dir), args.request_id, claim_spec_ref=args.claim_spec_ref)
+    report = run_provider_cli(
+        Path(args.claim_spec_json),
+        Path(args.output_dir),
+        args.request_id,
+        claim_spec_ref=args.claim_spec_ref,
+        task_id=args.task_id,
+        baseline_id=args.baseline_id,
+        disabled_component=args.disabled_component,
+        disabled_engine_roles=tuple(args.disabled_engine_role),
+    )
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["status"] == "passed" else 1
 
 
-def run_provider_cli(claim_spec_json: Path, output_dir: Path, request_id: str, *, claim_spec_ref: str | None = None) -> dict[str, Any]:
+def run_provider_cli(
+    claim_spec_json: Path,
+    output_dir: Path,
+    request_id: str,
+    *,
+    claim_spec_ref: str | None = None,
+    task_id: str | None = None,
+    baseline_id: str = "B2",
+    disabled_component: str = "none",
+    disabled_engine_roles: tuple[str, ...] = (),
+) -> dict[str, Any]:
     claim_path = resolve_path(claim_spec_json)
     output_root = resolve_path(output_dir)
     claim_spec = read_json(claim_path)
     claim_ref = claim_spec_ref or sha256_file(claim_path)
+    constraints = {
+        "release_mode": True,
+        "disabled_component": disabled_component,
+        "disabled_engine_roles": list(disabled_engine_roles),
+    }
     provider_run = GeometryFull2DProvider().solve(
         GeometryFull2DSolveRequest(
             schema_version="GeometryFull2DSolveRequestV05",
             request_id=request_id,
+            task_id=task_id,
+            baseline_id=baseline_id,
             claim_spec_ref=claim_ref,
             claim_spec=claim_spec,
-            constraints={"release_mode": True},
+            constraints=constraints,
         )
     )
     stage_dir = output_root / "provider_stage"
@@ -68,6 +98,9 @@ def run_provider_cli(claim_spec_json: Path, output_dir: Path, request_id: str, *
         "claim_spec_ref": claim_ref,
         "engine_output_refs": engine_refs,
         "engine_roles": list(ENGINE_ROLES),
+        "baseline_id": baseline_id,
+        "disabled_component": disabled_component,
+        "disabled_engine_roles": list(disabled_engine_roles),
         "provider_module": "plugins.geometry_full2d.provider_cli",
         "proof_use_status": "not_allowed",
     }
@@ -80,6 +113,10 @@ def run_provider_cli(claim_spec_json: Path, output_dir: Path, request_id: str, *
         "status": "passed" if not errors else "failed",
         "errors": errors,
         "request_id": request_id,
+        "task_id": task_id,
+        "baseline_id": baseline_id,
+        "disabled_component": disabled_component,
+        "disabled_engine_roles": list(disabled_engine_roles),
         "claim_spec_ref": claim_ref,
         "provider_manifest_ref": manifest_ref,
         "engine_output_refs": engine_refs,

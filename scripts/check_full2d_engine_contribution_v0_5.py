@@ -32,14 +32,32 @@ def check_engine_contribution(run_dir: Path) -> dict[str, Any]:
     ]
     roles_seen: set[str] = set()
     role_success_counts = {role: 0 for role in ENGINE_ROLES}
+    derivations = build_ref_index(run_dir / "selected_solver_derivations")
+    engine_outputs = build_ref_index(run_dir / "provider_stage" / "engine_outputs")
+    errors: list[str] = []
     for record in records:
-        roles = [str(role) for role in record.get("used_engine_roles", [])]
+        task_id = str(record.get("task_id", "missing_task"))
+        derivation = derivations.get(str(record.get("selected_solver_derivation_ref", "")))
+        if not isinstance(derivation, dict):
+            errors.append(f"{task_id}:selected_derivation_ref_unresolved")
+            continue
+        roles: list[str] = []
+        for ref in derivation.get("selected_engine_output_refs", []):
+            engine = engine_outputs.get(str(ref))
+            if not isinstance(engine, dict):
+                errors.append(f"{task_id}:selected_engine_output_ref_unresolved")
+                continue
+            role = str(engine.get("engine_role", ""))
+            if role:
+                roles.append(role)
+        record_roles = {str(role) for role in record.get("used_engine_roles", [])}
+        if record_roles and record_roles != set(roles):
+            errors.append(f"{task_id}:record_engine_roles_disagree_with_derivation_artifacts")
         for role in roles:
             roles_seen.add(role)
             if role in role_success_counts:
                 role_success_counts[role] += 1
     missing = sorted(set(ENGINE_ROLES) - roles_seen)
-    errors: list[str] = []
     if missing:
         errors.append("missing_release_engine_roles:" + ",".join(missing))
     if not records:
@@ -56,6 +74,24 @@ def check_engine_contribution(run_dir: Path) -> dict[str, Any]:
     }
     write_json(run_dir / "full2d_engine_contribution_v0_5.json", report)
     return report
+
+
+def build_ref_index(root: Path) -> dict[str, dict[str, Any]]:
+    refs: dict[str, dict[str, Any]] = {}
+    if not root.exists():
+        return refs
+    for item in sorted(root.glob("*.json")):
+        try:
+            payload = json.loads(item.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(payload, dict):
+            continue
+        for key in ["content_sha256", "derivation_id", "output_id"]:
+            value = payload.get(key)
+            if isinstance(value, str) and value.startswith("sha256:"):
+                refs[value] = payload
+    return refs
 
 
 def load_records(run_dir: Path) -> list[dict[str, Any]]:

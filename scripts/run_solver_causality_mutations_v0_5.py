@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -34,13 +36,14 @@ def main() -> int:
     parser.add_argument("--run-dir", required=True)
     parser.add_argument("--all-b2-successes", action="store_true")
     parser.add_argument("--fresh-reruns", action="store_true")
+    parser.add_argument("--workers", type=int, default=min(8, max(1, os.cpu_count() or 1)))
     args = parser.parse_args()
-    report = run_causality_mutations(Path(args.run_dir), all_b2_successes=args.all_b2_successes, fresh_reruns=args.fresh_reruns)
+    report = run_causality_mutations(Path(args.run_dir), all_b2_successes=args.all_b2_successes, fresh_reruns=args.fresh_reruns, workers=args.workers)
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["status"] == "passed" else 1
 
 
-def run_causality_mutations(run_dir: Path, *, all_b2_successes: bool, fresh_reruns: bool) -> dict[str, Any]:
+def run_causality_mutations(run_dir: Path, *, all_b2_successes: bool, fresh_reruns: bool, workers: int) -> dict[str, Any]:
     run_dir = resolve(run_dir)
     errors: list[str] = []
     if not all_b2_successes:
@@ -48,30 +51,26 @@ def run_causality_mutations(run_dir: Path, *, all_b2_successes: bool, fresh_reru
     if not fresh_reruns:
         errors.append("fresh_reruns_flag_required")
     records = load_b2_success_records(run_dir)
-    batch = build_batch_reruns(run_dir, [record for _record_path, record in records])
-    errors.extend(batch["errors"])
+    rerun_root = run_dir / "solver_causality_task_reruns"
+    if rerun_root.exists():
+        shutil.rmtree(rerun_root)
+    rerun_root.mkdir(parents=True)
+    registry_path = run_dir / "rule_registry" / "rule_registry_full2d.json"
     reports: list[dict[str, Any]] = []
-    for record_path, record in records:
-        report_ref, report = build_report_for_record(run_dir, record, batch)
-        cert_ref, _ = write_artifact(
-            run_dir,
-            Path("solver_backed_certificates") / f"{safe_id(str(record['task_id']))}.json",
-            {
-                "schema_version": "SolverBackedProofCertificateFull2D",
-                "actual_task_run_ref": sha256_text(canonical_json(record)),
-                "final_verify_report_ref": record["final_verify_report_ref"],
-                "solver_causality_report_ref": report_ref,
-                "causal_chain_hash": causal_chain_hash({**record, "solver_causality_report_ref": report_ref}),
-                "certificate_status": "solver_causal_replay_bound",
-            },
-            id_field="certificate_id",
-        )
-        updated = dict(record)
-        updated["solver_causality_report_ref"] = report_ref
-        updated["solver_backed_certificate_ref"] = cert_ref
-        updated["causal_chain_hash"] = causal_chain_hash(updated)
-        write_json(record_path, updated)
-        reports.append(report)
+    task_results: list[dict[str, Any]] = []
+    worker_count = max(1, int(workers))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=worker_count) as executor:
+        futures = [
+            executor.submit(process_causality_record, run_dir, rerun_root, registry_path, record_path, record)
+            for record_path, record in records
+        ]
+        for future in concurrent.futures.as_completed(futures):
+            result = future.result()
+            task_results.append(result)
+            errors.extend(f"{result.get('task_id', 'unknown')}:{error}" for error in result.get("errors", []))
+            report = result.get("report")
+            if isinstance(report, dict):
+                reports.append(report)
     summary = {
         "schema_version": "SolverCausalityMutationRunV05",
         "status": "passed" if not errors else "failed",
@@ -79,91 +78,59 @@ def run_causality_mutations(run_dir: Path, *, all_b2_successes: bool, fresh_reru
         "run_dir": str(run_dir),
         "all_b2_successes": all_b2_successes,
         "fresh_reruns": fresh_reruns,
+        "worker_count": worker_count,
         "b2_success_count": len(records),
         "report_count": len(reports),
         "mutation_run_count": sum(len(report.get("mutation_runs", [])) for report in reports),
-        "batch_rerun_summary": batch["summary"],
+        "task_rerun_count": sum(result.get("rerun_count", 0) for result in task_results),
+        "task_results": sorted(task_results, key=lambda item: str(item.get("task_id")))[:20],
     }
     write_json(run_dir / "solver_causality_mutation_summary_v0_5.json", summary)
     return summary
 
 
-def build_batch_reruns(run_dir: Path, records: list[dict[str, Any]]) -> dict[str, Any]:
+def process_causality_record(
+    run_dir: Path,
+    rerun_root: Path,
+    registry_path: Path,
+    record_path: Path,
+    record: dict[str, Any],
+) -> dict[str, Any]:
+    task_id = str(record["task_id"])
     errors: list[str] = []
-    task_ids = [str(record["task_id"]) for record in records]
-    theorem_names = [str(record.get("theorem_name") or record["task_id"]) for record in records]
-    batch_root = run_dir / "solver_causality_batch_reruns"
-    if batch_root.exists():
-        shutil.rmtree(batch_root)
-    batch_root.mkdir(parents=True)
-    task_manifest_ref, _ = write_artifact(
+    task_rerun = build_task_rerun_inputs(run_dir, rerun_root, record, registry_path)
+    errors.extend(task_rerun["errors"])
+    report_ref, report = build_report_for_record(run_dir, record, task_rerun)
+    if report.get("destructive_causality_passed") is not True:
+        errors.append("destructive_causality_not_passed")
+    cert_ref, _ = write_artifact(
         run_dir,
-        Path("solver_causality_batch_reruns") / "task_manifest.json",
+        Path("solver_backed_certificates") / f"{safe_id(task_id)}.json",
         {
-            "schema_version": "SolverCausalityBatchTaskManifestV05",
-            "task_ids": task_ids,
-            "theorem_names": theorem_names,
+            "schema_version": "SolverBackedProofCertificateFull2D",
+            "actual_task_run_ref": sha256_text(canonical_json(record)),
+            "final_verify_report_ref": record["final_verify_report_ref"],
+            "solver_causality_report_ref": report_ref,
+            "causal_chain_hash": causal_chain_hash({**record, "solver_causality_report_ref": report_ref}),
+            "certificate_status": "solver_causal_replay_bound",
         },
-        id_field="manifest_id",
+        id_field="certificate_id",
     )
-    logs: dict[str, dict[str, Any]] = {}
-    candidates: dict[str, str] = {}
-    task_runs: dict[str, dict[str, Any]] = {}
-    combined_blocks: dict[str, list[str]] = {"positive_control": []}
-    for mutation in MUTATIONS:
-        combined_blocks[mutation] = []
-    registry_path = run_dir / "rule_registry" / "rule_registry_full2d.json"
-    for record in records:
-        task_id = str(record["task_id"])
-        rerun = build_task_rerun_inputs(run_dir, batch_root, record, registry_path)
-        task_runs[task_id] = rerun
-        errors.extend(f"{task_id}:{error}" for error in rerun["errors"])
-        for mutation in ["positive_control", *MUTATIONS]:
-            block = rerun.get("runs", {}).get(mutation, {}).get("candidate_block", "")
-            if block:
-                combined_blocks[mutation].append(block)
-            else:
-                errors.append(f"{task_id}:missing_candidate_block:{mutation}")
-    positive_ref, positive_log = run_final_verify_batch_command(
-        run_dir=run_dir,
-        mutation="positive_control",
-        candidate_path=write_combined_candidate(batch_root, "positive_control", combined_blocks["positive_control"]),
-        task_manifest_ref=task_manifest_ref,
-        task_count=len(records),
-    )
-    logs["positive_control"] = positive_log
-    candidates["positive_control"] = str(positive_log.get("candidate_ref"))
-    if positive_log["returncode"] != 0:
-        errors.append("positive_control_batch_final_verify_failed")
-    for mutation in MUTATIONS:
-        mutated_candidate = write_combined_candidate(batch_root, mutation, combined_blocks[mutation])
-        command_ref, command_log = run_final_verify_batch_command(
-            run_dir=run_dir,
-            mutation=mutation,
-            candidate_path=mutated_candidate,
-            task_manifest_ref=task_manifest_ref,
-            task_count=len(records),
-        )
-        logs[mutation] = command_log
-        candidates[mutation] = str(command_log.get("candidate_ref"))
-        if command_log["returncode"] == 0:
-            errors.append(f"mutation_batch_unexpectedly_verified:{mutation}")
-    summary = {
-        "schema_version": "SolverCausalityBatchRerunSummaryV05",
+    updated = dict(record)
+    updated["solver_causality_report_ref"] = report_ref
+    updated["solver_backed_certificate_ref"] = cert_ref
+    updated["causal_chain_hash"] = causal_chain_hash(updated)
+    write_json(record_path, updated)
+    return {
+        "task_id": task_id,
         "status": "passed" if not errors else "failed",
-        "errors": errors,
-        "task_manifest_ref": task_manifest_ref,
-        "task_count": len(records),
-        "positive_control_command_log_ref": positive_ref,
-        "mutation_command_log_refs": {mutation: logs[mutation]["command_log_id"] for mutation in MUTATIONS if mutation in logs},
-        "candidate_refs": candidates,
-        "task_rerun_count": sum(len(rerun.get("runs", {})) for rerun in task_runs.values()),
+        "errors": sorted(set(errors)),
+        "report": report,
+        "rerun_count": len(task_rerun.get("runs", {})),
     }
-    write_json(run_dir / "solver_causality_batch_rerun_summary_v0_5.json", summary)
-    return {"errors": errors, "logs": logs, "candidates": candidates, "task_runs": task_runs, "summary": summary}
 
 
-def build_task_rerun_inputs(run_dir: Path, batch_root: Path, record: dict[str, Any], registry_path: Path) -> dict[str, Any]:
+def build_task_rerun_inputs(run_dir: Path, rerun_root: Path, record: dict[str, Any], registry_path: Path) -> dict[str, Any]:
     task_id = str(record["task_id"])
     theorem_name = str(record.get("theorem_name") or task_id)
     source_record_path = run_dir / "source_theorems" / f"{safe_id(task_id)}.json"
@@ -179,9 +146,20 @@ def build_task_rerun_inputs(run_dir: Path, batch_root: Path, record: dict[str, A
     if not header:
         return {"errors": ["source_theorem_header_missing"], "runs": {}}
     base_derivation = read_json(derivation_path)
+    task_manifest_ref, _ = write_artifact(
+        run_dir,
+        Path("solver_causality_task_reruns") / "task_manifests" / f"{safe_id(task_id)}.json",
+        {
+            "schema_version": "SolverCausalityTaskManifestV05",
+            "task_id": task_id,
+            "theorem_name": theorem_name,
+            "run_record_ref": sha256_text(canonical_json(record)),
+        },
+        id_field="manifest_id",
+    )
     runs: dict[str, dict[str, Any]] = {}
     for mutation in ["positive_control", *MUTATIONS]:
-        temp_dir = batch_root / "tasks" / safe_id(task_id) / safe_id(mutation)
+        temp_dir = rerun_root / "tasks" / safe_id(task_id) / safe_id(mutation)
         if temp_dir.exists():
             shutil.rmtree(temp_dir)
         temp_dir.mkdir(parents=True)
@@ -229,6 +207,19 @@ def build_task_rerun_inputs(run_dir: Path, batch_root: Path, record: dict[str, A
             fallback = temp_dir / "Candidate.failed.lean"
             fallback.write_text(single_theorem_source(header, theorem_name, f"  exact __full2d_{safe_id(mutation)}_proof_worker_failed"), encoding="utf-8")
             candidate_path = fallback
+        command_ref, command_log = run_final_verify_task_command(
+            run_dir=run_dir,
+            task_id=task_id,
+            theorem_name=theorem_name,
+            mutation=mutation,
+            candidate_path=candidate_path,
+            task_manifest_ref=task_manifest_ref,
+        )
+        same_final = command_log.get("returncode") == 0
+        if mutation == "positive_control" and not same_final:
+            errors.append("positive_control_final_verify_failed")
+        if mutation != "positive_control" and same_final:
+            errors.append(f"mutation_unexpectedly_verified:{mutation}")
         runs[mutation] = {
             "temp_run_dir": temp_dir.relative_to(run_dir).as_posix(),
             "temp_run_dir_hash": hash_directory(temp_dir),
@@ -239,9 +230,11 @@ def build_task_rerun_inputs(run_dir: Path, batch_root: Path, record: dict[str, A
             "proof_worker_errors": worker.get("errors", []),
             "proof_worker_result_ref": str(worker.get("worker_result_id") or sha256_text(canonical_json(worker))),
             "input_hashes": [sha256_file(claim_path), sha256_file(selected_path), sha256_file(registry_path)],
-            "output_hashes": [sha256_file(candidate_path), str(worker.get("worker_result_id") or sha256_text(canonical_json(worker)))],
+            "output_hashes": [sha256_file(candidate_path), str(worker.get("worker_result_id") or sha256_text(canonical_json(worker))), command_ref],
             "candidate_ref": sha256_file(candidate_path),
-            "candidate_block": theorem_block(candidate_path.read_text(encoding="utf-8"), theorem_name),
+            "command_log_ref": command_ref,
+            "command_log_returncode": command_log.get("returncode"),
+            "same_final_theorem_counted": same_final,
         }
     return {"errors": errors, "runs": runs}
 
@@ -259,7 +252,8 @@ def mutate_selected_derivation(base_derivation: dict[str, Any], mutation: str) -
         return selected
     if mutation == "corrupt_selected_fact_or_construction":
         selected["selected_facts"] = ["fact:corrupted_selected_solver_fact"]
-        bindings = selected.get("lean_bindings")
+        application = selected.get("checked_rule_application")
+        bindings = application.get("arguments") if isinstance(application, dict) else {}
         if isinstance(bindings, dict):
             for key in ["h", "h0", "h1", "A", "r"]:
                 if key in bindings:
@@ -271,6 +265,7 @@ def mutate_selected_derivation(base_derivation: dict[str, Any], mutation: str) -
             if isinstance(step, dict):
                 step["independent_checker_report_ref"] = "corrupted_checker_output_ref"
         selected["selected_certificates"] = ["certificate:corrupted_checker_output"]
+        selected["checked_rule_application_ref"] = "corrupted_checker_output_ref"
         return selected
     if mutation == "unsupported_rule_mutation":
         for step in selected.get("derivation_steps", []):
@@ -334,47 +329,14 @@ def single_theorem_source(header: str, theorem_name: str, proof_text: str) -> st
     )
 
 
-def theorem_block(candidate_text: str, theorem_name: str) -> str:
-    lines = []
-    keep = False
-    for line in candidate_text.splitlines():
-        stripped = line.strip()
-        if stripped.startswith("theorem ") and theorem_name in stripped:
-            keep = True
-        if keep and not stripped.startswith("import ") and not stripped.startswith("namespace ") and not stripped.startswith("end "):
-            lines.append(line)
-    return "\n".join(lines).strip("\n") + "\n"
-
-
-def write_combined_candidate(batch_root: Path, mutation: str, blocks: list[str]) -> Path:
-    mutation_dir = batch_root / safe_id(mutation)
-    mutation_dir.mkdir(parents=True, exist_ok=True)
-    path = mutation_dir / "Full2DMatrixCandidates.rerun.lean"
-    path.write_text(
-        "\n".join(
-            [
-                "import MathAutoResearch.GeometryFull2D.Inequality",
-                "",
-                "namespace MathAutoResearch.GeometryFull2D",
-                "",
-                *blocks,
-                "",
-                "end MathAutoResearch.GeometryFull2D",
-                "",
-            ]
-        ),
-        encoding="utf-8",
-    )
-    return path
-
-
-def run_final_verify_batch_command(
+def run_final_verify_task_command(
     *,
     run_dir: Path,
+    task_id: str,
+    theorem_name: str,
     mutation: str,
     candidate_path: Path,
     task_manifest_ref: str,
-    task_count: int,
 ) -> tuple[str, dict[str, Any]]:
     command = ["lake", "env", "lean", str(candidate_path)]
     started = time.time()
@@ -395,12 +357,14 @@ def run_final_verify_batch_command(
     except subprocess.TimeoutExpired as exc:
         returncode = 124
         stdout_tail = str(exc.stdout or "")[-4000:]
-        stderr_tail = str(exc.stderr or "solver causality batch final verify timed out")[-4000:]
+        stderr_tail = str(exc.stderr or "solver causality task final verify timed out")[-4000:]
     ref, path = write_artifact(
         run_dir,
-        Path("command_logs") / "solver_causality_batch" / f"{safe_id(mutation)}.json",
+        Path("command_logs") / "solver_causality" / f"{safe_id(task_id)}__{safe_id(mutation)}.json",
         {
             "schema_version": "CommandLogV05",
+            "task_id": task_id,
+            "theorem_name": theorem_name,
             "mutation": mutation,
             "stage_sequence": ["compiler", "proof_worker", "final_verify"],
             "actual_subprocess_executed": True,
@@ -411,7 +375,7 @@ def run_final_verify_batch_command(
             "candidate_ref": sha256_file(candidate_path),
             "candidate_path": str(candidate_path),
             "task_manifest_ref": task_manifest_ref,
-            "task_count": task_count,
+            "task_count": 1,
             "duration_seconds": round(time.time() - started, 3),
         },
         id_field="command_log_id",
@@ -419,34 +383,35 @@ def run_final_verify_batch_command(
     return ref, json.loads(path.read_text(encoding="utf-8"))
 
 
-def build_report_for_record(run_dir: Path, record: dict[str, Any], batch: dict[str, Any]) -> tuple[str, dict[str, Any]]:
+def build_report_for_record(run_dir: Path, record: dict[str, Any], task_rerun: dict[str, Any]) -> tuple[str, dict[str, Any]]:
     task_id = str(record["task_id"])
     run_record_ref = sha256_text(canonical_json(record))
-    task_rerun = batch.get("task_runs", {}).get(task_id, {})
     runs_by_mutation = task_rerun.get("runs", {}) if isinstance(task_rerun, dict) else {}
     positive_run = runs_by_mutation.get("positive_control", {})
     mutation_runs: list[dict[str, Any]] = []
     for mutation in MUTATIONS:
         stage_run = runs_by_mutation.get(mutation, {})
-        command_log = batch["logs"].get(mutation, {})
+        same_final = stage_run.get("same_final_theorem_counted") is True
         mutation_runs.append(
             {
                 "mutation": mutation,
                 "temp_run_dir": stage_run.get("temp_run_dir"),
                 "temp_run_dir_hash": stage_run.get("temp_run_dir_hash"),
-                "command_log_ref": command_log.get("command_log_id"),
+                "command_log_ref": stage_run.get("command_log_ref"),
                 "input_hashes": [run_record_ref, *stage_run.get("input_hashes", [])],
-                "output_hashes": [*stage_run.get("output_hashes", []), batch["candidates"].get(mutation, sha256_text("missing_mutation_candidate:" + mutation))],
+                "output_hashes": [*stage_run.get("output_hashes", []), stage_run.get("candidate_ref", sha256_text("missing_mutation_candidate:" + mutation))],
                 "rerun_stage_sequence": ["compiler", "proof_worker", "final_verify"],
                 "compiler_status": stage_run.get("compiler_status"),
                 "compiler_errors": stage_run.get("compiler_errors", []),
                 "proof_worker_status": stage_run.get("proof_worker_status"),
                 "proof_worker_errors": stage_run.get("proof_worker_errors", []),
-                "failure_reason": mutation_failure_reason(stage_run, command_log),
-                "same_final_theorem_counted": False,
+                "failure_reason": mutation_failure_reason(stage_run),
+                "same_final_theorem_counted": same_final,
                 "fresh_temp_run": True,
             }
         )
+    positive_same_final = positive_run.get("same_final_theorem_counted") is True
+    destructive_passed = positive_same_final and all(item.get("same_final_theorem_counted") is False for item in mutation_runs) and not task_rerun.get("errors")
     body = {
         "schema_version": "SolverCausalityReportV3",
         "run_record_ref": run_record_ref,
@@ -455,31 +420,32 @@ def build_report_for_record(run_dir: Path, record: dict[str, Any], batch: dict[s
         "positive_control": {
             "temp_run_dir": positive_run.get("temp_run_dir"),
             "temp_run_dir_hash": positive_run.get("temp_run_dir_hash"),
-            "command_log_ref": batch["logs"].get("positive_control", {}).get("command_log_id"),
-            "same_final_theorem_counted": True,
+            "command_log_ref": positive_run.get("command_log_ref"),
+            "same_final_theorem_counted": positive_same_final,
             "fresh_temp_run": True,
             "input_hashes": [run_record_ref, *positive_run.get("input_hashes", [])],
-            "output_hashes": [*positive_run.get("output_hashes", []), batch["candidates"].get("positive_control", sha256_text("missing_positive_candidate"))],
+            "output_hashes": [*positive_run.get("output_hashes", []), positive_run.get("candidate_ref", sha256_text("missing_positive_candidate"))],
             "rerun_stage_sequence": ["compiler", "proof_worker", "final_verify"],
             "compiler_status": positive_run.get("compiler_status"),
             "proof_worker_status": positive_run.get("proof_worker_status"),
         },
         "mutation_runs": mutation_runs,
         "live_rerun_status": "fresh_temp_dirs_with_command_logs",
-        "destructive_causality_passed": True,
+        "destructive_causality_passed": destructive_passed,
+        "task_rerun_errors": task_rerun.get("errors", []),
     }
     report_ref, path = write_artifact(run_dir, Path("solver_causality_reports") / f"{safe_id(task_id)}.json", body, id_field="report_id")
     report = json.loads(path.read_text(encoding="utf-8"))
     return report_ref, report
 
 
-def mutation_failure_reason(stage_run: dict[str, Any], command_log: dict[str, Any]) -> str:
+def mutation_failure_reason(stage_run: dict[str, Any]) -> str:
     compiler_status = stage_run.get("compiler_status")
     if compiler_status != "passed":
         return "compiler rejected mutated SelectedSolverDerivationV2 before proof generation"
     if stage_run.get("proof_worker_status") != "patch_applied":
         return "ProofWorker rejected mutated compiler patch candidate"
-    if command_log.get("returncode") != 0:
+    if stage_run.get("command_log_returncode") != 0:
         return "FinalVerifyGate rejected solver-mutated candidate"
     return "mutation did not block final verification"
 

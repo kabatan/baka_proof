@@ -16,7 +16,7 @@ from scripts.geometry_full2d_v0_5_schemas import validate_payload
 
 
 REQUIRED_BASELINES = ["B1", "B2", "B5", "B6", "B7"]
-ALLOWED_MEASURED_FAILURE_SOURCES = {"FinalVerifyReportFull2D", "StageFailureReportV1", "DisabledStageReportV1"}
+ALLOWED_MEASURED_FAILURE_SOURCES = {"FinalVerifyReportFull2D", "StageFailureReportV1"}
 
 
 def main() -> int:
@@ -47,6 +47,7 @@ def check_baseline_comparability(run_dir: Path) -> dict[str, Any]:
     if required_baselines != REQUIRED_BASELINES:
         errors.append("required_baselines_not_exact_v0_5_set")
     records = load_records(run_dir)
+    ref_index = build_ref_index(run_dir)
     by_key: dict[tuple[str, str], dict[str, Any]] = {}
     duplicates: list[str] = []
     validation_errors: list[str] = []
@@ -71,6 +72,8 @@ def check_baseline_comparability(run_dir: Path) -> dict[str, Any]:
             errors.append(f"{task_id}:{baseline}:measured_failure_source_invalid:{source}")
         if final_status == "measured_failure" and not record.get("failure_report_ref") and baseline != "B2":
             errors.append(f"{task_id}:{baseline}:measured_failure_missing_failure_report_ref")
+        if final_status == "measured_failure" and baseline in {"B1", "B5", "B6", "B7"}:
+            errors.extend(f"{task_id}:{baseline}:{error}" for error in validate_ablation_failure_record(record, ref_index))
         if baseline == "B2" and record.get("baseline_disabled_components"):
             errors.append(f"{task_id}:B2:disabled_components_present")
     missing = [(task_id, baseline) for task_id in task_ids for baseline in required_baselines if (task_id, baseline) not in by_key]
@@ -135,6 +138,42 @@ def check_baseline_comparability(run_dir: Path) -> dict[str, Any]:
     return report
 
 
+def validate_ablation_failure_record(record: dict[str, Any], ref_index: dict[str, dict[str, Any]]) -> list[str]:
+    errors: list[str] = []
+    failure_ref = str(record.get("failure_report_ref", ""))
+    failure = ref_index.get(failure_ref)
+    if not isinstance(failure, dict):
+        return ["ablation_failure_report_ref_unresolved"]
+    if failure.get("schema_version") != "StageFailureReportV1":
+        errors.append("ablation_failure_not_stage_failure_report")
+    if failure.get("failure_kind") != "declared_baseline_ablation":
+        errors.append("ablation_failure_kind_not_declared_ablation")
+    if failure.get("stage") not in {"provider", "independent_checker", "compiler", "proof_worker", "final_verify"}:
+        errors.append("ablation_failure_stage_invalid")
+    if failure.get("disabled_components") != record.get("baseline_disabled_components"):
+        errors.append("ablation_failure_disabled_components_mismatch")
+    input_refs = failure.get("input_refs")
+    if not isinstance(input_refs, list) or len(input_refs) < 3:
+        errors.append("ablation_failure_input_refs_not_real_pipeline_prefix")
+    command_ref = str(failure.get("command_log_ref", ""))
+    command_log = ref_index.get(command_ref)
+    if not isinstance(command_log, dict):
+        errors.append("ablation_failure_command_log_ref_unresolved")
+    else:
+        if command_log.get("actual_python_function_executed") is not True and command_log.get("actual_subprocess_executed") is not True:
+            errors.append("ablation_failure_command_not_executed")
+        if command_log.get("stage_sequence") != ["claimspec", "provider"]:
+            errors.append("ablation_failure_stage_sequence_invalid")
+    engine_refs = record.get("engine_output_refs")
+    if not isinstance(engine_refs, list) or not engine_refs:
+        errors.append("ablation_engine_refs_missing")
+    elif engine_refs == [failure_ref]:
+        errors.append("ablation_engine_refs_synthetic_failure_only")
+    if record.get("final_status_source") == "DisabledStageReportV1":
+        errors.append("disabled_stage_report_not_allowed_for_release_ablation")
+    return errors
+
+
 def load_records(run_dir: Path) -> list[dict[str, Any]]:
     records_dir = run_dir / "actual_task_pipeline_runs"
     if not records_dir.exists():
@@ -148,6 +187,29 @@ def load_records(run_dir: Path) -> list[dict[str, Any]]:
         if isinstance(payload, dict):
             records.append(payload)
     return records
+
+
+def build_ref_index(run_dir: Path) -> dict[str, dict[str, Any]]:
+    refs: dict[str, dict[str, Any]] = {}
+    roots = [
+        run_dir / "stage_failures",
+        run_dir / "command_logs" / "baseline_ablation",
+    ]
+    for root in roots:
+        if not root.exists():
+            continue
+        for item in sorted(root.glob("*.json")):
+            try:
+                payload = json.loads(item.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            if not isinstance(payload, dict):
+                continue
+            for key in ["content_sha256", "failure_report_id", "command_log_id", "report_id", "disabled_report_id"]:
+                value = payload.get(key)
+                if isinstance(value, str) and value.startswith("sha256:"):
+                    refs[value] = payload
+    return refs
 
 
 def current_git_head() -> str:

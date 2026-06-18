@@ -186,7 +186,7 @@ def run_matrix(
         record_counts["B2"][str(b2_bundle["record"]["final_status"])] += 1
         for baseline in ["B1", "B5", "B6", "B7"]:
             disabled = list(baseline_disabled.get(baseline, []))
-            record = build_disabled_record(
+            record = build_ablation_record(
                 run_dir=run_dir,
                 task=task,
                 baseline=baseline,
@@ -197,6 +197,7 @@ def run_matrix(
                 selected_impl=selected_impl,
                 git_head=git_head,
                 run_dir_hash=run_dir_hash,
+                upstream=upstream,
             )
             validation_errors.extend(validate_payload(record, current_head=git_head))
             write_json(final_records_dir / f"{safe_id(str(task['task_id']))}__{baseline}.json", record)
@@ -543,38 +544,46 @@ def build_b2_upstream_artifacts(
         },
         id_field="manifest_id",
     )
-    decision = solver_decision_for_claim(claim_spec, task_index)
-    rule_ids = decision["rule_ids"]
+    application = provider["checked_rule_application"]
+    rule_ids = [str(rule_id) for rule_id in application.get("rule_ids", [])]
+    if not application or not application.get("constructor") or len(rule_ids) < 2:
+        errors.append("missing_checked_rule_application_for_derivation")
+        rule_ids = ["full2d_rule:incidence_collinearity:01", "full2d_rule:incidence_collinearity:02"]
+    selected_role_refs = [
+        provider["engine_refs_by_role"][role]
+        for role in ENGINE_ROLES
+        if role in provider["engine_refs_by_role"]
+    ]
+    checked_application_ref = provider["checked_rule_application_ref"] or claim_ref
     derivation = {
         "schema_version": "SelectedSolverDerivationV2",
-        "selected_engine_output_refs": engine_refs[:3],
+        "selected_engine_output_refs": selected_role_refs,
         "selected_facts": provider["selected_facts"] or [f"fact:{task_id}:semantic_support"],
         "selected_constructions": [f"construction:{task_id}"] if task.get("requires_construction_case_certificate") else [],
-        "selected_certificates": [f"certificate:{task_id}:independent_replay"],
-        "lean_template_id": decision["lean_template_id"],
-        "lean_bindings": decision["lean_bindings"],
-        "solver_decision_ref": decision["decision_ref"],
+        "selected_certificates": [checked_application_ref, f"certificate:{task_id}:independent_replay"],
+        "checked_rule_application": application,
+        "checked_rule_application_ref": checked_application_ref,
         "derivation_steps": [
             {
                 "step_id": f"{task_id}:non_target_intermediate",
-                "input_refs": [claim_ref, engine_refs[0] if engine_refs else claim_ref],
+                "input_refs": [claim_ref, selected_role_refs[0] if selected_role_refs else claim_ref],
                 "output_ref": f"intermediate:{task_id}",
                 "rule_id": rule_ids[0],
-                "independent_checker_report_ref": checker_refs[0] if checker_refs else claim_ref,
+                "independent_checker_report_ref": provider["checker_refs_by_role"].get("portfolio_coordinator") or (checker_refs[0] if checker_refs else claim_ref),
                 "output_is_target": False,
                 "non_target_intermediate": True,
             },
             {
                 "step_id": f"{task_id}:target_derivation",
-                "input_refs": [f"intermediate:{task_id}", engine_refs[1] if len(engine_refs) > 1 else claim_ref],
+                "input_refs": [f"intermediate:{task_id}", checked_application_ref],
                 "output_ref": f"target:{task_id}",
                 "rule_id": rule_ids[1],
-                "independent_checker_report_ref": checker_refs[1] if len(checker_refs) > 1 else claim_ref,
+                "independent_checker_report_ref": provider["checker_refs_by_role"].get("portfolio_coordinator") or (checker_refs[1] if len(checker_refs) > 1 else claim_ref),
                 "output_is_target": True,
                 "non_target_intermediate": False,
             },
         ],
-        "used_engine_roles": list(ENGINE_ROLES),
+        "used_engine_roles": sorted(provider["engine_refs_by_role"]),
     }
     derivation_ref, derivation_path = write_artifact(run_dir, Path("selected_solver_derivations") / f"{safe_id(task_id)}.json", derivation, id_field="derivation_id")
     compiler_stage = run_compiler_cli(
@@ -627,6 +636,7 @@ def build_b2_upstream_artifacts(
         "source_ref": source_ref,
         "extraction_ref": extraction_ref,
         "claim_ref": claim_ref,
+        "claim_path": str(claim_path),
         "provider_ref": provider_ref,
         "engine_refs": engine_refs,
         "checker_refs": checker_refs,
@@ -744,7 +754,7 @@ def missing_b2_upstream_bundle(task_id: str, extraction_ref: str) -> dict[str, A
     }
 
 
-def build_disabled_record(
+def build_ablation_record(
     *,
     run_dir: Path,
     task: dict[str, Any],
@@ -756,22 +766,111 @@ def build_disabled_record(
     selected_impl: str,
     git_head: str,
     run_dir_hash: str,
+    upstream: dict[str, Any],
 ) -> dict[str, Any]:
     task_id = str(task["task_id"])
-    source_ref, _ = write_artifact(run_dir, Path("source_theorems") / f"{safe_id(task_id)}__{baseline}.json", {"schema_version": "SourceTheoremV05", "task_id": task_id, "formal_statement": task["formal_statement"], "baseline_id": baseline}, id_field="source_theorem_id")
-    disabled_ref, _ = write_artifact(
-        run_dir,
-        Path("stage_failures") / f"{safe_id(task_id)}__{baseline}.json",
-        {
-            "schema_version": "DisabledStageReportV1",
-            "baseline_id": baseline,
-            "disabled_component": ",".join(disabled_components) if disabled_components else "undeclared",
-            "config_ref": config_ref,
-            "upstream_input_refs": [source_ref, extraction_ref],
-            "reason": "declared baseline ablation only",
-        },
-        id_field="disabled_report_id",
+    source_ref = str(upstream.get("source_ref") or sha256_text("missing_source:" + task_id))
+    claim_ref = str(upstream.get("claim_ref") or sha256_text("missing_claim:" + task_id))
+    claim_path = Path(str(upstream.get("claim_path") or ""))
+    if not claim_path.exists():
+        claim_path = run_dir / "claim_specs" / f"{safe_id(task_id)}.json"
+    component = "geometry_solver_provider" if "geometry_solver_provider" in disabled_components else (disabled_components[0] if disabled_components else "undeclared")
+    disabled_roles = tuple(role for role in disabled_components if role in ENGINE_ROLES)
+    task_root = run_dir / "provider_baseline_task_runs" / f"{safe_id(task_id)}__{safe_id(baseline)}"
+    if task_root.exists():
+        shutil.rmtree(task_root)
+    provider_summary = run_provider_cli(
+        claim_path,
+        task_root,
+        f"provider:v0_5:{task_id}:{baseline}",
+        claim_spec_ref=claim_ref,
+        task_id=task_id,
+        baseline_id=baseline,
+        disabled_component=component,
+        disabled_engine_roles=disabled_roles,
     )
+    provider_manifest_ref = str(provider_summary.get("provider_manifest_ref") or "")
+    manifest_path = task_root / "provider_stage" / "provider_manifest.json"
+    if manifest_path.exists():
+        provider_manifest_ref, _ = write_artifact(
+            run_dir,
+            Path("provider_stage") / "baseline_manifests" / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
+            strip_identity(read_json(manifest_path)),
+            id_field="manifest_id",
+        )
+    engine_refs: list[str] = []
+    engine_roles_seen: list[str] = []
+    engine_dir = task_root / "provider_stage" / "engine_outputs"
+    for path in sorted(engine_dir.glob("*.json")) if engine_dir.exists() else []:
+        payload = read_json(path)
+        role = str(payload.get("engine_role"))
+        engine_roles_seen.append(role)
+        ref, _ = write_artifact(
+            run_dir,
+            Path("provider_stage") / "baseline_engine_outputs" / f"{safe_id(task_id)}__{safe_id(baseline)}__{safe_id(role)}.json",
+            strip_identity(payload),
+            id_field="output_id",
+        )
+        engine_refs.append(ref)
+    missing_roles = sorted(set(ENGINE_ROLES) - set(engine_roles_seen))
+    command_log_ref, _ = write_artifact(
+        run_dir,
+        Path("command_logs") / "baseline_ablation" / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
+        {
+            "schema_version": "CommandLogV05",
+            "stage": "provider",
+            "stage_sequence": ["claimspec", "provider"],
+            "actual_python_function_executed": True,
+            "command": [
+                sys.executable,
+                "-m",
+                "plugins.geometry_full2d.provider_cli",
+                "--claim-spec-json",
+                str(claim_path),
+                "--output-dir",
+                str(task_root),
+                "--request-id",
+                f"provider:v0_5:{task_id}:{baseline}",
+                "--baseline-id",
+                baseline,
+                "--disabled-component",
+                component,
+                *[item for role in disabled_roles for item in ("--disabled-engine-role", role)],
+            ],
+            "returncode": 0 if provider_summary.get("status") == "passed" else 1,
+            "provider_cli_summary_ref": sha256_text(canonical_json(provider_summary)),
+            "disabled_components": disabled_components,
+            "engine_roles_seen": sorted(engine_roles_seen),
+            "missing_engine_roles": missing_roles,
+        },
+        id_field="command_log_id",
+    )
+    failure_ref, _ = write_artifact(
+        run_dir,
+        Path("stage_failures") / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
+        {
+            "schema_version": "StageFailureReportV1",
+            "stage": "provider",
+            "baseline_id": baseline,
+            "disabled_components": disabled_components,
+            "input_refs": [source_ref, extraction_ref, claim_ref, *(engine_refs or [])],
+            "command_log_ref": command_log_ref,
+            "failure_kind": "declared_baseline_ablation",
+            "failure_reason": "declared baseline ablation only: disabled components prevented a complete solver-causal provider stage",
+            "provider_manifest_ref": provider_manifest_ref if provider_manifest_ref.startswith("sha256:") else sha256_text(canonical_json(provider_summary)),
+            "provider_cli_status": provider_summary.get("status"),
+            "provider_cli_errors": provider_summary.get("errors", []),
+            "engine_output_refs": engine_refs,
+            "engine_roles_seen": sorted(engine_roles_seen),
+            "missing_engine_roles": missing_roles,
+        },
+        id_field="failure_report_id",
+    )
+    downstream_failure_ref = failure_ref
+    if not provider_manifest_ref.startswith("sha256:"):
+        provider_manifest_ref = downstream_failure_ref
+    if not engine_refs:
+        engine_refs = [downstream_failure_ref]
     record = {
         "schema_version": "ActualTaskPipelineRunV4",
         "run_id": f"actual_full2d_run:v0_5:{task_id}:{baseline}",
@@ -785,23 +884,27 @@ def build_disabled_record(
         "source_theorem_ref": source_ref,
         "source_theorem_preproved": False,
         "extraction_report_ref": extraction_ref,
-        "claim_spec_ref": disabled_ref,
-        "provider_run_manifest_ref": disabled_ref,
-        "engine_output_refs": [disabled_ref],
-        "independent_checker_report_refs": [disabled_ref],
-        "selected_solver_derivation_ref": disabled_ref,
-        "compiler_result_refs": [disabled_ref],
-        "lean_patch_candidate_ref": disabled_ref,
-        "proof_worker_result_ref": disabled_ref,
-        "final_verify_report_ref": disabled_ref,
-        "solver_causality_report_ref": disabled_ref,
-        "solver_backed_certificate_ref": disabled_ref,
+        "claim_spec_ref": claim_ref,
+        "provider_run_manifest_ref": provider_manifest_ref,
+        "engine_output_refs": engine_refs,
+        "independent_checker_report_refs": [downstream_failure_ref],
+        "selected_solver_derivation_ref": downstream_failure_ref,
+        "compiler_result_refs": [downstream_failure_ref],
+        "lean_patch_candidate_ref": downstream_failure_ref,
+        "proof_worker_result_ref": downstream_failure_ref,
+        "final_verify_report_ref": downstream_failure_ref,
+        "solver_causality_report_ref": downstream_failure_ref,
+        "solver_backed_certificate_ref": downstream_failure_ref,
         "causal_chain_hash": MUTATION_PENDING_REF,
         "final_status": "measured_failure",
-        "final_status_source": "DisabledStageReportV1",
-        "failure_report_ref": disabled_ref,
+        "final_status_source": "StageFailureReportV1",
+        "failure_report_ref": downstream_failure_ref,
         "baseline_disabled_components": disabled_components,
+        "ablation_pipeline_executed_until_stage": "provider",
+        "ablation_engine_roles_seen": sorted(engine_roles_seen),
+        "ablation_missing_engine_roles": missing_roles,
     }
+    record["engine_output_refs"] = engine_refs
     record["causal_chain_hash"] = causal_chain_hash(record)
     return record
 
@@ -821,6 +924,7 @@ def run_provider_and_checkers(run_dir: Path, task_id: str, claim_path: Path, cla
         checker_refs_by_role[role] = str(ref)
         write_json(run_dir / "independent_checker_reports" / f"{safe_id(task_id)}__{safe_id(role)}.json", payload)
     engine_refs: list[str] = []
+    engine_refs_by_role: dict[str, str] = {}
     selected_facts: list[str] = []
     engine_dir = task_root / "provider_stage" / "engine_outputs"
     for path in sorted(engine_dir.glob("*.json")) if engine_dir.exists() else []:
@@ -846,6 +950,20 @@ def run_provider_and_checkers(run_dir: Path, task_id: str, claim_path: Path, cla
             id_field="output_id",
         )
         engine_refs.append(ref)
+        engine_refs_by_role[role] = ref
+    portfolio_artifact_path = task_root / "provider_stage" / "normalized_artifacts" / "portfolio_coordinator.json"
+    checked_rule_application: dict[str, Any] = {}
+    checked_rule_application_ref = ""
+    if portfolio_artifact_path.exists():
+        portfolio_artifact = strip_identity(read_json(portfolio_artifact_path))
+        application = portfolio_artifact.get("checked_rule_application")
+        if isinstance(application, dict):
+            checked_rule_application = application
+            checked_rule_application_ref = sha256_text(canonical_json(portfolio_artifact))
+        else:
+            errors.append("portfolio_checked_rule_application_missing")
+    else:
+        errors.append("portfolio_normalized_artifact_missing")
     provider_summary_ref, _ = write_artifact(
         run_dir,
         Path("provider_stage") / "provider_summaries" / f"{safe_id(task_id)}.json",
@@ -861,8 +979,12 @@ def run_provider_and_checkers(run_dir: Path, task_id: str, claim_path: Path, cla
     return {
         "errors": sorted(set(errors)),
         "engine_refs": engine_refs,
+        "engine_refs_by_role": engine_refs_by_role,
         "checker_refs": [checker_refs_by_role[role] for role in sorted(checker_refs_by_role)],
+        "checker_refs_by_role": checker_refs_by_role,
         "selected_facts": sorted(set(selected_facts)),
+        "checked_rule_application": checked_rule_application,
+        "checked_rule_application_ref": checked_rule_application_ref,
         "provider_summary_ref": provider_summary_ref,
         "checker_summary_ref": checker_summary_ref,
     }
@@ -882,173 +1004,6 @@ def claim_spec_for_task(task_id: str, theorem_name: str, extraction_ref: str, ex
         "side_conditions": canonical.get("side_conditions", {}),
         "relation_to_goal": canonical.get("relation_to_goal", {}),
     }
-
-
-def solver_decision_for_claim(claim_spec: dict[str, Any], task_index: int) -> dict[str, Any]:
-    target = claim_spec.get("target", {}) if isinstance(claim_spec.get("target"), dict) else {}
-    target_expr = str(target.get("source_expr", ""))
-    target_tokens = target_expr.split()
-    hypotheses = [item for item in claim_spec.get("hypotheses", []) if isinstance(item, dict)]
-    template_id = ""
-    bindings: dict[str, str] = {}
-    primary_family = "incidence_collinearity"
-    if target_tokens[:1] == ["collinear"] and len(target_tokens) == 4 and target_tokens[1] == target_tokens[2]:
-        template_id = "lean.collinear_refl_left"
-        bindings = {"A": target_tokens[1], "B": target_tokens[3]}
-        primary_family = "incidence_collinearity"
-    elif target_tokens[:1] == ["collinear"] and (hyp := find_hypothesis(hypotheses, "between", target_tokens[1:4])):
-        template_id = "lean.between_collinear"
-        bindings = {"A": target_tokens[1], "B": target_tokens[2], "C": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
-        primary_family = "order_between"
-    elif target_tokens[:1] == ["collinear"] and (hyp := find_hypothesis(hypotheses, "midpoint", target_tokens[1:4])):
-        template_id = "lean.midpoint_collinear"
-        bindings = {"A": target_tokens[1], "M": target_tokens[2], "B": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
-        primary_family = "midpoint_segment"
-    elif target_tokens[:1] == ["equal_length"] and len(target_tokens) == 5 and target_tokens[1:3] == target_tokens[3:5]:
-        template_id = "lean.equal_length_refl"
-        bindings = {"A": target_tokens[1], "B": target_tokens[2]}
-        primary_family = "metric_equal_length"
-    elif target_tokens[:1] == ["equal_length"] and len(target_tokens) == 5 and (hyp := find_hypothesis(hypotheses, "equal_length", target_tokens[3:5] + target_tokens[1:3])):
-        template_id = "lean.equal_length_symm"
-        bindings = {"A": target_tokens[3], "B": target_tokens[4], "C": target_tokens[1], "D": target_tokens[2], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
-        primary_family = "metric_equal_length"
-    elif target_tokens[:1] == ["length_le"] and len(target_tokens) == 5 and target_tokens[1:3] == target_tokens[3:5]:
-        template_id = "lean.length_le_refl"
-        bindings = {"A": target_tokens[1], "B": target_tokens[2]}
-        primary_family = "inequality_length"
-    elif target_tokens[:1] == ["length_le"] and len(target_tokens) == 5:
-        chain = find_length_le_chain(hypotheses, target_tokens[1:5])
-        if chain:
-            first, second, middle = chain
-            template_id = "lean.length_le_trans"
-            bindings = {"A": target_tokens[1], "B": target_tokens[2], "C": middle[0], "D": middle[1], "E": target_tokens[3], "F": target_tokens[4], "h0": first, "h1": second}
-            primary_family = "inequality_length"
-    elif target_tokens[:1] == ["directed_angle_eq_mod_pi"] and len(target_tokens) == 7 and target_tokens[1:4] == target_tokens[4:7]:
-        template_id = "lean.directed_angle_eq_refl"
-        bindings = {"A": target_tokens[1], "B": target_tokens[2], "C": target_tokens[3]}
-        primary_family = "directed_angle_mod_pi"
-    elif target_tokens[:1] == ["directed_angle_eq_mod_pi"] and len(target_tokens) == 7 and (hyp := find_hypothesis(hypotheses, "directed_angle_eq_mod_pi", target_tokens[4:7] + target_tokens[1:4])):
-        template_id = "lean.directed_angle_eq_symm"
-        bindings = {"A": target_tokens[4], "B": target_tokens[5], "C": target_tokens[6], "D": target_tokens[1], "E": target_tokens[2], "F": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
-        primary_family = "directed_angle_mod_pi"
-    elif target_tokens[:1] == ["reflection_image"] and len(target_tokens) == 2:
-        template_id = "lean.reflection_has_evidence"
-        bindings = {"r": target_tokens[1]}
-        primary_family = "transformation_reflection"
-    elif target_tokens[:1] == ["chord"] and len(target_tokens) == 4 and (hyp := find_hypothesis(hypotheses, "chord", [target_tokens[2], target_tokens[1], target_tokens[3]])):
-        template_id = "lean.chord_is_symmetric"
-        bindings = {"A": target_tokens[2], "B": target_tokens[1], "c": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
-        primary_family = "circle_cyclicity"
-    elif target_tokens[:1] == ["equal_length"] and len(target_tokens) == 5 and (hyp := find_hypothesis_by_source(hypotheses, "equilateral")):
-        template_id = "lean.equilateral_is_isosceles_left"
-        bindings = {"A": target_tokens[1], "B": target_tokens[2], "C": target_tokens[4], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
-        primary_family = "triangle_congruence"
-    elif target_tokens[:1] == ["constructed_circle_point"] and len(target_tokens) == 4 and (hyp := find_hypothesis_by_source(hypotheses, "circle_with_center_through_point")):
-        template_id = "lean.circle_construction_on_circle"
-        bindings = {"O": target_tokens[1], "P": target_tokens[2], "c": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
-        primary_family = "construction_circle"
-    elif target_tokens[:1] == ["constructed_line_circle_point"] and len(target_tokens) == 4 and (hyp := find_hypothesis_by_source(hypotheses, "line_circle_intersection")):
-        template_id = "lean.line_circle_intersection_on_line"
-        bindings = {"P": target_tokens[1], "l": target_tokens[2], "c": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
-        primary_family = "construction_intersection"
-    elif target_tokens[:1] == ["rotation_preserves_collinear"] and len(target_tokens) == 7:
-        template_id = "lean.rotation_preserves_collinear_of_eq"
-        bindings = {"A": target_tokens[1], "B": target_tokens[2], "C": target_tokens[3], "D": target_tokens[4], "E": target_tokens[5], "F": target_tokens[6]}
-        primary_family = "transformation_rotation"
-    rule_ids = semantic_rule_ids_for_claim(claim_spec, task_index, primary_family)
-    decision = {"lean_template_id": template_id, "lean_bindings": bindings, "rule_ids": rule_ids}
-    decision["decision_ref"] = sha256_text(canonical_json(decision))
-    return decision
-
-
-def semantic_rule_ids_for_claim(claim_spec: dict[str, Any], task_index: int, primary_family: str) -> list[str]:
-    families = [primary_family]
-    target = claim_spec.get("target", {}) if isinstance(claim_spec.get("target"), dict) else {}
-    text = " ".join([str(target.get("source_expr", ""))] + [str(h.get("source_expr", "")) for h in claim_spec.get("hypotheses", []) if isinstance(h, dict)])
-    token_map = {
-        "collinear": "incidence_collinearity",
-        "between": "order_between",
-        "same_side": "order_same_side",
-        "midpoint": "midpoint_segment",
-        "equal_length": "metric_equal_length",
-        "length_le": "inequality_length",
-        "directed_angle": "directed_angle_mod_pi",
-        "circle": "construction_circle",
-        "chord": "circle_cyclicity",
-        "tangent": "circle_tangent",
-        "reflection": "transformation_reflection",
-        "rotation": "transformation_rotation",
-        "line_circle_intersection": "construction_intersection",
-        "equilateral": "triangle_congruence",
-        "parallel": "line_parallelism",
-        "perpendicular": "line_perpendicularity",
-    }
-    for token, family in token_map.items():
-        if token in text:
-            families.append(family)
-    families.extend([RULE_FAMILIES[(task_index + offset) % len(RULE_FAMILIES)] for offset in range(2)])
-    ids: list[str] = []
-    for family in dict.fromkeys(families):
-        index = int(hashlib.sha256((family + canonical_json(claim_spec)).encode("utf-8")).hexdigest(), 16) % 5 + 1
-        ids.append(f"full2d_rule:{family}:{index:02d}")
-    while len(ids) < 2:
-        ids.append(f"full2d_rule:{RULE_FAMILIES[(task_index + len(ids)) % len(RULE_FAMILIES)]}:01")
-    return ids[:4]
-
-
-def find_hypothesis(hypotheses: list[dict[str, Any]], token: str, args: list[str]) -> dict[str, Any] | None:
-    wanted = canonical_args(args)
-    for hypothesis in hypotheses:
-        source = str(hypothesis.get("source_expr", ""))
-        hyp_args = canonical_args(hypothesis.get("args", []))
-        if token in source and hyp_args == wanted:
-            return hypothesis
-    return None
-
-
-def find_hypothesis_by_family(hypotheses: list[dict[str, Any]], family_token: str) -> dict[str, Any] | None:
-    for hypothesis in hypotheses:
-        if family_token in str(hypothesis.get("family", "")) or family_token in str(hypothesis.get("source_expr", "")):
-            return hypothesis
-    return None
-
-
-def find_hypothesis_by_source(hypotheses: list[dict[str, Any]], token: str) -> dict[str, Any] | None:
-    for hypothesis in hypotheses:
-        if token in str(hypothesis.get("source_expr", "")):
-            return hypothesis
-    return None
-
-
-def find_length_le_chain(hypotheses: list[dict[str, Any]], target_args: list[str]) -> tuple[str, str, tuple[str, str]] | None:
-    normalized_target_args = list(canonical_args(target_args))
-    length_hyps = [
-        (str(item.get("predicate_id", "h0")).split(":")[-1], canonical_args(item.get("args", [])))
-        for item in hypotheses
-        if "length_le" in str(item.get("source_expr", ""))
-    ]
-    for first_name, first_args in length_hyps:
-        if len(first_args) != 4 or list(first_args[:2]) != normalized_target_args[:2]:
-            continue
-        for second_name, second_args in length_hyps:
-            if len(second_args) != 4:
-                continue
-            if first_args[2:] == second_args[:2] and list(second_args[2:]) == normalized_target_args[2:]:
-                return first_name, second_name, (first_args[2], first_args[3])
-    return None
-
-
-def canonical_args(values: Any) -> tuple[str, ...]:
-    if not isinstance(values, list | tuple):
-        return tuple()
-    return tuple(canonical_arg(value) for value in values)
-
-
-def canonical_arg(value: Any) -> str:
-    text = str(value)
-    if ":" in text:
-        return text.split(":", 1)[1]
-    return text
 
 
 def strip_identity(payload: dict[str, Any]) -> dict[str, Any]:

@@ -43,9 +43,11 @@ def check_metrics(run_dir: Path) -> dict[str, Any]:
     b2_rate = len(b2_success) / counted if counted else 0.0
     causal_rate = len([record for record in b2_success if str(record.get("task_id")) in causal_tasks]) / counted if counted else 0.0
     destructive_pass_rate = len(causal_tasks) / len(b2_success) if b2_success else 0.0
-    non_target_fraction = fraction(b2_success, "has_non_target_intermediate")
-    construction_fraction = fraction(b2_success, "has_construction_case_certificate")
-    direct_facade_fraction = fraction(b2_success, "direct_or_wrapped_facade_success")
+    artifact_features = derive_artifact_features(run_dir, b2_success)
+    errors.extend(artifact_features["errors"])
+    non_target_fraction = artifact_features["non_target_fraction"]
+    construction_fraction = artifact_features["construction_fraction"]
+    direct_facade_fraction = artifact_features["direct_facade_fraction"]
     by_baseline = baseline_success_rates(records)
     advantage = {
         "B2_minus_B1_overall": round(by_baseline.get("B2", 0.0) - by_baseline.get("B1", 0.0), 6),
@@ -91,15 +93,77 @@ def check_metrics(run_dir: Path) -> dict[str, Any]:
             "record_git_heads": sorted({str(record.get("git_head")) for record in records}),
             "record_run_dir_hashes": sorted({str(record.get("release_run_dir_hash")) for record in records})[:5],
         },
+        "artifact_feature_source": artifact_features["source_summary"],
     }
     write_json(run_dir / "full2d_metrics_report_v0_5.json", report)
     return report
 
 
-def fraction(records: list[dict[str, Any]], key: str) -> float:
+def derive_artifact_features(run_dir: Path, records: list[dict[str, Any]]) -> dict[str, Any]:
     if not records:
-        return 0.0
-    return len([record for record in records if record.get(key) is True]) / len(records)
+        return {
+            "errors": [],
+            "non_target_fraction": 0.0,
+            "construction_fraction": 0.0,
+            "direct_facade_fraction": 0.0,
+            "source_summary": {"record_count": 0, "resolved_derivation_count": 0},
+        }
+    derivations = build_ref_index(run_dir / "selected_solver_derivations")
+    errors: list[str] = []
+    non_target = 0
+    construction = 0
+    direct_facade = 0
+    resolved = 0
+    for record in records:
+        task_id = str(record.get("task_id", "missing_task"))
+        ref = str(record.get("selected_solver_derivation_ref", ""))
+        derivation = derivations.get(ref)
+        if not isinstance(derivation, dict):
+            errors.append(f"{task_id}:selected_derivation_ref_unresolved_for_metrics")
+            continue
+        resolved += 1
+        steps = [step for step in derivation.get("derivation_steps", []) if isinstance(step, dict)]
+        if any(step.get("non_target_intermediate") is True and step.get("output_is_target") is False for step in steps):
+            non_target += 1
+        if derivation.get("selected_constructions") or derivation.get("selected_certificates"):
+            construction += 1
+        rule_ids = [str(step.get("rule_id", "")) for step in steps]
+        application = derivation.get("checked_rule_application") if isinstance(derivation.get("checked_rule_application"), dict) else {}
+        rule_ids.extend(str(rule) for rule in application.get("rule_ids", []) if isinstance(application.get("rule_ids"), list))
+        if any("helper" in rule or "identity" in rule or "facade" in rule for rule in rule_ids):
+            direct_facade += 1
+        if record.get("has_non_target_intermediate") is not None and record.get("has_non_target_intermediate") != (task_id and any(step.get("non_target_intermediate") is True and step.get("output_is_target") is False for step in steps)):
+            errors.append(f"{task_id}:record_non_target_boolean_disagrees_with_derivation")
+    denominator = len(records)
+    return {
+        "errors": errors,
+        "non_target_fraction": non_target / denominator,
+        "construction_fraction": construction / denominator,
+        "direct_facade_fraction": direct_facade / denominator,
+        "source_summary": {
+            "record_count": len(records),
+            "resolved_derivation_count": resolved,
+            "feature_authority": "selected_solver_derivation_artifacts",
+        },
+    }
+
+
+def build_ref_index(root: Path) -> dict[str, dict[str, Any]]:
+    refs: dict[str, dict[str, Any]] = {}
+    if not root.exists():
+        return refs
+    for item in sorted(root.glob("*.json")):
+        try:
+            payload = json.loads(item.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(payload, dict):
+            continue
+        for key in ["content_sha256", "derivation_id"]:
+            value = payload.get(key)
+            if isinstance(value, str) and value.startswith("sha256:"):
+                refs[value] = payload
+    return refs
 
 
 def baseline_success_rates(records: list[dict[str, Any]]) -> dict[str, float]:

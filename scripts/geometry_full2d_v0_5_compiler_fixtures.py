@@ -65,7 +65,16 @@ def sample_selected_derivation() -> dict[str, Any]:
         "selected_engine_output_refs": [REF_A],
         "selected_facts": ["fact:synthetic:non_target_support"],
         "selected_constructions": [],
-        "selected_certificates": [],
+        "selected_certificates": [REF_A],
+        "checked_rule_application": {
+            "schema_version": "CheckedRuleApplicationFull2D",
+            "constructor": "collinear_refl_left",
+            "arguments": {"A": "A", "B": "B"},
+            "rule_ids": ["full2d_rule:incidence_collinearity:01", "full2d_rule:incidence_collinearity:02"],
+            "support_source": "fixture_checked_solver_artifact",
+            "target_fact": "incidence:point:A,point:A,point:B:positive",
+        },
+        "checked_rule_application_ref": REF_A,
         "derivation_steps": [
             {
                 "step_id": "step:non_target_support",

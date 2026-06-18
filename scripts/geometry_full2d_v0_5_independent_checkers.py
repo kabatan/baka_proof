@@ -445,6 +445,24 @@ def check_portfolio_decision(claim_spec: dict[str, Any], artifact: dict[str, Any
         errors.append("portfolio_parallel_groups_mismatch")
     if artifact.get("llm_semantics_used") is not False:
         errors.append("portfolio_llm_semantics_used")
+    application = artifact.get("checked_rule_application")
+    if not isinstance(application, dict):
+        errors.append("portfolio_missing_checked_rule_application")
+    else:
+        if application.get("schema_version") != "CheckedRuleApplicationFull2D":
+            errors.append("rule_application_schema_invalid")
+        if not application.get("constructor"):
+            errors.append("rule_application_missing_constructor")
+        if not isinstance(application.get("arguments"), dict) or not application.get("arguments"):
+            errors.append("rule_application_missing_arguments")
+        rule_ids = application.get("rule_ids")
+        if not isinstance(rule_ids, list) or not rule_ids or any(not str(rule).startswith("full2d_rule:") for rule in rule_ids):
+            errors.append("rule_application_bad_rule_ids")
+        if application.get("target_fact") != target_fact(claim_spec):
+            errors.append("rule_application_target_fact_mismatch")
+        text = json.dumps(application, sort_keys=True).lower()
+        if "exact " in text or " by " in text:
+            errors.append("rule_application_contains_proof_text")
     return errors
 
 

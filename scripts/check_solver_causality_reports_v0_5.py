@@ -74,15 +74,16 @@ def check_reports(run_dir: Path) -> dict[str, Any]:
     return report
 
 
-def validate_report_payload(report: dict[str, Any], run_dir: Path, ref_index: set[str]) -> list[str]:
+def validate_report_payload(report: dict[str, Any], run_dir: Path, ref_index: dict[str, dict[str, Any]]) -> list[str]:
     errors: list[str] = []
+    task_id = str(report.get("task_id", "missing_task"))
     positive = report.get("positive_control")
     if not isinstance(positive, dict):
         errors.append("positive_control_not_object")
     else:
         if positive.get("same_final_theorem_counted") is not True:
             errors.append("positive_control_not_reproduced")
-        errors.extend(validate_run_evidence("positive_control", positive, run_dir, ref_index, expect_success=True))
+        errors.extend(validate_run_evidence("positive_control", positive, run_dir, ref_index, task_id=task_id, mutation="positive_control", expect_success=True))
     runs = report.get("mutation_runs")
     if not isinstance(runs, list) or not runs:
         errors.append("causality_report_not_live_rerun")
@@ -101,13 +102,24 @@ def validate_report_payload(report: dict[str, Any], run_dir: Path, ref_index: se
             errors.append(f"mutation_not_fresh:{index}")
         if item.get("rerun_stage_sequence") != ["compiler", "proof_worker", "final_verify"]:
             errors.append(f"mutation_stage_sequence_invalid:{index}")
-        errors.extend(validate_run_evidence(f"mutation:{index}", item, run_dir, ref_index, expect_success=False))
+        errors.extend(validate_run_evidence(f"mutation:{index}", item, run_dir, ref_index, task_id=task_id, mutation=str(item.get("mutation")), expect_success=False))
     if report.get("live_rerun_status") != "fresh_temp_dirs_with_command_logs":
         errors.append("live_rerun_status_invalid")
+    if report.get("destructive_causality_passed") is not True:
+        errors.append("destructive_causality_not_passed")
     return errors
 
 
-def validate_run_evidence(label: str, payload: dict[str, Any], run_dir: Path, ref_index: dict[str, dict[str, Any]], *, expect_success: bool) -> list[str]:
+def validate_run_evidence(
+    label: str,
+    payload: dict[str, Any],
+    run_dir: Path,
+    ref_index: dict[str, dict[str, Any]],
+    *,
+    task_id: str,
+    mutation: str,
+    expect_success: bool,
+) -> list[str]:
     errors: list[str] = []
     command_ref = str(payload.get("command_log_ref", ""))
     if command_ref not in ref_index:
@@ -122,11 +134,19 @@ def validate_run_evidence(label: str, payload: dict[str, Any], run_dir: Path, re
             errors.append(f"{label}:actual_subprocess_not_recorded")
         if command_log.get("stage_sequence") != ["compiler", "proof_worker", "final_verify"]:
             errors.append(f"{label}:command_stage_sequence_invalid")
+        if command_log.get("task_id") != task_id:
+            errors.append(f"{label}:command_task_id_mismatch")
+        if command_log.get("mutation") != mutation:
+            errors.append(f"{label}:command_mutation_mismatch")
+        if command_log.get("task_count") != 1:
+            errors.append(f"{label}:command_not_per_task_final_verify")
         returncode = command_log.get("returncode")
         if expect_success and returncode != 0:
             errors.append(f"{label}:positive_control_command_failed")
         if not expect_success and returncode == 0:
             errors.append(f"{label}:mutation_command_unexpected_success")
+        if payload.get("same_final_theorem_counted") != (returncode == 0):
+            errors.append(f"{label}:same_final_theorem_counted_disagrees_with_command")
         if not isinstance(command_log.get("candidate_ref"), str) or not str(command_log.get("candidate_ref")).startswith("sha256:"):
             errors.append(f"{label}:candidate_ref_missing")
         if not isinstance(command_log.get("task_manifest_ref"), str) or not str(command_log.get("task_manifest_ref")).startswith("sha256:"):
@@ -165,7 +185,6 @@ def load_reports(run_dir: Path) -> list[dict[str, Any]]:
 def build_ref_index(run_dir: Path) -> dict[str, dict[str, Any]]:
     refs: dict[str, dict[str, Any]] = {}
     roots = [
-        run_dir / "command_logs" / "solver_causality_batch",
         run_dir / "command_logs" / "solver_causality",
     ]
     files = [item for root in roots if root.exists() for item in sorted(root.glob("*.json"))]

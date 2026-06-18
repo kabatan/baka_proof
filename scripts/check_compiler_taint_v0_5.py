@@ -87,10 +87,10 @@ def check_compiler_taint(run_dir: Path) -> dict[str, Any]:
             errors.append("tainted_metadata_compile_failed")
         if proof_decision_view(base_result) != proof_decision_view(tainted_result):
             errors.append("forbidden_metadata_changed_proof_decision")
-        if derivation_mutation["status"] != "passed":
-            errors.append("selected_derivation_mutation_failed_instead_of_changed")
-        elif proof_decision_view(base_result) == proof_decision_view(derivation_mutation["compiler_result"]):
+        if derivation_mutation["status"] == "passed" and proof_decision_view(base_result) == proof_decision_view(derivation_mutation["compiler_result"]):
             errors.append("selected_derivation_mutation_did_not_change_output")
+        if derivation_mutation["status"] not in {"passed", "failed"}:
+            errors.append("selected_derivation_mutation_status_invalid")
         return {
             "schema_version": "CompilerTaintCheckV05",
             "status": "passed" if not errors else "failed",

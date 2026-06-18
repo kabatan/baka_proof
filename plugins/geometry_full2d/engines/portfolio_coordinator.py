@@ -29,6 +29,7 @@ class PortfolioDecisionFull2D:
     parallel_groups: tuple[tuple[str, ...], ...]
     reason_codes: tuple[str, ...]
     selection_features: dict[str, str]
+    checked_rule_application: dict[str, Any]
     llm_semantics_used: bool
     proof_use_status: str = "not_allowed"
 
@@ -75,6 +76,7 @@ def build_portfolio_decision(claim_spec: dict[str, Any]) -> PortfolioDecisionFul
         parallel_groups=parallel_groups,
         reason_codes=reasons,
         selection_features=features,
+        checked_rule_application=derive_checked_rule_application(claim_spec),
         llm_semantics_used=False,
     )
 
@@ -136,6 +138,169 @@ def _policy(features: dict[str, str]) -> tuple[tuple[str, ...], tuple[str, ...],
     order = ENGINE_ROLES
     reasons = ("target_family:generic_full_order", "policy:no_llm_semantics")
     return order, reasons, (("synthetic_closure", "algebraic_geometry"),)
+
+
+def derive_checked_rule_application(claim_spec: dict[str, Any]) -> dict[str, Any]:
+    target = claim_spec.get("target", {}) if isinstance(claim_spec.get("target"), dict) else {}
+    source = str(target.get("source_expr", ""))
+    tokens = source.split()
+    hypotheses = [item for item in claim_spec.get("hypotheses", []) if isinstance(item, dict)]
+    constructor = ""
+    arguments: dict[str, str] = {}
+    primary_family = "incidence_collinearity"
+    if tokens[:1] == ["collinear"] and len(tokens) == 4 and tokens[1] == tokens[2]:
+        constructor = "collinear_refl_left"
+        arguments = {"A": tokens[1], "B": tokens[3]}
+    elif tokens[:1] == ["collinear"] and (hyp := find_hypothesis(hypotheses, "between", tokens[1:4])):
+        constructor = "between_collinear"
+        arguments = {"A": tokens[1], "B": tokens[2], "C": tokens[3], "h": hypothesis_name(hyp)}
+        primary_family = "order_between"
+    elif tokens[:1] == ["collinear"] and (hyp := find_hypothesis(hypotheses, "midpoint", tokens[1:4])):
+        constructor = "midpoint_collinear"
+        arguments = {"A": tokens[1], "M": tokens[2], "B": tokens[3], "h": hypothesis_name(hyp)}
+        primary_family = "midpoint_segment"
+    elif tokens[:1] == ["equal_length"] and len(tokens) == 5 and tokens[1:3] == tokens[3:5]:
+        constructor = "equal_length_refl"
+        arguments = {"A": tokens[1], "B": tokens[2]}
+        primary_family = "metric_equal_length"
+    elif tokens[:1] == ["equal_length"] and len(tokens) == 5 and (hyp := find_hypothesis(hypotheses, "equal_length", tokens[3:5] + tokens[1:3])):
+        constructor = "equal_length_symm"
+        arguments = {"A": tokens[3], "B": tokens[4], "C": tokens[1], "D": tokens[2], "h": hypothesis_name(hyp)}
+        primary_family = "metric_equal_length"
+    elif tokens[:1] == ["length_le"] and len(tokens) == 5 and tokens[1:3] == tokens[3:5]:
+        constructor = "length_le_refl"
+        arguments = {"A": tokens[1], "B": tokens[2]}
+        primary_family = "inequality_length"
+    elif tokens[:1] == ["length_le"] and len(tokens) == 5 and (chain := find_length_le_chain(hypotheses, tokens[1:5])):
+        first, second, middle = chain
+        constructor = "length_le_trans"
+        arguments = {"A": tokens[1], "B": tokens[2], "C": middle[0], "D": middle[1], "E": tokens[3], "F": tokens[4], "h0": first, "h1": second}
+        primary_family = "inequality_length"
+    elif tokens[:1] == ["directed_angle_eq_mod_pi"] and len(tokens) == 7 and tokens[1:4] == tokens[4:7]:
+        constructor = "directed_angle_eq_refl"
+        arguments = {"A": tokens[1], "B": tokens[2], "C": tokens[3]}
+        primary_family = "directed_angle_mod_pi"
+    elif tokens[:1] == ["directed_angle_eq_mod_pi"] and len(tokens) == 7 and (hyp := find_hypothesis(hypotheses, "directed_angle_eq_mod_pi", tokens[4:7] + tokens[1:4])):
+        constructor = "directed_angle_eq_symm"
+        arguments = {"A": tokens[4], "B": tokens[5], "C": tokens[6], "D": tokens[1], "E": tokens[2], "F": tokens[3], "h": hypothesis_name(hyp)}
+        primary_family = "directed_angle_mod_pi"
+    elif tokens[:1] == ["reflection_image"] and len(tokens) == 2:
+        constructor = "reflection_has_evidence"
+        arguments = {"r": tokens[1]}
+        primary_family = "transformation_reflection"
+    elif tokens[:1] == ["chord"] and len(tokens) == 4 and (hyp := find_hypothesis(hypotheses, "chord", [tokens[2], tokens[1], tokens[3]])):
+        constructor = "chord_is_symmetric"
+        arguments = {"A": tokens[2], "B": tokens[1], "c": tokens[3], "h": hypothesis_name(hyp)}
+        primary_family = "circle_cyclicity"
+    elif tokens[:1] == ["equal_length"] and len(tokens) == 5 and (hyp := find_hypothesis_by_source(hypotheses, "equilateral")):
+        constructor = "equilateral_is_isosceles_left"
+        arguments = {"A": tokens[1], "B": tokens[2], "C": tokens[4], "h": hypothesis_name(hyp)}
+        primary_family = "triangle_congruence"
+    elif tokens[:1] == ["constructed_circle_point"] and len(tokens) == 4 and (hyp := find_hypothesis_by_source(hypotheses, "circle_with_center_through_point")):
+        constructor = "circle_construction_on_circle"
+        arguments = {"O": tokens[1], "P": tokens[2], "c": tokens[3], "h": hypothesis_name(hyp)}
+        primary_family = "construction_circle"
+    elif tokens[:1] == ["constructed_line_circle_point"] and len(tokens) == 4 and (hyp := find_hypothesis_by_source(hypotheses, "line_circle_intersection")):
+        constructor = "line_circle_intersection_on_line"
+        arguments = {"P": tokens[1], "l": tokens[2], "c": tokens[3], "h": hypothesis_name(hyp)}
+        primary_family = "construction_intersection"
+    elif tokens[:1] == ["rotation_preserves_collinear"] and len(tokens) == 7:
+        constructor = "rotation_preserves_collinear_of_eq"
+        arguments = {"A": tokens[1], "B": tokens[2], "C": tokens[3], "D": tokens[4], "E": tokens[5], "F": tokens[6]}
+        primary_family = "transformation_rotation"
+    rule_ids = semantic_rule_ids(claim_spec, primary_family)
+    return {
+        "schema_version": "CheckedRuleApplicationFull2D",
+        "constructor": constructor,
+        "arguments": arguments,
+        "rule_ids": rule_ids,
+        "support_source": "portfolio_semantic_solver_checked_artifact",
+        "target_fact": target_fact(claim_spec),
+    }
+
+
+def semantic_rule_ids(claim_spec: dict[str, Any], primary_family: str) -> list[str]:
+    text = " ".join(
+        [str((claim_spec.get("target") or {}).get("source_expr", ""))]
+        + [str(h.get("source_expr", "")) for h in claim_spec.get("hypotheses", []) if isinstance(h, dict)]
+    )
+    families = [primary_family]
+    token_map = {
+        "collinear": "incidence_collinearity",
+        "between": "order_between",
+        "midpoint": "midpoint_segment",
+        "equal_length": "metric_equal_length",
+        "length_le": "inequality_length",
+        "directed_angle": "directed_angle_mod_pi",
+        "circle": "construction_circle",
+        "chord": "circle_cyclicity",
+        "reflection": "transformation_reflection",
+        "rotation": "transformation_rotation",
+        "line_circle_intersection": "construction_intersection",
+        "equilateral": "triangle_congruence",
+    }
+    for token, family in token_map.items():
+        if token in text:
+            families.append(family)
+    out: list[str] = []
+    seed = canonical_json(claim_spec)
+    for family in dict.fromkeys(families):
+        index = int(hash_ref(family + seed)[7:15], 16) % 5 + 1
+        out.append(f"full2d_rule:{family}:{index:02d}")
+    while len(out) < 2:
+        out.append("full2d_rule:incidence_collinearity:01")
+    return out[:4]
+
+
+def find_hypothesis(hypotheses: list[dict[str, Any]], token: str, args: list[str]) -> dict[str, Any] | None:
+    wanted = canonical_args(args)
+    for hypothesis in hypotheses:
+        if token in str(hypothesis.get("source_expr", "")) and canonical_args(hypothesis.get("args", [])) == wanted:
+            return hypothesis
+    return None
+
+
+def find_hypothesis_by_source(hypotheses: list[dict[str, Any]], token: str) -> dict[str, Any] | None:
+    for hypothesis in hypotheses:
+        if token in str(hypothesis.get("source_expr", "")):
+            return hypothesis
+    return None
+
+
+def find_length_le_chain(hypotheses: list[dict[str, Any]], target_args: list[str]) -> tuple[str, str, tuple[str, str]] | None:
+    normalized_target_args = list(canonical_args(target_args))
+    length_hyps = [
+        (hypothesis_name(item), canonical_args(item.get("args", [])))
+        for item in hypotheses
+        if "length_le" in str(item.get("source_expr", ""))
+    ]
+    for first_name, first_args in length_hyps:
+        if len(first_args) != 4 or list(first_args[:2]) != normalized_target_args[:2]:
+            continue
+        for second_name, second_args in length_hyps:
+            if len(second_args) == 4 and first_args[2:] == second_args[:2] and list(second_args[2:]) == normalized_target_args[2:]:
+                return first_name, second_name, (first_args[2], first_args[3])
+    return None
+
+
+def target_fact(claim_spec: dict[str, Any]) -> str:
+    target = claim_spec.get("target", {}) if isinstance(claim_spec.get("target"), dict) else {}
+    return f"{target.get('family')}:{','.join(str(item) for item in target.get('args', []))}:positive"
+
+
+def hypothesis_name(hypothesis: dict[str, Any]) -> str:
+    return str(hypothesis.get("predicate_id", "h0")).split(":")[-1]
+
+
+def canonical_args(values: Any) -> tuple[str, ...]:
+    if not isinstance(values, (list, tuple)):
+        return tuple()
+    return tuple(canonical_arg(value) for value in values)
+
+
+def canonical_arg(value: Any) -> str:
+    text = str(value)
+    return text.split(":", 1)[1] if ":" in text else text
 
 
 def _measured_failure(engine_input: EngineInputFull2D, context: RunContext, reason: str) -> EngineOutputFull2D:

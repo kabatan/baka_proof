@@ -191,8 +191,22 @@ def validate_compile_inputs(
     for index, ref in enumerate(side_condition_checker_refs):
         if not str(ref).startswith(SHA_PREFIX):
             errors.append(f"bad_side_condition_checker_ref:{index}")
-    if selected_derivation.get("lean_template_id") and not build_solver_selected_lean_exact(selected_derivation):
-        errors.append("selected_derivation_lean_template_invalid")
+    application = selected_derivation.get("checked_rule_application")
+    if not isinstance(application, dict):
+        errors.append("selected_derivation_missing_checked_rule_application")
+    elif not build_checked_rule_application_exact(application):
+        errors.append("selected_derivation_checked_rule_application_invalid")
+    else:
+        application_ref = str(selected_derivation.get("checked_rule_application_ref", ""))
+        if not application_ref.startswith(SHA_PREFIX):
+            errors.append("selected_derivation_bad_checked_rule_application_ref")
+        certificates = [str(ref) for ref in selected_derivation.get("selected_certificates", [])]
+        if application_ref not in certificates:
+            errors.append("checked_rule_application_ref_not_selected_certificate")
+        application_rules = {str(rule_id) for rule_id in application.get("rule_ids", [])}
+        step_rules = {str(step.get("rule_id")) for step in steps if isinstance(step, dict)}
+        if not step_rules.issubset(application_rules):
+            errors.append("derivation_step_rules_not_backed_by_checked_application")
     return errors
 
 
@@ -218,7 +232,8 @@ def build_solver_citing_proof_text(
         f"-- consumed RuleRegistry contracts: {', '.join(consumed_rule_ids)}",
         *(line[2:] if line.startswith("  ") else line for line in step_lines),
     ]
-    solver_exact = build_solver_selected_lean_exact(selected_derivation)
+    application = selected_derivation.get("checked_rule_application") if isinstance(selected_derivation.get("checked_rule_application"), dict) else {}
+    solver_exact = build_checked_rule_application_exact(application)
     if solver_exact:
         return "\n".join([*citation_lines, solver_exact])
     return "\n".join(
@@ -231,43 +246,43 @@ def build_solver_citing_proof_text(
     )
 
 
-def build_solver_selected_lean_exact(selected_derivation: dict[str, Any]) -> str:
-    lean_rule = str(selected_derivation.get("lean_template_id", ""))
-    bindings = selected_derivation.get("lean_bindings", {})
-    if not lean_rule:
+def build_checked_rule_application_exact(application: dict[str, Any]) -> str:
+    constructor = str(application.get("constructor", ""))
+    bindings = application.get("arguments", {})
+    if not constructor:
         return ""
     if not isinstance(bindings, dict):
         return ""
     try:
-        if lean_rule == "lean.collinear_refl_left":
+        if constructor == "collinear_refl_left":
             return f"exact collinear_refl_left {bindings['A']} {bindings['B']}"
-        if lean_rule == "lean.between_collinear":
+        if constructor == "between_collinear":
             return f"exact between_collinear {bindings['A']} {bindings['B']} {bindings['C']} {bindings['h']}"
-        if lean_rule == "lean.midpoint_collinear":
+        if constructor == "midpoint_collinear":
             return f"exact midpoint_collinear {bindings['A']} {bindings['M']} {bindings['B']} {bindings['h']}"
-        if lean_rule == "lean.equal_length_refl":
+        if constructor == "equal_length_refl":
             return f"exact equal_length_refl {bindings['A']} {bindings['B']}"
-        if lean_rule == "lean.equal_length_symm":
+        if constructor == "equal_length_symm":
             return f"exact equal_length_symm {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['h']}"
-        if lean_rule == "lean.length_le_refl":
+        if constructor == "length_le_refl":
             return f"exact length_le_refl {bindings['A']} {bindings['B']}"
-        if lean_rule == "lean.length_le_trans":
+        if constructor == "length_le_trans":
             return f"exact length_le_trans {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} {bindings['h0']} {bindings['h1']}"
-        if lean_rule == "lean.directed_angle_eq_refl":
+        if constructor == "directed_angle_eq_refl":
             return f"exact directed_angle_eq_refl {bindings['A']} {bindings['B']} {bindings['C']}"
-        if lean_rule == "lean.directed_angle_eq_symm":
+        if constructor == "directed_angle_eq_symm":
             return f"exact directed_angle_eq_symm {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} {bindings['h']}"
-        if lean_rule == "lean.reflection_has_evidence":
+        if constructor == "reflection_has_evidence":
             return f"exact reflection_has_evidence {bindings['r']}"
-        if lean_rule == "lean.chord_is_symmetric":
+        if constructor == "chord_is_symmetric":
             return f"exact chord_is_symmetric {bindings['A']} {bindings['B']} {bindings['c']} {bindings['h']}"
-        if lean_rule == "lean.equilateral_is_isosceles_left":
+        if constructor == "equilateral_is_isosceles_left":
             return f"exact equilateral_is_isosceles_left {bindings['A']} {bindings['B']} {bindings['C']} {bindings['h']}"
-        if lean_rule == "lean.circle_construction_on_circle":
+        if constructor == "circle_construction_on_circle":
             return f"exact circle_construction_on_circle {bindings['O']} {bindings['P']} {bindings['c']} {bindings['h']}"
-        if lean_rule == "lean.line_circle_intersection_on_line":
+        if constructor == "line_circle_intersection_on_line":
             return f"exact line_circle_intersection_on_line {bindings['P']} {bindings['l']} {bindings['c']} {bindings['h']}"
-        if lean_rule == "lean.rotation_preserves_collinear_of_eq":
+        if constructor == "rotation_preserves_collinear_of_eq":
             return f"exact rotation_preserves_collinear_of_eq {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} rfl rfl rfl"
     except KeyError:
         return ""

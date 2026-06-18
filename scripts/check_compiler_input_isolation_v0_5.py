@@ -122,6 +122,7 @@ def self_test_report(run_dir: Path) -> dict[str, Any]:
         naked["derivation_steps"] = [naked["derivation_steps"][1]]
         naked["derivation_steps"][0]["input_refs"] = []
         naked["selected_facts"] = []
+        naked["selected_certificates"] = []
         bad_compile = compile_selected_derivation(
             claim_spec=fixture["claim"],
             claim_spec_ref=fixture["claim_ref"],

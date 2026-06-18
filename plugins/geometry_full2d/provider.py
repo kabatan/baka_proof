@@ -250,13 +250,13 @@ def _disabled_engine_roles(request: GeometryFull2DSolveRequest) -> set[str]:
     component = str(request.constraints.get("disabled_component", "none"))
     configured = request.constraints.get("disabled_engine_roles", ())
     roles = {str(role) for role in configured if str(role) in ENGINE_ROLES} if isinstance(configured, (list, tuple, set)) else set()
-    if component == "geometry_solver":
+    if component in {"geometry_solver", "geometry_solver_provider"}:
         return set(ENGINE_ROLES)
     return roles
 
 
 def _emit_disabled_engine_output(request: GeometryFull2DSolveRequest) -> bool:
-    return str(request.constraints.get("disabled_component", "none")) == "geometry_solver"
+    return str(request.constraints.get("disabled_component", "none")) in {"geometry_solver", "geometry_solver_provider"}
 
 
 def _disabled_engine_output(

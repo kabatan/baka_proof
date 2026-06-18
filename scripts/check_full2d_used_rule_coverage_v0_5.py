@@ -28,8 +28,19 @@ def check_used_rule_coverage(run_dir: Path) -> dict[str, Any]:
     used_rules: set[str] = set()
     used_families: set[str] = set()
     errors: list[str] = []
+    derivations = build_ref_index(run_dir / "selected_solver_derivations")
     for record in records:
-        for rule_id in record.get("used_rule_ids", []):
+        task_id = str(record.get("task_id", "missing_task"))
+        ref = str(record.get("selected_solver_derivation_ref", ""))
+        derivation = derivations.get(ref)
+        if not isinstance(derivation, dict):
+            errors.append(f"{task_id}:selected_derivation_ref_unresolved")
+            continue
+        artifact_rules = rules_from_derivation(derivation)
+        record_rules = {str(rule) for rule in record.get("used_rule_ids", [])}
+        if record_rules and record_rules != artifact_rules:
+            errors.append(f"{task_id}:record_used_rules_disagree_with_derivation")
+        for rule_id in artifact_rules:
             rule_text = str(rule_id)
             used_rules.add(rule_text)
             parts = rule_text.split(":")
@@ -54,6 +65,37 @@ def check_used_rule_coverage(run_dir: Path) -> dict[str, Any]:
     }
     write_json(run_dir / "full2d_used_rule_coverage_v0_5.json", report)
     return report
+
+
+def rules_from_derivation(derivation: dict[str, Any]) -> set[str]:
+    rules: set[str] = set()
+    for step in derivation.get("derivation_steps", []):
+        if isinstance(step, dict) and str(step.get("rule_id", "")).startswith("full2d_rule:"):
+            rules.add(str(step["rule_id"]))
+    application = derivation.get("checked_rule_application")
+    if isinstance(application, dict):
+        for rule_id in application.get("rule_ids", []):
+            if str(rule_id).startswith("full2d_rule:"):
+                rules.add(str(rule_id))
+    return rules
+
+
+def build_ref_index(root: Path) -> dict[str, dict[str, Any]]:
+    refs: dict[str, dict[str, Any]] = {}
+    if not root.exists():
+        return refs
+    for item in sorted(root.glob("*.json")):
+        try:
+            payload = json.loads(item.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(payload, dict):
+            continue
+        for key in ["content_sha256", "derivation_id"]:
+            value = payload.get(key)
+            if isinstance(value, str) and value.startswith("sha256:"):
+                refs[value] = payload
+    return refs
 
 
 def load_records(run_dir: Path) -> list[dict[str, Any]]:

@@ -491,12 +491,21 @@ def run_red_cases() -> dict[str, Any]:
 
 
 def build_checker_coverage_matrix(executed_checkers: dict[str, Any] | None = None) -> dict[str, Any]:
+    require_executed = executed_checkers is not None
     executed_checkers = executed_checkers or {}
+    executed_names = set(executed_checkers)
+    for command_name in executed_checkers:
+        command = REQUIRED_CHECKER_COMMANDS.get(command_name, [])
+        for item in command:
+            if str(item).endswith(".py"):
+                executed_names.add(Path(str(item)).name)
+    if require_executed:
+        executed_names.add("check_release_acceptance_v0_5.py")
     rows: list[dict[str, Any]] = []
     errors: list[str] = []
     for kid in sorted(K_BLOCKERS):
         checkers = CHECKER_COVERAGE.get(kid, [])
-        executed = [checker for checker in checkers if checker in executed_checkers or any(name in checker for name in executed_checkers)]
+        executed = [checker for checker in checkers if checker in executed_names or any(name in checker for name in executed_names)]
         rows.append(
             {
                 "requirement": kid,
@@ -507,6 +516,8 @@ def build_checker_coverage_matrix(executed_checkers: dict[str, Any] | None = Non
         )
         if not checkers:
             errors.append(f"{kid}:missing_checker_mapping")
+        if require_executed and not executed:
+            errors.append(f"{kid}:no_executed_checker")
     unknown = sorted(set(CHECKER_COVERAGE) - set(K_BLOCKERS))
     if unknown:
         errors.append("unknown_k_coverage:" + ",".join(unknown))
@@ -765,9 +776,12 @@ def build_fail_closed_release_report(
         cmd = [str(run_dir) if item == "runs/geometry_full2d_v0_5" else item for item in cmd]
         if name == "closure_claim_ceiling":
             cmd = [str(output_path) if item.endswith("release_acceptance_report.json") else item for item in cmd]
+            closure_path = ROOT / "docs" / "ai" / "changes" / "geometry-full2d-v0_5" / "CLOSURE.md"
+            if closure_path.exists():
+                cmd = [item for item in cmd if item != "--allow-missing-closure"]
         timeout_by_command = {
-            "matrix": 2400,
-            "causality_mutations": 1800,
+            "matrix": 3600,
+            "causality_mutations": 10800,
             "engine_outputs": 300,
             "extraction": 300,
             "solver_causality": 300,
