@@ -191,6 +191,8 @@ def validate_compile_inputs(
     for index, ref in enumerate(side_condition_checker_refs):
         if not str(ref).startswith(SHA_PREFIX):
             errors.append(f"bad_side_condition_checker_ref:{index}")
+    if selected_derivation.get("lean_template_id") and not build_solver_selected_lean_exact(selected_derivation):
+        errors.append("selected_derivation_lean_template_invalid")
     return errors
 
 
@@ -208,20 +210,68 @@ def build_solver_citing_proof_text(
         for step in selected_derivation.get("derivation_steps", [])
         if isinstance(step, dict)
     ]
+    citation_lines = [
+        f"-- solver-derived facts: {facts}",
+        f"-- solver-derived constructions: {constructions}",
+        f"-- solver-derived certificates: {certificates}",
+        f"-- generated obligations: {obligations}",
+        f"-- consumed RuleRegistry contracts: {', '.join(consumed_rule_ids)}",
+        *(line[2:] if line.startswith("  ") else line for line in step_lines),
+    ]
+    solver_exact = build_solver_selected_lean_exact(selected_derivation)
+    if solver_exact:
+        return "\n".join([*citation_lines, solver_exact])
     return "\n".join(
         [
-            "by",
-            f"  -- solver-derived facts: {facts}",
-            f"  -- solver-derived constructions: {constructions}",
-            f"  -- solver-derived certificates: {certificates}",
-            f"  -- generated obligations: {obligations}",
-            f"  -- consumed RuleRegistry contracts: {', '.join(consumed_rule_ids)}",
-            *step_lines,
-            "  exact by",
-            "    -- proof worker must refine this solver-causal skeleton in a later stage",
-            "    trivial",
+            *citation_lines,
+            "exact by",
+            "  -- proof worker must refine this solver-causal skeleton in a later stage",
+            "  trivial",
         ]
     )
+
+
+def build_solver_selected_lean_exact(selected_derivation: dict[str, Any]) -> str:
+    lean_rule = str(selected_derivation.get("lean_template_id", ""))
+    bindings = selected_derivation.get("lean_bindings", {})
+    if not lean_rule:
+        return ""
+    if not isinstance(bindings, dict):
+        return ""
+    try:
+        if lean_rule == "lean.collinear_refl_left":
+            return f"exact collinear_refl_left {bindings['A']} {bindings['B']}"
+        if lean_rule == "lean.between_collinear":
+            return f"exact between_collinear {bindings['A']} {bindings['B']} {bindings['C']} {bindings['h']}"
+        if lean_rule == "lean.midpoint_collinear":
+            return f"exact midpoint_collinear {bindings['A']} {bindings['M']} {bindings['B']} {bindings['h']}"
+        if lean_rule == "lean.equal_length_refl":
+            return f"exact equal_length_refl {bindings['A']} {bindings['B']}"
+        if lean_rule == "lean.equal_length_symm":
+            return f"exact equal_length_symm {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['h']}"
+        if lean_rule == "lean.length_le_refl":
+            return f"exact length_le_refl {bindings['A']} {bindings['B']}"
+        if lean_rule == "lean.length_le_trans":
+            return f"exact length_le_trans {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} {bindings['h0']} {bindings['h1']}"
+        if lean_rule == "lean.directed_angle_eq_refl":
+            return f"exact directed_angle_eq_refl {bindings['A']} {bindings['B']} {bindings['C']}"
+        if lean_rule == "lean.directed_angle_eq_symm":
+            return f"exact directed_angle_eq_symm {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} {bindings['h']}"
+        if lean_rule == "lean.reflection_has_evidence":
+            return f"exact reflection_has_evidence {bindings['r']}"
+        if lean_rule == "lean.chord_is_symmetric":
+            return f"exact chord_is_symmetric {bindings['A']} {bindings['B']} {bindings['c']} {bindings['h']}"
+        if lean_rule == "lean.equilateral_is_isosceles_left":
+            return f"exact equilateral_is_isosceles_left {bindings['A']} {bindings['B']} {bindings['C']} {bindings['h']}"
+        if lean_rule == "lean.circle_construction_on_circle":
+            return f"exact circle_construction_on_circle {bindings['O']} {bindings['P']} {bindings['c']} {bindings['h']}"
+        if lean_rule == "lean.line_circle_intersection_on_line":
+            return f"exact line_circle_intersection_on_line {bindings['P']} {bindings['l']} {bindings['c']} {bindings['h']}"
+        if lean_rule == "lean.rotation_preserves_collinear_of_eq":
+            return f"exact rotation_preserves_collinear_of_eq {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} rfl rfl rfl"
+    except KeyError:
+        return ""
+    return ""
 
 
 def write_content_json(path: Path, payload_without_id: dict[str, Any], *, id_field: str) -> tuple[str, Path]:

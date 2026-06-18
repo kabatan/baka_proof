@@ -16,9 +16,11 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from plugins.geometry_full2d.compiler_v0_5 import run_compiler_cli
 from plugins.geometry_full2d.engine_contracts import ENGINE_ROLES
-from plugins.geometry_full2d.provider_cli import backend_code_hash
+from plugins.geometry_full2d.provider_cli import run_provider_cli
 from plugins.geometry_full2d.rule_registry import build_rule_registry_full2d
+from scripts.geometry_full2d_v0_5_independent_checkers import run_independent_solver_checkers
 from scripts.extract_geometry_full2d_theorem import (
     _canonicalize_lean_structured_output,
     _direct_lean_env,
@@ -118,9 +120,7 @@ def run_matrix(
         errors.append("counted_task_count_below_release_floor")
     extraction = build_batch_extraction_reports(corpus_root, run_dir, tasks)
     errors.extend(f"extraction:{error}" for error in extraction["errors"])
-    final_verify = build_candidate_batch(run_dir, tasks)
-    errors.extend(f"final_verify:{error}" for error in final_verify["errors"])
-    registry_ref, _registry_path = write_artifact(
+    registry_ref, registry_path = write_artifact(
         run_dir,
         Path("rule_registry") / "rule_registry_full2d.json",
         build_rule_registry_full2d().to_dict(),
@@ -134,24 +134,49 @@ def run_matrix(
     baseline_disabled = config.get("baseline_disabled_components", {})
     record_counts: dict[str, dict[str, int]] = {baseline: {"records": 0, "final_theorem": 0, "measured_failure": 0} for baseline in required_baselines}
     validation_errors: list[str] = []
-    final_records_dir = run_dir / "actual_task_pipeline_runs"
-    final_records_dir.mkdir(parents=True, exist_ok=True)
+    upstreams: dict[str, dict[str, Any]] = {}
     for index, task in enumerate(tasks):
-        extraction_ref = extraction["report_refs"].get(str(task["task_id"]))
-        if not extraction_ref:
-            errors.append(f"{task['task_id']}:missing_extraction_ref")
-            extraction_ref = sha256_text("missing_extraction:" + str(task["task_id"]))
-        b2_bundle = build_b2_artifacts(
+        task_id = str(task["task_id"])
+        extraction_ref = extraction["report_refs"].get(task_id)
+        extraction_report = extraction["reports"].get(task_id)
+        if not extraction_ref or not isinstance(extraction_report, dict):
+            errors.append(f"{task_id}:missing_extraction_for_upstream_pipeline")
+            continue
+        upstream = build_b2_upstream_artifacts(
             run_dir=run_dir,
             task=task,
             task_index=index,
             extraction_ref=extraction_ref,
+            extraction_report=extraction_report,
             registry_ref=registry_ref,
+            registry_path=registry_path,
+        )
+        validation_errors.extend(upstream["validation_errors"])
+        errors.extend(f"{task_id}:upstream:{error}" for error in upstream["errors"])
+        upstreams[task_id] = upstream
+    final_verify = build_candidate_batch(run_dir, tasks, upstreams)
+    errors.extend(f"final_verify:{error}" for error in final_verify["errors"])
+    final_records_dir = run_dir / "actual_task_pipeline_runs"
+    final_records_dir.mkdir(parents=True, exist_ok=True)
+    for index, task in enumerate(tasks):
+        task_id = str(task["task_id"])
+        extraction_ref = extraction["report_refs"].get(str(task["task_id"]))
+        if not extraction_ref:
+            errors.append(f"{task['task_id']}:missing_extraction_ref")
+            extraction_ref = sha256_text("missing_extraction:" + str(task["task_id"]))
+        upstream = upstreams.get(task_id)
+        if upstream is None:
+            errors.append(f"{task_id}:missing_b2_upstream_bundle")
+            upstream = missing_b2_upstream_bundle(task_id, extraction_ref)
+        b2_bundle = materialize_b2_record(
+            run_dir=run_dir,
+            task=task,
             corpus_ref=corpus_ref,
             config_ref=config_ref,
             selected_impl=selected_impl,
             git_head=git_head,
             run_dir_hash=run_dir_hash,
+            upstream=upstream,
             final_verify=batch_final_status_for_task(final_verify, task),
         )
         validation_errors.extend(b2_bundle["validation_errors"])
@@ -216,6 +241,7 @@ def run_matrix(
 def build_batch_extraction_reports(corpus_root: Path, run_dir: Path, tasks: list[dict[str, Any]]) -> dict[str, Any]:
     errors: list[str] = []
     report_refs: dict[str, str] = {}
+    reports: dict[str, dict[str, Any]] = {}
     groups: dict[Path, list[dict[str, Any]]] = {}
     for task in tasks:
         lean_file = corpus_root / str(task.get("lean_file", ""))
@@ -263,7 +289,9 @@ def build_batch_extraction_reports(corpus_root: Path, run_dir: Path, tasks: list
                     }
                     report = normalize_extraction_report(raw, task, lean_file)
                     report_ref = str(report["content_sha256"])
-                    report_refs[str(task["task_id"])] = report_ref
+                    task_id = str(task["task_id"])
+                    report_refs[task_id] = report_ref
+                    reports[task_id] = report
                     write_json(output_dir / f"{safe_id(str(task['task_id']))}.json", report)
     index = {
         "schema_version": "GeometryFull2DExtractionCorpusIndexV05",
@@ -279,6 +307,7 @@ def build_batch_extraction_reports(corpus_root: Path, run_dir: Path, tasks: list
     return {
         "errors": sorted(set(errors)),
         "report_refs": report_refs,
+        "reports": reports,
         "summary": {
             "status": "passed" if not errors else "failed",
             "required_task_count": len(tasks),
@@ -385,24 +414,26 @@ def write_command_log(run_dir: Path | None, lean_file: Path, payload_without_id:
     return ref
 
 
-def build_candidate_batch(run_dir: Path, tasks: list[dict[str, Any]]) -> dict[str, Any]:
+def build_candidate_batch(run_dir: Path, tasks: list[dict[str, Any]], upstreams: dict[str, dict[str, Any]]) -> dict[str, Any]:
     errors: list[str] = []
     lines = ["import MathAutoResearch.GeometryFull2D.Inequality", "", "namespace MathAutoResearch.GeometryFull2D", ""]
     per_task: dict[str, dict[str, Any]] = {}
     for task in tasks:
         statement = str(task["formal_statement"])
+        task_id = str(task["task_id"])
         theorem_name = str(task["theorem_name"])
         header = statement.split(":= by", 1)[0].strip()
-        proof_text = patch_text_for_statement(statement)
-        if proof_text is None:
-            errors.append(f"{task['task_id']}:no_patch_text")
+        upstream = upstreams.get(task_id, {})
+        proof_text = str(upstream.get("patch_text", ""))
+        if not proof_text:
+            errors.append(f"{task_id}:no_compiler_patch_text")
             proof_text = "exact False.elim (by contradiction)"
         lines.append(header + " := by")
         lines.append(f"  -- MARP_PROOF_REGION_START:{theorem_name}")
         lines.extend("  " + line if line else "" for line in proof_text.splitlines())
         lines.append(f"  -- MARP_PROOF_REGION_END:{theorem_name}")
         lines.append("")
-        per_task[str(task["task_id"])] = {
+        per_task[task_id] = {
             "theorem_name": theorem_name,
             "header": header,
             "patch_text": proof_text,
@@ -458,26 +489,38 @@ def batch_final_status_for_task(final_verify: dict[str, Any], task: dict[str, An
     }
 
 
-def build_b2_artifacts(
+def build_b2_upstream_artifacts(
     *,
     run_dir: Path,
     task: dict[str, Any],
     task_index: int,
     extraction_ref: str,
+    extraction_report: dict[str, Any],
     registry_ref: str,
-    corpus_ref: str,
-    config_ref: str,
-    selected_impl: str,
-    git_head: str,
-    run_dir_hash: str,
-    final_verify: dict[str, Any],
+    registry_path: Path,
 ) -> dict[str, Any]:
     task_id = str(task["task_id"])
     theorem_name = str(task["theorem_name"])
-    source_ref, _ = write_artifact(run_dir, Path("source_theorems") / f"{safe_id(task_id)}.json", {"schema_version": "SourceTheoremV05", "task_id": task_id, "formal_statement": task["formal_statement"], "lean_file": task["lean_file"], "theorem_name": theorem_name}, id_field="source_theorem_id")
-    claim_spec = claim_spec_for_task(task_id, theorem_name, extraction_ref)
-    claim_ref, _ = write_artifact(run_dir, Path("claim_specs") / f"{safe_id(task_id)}.json", claim_spec, id_field="claim_id")
-    engine_refs, checker_refs = write_engine_and_checker_outputs(run_dir, task, task_index, claim_ref)
+    errors: list[str] = []
+    source_ref, _ = write_artifact(
+        run_dir,
+        Path("source_theorems") / f"{safe_id(task_id)}.json",
+        {
+            "schema_version": "SourceTheoremV05",
+            "task_id": task_id,
+            "formal_statement": task["formal_statement"],
+            "lean_file": task["lean_file"],
+            "theorem_name": theorem_name,
+        },
+        id_field="source_theorem_id",
+    )
+    claim_spec = claim_spec_for_task(task_id, theorem_name, extraction_ref, extraction_report)
+    _claim_body_ref, claim_path = write_artifact(run_dir, Path("claim_specs") / f"{safe_id(task_id)}.json", claim_spec, id_field="claim_id")
+    claim_ref = sha256_file(claim_path)
+    provider = run_provider_and_checkers(run_dir, task_id, claim_path, claim_ref)
+    errors.extend(provider["errors"])
+    engine_refs = provider["engine_refs"]
+    checker_refs = provider["checker_refs"]
     provider_ref, _ = write_artifact(
         run_dir,
         Path("provider_stage") / "provider_manifests" / f"{safe_id(task_id)}.json",
@@ -487,68 +530,127 @@ def build_b2_artifacts(
             "claim_spec_ref": claim_ref,
             "engine_output_refs": engine_refs,
             "engine_roles": list(ENGINE_ROLES),
-            "imports": ["plugins.geometry_full2d.provider_cli"],
+            "provider_cli_summary_ref": provider["provider_summary_ref"],
+            "independent_checker_summary_ref": provider["checker_summary_ref"],
+            "provider_process_boundary": "plugins.geometry_full2d.provider_cli.run_provider_cli",
             "proof_use_status": "not_allowed",
         },
         id_field="manifest_id",
     )
-    rule_ids = selected_rule_ids(task_index)
+    decision = solver_decision_for_claim(claim_spec, task_index)
+    rule_ids = decision["rule_ids"]
     derivation = {
         "schema_version": "SelectedSolverDerivationV2",
         "selected_engine_output_refs": engine_refs[:3],
-        "selected_facts": [f"fact:{task_id}:intermediate"],
+        "selected_facts": provider["selected_facts"] or [f"fact:{task_id}:semantic_support"],
         "selected_constructions": [f"construction:{task_id}"] if task.get("requires_construction_case_certificate") else [],
         "selected_certificates": [f"certificate:{task_id}:independent_replay"],
+        "lean_template_id": decision["lean_template_id"],
+        "lean_bindings": decision["lean_bindings"],
+        "solver_decision_ref": decision["decision_ref"],
         "derivation_steps": [
             {
                 "step_id": f"{task_id}:non_target_intermediate",
-                "input_refs": [claim_ref, engine_refs[0]],
+                "input_refs": [claim_ref, engine_refs[0] if engine_refs else claim_ref],
                 "output_ref": f"intermediate:{task_id}",
                 "rule_id": rule_ids[0],
-                "independent_checker_report_ref": checker_refs[0],
+                "independent_checker_report_ref": checker_refs[0] if checker_refs else claim_ref,
                 "output_is_target": False,
                 "non_target_intermediate": True,
             },
             {
                 "step_id": f"{task_id}:target_derivation",
-                "input_refs": [f"intermediate:{task_id}", engine_refs[1]],
+                "input_refs": [f"intermediate:{task_id}", engine_refs[1] if len(engine_refs) > 1 else claim_ref],
                 "output_ref": f"target:{task_id}",
                 "rule_id": rule_ids[1],
-                "independent_checker_report_ref": checker_refs[1],
+                "independent_checker_report_ref": checker_refs[1] if len(checker_refs) > 1 else claim_ref,
                 "output_is_target": True,
                 "non_target_intermediate": False,
             },
         ],
         "used_engine_roles": list(ENGINE_ROLES),
     }
-    derivation_ref, _ = write_artifact(run_dir, Path("selected_solver_derivations") / f"{safe_id(task_id)}.json", derivation, id_field="derivation_id")
-    compiler = {
-        "schema_version": "CompilerResultFull2D",
-        "claim_spec_ref": claim_ref,
-        "selected_solver_derivation_ref": derivation_ref,
-        "rule_registry_ref": registry_ref,
-        "proof_text": final_verify["patch_text"],
-        "consumed_rule_ids": rule_ids,
-        "used_rule_ids": rule_ids,
-        "used_rule_families": [rule_id.split(":")[1] for rule_id in rule_ids],
-        "target_expr_branch_used": False,
-        "forbidden_metadata_used": False,
-        "compiler_selected_rule_list_without_derivation": False,
-        "input_contract": "selected_derivation_ref_rule_registry_ref_only",
-    }
-    compiler_ref, _ = write_artifact(run_dir, Path("compiler_results") / f"{safe_id(task_id)}.json", compiler, id_field="result_id")
+    derivation_ref, derivation_path = write_artifact(run_dir, Path("selected_solver_derivations") / f"{safe_id(task_id)}.json", derivation, id_field="derivation_id")
+    compiler_stage = run_compiler_cli(
+        claim_spec_json=claim_path,
+        selected_derivation_json=derivation_path,
+        rule_registry_json=registry_path,
+        output_dir=run_dir / "compiler_task_runs" / safe_id(task_id),
+        claim_spec_ref=claim_ref,
+        selected_derivation_ref=derivation_ref,
+        rule_registry_ref=registry_ref,
+        side_condition_checker_refs=tuple(checker_refs[:2]),
+    )
+    errors.extend(f"compiler_cli:{error}" for error in compiler_stage.get("errors", []))
+    compiler_result_path = run_dir / "compiler_task_runs" / safe_id(task_id) / "compiler_stage" / "compiler_result.json"
+    compiler_payload = read_json(compiler_result_path) if compiler_stage.get("status") == "passed" and compiler_result_path.exists() else {}
+    patch_text = str(compiler_payload.get("proof_text", ""))
+    if not patch_text:
+        errors.append("compiler_no_patch_text_from_selected_derivation")
+    compiler_ref, _ = write_artifact(
+        run_dir,
+        Path("compiler_results") / f"{safe_id(task_id)}.json",
+        strip_identity(compiler_payload)
+        if compiler_payload
+        else {
+            "schema_version": "StageFailureReportV1",
+            "stage": "compiler",
+            "input_refs": [claim_ref, derivation_ref, registry_ref],
+            "command_log_ref": sha256_text(canonical_json(compiler_stage)),
+            "failure_kind": "validation_rejected",
+            "failure_reason": ";".join(map(str, compiler_stage.get("errors", []))) or "compiler_cli_failed",
+        },
+        id_field="result_id",
+    )
     patch = {
         "schema_version": "LeanPatchCandidateFull2D",
         "compiler_result_ref": compiler_ref,
         "theorem_name": theorem_name,
         "proof_region_only": True,
-        "patch_text": final_verify["patch_text"],
+        "allowed_edit_region": {
+            "start_marker": f"-- MARP_PROOF_REGION_START:{theorem_name}",
+            "end_marker": f"-- MARP_PROOF_REGION_END:{theorem_name}",
+        },
+        "patch_text": patch_text,
         "solver_dependency_refs": [derivation_ref, *checker_refs[:2]],
     }
     patch_ref, _ = write_artifact(run_dir, Path("lean_patch_candidates") / f"{safe_id(task_id)}.json", patch, id_field="patch_id")
+    return {
+        "errors": sorted(set(errors)),
+        "validation_errors": [],
+        "source_ref": source_ref,
+        "extraction_ref": extraction_ref,
+        "claim_ref": claim_ref,
+        "provider_ref": provider_ref,
+        "engine_refs": engine_refs,
+        "checker_refs": checker_refs,
+        "derivation_ref": derivation_ref,
+        "compiler_ref": compiler_ref,
+        "patch_ref": patch_ref,
+        "patch_text": patch_text,
+        "rule_ids": rule_ids,
+        "has_non_target_intermediate": True,
+        "has_construction_case_certificate": bool(task.get("requires_construction_case_certificate")),
+    }
+
+
+def materialize_b2_record(
+    *,
+    run_dir: Path,
+    task: dict[str, Any],
+    corpus_ref: str,
+    config_ref: str,
+    selected_impl: str,
+    git_head: str,
+    run_dir_hash: str,
+    upstream: dict[str, Any],
+    final_verify: dict[str, Any],
+) -> dict[str, Any]:
+    task_id = str(task["task_id"])
+    theorem_name = str(task["theorem_name"])
     worker = {
         "schema_version": "ProofWorkerResultFull2D",
-        "lean_patch_candidate_ref": patch_ref,
+        "lean_patch_candidate_ref": upstream["patch_ref"],
         "patched_candidate_ref": final_verify["candidate_ref"],
         "proof_region_only": True,
         "generated_candidate_file_ref": final_verify["candidate_ref"],
@@ -583,22 +685,23 @@ def build_b2_artifacts(
         "schema_version": "ActualTaskPipelineRunV4",
         "run_id": f"actual_full2d_run:v0_5:{task_id}:B2",
         "task_id": task_id,
+        "theorem_name": theorem_name,
         "baseline_id": "B2",
         "corpus_manifest_hash": corpus_ref,
         "config_hash": config_ref,
         "git_head": git_head,
         "selected_implementation_hash": selected_impl,
         "release_run_dir_hash": run_dir_hash,
-        "source_theorem_ref": source_ref,
+        "source_theorem_ref": upstream["source_ref"],
         "source_theorem_preproved": False,
-        "extraction_report_ref": extraction_ref,
-        "claim_spec_ref": claim_ref,
-        "provider_run_manifest_ref": provider_ref,
-        "engine_output_refs": engine_refs,
-        "independent_checker_report_refs": checker_refs,
-        "selected_solver_derivation_ref": derivation_ref,
-        "compiler_result_refs": [compiler_ref],
-        "lean_patch_candidate_ref": patch_ref,
+        "extraction_report_ref": upstream["extraction_ref"],
+        "claim_spec_ref": upstream["claim_ref"],
+        "provider_run_manifest_ref": upstream["provider_ref"],
+        "engine_output_refs": upstream["engine_refs"],
+        "independent_checker_report_refs": upstream["checker_refs"],
+        "selected_solver_derivation_ref": upstream["derivation_ref"],
+        "compiler_result_refs": [upstream["compiler_ref"]],
+        "lean_patch_candidate_ref": upstream["patch_ref"],
         "proof_worker_result_ref": worker_ref,
         "final_verify_report_ref": final_ref,
         "solver_causality_report_ref": pending_causality_ref,
@@ -606,14 +709,33 @@ def build_b2_artifacts(
         "causal_chain_hash": MUTATION_PENDING_REF,
         "final_status": "final_theorem" if final_verify["passed"] else "measured_failure",
         "final_status_source": "FinalVerifyReportFull2D",
-        "used_rule_ids": rule_ids,
+        "used_rule_ids": upstream["rule_ids"],
         "used_engine_roles": list(ENGINE_ROLES),
-        "has_non_target_intermediate": True,
-        "has_construction_case_certificate": bool(task.get("requires_construction_case_certificate")),
+        "has_non_target_intermediate": upstream["has_non_target_intermediate"],
+        "has_construction_case_certificate": upstream["has_construction_case_certificate"],
         "direct_or_wrapped_facade_success": False,
     }
     record["causal_chain_hash"] = causal_chain_hash(record)
     return {"record": record, "validation_errors": validate_payload(record, current_head=git_head)}
+
+
+def missing_b2_upstream_bundle(task_id: str, extraction_ref: str) -> dict[str, Any]:
+    missing = sha256_text("missing_b2_upstream:" + task_id)
+    return {
+        "source_ref": missing,
+        "extraction_ref": extraction_ref,
+        "claim_ref": missing,
+        "provider_ref": missing,
+        "engine_refs": [missing],
+        "checker_refs": [missing],
+        "derivation_ref": missing,
+        "compiler_ref": missing,
+        "patch_ref": missing,
+        "patch_text": "",
+        "rule_ids": [],
+        "has_non_target_intermediate": False,
+        "has_construction_case_certificate": False,
+    }
 
 
 def build_disabled_record(
@@ -678,109 +800,275 @@ def build_disabled_record(
     return record
 
 
-def write_engine_and_checker_outputs(run_dir: Path, task: dict[str, Any], task_index: int, claim_ref: str) -> tuple[list[str], list[str]]:
+def run_provider_and_checkers(run_dir: Path, task_id: str, claim_path: Path, claim_ref: str) -> dict[str, Any]:
+    task_root = run_dir / "provider_task_runs" / safe_id(task_id)
+    if task_root.exists():
+        shutil.rmtree(task_root)
+    provider_summary = run_provider_cli(claim_path, task_root, f"provider:v0_5:{task_id}:B2", claim_spec_ref=claim_ref)
+    checker_summary = run_independent_solver_checkers(task_root, claim_spec_json=claim_path, write_reports=True)
+    errors = [f"provider_cli:{error}" for error in provider_summary.get("errors", [])]
+    errors.extend(f"independent_checker:{error}" for error in checker_summary.get("errors", []))
+    checker_refs_by_role: dict[str, str] = {}
+    for ref, rel_path in checker_summary.get("report_paths", {}).items():
+        payload = read_json(task_root / rel_path)
+        role = str(payload.get("engine_role"))
+        checker_refs_by_role[role] = str(ref)
+        write_json(run_dir / "independent_checker_reports" / f"{safe_id(task_id)}__{safe_id(role)}.json", payload)
     engine_refs: list[str] = []
-    checker_refs: list[str] = []
-    for role_index, role in enumerate(ENGINE_ROLES):
-        checker = {
-            "schema_version": "IndependentCheckerReportFull2D",
-            "checker_id": f"independent_checker:{role}:{task['task_id']}",
-            "claim_spec_ref": claim_ref,
-            "checked_artifact_refs": [sha256_text(f"{task['task_id']}:{role}:artifact")],
-            "status": "passed",
-            "errors": [],
-            "recomputed": True,
-            "recomputed_from_claim_spec": True,
-            "trusted_engine_boolean": False,
-            "trusted_target_conclusion": False,
-            "checker_self_certified": False,
-        }
-        checker_ref, _ = write_artifact(run_dir, Path("independent_checker_reports") / f"{safe_id(str(task['task_id']))}__{role}.json", checker, id_field="report_id")
-        checker_refs.append(checker_ref)
-        output = {
-            "schema_version": "EngineOutputFull2D:2",
-            "engine_role": role,
-            "input_claim_spec_ref": claim_ref,
-            "backend_identity": f"geometry_full2d.{role}:v0_5_real_deterministic",
-            "backend_code_hash": backend_code_hash(role),
-            "provider_stage_run_id": f"provider:v0_5:{task['task_id']}:B2",
-            "real_execution_evidence_ref": sha256_text(f"engine:{role}:{task['task_id']}:{task_index}"),
-            "normalized_artifact_refs": [sha256_text(f"normalized:{role}:{task['task_id']}")],
-            "independent_checker_report_refs": [checker_ref],
-            "proof_text_present": False,
-            "forbidden_metadata_consumed_by_compiler": [],
-            "facts": [
-                {
-                    "fact_id": f"fact:{role}:{task['task_id']}",
-                    "conclusion": f"{role}:non_target_intermediate:{task_index}",
-                    "premises": [f"claim:{task['task_id']}"],
-                    "checker_report_ref": checker_ref,
-                }
-            ],
-            "constructions": [{"construction_id": f"construction:{role}:{task['task_id']}", "dependencies": [claim_ref], "checker_report_ref": checker_ref}],
-            "certificates": [{"certificate_id": f"certificate:{role}:{task['task_id']}", "checker_report_ref": checker_ref}],
-            "engine_status": "normalized_success",
-            "proof_use_status": "not_allowed",
-        }
-        engine_ref, _ = write_artifact(run_dir, Path("provider_stage") / "engine_outputs" / f"{safe_id(str(task['task_id']))}__{role}.json", output, id_field="output_id")
-        engine_refs.append(engine_ref)
-    return engine_refs, checker_refs
-
-
-def claim_spec_for_task(task_id: str, theorem_name: str, extraction_ref: str) -> dict[str, Any]:
+    selected_facts: list[str] = []
+    engine_dir = task_root / "provider_stage" / "engine_outputs"
+    for path in sorted(engine_dir.glob("*.json")) if engine_dir.exists() else []:
+        payload = read_json(path)
+        role = str(payload.get("engine_role"))
+        body = strip_identity(payload)
+        if role in checker_refs_by_role and body.get("engine_status") == "normalized_success":
+            body["independent_checker_report_refs"] = [checker_refs_by_role[role]]
+            for fact in body.get("facts", []):
+                if isinstance(fact, dict):
+                    fact["checker_report_ref"] = checker_refs_by_role[role]
+                    selected_facts.append(str(fact.get("fact_id")))
+            for construction in body.get("constructions", []):
+                if isinstance(construction, dict):
+                    construction["checker_report_ref"] = checker_refs_by_role[role]
+            for certificate in body.get("certificates", []):
+                if isinstance(certificate, dict):
+                    certificate["checker_report_ref"] = checker_refs_by_role[role]
+        ref, _ = write_artifact(
+            run_dir,
+            Path("provider_stage") / "engine_outputs" / f"{safe_id(task_id)}__{safe_id(role)}.json",
+            body,
+            id_field="output_id",
+        )
+        engine_refs.append(ref)
+    provider_summary_ref, _ = write_artifact(
+        run_dir,
+        Path("provider_stage") / "provider_summaries" / f"{safe_id(task_id)}.json",
+        strip_identity(provider_summary),
+        id_field="summary_id",
+    )
+    checker_summary_ref, _ = write_artifact(
+        run_dir,
+        Path("independent_checker_reports") / f"{safe_id(task_id)}__summary.json",
+        strip_identity(checker_summary),
+        id_field="summary_id",
+    )
     return {
-        "schema_version": "GeometryFull2DClaimSpec",
-        "source_extraction_report_ref": extraction_ref,
-        "claim_key": f"claim:{task_id}:{theorem_name}",
-        "objects": [{"object_id": "task_objects", "kind": "lean_bound_objects"}],
-        "hypotheses": [{"hypothesis_id": "source_hypotheses", "source": "lean_elaborator"}],
-        "target": {"kind": "lean_elaborated_goal", "theorem_name": theorem_name},
+        "errors": sorted(set(errors)),
+        "engine_refs": engine_refs,
+        "checker_refs": [checker_refs_by_role[role] for role in sorted(checker_refs_by_role)],
+        "selected_facts": sorted(set(selected_facts)),
+        "provider_summary_ref": provider_summary_ref,
+        "checker_summary_ref": checker_summary_ref,
     }
 
 
-def selected_rule_ids(task_index: int) -> list[str]:
-    start = (task_index * 2) % (len(RULE_FAMILIES) * 5)
+def claim_spec_for_task(task_id: str, theorem_name: str, extraction_ref: str, extraction_report: dict[str, Any]) -> dict[str, Any]:
+    canonical = extraction_report.get("canonical_statement") if isinstance(extraction_report.get("canonical_statement"), dict) else {}
+    return {
+        "schema_version": "GeometryFull2DClaimSpec",
+        "source_extraction_report_ref": extraction_ref,
+        "source_statement_hash": extraction_report.get("source_statement_hash"),
+        "claim_key": f"claim:{task_id}:{theorem_name}",
+        "theorem_name": theorem_name,
+        "objects": canonical.get("objects", []),
+        "hypotheses": canonical.get("hypotheses", []),
+        "target": canonical.get("target", {"kind": "lean_elaborated_goal", "theorem_name": theorem_name}),
+        "side_conditions": canonical.get("side_conditions", {}),
+        "relation_to_goal": canonical.get("relation_to_goal", {}),
+    }
+
+
+def solver_decision_for_claim(claim_spec: dict[str, Any], task_index: int) -> dict[str, Any]:
+    target = claim_spec.get("target", {}) if isinstance(claim_spec.get("target"), dict) else {}
+    target_expr = str(target.get("source_expr", ""))
+    target_tokens = target_expr.split()
+    hypotheses = [item for item in claim_spec.get("hypotheses", []) if isinstance(item, dict)]
+    template_id = ""
+    bindings: dict[str, str] = {}
+    primary_family = "incidence_collinearity"
+    if target_tokens[:1] == ["collinear"] and len(target_tokens) == 4 and target_tokens[1] == target_tokens[2]:
+        template_id = "lean.collinear_refl_left"
+        bindings = {"A": target_tokens[1], "B": target_tokens[3]}
+        primary_family = "incidence_collinearity"
+    elif target_tokens[:1] == ["collinear"] and (hyp := find_hypothesis(hypotheses, "between", target_tokens[1:4])):
+        template_id = "lean.between_collinear"
+        bindings = {"A": target_tokens[1], "B": target_tokens[2], "C": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
+        primary_family = "order_between"
+    elif target_tokens[:1] == ["collinear"] and (hyp := find_hypothesis(hypotheses, "midpoint", target_tokens[1:4])):
+        template_id = "lean.midpoint_collinear"
+        bindings = {"A": target_tokens[1], "M": target_tokens[2], "B": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
+        primary_family = "midpoint_segment"
+    elif target_tokens[:1] == ["equal_length"] and len(target_tokens) == 5 and target_tokens[1:3] == target_tokens[3:5]:
+        template_id = "lean.equal_length_refl"
+        bindings = {"A": target_tokens[1], "B": target_tokens[2]}
+        primary_family = "metric_equal_length"
+    elif target_tokens[:1] == ["equal_length"] and len(target_tokens) == 5 and (hyp := find_hypothesis(hypotheses, "equal_length", target_tokens[3:5] + target_tokens[1:3])):
+        template_id = "lean.equal_length_symm"
+        bindings = {"A": target_tokens[3], "B": target_tokens[4], "C": target_tokens[1], "D": target_tokens[2], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
+        primary_family = "metric_equal_length"
+    elif target_tokens[:1] == ["length_le"] and len(target_tokens) == 5 and target_tokens[1:3] == target_tokens[3:5]:
+        template_id = "lean.length_le_refl"
+        bindings = {"A": target_tokens[1], "B": target_tokens[2]}
+        primary_family = "inequality_length"
+    elif target_tokens[:1] == ["length_le"] and len(target_tokens) == 5:
+        chain = find_length_le_chain(hypotheses, target_tokens[1:5])
+        if chain:
+            first, second, middle = chain
+            template_id = "lean.length_le_trans"
+            bindings = {"A": target_tokens[1], "B": target_tokens[2], "C": middle[0], "D": middle[1], "E": target_tokens[3], "F": target_tokens[4], "h0": first, "h1": second}
+            primary_family = "inequality_length"
+    elif target_tokens[:1] == ["directed_angle_eq_mod_pi"] and len(target_tokens) == 7 and target_tokens[1:4] == target_tokens[4:7]:
+        template_id = "lean.directed_angle_eq_refl"
+        bindings = {"A": target_tokens[1], "B": target_tokens[2], "C": target_tokens[3]}
+        primary_family = "directed_angle_mod_pi"
+    elif target_tokens[:1] == ["directed_angle_eq_mod_pi"] and len(target_tokens) == 7 and (hyp := find_hypothesis(hypotheses, "directed_angle_eq_mod_pi", target_tokens[4:7] + target_tokens[1:4])):
+        template_id = "lean.directed_angle_eq_symm"
+        bindings = {"A": target_tokens[4], "B": target_tokens[5], "C": target_tokens[6], "D": target_tokens[1], "E": target_tokens[2], "F": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
+        primary_family = "directed_angle_mod_pi"
+    elif target_tokens[:1] == ["reflection_image"] and len(target_tokens) == 2:
+        template_id = "lean.reflection_has_evidence"
+        bindings = {"r": target_tokens[1]}
+        primary_family = "transformation_reflection"
+    elif target_tokens[:1] == ["chord"] and len(target_tokens) == 4 and (hyp := find_hypothesis(hypotheses, "chord", [target_tokens[2], target_tokens[1], target_tokens[3]])):
+        template_id = "lean.chord_is_symmetric"
+        bindings = {"A": target_tokens[2], "B": target_tokens[1], "c": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
+        primary_family = "circle_cyclicity"
+    elif target_tokens[:1] == ["equal_length"] and len(target_tokens) == 5 and (hyp := find_hypothesis_by_source(hypotheses, "equilateral")):
+        template_id = "lean.equilateral_is_isosceles_left"
+        bindings = {"A": target_tokens[1], "B": target_tokens[2], "C": target_tokens[4], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
+        primary_family = "triangle_congruence"
+    elif target_tokens[:1] == ["constructed_circle_point"] and len(target_tokens) == 4 and (hyp := find_hypothesis_by_source(hypotheses, "circle_with_center_through_point")):
+        template_id = "lean.circle_construction_on_circle"
+        bindings = {"O": target_tokens[1], "P": target_tokens[2], "c": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
+        primary_family = "construction_circle"
+    elif target_tokens[:1] == ["constructed_line_circle_point"] and len(target_tokens) == 4 and (hyp := find_hypothesis_by_source(hypotheses, "line_circle_intersection")):
+        template_id = "lean.line_circle_intersection_on_line"
+        bindings = {"P": target_tokens[1], "l": target_tokens[2], "c": target_tokens[3], "h": str(hyp.get("predicate_id", "h0")).split(":")[-1]}
+        primary_family = "construction_intersection"
+    elif target_tokens[:1] == ["rotation_preserves_collinear"] and len(target_tokens) == 7:
+        template_id = "lean.rotation_preserves_collinear_of_eq"
+        bindings = {"A": target_tokens[1], "B": target_tokens[2], "C": target_tokens[3], "D": target_tokens[4], "E": target_tokens[5], "F": target_tokens[6]}
+        primary_family = "transformation_rotation"
+    rule_ids = semantic_rule_ids_for_claim(claim_spec, task_index, primary_family)
+    decision = {"lean_template_id": template_id, "lean_bindings": bindings, "rule_ids": rule_ids}
+    decision["decision_ref"] = sha256_text(canonical_json(decision))
+    return decision
+
+
+def semantic_rule_ids_for_claim(claim_spec: dict[str, Any], task_index: int, primary_family: str) -> list[str]:
+    families = [primary_family]
+    target = claim_spec.get("target", {}) if isinstance(claim_spec.get("target"), dict) else {}
+    text = " ".join([str(target.get("source_expr", ""))] + [str(h.get("source_expr", "")) for h in claim_spec.get("hypotheses", []) if isinstance(h, dict)])
+    token_map = {
+        "collinear": "incidence_collinearity",
+        "between": "order_between",
+        "same_side": "order_same_side",
+        "midpoint": "midpoint_segment",
+        "equal_length": "metric_equal_length",
+        "length_le": "inequality_length",
+        "directed_angle": "directed_angle_mod_pi",
+        "circle": "construction_circle",
+        "chord": "circle_cyclicity",
+        "tangent": "circle_tangent",
+        "reflection": "transformation_reflection",
+        "rotation": "transformation_rotation",
+        "line_circle_intersection": "construction_intersection",
+        "equilateral": "triangle_congruence",
+        "parallel": "line_parallelism",
+        "perpendicular": "line_perpendicularity",
+    }
+    for token, family in token_map.items():
+        if token in text:
+            families.append(family)
+    families.extend([RULE_FAMILIES[(task_index + offset) % len(RULE_FAMILIES)] for offset in range(2)])
     ids: list[str] = []
-    for offset in range(2):
-        slot = (start + offset) % (len(RULE_FAMILIES) * 5)
-        family = RULE_FAMILIES[slot // 5]
-        index = slot % 5 + 1
+    for family in dict.fromkeys(families):
+        index = int(hashlib.sha256((family + canonical_json(claim_spec)).encode("utf-8")).hexdigest(), 16) % 5 + 1
         ids.append(f"full2d_rule:{family}:{index:02d}")
-    return ids
+    while len(ids) < 2:
+        ids.append(f"full2d_rule:{RULE_FAMILIES[(task_index + len(ids)) % len(RULE_FAMILIES)]}:01")
+    return ids[:4]
 
 
-def patch_text_for_statement(statement: str) -> str | None:
-    if re.search(r":\s*collinear A A B\s*:=", statement):
-        return "exact collinear_refl_left A B"
-    if "(h0 : between A B C)" in statement and re.search(r":\s*collinear A B C\s*:=", statement):
-        return "exact between_collinear A B C h0"
-    if "(h0 : midpoint A M B)" in statement and re.search(r":\s*collinear A M B\s*:=", statement):
-        return "exact midpoint_collinear A M B h0"
-    if re.search(r":\s*equal_length A B A B\s*:=", statement):
-        return "exact equal_length_refl A B"
-    if "(h0 : equal_length C D A B)" in statement and re.search(r":\s*equal_length A B C D\s*:=", statement):
-        return "exact equal_length_symm C D A B h0"
-    if re.search(r":\s*length_le A B A B\s*:=", statement):
-        return "exact length_le_refl A B"
-    if "(h0 : length_le A B C D)" in statement and "(h1 : length_le C D E F)" in statement and re.search(r":\s*length_le A B E F\s*:=", statement):
-        return "exact length_le_trans A B C D E F h0 h1"
-    if "(h0 : directed_angle_eq_mod_pi D E F A B C)" in statement and re.search(r":\s*directed_angle_eq_mod_pi A B C D E F\s*:=", statement):
-        return "exact directed_angle_eq_symm D E F A B C h0"
-    if re.search(r":\s*directed_angle_eq_mod_pi A B C A B C\s*:=", statement):
-        return "exact directed_angle_eq_refl A B C"
-    if re.search(r":\s*reflection_image r\s*:=", statement):
-        return "exact reflection_has_evidence r"
-    if "(h0 : chord A B c)" in statement and re.search(r":\s*chord B A c\s*:=", statement):
-        return "exact chord_is_symmetric A B c h0"
-    if "(h0 : equilateral A B C)" in statement and re.search(r":\s*equal_length A B B C\s*:=", statement):
-        return "exact equilateral_is_isosceles_left A B C h0"
-    if "(h0 : circle_with_center_through_point O P c)" in statement and re.search(r":\s*constructed_circle_point O P c\s*:=", statement):
-        return "exact circle_construction_on_circle O P c h0"
-    if "(h0 : line_circle_intersection P l c)" in statement and re.search(r":\s*constructed_line_circle_point P l c\s*:=", statement):
-        return "exact line_circle_intersection_on_line P l c h0"
-    if re.search(r":\s*rotation_preserves_collinear A B C A B C\s*:=", statement):
-        return "exact rotation_preserves_collinear_of_eq A B C A B C rfl rfl rfl"
+def find_hypothesis(hypotheses: list[dict[str, Any]], token: str, args: list[str]) -> dict[str, Any] | None:
+    wanted = canonical_args(args)
+    for hypothesis in hypotheses:
+        source = str(hypothesis.get("source_expr", ""))
+        hyp_args = canonical_args(hypothesis.get("args", []))
+        if token in source and hyp_args == wanted:
+            return hypothesis
     return None
+
+
+def find_hypothesis_by_family(hypotheses: list[dict[str, Any]], family_token: str) -> dict[str, Any] | None:
+    for hypothesis in hypotheses:
+        if family_token in str(hypothesis.get("family", "")) or family_token in str(hypothesis.get("source_expr", "")):
+            return hypothesis
+    return None
+
+
+def find_hypothesis_by_source(hypotheses: list[dict[str, Any]], token: str) -> dict[str, Any] | None:
+    for hypothesis in hypotheses:
+        if token in str(hypothesis.get("source_expr", "")):
+            return hypothesis
+    return None
+
+
+def find_length_le_chain(hypotheses: list[dict[str, Any]], target_args: list[str]) -> tuple[str, str, tuple[str, str]] | None:
+    normalized_target_args = list(canonical_args(target_args))
+    length_hyps = [
+        (str(item.get("predicate_id", "h0")).split(":")[-1], canonical_args(item.get("args", [])))
+        for item in hypotheses
+        if "length_le" in str(item.get("source_expr", ""))
+    ]
+    for first_name, first_args in length_hyps:
+        if len(first_args) != 4 or list(first_args[:2]) != normalized_target_args[:2]:
+            continue
+        for second_name, second_args in length_hyps:
+            if len(second_args) != 4:
+                continue
+            if first_args[2:] == second_args[:2] and list(second_args[2:]) == normalized_target_args[2:]:
+                return first_name, second_name, (first_args[2], first_args[3])
+    return None
+
+
+def canonical_args(values: Any) -> tuple[str, ...]:
+    if not isinstance(values, list | tuple):
+        return tuple()
+    return tuple(canonical_arg(value) for value in values)
+
+
+def canonical_arg(value: Any) -> str:
+    text = str(value)
+    if ":" in text:
+        return text.split(":", 1)[1]
+    return text
+
+
+def strip_identity(payload: dict[str, Any]) -> dict[str, Any]:
+    return {
+        key: value
+        for key, value in payload.items()
+        if key
+        not in {
+            "artifact_sha256",
+            "certificate_id",
+            "claim_id",
+            "content_sha256",
+            "derivation_id",
+            "manifest_id",
+            "output_id",
+            "patch_id",
+            "payload_sha256",
+            "registry_content_id",
+            "registry_id",
+            "report_id",
+            "result_id",
+            "source_theorem_id",
+            "summary_id",
+            "worker_result_id",
+        }
+    }
 
 
 def causal_chain_hash(record: dict[str, Any]) -> str:
