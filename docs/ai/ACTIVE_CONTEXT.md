@@ -44,7 +44,7 @@ The v0.4.5 closure is invalidated as a false-positive checker-passing scaffold. 
 Current task:
 
 ```text
-WP-03 — Schemas and artifact validators.
+WP-04 — Corpus system without proof coupling.
 ```
 
 Completed preparation:
@@ -65,9 +65,10 @@ Post-admission review loop found fixable Plan/Base/Acceptance alignment gaps and
 WP-01 red-case suite implemented with 19 executable red cases, each with static-code and artifact-run variants.
 WP-02 fail-closed acceptance harness, K coverage checker, and checker-suppression guard implemented.
 WP-02 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp01_wp02_redcase_acceptance_harness.md and wp02_release_acceptance_smoke.json.
+WP-03 schema validators implemented with positive/negative self-tests for required v0.5 artifact schemas.
 ```
 
-Implementation work for WP-03 and later has not started.
+Implementation work for WP-04 and later has not started.
 
 ## Non-Negotiables
 

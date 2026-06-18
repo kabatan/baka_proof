@@ -93,6 +93,7 @@ REQUIRED_CHECKER_COMMANDS: dict[str, list[str]] = {
     "red_cases": [sys.executable, "scripts/run_red_cases_v0_5.py", "--expect-failure"],
     "acceptance_coverage": [sys.executable, "scripts/check_acceptance_coverage_v0_5.py"],
     "no_checker_whitelist": [sys.executable, "scripts/check_no_checker_whitelist_v0_5.py"],
+    "schema_validators": [sys.executable, "scripts/check_schema_validators_v0_5.py", "--self-test"],
     "corpus_independence": [sys.executable, "scripts/check_corpus_independence_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5"],
     "corpus_statement_diversity": [sys.executable, "scripts/check_corpus_statement_diversity_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5"],
     "goal_preservation": [sys.executable, "scripts/check_goal_preservation_reports_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5"],
