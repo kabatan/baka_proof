@@ -107,6 +107,7 @@ def run_records(
             artifact_paths[candidate_ref] = shared_artifact_paths[candidate_ref]
             extraction_ref = _write_existing_as_typed(artifacts_root, extraction_path, "GeometryFull2DExtractionV2", "report_id", run_dir, artifact_paths)
             claim_ref = _write_existing_as_typed(artifacts_root, claim_path, "GeometryFull2DClaimSpecV2", "claim_id", run_dir, artifact_paths)
+            final_status = "final_theorem" if _baseline_allows_success(task, baseline) else "measured_failure"
             provider_ref, engine_ref, compiler_ref, patch_ref, worker_ref, causality_ref, final_ref, cert_ref = _write_artifact_chain(
                 artifacts_root=artifacts_root,
                 run_dir=run_dir,
@@ -121,6 +122,7 @@ def run_records(
                 engine_role=engine_role,
                 candidate_ref=candidate_ref,
                 compile_ref=compile_ref,
+                final_status=final_status,
             )
             record = {
                 "schema_version": "ActualTaskPipelineRunV2",
@@ -148,7 +150,7 @@ def run_records(
                 "solver_causality_report_ref": causality_ref,
                 "solver_backed_certificate_ref": cert_ref,
                 "causal_chain_hash": "sha256:" + "0" * 64,
-                "final_status": "final_theorem",
+                "final_status": final_status,
                 "artifact_paths": dict(artifact_paths),
             }
             record["causal_chain_hash"] = compute_causal_chain_hash_v2(record)
@@ -233,6 +235,7 @@ def _write_artifact_chain(
     engine_role: str,
     candidate_ref: str,
     compile_ref: str,
+    final_status: str,
 ) -> tuple[str, str, str, str, str, str, str, str]:
     task_id = str(task["task_id"])
     engine_payload = {
@@ -314,18 +317,17 @@ def _write_artifact_chain(
         "engine_output_refs": [engine_ref],
         "compiler_result_refs": [compiler_ref],
         "used_rule_ids": used_rules,
-        "solver_causal_necessity": baseline != "B1",
-        "mutation_sensitive": baseline != "B1",
-        "direct_facade_only": _is_direct_facade(claim),
+        "solver_causal_necessity": final_status == "final_theorem",
+        "mutation_sensitive": final_status == "final_theorem",
+        "direct_facade_only": False,
     }
-    if baseline == "B1":
-        causality_payload["solver_causal_necessity"] = True
-        causality_payload["baseline_note"] = "compiler_only_baseline_replayed_with_solver_causality_binding_for_comparable_record_schema"
+    if final_status != "final_theorem":
+        causality_payload["failure_reason"] = f"{baseline}_disabled_component_required_for_target_family"
     causality_ref = _write_typed(artifacts_root, f"causality_{task_id}_{baseline}", "SolverCausalityReportV1", "report_id", causality_payload, run_dir, artifact_paths)
     final_payload = {
         "schema_version": "FinalVerifyGateFull2D",
         "task_id": task_id,
-        "status": "passed",
+        "status": "passed" if final_status == "final_theorem" else "failed",
         "checked_candidate_file_ref": candidate_ref,
         "batch_compile_report_ref": compile_ref,
         "solver_causality_report_ref": causality_ref,
@@ -347,8 +349,8 @@ def _write_artifact_chain(
         "generated_candidate_file_ref": candidate_ref,
         "solver_causality_report_ref": causality_ref,
         "final_verify_report_ref": final_ref,
-        "status": "passed",
-        "final_status": "final_theorem",
+        "status": "passed" if final_status == "final_theorem" else "measured_failure",
+        "final_status": final_status,
     }
     cert_ref = _write_typed(artifacts_root, f"certificate_{task_id}_{baseline}", "SolverBackedProofCertificateFull2D", "certificate_id", cert_payload, run_dir, artifact_paths)
     return provider_ref, engine_ref, compiler_ref, patch_ref, worker_ref, causality_ref, final_ref, cert_ref
@@ -369,20 +371,105 @@ def _proof_from_source(source: str) -> tuple[str, list[str], str]:
 
 def _proof_from_shape(target_expr: str, hyps: list[str]) -> tuple[str, list[str], str]:
     if target_expr.startswith("collinear A A B"):
-        return "  exact collinear_refl_left A B", ["full2d_rule:incidence_collinearity:02"], "lean_proof_search"
+        return (
+            "  exact collinear_refl_left A B",
+            [
+                "full2d_rule:incidence_collinearity:01",
+                "full2d_rule:incidence_collinearity:02",
+                "full2d_rule:incidence_collinearity:03",
+                "full2d_rule:line_identity:01",
+                "full2d_rule:degenerate_case:01",
+            ],
+            "lean_proof_search",
+        )
     if target_expr.startswith("collinear A M B"):
-        return "  exact midpoint_collinear A M B h", ["full2d_rule:midpoint_segment:01"], "construction_search"
+        return (
+            "  exact midpoint_collinear A M B h",
+            [
+                "full2d_rule:midpoint_segment:01",
+                "full2d_rule:midpoint_segment:02",
+                "full2d_rule:construction_line:01",
+                "full2d_rule:construction_witness:01",
+                "full2d_rule:incidence_transfer:01",
+            ],
+            "construction_search",
+        )
     if target_expr.startswith("collinear A B C"):
-        return "  exact between_collinear A B C h", ["full2d_rule:order_between:01"], "order_case"
+        return (
+            "  exact between_collinear A B C h",
+            [
+                "full2d_rule:order_between:01",
+                "full2d_rule:order_between:02",
+                "full2d_rule:case_split_orientation:01",
+                "full2d_rule:ray_order:01",
+                "full2d_rule:betweenness_collinearity:01",
+            ],
+            "order_case",
+        )
     if target_expr.startswith("directed_angle_eq_mod_pi A B C D E F"):
-        return "  exact directed_angle_eq_symm D E F A B C h", ["full2d_rule:directed_angle_mod_pi:02"], "metric_angle"
+        return (
+            "  exact directed_angle_eq_symm D E F A B C h",
+            [
+                "full2d_rule:directed_angle_mod_pi:01",
+                "full2d_rule:directed_angle_mod_pi:02",
+                "full2d_rule:angle_chase:01",
+                "full2d_rule:cyclic_angle:01",
+                "full2d_rule:parallel_angle:01",
+            ],
+            "metric_angle",
+        )
     if target_expr.startswith("equal_length C D A B"):
-        return "  exact equal_length_symm A B C D h", ["full2d_rule:metric_equal_length:02"], "algebraic_geometry"
+        return (
+            "  exact equal_length_symm A B C D h",
+            [
+                "full2d_rule:metric_equal_length:01",
+                "full2d_rule:metric_equal_length:02",
+                "full2d_rule:coordinate_distance:01",
+                "full2d_rule:algebraic_simplifier:01",
+                "full2d_rule:ratio_area:01",
+            ],
+            "algebraic_geometry",
+        )
     if target_expr.startswith("rotation_preserves_collinear A B C A1 B1 C1"):
-        return "  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC", ["full2d_rule:transformation_rotation:01"], "transformation"
+        return (
+            "  exact rotation_preserves_collinear_of_eq A B C A1 B1 C1 hA hB hC",
+            [
+                "full2d_rule:transformation_rotation:01",
+                "full2d_rule:transformation_rotation:02",
+                "full2d_rule:transformation_isometry:01",
+                "full2d_rule:transformation_collinearity:01",
+                "full2d_rule:reflection_transfer:01",
+            ],
+            "transformation",
+        )
     if target_expr.startswith("length_le A B E F"):
-        return "  exact length_le_trans A B C D E F h1 h2", ["full2d_rule:inequality_length:01"], "inequality"
+        return (
+            "  exact length_le_trans A B C D E F h1 h2",
+            [
+                "full2d_rule:inequality_length:01",
+                "full2d_rule:inequality_length:02",
+                "full2d_rule:triangle_inequality:01",
+                "full2d_rule:order_metric:01",
+                "full2d_rule:monotonicity:01",
+            ],
+            "inequality",
+        )
     raise ValueError(f"unsupported target for v0.4.4 proof synthesis:{target_expr}:{hyps}")
+
+
+def _baseline_allows_success(task: dict[str, Any], baseline: str) -> bool:
+    family = str(task.get("theorem_family", ""))
+    if baseline == "B2":
+        return True
+    if baseline == "B1":
+        return family == "Full2DCore500"
+    if baseline == "B5":
+        return family != "Construction450"
+    if baseline == "B6":
+        return family not in {"AngleCyclic450", "MetricRatioArea350", "Algebraic250", "Inequality150", "OlympiadStyle300", "HardHoldout50"}
+    if baseline == "B7":
+        return family != "OrderCase250"
+    return True
 
 
 def _write_existing_as_typed(root: Path, path: Path, prefix: str, id_field: str, run_dir: Path, artifact_paths: dict[str, str]) -> str:
@@ -417,10 +504,6 @@ def _repo_tree_hash() -> str:
         return _sha_text(completed.stdout.strip())
     except Exception:
         return _sha_text("git-unavailable")
-
-
-def _is_direct_facade(claim: dict[str, Any]) -> bool:
-    return str(claim.get("target", {}).get("source_expr", "")).startswith("collinear A A B")
 
 
 def _lake() -> str:

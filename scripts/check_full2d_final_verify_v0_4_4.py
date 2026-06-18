@@ -28,8 +28,12 @@ def main() -> int:
         if final is None:
             errors.append(f"{path.name}:missing_final_verify")
             continue
-        if final.get("status") != "passed":
-            errors.append(f"{path.name}:final_verify_not_passed")
+        if record.get("final_status") == "final_theorem":
+            if final.get("status") != "passed":
+                errors.append(f"{path.name}:final_verify_not_passed")
+        else:
+            if final.get("status") != "failed":
+                errors.append(f"{path.name}:measured_failure_final_verify_not_failed")
         if final.get("checked_candidate_file_ref") != record.get("generated_candidate_file_ref"):
             errors.append(f"{path.name}:final_candidate_ref_mismatch")
         if final.get("solver_causality_report_ref") != record.get("solver_causality_report_ref"):

@@ -32,8 +32,16 @@ def main() -> int:
         if causality is None:
             errors.append(f"{path.name}:missing_causality_report")
             continue
-        if causality.get("solver_causal_necessity") is not True:
-            errors.append(f"{path.name}:solver_causal_necessity_not_true")
+        if record.get("final_status") == "final_theorem":
+            if causality.get("solver_causal_necessity") is not True:
+                errors.append(f"{path.name}:solver_causal_necessity_not_true")
+            if causality.get("mutation_sensitive") is not True:
+                errors.append(f"{path.name}:mutation_sensitive_not_true")
+        else:
+            if causality.get("solver_causal_necessity") is not False:
+                errors.append(f"{path.name}:measured_failure_causality_not_false")
+            if not causality.get("failure_reason"):
+                errors.append(f"{path.name}:measured_failure_missing_reason")
         if causality.get("compiler_result_refs") != record.get("compiler_result_refs"):
             errors.append(f"{path.name}:causality_compiler_refs_mismatch")
         if not causality.get("used_rule_ids"):
