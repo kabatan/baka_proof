@@ -236,8 +236,16 @@ def _validate_independent_checker(payload: dict[str, Any], errors: list[str]) ->
     _require_ref_list(payload, "checked_artifact_refs", errors)
     if payload.get("recomputed") is not True:
         errors.append("checker_self_attested")
+    if payload.get("recomputed_from_claim_spec") is not True:
+        errors.append("checker_not_recomputed_from_claim_spec")
     if payload.get("trusted_engine_boolean") is True:
         errors.append("checker_trusts_engine_boolean")
+    if payload.get("trusted_target_conclusion") is True:
+        errors.append("checker_trusts_target_conclusion")
+    if payload.get("checker_self_certified") is True:
+        errors.append("self_certified_checker_report")
+    if payload.get("status") == "passed" and payload.get("errors"):
+        errors.append("passed_checker_report_with_errors")
 
 
 def _validate_selected_derivation(payload: dict[str, Any], errors: list[str]) -> None:
@@ -438,7 +446,19 @@ def positive_fixtures() -> dict[str, dict[str, Any]]:
             "certificates": [],
             "proof_use_status": "not_allowed",
         },
-        "IndependentCheckerReportFull2D": {"schema_version": "IndependentCheckerReportFull2D", "checker_id": "ic", "claim_spec_ref": ref, "checked_artifact_refs": [ref], "status": "passed", "recomputed": True},
+        "IndependentCheckerReportFull2D": {
+            "schema_version": "IndependentCheckerReportFull2D",
+            "checker_id": "ic",
+            "claim_spec_ref": ref,
+            "checked_artifact_refs": [ref],
+            "status": "passed",
+            "errors": [],
+            "recomputed": True,
+            "recomputed_from_claim_spec": True,
+            "trusted_engine_boolean": False,
+            "trusted_target_conclusion": False,
+            "checker_self_certified": False,
+        },
         "SelectedSolverDerivationV2": {
             "schema_version": "SelectedSolverDerivationV2",
             "derivation_id": ref,
@@ -482,6 +502,7 @@ def negative_fixtures() -> dict[str, dict[str, Any]]:
         "target_fact_without_derivation": {"schema_version": "EngineOutputFull2D:2", "engine_role": "synthetic_closure", "input_claim_spec_ref": ref, "backend_identity": "test", "backend_code_hash": ref, "provider_stage_run_id": "p", "proof_text_present": False, "facts": [{"conclusion": "TARGET", "premises": []}], "proof_use_status": "not_allowed"},
         "naked_target_assertion": {"schema_version": "SelectedSolverDerivationV2", "derivation_id": ref, "selected_engine_output_refs": [ref], "derivation_steps": [{"step_id": "s", "input_refs": ["h"], "output_ref": "target_goal", "rule_id": "r", "independent_checker_report_ref": ref, "output_is_target": True, "non_target_intermediate": False}]},
         "proof_text_in_engine_output": {"schema_version": "EngineOutputFull2D:2", "engine_role": "lean_proof_search", "input_claim_spec_ref": ref, "backend_identity": "test", "backend_code_hash": ref, "provider_stage_run_id": "p", "proof_text_present": True, "proof": "exact h", "facts": [], "proof_use_status": "not_allowed"},
+        "self_certified_independent_checker": {"schema_version": "IndependentCheckerReportFull2D", "checker_id": "ic", "claim_spec_ref": ref, "checked_artifact_refs": [ref], "status": "passed", "errors": [], "recomputed": False, "recomputed_from_claim_spec": False, "trusted_engine_boolean": True, "trusted_target_conclusion": True, "checker_self_certified": True},
         "report_only_causality": {"schema_version": "SolverCausalityReportV3", "report_id": "sc", "run_record_ref": ref, "positive_control": {}, "mutation_runs": [], "failed_as_expected": True},
         "hash_mismatch": {"schema_version": "LeanExtractionReportFull2D", "theorem_id": "t", "source_theorem_preproved": False, "source_file_hash": ref, "theorem_statement_hash": ref, "elaborated_expression_hash": ref, "target_classification": {}, "expected_content_hash": ref, "content_for_hash": "different"},
         "stale_artifact": {"schema_version": "GoalPreservationReportV2", "git_head": "stale", "source_goal_ast_ref": ref, "translated_goal_ast_ref": ref, "mapping_table_ref": ref, "preservation_kind": "exact_same_formal_goal", "dropped_hypotheses": [], "added_strengthening_hypotheses": [], "easier_projection": False, "checker_report_ref": ref},

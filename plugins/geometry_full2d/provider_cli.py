@@ -43,11 +43,22 @@ def run_provider_cli(claim_spec_json: Path, output_dir: Path, request_id: str, *
     )
     stage_dir = output_root / "provider_stage"
     engine_dir = stage_dir / "engine_outputs"
+    normalized_dir = stage_dir / "normalized_artifacts"
     artifact_paths: dict[str, str] = {}
     engine_refs: list[str] = []
     errors: list[str] = []
+    claim_copy_path = stage_dir / "claim_spec.json"
+    claim_copy_path.parent.mkdir(parents=True, exist_ok=True)
+    claim_copy_path.write_bytes(claim_path.read_bytes())
+    artifact_paths[claim_ref] = claim_copy_path.relative_to(output_root).as_posix()
     for record in provider_run.engine_records:
-        payload = to_v0_5_engine_output(record.to_dict(), claim_ref, request_id)
+        record_payload = record.to_dict()
+        normalized_payload = record_payload.get("normalized_output_payload") if isinstance(record_payload.get("normalized_output_payload"), dict) else None
+        normalized_ref = None
+        if normalized_payload is not None:
+            normalized_ref, normalized_path = write_content_json(normalized_dir / f"{record.engine_role}.json", normalized_payload, id_field="artifact_id")
+            artifact_paths[normalized_ref] = normalized_path.relative_to(output_root).as_posix()
+        payload = to_v0_5_engine_output(record_payload, claim_ref, request_id, normalized_artifact_ref=normalized_ref)
         ref, path = write_content_json(engine_dir / f"{record.engine_role}.json", payload)
         engine_refs.append(ref)
         artifact_paths[ref] = path.relative_to(output_root).as_posix()
@@ -73,16 +84,22 @@ def run_provider_cli(claim_spec_json: Path, output_dir: Path, request_id: str, *
         "provider_manifest_ref": manifest_ref,
         "engine_output_refs": engine_refs,
         "artifact_paths": artifact_paths,
+        "claim_spec_path": claim_copy_path.relative_to(output_root).as_posix(),
         "output_dir": str(output_root),
     }
     write_json(stage_dir / "provider_cli_summary.json", summary)
     return summary
 
 
-def to_v0_5_engine_output(record: dict[str, Any], claim_spec_ref: str, provider_stage_run_id: str) -> dict[str, Any]:
+def to_v0_5_engine_output(
+    record: dict[str, Any],
+    claim_spec_ref: str,
+    provider_stage_run_id: str,
+    *,
+    normalized_artifact_ref: str | None = None,
+) -> dict[str, Any]:
     role = str(record["engine_role"])
     normalized_payload = record.get("normalized_output_payload") if isinstance(record.get("normalized_output_payload"), dict) else None
-    normalized_ref = sha256_text(canonical_json(normalized_payload)) if normalized_payload is not None else None
     facts = extract_nonempty_premise_facts(normalized_payload)
     constructions = []
     certificates = []
@@ -111,7 +128,7 @@ def to_v0_5_engine_output(record: dict[str, Any], claim_spec_ref: str, provider_
         "backend_code_hash": backend_code_hash(role),
         "provider_stage_run_id": provider_stage_run_id,
         "real_execution_evidence_ref": str(record.get("real_integration_evidence_ref") or sha256_text(canonical_json(record))),
-        "normalized_artifact_refs": [normalized_ref] if normalized_ref else [],
+        "normalized_artifact_refs": [normalized_artifact_ref] if normalized_artifact_ref else [],
         "independent_checker_report_refs": [independent_checker_sha_ref(role)] if record.get("checker_or_compiler_ref") else [],
         "proof_text_present": False,
         "forbidden_metadata_consumed_by_compiler": [],

@@ -44,7 +44,7 @@ The v0.4.5 closure is invalidated as a false-positive checker-passing scaffold. 
 Current task:
 
 ```text
-WP-07 — Independent solver checkers.
+WP-08 — RuleRegistry with non-identity counted rules.
 ```
 
 Completed preparation:
@@ -83,9 +83,15 @@ WP-06 provider / engine stage boundary implemented:
   - v0.5 engine output checker;
   - provider/engine release path no longer imports run records or rule registry.
 WP-06 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp06_provider_boundary_evidence.md.
+WP-07 independent solver checkers implemented:
+  - provider CLI now writes ClaimSpec and normalized semantic artifacts as content-addressed upstream inputs;
+  - `check_independent_solver_checkers_v0_5.py` recomputes role-specific checks from ClaimSpec and artifacts;
+  - synthetic target emission was changed to require non-target support for replay;
+  - checker report schema rejects self-certified and target-trusting reports.
+WP-07 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp07_independent_solver_checkers_evidence.md.
 ```
 
-Implementation work proceeds from WP-07. No counted corpus or release completion is claimed before WP-10A and WP-14.
+Implementation work proceeds from WP-08. No counted corpus or release completion is claimed before WP-10A and WP-14.
 
 ## Non-Negotiables
 
@@ -110,6 +116,7 @@ Allowed:
 MARP-GEOLEAN-BASE-011 / PLAN-011 / ACCEPTANCE-011 are active; WP-01 through WP-04 implementation gates have local evidence.
 WP-05 extraction gate has local evidence.
 WP-06 provider boundary and engine-output gates have local evidence.
+WP-07 independent solver checker gates have local evidence.
 ```
 
 Not allowed yet:

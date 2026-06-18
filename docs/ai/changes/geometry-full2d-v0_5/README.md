@@ -26,6 +26,7 @@ Review evidence:
 - `evidence/wp04_corpus_system_evidence.md`
 - `evidence/wp05_extraction_gate_evidence.md`
 - `evidence/wp06_provider_boundary_evidence.md`
+- `evidence/wp07_independent_solver_checkers_evidence.md`
 
 First checks:
 
