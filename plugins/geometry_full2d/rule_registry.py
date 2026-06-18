@@ -100,20 +100,42 @@ SIDE_CONDITION_PROCEDURES = (
 class RuleContractFull2D:
     schema_version: str
     rule_id: str
-    family: str
+    rule_family: str
     input_patterns: tuple[str, ...]
-    output_patterns: tuple[str, ...]
+    output_pattern: str
     required_side_conditions: tuple[str, ...]
     generated_obligations: tuple[str, ...]
-    lean_template_or_lemma: str
-    proof_template: str
-    unsupported_variants: tuple[str, ...]
+    lean_template_id: str
+    independent_checker: str
     positive_fixtures: tuple[str, ...]
     negative_fixtures: tuple[str, ...]
     mutation_fixtures: tuple[str, ...]
+    direct_identity_rule: bool
+    direct_facade_rule: bool
+    counted: bool
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        return _jsonable(asdict(self))
+
+    @property
+    def family(self) -> str:
+        return self.rule_family
+
+    @property
+    def output_patterns(self) -> tuple[str, ...]:
+        return (self.output_pattern,)
+
+    @property
+    def lean_template_or_lemma(self) -> str:
+        return self.lean_template_id
+
+    @property
+    def proof_template(self) -> str:
+        return f"apply {self.lean_template_id}"
+
+    @property
+    def unsupported_variants(self) -> tuple[str, ...]:
+        return tuple(fixture.replace(":mutation", ":unsupported") for fixture in self.mutation_fixtures)
 
 
 @dataclass(frozen=True)
@@ -127,7 +149,7 @@ class ConstructionTemplateFull2D:
     lean_template_or_lemma: str
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        return _jsonable(asdict(self))
 
 
 @dataclass(frozen=True)
@@ -139,7 +161,7 @@ class SideConditionProcedureFull2D:
     failure_mode: str
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        return _jsonable(asdict(self))
 
 
 @dataclass(frozen=True)
@@ -151,19 +173,24 @@ class RuleRegistryFull2D:
     side_condition_procedures: tuple[SideConditionProcedureFull2D, ...]
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        return _jsonable(asdict(self))
 
     def registry_hash(self) -> str:
         return _hash_ref(_canonical_json(self.to_dict()))
 
 
 def build_rule_registry_full2d() -> RuleRegistryFull2D:
-    rules = tuple(_rule_contract(family, index) for family in RULE_FAMILIES for index in range(1, 6))
+    counted_rules = tuple(_rule_contract(family, index) for family in RULE_FAMILIES for index in range(1, 6))
+    helper_rules = (
+        _helper_rule("full2d_helper:target_anchor_name", "helper_target_anchor", direct_facade=True),
+        _helper_rule("full2d_helper:reflexive_rewrite_noncounted", "helper_reflexive_rewrite", direct_identity=True),
+    )
+    rules = counted_rules + helper_rules
     templates = tuple(_construction_template(kind, index) for index, kind in enumerate(CONSTRUCTION_TEMPLATE_KINDS, start=1))
     procedures = tuple(_side_condition_procedure(kind, index) for index, kind in enumerate(SIDE_CONDITION_PROCEDURES, start=1))
     registry = RuleRegistryFull2D(
-        schema_version="1.0.0",
-        registry_id="RuleRegistryFull2D:generated:v0_4_2",
+        schema_version="RuleRegistryFull2D",
+        registry_id="RuleRegistryFull2D:generated:v0_5",
         rules=rules,
         construction_templates=templates,
         side_condition_procedures=procedures,
@@ -173,13 +200,14 @@ def build_rule_registry_full2d() -> RuleRegistryFull2D:
 
 def validate_rule_registry_full2d(registry: RuleRegistryFull2D) -> list[str]:
     errors: list[str] = []
-    if registry.schema_version != "1.0.0":
-        errors.append("schema_version_not_1_0_0")
-    if len(registry.rules) < 150:
-        errors.append("rule_count_below_150")
-    families = {rule.family for rule in registry.rules}
+    if registry.schema_version != "RuleRegistryFull2D":
+        errors.append("schema_version_not_RuleRegistryFull2D")
+    counted_rules = [rule for rule in registry.rules if rule.counted]
+    if len(counted_rules) < 150:
+        errors.append("counted_rule_count_below_150")
+    families = {rule.rule_family for rule in counted_rules}
     if len(families) < 25:
-        errors.append("rule_family_count_below_25")
+        errors.append("counted_rule_family_count_below_25")
     if len(registry.construction_templates) < 30:
         errors.append("construction_template_count_below_30")
     if len(registry.side_condition_procedures) < 20:
@@ -204,19 +232,41 @@ def _rule_contract(family: str, index: int) -> RuleContractFull2D:
     rule_id = f"full2d_rule:{family}:{index:02d}"
     side_conditions = _family_side_conditions(family, index)
     return RuleContractFull2D(
-        schema_version="1.0.0",
+        schema_version="RuleContractFull2D",
         rule_id=rule_id,
-        family=family,
+        rule_family=family,
         input_patterns=(f"{family}:input:{index}:primary", f"{family}:input:{index}:context"),
-        output_patterns=(f"{family}:output:{index}:derived_fact",),
+        output_pattern=f"{family}:output:{index}:derived_fact",
         required_side_conditions=side_conditions,
         generated_obligations=tuple(f"obligation:{condition}" for condition in side_conditions),
-        lean_template_or_lemma=f"MathAutoResearch.GeometryFull2D.Tactics.exactInTarget:{family}:{index:02d}",
-        proof_template=f"apply registered_full2d_rule {rule_id}",
-        unsupported_variants=(f"{family}:unsupported_degenerate_or_unoriented_variant",),
+        lean_template_id=f"GeometryFull2D.rule_template.{family}.{index:02d}",
+        independent_checker=f"IndependentCheckerFull2D:{family}:{index:02d}",
         positive_fixtures=(f"fixture:{rule_id}:positive",),
         negative_fixtures=(f"fixture:{rule_id}:negative",),
         mutation_fixtures=(f"fixture:{rule_id}:mutation",),
+        direct_identity_rule=False,
+        direct_facade_rule=False,
+        counted=True,
+    )
+
+
+def _helper_rule(rule_id: str, family: str, *, direct_identity: bool = False, direct_facade: bool = False) -> RuleContractFull2D:
+    return RuleContractFull2D(
+        schema_version="RuleContractFull2D",
+        rule_id=rule_id,
+        rule_family=family,
+        input_patterns=("helper:input",),
+        output_pattern="helper:output",
+        required_side_conditions=("helper_noncounted_guard",),
+        generated_obligations=("obligation:helper_noncounted_guard",),
+        lean_template_id=f"GeometryFull2D.helper_template.{family}",
+        independent_checker=f"IndependentCheckerFull2D:{family}:helper",
+        positive_fixtures=(f"fixture:{rule_id}:positive",),
+        negative_fixtures=(f"fixture:{rule_id}:negative",),
+        mutation_fixtures=(f"fixture:{rule_id}:mutation",),
+        direct_identity_rule=direct_identity,
+        direct_facade_rule=direct_facade,
+        counted=False,
     )
 
 
@@ -267,22 +317,35 @@ def _family_side_conditions(family: str, index: int) -> tuple[str, ...]:
 
 def _validate_rule(rule: RuleContractFull2D) -> list[str]:
     errors: list[str] = []
+    if rule.schema_version != "RuleContractFull2D":
+        errors.append(f"{rule.rule_id}:bad_schema_version")
     for key in (
         "input_patterns",
-        "output_patterns",
         "required_side_conditions",
         "generated_obligations",
-        "unsupported_variants",
         "positive_fixtures",
         "negative_fixtures",
         "mutation_fixtures",
     ):
         if not getattr(rule, key):
             errors.append(f"{rule.rule_id}:missing_{key}")
-    if not rule.lean_template_or_lemma:
-        errors.append(f"{rule.rule_id}:missing_lean_template_or_lemma")
-    if not rule.proof_template:
-        errors.append(f"{rule.rule_id}:missing_proof_template")
+    if not rule.output_pattern:
+        errors.append(f"{rule.rule_id}:missing_output_pattern")
+    if not rule.lean_template_id:
+        errors.append(f"{rule.rule_id}:missing_lean_template_id")
+    if not rule.independent_checker:
+        errors.append(f"{rule.rule_id}:missing_independent_checker")
+    if tuple(rule.generated_obligations) != tuple(f"obligation:{condition}" for condition in rule.required_side_conditions):
+        errors.append(f"{rule.rule_id}:generated_obligations_mismatch")
+    if rule.counted:
+        if rule.direct_identity_rule or rule.direct_facade_rule:
+            errors.append(f"{rule.rule_id}:identity_or_facade_counted")
+        if rule.output_pattern in set(rule.input_patterns):
+            errors.append(f"{rule.rule_id}:counted_rule_output_equals_input")
+        if rule.output_pattern in {"TARGET", "TARGET_GOAL", "target_goal"}:
+            errors.append(f"{rule.rule_id}:naked_target_output_pattern")
+        if not rule.positive_fixtures or not rule.negative_fixtures or not rule.mutation_fixtures:
+            errors.append(f"{rule.rule_id}:missing_required_fixtures")
     return errors
 
 
@@ -292,3 +355,7 @@ def _canonical_json(payload: Any) -> str:
 
 def _hash_ref(text: str) -> str:
     return f"sha256:{hashlib.sha256(text.encode('utf-8')).hexdigest()}"
+
+
+def _jsonable(payload: Any) -> Any:
+    return json.loads(json.dumps(payload, sort_keys=True))

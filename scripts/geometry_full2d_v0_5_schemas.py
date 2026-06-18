@@ -357,15 +357,39 @@ def _validate_rule_registry(payload: dict[str, Any], errors: list[str]) -> None:
     if not isinstance(rules, list) or not rules:
         errors.append("missing_rules")
         return
+    counted_rules = [rule for rule in rules if isinstance(rule, dict) and rule.get("counted") is True]
+    if payload.get("schema_version") != "RuleRegistryFull2D":
+        errors.append("bad_rule_registry_schema_version")
+    if not counted_rules:
+        errors.append("missing_counted_rules")
     for index, rule in enumerate(rules):
         if not isinstance(rule, dict):
             errors.append(f"bad_rule:{index}")
             continue
         if rule.get("counted") is True and (rule.get("direct_identity_rule") is True or rule.get("direct_facade_rule") is True):
             errors.append("identity_rule_counted_success")
-        for key in ["rule_id", "rule_family", "input_patterns", "output_pattern", "independent_checker"]:
+        for key in [
+            "rule_id",
+            "rule_family",
+            "input_patterns",
+            "output_pattern",
+            "required_side_conditions",
+            "generated_obligations",
+            "lean_template_id",
+            "independent_checker",
+            "positive_fixtures",
+            "negative_fixtures",
+            "mutation_fixtures",
+        ]:
             if key not in rule:
                 errors.append(f"missing_rule_field:{index}:{key}")
+        if rule.get("counted") is True:
+            if rule.get("output_pattern") in set(rule.get("input_patterns", [])):
+                errors.append("identity_rule_counted_success")
+            if rule.get("output_pattern") in {"TARGET", "TARGET_GOAL", "target_goal"}:
+                errors.append("naked_target_rule_counted_success")
+            if not rule.get("positive_fixtures") or not rule.get("negative_fixtures") or not rule.get("mutation_fixtures"):
+                errors.append(f"missing_rule_fixtures:{index}")
 
 
 def _validate_stage_failure(payload: dict[str, Any], errors: list[str]) -> None:
@@ -490,7 +514,27 @@ def positive_fixtures() -> dict[str, dict[str, Any]]:
         },
         "SolverBackedProofCertificateFull2D": {"schema_version": "SolverBackedProofCertificateFull2D", "certificate_id": "cert", "actual_task_run_ref": ref, "final_verify_report_ref": ref, "solver_causality_report_ref": ref, "causal_chain_hash": ref},
         "GoalPreservationReportV2": {"schema_version": "GoalPreservationReportV2", "source_goal_ast_ref": ref, "translated_goal_ast_ref": ref, "mapping_table_ref": ref, "preservation_kind": "exact_same_formal_goal", "dropped_hypotheses": [], "added_strengthening_hypotheses": [], "easier_projection": False, "checker_report_ref": ref},
-        "RuleRegistryFull2D": {"schema_version": "RuleRegistryFull2D", "rules": [{"rule_id": "r1", "rule_family": "synthetic", "input_patterns": ["h"], "output_pattern": "f", "independent_checker": "ic", "counted": True, "direct_identity_rule": False, "direct_facade_rule": False}]},
+        "RuleRegistryFull2D": {
+            "schema_version": "RuleRegistryFull2D",
+            "rules": [
+                {
+                    "rule_id": "r1",
+                    "rule_family": "synthetic",
+                    "input_patterns": ["h"],
+                    "output_pattern": "f",
+                    "required_side_conditions": ["point_distinctness"],
+                    "generated_obligations": ["obligation:point_distinctness"],
+                    "lean_template_id": "template:r1",
+                    "independent_checker": "ic",
+                    "positive_fixtures": ["pos"],
+                    "negative_fixtures": ["neg"],
+                    "mutation_fixtures": ["mut"],
+                    "counted": True,
+                    "direct_identity_rule": False,
+                    "direct_facade_rule": False,
+                }
+            ],
+        },
         "StageFailureReportV1": {"schema_version": "StageFailureReportV1", "stage": "compiler", "input_refs": [ref], "command_log_ref": ref, "failure_kind": "validation_rejected", "failure_reason": "negative fixture"},
         "DisabledStageReportV1": {"schema_version": "DisabledStageReportV1", "baseline_id": "B5", "disabled_component": "construction_search", "config_ref": ref, "upstream_input_refs": [ref], "reason": "declared baseline ablation only"},
     }
@@ -506,7 +550,8 @@ def negative_fixtures() -> dict[str, dict[str, Any]]:
         "report_only_causality": {"schema_version": "SolverCausalityReportV3", "report_id": "sc", "run_record_ref": ref, "positive_control": {}, "mutation_runs": [], "failed_as_expected": True},
         "hash_mismatch": {"schema_version": "LeanExtractionReportFull2D", "theorem_id": "t", "source_theorem_preproved": False, "source_file_hash": ref, "theorem_statement_hash": ref, "elaborated_expression_hash": ref, "target_classification": {}, "expected_content_hash": ref, "content_for_hash": "different"},
         "stale_artifact": {"schema_version": "GoalPreservationReportV2", "git_head": "stale", "source_goal_ast_ref": ref, "translated_goal_ast_ref": ref, "mapping_table_ref": ref, "preservation_kind": "exact_same_formal_goal", "dropped_hypotheses": [], "added_strengthening_hypotheses": [], "easier_projection": False, "checker_report_ref": ref},
-        "identity_rule_counted_success": {"schema_version": "RuleRegistryFull2D", "rules": [{"rule_id": "id", "rule_family": "facade", "input_patterns": ["x"], "output_pattern": "x", "independent_checker": "none", "counted": True, "direct_identity_rule": True, "direct_facade_rule": False}]},
+        "identity_rule_counted_success": {"schema_version": "RuleRegistryFull2D", "rules": [{"rule_id": "id", "rule_family": "facade", "input_patterns": ["x"], "output_pattern": "x", "required_side_conditions": ["guard"], "generated_obligations": ["obligation:guard"], "lean_template_id": "template:id", "independent_checker": "none", "positive_fixtures": ["pos"], "negative_fixtures": ["neg"], "mutation_fixtures": ["mut"], "counted": True, "direct_identity_rule": True, "direct_facade_rule": False}]},
+        "naked_target_rule_counted_success": {"schema_version": "RuleRegistryFull2D", "rules": [{"rule_id": "target", "rule_family": "facade", "input_patterns": ["h"], "output_pattern": "target_goal", "required_side_conditions": ["guard"], "generated_obligations": ["obligation:guard"], "lean_template_id": "template:target", "independent_checker": "none", "positive_fixtures": ["pos"], "negative_fixtures": ["neg"], "mutation_fixtures": ["mut"], "counted": True, "direct_identity_rule": False, "direct_facade_rule": True}]},
     }
 
 

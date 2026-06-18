@@ -44,7 +44,7 @@ The v0.4.5 closure is invalidated as a false-positive checker-passing scaffold. 
 Current task:
 
 ```text
-WP-08 — RuleRegistry with non-identity counted rules.
+WP-09 — Compiler from SelectedSolverDerivation only.
 ```
 
 Completed preparation:
@@ -89,9 +89,15 @@ WP-07 independent solver checkers implemented:
   - synthetic target emission was changed to require non-target support for replay;
   - checker report schema rejects self-certified and target-trusting reports.
 WP-07 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp07_independent_solver_checkers_evidence.md.
+WP-08 RuleRegistry implemented:
+  - RuleRegistryFull2D emits v0.5 rule contracts with counted/non-counted helper separation;
+  - counted rules require input/output patterns, side conditions, generated obligations, Lean template ids, independent checkers, and positive/negative/mutation fixtures;
+  - identity/direct-facade helper rules are present only as non-counted helpers;
+  - `check_full2d_rule_registry_v0_5.py --self-test` rejects counted identity and naked-target rule registries.
+WP-08 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp08_rule_registry_evidence.md.
 ```
 
-Implementation work proceeds from WP-08. No counted corpus or release completion is claimed before WP-10A and WP-14.
+Implementation work proceeds from WP-09. No counted corpus or release completion is claimed before WP-10A and WP-14.
 
 ## Non-Negotiables
 
@@ -117,6 +123,7 @@ MARP-GEOLEAN-BASE-011 / PLAN-011 / ACCEPTANCE-011 are active; WP-01 through WP-0
 WP-05 extraction gate has local evidence.
 WP-06 provider boundary and engine-output gates have local evidence.
 WP-07 independent solver checker gates have local evidence.
+WP-08 RuleRegistry gate has local evidence.
 ```
 
 Not allowed yet:
