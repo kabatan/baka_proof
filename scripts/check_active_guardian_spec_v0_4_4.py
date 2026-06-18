@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 from pathlib import Path
 
@@ -33,9 +34,25 @@ INACTIVE_STATUS_MARKERS = (
     "DRAFT",
 )
 
+EXPECTED_AUTHORITY_SHA256: dict[str, str] = {
+    "docs/ai/changes/geometry-full2d-v0_4_4/BASE_SPEC.md": "c79939bee5d1c7f0756085d804f8cf70b779d7aa639323174c6e9c0a12776507",
+    "docs/ai/changes/geometry-full2d-v0_4_4/PLAN.md": "5936ae1fc5225ee6ea66ed0bb57524d100d16d1ca25ef23fd6672868c0a9c8ac",
+    "docs/ai/changes/geometry-full2d-v0_4_4/ACCEPTANCE.md": "00e8c579281e2aac6efd8d5ad56b6083d9bc009068986131452a53e3daebb1fe",
+    "docs/ai/changes/geometry-full2d-v0_4_4/ACTIVE_CONTEXT.md": "5329469c75b9b6e287cab94ecce40be671eb6f6f57a3a610d7b1b56630d9ce0a",
+    "docs/ai/changes/geometry-full2d-v0_4_4/REAL_PIPELINE_INVARIANTS.md": "493d455947695e5cad92ff3cc82c7fe7cef1da3ace6c536c2cc8af4833407658",
+    "docs/ai/changes/geometry-full2d-v0_4_4/REFACTOR_DIRECTIVE.md": "55d7b24e0e9c08151f8b850d91d5bec99b4b1d818cf72f9c2e24bcc3989c5928",
+    "docs/ai/changes/geometry-full2d-v0_4_4/SOURCE_MAP.md": "f846f99c25895d3d25bd795f9f169f93f11154a1c0ed764227c588fa6b081568",
+    "docs/ai/changes/geometry-full2d-v0_4_4/CODEX_HANDOFF.md": "9120f7d7948056fa49aa0a79c0b51ee5b8b92cdf059605a21fd698d0b3c3e185",
+}
+
 
 def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def _sha256(path: Path) -> str:
+    text = _read(path).replace("\r\n", "\n").replace("\r", "\n")
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
 def _field(text: str, name: str) -> str | None:
@@ -125,6 +142,7 @@ def main() -> int:
     errors: list[str] = []
 
     active_context = DOCS_AI / "ACTIVE_CONTEXT.md"
+    change_active_context = ACTIVE_CHANGE_DIR / "ACTIVE_CONTEXT.md"
     index = DOCS_AI / "INDEX.md"
     plan = ACTIVE_CHANGE_DIR / "PLAN.md"
     acceptance = ACTIVE_CHANGE_DIR / "ACCEPTANCE.md"
@@ -144,6 +162,7 @@ def main() -> int:
 
     for required in [
         active_context,
+        change_active_context,
         index,
         plan,
         acceptance,
@@ -162,6 +181,16 @@ def main() -> int:
         *superseded_docs,
     ]:
         _expect_file(errors, required)
+
+    for relative_path, expected_hash in EXPECTED_AUTHORITY_SHA256.items():
+        path = ROOT / relative_path
+        _expect_file(errors, path)
+        if path.exists():
+            actual_hash = _sha256(path)
+            if actual_hash != expected_hash:
+                errors.append(
+                    f"authority_hash_mismatch:{relative_path}:expected={expected_hash}:actual={actual_hash}"
+                )
 
     records = _base_spec_records()
     active_records = [record for record in records if record["active"]]
@@ -187,6 +216,13 @@ def main() -> int:
         _check_required_text(errors, base_spec, "SolverCausalityReportV1", "base_spec_solver_causality_missing")
         _check_required_text(errors, base_spec, "ProjectionNonCounted", "base_spec_projection_category_missing")
         _check_required_text(errors, base_spec, "allowed but has no fixed release floor", "base_spec_user_review_nonblocking_missing")
+        _check_required_text(errors, base_spec, "freshness_summary", "base_spec_freshness_summary_missing")
+        _check_required_text(errors, base_spec, "renamed or shimmed v0.4.3 release path", "base_spec_old_path_alias_guard_missing")
+        _check_required_text(errors, base_spec, "compiler reads task_id", "base_spec_task_id_regression_missing")
+        _check_required_text(errors, base_spec, "compiler reads provenance, source_ref, or generator private labels", "base_spec_source_ref_regression_missing")
+        _check_required_text(errors, base_spec, "solver_causal_success_fraction = 1.00", "base_spec_solver_causal_fraction_not_100")
+        _check_required_text(errors, base_spec, "family_floor_summary", "base_spec_family_floor_summary_missing")
+        _check_required_text(errors, base_spec, "used concrete rules >= 35", "base_spec_used_rule_thresholds_missing")
 
     if plan.exists():
         text = _read(plan)
@@ -199,6 +235,13 @@ def main() -> int:
         _check_required_text(errors, plan, "WP00 — Authority reset", "plan_missing_wp00")
         _check_required_text(errors, plan, "WP18 — Closure", "plan_missing_wp18")
         _check_required_text(errors, plan, "Missing user-reviewed tasks must not block release", "plan_user_review_nonblocking_missing")
+        _check_required_text(errors, plan, "substantially equivalent v0.4.3 release commands", "plan_old_path_alias_guard_missing")
+        _check_required_text(errors, plan, "It emits a nonempty `freshness_summary`", "plan_freshness_summary_missing")
+        _check_required_text(errors, plan, "It emits a nonempty `family_floor_summary`", "plan_family_floor_summary_missing")
+        _check_required_text(errors, plan, "compiler reads task_id", "plan_task_id_regression_missing")
+        _check_required_text(errors, plan, "compiler reads provenance/source_ref/generator-private labels", "plan_source_ref_regression_missing")
+        _check_required_text(errors, plan, "It must report and enforce every positive family floor", "plan_family_floor_checker_missing")
+        _check_required_text(errors, plan, "call graph / direct invocation targets", "plan_old_path_equivalence_check_missing")
 
     if acceptance.exists():
         text = _read(acceptance)
@@ -212,7 +255,14 @@ def main() -> int:
             errors.append("active_acceptance_status_not_active")
         _check_required_text(errors, acceptance, "K-016 — Solver causality missing", "acceptance_missing_solver_causality_gate")
         _check_required_text(errors, acceptance, "K-024 — Regression failure suite missing", "acceptance_missing_regression_gate")
+        _check_required_text(errors, acceptance, "K-026 — Stale or hash-unbound evidence", "acceptance_missing_stale_evidence_gate")
+        _check_required_text(errors, acceptance, "K-027 — Renamed old release path", "acceptance_missing_old_path_alias_gate")
+        _check_required_text(errors, acceptance, "python scripts/check_anti_v043_projection_regression.py", "acceptance_missing_anti_v043_projection_command")
         _check_required_text(errors, acceptance, "not_applicable_model_provider_not_used", "acceptance_missing_b8_not_applicable")
+        _check_required_text(errors, acceptance, "solver_causal_success_fraction < 1.00", "acceptance_solver_causal_fraction_not_100")
+        _check_required_text(errors, acceptance, "family_floor_summary", "acceptance_family_floor_summary_missing")
+        _check_required_text(errors, acceptance, "Full2DCore500 >= 500", "acceptance_family_floors_missing")
+        _check_required_text(errors, acceptance, "Base-forbidden proof-decision field", "acceptance_compiler_isolation_too_narrow")
 
     if superseded_base.exists():
         text = _read(superseded_base)
@@ -232,8 +282,10 @@ def main() -> int:
             errors.append("active_context_plan_missing")
         if f"acceptance: {ACTIVE_ACCEPTANCE_ID}" not in text:
             errors.append("active_context_acceptance_missing")
-        if "Implementation work for WP01 and later has not started" not in text:
+        if "Current Claim Ceiling" not in text:
             errors.append("active_context_claim_ceiling_missing")
+        if "V0.4.4_GEOMETRY_FULL2D_REAL_SOLVER_CAUSAL_PIPELINE_READY" not in text:
+            errors.append("active_context_claim_target_missing")
 
     if index.exists():
         text = _read(index)

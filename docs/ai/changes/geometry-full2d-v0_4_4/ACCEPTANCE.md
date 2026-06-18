@@ -23,6 +23,8 @@ The command must return 0 only when all acceptance requirements pass.
 
 ```text
 checked_rids
+freshness_summary
+family_floor_summary
 metrics_summary
 advantage_summary
 used_rule_coverage_summary
@@ -40,6 +42,12 @@ debt_ledger_summary
 ```
 
 Empty placeholder fields fail `K-001`.
+
+`checked_rids` must be populated only with concrete requirement identifiers from `MARP-GEOLEAN-BASE-009 / PLAN-009 / ACCEPTANCE-009`, including applicable `DR-009-*`, `I-*`, `K-*`, and Plan work-package acceptance gates.
+
+`freshness_summary` must prove that reused checker, matrix, corpus, and report outputs are bound to the current repository tree or selected implementation hash, corpus hash, config hash, run directory hash, and checker code hash as applicable.
+
+`family_floor_summary` must report every positive family floor from Base Spec section 4.2 and fail if any family is below its floor.
 
 ## 2. Blocker list
 
@@ -87,6 +95,17 @@ SealedSolverChallenge positives >= 1200
 ProjectionNonCounted positives counted as release positives = 0
 near duplicate positives <= 10%
 exact target-shape duplicate max per theorem family <= 5
+Full2DCore500 >= 500
+IncidenceParallelPerp350 >= 350
+AngleCyclic450 >= 450
+Construction450 >= 450
+MetricRatioArea350 >= 350
+Transformation250 >= 250
+OrderCase250 >= 250
+Algebraic250 >= 250
+Inequality150 >= 150
+OlympiadStyle300 >= 300
+HardHoldout50 >= 50
 ```
 
 `UserReviewedGoal` has no fixed floor. If present, every UserReviewedGoal must pass ReviewManifest validation.
@@ -133,7 +152,7 @@ Fail if engine output contains Lean proof text, tactic scripts, theorem-specific
 
 ### K-015 — Compiler input isolation violated
 
-Fail if compiler release path reads benchmark labels or corpus generator private labels for proof decision.
+Fail if compiler release path reads any Base-forbidden proof-decision field, including `task_id`, `theorem_name` except for patch anchoring, `theorem_family`, `grammar_family`, `difficulty_tier`, `template_id`, `provenance`, `source_ref` except for artifact bookkeeping, benchmark labels, corpus generator private labels, or proof text embedded in corpus metadata.
 
 ### K-016 — Solver causality missing
 
@@ -158,7 +177,7 @@ Direct/wrapped includes `exact lemma`, direct `have` wrapper around exact lemma,
 Fail if:
 
 ```text
-solver_causal_success_fraction < 0.80
+solver_causal_success_fraction < 1.00
 non_target_intermediate_fact_success_fraction < 0.50
 construction_or_case_or_certificate_success_fraction < 0.50
 ExternalGoalPreserved_success_count < 500
@@ -199,6 +218,14 @@ Fail if regression tests do not prove v0.4.2/v0.4.3 shortcuts and v0.4.4 bypasse
 
 Fail if closure claims more than release report supports.
 
+### K-026 — Stale or hash-unbound evidence
+
+Fail if release acceptance relies on stale v0.4.2/v0.4.3 evidence, stale v0.4.4 checker or matrix outputs, or any reused output not bound to the current repository tree or selected implementation hash, corpus hash, config hash, run directory hash, and checker code hash as applicable.
+
+### K-027 — Renamed old release path
+
+Fail if a renamed, wrapped, copied, shimmed, or substantially equivalent v0.4.2/v0.4.3 release path is accepted as a v0.4.4 release path instead of being treated as a regression fixture that fails acceptance.
+
 ## 3. Required checker commands
 
 The final release checker must invoke or verify outputs from:
@@ -206,6 +233,7 @@ The final release checker must invoke or verify outputs from:
 ```bash
 python scripts/check_active_guardian_spec_v0_4_4.py
 python scripts/check_no_projection_release_path_v0_4_4.py
+python scripts/check_anti_v043_projection_regression.py
 python scripts/check_full2d_corpus_manifest_v0_4_4.py --corpus-root benchmarks/geometry_full2d_v0_4_4
 python scripts/check_goal_preservation_reports.py --corpus-root benchmarks/geometry_full2d_v0_4_4
 python scripts/check_review_manifest_v0_4_4.py --corpus-root benchmarks/geometry_full2d_v0_4_4
@@ -241,6 +269,8 @@ ReleaseAcceptanceReportV0_4_4:
   release_blockers: []
   work_debt_open: []
   checked_rids: []
+  freshness_summary: {}
+  family_floor_summary: {}
   corpus_summary: {}
   corpus_goal_preservation_summary: {}
   metrics_summary: {}
@@ -267,12 +297,16 @@ Each checker must include self-tests proving it fails on:
 v0.4.2 overlay success
 v0.4.3 projection corpus counted as external
 compiler using template_id
+compiler using task_id
 compiler using theorem_family
 compiler using grammar_family
+compiler using provenance/source_ref/generator-private labels
 engine proof text leakage
 missing solver causality report
 stale ActualTaskPipelineRunV2 record
 mutated solver artifact still producing same patch
+renamed/shimmed v0.4.3 release path accepted as v0.4.4
+stale checker, matrix, corpus, or release output accepted without current hash binding
 direct lemma wrapper counted as solver intermediate
 open DebtLedger entry ignored
 source theorem already proved

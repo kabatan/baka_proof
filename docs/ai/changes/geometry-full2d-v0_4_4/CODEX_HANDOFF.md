@@ -21,6 +21,8 @@ Do not count ExternalGoalPreserved unless GoalPreservationReportV1 proves exact/
 Do not require user-reviewed tasks as a release blocker; they are optional unless present.
 Do not require B8 unless a model provider is enabled.
 Do not close from v0.4.3 evidence.
+Do not use renamed, wrapped, copied, shimmed, or substantially equivalent v0.4.2/v0.4.3 release paths except as regression fixtures that fail v0.4.4 acceptance.
+Do not reuse checker, matrix, corpus, or release outputs unless freshness_summary binds them to the current repo tree or selected implementation hash and relevant corpus/config/run/checker hashes.
 ```
 
 ## Expected behavior

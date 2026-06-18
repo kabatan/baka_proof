@@ -25,6 +25,7 @@ v0.4.2/v0.4.3 release_acceptance_report.json as closure evidence
 v0.4.3 projection corpus files as release positives
 any proof artifact overlay sidecar as a success source
 any compiler path selecting proof from template_id/theorem_family/grammar_family
+renamed, wrapped, copied, shimmed, or substantially equivalent versions of these release paths
 ```
 
 They may remain under `legacy/` or `regression_fixtures/` only if v0.4.4 tests prove they fail release acceptance.

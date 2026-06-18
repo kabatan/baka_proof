@@ -46,6 +46,8 @@ smoke extraction JSON -> reused as extraction evidence for many tasks
 source theorem already proved -> rewritten as solver-backed success
 engine output contains Lean proof text -> compiler copies it
 compiler reads task_id/theorem_family/grammar_family/template_id/provenance -> proof decision
+renamed or shimmed v0.4.3 release path -> v0.4.4-looking command -> counted success
+stale v0.4.4 checker or matrix output -> release report -> closure
 ```
 
 ## 2. Non-negotiable decisions
@@ -619,12 +621,30 @@ For B2 counted successes:
 
 ```text
 direct_or_wrapped_facade_lemma_success_fraction <= 0.10
-solver_causal_success_fraction >= 0.80
+solver_causal_success_fraction = 1.00
 non_target_intermediate_fact_success_fraction >= 0.50
 construction_or_case_or_certificate_success_fraction >= 0.50
 ExternalGoalPreserved_success_count >= 500
 SealedSolverChallenge_success_count >= 700
 ```
+
+`solver_causal_success_fraction` is measured over counted B2 positive final theorem successes. Because every counted B2 positive final theorem success requires a passing `SolverCausalityReportV1`, any value below `1.00` is release-failing.
+
+### 9.4 Used-rule coverage thresholds
+
+B2 counted successes must meet:
+
+```text
+used concrete rules >= 35
+used rule families >= 15
+non-incidence families >= 8
+construction families >= 4
+algebraic/metric/angle families >= 3
+order/case families >= 2
+transformation families >= 2
+```
+
+Rules count only if certificate-bound, compiler-consumed, mutation-sensitive, and final-theorem successful.
 
 ## 10. Release report requirements
 
@@ -632,6 +652,8 @@ The release report must contain nonempty:
 
 ```text
 checked_rids
+freshness_summary
+family_floor_summary
 metrics_summary
 advantage_summary
 used_rule_coverage_summary
@@ -650,6 +672,12 @@ debt_ledger_summary
 
 Empty placeholder summary is release-failing.
 
+`checked_rids` must contain concrete checked requirement identifiers from this authority set, including applicable `DR-009-*`, `I-*`, `K-*`, and Plan work-package acceptance gates. Synthetic, undefined, or non-authority identifiers do not satisfy this field.
+
+`freshness_summary` must bind every reused checker, matrix, corpus, and release-evidence artifact to the current repository tree or selected implementation hash, corpus hash, config hash, run directory hash, and checker code hash as applicable. Stale v0.4.2/v0.4.3 outputs, stale v0.4.4 outputs, or unbound sidecar reports cannot satisfy release acceptance.
+
+`family_floor_summary` must report each positive family floor from section 4.2 and fail release acceptance if any family is below its floor.
+
 ## 11. Required regression failures
 
 Release must include tests proving that each of the following fails:
@@ -658,11 +686,16 @@ Release must include tests proving that each of the following fails:
 v0.4.2 proof artifact overlay matrix
 v0.4.3 projection-only corpus counted as external
 compiler reads template_id
+compiler reads task_id
 compiler reads theorem_family
+compiler reads grammar_family
+compiler reads provenance, source_ref, or generator private labels
 compiler succeeds after selected engine artifact removal
 compiler succeeds after selected engine fact mutation
 engine emits proof text
 engine output generated from task_id hash
+renamed/shimmed v0.4.3 release path accepted as v0.4.4
+stale checker, matrix, corpus, or release output accepted without current hash binding
 source theorem already proved
 single smoke extraction reused for corpus
 open DebtLedger entry ignored by release

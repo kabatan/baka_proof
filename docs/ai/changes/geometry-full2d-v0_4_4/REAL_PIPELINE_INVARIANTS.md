@@ -53,3 +53,7 @@ Replay is allowed only if corpus hash, config hash, selected implementation hash
 ## I-011 — Report integrity invariant
 
 Release report summaries are nonempty and artifact-derived. Empty summary fields, stale reports, or open debt entries block closure.
+
+## I-012 — Old-path alias invariant
+
+Renamed, wrapped, copied, shimmed, or substantially equivalent v0.4.2/v0.4.3 release paths are old paths. They may exist only as regression fixtures that v0.4.4 checks prove fail acceptance.

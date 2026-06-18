@@ -54,6 +54,10 @@ No other report, partial acceptance, old v0.4.3 closure, or checker-specific suc
    - `ACTIVE_CONTEXT.md`
    - `CODEX_HANDOFF.md`
    - `SELF_REVIEW_LOG.md`
+   - `README.md`
+   - `FAILURE_ANALYSIS.md`
+   - `evidence/bundle_sha256sums.txt`
+   - `evidence/v0_4_4_bundle_import.md`
 3. Mark v0.4.3 and earlier v0.4.4 drafts superseded.
 4. Implement `scripts/check_active_guardian_spec_v0_4_4.py`.
 5. Initialize `docs/ai/changes/geometry-full2d-v0_4_4/debt/debt_ledger.jsonl`.
@@ -67,6 +71,8 @@ python scripts/check_active_guardian_spec_v0_4_4.py
 ### WP01 — Quarantine old release paths
 
 1. Remove v0.4.3 release commands from v0.4.4 release path.
+   - Renamed, wrapped, copied, shimmed, or substantially equivalent v0.4.3 release commands are also forbidden unless they are regression fixtures that v0.4.4 checks prove fail.
+   - The release-path checker must inspect v0.4.4 release entrypoints by path, imports, call graph / direct invocation targets, command provenance, and known old-entrypoint hashes or implementation signatures. It must not rely only on filename matching.
 2. Archive but do not use for release positives:
    - `generate_full2d_external_projection_corpus.py`
    - v0.4.3 projection corpus artifacts
@@ -100,6 +106,7 @@ Tasks:
 3. Define `SealedChallengeManifestV1` schema.
 4. Define `ReviewManifestV1` schema.
 5. Implement corpus checker.
+   - It must report and enforce every positive family floor from Base Spec section 4.2, not only global positive and negative counts.
 6. Implement goal preservation checker.
 7. Implement sealed challenge checker.
 8. Implement review manifest checker.
@@ -211,6 +218,7 @@ python scripts/check_full2d_claimspec_v0_4_4.py --run-dir runs/geometry_full2d_v
 2. Every engine emits `EngineOutputFull2D` with real execution evidence.
 3. Engine outputs contain semantic artifacts only, no Lean proof text.
 4. Engine outputs do not depend on task_id/template_id/theorem_family.
+   They also must not depend on benchmark labels, provenance, source refs, theorem names, or generator-private labels.
 5. Engine output changes or fails under relevant ClaimSpec mutation.
 6. Implement engine challenge suite.
 
@@ -240,6 +248,7 @@ python scripts/check_full2d_engine_no_proof_text_v0_4_4.py --run-dir runs/geomet
 
 1. Remove compiler paths that select proof text from target shape alone.
 2. Remove compiler access to task_id, theorem_family, grammar_family, template_id, difficulty_tier, provenance, and generator labels for proof decisions.
+   Also remove proof-decision access to theorem_name except for patch anchoring, source_ref except for artifact bookkeeping, benchmark labels, and renamed/shimmed old-path labels.
 3. Compile from normalized solver artifacts plus RuleRegistry and SideConditionCalculus.
 4. Generate `SolverCausalityReportV1`.
 5. Run mutation tests for every B2 counted final theorem.
@@ -335,12 +344,16 @@ Implement failing fixtures for:
 v0.4.2 overlay matrix
 v0.4.3 projection-only corpus
 compiler reads template_id
+compiler reads task_id
 compiler reads theorem_family
 compiler reads grammar_family
+compiler reads provenance/source_ref/generator-private labels
 compiler succeeds without selected engine artifact
 compiler succeeds after corrupted solver fact
 engine emits proof text
 engine output from task_id hash
+renamed/shimmed v0.4.3 release path accepted as v0.4.4
+stale checker, matrix, corpus, or release output accepted without current hash binding
 source theorem pre-proved
 smoke extraction reused for corpus
 open DebtLedger ignored
@@ -359,9 +372,13 @@ python scripts/check_v0_4_4_regression_failures.py
 1. Implement `scripts/check_release_acceptance_v0_4_4.py`.
 2. It must call all required checkers in Acceptance.
 3. It fails on empty summaries.
-4. It parses DebtLedger.
-5. It rejects stale v0.4.3 reports.
-6. It validates B8 applicability.
+4. It fails on synthetic or undefined `checked_rids`.
+5. It emits a nonempty `freshness_summary`.
+6. It emits a nonempty `family_floor_summary` derived from the v0.4.4 corpus checker.
+7. It either invokes required checks in the current run or verifies reused outputs by current repository tree or selected implementation hash, corpus hash, config hash, run directory hash, and checker code hash as applicable.
+8. It parses DebtLedger.
+9. It rejects stale v0.4.2/v0.4.3 reports and stale or hash-unbound v0.4.4 reports.
+10. It validates B8 applicability.
 
 Acceptance:
 
