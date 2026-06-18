@@ -195,7 +195,7 @@
   "config_hashes": {
     "configs/benchmark_runs/geometry_full2d_v0_5.yaml": "sha256:cdaa67d9da9bc0bad5cf6dc1e4390520be172fb493725321eb105ef138288370"
   },
-  "content_sha256": "sha256:903aa5fe71cf222a5df77238e42284ece63e2d75172277f31971c6b978ad736c",
+  "content_sha256": "sha256:51493a6806244bc3a0bcc6365638d64be7cac6f17f6eaeadcdef92fc78cf9b31",
   "corpus_tool_hash": "sha256:6cb32e4ae5392a6d1c429f9f3da5f5f302e53890c0a6c1868c77854447b0fb43",
   "corpus_tool_hashes": {
     "scripts/create_freeze_manifest_v0_5.py": "sha256:6ec7a132c894638bdeb89b2cafd49eaa78b162923432877aeb8dff8cffa47857",
@@ -205,7 +205,7 @@
     "scripts/import_external_goal_preserved_v0_5.py": "sha256:9ea69f4899d9250ed38b18b713d609bc3d1c5b640f136a0520e2303b2f9a3882"
   },
   "errors": [],
-  "freeze_id": "sha256:903aa5fe71cf222a5df77238e42284ece63e2d75172277f31971c6b978ad736c",
+  "freeze_id": "sha256:51493a6806244bc3a0bcc6365638d64be7cac6f17f6eaeadcdef92fc78cf9b31",
   "freeze_policy": "any later change to provider, compiler, rule registry, proof worker, final verifier, matrix runner, release checker, corpus generator, or checker code invalidates this manifest",
   "implementation_file_hashes": {
     "plugins/geometry_full2d/compiler_v0_5.py": "sha256:d21c93892e102dc23deacae5ee13ba43a60f2adcd30b4e025a5775603e4276c7",
@@ -218,7 +218,7 @@
     "scripts/geometry_full2d_v0_5_independent_checkers.py": "sha256:8232f3108feb242d12c86e9931c4a6bc61085f9861c3b0aa1c6fc8f5d1a1fd00",
     "scripts/geometry_full2d_v0_5_schemas.py": "sha256:e28ecf72240d5b4cf71321f369b4c2626bdd1e7645c474581e07379184881fce"
   },
-  "implementation_git_head": "6ce2b9056e013fdaf1b1c484e6fef105dd377a11",
+  "implementation_git_head": "45643c6520800906fcaacc872d77ed6ac4a11286",
   "schema_version": "GeometryFull2DImplementationFreezeManifestV05",
   "selected_implementation_hash": "sha256:dd115f379977b7e77ae004e19a73fb6ceef0bccbba3a36f838ef071a15e94fc6",
   "status": "passed"
