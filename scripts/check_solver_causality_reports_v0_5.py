@@ -82,7 +82,7 @@ def validate_report_payload(report: dict[str, Any], run_dir: Path, ref_index: se
     else:
         if positive.get("same_final_theorem_counted") is not True:
             errors.append("positive_control_not_reproduced")
-        errors.extend(validate_run_evidence("positive_control", positive, run_dir, ref_index))
+        errors.extend(validate_run_evidence("positive_control", positive, run_dir, ref_index, expect_success=True))
     runs = report.get("mutation_runs")
     if not isinstance(runs, list) or not runs:
         errors.append("causality_report_not_live_rerun")
@@ -101,17 +101,36 @@ def validate_report_payload(report: dict[str, Any], run_dir: Path, ref_index: se
             errors.append(f"mutation_not_fresh:{index}")
         if item.get("rerun_stage_sequence") != ["compiler", "proof_worker", "final_verify"]:
             errors.append(f"mutation_stage_sequence_invalid:{index}")
-        errors.extend(validate_run_evidence(f"mutation:{index}", item, run_dir, ref_index))
+        errors.extend(validate_run_evidence(f"mutation:{index}", item, run_dir, ref_index, expect_success=False))
     if report.get("live_rerun_status") != "fresh_temp_dirs_with_command_logs":
         errors.append("live_rerun_status_invalid")
     return errors
 
 
-def validate_run_evidence(label: str, payload: dict[str, Any], run_dir: Path, ref_index: set[str]) -> list[str]:
+def validate_run_evidence(label: str, payload: dict[str, Any], run_dir: Path, ref_index: dict[str, dict[str, Any]], *, expect_success: bool) -> list[str]:
     errors: list[str] = []
     command_ref = str(payload.get("command_log_ref", ""))
     if command_ref not in ref_index:
         errors.append(f"{label}:command_log_ref_unresolved")
+        command_log: dict[str, Any] = {}
+    else:
+        command_log = ref_index[command_ref]
+        command = command_log.get("command")
+        if not isinstance(command, list) or command[:3] != ["lake", "env", "lean"]:
+            errors.append(f"{label}:command_log_not_lake_env_lean")
+        if command_log.get("actual_subprocess_executed") is not True:
+            errors.append(f"{label}:actual_subprocess_not_recorded")
+        if command_log.get("stage_sequence") != ["compiler", "proof_worker", "final_verify"]:
+            errors.append(f"{label}:command_stage_sequence_invalid")
+        returncode = command_log.get("returncode")
+        if expect_success and returncode != 0:
+            errors.append(f"{label}:positive_control_command_failed")
+        if not expect_success and returncode == 0:
+            errors.append(f"{label}:mutation_command_unexpected_success")
+        if not isinstance(command_log.get("candidate_ref"), str) or not str(command_log.get("candidate_ref")).startswith("sha256:"):
+            errors.append(f"{label}:candidate_ref_missing")
+        if not isinstance(command_log.get("task_manifest_ref"), str) or not str(command_log.get("task_manifest_ref")).startswith("sha256:"):
+            errors.append(f"{label}:task_manifest_ref_missing")
     temp_rel = payload.get("temp_run_dir")
     if not isinstance(temp_rel, str) or not (run_dir / temp_rel).exists():
         errors.append(f"{label}:temp_run_dir_missing")
@@ -143,9 +162,14 @@ def load_reports(run_dir: Path) -> list[dict[str, Any]]:
     return reports
 
 
-def build_ref_index(run_dir: Path) -> set[str]:
-    refs: set[str] = set()
-    for item in sorted(run_dir.rglob("*.json")):
+def build_ref_index(run_dir: Path) -> dict[str, dict[str, Any]]:
+    refs: dict[str, dict[str, Any]] = {}
+    roots = [
+        run_dir / "command_logs" / "solver_causality_batch",
+        run_dir / "command_logs" / "solver_causality",
+    ]
+    files = [item for root in roots if root.exists() for item in sorted(root.glob("*.json"))]
+    for item in files:
         try:
             payload = json.loads(item.read_text(encoding="utf-8"))
         except Exception:
@@ -154,7 +178,7 @@ def build_ref_index(run_dir: Path) -> set[str]:
             for key in ["content_sha256", "command_log_id", "report_id", "certificate_id", "disabled_report_id"]:
                 value = payload.get(key)
                 if isinstance(value, str) and value.startswith("sha256:"):
-                    refs.add(value)
+                    refs[value] = payload
     return refs
 
 
@@ -180,7 +204,8 @@ def self_test_report() -> dict[str, Any]:
         expected = {"causality_report_not_live_rerun", "positive_control:command_log_ref_unresolved", "positive_control:temp_run_dir_missing"}
         if bad["status"] != "failed":
             errors.append("field_only_fixture_not_rejected")
-        if not expected.intersection(set(bad["errors"])):
+        error_text = "\n".join(map(str, bad["errors"]))
+        if not all(expected_item in error_text for expected_item in expected):
             errors.append("field_only_fixture_missing_expected_errors")
         return {
             "schema_version": "SolverCausalityReportsCheckSelfTestV05",
