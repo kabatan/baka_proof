@@ -44,7 +44,7 @@ The v0.4.5 closure is invalidated as a false-positive checker-passing scaffold. 
 Current task:
 
 ```text
-WP-10 — Provider-selector-compiler integration.
+WP-10A — Implementation freeze and counted corpus materialization.
 ```
 
 Completed preparation:
@@ -101,9 +101,15 @@ WP-09 compiler input isolation implemented:
   - compiler taint checker shows forbidden metadata-only mutations do not change proof-decision output while selected-derivation mutations do;
   - proof-from-shape compiler and rule-list artifact synthesis red cases remain rejected.
 WP-09 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp09_compiler_input_isolation_evidence.md.
+WP-10 ProofWorker and FinalVerifyGate implemented:
+  - v0.5 ProofWorker applies LeanPatchCandidateFull2D only inside the MARP proof region;
+  - source theorem proof regions must be sorry-only before patching;
+  - v0.5 FinalVerifyGate runs `lake env lean`, checks theorem statement unchanged, no sorry, no forbidden declarations, no toy target definitions, admitted imports only, and proof-use provenance;
+  - `check_proof_worker_final_verify_v0_5.py --self-test` rejects pre-proved sources, non-region patches, changed theorem statements, sorry, forbidden declarations, toy targets, and non-admitted imports.
+WP-10 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp10_proof_worker_final_verify_evidence.md.
 ```
 
-Implementation work proceeds from WP-10. No counted corpus or release completion is claimed before WP-10A and WP-14.
+Implementation work proceeds from WP-10A. No counted corpus or release completion is claimed before WP-10A and WP-14.
 
 ## Non-Negotiables
 
@@ -131,6 +137,7 @@ WP-06 provider boundary and engine-output gates have local evidence.
 WP-07 independent solver checker gates have local evidence.
 WP-08 RuleRegistry gate has local evidence.
 WP-09 compiler input isolation and taint gates have local evidence.
+WP-10 ProofWorker and FinalVerifyGate gates have local evidence.
 ```
 
 Not allowed yet:

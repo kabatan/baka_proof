@@ -29,6 +29,7 @@ Review evidence:
 - `evidence/wp07_independent_solver_checkers_evidence.md`
 - `evidence/wp08_rule_registry_evidence.md`
 - `evidence/wp09_compiler_input_isolation_evidence.md`
+- `evidence/wp10_proof_worker_final_verify_evidence.md`
 
 First checks:
 

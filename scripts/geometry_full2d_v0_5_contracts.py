@@ -586,6 +586,69 @@ def placeholder_summary(name: str) -> dict[str, Any]:
     return {"status": "failed", "summary": f"{name} not yet implemented", "placeholder": False}
 
 
+def command_passed(command_results: dict[str, Any], name: str) -> bool:
+    result = command_results.get(name)
+    return isinstance(result, dict) and result.get("returncode") == 0
+
+
+def command_report(command_results: dict[str, Any], name: str) -> dict[str, Any]:
+    result = command_results.get(name)
+    report = result.get("report") if isinstance(result, dict) else None
+    return report if isinstance(report, dict) else {}
+
+
+def compiler_isolation_summary(command_results: dict[str, Any]) -> dict[str, Any]:
+    input_report = command_report(command_results, "compiler_input_isolation")
+    taint_report = command_report(command_results, "compiler_taint")
+    passed = command_passed(command_results, "compiler_input_isolation") and command_passed(command_results, "compiler_taint")
+    return {
+        "status": "passed" if passed else "failed",
+        "input_isolation_status": input_report.get("status", "not_run"),
+        "taint_status": taint_report.get("status", "not_run"),
+        "proof_from_shape_rejected": "proof_from_shape_static_not_rejected" not in input_report.get("errors", []),
+        "forbidden_metadata_taint_checked": taint_report.get("schema_version") == "CompilerTaintCheckV05",
+    }
+
+
+def final_verify_summary(command_results: dict[str, Any]) -> dict[str, Any]:
+    report = command_report(command_results, "proof_worker_final_verify")
+    positive = report.get("positive") if isinstance(report.get("positive"), dict) else {}
+    final = positive.get("final_verify") if isinstance(positive.get("final_verify"), dict) else {}
+    passed = command_passed(command_results, "proof_worker_final_verify")
+    return {
+        "status": "passed" if passed else "failed",
+        "self_test_status": report.get("status", "not_run"),
+        "lake_env_lean_command": final.get("lake_env_lean_command", []),
+        "lake_env_lean_returncode": final.get("lake_env_lean_returncode"),
+        "theorem_statement_unchanged": final.get("theorem_statement_unchanged") is True,
+        "no_sorry": final.get("no_sorry") is True,
+        "no_forbidden_declarations": final.get("no_forbidden_declarations") is True,
+        "no_toy_target_definitions": final.get("no_toy_target_definitions") is True,
+        "admitted_imports_only": final.get("admitted_imports_only") is True,
+        "final_status_source": final.get("final_status_source"),
+    }
+
+
+def independent_checker_summary(command_results: dict[str, Any]) -> dict[str, Any]:
+    report = command_report(command_results, "independent_solver_checkers")
+    return {
+        "status": "passed" if command_passed(command_results, "independent_solver_checkers") else "failed",
+        "self_test_status": report.get("status", "not_run"),
+        "schema_version": report.get("schema_version"),
+    }
+
+
+def rule_registry_summary(command_results: dict[str, Any]) -> dict[str, Any]:
+    report = command_report(command_results, "rule_registry")
+    positive = report.get("positive") if isinstance(report.get("positive"), dict) else {}
+    return {
+        "status": "passed" if command_passed(command_results, "rule_registry") else "failed",
+        "self_test_status": report.get("status", "not_run"),
+        "counted_rule_count": positive.get("counted_rule_count", 0),
+        "counted_rule_family_count": positive.get("counted_rule_family_count", 0),
+    }
+
+
 def build_fail_closed_release_report(
     *,
     config_path: Path,
@@ -628,21 +691,11 @@ def build_fail_closed_release_report(
     if not (ROOT / "configs" / "benchmark_runs" / "geometry_full2d_v0_5.yaml").exists():
         hard_blockers.add("missing_v0_5_config")
 
-    release_blockers.update(
-        {
-            "K-010",
-            "K-011",
-            "K-012",
-            "K-018",
-            "K-019",
-            "K-021",
-            "K-022",
-            "K-024",
-            "K-025",
-            "K-032",
-            "K-033",
-        }
-    )
+    if not command_passed(command_results, "independent_solver_checkers"):
+        release_blockers.add("K-010")
+    if not command_passed(command_results, "proof_worker_final_verify"):
+        release_blockers.add("K-032")
+    release_blockers.update({"K-011", "K-012", "K-018", "K-019", "K-021", "K-022", "K-024", "K-025", "K-033"})
 
     report = {
         "schema_version": "GeometryFull2DReleaseAcceptanceV05",
@@ -656,12 +709,12 @@ def build_fail_closed_release_report(
         "extraction_summary": placeholder_summary("extraction"),
         "provider_stage_boundary_summary": placeholder_summary("provider_stage_boundary"),
         "engine_output_summary": placeholder_summary("engine_outputs"),
-        "independent_checker_summary": placeholder_summary("independent_solver_checkers"),
-        "rule_registry_summary": placeholder_summary("rule_registry"),
-        "compiler_isolation_summary": placeholder_summary("compiler_isolation"),
+        "independent_checker_summary": independent_checker_summary(command_results),
+        "rule_registry_summary": rule_registry_summary(command_results),
+        "compiler_isolation_summary": compiler_isolation_summary(command_results),
         "actual_pipeline_run_summary": {"status": "failed", "required_baselines": REQUIRED_BASELINES + [CONDITIONAL_BASELINE], "record_count": 0},
         "solver_causality_summary": {"status": "failed", "live_destructive_rerun_fraction": 0.0, "precomputed_report_fraction": 1.0},
-        "final_verify_summary": placeholder_summary("final_verify"),
+        "final_verify_summary": final_verify_summary(command_results),
         "metrics_summary": {"status": "failed", "B2_final_theorem_rate": 0.0, "B2_solver_causal_rate": 0.0},
         "used_rule_coverage_summary": {"status": "failed", "used_concrete_non_identity_rules": 0, "used_rule_families": 0},
         "engine_contribution_summary": {"status": "failed", "every_release_engine_role_contributed": False},
