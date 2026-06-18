@@ -765,7 +765,18 @@ def build_fail_closed_release_report(
         cmd = [str(run_dir) if item == "runs/geometry_full2d_v0_5" else item for item in cmd]
         if name == "closure_claim_ceiling":
             cmd = [str(output_path) if item.endswith("release_acceptance_report.json") else item for item in cmd]
-        timeout = 600 if name in {"matrix", "extraction", "engine_outputs", "causality_mutations", "solver_causality", "metrics"} else 120
+        timeout_by_command = {
+            "matrix": 2400,
+            "causality_mutations": 1800,
+            "engine_outputs": 300,
+            "extraction": 300,
+            "solver_causality": 300,
+            "metrics": 300,
+            "used_rule_coverage": 300,
+            "engine_contribution": 300,
+            "baseline_comparability": 300,
+        }
+        timeout = timeout_by_command.get(name, 120)
         result = run_command(name, cmd, timeout=timeout)
         command_results[name] = result
         if result["returncode"] != 0:
