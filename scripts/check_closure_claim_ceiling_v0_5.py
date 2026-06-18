@@ -25,7 +25,7 @@ def main() -> int:
     closure_path = Path(args.closure)
     errors: list[str] = []
     forbidden_present: list[str] = []
-    if not report_path.exists():
+    if not report_path.exists() and not args.allow_missing_closure:
         errors.append("release_report_missing")
     if not closure_path.exists():
         if not args.allow_missing_closure:

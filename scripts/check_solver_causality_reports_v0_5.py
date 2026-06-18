@@ -3,6 +3,25 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
+import tempfile
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.geometry_full2d_v0_5_schemas import validate_payload
+
+
+REQUIRED_MUTATIONS = {
+    "remove_selected_solver_artifact",
+    "corrupt_selected_fact_or_construction",
+    "corrupt_certificate_or_checker_output",
+    "unsupported_rule_mutation",
+    "side_condition_mutation",
+}
 
 
 def main() -> int:
@@ -10,17 +29,174 @@ def main() -> int:
     parser.add_argument("--run-dir", required=False)
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
+    report = self_test_report() if args.self_test else check_reports(Path(args.run_dir or "runs/geometry_full2d_v0_5"))
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0 if report["status"] == "passed" else 1
+
+
+def check_reports(run_dir: Path) -> dict[str, Any]:
+    run_dir = resolve(run_dir)
+    errors: list[str] = []
+    b2_successes = load_b2_success_records(run_dir)
+    reports = load_reports(run_dir)
+    reports_by_task = {str(report.get("task_id")): report for report in reports}
+    if len(reports_by_task) != len(reports):
+        errors.append("duplicate_or_missing_task_report")
+    missing = sorted(set(b2_successes) - set(reports_by_task))
+    errors.extend(f"missing_causality_report:{task_id}" for task_id in missing[:50])
+    ref_index = build_ref_index(run_dir)
+    passed_reports = 0
+    mutation_run_count = 0
+    for report in reports:
+        task_id = str(report.get("task_id", "missing_task"))
+        schema_errors = validate_payload(report, current_head="test-head")
+        errors.extend(f"{task_id}:{error}" for error in schema_errors)
+        report_errors = validate_report_payload(report, run_dir, ref_index)
+        errors.extend(f"{task_id}:{error}" for error in report_errors)
+        if not schema_errors and not report_errors:
+            passed_reports += 1
+        mutation_run_count += len(report.get("mutation_runs", [])) if isinstance(report.get("mutation_runs"), list) else 0
+    live_fraction = passed_reports / len(b2_successes) if b2_successes else 0.0
+    destructive_pass_rate = passed_reports / len(reports) if reports else 0.0
     report = {
         "schema_version": "SolverCausalityReportsCheckV05",
-        "status": "failed",
-        "errors": ["wp12_solver_causality_reports_pending"],
-        "run_dir": args.run_dir,
-        "self_test": args.self_test,
-        "live_destructive_rerun_fraction": 0.0,
-        "precomputed_report_fraction": 1.0,
+        "status": "passed" if not errors else "failed",
+        "errors": sorted(set(errors)),
+        "run_dir": str(run_dir),
+        "b2_success_count": len(b2_successes),
+        "report_count": len(reports),
+        "mutation_run_count": mutation_run_count,
+        "live_destructive_rerun_fraction": round(live_fraction, 6),
+        "destructive_causality_pass_rate": round(destructive_pass_rate, 6),
+        "precomputed_report_fraction": 0.0 if reports else 1.0,
     }
-    print(json.dumps(report, indent=2, sort_keys=True))
-    return 1
+    write_json(run_dir / "solver_causality_reports_check_v0_5.json", report)
+    return report
+
+
+def validate_report_payload(report: dict[str, Any], run_dir: Path, ref_index: set[str]) -> list[str]:
+    errors: list[str] = []
+    positive = report.get("positive_control")
+    if not isinstance(positive, dict):
+        errors.append("positive_control_not_object")
+    else:
+        if positive.get("same_final_theorem_counted") is not True:
+            errors.append("positive_control_not_reproduced")
+        errors.extend(validate_run_evidence("positive_control", positive, run_dir, ref_index))
+    runs = report.get("mutation_runs")
+    if not isinstance(runs, list) or not runs:
+        errors.append("causality_report_not_live_rerun")
+        runs = []
+    seen = {str(item.get("mutation")) for item in runs if isinstance(item, dict)}
+    missing = sorted(REQUIRED_MUTATIONS - seen)
+    if missing:
+        errors.append("missing_mutation_runs:" + ",".join(missing))
+    for index, item in enumerate(runs):
+        if not isinstance(item, dict):
+            errors.append(f"bad_mutation_run:{index}")
+            continue
+        if item.get("same_final_theorem_counted") is not False:
+            errors.append(f"destructive_causality_failure:{index}")
+        if item.get("fresh_temp_run") is not True:
+            errors.append(f"mutation_not_fresh:{index}")
+        if item.get("rerun_stage_sequence") != ["compiler", "proof_worker", "final_verify"]:
+            errors.append(f"mutation_stage_sequence_invalid:{index}")
+        errors.extend(validate_run_evidence(f"mutation:{index}", item, run_dir, ref_index))
+    if report.get("live_rerun_status") != "fresh_temp_dirs_with_command_logs":
+        errors.append("live_rerun_status_invalid")
+    return errors
+
+
+def validate_run_evidence(label: str, payload: dict[str, Any], run_dir: Path, ref_index: set[str]) -> list[str]:
+    errors: list[str] = []
+    command_ref = str(payload.get("command_log_ref", ""))
+    if command_ref not in ref_index:
+        errors.append(f"{label}:command_log_ref_unresolved")
+    temp_rel = payload.get("temp_run_dir")
+    if not isinstance(temp_rel, str) or not (run_dir / temp_rel).exists():
+        errors.append(f"{label}:temp_run_dir_missing")
+    if not isinstance(payload.get("temp_run_dir_hash"), str) or not str(payload.get("temp_run_dir_hash")).startswith("sha256:"):
+        errors.append(f"{label}:temp_run_dir_hash_invalid")
+    return errors
+
+
+def load_b2_success_records(run_dir: Path) -> list[str]:
+    records_dir = run_dir / "actual_task_pipeline_runs"
+    task_ids: list[str] = []
+    if records_dir.exists():
+        for item in sorted(records_dir.glob("*__B2.json")):
+            payload = json.loads(item.read_text(encoding="utf-8"))
+            if payload.get("baseline_id") == "B2" and payload.get("final_status") == "final_theorem":
+                task_ids.append(str(payload.get("task_id")))
+    return task_ids
+
+
+def load_reports(run_dir: Path) -> list[dict[str, Any]]:
+    reports_dir = run_dir / "solver_causality_reports"
+    if not reports_dir.exists():
+        return []
+    reports: list[dict[str, Any]] = []
+    for item in sorted(reports_dir.glob("*.json")):
+        payload = json.loads(item.read_text(encoding="utf-8"))
+        if isinstance(payload, dict):
+            reports.append(payload)
+    return reports
+
+
+def build_ref_index(run_dir: Path) -> set[str]:
+    refs: set[str] = set()
+    for item in sorted(run_dir.rglob("*.json")):
+        try:
+            payload = json.loads(item.read_text(encoding="utf-8"))
+        except Exception:
+            payload = None
+        if isinstance(payload, dict):
+            for key in ["content_sha256", "command_log_id", "report_id", "certificate_id", "disabled_report_id"]:
+                value = payload.get(key)
+                if isinstance(value, str) and value.startswith("sha256:"):
+                    refs.add(value)
+    return refs
+
+
+def self_test_report() -> dict[str, Any]:
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        run = root / "run"
+        (run / "actual_task_pipeline_runs").mkdir(parents=True)
+        write_json(run / "actual_task_pipeline_runs" / "task__B2.json", {"task_id": "task", "baseline_id": "B2", "final_status": "final_theorem"})
+        bad_report = {
+            "schema_version": "SolverCausalityReportV3",
+            "report_id": "sha256:" + "1" * 64,
+            "run_record_ref": "sha256:" + "2" * 64,
+            "task_id": "task",
+            "positive_control": {"same_final_theorem_counted": True},
+            "mutation_runs": [],
+            "live_rerun_status": "field_only",
+        }
+        (run / "solver_causality_reports").mkdir(parents=True)
+        write_json(run / "solver_causality_reports" / "task.json", bad_report)
+        bad = check_reports(run)
+        errors: list[str] = []
+        expected = {"causality_report_not_live_rerun", "positive_control:command_log_ref_unresolved", "positive_control:temp_run_dir_missing"}
+        if bad["status"] != "failed":
+            errors.append("field_only_fixture_not_rejected")
+        if not expected.intersection(set(bad["errors"])):
+            errors.append("field_only_fixture_missing_expected_errors")
+        return {
+            "schema_version": "SolverCausalityReportsCheckSelfTestV05",
+            "status": "passed" if not errors else "failed",
+            "errors": errors,
+            "field_only_fixture": bad,
+        }
+
+
+def write_json(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def resolve(path: Path) -> Path:
+    return path if path.is_absolute() else ROOT / path
 
 
 if __name__ == "__main__":

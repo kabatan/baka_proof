@@ -174,7 +174,12 @@ def manifest_tasks(corpus_root: Path) -> list[dict[str, Any]]:
 
 def normalized_skeleton(statement: str) -> str:
     text = re.sub(r"\btheorem\s+[A-Za-z0-9_'.-]+", "theorem _", statement)
+    text = re.sub(r"\(([A-Za-z0-9_'\s]+)\s*:\s*(Point|Line|Circle|Reflection)\)", r"(_ : \2)", text)
+    text = re.sub(r"\(([a-z][A-Za-z0-9_']*)\s*:\s*([^)]+)\)", r"(_ : \2)", text)
     text = re.sub(r"\b[A-Z][A-Za-z0-9_']*\b", "P", text)
+    text = re.sub(r"\b[LM]\b", "P", text)
+    text = re.sub(r"\b[lc]\b", "O", text)
+    text = re.sub(r"\br\b", "R", text)
     text = re.sub(r"\s+", " ", text)
     return text.strip()
 
@@ -412,28 +417,80 @@ def import_goal_preserved(registry: Path, corpus_root: Path) -> dict[str, Any]:
     }
 
 
-def holdout_goal(index: int) -> str:
-    shape = GOAL_SHAPES[index % len(GOAL_SHAPES)]
-    relations = [RELATION_FAMILIES[(index + offset * 3) % len(RELATION_FAMILIES)] for offset in range(4)]
-    names = [chr(ord("A") + ((index + offset * 2) % 26)) for offset in range(12)]
-    return shape.format(
-        r1=relations[0],
-        r2=relations[1],
-        r3=relations[2],
-        r4=relations[3],
-        a=names[0],
-        b=names[1],
-        c=names[2],
-        d=names[3],
-        e=names[4],
-        f=names[5],
-        g=names[6],
-        h=names[7],
-        i=names[8],
-        j=names[9],
-        k=names[10],
-        l=names[11],
-    )
+LEAN_IMPORTS = [
+    "MathAutoResearch.GeometryFull2D.Inequality",
+]
+
+COMMON_BINDERS = "(A B C D E F G H I M O P : Point) (l m : Line) (c : Circle) (r : Reflection)"
+
+GOAL_SCHEMES: list[dict[str, Any]] = [
+    {"id": "incidence_reflexive", "families": ["collinear"], "assumptions": [], "target": "collinear A A B"},
+    {"id": "order_between_collinear", "families": ["between", "collinear"], "assumptions": [("h0", "between A B C")], "target": "collinear A B C"},
+    {"id": "construction_midpoint_collinear", "families": ["midpoint", "collinear"], "assumptions": [("h0", "midpoint A M B")], "target": "collinear A M B"},
+    {"id": "metric_equal_length_reflexive", "families": ["equal_length"], "assumptions": [], "target": "equal_length A B A B"},
+    {"id": "metric_equal_length_symmetric", "families": ["equal_length"], "assumptions": [("h0", "equal_length C D A B")], "target": "equal_length A B C D"},
+    {"id": "inequality_length_reflexive", "families": ["length_le"], "assumptions": [], "target": "length_le A B A B"},
+    {"id": "inequality_length_transitive", "families": ["length_le"], "assumptions": [("h0", "length_le A B C D"), ("h1", "length_le C D E F")], "target": "length_le A B E F"},
+    {"id": "angle_directed_symmetric", "families": ["angle_eq"], "assumptions": [("h0", "directed_angle_eq_mod_pi D E F A B C")], "target": "directed_angle_eq_mod_pi A B C D E F"},
+    {"id": "angle_directed_reflexive", "families": ["angle_eq"], "assumptions": [], "target": "directed_angle_eq_mod_pi A B C A B C"},
+    {"id": "transformation_reflection", "families": ["reflection_image"], "assumptions": [], "target": "reflection_image r"},
+    {"id": "circle_chord_symmetric", "families": ["chord"], "assumptions": [("h0", "chord A B c")], "target": "chord B A c"},
+    {"id": "triangle_equilateral_metric", "families": ["triangle", "equal_length"], "assumptions": [("h0", "equilateral A B C")], "target": "equal_length A B B C"},
+    {"id": "construction_circle_point", "families": ["circle", "construction"], "assumptions": [("h0", "circle_with_center_through_point O P c")], "target": "constructed_circle_point O P c"},
+    {"id": "construction_line_circle_point", "families": ["circle", "construction"], "assumptions": [("h0", "line_circle_intersection P l c")], "target": "constructed_line_circle_point P l c"},
+    {"id": "transformation_rotation_collinear", "families": ["rotation", "collinear"], "assumptions": [], "target": "rotation_preserves_collinear A B C A B C"},
+]
+
+NOISE_ASSUMPTIONS: list[tuple[str, str, str]] = [
+    ("u0", "on_line D l", "on_line"),
+    ("u1", "equal_length G H I M", "equal_length"),
+    ("u2", "length_le A C D F", "length_le"),
+    ("u3", "directed_angle_eq_mod_pi A B C D E F", "angle_eq"),
+    ("u4", "chord D E c", "chord"),
+    ("u5", "midpoint G M H", "midpoint"),
+    ("u6", "same_side A B l", "same_side"),
+    ("u7", "collinear C E G", "collinear"),
+    ("u8", "circle_with_center_through_point O P c", "circle"),
+    ("u9", "reflection_image r", "reflection_image"),
+]
+
+
+def holdout_theorem(index: int, marker: int) -> dict[str, Any]:
+    variant = index % (len(GOAL_SCHEMES) * len(NOISE_ASSUMPTIONS))
+    scheme = GOAL_SCHEMES[variant % len(GOAL_SCHEMES)]
+    noise_count = variant // len(GOAL_SCHEMES)
+    assumptions = list(scheme["assumptions"]) + [(name, expr) for name, expr, _family in NOISE_ASSUMPTIONS[:noise_count]]
+    theorem_name = f"sealed_{index}_{marker}"
+    assumption_text = " ".join(f"({name} : {expr})" for name, expr in assumptions)
+    header = f"theorem {theorem_name} {COMMON_BINDERS}"
+    if assumption_text:
+        header += " " + assumption_text
+    header += f" : {scheme['target']}"
+    statement = f"{header} := by sorry"
+    families = list(dict.fromkeys(list(scheme["families"]) + [family for _name, _expr, family in NOISE_ASSUMPTIONS[:noise_count]]))
+    return {
+        "theorem_name": theorem_name,
+        "header": header,
+        "statement": statement,
+        "families": families,
+        "scheme_id": scheme["id"],
+        "noise_count": noise_count,
+    }
+
+
+def render_holdout_lean(theorems: list[dict[str, Any]]) -> str:
+    lines: list[str] = [f"import {module}" for module in LEAN_IMPORTS]
+    lines.extend(["", "namespace MathAutoResearch.GeometryFull2D", ""])
+    for item in theorems:
+        theorem_name = str(item["theorem_name"])
+        lines.append(str(item["header"]) + " := by")
+        lines.append(f"  -- MARP_PROOF_REGION_START:{theorem_name}")
+        lines.append("  sorry")
+        lines.append(f"  -- MARP_PROOF_REGION_END:{theorem_name}")
+        lines.append("")
+    lines.append("end MathAutoResearch.GeometryFull2D")
+    lines.append("")
+    return "\n".join(lines)
 
 
 def generate_sealed_holdout(
@@ -452,23 +509,25 @@ def generate_sealed_holdout(
         return {"schema_version": "SealedAdversarialHoldoutGenerationV05", "status": "failed", "errors": freeze_errors}
     rng = random.Random(seed)
     tasks: list[dict[str, Any]] = []
+    lean_theorems: list[dict[str, Any]] = []
     challenge_manifest_hash = sha256_text(f"{seed}:{count}:{negative_count}:sealed_adversarial_holdout_v0_5")
     freeze_hash = sha256_text(freeze_manifest.read_text(encoding="utf-8")) if freeze_manifest and freeze_manifest.exists() else None
     for index in range(count):
         marker = rng.randint(1000, 9999)
-        goal = holdout_goal(index)
-        statement = f"theorem sealed_{index}_{marker} : {goal} := by sorry"
-        relation = RELATION_FAMILIES[index % len(RELATION_FAMILIES)]
+        theorem = holdout_theorem(index, marker)
+        lean_theorems.append(theorem)
         tasks.append(
             {
                 "task_id": f"sealed_holdout_{index:04d}",
                 "source_type": "SealedAdversarialHoldout" if counted else "SealedAdversarialHoldoutPreview",
                 "counted_positive": counted,
-                "formal_statement": statement,
-                "normalized_skeleton": normalized_skeleton(statement),
-                "relation_families": [relation],
-                "requires_construction_case_certificate": index % 3 == 0,
-                "requires_non_target_intermediate": index % 2 == 0,
+                "formal_statement": theorem["statement"],
+                "lean_file": "lean/SealedAdversarialHoldout.lean",
+                "theorem_name": theorem["theorem_name"],
+                "normalized_skeleton": normalized_skeleton(theorem["statement"]),
+                "relation_families": theorem["families"],
+                "requires_construction_case_certificate": theorem["noise_count"] >= 3 or any(family in theorem["families"] for family in ["construction", "circle", "midpoint", "reflection_image", "rotation"]),
+                "requires_non_target_intermediate": theorem["noise_count"] > 0 or len(theorem["families"]) > 1,
                 "metadata": {
                     "seed": seed,
                     "generator_hash": generator_source_hash(),
@@ -478,6 +537,9 @@ def generate_sealed_holdout(
                 },
             }
         )
+    lean_dir = output_root / "lean"
+    lean_dir.mkdir(parents=True, exist_ok=True)
+    (lean_dir / "SealedAdversarialHoldout.lean").write_text(render_holdout_lean(lean_theorems), encoding="utf-8")
     for index in range(negative_count):
         goal = f"malformed_outside_relation_{index % 37} X{index} Y{index}"
         statement = f"theorem negative_target_outside_{index:04d} : {goal} := by sorry"

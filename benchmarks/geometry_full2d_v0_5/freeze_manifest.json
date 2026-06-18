@@ -152,8 +152,7 @@
         "C:\\Users\\bakat\\miniforge3\\python.exe",
         "scripts/check_solver_causality_reports_v0_5.py",
         "--run-dir",
-        "runs/geometry_full2d_v0_5",
-        "--self-test"
+        "runs/geometry_full2d_v0_5"
       ],
       "used_rule_coverage": [
         "C:\\Users\\bakat\\miniforge3\\python.exe",
@@ -166,19 +165,19 @@
   "checker_file_hashes": {
     "scripts/check_acceptance_coverage_v0_5.py": "sha256:f14a9721f6b1a6074b23c654f833e6b911411a28c634b2f11d1e5c7a77b6977c",
     "scripts/check_active_guardian_spec_v0_5.py": "sha256:f9244d4eebba2835f6623da8343d823b63084897e58ee9ece28b149ede305a61",
-    "scripts/check_closure_claim_ceiling_v0_5.py": "sha256:fc589b6bcafab25fa6f5916eb2a1768e3d272163d49abfb3e7aafad24714eac0",
+    "scripts/check_closure_claim_ceiling_v0_5.py": "sha256:55b957bda5639649f6bb0f76aa5d83ebb061e866a7cab2aaaf01483fe5ea9e91",
     "scripts/check_compiler_input_isolation_v0_5.py": "sha256:27dd57af5c3b77e73bdc6dcf0841665b1100ec8443e30a11ff859ec8422d38ec",
     "scripts/check_compiler_taint_v0_5.py": "sha256:7974466f21e1e83e17390b2ba63edc444a2d00e9c80523b9c256a40046b817bf",
     "scripts/check_corpus_independence_v0_5.py": "sha256:acff80b4fcfa4c3f2da29a0e535fc3167f78188f9ac1a471ecf81af2ff915009",
     "scripts/check_corpus_statement_diversity_v0_5.py": "sha256:521976ec79f43ae107734fdc761f2d3947717e0bb877fa5a5833fad7a6e124e6",
     "scripts/check_debt_ledger_v0_5.py": "sha256:263b50e6e81713a1bfbfb7c3482c0658132fd22974512366ed87c6e49f730894",
     "scripts/check_engine_outputs_v0_5.py": "sha256:f92b816580cb6c24f642ba21e925b826eca1a01569ecb8e2dd5b636b7bc80770",
-    "scripts/check_full2d_baseline_comparability_v0_5.py": "sha256:164dc808f88d6634137119151c55919a44daece55710505780d365881d852643",
-    "scripts/check_full2d_engine_contribution_v0_5.py": "sha256:bb2a4ff934972d19a2fc077851c0a05e9f7fe3fa62d763e3df458fb3fa220394",
+    "scripts/check_full2d_baseline_comparability_v0_5.py": "sha256:97ce3d234a0b3bcdedcd40c2c96f1b30be973dfedb13982e00703f1df2c55b33",
+    "scripts/check_full2d_engine_contribution_v0_5.py": "sha256:5b3da733153729745918ed916e9f3ac867dac5b5ed554f7b57f904968f6e25b5",
     "scripts/check_full2d_extraction_corpus_v0_5.py": "sha256:0104016137fcbfeae05932d9b7b2bdbc1d74c48fb43400f673bab2a615e16711",
-    "scripts/check_full2d_metrics_v0_5.py": "sha256:cf9e2e914d277e6c3263bce399ad35f420298bc35f929509983643948f244e92",
+    "scripts/check_full2d_metrics_v0_5.py": "sha256:9c2a90af4730d450229eb2e252d8bf16a34237ac3ebd9bfcffc8bfdde2e07b60",
     "scripts/check_full2d_rule_registry_v0_5.py": "sha256:062d56e1c99aa4d85b5cbf5a44d870360221ed2ac06df3bc8bde64a12bedfea4",
-    "scripts/check_full2d_used_rule_coverage_v0_5.py": "sha256:f1dc1b75a501640b2ed6a7260da0d8b9357295b8e9cd67e481400f870fc740cc",
+    "scripts/check_full2d_used_rule_coverage_v0_5.py": "sha256:352ecea64413955269a594f2ceb16649b06c49725d682253d7afe9ac369c5c81",
     "scripts/check_goal_preservation_reports_v0_5.py": "sha256:6a42fde456161baa480581b7431bf7b0c9bf2f902f676a7a0b1b1686d42116e6",
     "scripts/check_independent_solver_checkers_v0_5.py": "sha256:e31d43b71fe43e25b86a8ceb167dee9e407f25028a96a2b9221f25aefbb0a97d",
     "scripts/check_no_checker_whitelist_v0_5.py": "sha256:540bf966ec92c97a551837bd4809cd5cd7935a2e1c27dccb6820ce80598b7969",
@@ -186,27 +185,27 @@
     "scripts/check_provider_stage_boundary_v0_5.py": "sha256:3f673d3bcacb9f3892a7600d10b1d6e65afc2900b56329dfc9d9d988ea2ae74b",
     "scripts/check_release_acceptance_v0_5.py": "sha256:9d45ede3105b080d91748060e02371391417c1406a966ae1a1195c177f529061",
     "scripts/check_schema_validators_v0_5.py": "sha256:6d61353ca0900741ac3a9e4d0724cae958a2976ee62d9fd87669de319d7898d1",
-    "scripts/check_solver_causality_reports_v0_5.py": "sha256:6c3184839dbc16d0b23eeaac5aa36b588cf456ccdf6b24acac9988c0616cdc4c",
-    "scripts/run_full2d_matrix_v0_5.py": "sha256:fb32392d63300f6911ccca4c98e22d30282da0f707ef724034596198c4955eb1",
+    "scripts/check_solver_causality_reports_v0_5.py": "sha256:11a9d90272a7f792cc339c49cc6eb7ba06491f0f3a06767063064fd5b9bd381b",
+    "scripts/run_full2d_matrix_v0_5.py": "sha256:6064eb221a62156b1b7e1e5a753ab9701f4f57b3b1be1236f680c5ba315c7cc3",
     "scripts/run_red_cases_v0_5.py": "sha256:26f62f4d7f71a7ad45aae6357cc37a82be30a8c2161de6b50248dea0fcad0c77",
-    "scripts/run_solver_causality_mutations_v0_5.py": "sha256:e98ca5d498537dae30baedfc529c3350e97c5e9add0b07125fc99b1c99f5e0de"
+    "scripts/run_solver_causality_mutations_v0_5.py": "sha256:c3460ded268415a0e7b9f540e7d69f0bef8e5e98d3eba300aa8bca367a39fa91"
   },
-  "checker_hashes": "sha256:df3712bd8bca8610f2ae5a6e0f6f102ca12f5607e1e79dafe0288ad848b44e7a",
-  "config_hash": "sha256:69536ec79ae476bb307d974799509ca0389f3b46a1a813ac95bee854afadd79d",
+  "checker_hashes": "sha256:b81ae80415772d1dfe63b99d873bbb34f9372e1b1ab30be0218a06305c6c4653",
+  "config_hash": "sha256:649a03cf4c67ec17b2bcc1e66ff63958678f352fe90c019a10a438315206b40f",
   "config_hashes": {
-    "configs/benchmark_runs/geometry_full2d_v0_5.yaml": "sha256:f4b9b2f2075b74c663bce0845d0214454b5c1bdbf0ec215f2b95bda5f81baa4f"
+    "configs/benchmark_runs/geometry_full2d_v0_5.yaml": "sha256:cdaa67d9da9bc0bad5cf6dc1e4390520be172fb493725321eb105ef138288370"
   },
-  "content_sha256": "sha256:43bcb43a050b9a66085baaa3a699acf0b7b0ad36da988bfb12502034c6da7a12",
-  "corpus_tool_hash": "sha256:941b9b38d876eb39dfdd7df0f5e850843a9f0eb9854606dbf3948c609447006e",
+  "content_sha256": "sha256:02be2e6089a0d928611200200f7983b0f0432b1fdc2f6277b0fce5efc14189aa",
+  "corpus_tool_hash": "sha256:6cb32e4ae5392a6d1c429f9f3da5f5f302e53890c0a6c1868c77854447b0fb43",
   "corpus_tool_hashes": {
     "scripts/create_freeze_manifest_v0_5.py": "sha256:6ec7a132c894638bdeb89b2cafd49eaa78b162923432877aeb8dff8cffa47857",
     "scripts/discover_external_goal_sources_v0_5.py": "sha256:0b96a72bc532b94a9b1631e9ac6252dfa54efa11b75e82dd81333b8f93f30aad",
     "scripts/generate_sealed_adversarial_holdout_v0_5.py": "sha256:c75a28e00b27d415457a3f828a3e89b9f64e0d1fad58b548dc169eccec4828cb",
-    "scripts/geometry_full2d_v0_5_corpus.py": "sha256:9fe24c802e04f31b1b88b13ec9237a45a1a72677a27f954b9078c34d676e2749",
+    "scripts/geometry_full2d_v0_5_corpus.py": "sha256:9a40bdb383bfcf2fbb61146ab3846b0dfbce24797690a85702bd9b1f977f5980",
     "scripts/import_external_goal_preserved_v0_5.py": "sha256:9ea69f4899d9250ed38b18b713d609bc3d1c5b640f136a0520e2303b2f9a3882"
   },
   "errors": [],
-  "freeze_id": "sha256:43bcb43a050b9a66085baaa3a699acf0b7b0ad36da988bfb12502034c6da7a12",
+  "freeze_id": "sha256:02be2e6089a0d928611200200f7983b0f0432b1fdc2f6277b0fce5efc14189aa",
   "freeze_policy": "any later change to provider, compiler, rule registry, proof worker, final verifier, matrix runner, release checker, corpus generator, or checker code invalidates this manifest",
   "implementation_file_hashes": {
     "plugins/geometry_full2d/compiler_v0_5.py": "sha256:254f2b3720ff6b1a5daf1937bfb2ddbdebd14e5084977fbb7accb1a16f32c862",
@@ -219,7 +218,7 @@
     "scripts/geometry_full2d_v0_5_independent_checkers.py": "sha256:8232f3108feb242d12c86e9931c4a6bc61085f9861c3b0aa1c6fc8f5d1a1fd00",
     "scripts/geometry_full2d_v0_5_schemas.py": "sha256:e28ecf72240d5b4cf71321f369b4c2626bdd1e7645c474581e07379184881fce"
   },
-  "implementation_git_head": "db3d093117b413877b91cb804b2a3874a3d4352d",
+  "implementation_git_head": "0e478988d915dec1fc0e09f607217953c9ae953b",
   "schema_version": "GeometryFull2DImplementationFreezeManifestV05",
   "selected_implementation_hash": "sha256:d030e5ae70eb630b5c7690fe615bf5707f3bbdd35610fb535881dd82b14f12ce",
   "status": "passed"

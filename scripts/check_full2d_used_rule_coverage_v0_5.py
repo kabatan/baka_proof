@@ -3,22 +3,77 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--run-dir", required=False)
+    parser.add_argument("--run-dir", required=True)
     args = parser.parse_args()
+    report = check_used_rule_coverage(Path(args.run_dir))
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0 if report["status"] == "passed" else 1
+
+
+def check_used_rule_coverage(run_dir: Path) -> dict[str, Any]:
+    run_dir = resolve(run_dir)
+    records = [
+        record
+        for record in load_records(run_dir)
+        if record.get("baseline_id") == "B2" and record.get("final_status") == "final_theorem"
+    ]
+    used_rules: set[str] = set()
+    used_families: set[str] = set()
+    errors: list[str] = []
+    for record in records:
+        for rule_id in record.get("used_rule_ids", []):
+            rule_text = str(rule_id)
+            used_rules.add(rule_text)
+            parts = rule_text.split(":")
+            if len(parts) >= 3:
+                used_families.add(parts[1])
+            if "helper" in rule_text or "identity" in rule_text or "facade" in rule_text:
+                errors.append(f"noncounted_helper_rule_used:{rule_text}")
+    if len(used_rules) < 25:
+        errors.append("used_concrete_non_identity_rules_lt_25")
+    if len(used_families) < 10:
+        errors.append("used_rule_families_lt_10")
     report = {
         "schema_version": "Full2DUsedRuleCoverageCheckV05",
-        "status": "failed",
-        "errors": ["wp13_used_rule_coverage_pending"],
-        "run_dir": args.run_dir,
-        "used_concrete_non_identity_rules": 0,
-        "used_rule_families": 0,
+        "status": "passed" if not errors else "failed",
+        "errors": sorted(set(errors)),
+        "run_dir": str(run_dir),
+        "B2_final_theorem_records": len(records),
+        "used_concrete_non_identity_rules": len(used_rules),
+        "used_rule_families": len(used_families),
+        "sample_used_rules": sorted(used_rules)[:40],
+        "sample_used_rule_families": sorted(used_families)[:20],
     }
-    print(json.dumps(report, indent=2, sort_keys=True))
-    return 1
+    write_json(run_dir / "full2d_used_rule_coverage_v0_5.json", report)
+    return report
+
+
+def load_records(run_dir: Path) -> list[dict[str, Any]]:
+    records_dir = run_dir / "actual_task_pipeline_runs"
+    records: list[dict[str, Any]] = []
+    if records_dir.exists():
+        for item in sorted(records_dir.glob("*.json")):
+            payload = json.loads(item.read_text(encoding="utf-8"))
+            if isinstance(payload, dict):
+                records.append(payload)
+    return records
+
+
+def write_json(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def resolve(path: Path) -> Path:
+    return path if path.is_absolute() else ROOT / path
 
 
 if __name__ == "__main__":

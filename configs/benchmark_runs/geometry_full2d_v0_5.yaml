@@ -9,5 +9,19 @@
     "resolution": "B8_NOT_APPLICABLE",
     "reason": "model/provider baseline is not configured for this local v0.5 release track"
   },
-  "required_baselines": ["B1", "B2", "B5", "B6", "B7"]
+  "required_baselines": ["B1", "B2", "B5", "B6", "B7"],
+  "baseline_disabled_components": {
+    "B1": ["geometry_solver_provider"],
+    "B2": [],
+    "B5": ["construction_search"],
+    "B6": ["algebraic_geometry", "metric_angle", "inequality"],
+    "B7": ["order_case"]
+  },
+  "baseline_success_policy": {
+    "B2": "full_solver_backed_pipeline",
+    "B1": "measured_failure_after_declared_ablation",
+    "B5": "measured_failure_after_declared_ablation",
+    "B6": "measured_failure_after_declared_ablation",
+    "B7": "measured_failure_after_declared_ablation"
+  }
 }

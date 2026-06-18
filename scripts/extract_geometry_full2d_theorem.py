@@ -33,6 +33,8 @@ _LEAN_EXTRACTOR_CACHE: dict[tuple[str, str, str], dict[str, Any]] = {}
 _EXTRACTION_OLEAN_READY = False
 _EXTRACTION_METHOD = "lean_elaborator_structured_theorem"
 _EXTRACTION_MARKER = "FULL2D_EXTRACTION_JSON:"
+_EXTRACTION_IMPORT = "import MathAutoResearch.GeometryFull2D.Extraction"
+_DEFAULT_THEOREM_NAMESPACE = "MathAutoResearch.GeometryFull2D"
 
 
 def main() -> int:
@@ -212,11 +214,11 @@ def _run_lean_semantic_extractor(lean_file: Path, theorem_name: str, theorem_hea
     source = lean_file.read_text(encoding="utf-8")
     command = [_lean(), "--stdin", "--json"]
     extractor_source = (
-        source.rstrip()
+        _lean_source_with_extraction_import(source).rstrip()
         + "\n\n"
         + "open MathAutoResearch.GeometryFull2D\n"
         + "open MathAutoResearch.GeometryFull2D.Extraction\n"
-        + f"#full2d_extract {theorem_name}\n"
+        + f"#full2d_extract {_qualified_theorem_name(theorem_name)}\n"
     )
     completed = subprocess.run(
         command,
@@ -245,6 +247,16 @@ def _run_lean_semantic_extractor(lean_file: Path, theorem_name: str, theorem_hea
         _write_lean_extraction_cache(disk_cache_path, theorem_name, theorem_header_hash, structured_output or {})
     _LEAN_EXTRACTOR_CACHE[cache_key] = dict(report)
     return report
+
+
+def _lean_source_with_extraction_import(source: str) -> str:
+    if _EXTRACTION_IMPORT in source:
+        return source
+    return _EXTRACTION_IMPORT + "\n" + source
+
+
+def _qualified_theorem_name(theorem_name: str) -> str:
+    return theorem_name if "." in theorem_name else f"{_DEFAULT_THEOREM_NAMESPACE}.{theorem_name}"
 
 
 def _ensure_extraction_olean() -> None:

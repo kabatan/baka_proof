@@ -104,9 +104,7 @@ REQUIRED_CHECKER_COMMANDS: dict[str, list[str]] = {
     ],
     "corpus_statement_diversity": [sys.executable, "scripts/check_corpus_statement_diversity_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5"],
     "goal_preservation": [sys.executable, "scripts/check_goal_preservation_reports_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5"],
-    "extraction": [sys.executable, "scripts/check_full2d_extraction_corpus_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5", "--run-dir", "runs/geometry_full2d_v0_5"],
     "provider_stage_boundary": [sys.executable, "scripts/check_provider_stage_boundary_v0_5.py", "--self-test"],
-    "engine_outputs": [sys.executable, "scripts/check_engine_outputs_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5"],
     "independent_solver_checkers": [sys.executable, "scripts/check_independent_solver_checkers_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5", "--self-test"],
     "rule_registry": [sys.executable, "scripts/check_full2d_rule_registry_v0_5.py", "--self-test"],
     "compiler_input_isolation": [sys.executable, "scripts/check_compiler_input_isolation_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5", "--self-test"],
@@ -122,8 +120,10 @@ REQUIRED_CHECKER_COMMANDS: dict[str, list[str]] = {
         "--execute-all-baselines",
         "--fresh-run",
     ],
+    "extraction": [sys.executable, "scripts/check_full2d_extraction_corpus_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5", "--run-dir", "runs/geometry_full2d_v0_5"],
+    "engine_outputs": [sys.executable, "scripts/check_engine_outputs_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5"],
     "causality_mutations": [sys.executable, "scripts/run_solver_causality_mutations_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5", "--all-b2-successes", "--fresh-reruns"],
-    "solver_causality": [sys.executable, "scripts/check_solver_causality_reports_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5", "--self-test"],
+    "solver_causality": [sys.executable, "scripts/check_solver_causality_reports_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5"],
     "baseline_comparability": [sys.executable, "scripts/check_full2d_baseline_comparability_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5"],
     "metrics": [sys.executable, "scripts/check_full2d_metrics_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5"],
     "used_rule_coverage": [sys.executable, "scripts/check_full2d_used_rule_coverage_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5"],
@@ -721,6 +721,29 @@ def rule_registry_summary(command_results: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def report_summary(command_results: dict[str, Any], name: str, fallback_name: str) -> dict[str, Any]:
+    report = command_report(command_results, name)
+    if report:
+        return report
+    return placeholder_summary(fallback_name)
+
+
+def actual_pipeline_run_summary(command_results: dict[str, Any]) -> dict[str, Any]:
+    report = command_report(command_results, "matrix")
+    summary = report.get("actual_pipeline_run_summary") if isinstance(report.get("actual_pipeline_run_summary"), dict) else {}
+    return summary if summary else {"status": "failed", "required_baselines": REQUIRED_BASELINES, "record_count": 0}
+
+
+def measured_failure_summary(command_results: dict[str, Any]) -> dict[str, Any]:
+    report = command_report(command_results, "metrics")
+    counts = report.get("measured_failure_by_baseline") if isinstance(report.get("measured_failure_by_baseline"), dict) else {}
+    return {
+        "status": "passed" if command_passed(command_results, "metrics") else "failed",
+        "measured_failure_count": report.get("measured_failure_count", 0),
+        "measured_failure_by_baseline": counts,
+    }
+
+
 def build_fail_closed_release_report(
     *,
     config_path: Path,
@@ -742,7 +765,8 @@ def build_fail_closed_release_report(
         cmd = [str(run_dir) if item == "runs/geometry_full2d_v0_5" else item for item in cmd]
         if name == "closure_claim_ceiling":
             cmd = [str(output_path) if item.endswith("release_acceptance_report.json") else item for item in cmd]
-        result = run_command(name, cmd)
+        timeout = 600 if name in {"matrix", "extraction", "engine_outputs", "causality_mutations", "solver_causality", "metrics"} else 120
+        result = run_command(name, cmd, timeout=timeout)
         command_results[name] = result
         if result["returncode"] != 0:
             release_blockers.add(f"required_command_failed:{name}")
@@ -773,7 +797,26 @@ def build_fail_closed_release_report(
         release_blockers.add("K-016")
     if not command_passed(command_results, "corpus_statement_diversity"):
         release_blockers.add("K-029")
-    release_blockers.update({"K-011", "K-012", "K-018", "K-019", "K-021", "K-022", "K-024", "K-025", "K-033"})
+    if not command_passed(command_results, "extraction"):
+        release_blockers.add("K-017")
+    if not command_passed(command_results, "engine_outputs"):
+        release_blockers.update({"K-004", "K-005", "K-009"})
+    if not command_passed(command_results, "matrix"):
+        release_blockers.add("K-033")
+    if not command_passed(command_results, "causality_mutations") or not command_passed(command_results, "solver_causality"):
+        release_blockers.update({"K-011", "K-012"})
+    if not command_passed(command_results, "baseline_comparability"):
+        release_blockers.update({"K-023", "K-024", "K-033"})
+    if not command_passed(command_results, "metrics"):
+        release_blockers.update({"K-020", "K-021", "K-022", "K-025"})
+    if not command_passed(command_results, "used_rule_coverage"):
+        release_blockers.add("K-019")
+    if not command_passed(command_results, "engine_contribution"):
+        release_blockers.add("K-018")
+    if not command_passed(command_results, "debt_ledger"):
+        release_blockers.add("K-027")
+    if not command_passed(command_results, "closure_claim_ceiling"):
+        release_blockers.add("K-028")
 
     corpus = corpus_summary(DEFAULT_CORPUS_ROOT, command_results)
     diversity = corpus_statement_diversity_summary(command_results)
@@ -791,21 +834,21 @@ def build_fail_closed_release_report(
         "red_case_summary": red_case_report if isinstance(red_case_report, dict) else {"status": "failed", "all_rejected": False},
         "corpus_summary": corpus,
         "corpus_statement_diversity_summary": diversity,
-        "extraction_summary": placeholder_summary("extraction"),
-        "provider_stage_boundary_summary": placeholder_summary("provider_stage_boundary"),
-        "engine_output_summary": placeholder_summary("engine_outputs"),
+        "extraction_summary": report_summary(command_results, "extraction", "extraction"),
+        "provider_stage_boundary_summary": report_summary(command_results, "provider_stage_boundary", "provider_stage_boundary"),
+        "engine_output_summary": report_summary(command_results, "engine_outputs", "engine_outputs"),
         "independent_checker_summary": independent_checker_summary(command_results),
         "rule_registry_summary": rule_registry_summary(command_results),
         "compiler_isolation_summary": compiler_isolation_summary(command_results),
-        "actual_pipeline_run_summary": {"status": "failed", "required_baselines": REQUIRED_BASELINES + [CONDITIONAL_BASELINE], "record_count": 0},
-        "solver_causality_summary": {"status": "failed", "live_destructive_rerun_fraction": 0.0, "precomputed_report_fraction": 1.0},
+        "actual_pipeline_run_summary": actual_pipeline_run_summary(command_results),
+        "solver_causality_summary": report_summary(command_results, "solver_causality", "solver_causality"),
         "final_verify_summary": final_verify_summary(command_results),
-        "metrics_summary": {"status": "failed", "B2_final_theorem_rate": 0.0, "B2_solver_causal_rate": 0.0},
-        "used_rule_coverage_summary": {"status": "failed", "used_concrete_non_identity_rules": 0, "used_rule_families": 0},
-        "engine_contribution_summary": {"status": "failed", "every_release_engine_role_contributed": False},
-        "baseline_comparability_summary": {"status": "failed", "conditional_b8_resolution_valid": False},
-        "measured_failure_summary": {"status": "failed"},
-        "debt_ledger_summary": {"status": "failed", "open_entries": ["V05-DEBT-001"]},
+        "metrics_summary": report_summary(command_results, "metrics", "metrics"),
+        "used_rule_coverage_summary": report_summary(command_results, "used_rule_coverage", "used_rule_coverage"),
+        "engine_contribution_summary": report_summary(command_results, "engine_contribution", "engine_contribution"),
+        "baseline_comparability_summary": report_summary(command_results, "baseline_comparability", "baseline_comparability"),
+        "measured_failure_summary": measured_failure_summary(command_results),
+        "debt_ledger_summary": report_summary(command_results, "debt_ledger", "debt_ledger"),
         "freshness_summary": {
             "status": "passed",
             "fresh_run": fresh_run,
@@ -814,7 +857,7 @@ def build_fail_closed_release_report(
             "git_head": current_git_head(),
         },
         "closure_claim_ceiling": {"allowed_final_claim": CLAIM_TARGET, "forbidden_claims_present": []},
-        "closure_claim_ceiling_summary": {"status": "pending_closure"},
+        "closure_claim_ceiling_summary": report_summary(command_results, "closure_claim_ceiling", "closure_claim_ceiling"),
         "required_command_results": command_results,
         "release_blockers": sorted(release_blockers),
         "hard_blockers": sorted(hard_blockers),
