@@ -21,6 +21,7 @@ Review evidence:
 
 - `evidence/v0_5_bundle_import.md`
 - `evidence/v0_5_post_admission_review_loop.md`
+- `evidence/wp01_wp02_redcase_acceptance_harness.md`
 
 First checks:
 

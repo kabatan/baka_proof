@@ -1,0 +1,2176 @@
+{
+  "actual_pipeline_run_summary": {
+    "record_count": 0,
+    "required_baselines": [
+      "B1",
+      "B2",
+      "B5",
+      "B6",
+      "B7",
+      "B8"
+    ],
+    "status": "failed"
+  },
+  "baseline_comparability_summary": {
+    "conditional_b8_resolution_valid": false,
+    "status": "failed"
+  },
+  "checked_requirements": [
+    "K-001",
+    "K-002",
+    "K-003",
+    "K-004",
+    "K-005",
+    "K-006",
+    "K-007",
+    "K-008",
+    "K-009",
+    "K-010",
+    "K-011",
+    "K-012",
+    "K-013",
+    "K-014",
+    "K-015",
+    "K-016",
+    "K-017",
+    "K-018",
+    "K-019",
+    "K-020",
+    "K-021",
+    "K-022",
+    "K-023",
+    "K-024",
+    "K-025",
+    "K-026",
+    "K-027",
+    "K-028",
+    "K-029",
+    "K-030",
+    "K-031",
+    "K-032",
+    "K-033"
+  ],
+  "checker_coverage_matrix": {
+    "covered_requirements": [
+      "K-001",
+      "K-002",
+      "K-003",
+      "K-004",
+      "K-005",
+      "K-006",
+      "K-007",
+      "K-008",
+      "K-009",
+      "K-010",
+      "K-011",
+      "K-012",
+      "K-013",
+      "K-014",
+      "K-015",
+      "K-016",
+      "K-017",
+      "K-018",
+      "K-019",
+      "K-020",
+      "K-021",
+      "K-022",
+      "K-023",
+      "K-024",
+      "K-025",
+      "K-026",
+      "K-027",
+      "K-028",
+      "K-029",
+      "K-030",
+      "K-031",
+      "K-032",
+      "K-033"
+    ],
+    "errors": [],
+    "required_requirements": [
+      "K-001",
+      "K-002",
+      "K-003",
+      "K-004",
+      "K-005",
+      "K-006",
+      "K-007",
+      "K-008",
+      "K-009",
+      "K-010",
+      "K-011",
+      "K-012",
+      "K-013",
+      "K-014",
+      "K-015",
+      "K-016",
+      "K-017",
+      "K-018",
+      "K-019",
+      "K-020",
+      "K-021",
+      "K-022",
+      "K-023",
+      "K-024",
+      "K-025",
+      "K-026",
+      "K-027",
+      "K-028",
+      "K-029",
+      "K-030",
+      "K-031",
+      "K-032",
+      "K-033"
+    ],
+    "rows": [
+      {
+        "checkers": [
+          "check_release_acceptance_v0_5.py"
+        ],
+        "description": "Empty or placeholder summary",
+        "executed_checkers": [],
+        "requirement": "K-001"
+      },
+      {
+        "checkers": [
+          "check_acceptance_coverage_v0_5.py"
+        ],
+        "description": "Checker coverage incomplete",
+        "executed_checkers": [
+          "check_acceptance_coverage_v0_5.py"
+        ],
+        "requirement": "K-002"
+      },
+      {
+        "checkers": [
+          "run_red_cases_v0_5.py"
+        ],
+        "description": "Red case accepted",
+        "executed_checkers": [
+          "run_red_cases_v0_5.py"
+        ],
+        "requirement": "K-003"
+      },
+      {
+        "checkers": [
+          "check_engine_outputs_v0_5.py",
+          "check_provider_stage_boundary_v0_5.py"
+        ],
+        "description": "Target-fact provider",
+        "executed_checkers": [],
+        "requirement": "K-004"
+      },
+      {
+        "checkers": [
+          "check_engine_outputs_v0_5.py",
+          "check_independent_solver_checkers_v0_5.py"
+        ],
+        "description": "Naked target assertion",
+        "executed_checkers": [],
+        "requirement": "K-005"
+      },
+      {
+        "checkers": [
+          "check_full2d_rule_registry_v0_5.py",
+          "check_full2d_used_rule_coverage_v0_5.py"
+        ],
+        "description": "Identity/direct-facade rule counted",
+        "executed_checkers": [],
+        "requirement": "K-006"
+      },
+      {
+        "checkers": [
+          "check_compiler_input_isolation_v0_5.py",
+          "check_compiler_taint_v0_5.py"
+        ],
+        "description": "Proof-from-shape compiler",
+        "executed_checkers": [],
+        "requirement": "K-007"
+      },
+      {
+        "checkers": [
+          "check_engine_outputs_v0_5.py",
+          "check_compiler_taint_v0_5.py"
+        ],
+        "description": "Engine output from compiler-selected rules",
+        "executed_checkers": [],
+        "requirement": "K-008"
+      },
+      {
+        "checkers": [
+          "check_engine_outputs_v0_5.py"
+        ],
+        "description": "Proof text in engine output",
+        "executed_checkers": [],
+        "requirement": "K-009"
+      },
+      {
+        "checkers": [
+          "check_independent_solver_checkers_v0_5.py"
+        ],
+        "description": "Missing independent checker evidence",
+        "executed_checkers": [],
+        "requirement": "K-010"
+      },
+      {
+        "checkers": [
+          "check_solver_causality_reports_v0_5.py"
+        ],
+        "description": "Causality report not live rerun",
+        "executed_checkers": [],
+        "requirement": "K-011"
+      },
+      {
+        "checkers": [
+          "check_solver_causality_reports_v0_5.py"
+        ],
+        "description": "Destructive causality failure",
+        "executed_checkers": [],
+        "requirement": "K-012"
+      },
+      {
+        "checkers": [
+          "check_corpus_independence_v0_5.py"
+        ],
+        "description": "Projection counted as positive",
+        "executed_checkers": [],
+        "requirement": "K-013"
+      },
+      {
+        "checkers": [
+          "check_corpus_independence_v0_5.py"
+        ],
+        "description": "Corpus coupled to proof implementation",
+        "executed_checkers": [],
+        "requirement": "K-014"
+      },
+      {
+        "checkers": [
+          "check_corpus_independence_v0_5.py"
+        ],
+        "description": "Sealed challenge not independent",
+        "executed_checkers": [],
+        "requirement": "K-015"
+      },
+      {
+        "checkers": [
+          "check_goal_preservation_reports_v0_5.py"
+        ],
+        "description": "Weak/self-attested goal preservation",
+        "executed_checkers": [],
+        "requirement": "K-016"
+      },
+      {
+        "checkers": [
+          "check_full2d_extraction_corpus_v0_5.py"
+        ],
+        "description": "Source theorem pre-proved",
+        "executed_checkers": [],
+        "requirement": "K-017"
+      },
+      {
+        "checkers": [
+          "check_full2d_engine_contribution_v0_5.py"
+        ],
+        "description": "Engine contribution insufficient",
+        "executed_checkers": [],
+        "requirement": "K-018"
+      },
+      {
+        "checkers": [
+          "check_full2d_used_rule_coverage_v0_5.py"
+        ],
+        "description": "Used-rule coverage insufficient",
+        "executed_checkers": [],
+        "requirement": "K-019"
+      },
+      {
+        "checkers": [
+          "check_full2d_metrics_v0_5.py"
+        ],
+        "description": "Direct/wrapped facade lemma dominance",
+        "executed_checkers": [],
+        "requirement": "K-020"
+      },
+      {
+        "checkers": [
+          "check_full2d_metrics_v0_5.py"
+        ],
+        "description": "Non-target intermediate insufficient",
+        "executed_checkers": [],
+        "requirement": "K-021"
+      },
+      {
+        "checkers": [
+          "check_full2d_metrics_v0_5.py",
+          "check_corpus_statement_diversity_v0_5.py"
+        ],
+        "description": "Construction/case/certificate evidence insufficient",
+        "executed_checkers": [],
+        "requirement": "K-022"
+      },
+      {
+        "checkers": [
+          "check_full2d_baseline_comparability_v0_5.py"
+        ],
+        "description": "Family-coded baseline",
+        "executed_checkers": [],
+        "requirement": "K-023"
+      },
+      {
+        "checkers": [
+          "check_full2d_baseline_comparability_v0_5.py"
+        ],
+        "description": "Baseline comparability violated",
+        "executed_checkers": [],
+        "requirement": "K-024"
+      },
+      {
+        "checkers": [
+          "check_full2d_metrics_v0_5.py",
+          "check_full2d_baseline_comparability_v0_5.py"
+        ],
+        "description": "Metrics below threshold",
+        "executed_checkers": [],
+        "requirement": "K-025"
+      },
+      {
+        "checkers": [
+          "check_release_acceptance_v0_5.py"
+        ],
+        "description": "Stale evidence",
+        "executed_checkers": [],
+        "requirement": "K-026"
+      },
+      {
+        "checkers": [
+          "check_debt_ledger_v0_5.py"
+        ],
+        "description": "Open debt",
+        "executed_checkers": [],
+        "requirement": "K-027"
+      },
+      {
+        "checkers": [
+          "check_closure_claim_ceiling_v0_5.py"
+        ],
+        "description": "Closure exceeds evidence",
+        "executed_checkers": [],
+        "requirement": "K-028"
+      },
+      {
+        "checkers": [
+          "check_corpus_statement_diversity_v0_5.py"
+        ],
+        "description": "Statement diversity insufficient",
+        "executed_checkers": [],
+        "requirement": "K-029"
+      },
+      {
+        "checkers": [
+          "check_no_checker_whitelist_v0_5.py"
+        ],
+        "description": "Checker whitelist or suppression",
+        "executed_checkers": [
+          "check_no_checker_whitelist_v0_5.py"
+        ],
+        "requirement": "K-030"
+      },
+      {
+        "checkers": [
+          "check_provider_stage_boundary_v0_5.py"
+        ],
+        "description": "Provider imports downstream proof code",
+        "executed_checkers": [],
+        "requirement": "K-031"
+      },
+      {
+        "checkers": [
+          "check_proof_worker_final_verify_v0_5.py",
+          "check_full2d_baseline_comparability_v0_5.py"
+        ],
+        "description": "Final status not from FinalVerifyReport",
+        "executed_checkers": [],
+        "requirement": "K-032"
+      },
+      {
+        "checkers": [
+          "run_full2d_matrix_v0_5.py",
+          "check_full2d_baseline_comparability_v0_5.py"
+        ],
+        "description": "Matrix not all-baselines",
+        "executed_checkers": [],
+        "requirement": "K-033"
+      }
+    ],
+    "schema_version": "GeometryFull2DCheckerCoverageV1",
+    "status": "passed"
+  },
+  "closure_allowed": false,
+  "closure_claim_ceiling": {
+    "allowed_final_claim": "V0.5_GEOMETRY_FULL2D_REAL_SOLVER_CAUSAL_FULL_PIPELINE_READY",
+    "forbidden_claims_present": []
+  },
+  "closure_claim_ceiling_summary": {
+    "status": "pending_closure"
+  },
+  "compiler_isolation_summary": {
+    "placeholder": false,
+    "status": "failed",
+    "summary": "compiler_isolation not yet implemented"
+  },
+  "corpus_statement_diversity_summary": {
+    "status": "failed",
+    "unique_normalized_theorem_skeletons": 0
+  },
+  "corpus_summary": {
+    "counted_positive_formal_lean_tasks": 0,
+    "negative_target_outside_malformed_tasks": 0,
+    "sealed_adversarial_holdout_count": 0,
+    "status": "failed"
+  },
+  "debt_ledger_summary": {
+    "open_entries": [
+      "V05-DEBT-001"
+    ],
+    "status": "failed"
+  },
+  "engine_contribution_summary": {
+    "every_release_engine_role_contributed": false,
+    "status": "failed"
+  },
+  "engine_output_summary": {
+    "placeholder": false,
+    "status": "failed",
+    "summary": "engine_outputs not yet implemented"
+  },
+  "extraction_summary": {
+    "placeholder": false,
+    "status": "failed",
+    "summary": "extraction not yet implemented"
+  },
+  "final_verify_summary": {
+    "placeholder": false,
+    "status": "failed",
+    "summary": "final_verify not yet implemented"
+  },
+  "freshness_summary": {
+    "current_git_head_bound": true,
+    "fresh_run": true,
+    "git_head": "f143a5a71cb03154d76601463e71a9883a21862f",
+    "release_run_dir": "runs/geometry_full2d_v0_5/release_1781792510_5736",
+    "status": "passed"
+  },
+  "hard_blockers": [],
+  "independent_checker_summary": {
+    "placeholder": false,
+    "status": "failed",
+    "summary": "independent_solver_checkers not yet implemented"
+  },
+  "measured_failure_summary": {
+    "status": "failed"
+  },
+  "metrics_summary": {
+    "B2_final_theorem_rate": 0.0,
+    "B2_solver_causal_rate": 0.0,
+    "status": "failed"
+  },
+  "provider_stage_boundary_summary": {
+    "placeholder": false,
+    "status": "failed",
+    "summary": "provider_stage_boundary not yet implemented"
+  },
+  "red_case_summary": {
+    "all_rejected": true,
+    "errors": [],
+    "expected_red_case_count": 19,
+    "red_case_count": 19,
+    "results": [
+      {
+        "detected_blockers": [
+          "K-004",
+          "K-005"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-004",
+          "K-005"
+        ],
+        "id": "target_fact_provider",
+        "missing_expected_blockers": [],
+        "name": "TargetFactProvider",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-004"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-004",
+              "K-005"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-005"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-005"
+        ],
+        "id": "naked_target_assertion",
+        "missing_expected_blockers": [],
+        "name": "NakedTargetAssertion",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-005"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-005"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-006"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-006"
+        ],
+        "id": "identity_rule_registry",
+        "missing_expected_blockers": [],
+        "name": "IdentityRuleRegistry",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-006"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-006"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-007",
+          "K-014"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-007"
+        ],
+        "id": "proof_from_shape_compiler",
+        "missing_expected_blockers": [],
+        "name": "ProofFromShapeCompiler",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-007"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-007",
+              "K-014"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-008"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-008"
+        ],
+        "id": "rule_list_artifact_synthesis",
+        "missing_expected_blockers": [],
+        "name": "RuleListArtifactSynthesis",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-008"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-008"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-011",
+          "K-012"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-011",
+          "K-012"
+        ],
+        "id": "report_only_causality",
+        "missing_expected_blockers": [],
+        "name": "ReportOnlyCausality",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-011",
+              "K-012"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-011",
+              "K-012"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-023"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-023"
+        ],
+        "id": "family_coded_baseline",
+        "missing_expected_blockers": [],
+        "name": "FamilyCodedBaseline",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-023"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-023"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-013",
+          "K-016"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-013",
+          "K-016"
+        ],
+        "id": "projection_corpus_counted",
+        "missing_expected_blockers": [],
+        "name": "ProjectionCorpusCounted",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-013",
+              "K-016"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-013",
+              "K-016"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-009"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-009"
+        ],
+        "id": "engine_output_contains_proof_text",
+        "missing_expected_blockers": [],
+        "name": "EngineOutputContainsProofText",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-009"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-009"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-002"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-002"
+        ],
+        "id": "checker_omission",
+        "missing_expected_blockers": [],
+        "name": "CheckerOmission",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-002"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-002"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-030"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-030"
+        ],
+        "id": "checker_whitelist",
+        "missing_expected_blockers": [],
+        "name": "CheckerWhitelist",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-030"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-030"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-020",
+          "K-021"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-020",
+          "K-021"
+        ],
+        "id": "direct_lemma_wrapped_as_intermediate",
+        "missing_expected_blockers": [],
+        "name": "DirectLemmaWrappedAsIntermediate",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-020",
+              "K-021"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-020",
+              "K-021"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-015"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-015"
+        ],
+        "id": "sealed_challenge_imports_compiler",
+        "missing_expected_blockers": [],
+        "name": "SealedChallengeImportsCompiler",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-015"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-015"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-026"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-026"
+        ],
+        "id": "stale_evidence_replay",
+        "missing_expected_blockers": [],
+        "name": "StaleEvidenceReplay",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-026"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-026"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-007",
+          "K-014",
+          "K-029"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-014",
+          "K-029"
+        ],
+        "id": "target_shape_menu_corpus",
+        "missing_expected_blockers": [],
+        "name": "TargetShapeMenuCorpus",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-007",
+              "K-014",
+              "K-029"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-014",
+              "K-029"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-016"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-016"
+        ],
+        "id": "goal_preservation_self_attestation",
+        "missing_expected_blockers": [],
+        "name": "GoalPreservationSelfAttestation",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-016"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-016"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-031"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-031"
+        ],
+        "id": "provider_imports_compiler",
+        "missing_expected_blockers": [],
+        "name": "ProviderImportsCompiler",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-031"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-031"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-024",
+          "K-033"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-024",
+          "K-033"
+        ],
+        "id": "b8_silently_omitted",
+        "missing_expected_blockers": [],
+        "name": "B8SilentlyOmitted",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-024",
+              "K-033"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-024",
+              "K-033"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      },
+      {
+        "detected_blockers": [
+          "K-028"
+        ],
+        "errors": [],
+        "expected_blockers": [
+          "K-028"
+        ],
+        "id": "closure_overclaims_readiness",
+        "missing_expected_blockers": [],
+        "name": "ClosureOverclaimsReadiness",
+        "rejected": true,
+        "variant_results": [
+          {
+            "detected_blockers": [
+              "K-028"
+            ],
+            "kind": "static-code",
+            "path": null
+          },
+          {
+            "detected_blockers": [
+              "K-028"
+            ],
+            "kind": "artifact-run",
+            "path": null
+          }
+        ]
+      }
+    ],
+    "schema_version": "GeometryFull2DRedCaseRunV1",
+    "status": "passed"
+  },
+  "release_blockers": [
+    "K-001",
+    "K-010",
+    "K-011",
+    "K-012",
+    "K-018",
+    "K-019",
+    "K-021",
+    "K-022",
+    "K-024",
+    "K-025",
+    "K-029",
+    "K-032",
+    "K-033"
+  ],
+  "required_command_results": {
+    "acceptance_coverage": {
+      "cmd": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_acceptance_coverage_v0_5.py"
+      ],
+      "duration_seconds": 0.096,
+      "name": "acceptance_coverage",
+      "report": {
+        "covered_requirements": [
+          "K-001",
+          "K-002",
+          "K-003",
+          "K-004",
+          "K-005",
+          "K-006",
+          "K-007",
+          "K-008",
+          "K-009",
+          "K-010",
+          "K-011",
+          "K-012",
+          "K-013",
+          "K-014",
+          "K-015",
+          "K-016",
+          "K-017",
+          "K-018",
+          "K-019",
+          "K-020",
+          "K-021",
+          "K-022",
+          "K-023",
+          "K-024",
+          "K-025",
+          "K-026",
+          "K-027",
+          "K-028",
+          "K-029",
+          "K-030",
+          "K-031",
+          "K-032",
+          "K-033"
+        ],
+        "errors": [],
+        "required_requirements": [
+          "K-001",
+          "K-002",
+          "K-003",
+          "K-004",
+          "K-005",
+          "K-006",
+          "K-007",
+          "K-008",
+          "K-009",
+          "K-010",
+          "K-011",
+          "K-012",
+          "K-013",
+          "K-014",
+          "K-015",
+          "K-016",
+          "K-017",
+          "K-018",
+          "K-019",
+          "K-020",
+          "K-021",
+          "K-022",
+          "K-023",
+          "K-024",
+          "K-025",
+          "K-026",
+          "K-027",
+          "K-028",
+          "K-029",
+          "K-030",
+          "K-031",
+          "K-032",
+          "K-033"
+        ],
+        "rows": [
+          {
+            "checkers": [
+              "check_release_acceptance_v0_5.py"
+            ],
+            "description": "Empty or placeholder summary",
+            "executed_checkers": [],
+            "requirement": "K-001"
+          },
+          {
+            "checkers": [
+              "check_acceptance_coverage_v0_5.py"
+            ],
+            "description": "Checker coverage incomplete",
+            "executed_checkers": [],
+            "requirement": "K-002"
+          },
+          {
+            "checkers": [
+              "run_red_cases_v0_5.py"
+            ],
+            "description": "Red case accepted",
+            "executed_checkers": [],
+            "requirement": "K-003"
+          },
+          {
+            "checkers": [
+              "check_engine_outputs_v0_5.py",
+              "check_provider_stage_boundary_v0_5.py"
+            ],
+            "description": "Target-fact provider",
+            "executed_checkers": [],
+            "requirement": "K-004"
+          },
+          {
+            "checkers": [
+              "check_engine_outputs_v0_5.py",
+              "check_independent_solver_checkers_v0_5.py"
+            ],
+            "description": "Naked target assertion",
+            "executed_checkers": [],
+            "requirement": "K-005"
+          },
+          {
+            "checkers": [
+              "check_full2d_rule_registry_v0_5.py",
+              "check_full2d_used_rule_coverage_v0_5.py"
+            ],
+            "description": "Identity/direct-facade rule counted",
+            "executed_checkers": [],
+            "requirement": "K-006"
+          },
+          {
+            "checkers": [
+              "check_compiler_input_isolation_v0_5.py",
+              "check_compiler_taint_v0_5.py"
+            ],
+            "description": "Proof-from-shape compiler",
+            "executed_checkers": [],
+            "requirement": "K-007"
+          },
+          {
+            "checkers": [
+              "check_engine_outputs_v0_5.py",
+              "check_compiler_taint_v0_5.py"
+            ],
+            "description": "Engine output from compiler-selected rules",
+            "executed_checkers": [],
+            "requirement": "K-008"
+          },
+          {
+            "checkers": [
+              "check_engine_outputs_v0_5.py"
+            ],
+            "description": "Proof text in engine output",
+            "executed_checkers": [],
+            "requirement": "K-009"
+          },
+          {
+            "checkers": [
+              "check_independent_solver_checkers_v0_5.py"
+            ],
+            "description": "Missing independent checker evidence",
+            "executed_checkers": [],
+            "requirement": "K-010"
+          },
+          {
+            "checkers": [
+              "check_solver_causality_reports_v0_5.py"
+            ],
+            "description": "Causality report not live rerun",
+            "executed_checkers": [],
+            "requirement": "K-011"
+          },
+          {
+            "checkers": [
+              "check_solver_causality_reports_v0_5.py"
+            ],
+            "description": "Destructive causality failure",
+            "executed_checkers": [],
+            "requirement": "K-012"
+          },
+          {
+            "checkers": [
+              "check_corpus_independence_v0_5.py"
+            ],
+            "description": "Projection counted as positive",
+            "executed_checkers": [],
+            "requirement": "K-013"
+          },
+          {
+            "checkers": [
+              "check_corpus_independence_v0_5.py"
+            ],
+            "description": "Corpus coupled to proof implementation",
+            "executed_checkers": [],
+            "requirement": "K-014"
+          },
+          {
+            "checkers": [
+              "check_corpus_independence_v0_5.py"
+            ],
+            "description": "Sealed challenge not independent",
+            "executed_checkers": [],
+            "requirement": "K-015"
+          },
+          {
+            "checkers": [
+              "check_goal_preservation_reports_v0_5.py"
+            ],
+            "description": "Weak/self-attested goal preservation",
+            "executed_checkers": [],
+            "requirement": "K-016"
+          },
+          {
+            "checkers": [
+              "check_full2d_extraction_corpus_v0_5.py"
+            ],
+            "description": "Source theorem pre-proved",
+            "executed_checkers": [],
+            "requirement": "K-017"
+          },
+          {
+            "checkers": [
+              "check_full2d_engine_contribution_v0_5.py"
+            ],
+            "description": "Engine contribution insufficient",
+            "executed_checkers": [],
+            "requirement": "K-018"
+          },
+          {
+            "checkers": [
+              "check_full2d_used_rule_coverage_v0_5.py"
+            ],
+            "description": "Used-rule coverage insufficient",
+            "executed_checkers": [],
+            "requirement": "K-019"
+          },
+          {
+            "checkers": [
+              "check_full2d_metrics_v0_5.py"
+            ],
+            "description": "Direct/wrapped facade lemma dominance",
+            "executed_checkers": [],
+            "requirement": "K-020"
+          },
+          {
+            "checkers": [
+              "check_full2d_metrics_v0_5.py"
+            ],
+            "description": "Non-target intermediate insufficient",
+            "executed_checkers": [],
+            "requirement": "K-021"
+          },
+          {
+            "checkers": [
+              "check_full2d_metrics_v0_5.py",
+              "check_corpus_statement_diversity_v0_5.py"
+            ],
+            "description": "Construction/case/certificate evidence insufficient",
+            "executed_checkers": [],
+            "requirement": "K-022"
+          },
+          {
+            "checkers": [
+              "check_full2d_baseline_comparability_v0_5.py"
+            ],
+            "description": "Family-coded baseline",
+            "executed_checkers": [],
+            "requirement": "K-023"
+          },
+          {
+            "checkers": [
+              "check_full2d_baseline_comparability_v0_5.py"
+            ],
+            "description": "Baseline comparability violated",
+            "executed_checkers": [],
+            "requirement": "K-024"
+          },
+          {
+            "checkers": [
+              "check_full2d_metrics_v0_5.py",
+              "check_full2d_baseline_comparability_v0_5.py"
+            ],
+            "description": "Metrics below threshold",
+            "executed_checkers": [],
+            "requirement": "K-025"
+          },
+          {
+            "checkers": [
+              "check_release_acceptance_v0_5.py"
+            ],
+            "description": "Stale evidence",
+            "executed_checkers": [],
+            "requirement": "K-026"
+          },
+          {
+            "checkers": [
+              "check_debt_ledger_v0_5.py"
+            ],
+            "description": "Open debt",
+            "executed_checkers": [],
+            "requirement": "K-027"
+          },
+          {
+            "checkers": [
+              "check_closure_claim_ceiling_v0_5.py"
+            ],
+            "description": "Closure exceeds evidence",
+            "executed_checkers": [],
+            "requirement": "K-028"
+          },
+          {
+            "checkers": [
+              "check_corpus_statement_diversity_v0_5.py"
+            ],
+            "description": "Statement diversity insufficient",
+            "executed_checkers": [],
+            "requirement": "K-029"
+          },
+          {
+            "checkers": [
+              "check_no_checker_whitelist_v0_5.py"
+            ],
+            "description": "Checker whitelist or suppression",
+            "executed_checkers": [],
+            "requirement": "K-030"
+          },
+          {
+            "checkers": [
+              "check_provider_stage_boundary_v0_5.py"
+            ],
+            "description": "Provider imports downstream proof code",
+            "executed_checkers": [],
+            "requirement": "K-031"
+          },
+          {
+            "checkers": [
+              "check_proof_worker_final_verify_v0_5.py",
+              "check_full2d_baseline_comparability_v0_5.py"
+            ],
+            "description": "Final status not from FinalVerifyReport",
+            "executed_checkers": [],
+            "requirement": "K-032"
+          },
+          {
+            "checkers": [
+              "run_full2d_matrix_v0_5.py",
+              "check_full2d_baseline_comparability_v0_5.py"
+            ],
+            "description": "Matrix not all-baselines",
+            "executed_checkers": [],
+            "requirement": "K-033"
+          }
+        ],
+        "schema_version": "GeometryFull2DCheckerCoverageV1",
+        "status": "passed"
+      },
+      "returncode": 0
+    },
+    "active_guardian_spec": {
+      "cmd": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_active_guardian_spec_v0_5.py"
+      ],
+      "duration_seconds": 0.206,
+      "name": "active_guardian_spec",
+      "report": {
+        "active_base_spec_path": "docs/ai/changes/geometry-full2d-v0_5/BASE_SPEC.md",
+        "active_geometry_base_spec": "MARP-GEOLEAN-BASE-011",
+        "base_specs": [
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-full2d-v0_4_2/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-007",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-008"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-full2d-v0_4_3/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-008",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-009"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-full2d-v0_4_4/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-009",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-010"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-full2d-v0_4_5/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-010",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-011_FALSE_POSITIVE_CLOSURE"
+          },
+          {
+            "active": true,
+            "path": "docs/ai/changes/geometry-full2d-v0_5/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-011",
+            "status": "USER_APPROVED_ACTIVE"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-003",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/ACCEPTANCE_MATRIX.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/BASE_SPEC.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/REFACTOR_DIRECTIVE.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          },
+          {
+            "active": false,
+            "path": "docs/ai/changes/geometry-lean-v0_3-full-rebase/SOURCE_MAP.md",
+            "spec_id": "MARP-GEOLEAN-BASE-004",
+            "status": "SUPERSEDED_BY_MARP-GEOLEAN-BASE-007"
+          }
+        ],
+        "status": "passed",
+        "superseded_geometry_base_spec": "MARP-GEOLEAN-BASE-010"
+      },
+      "returncode": 0
+    },
+    "no_checker_whitelist": {
+      "cmd": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_no_checker_whitelist_v0_5.py"
+      ],
+      "duration_seconds": 0.079,
+      "name": "no_checker_whitelist",
+      "report": {
+        "errors": [],
+        "scanned_file_count": 5,
+        "scans": [
+          {
+            "hits": [],
+            "path": "scripts/check_acceptance_coverage_v0_5.py"
+          },
+          {
+            "hits": [],
+            "path": "scripts/check_active_guardian_spec_v0_5.py"
+          },
+          {
+            "hits": [],
+            "path": "scripts/check_no_checker_whitelist_v0_5.py"
+          },
+          {
+            "hits": [],
+            "path": "scripts/check_release_acceptance_v0_5.py"
+          },
+          {
+            "hits": [],
+            "path": "scripts/run_red_cases_v0_5.py"
+          }
+        ],
+        "schema_version": "GeometryFull2DNoCheckerWhitelistV1",
+        "status": "passed"
+      },
+      "returncode": 0
+    },
+    "red_cases": {
+      "cmd": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/run_red_cases_v0_5.py",
+        "--expect-failure"
+      ],
+      "duration_seconds": 0.2,
+      "name": "red_cases",
+      "report": {
+        "all_rejected": true,
+        "errors": [],
+        "expected_red_case_count": 19,
+        "red_case_count": 19,
+        "results": [
+          {
+            "detected_blockers": [
+              "K-004",
+              "K-005"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-004",
+              "K-005"
+            ],
+            "id": "target_fact_provider",
+            "missing_expected_blockers": [],
+            "name": "TargetFactProvider",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-004"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-004",
+                  "K-005"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-005"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-005"
+            ],
+            "id": "naked_target_assertion",
+            "missing_expected_blockers": [],
+            "name": "NakedTargetAssertion",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-005"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-005"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-006"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-006"
+            ],
+            "id": "identity_rule_registry",
+            "missing_expected_blockers": [],
+            "name": "IdentityRuleRegistry",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-006"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-006"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-007",
+              "K-014"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-007"
+            ],
+            "id": "proof_from_shape_compiler",
+            "missing_expected_blockers": [],
+            "name": "ProofFromShapeCompiler",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-007"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-007",
+                  "K-014"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-008"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-008"
+            ],
+            "id": "rule_list_artifact_synthesis",
+            "missing_expected_blockers": [],
+            "name": "RuleListArtifactSynthesis",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-008"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-008"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-011",
+              "K-012"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-011",
+              "K-012"
+            ],
+            "id": "report_only_causality",
+            "missing_expected_blockers": [],
+            "name": "ReportOnlyCausality",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-011",
+                  "K-012"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-011",
+                  "K-012"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-023"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-023"
+            ],
+            "id": "family_coded_baseline",
+            "missing_expected_blockers": [],
+            "name": "FamilyCodedBaseline",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-023"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-023"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-013",
+              "K-016"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-013",
+              "K-016"
+            ],
+            "id": "projection_corpus_counted",
+            "missing_expected_blockers": [],
+            "name": "ProjectionCorpusCounted",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-013",
+                  "K-016"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-013",
+                  "K-016"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-009"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-009"
+            ],
+            "id": "engine_output_contains_proof_text",
+            "missing_expected_blockers": [],
+            "name": "EngineOutputContainsProofText",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-009"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-009"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-002"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-002"
+            ],
+            "id": "checker_omission",
+            "missing_expected_blockers": [],
+            "name": "CheckerOmission",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-002"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-002"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-030"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-030"
+            ],
+            "id": "checker_whitelist",
+            "missing_expected_blockers": [],
+            "name": "CheckerWhitelist",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-030"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-030"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-020",
+              "K-021"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-020",
+              "K-021"
+            ],
+            "id": "direct_lemma_wrapped_as_intermediate",
+            "missing_expected_blockers": [],
+            "name": "DirectLemmaWrappedAsIntermediate",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-020",
+                  "K-021"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-020",
+                  "K-021"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-015"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-015"
+            ],
+            "id": "sealed_challenge_imports_compiler",
+            "missing_expected_blockers": [],
+            "name": "SealedChallengeImportsCompiler",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-015"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-015"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-026"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-026"
+            ],
+            "id": "stale_evidence_replay",
+            "missing_expected_blockers": [],
+            "name": "StaleEvidenceReplay",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-026"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-026"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-007",
+              "K-014",
+              "K-029"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-014",
+              "K-029"
+            ],
+            "id": "target_shape_menu_corpus",
+            "missing_expected_blockers": [],
+            "name": "TargetShapeMenuCorpus",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-007",
+                  "K-014",
+                  "K-029"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-014",
+                  "K-029"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-016"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-016"
+            ],
+            "id": "goal_preservation_self_attestation",
+            "missing_expected_blockers": [],
+            "name": "GoalPreservationSelfAttestation",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-016"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-016"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-031"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-031"
+            ],
+            "id": "provider_imports_compiler",
+            "missing_expected_blockers": [],
+            "name": "ProviderImportsCompiler",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-031"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-031"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-024",
+              "K-033"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-024",
+              "K-033"
+            ],
+            "id": "b8_silently_omitted",
+            "missing_expected_blockers": [],
+            "name": "B8SilentlyOmitted",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-024",
+                  "K-033"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-024",
+                  "K-033"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          },
+          {
+            "detected_blockers": [
+              "K-028"
+            ],
+            "errors": [],
+            "expected_blockers": [
+              "K-028"
+            ],
+            "id": "closure_overclaims_readiness",
+            "missing_expected_blockers": [],
+            "name": "ClosureOverclaimsReadiness",
+            "rejected": true,
+            "variant_results": [
+              {
+                "detected_blockers": [
+                  "K-028"
+                ],
+                "kind": "static-code",
+                "path": null
+              },
+              {
+                "detected_blockers": [
+                  "K-028"
+                ],
+                "kind": "artifact-run",
+                "path": null
+              }
+            ]
+          }
+        ],
+        "schema_version": "GeometryFull2DRedCaseRunV1",
+        "status": "passed"
+      },
+      "returncode": 0
+    }
+  },
+  "rule_registry_summary": {
+    "placeholder": false,
+    "status": "failed",
+    "summary": "rule_registry not yet implemented"
+  },
+  "schema_version": "GeometryFull2DReleaseAcceptanceV05",
+  "solver_causality_summary": {
+    "live_destructive_rerun_fraction": 0.0,
+    "precomputed_report_fraction": 1.0,
+    "status": "failed"
+  },
+  "status": "failed",
+  "used_rule_coverage_summary": {
+    "status": "failed",
+    "used_concrete_non_identity_rules": 0,
+    "used_rule_families": 0
+  }
+}

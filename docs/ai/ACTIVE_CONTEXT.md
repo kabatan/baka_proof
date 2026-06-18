@@ -44,7 +44,7 @@ The v0.4.5 closure is invalidated as a false-positive checker-passing scaffold. 
 Current task:
 
 ```text
-Post-admission Base Spec / Plan / Acceptance review loop. After this review is committed, implementation resumes at WP-01 red cases and WP-02 acceptance harness.
+WP-03 — Schemas and artifact validators.
 ```
 
 Completed preparation:
@@ -62,9 +62,12 @@ Post-admission review loop found fixable Plan/Base/Acceptance alignment gaps and
   - no empty-premise target fact counted success;
   - explicit disabled/failing baseline reports;
   - conditional B8 and closure claim ceiling checks.
+WP-01 red-case suite implemented with 19 executable red cases, each with static-code and artifact-run variants.
+WP-02 fail-closed acceptance harness, K coverage checker, and checker-suppression guard implemented.
+WP-02 evidence captured in docs/ai/changes/geometry-full2d-v0_5/evidence/wp01_wp02_redcase_acceptance_harness.md and wp02_release_acceptance_smoke.json.
 ```
 
-Implementation work for WP-01 and later has not started.
+Implementation work for WP-03 and later has not started.
 
 ## Non-Negotiables
 

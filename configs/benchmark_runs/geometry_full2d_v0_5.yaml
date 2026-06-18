@@ -1,0 +1,13 @@
+{
+  "schema_version": "GeometryFull2DBenchmarkRunConfigV4",
+  "matrix_id": "geometry_full2d_v0_5",
+  "benchmark_corpus_root": "benchmarks/geometry_full2d_v0_5",
+  "output_root": "runs/geometry_full2d_v0_5",
+  "release_acceptance_script": "scripts/check_release_acceptance_v0_5.py",
+  "matrix_runner": "scripts/run_full2d_matrix_v0_5.py",
+  "conditional_b8": {
+    "resolution": "B8_NOT_APPLICABLE",
+    "reason": "model/provider baseline is not configured for this local v0.5 release track"
+  },
+  "required_baselines": ["B1", "B2", "B5", "B6", "B7"]
+}

@@ -1,0 +1,176 @@
+{
+  "schema_version": "GeometryFull2DRedCaseManifestV1",
+  "fixtures": [
+    {
+      "id": "target_fact_provider",
+      "name": "TargetFactProvider",
+      "expected_blockers": ["K-004", "K-005"],
+      "variants": [
+        {"kind": "static-code", "code": "target_fact_with_empty_premises = True\nfacts = [{\"conclusion\": \"TARGET\", \"premises\": []}]\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "EngineOutputFull2D:2", "red_case_kind": "target_fact_provider", "target_fact_with_empty_premises": true}}
+      ]
+    },
+    {
+      "id": "naked_target_assertion",
+      "name": "NakedTargetAssertion",
+      "expected_blockers": ["K-005"],
+      "variants": [
+        {"kind": "static-code", "code": "naked_target_assertion = True\nderivation_steps = [{\"output_is_target\": True, \"non_target_intermediate\": False}]\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "SelectedSolverDerivationV2", "red_case_kind": "naked_target_assertion", "derivation_steps": [{"output_is_target": true, "non_target_intermediate": false}]}}
+      ]
+    },
+    {
+      "id": "identity_rule_registry",
+      "name": "IdentityRuleRegistry",
+      "expected_blockers": ["K-006"],
+      "variants": [
+        {"kind": "static-code", "code": "identity_rule_registry = True\ndirect_identity_rule = True\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "RuleRegistryFull2D", "red_case_kind": "identity_rule_registry", "direct_identity_rule": true}}
+      ]
+    },
+    {
+      "id": "proof_from_shape_compiler",
+      "name": "ProofFromShapeCompiler",
+      "expected_blockers": ["K-007"],
+      "variants": [
+        {"kind": "static-code", "code": "def compile(target_expr):\n    if target_expr.startswith(\"collinear\"):\n        return proof_from_shape(target_expr)\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "CompilerResultFull2D", "red_case_kind": "proof_from_shape_compiler", "target_shape_id": "collinear_menu"}}
+      ]
+    },
+    {
+      "id": "rule_list_artifact_synthesis",
+      "name": "RuleListArtifactSynthesis",
+      "expected_blockers": ["K-008"],
+      "variants": [
+        {"kind": "static-code", "code": "rule_list_artifact_synthesis = True\ncompiler_selected_rule_list = [\"direct_target\"]\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "EngineOutputFull2D:2", "red_case_kind": "rule_list_artifact_synthesis", "engine_output_from_compiler_selected_rules": true}}
+      ]
+    },
+    {
+      "id": "report_only_causality",
+      "name": "ReportOnlyCausality",
+      "expected_blockers": ["K-011", "K-012"],
+      "variants": [
+        {"kind": "static-code", "code": "causality_report_only = True\nfailed_as_expected = True\ndestructive_causality_passed = False\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "SolverCausalityReportV3", "red_case_kind": "report_only_causality", "failed_as_expected": true, "destructive_causality_passed": false}}
+      ]
+    },
+    {
+      "id": "family_coded_baseline",
+      "name": "FamilyCodedBaseline",
+      "expected_blockers": ["K-023"],
+      "variants": [
+        {"kind": "static-code", "code": "if theorem_family == \"collinear\" and baseline == \"B2\":\n    final_status = \"final_theorem\"\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "BaselineComparabilityReportV1", "red_case_kind": "family_coded_baseline", "baseline_outcome_from_family": true}}
+      ]
+    },
+    {
+      "id": "projection_corpus_counted",
+      "name": "ProjectionCorpusCounted",
+      "expected_blockers": ["K-013", "K-016"],
+      "variants": [
+        {"kind": "static-code", "code": "projection_counted_positive = True\neasier_projection = True\nself_attested_goal_preservation = True\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "CorpusManifestV1", "red_case_kind": "projection_corpus_counted", "projection_counted_positive": true, "easier_projection": true, "self_attested_goal_preservation": true}}
+      ]
+    },
+    {
+      "id": "engine_output_contains_proof_text",
+      "name": "EngineOutputContainsProofText",
+      "expected_blockers": ["K-009"],
+      "variants": [
+        {"kind": "static-code", "code": "engine_output_contains_proof_text = True\nproof_text_present = True\nproof = \"exact h\"\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "EngineOutputFull2D:2", "red_case_kind": "engine_output_contains_proof_text", "proof_text_present": true, "proof": "exact h"}}
+      ]
+    },
+    {
+      "id": "checker_omission",
+      "name": "CheckerOmission",
+      "expected_blockers": ["K-002"],
+      "variants": [
+        {"kind": "static-code", "code": "checker_omission = True\nchecker_coverage_matrix = {}\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "ReleaseReportV1", "red_case_kind": "checker_omission", "checker_coverage_matrix": {}}}
+      ]
+    },
+    {
+      "id": "checker_whitelist",
+      "name": "CheckerWhitelist",
+      "expected_blockers": ["K-030"],
+      "variants": [
+        {"kind": "static-code", "code": "def check(path):\n    if path.endswith(\"release_impl.py\"):\n        return True  # whitelist forbidden shortcut by filename\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "CheckerReportV1", "red_case_kind": "checker_whitelist", "checker_suppression": "filename"}}
+      ]
+    },
+    {
+      "id": "direct_lemma_wrapped_as_intermediate",
+      "name": "DirectLemmaWrappedAsIntermediate",
+      "expected_blockers": ["K-020", "K-021"],
+      "variants": [
+        {"kind": "static-code", "code": "direct_lemma_wrapped_as_intermediate = True\ndirect_wrapped_facade_fraction = 1.0\nnon_target_intermediate_fraction = 0.0\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "MetricsSummaryV1", "red_case_kind": "direct_lemma_wrapped_as_intermediate", "direct_wrapped_facade_fraction": 1.0, "non_target_intermediate_fraction": 0.0}}
+      ]
+    },
+    {
+      "id": "sealed_challenge_imports_compiler",
+      "name": "SealedChallengeImportsCompiler",
+      "expected_blockers": ["K-015"],
+      "variants": [
+        {"kind": "static-code", "code": "sealed_generator_imports_proof_code = True\nsealed_challenge_imports_compiler = True\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "SealedChallengeManifestV1", "red_case_kind": "sealed_challenge_imports_compiler", "sealed_generator_imports_proof_code": true}}
+      ]
+    },
+    {
+      "id": "stale_evidence_replay",
+      "name": "StaleEvidenceReplay",
+      "expected_blockers": ["K-026"],
+      "variants": [
+        {"kind": "static-code", "code": "stale_evidence = True\ncurrent_git_head_bound = False\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "FreshnessSummaryV1", "red_case_kind": "stale_evidence_replay", "stale_evidence": true, "current_git_head_bound": false}}
+      ]
+    },
+    {
+      "id": "target_shape_menu_corpus",
+      "name": "TargetShapeMenuCorpus",
+      "expected_blockers": ["K-014", "K-029"],
+      "variants": [
+        {"kind": "static-code", "code": "target_shape_menu = True\ntarget_shape_id = \"menu_1\"\nunique_normalized_theorem_skeletons = 3\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "CorpusDiversityReportV1", "red_case_kind": "target_shape_menu_corpus", "target_shape_id": "menu_1", "unique_normalized_theorem_skeletons": 3}}
+      ]
+    },
+    {
+      "id": "goal_preservation_self_attestation",
+      "name": "GoalPreservationSelfAttestation",
+      "expected_blockers": ["K-016"],
+      "variants": [
+        {"kind": "static-code", "code": "goal_preservation_self_attestation = True\nself_attested_goal_preservation = True\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "GoalPreservationReportV2", "red_case_kind": "goal_preservation_self_attestation", "self_attested_goal_preservation": true}}
+      ]
+    },
+    {
+      "id": "provider_imports_compiler",
+      "name": "ProviderImportsCompiler",
+      "expected_blockers": ["K-031"],
+      "variants": [
+        {"kind": "static-code", "code": "from plugins.geometry_full2d import compiler\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "ProviderBoundaryReportV1", "red_case_kind": "provider_imports_compiler", "imports": ["plugins.geometry_full2d.compiler"]}}
+      ]
+    },
+    {
+      "id": "b8_silently_omitted",
+      "name": "B8SilentlyOmitted",
+      "expected_blockers": ["K-024", "K-033"],
+      "variants": [
+        {"kind": "static-code", "code": "b8_silently_omitted = True\nmissing_required_baselines = [\"B8\"]\nconditional_b8_resolution_valid = False\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "BaselineComparabilityReportV1", "red_case_kind": "b8_silently_omitted", "missing_required_baselines": ["B8"], "conditional_b8_resolution_valid": false}}
+      ]
+    },
+    {
+      "id": "closure_overclaims_readiness",
+      "name": "ClosureOverclaimsReadiness",
+      "expected_blockers": ["K-028"],
+      "variants": [
+        {"kind": "static-code", "code": "ClosureOverclaimsReadiness = True\nclosure_forbidden_claims_present = [\"production safety\", \"open_problem_solving\"]\n"},
+        {"kind": "artifact-run", "payload": {"schema_version": "ClosureClaimCeilingReportV1", "red_case_kind": "closure_overclaims_readiness", "closure_forbidden_claims_present": ["production safety", "open_problem_solving"]}}
+      ]
+    }
+  ]
+}
