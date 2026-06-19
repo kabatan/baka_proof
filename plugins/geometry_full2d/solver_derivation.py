@@ -96,7 +96,6 @@ def build_order_between_derivation(context: dict[str, Any]) -> tuple[dict[str, A
             checker,
             engine,
             artifact,
-            "lean_template:between_collinear",
             {"A": a, "B": b, "C": c, "h": proof_name("order_between_support")},
         ),
     ]
@@ -132,7 +131,6 @@ def build_midpoint_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] |
             checker,
             engine,
             artifact,
-            "lean_template:midpoint_collinear",
             {"A": a, "M": m, "B": b, "h": proof_name("midpoint_support")},
         ),
     ]
@@ -159,7 +157,6 @@ def build_construction_projection_derivation(context: dict[str, Any]) -> tuple[d
         o, p, c = names_args
         support_expr = f"circle_with_center_through_point {o} {p} {c}"
         support_id = "circle_construction_support"
-        template = "lean_template:circle_construction_on_circle"
         bindings = {"O": o, "P": p, "c": c, "h": proof_name(support_id)}
         rule_1 = "full2d_rule:construction_circle:01"
         rule_2 = "full2d_rule:construction_circle:02"
@@ -171,7 +168,6 @@ def build_construction_projection_derivation(context: dict[str, Any]) -> tuple[d
         p, l, c = names_args
         support_expr = f"line_circle_intersection {p} {l} {c}"
         support_id = "line_circle_intersection_support"
-        template = "lean_template:line_circle_intersection_on_line"
         bindings = {"P": p, "l": l, "c": c, "h": proof_name(support_id)}
         rule_1 = "full2d_rule:construction_intersection:01"
         rule_2 = "full2d_rule:construction_intersection:02"
@@ -183,7 +179,6 @@ def build_construction_projection_derivation(context: dict[str, Any]) -> tuple[d
         o, c = names_args
         support_expr = f"constructed_center_point {o} {c}"
         support_id = "center_construction_support"
-        template = "lean_template:constructed_center_identity"
         bindings = {"O": o, "c": c, "h": proof_name(support_id)}
         rule_1 = "full2d_rule:construction_center:01"
         rule_2 = "full2d_rule:construction_center:02"
@@ -200,7 +195,6 @@ def build_construction_projection_derivation(context: dict[str, Any]) -> tuple[d
             checker,
             engine,
             artifact,
-            template,
             bindings,
         ),
     ]
@@ -223,7 +217,7 @@ def build_equal_length_derivation(context: dict[str, Any]) -> tuple[dict[str, An
     if operator == "metric_equal_length_reflexive" and args[:2] == args[2:]:
         a, b = names(args[:2])
         steps = [
-            certificate_step("equal_length_reflexive_certificate", "full2d_rule:metric_equal_length:01", artifact, checker, engine),
+            certificate_step("equal_length_reflexive_certificate", "full2d_rule:metric_equal_length:04", artifact, checker, engine),
             target_step(
                 "equal_length_reflexive_target",
                 "full2d_rule:metric_equal_length:03",
@@ -232,7 +226,6 @@ def build_equal_length_derivation(context: dict[str, Any]) -> tuple[dict[str, An
                 checker,
                 engine,
                 artifact,
-                "lean_template:equal_length_refl",
                 {"A": a, "B": b},
             ),
         ]
@@ -254,7 +247,6 @@ def build_equal_length_derivation(context: dict[str, Any]) -> tuple[dict[str, An
             checker,
             engine,
             artifact,
-            "lean_template:equal_length_symm",
             {"A": c, "B": d, "C": a, "D": b, "h": proof_name(support_id)},
         ),
     ]
@@ -277,7 +269,7 @@ def build_length_le_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] 
     if operator == "length_le_reflexive" and args[:2] == args[2:]:
         a, b = names(args[:2])
         steps = [
-            certificate_step("length_le_reflexive_certificate", "full2d_rule:inequality_length:01", artifact, checker, engine),
+            certificate_step("length_le_reflexive_certificate", "full2d_rule:inequality_length:04", artifact, checker, engine),
             target_step(
                 "length_le_reflexive_target",
                 "full2d_rule:inequality_length:03",
@@ -286,7 +278,6 @@ def build_length_le_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] 
                 checker,
                 engine,
                 artifact,
-                "lean_template:length_le_refl",
                 {"A": a, "B": b},
             ),
         ]
@@ -304,13 +295,12 @@ def build_length_le_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] 
         support_step("length_le_second_support", "full2d_rule:inequality_length:02", hyp_name(h1), f"length_le {c} {d} {e} {f}", checker, engine, artifact),
         target_step(
             "length_le_trans_target",
-            "full2d_rule:inequality_length:03",
+            "full2d_rule:inequality_length:05",
             [support_ref("length_le_first_support"), support_ref("length_le_second_support"), artifact],
             target_source_expr(claim),
             checker,
             engine,
             artifact,
-            "lean_template:length_le_trans",
             {
                 "A": a,
                 "B": b,
@@ -343,8 +333,8 @@ def build_area_eq_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | 
     if operator == "area_relation_reflexive" and args[:3] == args[3:]:
         a, b, c = names(args[:3])
         steps = [
-            certificate_step("area_eq_reflexive_certificate", "full2d_rule:area_relation:01", artifact, checker, engine),
-            target_step("area_eq_reflexive_target", "full2d_rule:area_relation:02", [support_ref("area_eq_reflexive_certificate"), artifact], source, checker, engine, artifact, "lean_template:area_eq_refl", {"A": a, "B": b, "C": c}),
+            certificate_step("area_eq_reflexive_certificate", "full2d_rule:area_relation:03", artifact, checker, engine),
+            target_step("area_eq_reflexive_target", "full2d_rule:area_relation:02", [support_ref("area_eq_reflexive_certificate"), artifact], source, checker, engine, artifact, {"A": a, "B": b, "C": c}),
         ]
         return derivation_for(context, "algebraic_geometry", steps, selected_certificates=[artifact]), None
     if operator != "area_relation_symmetry":
@@ -356,7 +346,7 @@ def build_area_eq_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | 
     support_id = "area_eq_reverse_support"
     steps = [
         support_step(support_id, "full2d_rule:area_relation:01", hyp_name(hyp), f"area_eq {d} {e} {f} {a} {b} {c}", checker, engine, artifact),
-        target_step("area_eq_symmetry_target", "full2d_rule:area_relation:02", [support_ref(support_id), artifact], source, checker, engine, artifact, "lean_template:area_eq_symm", {"A": d, "B": e, "C": f, "D": a, "E": b, "F": c, "h": proof_name(support_id)}),
+        target_step("area_eq_symmetry_target", "full2d_rule:area_relation:04", [support_ref(support_id), artifact], source, checker, engine, artifact, {"A": d, "B": e, "C": f, "D": a, "E": b, "F": c, "h": proof_name(support_id)}),
     ]
     return derivation_for(context, "algebraic_geometry", steps, selected_facts=[support_ref(support_id)], selected_certificates=[artifact]), None
 
@@ -378,8 +368,8 @@ def build_ratio_eq_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] |
     if operator == "ratio_similarity_reflexive" and args[:4] == args[4:]:
         a, b, c, d = names(args[:4])
         steps = [
-            certificate_step("ratio_eq_reflexive_certificate", "full2d_rule:ratio_similarity:01", artifact, checker, engine),
-            target_step("ratio_eq_reflexive_target", "full2d_rule:ratio_similarity:02", [support_ref("ratio_eq_reflexive_certificate"), artifact], source, checker, engine, artifact, "lean_template:ratio_eq_refl", {"A": a, "B": b, "C": c, "D": d}),
+            certificate_step("ratio_eq_reflexive_certificate", "full2d_rule:ratio_similarity:03", artifact, checker, engine),
+            target_step("ratio_eq_reflexive_target", "full2d_rule:ratio_similarity:02", [support_ref("ratio_eq_reflexive_certificate"), artifact], source, checker, engine, artifact, {"A": a, "B": b, "C": c, "D": d}),
         ]
         return derivation_for(context, "algebraic_geometry", steps, selected_certificates=[artifact]), None
     if operator != "ratio_similarity_symmetry":
@@ -391,7 +381,7 @@ def build_ratio_eq_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] |
     support_id = "ratio_eq_reverse_support"
     steps = [
         support_step(support_id, "full2d_rule:ratio_similarity:01", hyp_name(hyp), f"ratio_eq {e} {f} {g} {h_} {a} {b} {c} {d}", checker, engine, artifact),
-        target_step("ratio_eq_symmetry_target", "full2d_rule:ratio_similarity:02", [support_ref(support_id), artifact], source, checker, engine, artifact, "lean_template:ratio_eq_symm", {"A": e, "B": f, "C": g, "D": h_, "E": a, "F": b, "G": c, "H": d, "h": proof_name(support_id)}),
+        target_step("ratio_eq_symmetry_target", "full2d_rule:ratio_similarity:04", [support_ref(support_id), artifact], source, checker, engine, artifact, {"A": e, "B": f, "C": g, "D": h_, "E": a, "F": b, "G": c, "H": d, "h": proof_name(support_id)}),
     ]
     return derivation_for(context, "algebraic_geometry", steps, selected_facts=[support_ref(support_id)], selected_certificates=[artifact]), None
 
@@ -421,7 +411,6 @@ def build_angle_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | No
                 checker,
                 engine,
                 artifact,
-                "lean_template:directed_angle_eq_refl",
                 {"A": a, "B": b, "C": c},
             ),
         ]
@@ -437,13 +426,12 @@ def build_angle_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | No
         support_step(support_id, "full2d_rule:directed_angle_mod_pi:02", hyp_name(hyp), f"directed_angle_eq_mod_pi {d} {e} {f} {a} {b} {c}", checker, engine, artifact),
         target_step(
             "angle_symmetry_target",
-            "full2d_rule:directed_angle_mod_pi:03",
+            "full2d_rule:directed_angle_mod_pi:04",
             [support_ref(support_id), artifact],
             target_source_expr(claim),
             checker,
             engine,
             artifact,
-            "lean_template:directed_angle_eq_symm",
             {"A": d, "B": e, "C": f, "D": a, "E": b, "F": c, "h": proof_name(support_id)},
         ),
     ]
@@ -467,7 +455,7 @@ def build_angle_2pi_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] 
     if operator == "directed_angle_mod_2pi_reflexivity" and args[:3] == args[3:]:
         a, b, c = names(args[:3])
         steps = [
-            certificate_step("angle_2pi_reflexive_certificate", "full2d_rule:angle_chase:01", artifact, checker, engine),
+            certificate_step("angle_2pi_reflexive_certificate", "full2d_rule:angle_chase:03", artifact, checker, engine),
             target_step(
                 "angle_2pi_reflexive_target",
                 "full2d_rule:angle_chase:02",
@@ -476,7 +464,6 @@ def build_angle_2pi_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] 
                 checker,
                 engine,
                 artifact,
-                "lean_template:directed_angle_eq_mod_2pi_refl",
                 {"A": a, "B": b, "C": c},
             ),
         ]
@@ -492,13 +479,12 @@ def build_angle_2pi_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] 
         support_step(support_id, "full2d_rule:angle_chase:01", hyp_name(hyp), f"directed_angle_eq_mod_2pi {d} {e} {f} {a} {b} {c}", checker, engine, artifact),
         target_step(
             "angle_2pi_symmetry_target",
-            "full2d_rule:angle_chase:02",
+            "full2d_rule:angle_chase:04",
             [support_ref(support_id), artifact],
             source,
             checker,
             engine,
             artifact,
-            "lean_template:directed_angle_eq_mod_2pi_symm",
             {"A": d, "B": e, "C": f, "D": a, "E": b, "F": c, "h": proof_name(support_id)},
         ),
     ]
@@ -532,7 +518,6 @@ def build_chord_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | No
             checker,
             engine,
             artifact,
-            "lean_template:chord_is_symmetric",
             {"A": b, "B": a, "c": c, "h": proof_name(support_id)},
         ),
     ]
@@ -566,7 +551,6 @@ def build_triangle_metric_derivation(context: dict[str, Any]) -> tuple[dict[str,
             checker,
             engine,
             artifact,
-            "lean_template:equilateral_is_isosceles_left",
             {"A": a, "B": b, "C": c, "h": proof_name(support_id)},
         ),
     ]
@@ -603,17 +587,16 @@ def build_transformation_derivation(context: dict[str, Any]) -> tuple[dict[str, 
                 checker,
                 engine,
                 artifact,
-                "lean_template:reflection_has_evidence",
                 {"r": r},
             ),
         ]
         return derivation_for(context, "transformation", steps, selected_certificates=[artifact]), None
     transformation_evidence = (
-        ("homothety_evidence_projection", "homothety_evidence_certificate", "full2d_rule:transformation_homothety:01", "full2d_rule:transformation_homothety:02", "lean_template:homothety_has_evidence", "h"),
-        ("inversion_evidence_projection", "inversion_evidence_certificate", "full2d_rule:transformation_inversion:01", "full2d_rule:transformation_inversion:02", "lean_template:inversion_has_evidence", "i"),
-        ("spiral_similarity_evidence_projection", "spiral_similarity_evidence_certificate", "full2d_rule:spiral_similarity:01", "full2d_rule:spiral_similarity:02", "lean_template:spiral_similarity_has_evidence", "s"),
+        ("homothety_evidence_projection", "homothety_evidence_certificate", "full2d_rule:transformation_homothety:01", "full2d_rule:transformation_homothety:02", "h"),
+        ("inversion_evidence_projection", "inversion_evidence_certificate", "full2d_rule:transformation_inversion:01", "full2d_rule:transformation_inversion:02", "i"),
+        ("spiral_similarity_evidence_projection", "spiral_similarity_evidence_certificate", "full2d_rule:spiral_similarity:01", "full2d_rule:spiral_similarity:02", "s"),
     )
-    for expected_operator, certificate_id, rule_1, rule_2, template, binding_key in transformation_evidence:
+    for expected_operator, certificate_id, rule_1, rule_2, binding_key in transformation_evidence:
         if operator == expected_operator and len(args) == 1:
             value = names(args)[0]
             steps = [
@@ -626,7 +609,6 @@ def build_transformation_derivation(context: dict[str, Any]) -> tuple[dict[str, 
                     checker,
                     engine,
                     artifact,
-                    template,
                     {binding_key: value},
                 ),
             ]
@@ -643,7 +625,6 @@ def build_transformation_derivation(context: dict[str, Any]) -> tuple[dict[str, 
                 checker,
                 engine,
                 artifact,
-                "lean_template:rotation_preserves_collinear_of_eq",
                 {"A": a, "B": b, "C": c, "D": d, "E": e, "F": f},
             ),
         ]
@@ -674,7 +655,6 @@ def build_lean_search_reflexive_right_derivation(context: dict[str, Any]) -> tup
             checker,
             engine,
             artifact,
-            "lean_template:collinear_refl_right",
             {"A": a, "B": b},
         ),
     ]
@@ -704,7 +684,6 @@ def build_synthetic_reflexive_derivation(context: dict[str, Any]) -> tuple[dict[
             checker,
             engine,
             artifact,
-            "lean_template:collinear_refl_left",
             {"A": a, "B": c},
         ),
     ]
@@ -873,7 +852,6 @@ def support_step(
         "supporting_engine_role": "",
         "output_is_target": False,
         "non_target_intermediate": True,
-        "lean_template_id": "lean_template:assumption_support",
         "proof_bindings": {"h": hypothesis_name},
     }
 
@@ -891,7 +869,6 @@ def certificate_step(step_id: str, rule_id: str, artifact_ref_value: str, checke
         "supporting_engine_role": "",
         "output_is_target": False,
         "non_target_intermediate": True,
-        "lean_template_id": "lean_template:checked_certificate",
         "proof_bindings": {},
     }
 
@@ -904,7 +881,6 @@ def target_step(
     checker_ref_value: str,
     engine_ref_value: str,
     artifact_ref_value: str,
-    lean_template_id: str,
     proof_bindings: dict[str, str],
 ) -> dict[str, Any]:
     return {
@@ -919,7 +895,6 @@ def target_step(
         "supporting_engine_role": "",
         "output_is_target": True,
         "non_target_intermediate": False,
-        "lean_template_id": lean_template_id,
         "proof_bindings": proof_bindings,
     }
 

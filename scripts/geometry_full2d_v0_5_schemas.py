@@ -273,8 +273,8 @@ def _validate_selected_derivation(payload: dict[str, Any], errors: list[str]) ->
             errors.append(f"bad_ref:derivation_steps[{index}].supporting_artifact_ref")
         if not str(step.get("rule_id", "")).startswith("full2d_rule:"):
             errors.append(f"bad_rule_id:derivation_steps[{index}]")
-        if not str(step.get("lean_template_id", "")).startswith("lean_template:"):
-            errors.append(f"missing_lean_template_id:derivation_steps[{index}]")
+        if "lean_template_id" in step:
+            errors.append(f"selected_derivation_supplies_lean_template_id:derivation_steps[{index}]")
         if not isinstance(step.get("proof_bindings"), dict):
             errors.append(f"missing_proof_bindings:derivation_steps[{index}]")
         if not step.get("output_expr"):
@@ -519,7 +519,6 @@ def positive_fixtures() -> dict[str, dict[str, Any]]:
                     "independent_checker_report_ref": ref,
                     "supporting_engine_output_ref": ref,
                     "supporting_artifact_ref": ref,
-                    "lean_template_id": "lean_template:checked_certificate",
                     "proof_bindings": {},
                     "output_is_target": False,
                     "non_target_intermediate": True,
@@ -533,7 +532,6 @@ def positive_fixtures() -> dict[str, dict[str, Any]]:
                     "independent_checker_report_ref": ref_b,
                     "supporting_engine_output_ref": ref,
                     "supporting_artifact_ref": ref,
-                    "lean_template_id": "lean_template:collinear_refl_left",
                     "proof_selection_source": "engine_artifact_derivation_operator",
                     "derivation_operator": "collinear_reflexive_left",
                     "proof_bindings": {"A": "A", "B": "B"},

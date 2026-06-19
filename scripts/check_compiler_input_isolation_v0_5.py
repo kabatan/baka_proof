@@ -37,6 +37,7 @@ SOLVER_FORBIDDEN_PATTERNS = {
     "solver_target_expr_startswith": re.compile(r"target_source_expr\s*\([^)]*\)\.startswith\s*\("),
     "solver_target_shape_id": re.compile(r"\btarget_shape_id\b"),
     "solver_template_id_metadata": re.compile(r"\btemplate_id\b"),
+    "solver_lean_template_literal": re.compile(r"lean_template:"),
 }
 
 
@@ -160,6 +161,17 @@ def self_test_report(run_dir: Path) -> dict[str, Any]:
             rule_registry_ref=fixture["rule_registry_ref"],
             side_condition_checker_refs=fixture["side_condition_checker_refs"],
         )
+        derivation_template = copy.deepcopy(fixture["selected_derivation"])
+        derivation_template["derivation_steps"][1]["lean_template_id"] = "lean_template:collinear_refl_left"
+        derivation_template_compile = compile_selected_derivation(
+            claim_spec=fixture["claim"],
+            claim_spec_ref=fixture["claim_ref"],
+            selected_derivation=derivation_template,
+            selected_solver_derivation_ref=fixture["selected_derivation_ref"],
+            rule_registry=fixture["rule_registry"],
+            rule_registry_ref=fixture["rule_registry_ref"],
+            side_condition_checker_refs=fixture["side_condition_checker_refs"],
+        )
     errors: list[str] = []
     if positive["status"] != "passed":
         errors.append("positive_input_isolation_failed")
@@ -169,6 +181,8 @@ def self_test_report(run_dir: Path) -> dict[str, Any]:
         errors.append("naked_target_derivation_not_rejected")
     if missing_operator_compile["status"] != "failed" or not any("derivation_operator" in error or "proof_selection" in error for error in missing_operator_compile.get("errors", [])):
         errors.append("missing_artifact_operator_derivation_not_rejected")
+    if derivation_template_compile["status"] != "failed" or not any("selected_derivation_supplies_lean_template_id" in error for error in derivation_template_compile.get("errors", [])):
+        errors.append("derivation_supplied_template_not_rejected")
     return {
         "schema_version": "CompilerInputIsolationSelfTestV05",
         "status": "passed" if not errors else "failed",
@@ -177,6 +191,7 @@ def self_test_report(run_dir: Path) -> dict[str, Any]:
         "bad_static": bad_static,
         "bad_compile": bad_compile,
         "missing_operator_compile": missing_operator_compile,
+        "derivation_template_compile": derivation_template_compile,
     }
 
 

@@ -473,6 +473,23 @@ SEMANTIC_TARGET_GRAMMAR: list[dict[str, Any]] = [
     {"id": "construction_line_circle_point", "families": ["circle", "construction"], "assumptions": ["line_circle_intersection P l c"], "target": "constructed_line_circle_point P l c"},
     {"id": "construction_center_point", "families": ["construction", "circle"], "assumptions": ["constructed_center_point O c"], "target": "constructed_center_point O c"},
     {"id": "transformation_rotation_collinear", "families": ["rotation", "collinear"], "assumptions": [], "target": "rotation_preserves_collinear A B C A B C"},
+    {"id": "order_between_collinear_tail_repeat", "families": ["between", "collinear"], "assumptions": ["between A B A"], "target": "collinear A B A"},
+    {"id": "metric_equal_length_reflexive_degenerate", "families": ["equal_length"], "assumptions": [], "target": "equal_length A A A A"},
+    {"id": "metric_equal_length_symmetric_shared_endpoint", "families": ["equal_length"], "assumptions": ["equal_length A C A B"], "target": "equal_length A B A C"},
+    {"id": "metric_area_reflexive_repeated_first", "families": ["area_eq"], "assumptions": [], "target": "area_eq A A C A A C"},
+    {"id": "metric_area_symmetric_repeated_first", "families": ["area_eq"], "assumptions": ["area_eq D D F A A C"], "target": "area_eq A A C D D F"},
+    {"id": "metric_ratio_reflexive_repeated_first", "families": ["ratio_eq"], "assumptions": [], "target": "ratio_eq A A C D A A C D"},
+    {"id": "metric_ratio_symmetric_repeated_first", "families": ["ratio_eq"], "assumptions": ["ratio_eq E E G H A A C D"], "target": "ratio_eq A A C D E E G H"},
+    {"id": "inequality_length_reflexive_degenerate", "families": ["length_le"], "assumptions": [], "target": "length_le A A A A"},
+    {"id": "inequality_length_transitive_degenerate_segments", "families": ["length_le"], "assumptions": ["length_le A A C C", "length_le C C E E"], "target": "length_le A A E E"},
+    {"id": "angle_pi_reflexive_repeated_first", "families": ["angle_eq"], "assumptions": [], "target": "directed_angle_eq_mod_pi A A C A A C"},
+    {"id": "angle_pi_symmetric_repeated_first", "families": ["angle_eq"], "assumptions": ["directed_angle_eq_mod_pi D D F A A C"], "target": "directed_angle_eq_mod_pi A A C D D F"},
+    {"id": "angle_2pi_reflexive_repeated_first", "families": ["angle_eq"], "assumptions": [], "target": "directed_angle_eq_mod_2pi A A C A A C"},
+    {"id": "angle_2pi_symmetric_repeated_first", "families": ["angle_eq"], "assumptions": ["directed_angle_eq_mod_2pi D D F A A C"], "target": "directed_angle_eq_mod_2pi A A C D D F"},
+    {"id": "circle_chord_symmetric_degenerate", "families": ["chord"], "assumptions": ["chord A A c"], "target": "chord A A c"},
+    {"id": "triangle_equilateral_metric_degenerate", "families": ["triangle", "equal_length"], "assumptions": ["equilateral A A C"], "target": "equal_length A A A C"},
+    {"id": "construction_circle_point_degenerate", "families": ["circle", "construction"], "assumptions": ["circle_with_center_through_point O O c"], "target": "constructed_circle_point O O c"},
+    {"id": "transformation_rotation_collinear_repeated_endpoint", "families": ["rotation", "collinear"], "assumptions": [], "target": "rotation_preserves_collinear A B A A B A"},
 ]
 
 POINT_SYMBOLS = ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "M", "O", "P", "Q")
@@ -751,10 +768,10 @@ def check_statement_diversity(corpus_root: Path) -> dict[str, Any]:
         errors.append("max_exact_skeleton_duplicate_gt_8")
     if len(relation_families) < 8:
         errors.append("used_relation_families_lt_8")
-    if len(target_core_signatures) < 24:
-        errors.append("unique_core_target_signatures_lt_24")
-    if target_core_signatures and max(target_core_signatures.values()) > 100:
-        errors.append("max_core_target_signature_duplicate_gt_100")
+    if len(target_core_signatures) < 40:
+        errors.append("unique_core_target_signatures_lt_40")
+    if target_core_signatures and max(target_core_signatures.values()) > 60:
+        errors.append("max_core_target_signature_duplicate_gt_60")
     if construction_required < 350:
         errors.append("construction_case_certificate_required_tasks_lt_350")
     if non_target_required < 600:

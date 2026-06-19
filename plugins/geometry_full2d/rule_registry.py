@@ -95,6 +95,62 @@ SIDE_CONDITION_PROCEDURES = (
     "case_split_coverage",
 )
 
+RULE_LEAN_TEMPLATES = {
+    "full2d_rule:angle_chase:01": "lean_template:assumption_support",
+    "full2d_rule:angle_chase:02": "lean_template:directed_angle_eq_mod_2pi_refl",
+    "full2d_rule:angle_chase:03": "lean_template:checked_certificate",
+    "full2d_rule:angle_chase:04": "lean_template:directed_angle_eq_mod_2pi_symm",
+    "full2d_rule:area_relation:01": "lean_template:assumption_support",
+    "full2d_rule:area_relation:02": "lean_template:area_eq_refl",
+    "full2d_rule:area_relation:03": "lean_template:checked_certificate",
+    "full2d_rule:area_relation:04": "lean_template:area_eq_symm",
+    "full2d_rule:circle_cyclicity:01": "lean_template:assumption_support",
+    "full2d_rule:circle_cyclicity:02": "lean_template:chord_is_symmetric",
+    "full2d_rule:construction_center:01": "lean_template:assumption_support",
+    "full2d_rule:construction_center:02": "lean_template:constructed_center_identity",
+    "full2d_rule:construction_circle:01": "lean_template:assumption_support",
+    "full2d_rule:construction_circle:02": "lean_template:circle_construction_on_circle",
+    "full2d_rule:construction_intersection:01": "lean_template:assumption_support",
+    "full2d_rule:construction_intersection:02": "lean_template:line_circle_intersection_on_line",
+    "full2d_rule:directed_angle_mod_pi:01": "lean_template:checked_certificate",
+    "full2d_rule:directed_angle_mod_pi:02": "lean_template:assumption_support",
+    "full2d_rule:directed_angle_mod_pi:03": "lean_template:directed_angle_eq_refl",
+    "full2d_rule:directed_angle_mod_pi:04": "lean_template:directed_angle_eq_symm",
+    "full2d_rule:incidence_collinearity:01": "lean_template:checked_certificate",
+    "full2d_rule:incidence_collinearity:02": "lean_template:collinear_refl_left",
+    "full2d_rule:incidence_collinearity:03": "lean_template:checked_certificate",
+    "full2d_rule:incidence_collinearity:04": "lean_template:collinear_refl_right",
+    "full2d_rule:inequality_length:01": "lean_template:assumption_support",
+    "full2d_rule:inequality_length:02": "lean_template:assumption_support",
+    "full2d_rule:inequality_length:03": "lean_template:length_le_refl",
+    "full2d_rule:inequality_length:04": "lean_template:checked_certificate",
+    "full2d_rule:inequality_length:05": "lean_template:length_le_trans",
+    "full2d_rule:metric_equal_length:01": "lean_template:assumption_support",
+    "full2d_rule:metric_equal_length:02": "lean_template:equal_length_symm",
+    "full2d_rule:metric_equal_length:03": "lean_template:equal_length_refl",
+    "full2d_rule:metric_equal_length:04": "lean_template:checked_certificate",
+    "full2d_rule:midpoint_segment:01": "lean_template:assumption_support",
+    "full2d_rule:midpoint_segment:02": "lean_template:midpoint_collinear",
+    "full2d_rule:order_between:01": "lean_template:assumption_support",
+    "full2d_rule:order_between:02": "lean_template:between_collinear",
+    "full2d_rule:ratio_similarity:01": "lean_template:assumption_support",
+    "full2d_rule:ratio_similarity:02": "lean_template:ratio_eq_refl",
+    "full2d_rule:ratio_similarity:03": "lean_template:checked_certificate",
+    "full2d_rule:ratio_similarity:04": "lean_template:ratio_eq_symm",
+    "full2d_rule:spiral_similarity:01": "lean_template:checked_certificate",
+    "full2d_rule:spiral_similarity:02": "lean_template:spiral_similarity_has_evidence",
+    "full2d_rule:transformation_homothety:01": "lean_template:checked_certificate",
+    "full2d_rule:transformation_homothety:02": "lean_template:homothety_has_evidence",
+    "full2d_rule:transformation_inversion:01": "lean_template:checked_certificate",
+    "full2d_rule:transformation_inversion:02": "lean_template:inversion_has_evidence",
+    "full2d_rule:transformation_reflection:01": "lean_template:checked_certificate",
+    "full2d_rule:transformation_reflection:02": "lean_template:reflection_has_evidence",
+    "full2d_rule:transformation_rotation:01": "lean_template:checked_certificate",
+    "full2d_rule:transformation_rotation:02": "lean_template:rotation_preserves_collinear_of_eq",
+    "full2d_rule:triangle_congruence:01": "lean_template:assumption_support",
+    "full2d_rule:triangle_congruence:02": "lean_template:equilateral_is_isosceles_left",
+}
+
 
 @dataclass(frozen=True)
 class RuleContractFull2D:
@@ -231,6 +287,7 @@ def validate_rule_registry_full2d(registry: RuleRegistryFull2D) -> list[str]:
 def _rule_contract(family: str, index: int) -> RuleContractFull2D:
     rule_id = f"full2d_rule:{family}:{index:02d}"
     side_conditions = _family_side_conditions(family, index)
+    lean_template_id = RULE_LEAN_TEMPLATES.get(rule_id, f"GeometryFull2D.rule_template.{family}.{index:02d}")
     return RuleContractFull2D(
         schema_version="RuleContractFull2D",
         rule_id=rule_id,
@@ -239,7 +296,7 @@ def _rule_contract(family: str, index: int) -> RuleContractFull2D:
         output_pattern=f"{family}:output:{index}:derived_fact",
         required_side_conditions=side_conditions,
         generated_obligations=tuple(f"obligation:{condition}" for condition in side_conditions),
-        lean_template_id=f"GeometryFull2D.rule_template.{family}.{index:02d}",
+        lean_template_id=lean_template_id,
         independent_checker=f"IndependentCheckerFull2D:{family}:{index:02d}",
         positive_fixtures=(f"fixture:{rule_id}:positive",),
         negative_fixtures=(f"fixture:{rule_id}:negative",),

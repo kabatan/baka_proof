@@ -146,8 +146,9 @@ def compile_selected_derivation(
         for rule_id in consumed_rule_ids
         for obligation in rules_by_id[rule_id].get("generated_obligations", [])
     )
+    rule_templates_by_id = {rule_id: str(rule.get("lean_template_id", "")) for rule_id, rule in rules_by_id.items()}
     try:
-        proof_text = build_solver_citing_proof_text(selected_derivation, consumed_rule_ids, generated_obligations)
+        proof_text = build_solver_citing_proof_text(selected_derivation, consumed_rule_ids, generated_obligations, rule_templates_by_id)
     except (KeyError, ValueError) as exc:
         return {"status": "failed", "errors": [f"proof_template_binding_error:{exc}"]}
     unsigned = {
@@ -225,11 +226,14 @@ def validate_compile_inputs(
             errors.append(f"bad_supporting_artifact_ref:{index}")
         if not isinstance(step.get("proof_bindings"), dict):
             errors.append(f"missing_proof_bindings:{index}")
-        lean_template_id = str(step.get("lean_template_id", ""))
-        if not lean_template_id.startswith("lean_template:"):
-            errors.append(f"missing_lean_template_id:{index}")
-        elif lean_template_id not in ALLOWED_LEAN_TEMPLATES:
-            errors.append(f"unsupported_lean_template_id:{index}:{lean_template_id}")
+        if "lean_template_id" in step:
+            errors.append(f"selected_derivation_supplies_lean_template_id:{index}")
+        elif rule is not None:
+            lean_template_id = str(rule.get("lean_template_id", ""))
+            if not lean_template_id.startswith("lean_template:"):
+                errors.append(f"rule_registry_template_not_executable:{index}:{rule_id}")
+            elif lean_template_id not in ALLOWED_LEAN_TEMPLATES:
+                errors.append(f"unsupported_rule_registry_template:{index}:{rule_id}:{lean_template_id}")
         if step.get("output_is_target") is True:
             target_steps += 1
             if step.get("proof_selection_source") != "engine_artifact_derivation_operator":
@@ -264,6 +268,7 @@ def build_solver_citing_proof_text(
     selected_derivation: dict[str, Any],
     consumed_rule_ids: tuple[str, ...],
     generated_obligations: tuple[str, ...],
+    rule_templates_by_id: dict[str, str],
 ) -> str:
     facts = ", ".join(map(str, selected_derivation.get("selected_facts", []))) or "none"
     constructions = ", ".join(map(str, selected_derivation.get("selected_constructions", []))) or "none"
@@ -290,15 +295,16 @@ def build_solver_citing_proof_text(
         proof_names[str(step.get("output_ref"))] = proof_var
         output_expr = str(step.get("output_expr", "")).strip() or "True"
         proof_lines.append(f"have {proof_var} : {output_expr} := by")
-        proof_lines.extend("  " + line for line in build_step_exact(step).splitlines())
+        proof_lines.extend("  " + line for line in build_step_exact(step, rule_templates_by_id).splitlines())
     target_steps = [step for step in steps if step.get("output_is_target") is True]
     target_var = proof_name(str(target_steps[-1].get("step_id"))) if target_steps else ""
     proof_lines.append(f"exact {target_var}" if target_var else "exact by trivial")
     return "\n".join(proof_lines)
 
 
-def build_step_exact(step: dict[str, Any]) -> str:
-    template = str(step.get("lean_template_id", ""))
+def build_step_exact(step: dict[str, Any], rule_templates_by_id: dict[str, str]) -> str:
+    rule_id = str(step.get("rule_id", ""))
+    template = str(rule_templates_by_id.get(rule_id, ""))
     bindings = step.get("proof_bindings", {})
     if not isinstance(bindings, dict):
         bindings = {}
