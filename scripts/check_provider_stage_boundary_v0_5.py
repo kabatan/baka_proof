@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -40,6 +41,7 @@ def main() -> int:
 
 def check_provider_stage_boundary(extra_paths: list[Path] | None = None) -> dict[str, Any]:
     paths = [
+        ROOT / "plugins" / "geometry_full2d" / "__init__.py",
         ROOT / "plugins" / "geometry_full2d" / "provider_cli.py",
         ROOT / "plugins" / "geometry_full2d" / "provider.py",
         *sorted((ROOT / "plugins" / "geometry_full2d" / "engines").glob("*.py")),
@@ -54,12 +56,15 @@ def check_provider_stage_boundary(extra_paths: list[Path] | None = None) -> dict
         hits = forbidden_imports(path)
         scans.append({"path": path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else str(path), "hits": hits})
         errors.extend(f"{path}:{hit}" for hit in hits)
+    runtime_hits = forbidden_runtime_imports()
+    errors.extend(f"runtime_forbidden_import:{hit}" for hit in runtime_hits)
     return {
         "schema_version": "ProviderStageBoundaryCheckV05",
         "status": "passed" if not errors else "failed",
         "errors": sorted(set(errors)),
         "scanned_file_count": len(scans),
         "scans": scans,
+        "runtime_forbidden_imports": runtime_hits,
     }
 
 
@@ -83,6 +88,30 @@ def forbidden_imports(path: Path) -> list[str]:
                 if any(part in combined for part in FORBIDDEN_IMPORT_PARTS):
                     hits.append(f"forbidden_import:{combined}")
     return sorted(set(hits))
+
+
+def forbidden_runtime_imports() -> list[str]:
+    snippet = r'''
+import json
+import sys
+import plugins.geometry_full2d.provider_cli
+forbidden = (
+    "plugins.geometry_full2d.compiler",
+    "plugins.geometry_full2d.rule_registry",
+    "plugins.geometry_full2d.proof",
+    "plugins.geometry_full2d.run_records",
+)
+hits = sorted(name for name in sys.modules if any(name == part or name.startswith(part + ".") for part in forbidden))
+print(json.dumps(hits))
+'''
+    proc = subprocess.run([sys.executable, "-c", snippet], cwd=ROOT, text=True, capture_output=True, timeout=30)
+    if proc.returncode != 0:
+        return [f"runtime_import_probe_failed:{proc.returncode}:{(proc.stderr or proc.stdout)[-500:]}"]
+    try:
+        payload = json.loads(proc.stdout)
+    except json.JSONDecodeError:
+        return ["runtime_import_probe_unparseable"]
+    return [str(item) for item in payload] if isinstance(payload, list) else ["runtime_import_probe_not_list"]
 
 
 def self_test_report() -> dict[str, Any]:

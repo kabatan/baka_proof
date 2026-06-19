@@ -122,8 +122,17 @@ REQUIRED_CHECKER_COMMANDS: dict[str, list[str]] = {
     ],
     "extraction": [sys.executable, "scripts/check_full2d_extraction_corpus_v0_5.py", "--corpus-root", "benchmarks/geometry_full2d_v0_5", "--run-dir", "runs/geometry_full2d_v0_5"],
     "engine_outputs": [sys.executable, "scripts/check_engine_outputs_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5"],
-    "causality_mutations": [sys.executable, "scripts/run_solver_causality_mutations_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5", "--all-b2-successes", "--fresh-reruns"],
-    "solver_causality": [sys.executable, "scripts/check_solver_causality_reports_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5"],
+    "causality_mutations": [
+        sys.executable,
+        "scripts/run_solver_causality_mutations_v0_5.py",
+        "--run-dir",
+        "runs/geometry_full2d_v0_5",
+        "--all-b2-successes",
+        "--fresh-reruns",
+        "--workers",
+        "16",
+    ],
+    "solver_causality": [sys.executable, "scripts/check_solver_causality_reports_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5", "--self-test"],
     "baseline_comparability": [sys.executable, "scripts/check_full2d_baseline_comparability_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5"],
     "metrics": [sys.executable, "scripts/check_full2d_metrics_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5"],
     "used_rule_coverage": [sys.executable, "scripts/check_full2d_used_rule_coverage_v0_5.py", "--run-dir", "runs/geometry_full2d_v0_5"],
@@ -770,7 +779,34 @@ def build_fail_closed_release_report(
     hard_blockers: set[str] = set()
 
     base_commands = ["active_guardian_spec", "red_cases", "acceptance_coverage", "no_checker_whitelist"]
-    commands_to_run = list(REQUIRED_CHECKER_COMMANDS) if run_required_commands else base_commands
+    release_command_order = [
+        "active_guardian_spec",
+        "red_cases",
+        "acceptance_coverage",
+        "no_checker_whitelist",
+        "schema_validators",
+        "corpus_independence",
+        "corpus_statement_diversity",
+        "goal_preservation",
+        "provider_stage_boundary",
+        "rule_registry",
+        "compiler_input_isolation",
+        "compiler_taint",
+        "matrix",
+        "extraction",
+        "engine_outputs",
+        "independent_solver_checkers",
+        "proof_worker_final_verify",
+        "causality_mutations",
+        "solver_causality",
+        "baseline_comparability",
+        "metrics",
+        "used_rule_coverage",
+        "engine_contribution",
+        "debt_ledger",
+        "closure_claim_ceiling",
+    ]
+    commands_to_run = release_command_order if run_required_commands else base_commands
     for name in commands_to_run:
         cmd = list(REQUIRED_CHECKER_COMMANDS[name])
         cmd = [str(run_dir) if item == "runs/geometry_full2d_v0_5" else item for item in cmd]
@@ -780,8 +816,8 @@ def build_fail_closed_release_report(
             if closure_path.exists():
                 cmd = [item for item in cmd if item != "--allow-missing-closure"]
         timeout_by_command = {
-            "matrix": 3600,
-            "causality_mutations": 10800,
+            "matrix": 7200,
+            "causality_mutations": 43200,
             "engine_outputs": 300,
             "extraction": 300,
             "solver_causality": 300,

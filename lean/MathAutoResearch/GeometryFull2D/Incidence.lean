@@ -14,4 +14,7 @@ abbrev line_intersection (l₁ l₂ : Line) (p : Point) : Prop :=
 theorem collinear_refl_left (a b : Point) : collinear a a b := by
   simp [collinear, LeanGeo.Coll]
 
+theorem collinear_refl_right (a b : Point) : collinear a b b := by
+  simp [collinear, LeanGeo.Coll]
+
 end MathAutoResearch.GeometryFull2D

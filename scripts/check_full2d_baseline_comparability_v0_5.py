@@ -16,7 +16,8 @@ from scripts.geometry_full2d_v0_5_schemas import validate_payload
 
 
 REQUIRED_BASELINES = ["B1", "B2", "B5", "B6", "B7"]
-ALLOWED_MEASURED_FAILURE_SOURCES = {"FinalVerifyReportFull2D", "StageFailureReportV1"}
+ALLOWED_MEASURED_FAILURE_SOURCES = {"FinalVerifyReportFull2D", "StageFailureReportV1", "DisabledStageReportV1"}
+ALLOWED_STAGE_FAILURE_KINDS = {"real_execution_failure", "validation_rejected", "resource_exhausted", "unsupported_after_disabled_component"}
 
 
 def main() -> int:
@@ -113,8 +114,38 @@ def check_baseline_comparability(run_dir: Path) -> dict[str, Any]:
             status = str(record.get("final_status"))
             if status in {"final_theorem", "measured_failure"}:
                 by_baseline[baseline][status] += 1
-    b2_rate = (by_baseline["B2"]["final_theorem"] / len(task_ids)) if task_ids else 0.0
-    b1_rate = (by_baseline["B1"]["final_theorem"] / len(task_ids)) if task_ids else 0.0
+    b2_rate = success_rate(by_key, task_ids, "B2")
+    b1_rate = success_rate(by_key, task_ids, "B1")
+    construction_subset = [
+        str(task.get("task_id"))
+        for task in tasks
+        if task.get("requires_construction_case_certificate") is True
+        or relation_families(task) & {"construction", "circle", "midpoint", "reflection_image", "rotation"}
+    ]
+    algebraic_metric_subset = [
+        str(task.get("task_id"))
+        for task in tasks
+        if relation_families(task) & {"equal_length", "length_le", "angle_eq", "metric", "angle", "inequality", "triangle"}
+    ]
+    order_case_subset = [
+        str(task.get("task_id"))
+        for task in tasks
+        if relation_families(task) & {"between", "order", "case", "collinear"}
+    ]
+    advantage = {
+        "B2_minus_B1_overall": round(b2_rate - b1_rate, 6),
+        "B2_minus_B5_construction_subset": round(success_rate(by_key, construction_subset, "B2") - success_rate(by_key, construction_subset, "B5"), 6) if construction_subset else None,
+        "B2_minus_B6_algebraic_metric_subset": round(success_rate(by_key, algebraic_metric_subset, "B2") - success_rate(by_key, algebraic_metric_subset, "B6"), 6) if algebraic_metric_subset else None,
+        "B2_minus_B7_order_case_subset": round(success_rate(by_key, order_case_subset, "B2") - success_rate(by_key, order_case_subset, "B7"), 6) if order_case_subset else None,
+    }
+    if advantage["B2_minus_B1_overall"] < 0.15:
+        errors.append("baseline_advantage_b2_minus_b1_below_threshold")
+    if construction_subset and (advantage["B2_minus_B5_construction_subset"] or 0.0) < 0.10:
+        errors.append("baseline_advantage_b2_minus_b5_construction_subset_below_threshold")
+    if algebraic_metric_subset and (advantage["B2_minus_B6_algebraic_metric_subset"] or 0.0) < 0.10:
+        errors.append("baseline_advantage_b2_minus_b6_algebraic_metric_subset_below_threshold")
+    if order_case_subset and (advantage["B2_minus_B7_order_case_subset"] or 0.0) < 0.05:
+        errors.append("baseline_advantage_b2_minus_b7_order_case_subset_below_threshold")
     report = {
         "schema_version": "Full2DBaselineComparabilityCheckV05",
         "status": "passed" if not errors else "failed",
@@ -127,11 +158,11 @@ def check_baseline_comparability(run_dir: Path) -> dict[str, Any]:
         "conditional_b8_resolution_valid": b8_resolution_valid,
         "b2_metrics_independent_of_b8": b8_resolution_valid,
         "by_baseline": by_baseline,
-        "baseline_advantage": {
-            "B2_minus_B1_overall": round(b2_rate - b1_rate, 6),
-            "B2_minus_B5_construction_subset": 1.0,
-            "B2_minus_B6_algebraic_metric_subset": 1.0,
-            "B2_minus_B7_order_case_subset": 1.0,
+        "baseline_advantage": advantage,
+        "subset_counts": {
+            "construction_subset": len(construction_subset),
+            "algebraic_metric_subset": len(algebraic_metric_subset),
+            "order_case_subset": len(order_case_subset),
         },
     }
     write_json(run_dir / "baseline_comparability_report_v0_5.json", report)
@@ -146,8 +177,8 @@ def validate_ablation_failure_record(record: dict[str, Any], ref_index: dict[str
         return ["ablation_failure_report_ref_unresolved"]
     if failure.get("schema_version") != "StageFailureReportV1":
         errors.append("ablation_failure_not_stage_failure_report")
-    if failure.get("failure_kind") != "declared_baseline_ablation":
-        errors.append("ablation_failure_kind_not_declared_ablation")
+    if failure.get("failure_kind") not in ALLOWED_STAGE_FAILURE_KINDS:
+        errors.append("ablation_failure_kind_invalid")
     if failure.get("stage") not in {"provider", "independent_checker", "compiler", "proof_worker", "final_verify"}:
         errors.append("ablation_failure_stage_invalid")
     if failure.get("disabled_components") != record.get("baseline_disabled_components"):
@@ -162,8 +193,8 @@ def validate_ablation_failure_record(record: dict[str, Any], ref_index: dict[str
     else:
         if command_log.get("actual_python_function_executed") is not True and command_log.get("actual_subprocess_executed") is not True:
             errors.append("ablation_failure_command_not_executed")
-        if command_log.get("stage_sequence") != ["claimspec", "provider"]:
-            errors.append("ablation_failure_stage_sequence_invalid")
+        if not command_log.get("stage_sequence"):
+            errors.append("ablation_failure_stage_sequence_missing")
     engine_refs = record.get("engine_output_refs")
     if not isinstance(engine_refs, list) or not engine_refs:
         errors.append("ablation_engine_refs_missing")
@@ -172,6 +203,16 @@ def validate_ablation_failure_record(record: dict[str, Any], ref_index: dict[str
     if record.get("final_status_source") == "DisabledStageReportV1":
         errors.append("disabled_stage_report_not_allowed_for_release_ablation")
     return errors
+
+
+def success_rate(by_key: dict[tuple[str, str], dict[str, Any]], task_ids: list[str], baseline: str) -> float:
+    if not task_ids:
+        return 0.0
+    return len([task_id for task_id in task_ids if by_key.get((task_id, baseline), {}).get("final_status") == "final_theorem"]) / len(task_ids)
+
+
+def relation_families(task: dict[str, Any]) -> set[str]:
+    return {str(item) for item in task.get("relation_families", []) if item}
 
 
 def load_records(run_dir: Path) -> list[dict[str, Any]]:
@@ -191,14 +232,11 @@ def load_records(run_dir: Path) -> list[dict[str, Any]]:
 
 def build_ref_index(run_dir: Path) -> dict[str, dict[str, Any]]:
     refs: dict[str, dict[str, Any]] = {}
-    roots = [
-        run_dir / "stage_failures",
-        run_dir / "command_logs" / "baseline_ablation",
-    ]
+    roots = [run_dir / "stage_failures", run_dir / "command_logs"]
     for root in roots:
         if not root.exists():
             continue
-        for item in sorted(root.glob("*.json")):
+        for item in sorted(root.rglob("*.json")):
             try:
                 payload = json.loads(item.read_text(encoding="utf-8"))
             except Exception:

@@ -14,7 +14,7 @@ from plugins.geometry_full2d.engine_contracts import (
 )
 
 ENGINE_ROLE = "algebraic_geometry"
-BACKEND_IDENTITY = "geometry_full2d.algebraic_geometry:exact_symbolic_checker:v0_4_2"
+BACKEND_IDENTITY = "geometry_full2d.algebraic_geometry:exact_symbolic_checker:v0_5"
 
 
 @dataclass(frozen=True)
@@ -30,7 +30,6 @@ class AlgebraicCertificateFull2D:
     denominator_conditions: tuple[str, ...]
     checker_result: str
     source_rule_ids: tuple[str, ...]
-    lean_summary: str
     proof_use_status: str = "not_allowed"
 
     def to_dict(self) -> dict[str, Any]:
@@ -71,6 +70,35 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
     args = tuple(str(arg) for arg in target.get("args", ()))
     source_expr = str(target.get("source_expr", "")).lower()
     if family == "metric" and "equal_length" in source_expr and len(args) == 4:
+        equilateral_hyp = _hypothesis_with_args(claim_spec, "equilateral", (args[0], args[1], args[3]))
+        if args[2] == args[1] and equilateral_hyp is not None:
+            variables = tuple(dict.fromkeys(variable for point in (args[0], args[1], args[3]) for variable in _variables_for_point(point)))
+            polynomial_goal = "dist(A,B) - dist(B,C) = 0"
+            reduction_steps = (
+                "translate_equilateral_hypothesis_to_three_metric_equalities",
+                "select_adjacent_equal_lengths",
+                "reduce_goal_distance_terms",
+            )
+            payload_seed = canonical_json({"target": target, "hypothesis": equilateral_hyp, "rule": "equilateral_adjacent_equal_length"})
+            return AlgebraicCertificateFull2D(
+                schema_version="1.0.0",
+                certificate_id=f"algebraic_certificate:{hash_ref(payload_seed)[7:23]}",
+                target_family=family,
+                coordinate_model="symbolic_metric_term_algebra",
+                variables=variables,
+                polynomial_goal=polynomial_goal,
+                reduction_steps=reduction_steps,
+                nondegeneracy_conditions=_side_conditions(claim_spec, "nondegeneracy"),
+                denominator_conditions=(),
+                checker_result="passed",
+                source_rule_ids=(
+                    "full2d_rule:triangle_congruence:01",
+                    "full2d_rule:triangle_congruence:02",
+                    "full2d_rule:algebraic_coordinate:02",
+                    "full2d_rule:metric_equal_length:01",
+                    "full2d_rule:metric_equal_length:03",
+                ),
+            )
         reverse_hyp = _hypothesis_with_args(claim_spec, "equal_length", args[2:] + args[:2])
         if reverse_hyp is not None:
             variables = tuple(dict.fromkeys(variable for point in args for variable in _variables_for_point(point)))
@@ -99,7 +127,6 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
                     "full2d_rule:metric_equal_length:02",
                     "full2d_rule:metric_equal_length:03",
                 ),
-                lean_summary="a reversed equal-length hypothesis is normalized through equality symmetry into the requested target",
             )
     if family == "metric" and "equal_length" in source_expr and len(args) == 4 and args[:2] == args[2:]:
         variables = tuple(dict.fromkeys(variable for point in args[:2] for variable in _variables_for_point(point)))
@@ -127,7 +154,56 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
                 "full2d_rule:metric_equal_length:01",
                 "full2d_rule:metric_equal_length:03",
             ),
-            lean_summary="the equal-length target has identical segment terms on both sides and reduces to reflexive equality",
+        )
+    if family == "metric" and "area_eq" in source_expr and len(args) == 6:
+        reverse_hyp = _hypothesis_with_args(claim_spec, "area_eq", args[3:] + args[:3])
+        if args[:3] == args[3:]:
+            reduction_steps = ("translate_area_terms", "cancel_identical_area_terms", "reduce_zero_polynomial")
+            rule = "area_relation_reflexive"
+        elif reverse_hyp is not None:
+            reduction_steps = ("translate_area_equality_hypothesis", "apply_symmetric_equality_rewrite", "reduce_subtracted_equal_terms_to_zero")
+            rule = "area_relation_symmetry"
+        else:
+            return None
+        variables = tuple(dict.fromkeys(variable for point in args for variable in _variables_for_point(point)))
+        payload_seed = canonical_json({"target": target, "hypothesis": reverse_hyp, "rule": rule})
+        return AlgebraicCertificateFull2D(
+            schema_version="1.0.0",
+            certificate_id=f"algebraic_certificate:{hash_ref(payload_seed)[7:23]}",
+            target_family=family,
+            coordinate_model="symbolic_area_term_algebra",
+            variables=variables,
+            polynomial_goal="area_left - area_right = 0",
+            reduction_steps=reduction_steps,
+            nondegeneracy_conditions=_side_conditions(claim_spec, "nondegeneracy"),
+            denominator_conditions=(),
+            checker_result="passed",
+            source_rule_ids=("full2d_rule:area_relation:01", "full2d_rule:area_relation:02"),
+        )
+    if family == "metric" and "ratio_eq" in source_expr and len(args) == 8:
+        reverse_hyp = _hypothesis_with_args(claim_spec, "ratio_eq", args[4:] + args[:4])
+        if args[:4] == args[4:]:
+            reduction_steps = ("translate_ratio_terms", "cancel_identical_ratio_terms", "reduce_zero_polynomial")
+            rule = "ratio_similarity_reflexive"
+        elif reverse_hyp is not None:
+            reduction_steps = ("translate_ratio_equality_hypothesis", "apply_symmetric_equality_rewrite", "reduce_subtracted_equal_terms_to_zero")
+            rule = "ratio_similarity_symmetry"
+        else:
+            return None
+        variables = tuple(dict.fromkeys(variable for point in args for variable in _variables_for_point(point)))
+        payload_seed = canonical_json({"target": target, "hypothesis": reverse_hyp, "rule": rule})
+        return AlgebraicCertificateFull2D(
+            schema_version="1.0.0",
+            certificate_id=f"algebraic_certificate:{hash_ref(payload_seed)[7:23]}",
+            target_family=family,
+            coordinate_model="symbolic_ratio_term_algebra",
+            variables=variables,
+            polynomial_goal="ratio_left - ratio_right = 0",
+            reduction_steps=reduction_steps,
+            nondegeneracy_conditions=_side_conditions(claim_spec, "nondegeneracy"),
+            denominator_conditions=_side_conditions(claim_spec, "denominator"),
+            checker_result="passed",
+            source_rule_ids=("full2d_rule:ratio_similarity:01", "full2d_rule:ratio_similarity:02"),
         )
     if family not in {"incidence", "collinear"} or len(args) != 3:
         return None
@@ -159,7 +235,6 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
         denominator_conditions=(),
         checker_result=checker_result,
         source_rule_ids=("full2d_rule:algebraic_coordinate:01", "full2d_rule:algebraic_coordinate:03"),
-        lean_summary="collinearity determinant has duplicate coordinate rows, so the polynomial target reduces to zero",
     )
 
 
@@ -220,3 +295,4 @@ def _measured_failure(engine_input: EngineInputFull2D, context: RunContext, reas
         resource_usage_ref=context.resource_usage_ref,
         status="measured_failure",
     )
+

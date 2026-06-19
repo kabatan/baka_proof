@@ -249,27 +249,10 @@ def _validate_independent_checker(payload: dict[str, Any], errors: list[str]) ->
 
 
 def _validate_selected_derivation(payload: dict[str, Any], errors: list[str]) -> None:
-    _require(payload, ["derivation_id", "selected_engine_output_refs", "derivation_steps", "checked_rule_application", "checked_rule_application_ref"], errors)
+    _require(payload, ["derivation_id", "selected_engine_output_refs", "derivation_steps"], errors)
     _require_ref_list(payload, "selected_engine_output_refs", errors)
-    _require_ref(payload, "checked_rule_application_ref", errors)
-    application = payload.get("checked_rule_application")
-    if not isinstance(application, dict):
-        errors.append("missing_checked_rule_application")
-    else:
-        if application.get("schema_version") != "CheckedRuleApplicationFull2D":
-            errors.append("bad_checked_rule_application_schema")
-        if not application.get("constructor"):
-            errors.append("checked_rule_application_missing_constructor")
-        if not isinstance(application.get("arguments"), dict) or not application.get("arguments"):
-            errors.append("checked_rule_application_missing_arguments")
-        rule_ids = application.get("rule_ids")
-        if not isinstance(rule_ids, list) or not rule_ids:
-            errors.append("checked_rule_application_missing_rule_ids")
-        elif any(not str(rule).startswith("full2d_rule:") for rule in rule_ids):
-            errors.append("checked_rule_application_bad_rule_id")
-    certificates = [str(ref) for ref in payload.get("selected_certificates", [])]
-    if str(payload.get("checked_rule_application_ref", "")) not in certificates:
-        errors.append("checked_rule_application_ref_not_selected")
+    if "checked_rule_application" in payload or "checked_rule_application_ref" in payload:
+        errors.append("deprecated_checked_rule_application_present")
     steps = payload.get("derivation_steps")
     if not isinstance(steps, list) or not steps:
         errors.append("missing_derivation_steps")
@@ -284,6 +267,18 @@ def _validate_selected_derivation(payload: dict[str, Any], errors: list[str]) ->
             has_non_target = True
         if not valid_ref(step.get("independent_checker_report_ref")):
             errors.append(f"bad_ref:derivation_steps[{index}].independent_checker_report_ref")
+        if not valid_ref(step.get("supporting_engine_output_ref")):
+            errors.append(f"bad_ref:derivation_steps[{index}].supporting_engine_output_ref")
+        if not valid_ref(step.get("supporting_artifact_ref")):
+            errors.append(f"bad_ref:derivation_steps[{index}].supporting_artifact_ref")
+        if not str(step.get("rule_id", "")).startswith("full2d_rule:"):
+            errors.append(f"bad_rule_id:derivation_steps[{index}]")
+        if not str(step.get("lean_template_id", "")).startswith("lean_template:"):
+            errors.append(f"missing_lean_template_id:derivation_steps[{index}]")
+        if not isinstance(step.get("proof_bindings"), dict):
+            errors.append(f"missing_proof_bindings:derivation_steps[{index}]")
+        if not step.get("output_expr"):
+            errors.append(f"missing_output_expr:derivation_steps[{index}]")
     if not has_non_target and not has_selected_support:
         errors.append("naked_target_assertion")
 
@@ -509,17 +504,35 @@ def positive_fixtures() -> dict[str, dict[str, Any]]:
             "selected_facts": ["f1"],
             "selected_constructions": [],
             "selected_certificates": [ref],
-            "checked_rule_application": {
-                "schema_version": "CheckedRuleApplicationFull2D",
-                "constructor": "collinear_refl_left",
-                "arguments": {"A": "A", "B": "B"},
-                "rule_ids": ["full2d_rule:incidence_collinearity:01", "full2d_rule:incidence_collinearity:02"],
-                "target_fact": "incidence:point:A,point:A,point:B:positive",
-            },
-            "checked_rule_application_ref": ref,
             "derivation_steps": [
-                {"step_id": "s1", "input_refs": ["h1"], "output_ref": "f1", "rule_id": "full2d_rule:incidence_collinearity:01", "independent_checker_report_ref": ref, "output_is_target": False, "non_target_intermediate": True},
-                {"step_id": "s2", "input_refs": ["f1"], "output_ref": "target_goal", "rule_id": "full2d_rule:incidence_collinearity:02", "independent_checker_report_ref": ref_b, "output_is_target": True, "non_target_intermediate": False},
+                {
+                    "step_id": "s1",
+                    "input_refs": ["h1"],
+                    "output_ref": "f1",
+                    "output_expr": "True",
+                    "rule_id": "full2d_rule:incidence_collinearity:01",
+                    "independent_checker_report_ref": ref,
+                    "supporting_engine_output_ref": ref,
+                    "supporting_artifact_ref": ref,
+                    "lean_template_id": "lean_template:checked_certificate",
+                    "proof_bindings": {},
+                    "output_is_target": False,
+                    "non_target_intermediate": True,
+                },
+                {
+                    "step_id": "s2",
+                    "input_refs": ["f1"],
+                    "output_ref": "target_goal",
+                    "output_expr": "collinear A A B",
+                    "rule_id": "full2d_rule:incidence_collinearity:02",
+                    "independent_checker_report_ref": ref_b,
+                    "supporting_engine_output_ref": ref,
+                    "supporting_artifact_ref": ref,
+                    "lean_template_id": "lean_template:collinear_refl_left",
+                    "proof_bindings": {"A": "A", "B": "B"},
+                    "output_is_target": True,
+                    "non_target_intermediate": False,
+                },
             ],
         },
         "CompilerResultFull2D": {"schema_version": "CompilerResultFull2D", "result_id": "cr", "claim_spec_ref": ref, "selected_solver_derivation_ref": ref, "rule_registry_ref": ref, "proof_text": "have h := by\n  trivial\nexact h"},

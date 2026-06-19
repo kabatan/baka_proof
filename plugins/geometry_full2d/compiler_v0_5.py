@@ -12,6 +12,36 @@ from plugins.geometry_full2d.engine_contracts import canonical_json
 
 ROOT = Path(__file__).resolve().parents[2]
 SHA_PREFIX = "sha256:"
+ALLOWED_LEAN_TEMPLATES = {
+    "lean_template:assumption_support",
+    "lean_template:checked_certificate",
+    "lean_template:collinear_refl_left",
+    "lean_template:collinear_refl_right",
+    "lean_template:between_collinear",
+    "lean_template:midpoint_collinear",
+    "lean_template:equal_length_refl",
+    "lean_template:equal_length_symm",
+    "lean_template:length_le_refl",
+    "lean_template:length_le_trans",
+    "lean_template:directed_angle_eq_refl",
+    "lean_template:directed_angle_eq_symm",
+    "lean_template:directed_angle_eq_mod_2pi_refl",
+    "lean_template:directed_angle_eq_mod_2pi_symm",
+    "lean_template:area_eq_refl",
+    "lean_template:area_eq_symm",
+    "lean_template:ratio_eq_refl",
+    "lean_template:ratio_eq_symm",
+    "lean_template:reflection_has_evidence",
+    "lean_template:homothety_has_evidence",
+    "lean_template:inversion_has_evidence",
+    "lean_template:spiral_similarity_has_evidence",
+    "lean_template:chord_is_symmetric",
+    "lean_template:equilateral_is_isosceles_left",
+    "lean_template:circle_construction_on_circle",
+    "lean_template:line_circle_intersection_on_line",
+    "lean_template:constructed_center_identity",
+    "lean_template:rotation_preserves_collinear_of_eq",
+}
 
 
 def main() -> int:
@@ -101,8 +131,7 @@ def compile_selected_derivation(
     rule_registry_ref: str,
     side_condition_checker_refs: tuple[str, ...],
 ) -> dict[str, Any]:
-    del claim_spec
-    errors = validate_compile_inputs(selected_derivation, rule_registry, side_condition_checker_refs)
+    errors = validate_compile_inputs(claim_spec, selected_derivation, rule_registry, side_condition_checker_refs)
     if errors:
         return {"status": "failed", "errors": sorted(set(errors))}
     rules_by_id = {
@@ -117,7 +146,10 @@ def compile_selected_derivation(
         for rule_id in consumed_rule_ids
         for obligation in rules_by_id[rule_id].get("generated_obligations", [])
     )
-    proof_text = build_solver_citing_proof_text(selected_derivation, consumed_rule_ids, generated_obligations)
+    try:
+        proof_text = build_solver_citing_proof_text(selected_derivation, consumed_rule_ids, generated_obligations)
+    except (KeyError, ValueError) as exc:
+        return {"status": "failed", "errors": [f"proof_template_binding_error:{exc}"]}
     unsigned = {
         "schema_version": "CompilerResultFull2D",
         "claim_spec_ref": claim_spec_ref,
@@ -145,6 +177,7 @@ def compile_selected_derivation(
 
 
 def validate_compile_inputs(
+    claim_spec: dict[str, Any],
     selected_derivation: dict[str, Any],
     rule_registry: dict[str, Any],
     side_condition_checker_refs: tuple[str, ...],
@@ -161,8 +194,14 @@ def validate_compile_inputs(
     steps = selected_derivation.get("derivation_steps")
     if not isinstance(steps, list) or not steps:
         return ["selected_derivation_missing_steps"]
+    selected_engine_refs = {str(ref) for ref in selected_derivation.get("selected_engine_output_refs", [])}
+    if not selected_engine_refs:
+        errors.append("selected_derivation_missing_selected_engine_outputs")
+    elif any(not ref.startswith(SHA_PREFIX) for ref in selected_engine_refs):
+        errors.append("selected_engine_output_ref_not_sha256")
     has_non_target = bool(selected_derivation.get("selected_constructions") or selected_derivation.get("selected_certificates"))
     target_steps = 0
+    non_target_outputs: set[str] = set()
     for index, step in enumerate(steps):
         if not isinstance(step, dict):
             errors.append(f"bad_derivation_step:{index}")
@@ -176,12 +215,35 @@ def validate_compile_inputs(
         checker_ref = str(step.get("independent_checker_report_ref", ""))
         if not checker_ref.startswith(SHA_PREFIX):
             errors.append(f"bad_checker_ref:{index}")
+        supporting_engine = str(step.get("supporting_engine_output_ref", ""))
+        if not supporting_engine.startswith(SHA_PREFIX):
+            errors.append(f"bad_supporting_engine_ref:{index}")
+        elif supporting_engine not in selected_engine_refs:
+            errors.append(f"supporting_engine_not_selected:{index}")
+        supporting_artifact = str(step.get("supporting_artifact_ref", ""))
+        if not supporting_artifact.startswith(SHA_PREFIX):
+            errors.append(f"bad_supporting_artifact_ref:{index}")
+        if not isinstance(step.get("proof_bindings"), dict):
+            errors.append(f"missing_proof_bindings:{index}")
+        lean_template_id = str(step.get("lean_template_id", ""))
+        if not lean_template_id.startswith("lean_template:"):
+            errors.append(f"missing_lean_template_id:{index}")
+        elif lean_template_id not in ALLOWED_LEAN_TEMPLATES:
+            errors.append(f"unsupported_lean_template_id:{index}:{lean_template_id}")
         if step.get("output_is_target") is True:
             target_steps += 1
             if not step.get("input_refs"):
                 errors.append(f"target_step_missing_inputs:{index}")
+            if str(step.get("output_expr", "")).strip() != target_source_expr(claim_spec).strip():
+                errors.append(f"target_step_output_expr_mismatch:{index}")
+            target_inputs = {str(ref) for ref in step.get("input_refs", [])}
+            if not (target_inputs & non_target_outputs or target_inputs & set(map(str, selected_derivation.get("selected_constructions", []))) or target_inputs & set(map(str, selected_derivation.get("selected_certificates", [])))):
+                errors.append(f"target_step_not_supported_by_selected_non_target_artifact:{index}")
         else:
             has_non_target = True
+            non_target_outputs.add(str(step.get("output_ref", "")))
+            if not str(step.get("output_expr", "")):
+                errors.append(f"non_target_step_missing_output_expr:{index}")
         if step.get("non_target_intermediate") is True:
             has_non_target = True
     if target_steps != 1:
@@ -191,22 +253,6 @@ def validate_compile_inputs(
     for index, ref in enumerate(side_condition_checker_refs):
         if not str(ref).startswith(SHA_PREFIX):
             errors.append(f"bad_side_condition_checker_ref:{index}")
-    application = selected_derivation.get("checked_rule_application")
-    if not isinstance(application, dict):
-        errors.append("selected_derivation_missing_checked_rule_application")
-    elif not build_checked_rule_application_exact(application):
-        errors.append("selected_derivation_checked_rule_application_invalid")
-    else:
-        application_ref = str(selected_derivation.get("checked_rule_application_ref", ""))
-        if not application_ref.startswith(SHA_PREFIX):
-            errors.append("selected_derivation_bad_checked_rule_application_ref")
-        certificates = [str(ref) for ref in selected_derivation.get("selected_certificates", [])]
-        if application_ref not in certificates:
-            errors.append("checked_rule_application_ref_not_selected_certificate")
-        application_rules = {str(rule_id) for rule_id in application.get("rule_ids", [])}
-        step_rules = {str(step.get("rule_id")) for step in steps if isinstance(step, dict)}
-        if not step_rules.issubset(application_rules):
-            errors.append("derivation_step_rules_not_backed_by_checked_application")
     return errors
 
 
@@ -219,10 +265,10 @@ def build_solver_citing_proof_text(
     constructions = ", ".join(map(str, selected_derivation.get("selected_constructions", []))) or "none"
     certificates = ", ".join(map(str, selected_derivation.get("selected_certificates", []))) or "none"
     obligations = ", ".join(dict.fromkeys(map(str, generated_obligations))) or "none"
+    steps = [step for step in selected_derivation.get("derivation_steps", []) if isinstance(step, dict)]
     step_lines = [
         f"  -- solver step {step.get('step_id')} uses {step.get('rule_id')} from {list(step.get('input_refs', []))} to {step.get('output_ref')}"
-        for step in selected_derivation.get("derivation_steps", [])
-        if isinstance(step, dict)
+        for step in steps
     ]
     citation_lines = [
         f"-- solver-derived facts: {facts}",
@@ -232,61 +278,95 @@ def build_solver_citing_proof_text(
         f"-- consumed RuleRegistry contracts: {', '.join(consumed_rule_ids)}",
         *(line[2:] if line.startswith("  ") else line for line in step_lines),
     ]
-    application = selected_derivation.get("checked_rule_application") if isinstance(selected_derivation.get("checked_rule_application"), dict) else {}
-    solver_exact = build_checked_rule_application_exact(application)
-    if solver_exact:
-        return "\n".join([*citation_lines, solver_exact])
-    return "\n".join(
-        [
-            *citation_lines,
-            "exact by",
-            "  -- proof worker must refine this solver-causal skeleton in a later stage",
-            "  trivial",
-        ]
-    )
+    proof_lines = list(citation_lines)
+    proof_names: dict[str, str] = {}
+    for step in steps:
+        step_id = str(step.get("step_id"))
+        proof_var = proof_name(step_id)
+        proof_names[str(step.get("output_ref"))] = proof_var
+        output_expr = str(step.get("output_expr", "")).strip() or "True"
+        proof_lines.append(f"have {proof_var} : {output_expr} := by")
+        proof_lines.extend("  " + line for line in build_step_exact(step).splitlines())
+    target_steps = [step for step in steps if step.get("output_is_target") is True]
+    target_var = proof_name(str(target_steps[-1].get("step_id"))) if target_steps else ""
+    proof_lines.append(f"exact {target_var}" if target_var else "exact by trivial")
+    return "\n".join(proof_lines)
 
 
-def build_checked_rule_application_exact(application: dict[str, Any]) -> str:
-    constructor = str(application.get("constructor", ""))
-    bindings = application.get("arguments", {})
-    if not constructor:
-        return ""
+def build_step_exact(step: dict[str, Any]) -> str:
+    template = str(step.get("lean_template_id", ""))
+    bindings = step.get("proof_bindings", {})
     if not isinstance(bindings, dict):
-        return ""
+        bindings = {}
     try:
-        if constructor == "collinear_refl_left":
+        if template == "lean_template:assumption_support":
+            return f"exact {bindings['h']}"
+        if template == "lean_template:checked_certificate":
+            return "trivial"
+        if template == "lean_template:collinear_refl_left":
             return f"exact collinear_refl_left {bindings['A']} {bindings['B']}"
-        if constructor == "between_collinear":
+        if template == "lean_template:collinear_refl_right":
+            return f"exact collinear_refl_right {bindings['A']} {bindings['B']}"
+        if template == "lean_template:between_collinear":
             return f"exact between_collinear {bindings['A']} {bindings['B']} {bindings['C']} {bindings['h']}"
-        if constructor == "midpoint_collinear":
+        if template == "lean_template:midpoint_collinear":
             return f"exact midpoint_collinear {bindings['A']} {bindings['M']} {bindings['B']} {bindings['h']}"
-        if constructor == "equal_length_refl":
+        if template == "lean_template:equal_length_refl":
             return f"exact equal_length_refl {bindings['A']} {bindings['B']}"
-        if constructor == "equal_length_symm":
+        if template == "lean_template:equal_length_symm":
             return f"exact equal_length_symm {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['h']}"
-        if constructor == "length_le_refl":
+        if template == "lean_template:length_le_refl":
             return f"exact length_le_refl {bindings['A']} {bindings['B']}"
-        if constructor == "length_le_trans":
+        if template == "lean_template:length_le_trans":
             return f"exact length_le_trans {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} {bindings['h0']} {bindings['h1']}"
-        if constructor == "directed_angle_eq_refl":
+        if template == "lean_template:directed_angle_eq_refl":
             return f"exact directed_angle_eq_refl {bindings['A']} {bindings['B']} {bindings['C']}"
-        if constructor == "directed_angle_eq_symm":
+        if template == "lean_template:directed_angle_eq_symm":
             return f"exact directed_angle_eq_symm {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} {bindings['h']}"
-        if constructor == "reflection_has_evidence":
+        if template == "lean_template:directed_angle_eq_mod_2pi_refl":
+            return f"exact directed_angle_eq_mod_2pi_refl {bindings['A']} {bindings['B']} {bindings['C']}"
+        if template == "lean_template:directed_angle_eq_mod_2pi_symm":
+            return f"exact directed_angle_eq_mod_2pi_symm {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} {bindings['h']}"
+        if template == "lean_template:area_eq_refl":
+            return f"exact area_eq_refl {bindings['A']} {bindings['B']} {bindings['C']}"
+        if template == "lean_template:area_eq_symm":
+            return f"exact area_eq_symm {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} {bindings['h']}"
+        if template == "lean_template:ratio_eq_refl":
+            return f"exact ratio_eq_refl {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']}"
+        if template == "lean_template:ratio_eq_symm":
+            return f"exact ratio_eq_symm {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} {bindings['G']} {bindings['H']} {bindings['h']}"
+        if template == "lean_template:reflection_has_evidence":
             return f"exact reflection_has_evidence {bindings['r']}"
-        if constructor == "chord_is_symmetric":
+        if template == "lean_template:homothety_has_evidence":
+            return f"exact homothety_has_evidence {bindings['h']}"
+        if template == "lean_template:inversion_has_evidence":
+            return f"exact inversion_has_evidence {bindings['i']}"
+        if template == "lean_template:spiral_similarity_has_evidence":
+            return f"exact spiral_similarity_has_evidence {bindings['s']}"
+        if template == "lean_template:chord_is_symmetric":
             return f"exact chord_is_symmetric {bindings['A']} {bindings['B']} {bindings['c']} {bindings['h']}"
-        if constructor == "equilateral_is_isosceles_left":
+        if template == "lean_template:equilateral_is_isosceles_left":
             return f"exact equilateral_is_isosceles_left {bindings['A']} {bindings['B']} {bindings['C']} {bindings['h']}"
-        if constructor == "circle_construction_on_circle":
+        if template == "lean_template:circle_construction_on_circle":
             return f"exact circle_construction_on_circle {bindings['O']} {bindings['P']} {bindings['c']} {bindings['h']}"
-        if constructor == "line_circle_intersection_on_line":
+        if template == "lean_template:line_circle_intersection_on_line":
             return f"exact line_circle_intersection_on_line {bindings['P']} {bindings['l']} {bindings['c']} {bindings['h']}"
-        if constructor == "rotation_preserves_collinear_of_eq":
+        if template == "lean_template:constructed_center_identity":
+            return f"exact constructed_center_identity {bindings['O']} {bindings['c']} {bindings['h']}"
+        if template == "lean_template:rotation_preserves_collinear_of_eq":
             return f"exact rotation_preserves_collinear_of_eq {bindings['A']} {bindings['B']} {bindings['C']} {bindings['D']} {bindings['E']} {bindings['F']} rfl rfl rfl"
-    except KeyError:
-        return ""
-    return ""
+    except KeyError as exc:
+        raise ValueError(f"missing_binding:{str(exc).strip(chr(39))}") from exc
+    raise ValueError(f"unsupported_solver_template:{template}")
+
+
+def proof_name(step_id: str) -> str:
+    return "h_solver_" + "".join(char if char.isalnum() else "_" for char in step_id)
+
+
+def target_source_expr(claim_spec: dict[str, Any]) -> str:
+    target = claim_spec.get("target", {})
+    return str(target.get("source_expr", "")) if isinstance(target, dict) else ""
 
 
 def write_content_json(path: Path, payload_without_id: dict[str, Any], *, id_field: str) -> tuple[str, Path]:

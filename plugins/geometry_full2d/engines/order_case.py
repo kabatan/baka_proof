@@ -14,7 +14,7 @@ from plugins.geometry_full2d.engine_contracts import (
 )
 
 ENGINE_ROLE = "order_case"
-BACKEND_IDENTITY = "geometry_full2d.order_case:finite_coverage_gate:v0_4_2"
+BACKEND_IDENTITY = "geometry_full2d.order_case:finite_coverage_gate:v0_5"
 
 
 @dataclass(frozen=True)
@@ -36,7 +36,6 @@ class CoverageGateFull2D:
     cases: tuple[ProofStateDAGCaseFull2D, ...]
     coverage_rule_ids: tuple[str, ...]
     coverage_result: str
-    lean_summary: str
     proof_use_status: str = "not_allowed"
 
     def to_dict(self) -> dict[str, Any]:
@@ -106,7 +105,6 @@ def _build_gate(claim_spec: dict[str, Any]) -> CoverageGateFull2D | None:
             cases=(case,),
             coverage_rule_ids=coverage_rule_ids,
             coverage_result=coverage_result,
-            lean_summary="the declared between relation closes the collinearity target through the order-case rule",
         )
     if not _has_repeated_point(args):
         return None
@@ -130,7 +128,6 @@ def _build_gate(claim_spec: dict[str, Any]) -> CoverageGateFull2D | None:
         cases=(case,),
         coverage_rule_ids=coverage_rule_ids,
         coverage_result=coverage_result,
-        lean_summary="the repeated-point smoke target has a singleton closed case, so no additional order split is required",
     )
 
 
@@ -194,3 +191,4 @@ def _measured_failure(engine_input: EngineInputFull2D, context: RunContext, reas
         resource_usage_ref=context.resource_usage_ref,
         status="measured_failure",
     )
+

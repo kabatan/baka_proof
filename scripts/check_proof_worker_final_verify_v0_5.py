@@ -30,7 +30,21 @@ def main() -> int:
     parser.add_argument("--run-dir", default="runs/geometry_full2d_v0_5")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
-    report = self_test_report(Path(args.run_dir)) if args.self_test else check_existing_reports(Path(args.run_dir))
+    if args.self_test:
+        self_report = self_test_report(Path(args.run_dir))
+        if has_proof_worker_final_verify_artifacts(Path(args.run_dir)):
+            run_report = check_existing_reports(Path(args.run_dir))
+            report = combined_report(
+                "ProofWorkerFinalVerifySelfTestAndRunCheckV05",
+                self_report,
+                run_report,
+                self_key="self_test",
+                run_key="run_check",
+            )
+        else:
+            report = self_report
+    else:
+        report = check_existing_reports(Path(args.run_dir))
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["status"] == "passed" else 1
 
@@ -40,7 +54,7 @@ def check_existing_reports(run_dir: Path) -> dict[str, Any]:
     errors: list[str] = []
     worker_count = 0
     final_count = 0
-    for path in root.rglob("proof_worker_result.json"):
+    for path in proof_worker_report_paths(root):
         worker_count += 1
         payload = json.loads(path.read_text(encoding="utf-8"))
         errors.extend(f"{path.relative_to(root).as_posix()}:{error}" for error in validate_payload(payload, current_head="runtime"))
@@ -48,7 +62,7 @@ def check_existing_reports(run_dir: Path) -> dict[str, Any]:
             errors.append(f"{path.relative_to(root).as_posix()}:worker_claims_final_theorem")
         if payload.get("proof_region_only") is not True:
             errors.append(f"{path.relative_to(root).as_posix()}:worker_not_proof_region_only")
-    for path in root.rglob("final_verify_report.json"):
+    for path in final_verify_report_paths(root):
         final_count += 1
         payload = json.loads(path.read_text(encoding="utf-8"))
         errors.extend(f"{path.relative_to(root).as_posix()}:{error}" for error in validate_payload(payload, current_head="runtime"))
@@ -62,6 +76,51 @@ def check_existing_reports(run_dir: Path) -> dict[str, Any]:
         "errors": sorted(set(errors)),
         "proof_worker_report_count": worker_count,
         "final_verify_report_count": final_count,
+    }
+
+
+def has_proof_worker_final_verify_artifacts(run_dir: Path) -> bool:
+    root = run_dir if run_dir.is_absolute() else ROOT / run_dir
+    return bool(proof_worker_report_paths(root) or final_verify_report_paths(root))
+
+
+def proof_worker_report_paths(root: Path) -> list[Path]:
+    paths = set(root.rglob("proof_worker_result.json"))
+    aggregate = root / "proof_worker_results"
+    if aggregate.exists():
+        paths.update(path for path in aggregate.glob("*.json") if path.is_file())
+    return sorted(paths)
+
+
+def final_verify_report_paths(root: Path) -> list[Path]:
+    paths = set(root.rglob("final_verify_report.json"))
+    aggregate = root / "final_verify_reports"
+    if aggregate.exists():
+        paths.update(path for path in aggregate.glob("*.json") if path.is_file())
+    return sorted(paths)
+
+
+def combined_report(
+    schema_version: str,
+    self_report: dict[str, Any],
+    run_report: dict[str, Any],
+    *,
+    self_key: str,
+    run_key: str,
+) -> dict[str, Any]:
+    errors: list[str] = []
+    if self_report.get("status") != "passed":
+        errors.append(f"{self_key}_failed")
+    if run_report.get("status") != "passed":
+        errors.append(f"{run_key}_failed")
+    errors.extend(f"{self_key}:{error}" for error in self_report.get("errors", []) if isinstance(error, str))
+    errors.extend(f"{run_key}:{error}" for error in run_report.get("errors", []) if isinstance(error, str))
+    return {
+        "schema_version": schema_version,
+        "status": "passed" if not errors else "failed",
+        "errors": sorted(set(errors)),
+        self_key: self_report,
+        run_key: run_report,
     }
 
 

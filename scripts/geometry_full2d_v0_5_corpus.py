@@ -421,61 +421,119 @@ LEAN_IMPORTS = [
     "MathAutoResearch.GeometryFull2D.Inequality",
 ]
 
-COMMON_BINDERS = "(A B C D E F G H I M O P : Point) (l m : Line) (c : Circle) (r : Reflection)"
+COMMON_BINDERS = (
+    "(A B C D E F G H I J K M O P Q : Point) "
+    "(l m n : Line) (c d : Circle) (r : Reflection) "
+    "(hm : Homothety) (iv : Inversion) (ss : SpiralSimilarity)"
+)
 
 GOAL_SCHEMES: list[dict[str, Any]] = [
-    {"id": "incidence_reflexive", "families": ["collinear"], "assumptions": [], "target": "collinear A A B"},
-    {"id": "order_between_collinear", "families": ["between", "collinear"], "assumptions": [("h0", "between A B C")], "target": "collinear A B C"},
-    {"id": "construction_midpoint_collinear", "families": ["midpoint", "collinear"], "assumptions": [("h0", "midpoint A M B")], "target": "collinear A M B"},
+    {"id": "incidence_reflexive_left", "families": ["collinear"], "assumptions": [], "target": "collinear A A B"},
+    {"id": "incidence_reflexive_right", "families": ["collinear"], "assumptions": [], "target": "collinear A B B"},
+    {"id": "order_between_collinear", "families": ["between", "collinear"], "assumptions": ["between A B C"], "target": "collinear A B C"},
+    {"id": "construction_midpoint_collinear", "families": ["midpoint", "collinear"], "assumptions": ["midpoint A M B"], "target": "collinear A M B"},
     {"id": "metric_equal_length_reflexive", "families": ["equal_length"], "assumptions": [], "target": "equal_length A B A B"},
-    {"id": "metric_equal_length_symmetric", "families": ["equal_length"], "assumptions": [("h0", "equal_length C D A B")], "target": "equal_length A B C D"},
+    {"id": "metric_equal_length_symmetric", "families": ["equal_length"], "assumptions": ["equal_length C D A B"], "target": "equal_length A B C D"},
+    {"id": "metric_area_reflexive", "families": ["area_eq"], "assumptions": [], "target": "area_eq A B C A B C"},
+    {"id": "metric_area_symmetric", "families": ["area_eq"], "assumptions": ["area_eq D E F A B C"], "target": "area_eq A B C D E F"},
+    {"id": "metric_ratio_reflexive", "families": ["ratio_eq"], "assumptions": [], "target": "ratio_eq A B C D A B C D"},
+    {"id": "metric_ratio_symmetric", "families": ["ratio_eq"], "assumptions": ["ratio_eq E F G H A B C D"], "target": "ratio_eq A B C D E F G H"},
     {"id": "inequality_length_reflexive", "families": ["length_le"], "assumptions": [], "target": "length_le A B A B"},
-    {"id": "inequality_length_transitive", "families": ["length_le"], "assumptions": [("h0", "length_le A B C D"), ("h1", "length_le C D E F")], "target": "length_le A B E F"},
-    {"id": "angle_directed_symmetric", "families": ["angle_eq"], "assumptions": [("h0", "directed_angle_eq_mod_pi D E F A B C")], "target": "directed_angle_eq_mod_pi A B C D E F"},
-    {"id": "angle_directed_reflexive", "families": ["angle_eq"], "assumptions": [], "target": "directed_angle_eq_mod_pi A B C A B C"},
+    {"id": "inequality_length_transitive", "families": ["length_le"], "assumptions": ["length_le A B C D", "length_le C D E F"], "target": "length_le A B E F"},
+    {"id": "angle_pi_symmetric", "families": ["angle_eq"], "assumptions": ["directed_angle_eq_mod_pi D E F A B C"], "target": "directed_angle_eq_mod_pi A B C D E F"},
+    {"id": "angle_pi_reflexive", "families": ["angle_eq"], "assumptions": [], "target": "directed_angle_eq_mod_pi A B C A B C"},
+    {"id": "angle_2pi_symmetric", "families": ["angle_eq"], "assumptions": ["directed_angle_eq_mod_2pi D E F A B C"], "target": "directed_angle_eq_mod_2pi A B C D E F"},
+    {"id": "angle_2pi_reflexive", "families": ["angle_eq"], "assumptions": [], "target": "directed_angle_eq_mod_2pi A B C A B C"},
     {"id": "transformation_reflection", "families": ["reflection_image"], "assumptions": [], "target": "reflection_image r"},
-    {"id": "circle_chord_symmetric", "families": ["chord"], "assumptions": [("h0", "chord A B c")], "target": "chord B A c"},
-    {"id": "triangle_equilateral_metric", "families": ["triangle", "equal_length"], "assumptions": [("h0", "equilateral A B C")], "target": "equal_length A B B C"},
-    {"id": "construction_circle_point", "families": ["circle", "construction"], "assumptions": [("h0", "circle_with_center_through_point O P c")], "target": "constructed_circle_point O P c"},
-    {"id": "construction_line_circle_point", "families": ["circle", "construction"], "assumptions": [("h0", "line_circle_intersection P l c")], "target": "constructed_line_circle_point P l c"},
+    {"id": "transformation_homothety", "families": ["homothety_image"], "assumptions": [], "target": "homothety_image hm"},
+    {"id": "transformation_inversion", "families": ["inversion_image"], "assumptions": [], "target": "inversion_image iv"},
+    {"id": "transformation_spiral", "families": ["spiral_similarity"], "assumptions": [], "target": "spiral_similarity_center ss"},
+    {"id": "circle_chord_symmetric", "families": ["chord"], "assumptions": ["chord A B c"], "target": "chord B A c"},
+    {"id": "triangle_equilateral_metric", "families": ["triangle", "equal_length"], "assumptions": ["equilateral A B C"], "target": "equal_length A B B C"},
+    {"id": "construction_circle_point", "families": ["circle", "construction"], "assumptions": ["circle_with_center_through_point O P c"], "target": "constructed_circle_point O P c"},
+    {"id": "construction_line_circle_point", "families": ["circle", "construction"], "assumptions": ["line_circle_intersection P l c"], "target": "constructed_line_circle_point P l c"},
+    {"id": "construction_center_point", "families": ["construction", "circle"], "assumptions": ["constructed_center_point O c"], "target": "constructed_center_point O c"},
     {"id": "transformation_rotation_collinear", "families": ["rotation", "collinear"], "assumptions": [], "target": "rotation_preserves_collinear A B C A B C"},
 ]
 
-NOISE_ASSUMPTIONS: list[tuple[str, str, str]] = [
-    ("u0", "on_line D l", "on_line"),
-    ("u1", "equal_length G H I M", "equal_length"),
-    ("u2", "length_le A C D F", "length_le"),
-    ("u3", "directed_angle_eq_mod_pi A B C D E F", "angle_eq"),
-    ("u4", "chord D E c", "chord"),
-    ("u5", "midpoint G M H", "midpoint"),
-    ("u6", "same_side A B l", "same_side"),
-    ("u7", "collinear C E G", "collinear"),
-    ("u8", "circle_with_center_through_point O P c", "circle"),
-    ("u9", "reflection_image r", "reflection_image"),
+SEMANTIC_CONTEXT_PROFILES: list[dict[str, Any]] = [
+    {"id": "empty", "families": [], "assumptions": []},
+    {"id": "incidence_context", "families": ["on_line", "collinear"], "assumptions": ["on_line D l", "collinear D E F"]},
+    {"id": "metric_context", "families": ["equal_length", "length_le"], "assumptions": ["equal_length G H I J", "length_le G H I J"]},
+    {"id": "angle_context", "families": ["angle_eq"], "assumptions": ["directed_angle_eq_mod_pi A C E E C A", "directed_angle_eq_mod_2pi B D F F D B"]},
+    {"id": "circle_context", "families": ["circle", "chord"], "assumptions": ["on_circle G c", "chord G H c"]},
+    {"id": "construction_context", "families": ["midpoint", "construction"], "assumptions": ["midpoint G M H", "circle_with_center_through_point O Q d"]},
+    {"id": "order_context", "families": ["between", "order"], "assumptions": ["between G M H"]},
+    {"id": "transformation_context", "families": ["reflection_image", "homothety_image"], "assumptions": ["reflection_image r", "homothety_image hm"]},
+    {"id": "inversion_spiral_context", "families": ["inversion_image", "spiral_similarity"], "assumptions": ["inversion_image iv", "spiral_similarity_center ss"]},
+    {"id": "construction_line_context", "families": ["construction", "circle"], "assumptions": ["line_circle_intersection Q n d", "constructed_center_point O d"]},
 ]
 
 
 def holdout_theorem(index: int, marker: int) -> dict[str, Any]:
-    variant = index % (len(GOAL_SCHEMES) * len(NOISE_ASSUMPTIONS))
+    variant = index % (len(GOAL_SCHEMES) * 48)
     scheme = GOAL_SCHEMES[variant % len(GOAL_SCHEMES)]
-    noise_count = variant // len(GOAL_SCHEMES)
-    assumptions = list(scheme["assumptions"]) + [(name, expr) for name, expr, _family in NOISE_ASSUMPTIONS[:noise_count]]
+    profile_index = variant // len(GOAL_SCHEMES)
+    context_profiles = semantic_context_profiles(profile_index)
+    raw_assumptions = list(scheme["assumptions"])
+    context_families: list[str] = []
+    for profile in context_profiles:
+        raw_assumptions.extend(str(item) for item in profile["assumptions"])
+        context_families.extend(str(item) for item in profile["families"])
+    assumptions = unique_preserving_order(raw_assumptions)
     theorem_name = f"sealed_{index}_{marker}"
-    assumption_text = " ".join(f"({name} : {expr})" for name, expr in assumptions)
+    assumption_text = " ".join(f"(h{pos} : {expr})" for pos, expr in enumerate(assumptions))
     header = f"theorem {theorem_name} {COMMON_BINDERS}"
     if assumption_text:
         header += " " + assumption_text
     header += f" : {scheme['target']}"
     statement = f"{header} := by sorry"
-    families = list(dict.fromkeys(list(scheme["families"]) + [family for _name, _expr, family in NOISE_ASSUMPTIONS[:noise_count]]))
+    families = list(dict.fromkeys(list(scheme["families"]) + context_families))
     return {
         "theorem_name": theorem_name,
         "header": header,
         "statement": statement,
         "families": families,
         "scheme_id": scheme["id"],
-        "noise_count": noise_count,
+        "profile_index": profile_index,
+        "context_profile_ids": [str(profile["id"]) for profile in context_profiles],
     }
+
+
+def semantic_context_profiles(profile_index: int) -> list[dict[str, Any]]:
+    profiles = SEMANTIC_CONTEXT_PROFILES
+    if profile_index <= 0:
+        return []
+    first = profiles[profile_index % len(profiles)]
+    second = profiles[(profile_index // len(profiles) + profile_index) % len(profiles)]
+    third = profiles[(profile_index * 3 + 1) % len(profiles)] if profile_index % 3 == 0 else None
+    selected = [first, second]
+    if third is not None:
+        selected.append(third)
+    return [profile for profile in unique_profiles(selected) if profile["id"] != "empty"]
+
+
+def unique_profiles(profiles: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[str] = set()
+    result: list[dict[str, Any]] = []
+    for profile in profiles:
+        profile_id = str(profile["id"])
+        if profile_id in seen:
+            continue
+        seen.add(profile_id)
+        result.append(profile)
+    return result
+
+
+def unique_preserving_order(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for value in values:
+        if value in seen:
+            continue
+        seen.add(value)
+        result.append(value)
+    return result
 
 
 def render_holdout_lean(theorems: list[dict[str, Any]]) -> str:
@@ -526,8 +584,21 @@ def generate_sealed_holdout(
                 "theorem_name": theorem["theorem_name"],
                 "normalized_skeleton": normalized_skeleton(theorem["statement"]),
                 "relation_families": theorem["families"],
-                "requires_construction_case_certificate": theorem["noise_count"] >= 3 or any(family in theorem["families"] for family in ["construction", "circle", "midpoint", "reflection_image", "rotation"]),
-                "requires_non_target_intermediate": theorem["noise_count"] > 0 or len(theorem["families"]) > 1,
+                "requires_construction_case_certificate": any(
+                    family
+                    in theorem["families"]
+                    for family in [
+                        "construction",
+                        "circle",
+                        "midpoint",
+                        "reflection_image",
+                        "rotation",
+                        "homothety_image",
+                        "inversion_image",
+                        "spiral_similarity",
+                    ]
+                ),
+                "requires_non_target_intermediate": bool(theorem["context_profile_ids"]) or len(theorem["families"]) > 1,
                 "metadata": {
                     "seed": seed,
                     "generator_hash": generator_source_hash(),

@@ -72,11 +72,6 @@ def rules_from_derivation(derivation: dict[str, Any]) -> set[str]:
     for step in derivation.get("derivation_steps", []):
         if isinstance(step, dict) and str(step.get("rule_id", "")).startswith("full2d_rule:"):
             rules.add(str(step["rule_id"]))
-    application = derivation.get("checked_rule_application")
-    if isinstance(application, dict):
-        for rule_id in application.get("rule_ids", []):
-            if str(rule_id).startswith("full2d_rule:"):
-                rules.add(str(rule_id))
     return rules
 
 

@@ -14,7 +14,7 @@ from plugins.geometry_full2d.engine_contracts import (
 )
 
 ENGINE_ROLE = "construction_search"
-BACKEND_IDENTITY = "geometry_full2d.construction_search:deterministic_auxiliary_search:v0_4_2"
+BACKEND_IDENTITY = "geometry_full2d.construction_search:deterministic_auxiliary_search:v0_5"
 
 
 @dataclass(frozen=True)
@@ -222,3 +222,4 @@ def _measured_failure(engine_input: EngineInputFull2D, context: RunContext, reas
         resource_usage_ref=context.resource_usage_ref,
         status="measured_failure",
     )
+

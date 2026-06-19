@@ -17,12 +17,15 @@ from scripts.geometry_full2d_v0_5_contracts import REQUIRED_CHECKER_COMMANDS
 
 
 IMPLEMENTATION_PATHS = [
+    "plugins/geometry_full2d/__init__.py",
+    "plugins/geometry_full2d/claim_spec.py",
     "plugins/geometry_full2d/provider.py",
     "plugins/geometry_full2d/provider_cli.py",
     "plugins/geometry_full2d/engine_contracts.py",
     "plugins/geometry_full2d/rule_registry.py",
     "plugins/geometry_full2d/compiler_v0_5.py",
     "plugins/geometry_full2d/proof_worker_v0_5.py",
+    "plugins/geometry_full2d/solver_derivation.py",
     "plugins/geometry_full2d/engines/algebraic_geometry.py",
     "plugins/geometry_full2d/engines/construction_search.py",
     "plugins/geometry_full2d/engines/inequality.py",
@@ -38,6 +41,10 @@ IMPLEMENTATION_PATHS = [
     "scripts/run_full2d_matrix_v0_5.py",
     "scripts/run_solver_causality_mutations_v0_5.py",
 ]
+LEAN_IMPLEMENTATION_PATHS = sorted(
+    path.relative_to(ROOT).as_posix()
+    for path in (ROOT / "lean" / "MathAutoResearch" / "GeometryFull2D").glob("*.lean")
+)
 CONFIG_PATHS = [
     "configs/benchmark_runs/geometry_full2d_v0_5.yaml",
 ]
@@ -61,7 +68,7 @@ def main() -> int:
 
 
 def build_freeze_manifest(output: Path) -> dict[str, Any]:
-    implementation_hashes = file_hashes(IMPLEMENTATION_PATHS)
+    implementation_hashes = file_hashes([*IMPLEMENTATION_PATHS, *LEAN_IMPLEMENTATION_PATHS])
     checker_paths = sorted(required_checker_script_paths())
     checker_hashes = file_hashes(checker_paths)
     corpus_hashes = file_hashes(CORPUS_TOOL_PATHS)
@@ -113,7 +120,7 @@ def build_freeze_manifest(output: Path) -> dict[str, Any]:
 
 
 def required_checker_script_paths() -> set[str]:
-    paths = {"scripts/check_release_acceptance_v0_5.py"}
+    paths = {"scripts/check_release_acceptance_v0_5.py", "scripts/geometry_full2d_v0_5_contracts.py"}
     for command in REQUIRED_CHECKER_COMMANDS.values():
         for item in command:
             if item.startswith("scripts/") and item.endswith(".py"):

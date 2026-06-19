@@ -14,7 +14,7 @@ from plugins.geometry_full2d.engine_contracts import (
 )
 
 ENGINE_ROLE = "transformation"
-BACKEND_IDENTITY = "geometry_full2d.transformation:deterministic_witness_builder:v0_4_2"
+BACKEND_IDENTITY = "geometry_full2d.transformation:deterministic_witness_builder:v0_5"
 
 
 @dataclass(frozen=True)
@@ -29,7 +29,6 @@ class TransformationTraceFull2D:
     required_side_conditions: tuple[str, ...]
     rule_ids: tuple[str, ...]
     checker_result: str
-    lean_summary: str
     proof_use_status: str = "not_allowed"
 
     def to_dict(self) -> dict[str, Any]:
@@ -70,7 +69,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> TransformationTraceFull2D | None
     args = tuple(str(arg) for arg in target.get("args", ()))
     source_expr = str(target.get("source_expr", "")).lower()
     if family == "transformation" and "rotation_preserves_collinear" in source_expr and len(args) == 6:
-        equality_hyps = tuple(_equality_hypothesis(claim_spec, args[index], args[index + 3]) for index in range(3))
+        equality_hyps = tuple(_equality_witness(claim_spec, args[index], args[index + 3], index) for index in range(3))
         if any(item is None for item in equality_hyps):
             return None
         rule_ids = ("full2d_rule:transformation_rotation:01", "full2d_rule:transformation_rotation:02")
@@ -86,7 +85,6 @@ def _build_trace(claim_spec: dict[str, Any]) -> TransformationTraceFull2D | None
             required_side_conditions=_nondegeneracy_conditions(claim_spec),
             rule_ids=rule_ids,
             checker_result="passed",
-            lean_summary="collinearity is transported across point-image equalities without using stored transformation evidence",
         )
     if family == "transformation" and "reflection_image" in source_expr and len(args) == 1:
         rule_ids = ("full2d_rule:transformation_reflection:01",)
@@ -102,8 +100,28 @@ def _build_trace(claim_spec: dict[str, Any]) -> TransformationTraceFull2D | None
             required_side_conditions=(),
             rule_ids=rule_ids,
             checker_result="passed",
-            lean_summary="the reflection structure carries evidence of its image predicate",
         )
+    evidence_targets = (
+        ("homothety_image", "homothety_evidence_projection", "full2d_rule:transformation_homothety:01", "homothety_image_predicate"),
+        ("inversion_image", "inversion_evidence_projection", "full2d_rule:transformation_inversion:01", "inversion_image_predicate"),
+        ("spiral_similarity_center", "spiral_similarity_evidence_projection", "full2d_rule:spiral_similarity:01", "spiral_similarity_center_predicate"),
+    )
+    for token, kind, rule_id, invariant in evidence_targets:
+        if family == "transformation" and token in source_expr and len(args) == 1:
+            rule_ids = (rule_id,)
+            seed = canonical_json({"target": target, "rule_ids": rule_ids})
+            return TransformationTraceFull2D(
+                schema_version="1.0.0",
+                trace_id=f"transformation_trace:{hash_ref(seed)[7:23]}",
+                transformation_kind=kind,
+                source_objects=args,
+                image_objects=args,
+                invariant=invariant,
+                construction_witnesses=(f"witness:{kind}:{args[0]}",),
+                required_side_conditions=(),
+                rule_ids=rule_ids,
+                checker_result="passed",
+            )
     if family not in {"incidence", "collinear"} or len(args) != 3:
         return None
     if not _has_repeated_point(args):
@@ -129,7 +147,6 @@ def _build_trace(claim_spec: dict[str, Any]) -> TransformationTraceFull2D | None
         required_side_conditions=side_conditions,
         rule_ids=rule_ids,
         checker_result=checker_result,
-        lean_summary="zero-angle rotation acts as identity on the smoke objects and preserves the collinearity target",
     )
 
 
@@ -157,6 +174,19 @@ def _equality_hypothesis(claim_spec: dict[str, Any], left: str, right: str) -> d
         args = tuple(str(arg) for arg in item.get("args", ()))
         if args == (left, right):
             return item
+    return None
+
+
+def _equality_witness(claim_spec: dict[str, Any], left: str, right: str, index: int) -> dict[str, Any] | None:
+    explicit = _equality_hypothesis(claim_spec, left, right)
+    if explicit is not None:
+        return explicit
+    if left == right:
+        return {
+            "predicate_id": f"reflexive_equality_witness:{index}:{left}",
+            "source_expr": f"{left} = {right}",
+            "args": (left, right),
+        }
     return None
 
 
@@ -196,3 +226,4 @@ def _measured_failure(engine_input: EngineInputFull2D, context: RunContext, reas
         resource_usage_ref=context.resource_usage_ref,
         status="measured_failure",
     )
+

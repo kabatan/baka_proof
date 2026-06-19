@@ -29,7 +29,22 @@ def main() -> int:
     parser.add_argument("--run-dir", required=False)
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
-    report = self_test_report() if args.self_test else check_reports(Path(args.run_dir or "runs/geometry_full2d_v0_5"))
+    run_dir = Path(args.run_dir or "runs/geometry_full2d_v0_5")
+    if args.self_test:
+        self_report = self_test_report()
+        if load_b2_success_records(resolve(run_dir)):
+            run_report = check_reports(run_dir)
+            report = combined_report(
+                "SolverCausalityReportsSelfTestAndRunCheckV05",
+                self_report,
+                run_report,
+                self_key="self_test",
+                run_key="run_check",
+            )
+        else:
+            report = self_report
+    else:
+        report = check_reports(run_dir)
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["status"] == "passed" else 1
 
@@ -199,6 +214,30 @@ def build_ref_index(run_dir: Path) -> dict[str, dict[str, Any]]:
                 if isinstance(value, str) and value.startswith("sha256:"):
                     refs[value] = payload
     return refs
+
+
+def combined_report(
+    schema_version: str,
+    self_report: dict[str, Any],
+    run_report: dict[str, Any],
+    *,
+    self_key: str,
+    run_key: str,
+) -> dict[str, Any]:
+    errors: list[str] = []
+    if self_report.get("status") != "passed":
+        errors.append(f"{self_key}_failed")
+    if run_report.get("status") != "passed":
+        errors.append(f"{run_key}_failed")
+    errors.extend(f"{self_key}:{error}" for error in self_report.get("errors", []) if isinstance(error, str))
+    errors.extend(f"{run_key}:{error}" for error in run_report.get("errors", []) if isinstance(error, str))
+    return {
+        "schema_version": schema_version,
+        "status": "passed" if not errors else "failed",
+        "errors": sorted(set(errors)),
+        self_key: self_report,
+        run_key: run_report,
+    }
 
 
 def self_test_report() -> dict[str, Any]:

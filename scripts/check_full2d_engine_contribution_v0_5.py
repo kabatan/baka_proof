@@ -48,6 +48,11 @@ def check_engine_contribution(run_dir: Path) -> dict[str, Any]:
                 errors.append(f"{task_id}:selected_engine_output_ref_unresolved")
                 continue
             role = str(engine.get("engine_role", ""))
+            if role == "portfolio_coordinator":
+                portfolio_errors = validate_portfolio_selection_controller(derivation, str(ref), engine)
+                if portfolio_errors:
+                    errors.extend(f"{task_id}:portfolio_selection_controller:{error}" for error in portfolio_errors)
+                    continue
             if role:
                 roles.append(role)
         record_roles = {str(role) for role in record.get("used_engine_roles", [])}
@@ -74,6 +79,52 @@ def check_engine_contribution(run_dir: Path) -> dict[str, Any]:
     }
     write_json(run_dir / "full2d_engine_contribution_v0_5.json", report)
     return report
+
+
+def validate_portfolio_selection_controller(derivation: dict[str, Any], portfolio_ref: str, engine: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    if derivation.get("selection_policy") != "portfolio_guided_replay_checked_engine_order":
+        errors.append("selection_policy_not_portfolio_guided")
+    if derivation.get("selection_controller_role") != "portfolio_coordinator":
+        errors.append("selection_controller_role_mismatch")
+    if derivation.get("selection_controller_engine_output_ref") != portfolio_ref:
+        errors.append("selection_controller_engine_ref_mismatch")
+    if not str(derivation.get("selection_controller_artifact_ref", "")).startswith("sha256:"):
+        errors.append("selection_controller_artifact_ref_missing")
+    if not str(derivation.get("portfolio_decision_id", "")).startswith("portfolio_decision:"):
+        errors.append("portfolio_decision_id_missing")
+    if engine.get("engine_status") != "normalized_success":
+        errors.append("portfolio_engine_not_normalized_success")
+    if not engine.get("normalized_artifact_refs"):
+        errors.append("portfolio_normalized_artifact_ref_missing")
+
+    selected_role = str(derivation.get("selection_selected_engine_role", ""))
+    primary_role = str(derivation.get("primary_engine_role", ""))
+    if selected_role != primary_role:
+        errors.append("selected_role_disagrees_with_primary_role")
+    order = [
+        str(role)
+        for role in derivation.get("portfolio_selected_engine_order", [])
+        if isinstance(role, str) and role != "portfolio_coordinator"
+    ]
+    if not order:
+        errors.append("portfolio_order_missing")
+    elif selected_role not in order:
+        errors.append("selected_role_not_in_portfolio_order")
+    attempted = [
+        str(role)
+        for role in derivation.get("selection_attempted_engine_roles", [])
+        if isinstance(role, str) and role != "portfolio_coordinator"
+    ]
+    if not attempted:
+        errors.append("selection_attempts_missing")
+    elif selected_role and attempted[-1] != selected_role:
+        errors.append("selection_attempts_do_not_end_at_selected_role")
+    if order and selected_role in order and attempted:
+        expected_prefix = order[: order.index(selected_role) + 1]
+        if attempted != expected_prefix:
+            errors.append("selection_attempts_not_portfolio_order_prefix")
+    return errors
 
 
 def build_ref_index(root: Path) -> dict[str, dict[str, Any]]:

@@ -14,7 +14,7 @@ from plugins.geometry_full2d.engine_contracts import (
 )
 
 ENGINE_ROLE = "lean_proof_search"
-BACKEND_IDENTITY = "geometry_full2d.lean_proof_search:semantic_rule_trace:v0_4_3"
+BACKEND_IDENTITY = "geometry_full2d.lean_proof_search:semantic_rule_trace:v0_5"
 
 
 @dataclass(frozen=True)
@@ -66,15 +66,17 @@ def _build_trace(claim_spec: dict[str, Any]) -> LeanProofSearchTraceFull2D | Non
         return None
     side_conditions = _side_conditions(claim_spec)
     target_fact = f"{target.get('family')}:{','.join(map(str, target.get('args', [])))}:positive"
-    seed = canonical_json({"target": target, "side_conditions": side_conditions, "rules": ("full2d_rule:incidence_collinearity:02",)})
+    args = tuple(str(arg) for arg in target.get("args", ()))
+    rules = ("full2d_rule:incidence_collinearity:04",) if len(args) == 3 and args[1] == args[2] else ("full2d_rule:incidence_collinearity:02",)
+    seed = canonical_json({"target": target, "side_conditions": side_conditions, "rules": rules})
     return LeanProofSearchTraceFull2D(
         schema_version="1.0.0",
         trace_id=f"lean_rule_trace:{hash_ref(seed)[7:23]}",
         target_fact=target_fact,
         source_statement_hash=str(claim_spec.get("source_statement_hash", "")),
         search_strategy_id="full2d_rule_search:incidence_repeated_collinearity",
-        admissible_rule_refs=("full2d_rule:incidence_collinearity:02",),
-        used_rule_refs=("full2d_rule:incidence_collinearity:02",),
+        admissible_rule_refs=rules,
+        used_rule_refs=rules,
         used_side_condition_refs=side_conditions,
         semantic_check_status="passed",
     )
@@ -85,7 +87,7 @@ def _is_repeated_collinearity_target(target: Any) -> bool:
         return False
     family = str(target.get("family", ""))
     args = tuple(str(arg) for arg in target.get("args", ()))
-    return family in {"incidence", "collinear"} and len(args) == 3 and args[0] == args[1]
+    return family in {"incidence", "collinear"} and len(args) == 3 and (args[0] == args[1] or args[1] == args[2])
 
 
 def _side_conditions(claim_spec: dict[str, Any]) -> tuple[str, ...]:
@@ -119,3 +121,4 @@ def _measured_failure(engine_input: EngineInputFull2D, context: RunContext, reas
         resource_usage_ref=context.resource_usage_ref,
         status="measured_failure",
     )
+

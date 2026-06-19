@@ -14,7 +14,7 @@ from plugins.geometry_full2d.engine_contracts import (
 )
 
 ENGINE_ROLE = "inequality"
-BACKEND_IDENTITY = "geometry_full2d.inequality:exact_domain_certificate:v0_4_2"
+BACKEND_IDENTITY = "geometry_full2d.inequality:exact_domain_certificate:v0_5"
 
 
 @dataclass(frozen=True)
@@ -28,7 +28,6 @@ class InequalityCertificateFull2D:
     certificate_steps: tuple[str, ...]
     checker_result: str
     source_rule_ids: tuple[str, ...]
-    lean_summary: str
     proof_use_status: str = "not_allowed"
 
     def to_dict(self) -> dict[str, Any]:
@@ -94,7 +93,6 @@ def _build_certificate(claim_spec: dict[str, Any]) -> InequalityCertificateFull2
                     "full2d_rule:inequality_power:01",
                     "full2d_rule:inequality_power:02",
                 ),
-                lean_summary="two chained length inequalities are composed into the target inequality through transitivity",
             )
     if str(target.get("family")) == "inequality" and "length_le" in source_expr and len(args) == 4 and args[:2] == args[2:]:
         inequality_goal = f"length({args[0]}, {args[1]}) <= length({args[0]}, {args[1]})"
@@ -110,7 +108,6 @@ def _build_certificate(claim_spec: dict[str, Any]) -> InequalityCertificateFull2
             certificate_steps=steps,
             checker_result="passed",
             source_rule_ids=("full2d_rule:inequality_length:01", "full2d_rule:inequality_length:03"),
-            lean_summary="the inequality target compares identical length terms and closes through reflexive order",
         )
     if not side_conditions:
         return None
@@ -138,7 +135,6 @@ def _build_certificate(claim_spec: dict[str, Any]) -> InequalityCertificateFull2
         certificate_steps=steps,
         checker_result=checker_result,
         source_rule_ids=("full2d_rule:inequality_length:01", "full2d_rule:inequality_length:03"),
-        lean_summary="declared point distinctness is normalized as a positive squared-distance domain condition",
     )
 
 
@@ -217,3 +213,4 @@ def _measured_failure(engine_input: EngineInputFull2D, context: RunContext, reas
         resource_usage_ref=context.resource_usage_ref,
         status="measured_failure",
     )
+

@@ -293,10 +293,29 @@ def check_algebraic_certificate(claim_spec: dict[str, Any], artifact: dict[str, 
         if args[:2] == args[2:]:
             if "cancel_identical_distance_terms" not in steps:
                 errors.append("algebraic_reflexive_metric_step_missing")
+        elif args[2] == args[1] and hypothesis_with_args(claim_spec, "equilateral", (args[0], args[1], args[3])):
+            if "select_adjacent_equal_lengths" not in steps:
+                errors.append("algebraic_equilateral_metric_step_missing")
         elif not hypothesis_with_args(claim_spec, "equal_length", args[2:] + args[:2]):
             errors.append("algebraic_reverse_equal_length_hypothesis_missing")
         elif "apply_symmetric_equality_rewrite" not in steps:
             errors.append("algebraic_metric_symmetry_step_missing")
+    elif family == "metric" and "area_eq" in target_source_expr(claim_spec) and len(args) == 6:
+        if args[:3] == args[3:]:
+            if "cancel_identical_area_terms" not in steps:
+                errors.append("algebraic_area_reflexive_step_missing")
+        elif not hypothesis_with_args(claim_spec, "area_eq", args[3:] + args[:3]):
+            errors.append("algebraic_reverse_area_eq_hypothesis_missing")
+        elif "apply_symmetric_equality_rewrite" not in steps:
+            errors.append("algebraic_area_symmetry_step_missing")
+    elif family == "metric" and "ratio_eq" in target_source_expr(claim_spec) and len(args) == 8:
+        if args[:4] == args[4:]:
+            if "cancel_identical_ratio_terms" not in steps:
+                errors.append("algebraic_ratio_reflexive_step_missing")
+        elif not hypothesis_with_args(claim_spec, "ratio_eq", args[4:] + args[:4]):
+            errors.append("algebraic_reverse_ratio_eq_hypothesis_missing")
+        elif "apply_symmetric_equality_rewrite" not in steps:
+            errors.append("algebraic_ratio_symmetry_step_missing")
     elif family in {"incidence", "collinear"} and len(args) == 3 and has_repeated_point(args):
         if "det(" not in str(artifact.get("polynomial_goal", "")) or "reduce_determinant_with_equal_rows_to_zero" not in steps:
             errors.append("algebraic_collinearity_certificate_not_replayed")
@@ -322,11 +341,24 @@ def check_metric_angle_trace(claim_spec: dict[str, Any], artifact: dict[str, Any
                 errors.append("metric_angle_reflexive_policy_mismatch")
         elif not hypothesis_with_args(claim_spec, "directed_angle_eq_mod_pi", args[3:] + args[:3]):
             errors.append("metric_angle_reverse_hypothesis_missing")
+    elif family == "angle" and "directed_angle_eq_mod_2pi" in target_source_expr(claim_spec) and len(args) == 6:
+        if args[:3] == args[3:]:
+            if artifact.get("normalization_policy") != "directed_angle_mod_2pi_reflexivity":
+                errors.append("metric_angle_2pi_reflexive_policy_mismatch")
+        elif not hypothesis_with_args(claim_spec, "directed_angle_eq_mod_2pi", args[3:] + args[:3]):
+            errors.append("metric_angle_2pi_reverse_hypothesis_missing")
     elif family in {"incidence", "collinear"} and len(args) == 3 and (args[0] == args[1] or args[1] == args[2]):
         if not has_nonzero_baseline(args, all_side_conditions(claim_spec)):
             errors.append("metric_angle_side_condition_missing")
         if artifact.get("normalized_value") != "0 mod pi":
             errors.append("metric_angle_normalized_value_mismatch")
+    elif family == "circle" and "chord" in target_source_expr(claim_spec) and len(args) == 3:
+        if not hypothesis_with_args(claim_spec, "chord", (args[1], args[0], args[2])):
+            errors.append("metric_angle_chord_reverse_hypothesis_missing")
+        if artifact.get("normalization_policy") != "circle_chord_endpoint_symmetry_from_hypothesis":
+            errors.append("metric_angle_chord_policy_mismatch")
+        if artifact.get("normalized_value") != "symmetric chord endpoints":
+            errors.append("metric_angle_chord_normalized_value_mismatch")
     else:
         errors.append("metric_angle_unsupported_claimspec")
     return errors
@@ -339,12 +371,21 @@ def check_transformation_trace(claim_spec: dict[str, Any], artifact: dict[str, A
     kind = str(artifact.get("transformation_kind", ""))
     if family == "transformation" and "rotation_preserves_collinear" in target_source_expr(claim_spec) and len(args) == 6:
         for index in range(3):
-            if equality_hypothesis(claim_spec, args[index], args[index + 3]) is None:
+            if args[index] != args[index + 3] and equality_hypothesis(claim_spec, args[index], args[index + 3]) is None:
                 errors.append("transformation_rotation_equality_hypothesis_missing")
                 break
     elif family == "transformation" and "reflection_image" in target_source_expr(claim_spec) and len(args) == 1:
         if kind != "reflection_evidence_projection":
             errors.append("transformation_reflection_kind_mismatch")
+    elif family == "transformation" and "homothety_image" in target_source_expr(claim_spec) and len(args) == 1:
+        if kind != "homothety_evidence_projection":
+            errors.append("transformation_homothety_kind_mismatch")
+    elif family == "transformation" and "inversion_image" in target_source_expr(claim_spec) and len(args) == 1:
+        if kind != "inversion_evidence_projection":
+            errors.append("transformation_inversion_kind_mismatch")
+    elif family == "transformation" and "spiral_similarity_center" in target_source_expr(claim_spec) and len(args) == 1:
+        if kind != "spiral_similarity_evidence_projection":
+            errors.append("transformation_spiral_similarity_kind_mismatch")
     elif family in {"incidence", "collinear"} and len(args) == 3 and has_repeated_point(args):
         if not all_side_conditions(claim_spec):
             errors.append("transformation_side_conditions_missing")
@@ -416,7 +457,7 @@ def check_inequality_certificate(claim_spec: dict[str, Any], artifact: dict[str,
 def check_lean_search_trace(claim_spec: dict[str, Any], artifact: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     args = target_args(claim_spec)
-    if not (target_family(claim_spec) in {"incidence", "collinear"} and len(args) == 3 and args[0] == args[1]):
+    if not (target_family(claim_spec) in {"incidence", "collinear"} and len(args) == 3 and (args[0] == args[1] or args[1] == args[2])):
         errors.append("lean_search_unsupported_claimspec")
     if artifact.get("target_fact") != target_fact(claim_spec):
         errors.append("lean_search_target_fact_mismatch")
@@ -445,24 +486,8 @@ def check_portfolio_decision(claim_spec: dict[str, Any], artifact: dict[str, Any
         errors.append("portfolio_parallel_groups_mismatch")
     if artifact.get("llm_semantics_used") is not False:
         errors.append("portfolio_llm_semantics_used")
-    application = artifact.get("checked_rule_application")
-    if not isinstance(application, dict):
-        errors.append("portfolio_missing_checked_rule_application")
-    else:
-        if application.get("schema_version") != "CheckedRuleApplicationFull2D":
-            errors.append("rule_application_schema_invalid")
-        if not application.get("constructor"):
-            errors.append("rule_application_missing_constructor")
-        if not isinstance(application.get("arguments"), dict) or not application.get("arguments"):
-            errors.append("rule_application_missing_arguments")
-        rule_ids = application.get("rule_ids")
-        if not isinstance(rule_ids, list) or not rule_ids or any(not str(rule).startswith("full2d_rule:") for rule in rule_ids):
-            errors.append("rule_application_bad_rule_ids")
-        if application.get("target_fact") != target_fact(claim_spec):
-            errors.append("rule_application_target_fact_mismatch")
-        text = json.dumps(application, sort_keys=True).lower()
-        if "exact " in text or " by " in text:
-            errors.append("rule_application_contains_proof_text")
+    if "checked_rule_application" in artifact:
+        errors.append("portfolio_contains_proof_selection_application")
     return errors
 
 

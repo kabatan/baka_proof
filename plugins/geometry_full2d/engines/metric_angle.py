@@ -14,7 +14,7 @@ from plugins.geometry_full2d.engine_contracts import (
 )
 
 ENGINE_ROLE = "metric_angle"
-BACKEND_IDENTITY = "geometry_full2d.metric_angle:directed_angle_normalizer:v0_4_2"
+BACKEND_IDENTITY = "geometry_full2d.metric_angle:directed_angle_normalizer:v0_5"
 
 
 @dataclass(frozen=True)
@@ -28,7 +28,6 @@ class MetricAngleTraceFull2D:
     required_side_conditions: tuple[str, ...]
     rule_ids: tuple[str, ...]
     checker_result: str
-    lean_summary: str
     proof_use_status: str = "not_allowed"
 
     def to_dict(self) -> dict[str, Any]:
@@ -68,6 +67,27 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
     family = str(target.get("family", ""))
     args = tuple(str(arg) for arg in target.get("args", ()))
     source_expr = str(target.get("source_expr", "")).lower()
+    if family == "circle" and "chord" in source_expr and len(args) == 3:
+        reverse_hyp = _hypothesis_with_args(claim_spec, "chord", (args[1], args[0], args[2]))
+        if reverse_hyp is None:
+            return None
+        target_fact = f"{family}:{','.join(args)}:positive"
+        steps = ("match_reverse_chord_hypothesis", "apply_chord_endpoint_symmetry")
+        trace_seed = canonical_json({"target": target, "hypothesis": reverse_hyp, "steps": steps})
+        return MetricAngleTraceFull2D(
+            schema_version="1.0.0",
+            trace_id=f"metric_angle_trace:{hash_ref(trace_seed)[7:23]}",
+            target_fact=target_fact,
+            angle_expression=f"chord({args[0]}, {args[1]}, {args[2]})",
+            normalization_policy="circle_chord_endpoint_symmetry_from_hypothesis",
+            normalized_value="symmetric chord endpoints",
+            required_side_conditions=_side_conditions(claim_spec),
+            rule_ids=(
+                "full2d_rule:circle_cyclicity:01",
+                "full2d_rule:circle_cyclicity:02",
+            ),
+            checker_result="passed",
+        )
     if family == "angle" and "directed_angle_eq_mod_pi" in source_expr and len(args) == 6:
         reverse_hyp = _hypothesis_with_args(claim_spec, "directed_angle_eq_mod_pi", args[3:] + args[:3])
         if reverse_hyp is not None:
@@ -89,7 +109,6 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
                     "full2d_rule:angle_chase:03",
                 ),
                 checker_result="passed",
-                lean_summary="a reverse directed-angle equality hypothesis is normalized into the requested symmetric target",
             )
     if family == "angle" and "directed_angle_eq_mod_pi" in source_expr and len(args) == 6 and args[:3] == args[3:]:
         target_fact = f"{family}:{','.join(args)}:positive"
@@ -110,7 +129,31 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
                 "full2d_rule:angle_chase:03",
             ),
             checker_result="passed",
-            lean_summary="identical directed-angle expressions are equal modulo pi through reflexivity",
+        )
+    if family == "angle" and "directed_angle_eq_mod_2pi" in source_expr and len(args) == 6:
+        reverse_hyp = _hypothesis_with_args(claim_spec, "directed_angle_eq_mod_2pi", args[3:] + args[:3])
+        target_fact = f"{family}:{','.join(args)}:positive"
+        if args[:3] == args[3:]:
+            steps = ("normalize_identical_directed_angles", "check_mod_2pi_reflexivity")
+            policy = "directed_angle_mod_2pi_reflexivity"
+            rules = ("full2d_rule:angle_chase:01", "full2d_rule:angle_chase:04")
+        elif reverse_hyp is not None:
+            steps = ("match_reverse_directed_angle_hypothesis", "apply_mod_2pi_angle_symmetry")
+            policy = "directed_angle_mod_2pi_symmetry_from_hypothesis"
+            rules = ("full2d_rule:angle_chase:02", "full2d_rule:angle_chase:04")
+        else:
+            return None
+        trace_seed = canonical_json({"target": target, "hypothesis": reverse_hyp, "steps": steps})
+        return MetricAngleTraceFull2D(
+            schema_version="1.0.0",
+            trace_id=f"metric_angle_trace:{hash_ref(trace_seed)[7:23]}",
+            target_fact=target_fact,
+            angle_expression=f"angle({args[0]}, {args[1]}, {args[2]}) = angle({args[3]}, {args[4]}, {args[5]})",
+            normalization_policy=policy,
+            normalized_value="directed angle equality modulo 2pi",
+            required_side_conditions=_side_conditions(claim_spec),
+            rule_ids=rules,
+            checker_result="passed",
         )
     if family not in {"incidence", "collinear"} or len(args) != 3:
         return None
@@ -146,7 +189,6 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
             "full2d_rule:angle_chase:03",
         ),
         checker_result=checker_result,
-        lean_summary="the repeated endpoint angle normalizes to 0 modulo pi under the declared nondegeneracy convention",
     )
 
 
@@ -206,3 +248,4 @@ def _measured_failure(engine_input: EngineInputFull2D, context: RunContext, reas
         resource_usage_ref=context.resource_usage_ref,
         status="measured_failure",
     )
+

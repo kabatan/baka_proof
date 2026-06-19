@@ -18,8 +18,19 @@ if str(ROOT) not in sys.path:
 
 from plugins.geometry_full2d.compiler_v0_5 import run_compiler_cli
 from plugins.geometry_full2d.engine_contracts import ENGINE_ROLES
+from math_auto_research.lean_integration.goal_anchor import extract_theorem_statement, hash_text
+from plugins.geometry_full2d.proof_worker_v0_5 import (
+    apply_lean_patch_candidate_full2d_v0_5,
+    final_verify_gate_full2d_v0_5,
+    forbidden_declarations,
+    imports_are_admitted,
+    outside_target_region,
+    toy_target_tokens,
+    validate_proof_use_provenance,
+)
 from plugins.geometry_full2d.provider_cli import run_provider_cli
 from plugins.geometry_full2d.rule_registry import build_rule_registry_full2d
+from plugins.geometry_full2d.solver_derivation import select_solver_derivation
 from scripts.geometry_full2d_v0_5_independent_checkers import run_independent_solver_checkers
 from scripts.extract_geometry_full2d_theorem import (
     _canonicalize_lean_structured_output,
@@ -75,6 +86,7 @@ RULE_FAMILIES = [
     "inequality_power",
 ]
 EXTRACTION_BATCH_SIZE = 100
+BATCH_FINAL_VERIFY_CHUNK_SIZE = 200
 
 
 def main() -> int:
@@ -135,7 +147,7 @@ def run_matrix(
     baseline_disabled = config.get("baseline_disabled_components", {})
     record_counts: dict[str, dict[str, int]] = {baseline: {"records": 0, "final_theorem": 0, "measured_failure": 0} for baseline in required_baselines}
     validation_errors: list[str] = []
-    upstreams: dict[str, dict[str, Any]] = {}
+    upstreams_by_baseline: dict[str, dict[str, dict[str, Any]]] = {baseline: {} for baseline in required_baselines}
     for index, task in enumerate(tasks):
         task_id = str(task["task_id"])
         extraction_ref = extraction["report_refs"].get(task_id)
@@ -143,66 +155,116 @@ def run_matrix(
         if not extraction_ref or not isinstance(extraction_report, dict):
             errors.append(f"{task_id}:missing_extraction_for_upstream_pipeline")
             continue
-        upstream = build_b2_upstream_artifacts(
+        upstream = build_upstream_artifacts(
             run_dir=run_dir,
             task=task,
             task_index=index,
+            baseline="B2",
+            disabled_components=[],
             extraction_ref=extraction_ref,
             extraction_report=extraction_report,
             registry_ref=registry_ref,
             registry_path=registry_path,
         )
         validation_errors.extend(upstream["validation_errors"])
-        errors.extend(f"{task_id}:upstream:{error}" for error in upstream["errors"])
-        upstreams[task_id] = upstream
-    final_verify = build_candidate_batch(run_dir, tasks, upstreams)
-    errors.extend(f"final_verify:{error}" for error in final_verify["errors"])
+        errors.extend(f"{task_id}:B2:upstream:{error}" for error in upstream["errors"])
+        upstreams_by_baseline["B2"][task_id] = upstream
+        for baseline in ["B1", "B5", "B6", "B7"]:
+            disabled = list(baseline_disabled.get(baseline, []))
+            baseline_upstream = build_upstream_artifacts(
+                run_dir=run_dir,
+                task=task,
+                task_index=index,
+                baseline=baseline,
+                disabled_components=disabled,
+                extraction_ref=extraction_ref,
+                extraction_report=extraction_report,
+                registry_ref=registry_ref,
+                registry_path=registry_path,
+            )
+            validation_errors.extend(baseline_upstream["validation_errors"])
+            upstreams_by_baseline[baseline][task_id] = baseline_upstream
     final_records_dir = run_dir / "actual_task_pipeline_runs"
     final_records_dir.mkdir(parents=True, exist_ok=True)
+    prepared_runs: list[dict[str, Any]] = []
     for index, task in enumerate(tasks):
         task_id = str(task["task_id"])
         extraction_ref = extraction["report_refs"].get(str(task["task_id"]))
         if not extraction_ref:
             errors.append(f"{task['task_id']}:missing_extraction_ref")
             extraction_ref = sha256_text("missing_extraction:" + str(task["task_id"]))
-        upstream = upstreams.get(task_id)
-        if upstream is None:
-            errors.append(f"{task_id}:missing_b2_upstream_bundle")
-            upstream = missing_b2_upstream_bundle(task_id, extraction_ref)
-        b2_bundle = materialize_b2_record(
+        for baseline in ["B2", "B1", "B5", "B6", "B7"]:
+            disabled = list(baseline_disabled.get(baseline, []))
+            upstream = upstreams_by_baseline[baseline].get(task_id)
+            if upstream is None:
+                errors.append(f"{task_id}:{baseline}:missing_upstream_bundle")
+                upstream = missing_b2_upstream_bundle(task_id, extraction_ref)
+            prepared = prepare_proof_worker_run(
+                run_dir=run_dir,
+                corpus_root=corpus_root,
+                task=task,
+                baseline=baseline,
+                upstream=upstream,
+                git_head=git_head,
+                selected_impl=selected_impl,
+            )
+            validation_errors.extend(prepared.get("validation_errors", []))
+            if baseline == "B2" or not disabled:
+                errors.extend(f"{task_id}:{baseline}:proof_worker:{error}" for error in prepared.get("errors", []))
+            prepared_runs.append({"task": task, "baseline": baseline, "upstream": upstream, "disabled_components": disabled, "prepared": prepared})
+    finalized = finalize_batch_final_verify_runs(
+        run_dir=run_dir,
+        prepared_runs=prepared_runs,
+        git_head=git_head,
+        selected_impl=selected_impl,
+    )
+    validation_errors.extend(finalized["validation_errors"])
+    errors.extend(finalized["errors"])
+    for item in prepared_runs:
+        task = item["task"]
+        baseline = str(item["baseline"])
+        proof_run = finalized["proof_runs"].get((str(task["task_id"]), baseline))
+        if proof_run is None:
+            failure_ref = write_stage_failure(
+                run_dir=run_dir,
+                task_id=str(task["task_id"]),
+                baseline=baseline,
+                stage="final_verify",
+                input_refs=[str(item["upstream"].get("claim_ref", "")), str(item["upstream"].get("patch_ref", ""))],
+                command_log_payload={
+                    "schema_version": "CommandLogV05",
+                    "stage": "final_verify",
+                    "stage_sequence": ["proof_worker", "final_verify"],
+                    "actual_python_function_executed": False,
+                    "actual_subprocess_executed": False,
+                    "returncode": 1,
+                    "errors": ["batch_final_verify_result_missing"],
+                },
+                failure_kind="real_execution_failure",
+                failure_reason="batch FinalVerify did not produce a task result",
+                git_head=git_head,
+                selected_impl=selected_impl,
+                disabled_components=list(item.get("disabled_components", [])),
+            )
+            proof_run = proof_failure_result(str(task["task_id"]), baseline, failure_ref, "StageFailureReportV1", errors=["batch_final_verify_result_missing"])
+        bundle = materialize_record(
             run_dir=run_dir,
             task=task,
+            baseline=baseline,
             corpus_ref=corpus_ref,
             config_ref=config_ref,
             selected_impl=selected_impl,
             git_head=git_head,
             run_dir_hash=run_dir_hash,
-            upstream=upstream,
-            final_verify=batch_final_status_for_task(final_verify, task),
+            upstream=item["upstream"],
+            proof_run=proof_run,
+            disabled_components=list(item.get("disabled_components", [])) if baseline != "B2" else None,
         )
-        validation_errors.extend(b2_bundle["validation_errors"])
-        write_json(final_records_dir / f"{safe_id(str(task['task_id']))}__B2.json", b2_bundle["record"])
-        record_counts["B2"]["records"] += 1
-        record_counts["B2"][str(b2_bundle["record"]["final_status"])] += 1
-        for baseline in ["B1", "B5", "B6", "B7"]:
-            disabled = list(baseline_disabled.get(baseline, []))
-            record = build_ablation_record(
-                run_dir=run_dir,
-                task=task,
-                baseline=baseline,
-                disabled_components=disabled,
-                extraction_ref=extraction_ref,
-                corpus_ref=corpus_ref,
-                config_ref=config_ref,
-                selected_impl=selected_impl,
-                git_head=git_head,
-                run_dir_hash=run_dir_hash,
-                upstream=upstream,
-            )
-            validation_errors.extend(validate_payload(record, current_head=git_head))
-            write_json(final_records_dir / f"{safe_id(str(task['task_id']))}__{baseline}.json", record)
-            record_counts[baseline]["records"] += 1
-            record_counts[baseline]["measured_failure"] += 1
+        validation_errors.extend(bundle["validation_errors"])
+        record = bundle["record"]
+        write_json(final_records_dir / f"{safe_id(str(task['task_id']))}__{baseline}.json", record)
+        record_counts[baseline]["records"] += 1
+        record_counts[baseline][str(record["final_status"])] += 1
     errors.extend(f"record_validation:{error}" for error in sorted(set(validation_errors))[:50])
     actual_summary = {
         "status": "passed" if not errors else "failed",
@@ -233,7 +295,13 @@ def run_matrix(
         "actual_pipeline_run_summary": actual_summary,
         "conditional_b8": b8_report,
         "extraction_summary": extraction["summary"],
-        "final_verify_batch_summary": final_verify["summary"],
+        "task_level_final_verify_summary": {
+            "mode": "per_task_proof_worker_batch_final_verify_gate",
+            "proof_worker_result_count": len(list((run_dir / "proof_worker_results").glob("*.json"))) if (run_dir / "proof_worker_results").exists() else 0,
+            "final_verify_report_count": len(list((run_dir / "final_verify_reports").glob("*.json"))) if (run_dir / "final_verify_reports").exists() else 0,
+            "batch_command_count": finalized["batch_command_count"],
+            "batch_chunk_size": BATCH_FINAL_VERIFY_CHUNK_SIZE,
+        },
         "record_count": actual_summary["record_count"],
     }
     write_json(run_dir / "matrix_summary_v0_5.json", summary)
@@ -421,86 +489,13 @@ def chunks(items: list[dict[str, Any]], size: int) -> list[list[dict[str, Any]]]
     return [items[index : index + size] for index in range(0, len(items), size)]
 
 
-def build_candidate_batch(run_dir: Path, tasks: list[dict[str, Any]], upstreams: dict[str, dict[str, Any]]) -> dict[str, Any]:
-    errors: list[str] = []
-    lines = ["import MathAutoResearch.GeometryFull2D.Inequality", "", "namespace MathAutoResearch.GeometryFull2D", ""]
-    per_task: dict[str, dict[str, Any]] = {}
-    for task in tasks:
-        statement = str(task["formal_statement"])
-        task_id = str(task["task_id"])
-        theorem_name = str(task["theorem_name"])
-        header = statement.split(":= by", 1)[0].strip()
-        upstream = upstreams.get(task_id, {})
-        proof_text = str(upstream.get("patch_text", ""))
-        if not proof_text:
-            errors.append(f"{task_id}:no_compiler_patch_text")
-            proof_text = "exact False.elim (by contradiction)"
-        lines.append(header + " := by")
-        lines.append(f"  -- MARP_PROOF_REGION_START:{theorem_name}")
-        lines.extend("  " + line if line else "" for line in proof_text.splitlines())
-        lines.append(f"  -- MARP_PROOF_REGION_END:{theorem_name}")
-        lines.append("")
-        per_task[task_id] = {
-            "theorem_name": theorem_name,
-            "header": header,
-            "patch_text": proof_text,
-            "source_statement_hash": sha256_text(statement),
-        }
-    lines.append("end MathAutoResearch.GeometryFull2D")
-    lines.append("")
-    candidate_text = "\n".join(lines)
-    candidate_path = run_dir / "lean" / "Full2DMatrixCandidates.lean"
-    candidate_path.parent.mkdir(parents=True, exist_ok=True)
-    candidate_path.write_text(candidate_text, encoding="utf-8")
-    command = ["lake", "env", "lean", str(candidate_path)]
-    completed = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=False, timeout=300)
-    if completed.returncode != 0:
-        errors.append("candidate_batch_final_verify_failed")
-    command_log_ref, _ = write_artifact(
-        run_dir,
-        Path("command_logs") / "final_verify_batch.json",
-        {
-            "schema_version": "CommandLogV05",
-            "command": command,
-            "returncode": completed.returncode,
-            "stdout_tail": completed.stdout[-4000:],
-            "stderr_tail": completed.stderr[-4000:],
-        },
-        id_field="command_log_id",
-    )
-    summary = {
-        "status": "passed" if not errors else "failed",
-        "candidate_path": candidate_path.relative_to(run_dir).as_posix(),
-        "candidate_ref": sha256_file(candidate_path),
-        "command": command,
-        "command_log_ref": command_log_ref,
-        "returncode": completed.returncode,
-        "theorem_count": len(tasks),
-    }
-    write_json(run_dir / "final_verify_batch_summary_v0_5.json", summary)
-    return {"errors": errors, "summary": summary, "per_task": per_task, "candidate_path": candidate_path, "candidate_text": candidate_text}
-
-
-def batch_final_status_for_task(final_verify: dict[str, Any], task: dict[str, Any]) -> dict[str, Any]:
-    item = final_verify["per_task"][str(task["task_id"])]
-    return {
-        "passed": final_verify["summary"]["status"] == "passed",
-        "candidate_path": final_verify["candidate_path"],
-        "candidate_ref": final_verify["summary"]["candidate_ref"],
-        "command": final_verify["summary"]["command"],
-        "command_log_ref": final_verify["summary"]["command_log_ref"],
-        "theorem_statement_unchanged": True,
-        "no_sorry": "sorry" not in final_verify["candidate_text"],
-        "patch_text": item["patch_text"],
-        "source_statement_hash": item["source_statement_hash"],
-    }
-
-
-def build_b2_upstream_artifacts(
+def build_upstream_artifacts(
     *,
     run_dir: Path,
     task: dict[str, Any],
     task_index: int,
+    baseline: str,
+    disabled_components: list[str],
     extraction_ref: str,
     extraction_report: dict[str, Any],
     registry_ref: str,
@@ -524,19 +519,22 @@ def build_b2_upstream_artifacts(
     claim_spec = claim_spec_for_task(task_id, theorem_name, extraction_ref, extraction_report)
     _claim_body_ref, claim_path = write_artifact(run_dir, Path("claim_specs") / f"{safe_id(task_id)}.json", claim_spec, id_field="claim_id")
     claim_ref = sha256_file(claim_path)
-    provider = run_provider_and_checkers(run_dir, task_id, claim_path, claim_ref)
-    errors.extend(provider["errors"])
+    provider = run_provider_and_checkers(run_dir, task_id, claim_path, claim_ref, baseline=baseline, disabled_components=disabled_components)
+    errors.extend(provider["fatal_errors"])
     engine_refs = provider["engine_refs"]
     checker_refs = provider["checker_refs"]
     provider_ref, _ = write_artifact(
         run_dir,
-        Path("provider_stage") / "provider_manifests" / f"{safe_id(task_id)}.json",
+        Path("provider_stage") / "provider_manifests" / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
         {
             "schema_version": "ProviderRunManifestFull2D",
-            "provider_stage_run_id": f"provider:v0_5:{task_id}:B2",
+            "provider_stage_run_id": f"provider:v0_5:{task_id}:{baseline}",
             "claim_spec_ref": claim_ref,
             "engine_output_refs": engine_refs,
             "engine_roles": list(ENGINE_ROLES),
+            "baseline_id": baseline,
+            "disabled_components": disabled_components,
+            "disabled_engine_roles": provider["disabled_engine_roles"],
             "provider_cli_summary_ref": provider["provider_summary_ref"],
             "independent_checker_summary_ref": provider["checker_summary_ref"],
             "provider_process_boundary": "plugins.geometry_full2d.provider_cli.run_provider_cli",
@@ -544,67 +542,50 @@ def build_b2_upstream_artifacts(
         },
         id_field="manifest_id",
     )
-    application = provider["checked_rule_application"]
-    rule_ids = [str(rule_id) for rule_id in application.get("rule_ids", [])]
-    if not application or not application.get("constructor") or len(rule_ids) < 2:
-        errors.append("missing_checked_rule_application_for_derivation")
-        rule_ids = ["full2d_rule:incidence_collinearity:01", "full2d_rule:incidence_collinearity:02"]
-    selected_role_refs = [
-        provider["engine_refs_by_role"][role]
-        for role in ENGINE_ROLES
-        if role in provider["engine_refs_by_role"]
+    derivation, derivation_errors = select_solver_derivation(
+        claim_spec=claim_spec,
+        engine_refs_by_role=provider["engine_refs_by_role"],
+        checker_refs_by_role=provider["checker_refs_by_role"],
+        normalized_artifacts_by_role=provider["normalized_artifacts_by_role"],
+        normalized_artifact_refs_by_role=provider["normalized_artifact_refs_by_role"],
+    )
+    errors.extend(f"selected_derivation:{error}" for error in derivation_errors)
+    if derivation is None:
+        derivation = {
+            "schema_version": "SelectedSolverDerivationV2",
+            "selected_engine_output_refs": [],
+            "selected_facts": [],
+            "selected_constructions": [],
+            "selected_certificates": [],
+            "derivation_steps": [],
+            "used_engine_roles": [],
+            "selection_errors": derivation_errors,
+        }
+    rule_ids = [
+        str(step.get("rule_id"))
+        for step in derivation.get("derivation_steps", [])
+        if isinstance(step, dict) and str(step.get("rule_id", "")).startswith("full2d_rule:")
     ]
-    checked_application_ref = provider["checked_rule_application_ref"] or claim_ref
-    derivation = {
-        "schema_version": "SelectedSolverDerivationV2",
-        "selected_engine_output_refs": selected_role_refs,
-        "selected_facts": provider["selected_facts"] or [f"fact:{task_id}:semantic_support"],
-        "selected_constructions": [f"construction:{task_id}"] if task.get("requires_construction_case_certificate") else [],
-        "selected_certificates": [checked_application_ref, f"certificate:{task_id}:independent_replay"],
-        "checked_rule_application": application,
-        "checked_rule_application_ref": checked_application_ref,
-        "derivation_steps": [
-            {
-                "step_id": f"{task_id}:non_target_intermediate",
-                "input_refs": [claim_ref, selected_role_refs[0] if selected_role_refs else claim_ref],
-                "output_ref": f"intermediate:{task_id}",
-                "rule_id": rule_ids[0],
-                "independent_checker_report_ref": provider["checker_refs_by_role"].get("portfolio_coordinator") or (checker_refs[0] if checker_refs else claim_ref),
-                "output_is_target": False,
-                "non_target_intermediate": True,
-            },
-            {
-                "step_id": f"{task_id}:target_derivation",
-                "input_refs": [f"intermediate:{task_id}", checked_application_ref],
-                "output_ref": f"target:{task_id}",
-                "rule_id": rule_ids[1],
-                "independent_checker_report_ref": provider["checker_refs_by_role"].get("portfolio_coordinator") or (checker_refs[1] if len(checker_refs) > 1 else claim_ref),
-                "output_is_target": True,
-                "non_target_intermediate": False,
-            },
-        ],
-        "used_engine_roles": sorted(provider["engine_refs_by_role"]),
-    }
-    derivation_ref, derivation_path = write_artifact(run_dir, Path("selected_solver_derivations") / f"{safe_id(task_id)}.json", derivation, id_field="derivation_id")
+    derivation_ref, derivation_path = write_artifact(run_dir, Path("selected_solver_derivations") / f"{safe_id(task_id)}__{safe_id(baseline)}.json", derivation, id_field="derivation_id")
     compiler_stage = run_compiler_cli(
         claim_spec_json=claim_path,
         selected_derivation_json=derivation_path,
         rule_registry_json=registry_path,
-        output_dir=run_dir / "compiler_task_runs" / safe_id(task_id),
+        output_dir=run_dir / "compiler_task_runs" / safe_id(baseline) / safe_id(task_id),
         claim_spec_ref=claim_ref,
         selected_derivation_ref=derivation_ref,
         rule_registry_ref=registry_ref,
         side_condition_checker_refs=tuple(checker_refs[:2]),
     )
     errors.extend(f"compiler_cli:{error}" for error in compiler_stage.get("errors", []))
-    compiler_result_path = run_dir / "compiler_task_runs" / safe_id(task_id) / "compiler_stage" / "compiler_result.json"
+    compiler_result_path = run_dir / "compiler_task_runs" / safe_id(baseline) / safe_id(task_id) / "compiler_stage" / "compiler_result.json"
     compiler_payload = read_json(compiler_result_path) if compiler_stage.get("status") == "passed" and compiler_result_path.exists() else {}
     patch_text = str(compiler_payload.get("proof_text", ""))
     if not patch_text:
         errors.append("compiler_no_patch_text_from_selected_derivation")
     compiler_ref, _ = write_artifact(
         run_dir,
-        Path("compiler_results") / f"{safe_id(task_id)}.json",
+        Path("compiler_results") / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
         strip_identity(compiler_payload)
         if compiler_payload
         else {
@@ -612,8 +593,10 @@ def build_b2_upstream_artifacts(
             "stage": "compiler",
             "input_refs": [claim_ref, derivation_ref, registry_ref],
             "command_log_ref": sha256_text(canonical_json(compiler_stage)),
-            "failure_kind": "validation_rejected",
+            "failure_kind": "unsupported_after_disabled_component" if disabled_components else "validation_rejected",
             "failure_reason": ";".join(map(str, compiler_stage.get("errors", []))) or "compiler_cli_failed",
+            "baseline_id": baseline,
+            "disabled_components": disabled_components,
         },
         id_field="result_id",
     )
@@ -626,13 +609,15 @@ def build_b2_upstream_artifacts(
             "start_marker": f"-- MARP_PROOF_REGION_START:{theorem_name}",
             "end_marker": f"-- MARP_PROOF_REGION_END:{theorem_name}",
         },
-        "patch_text": patch_text,
+        "patch_text": indent_proof_region(patch_text),
         "solver_dependency_refs": [derivation_ref, *checker_refs[:2]],
     }
-    patch_ref, _ = write_artifact(run_dir, Path("lean_patch_candidates") / f"{safe_id(task_id)}.json", patch, id_field="patch_id")
+    patch_ref, patch_path = write_artifact(run_dir, Path("lean_patch_candidates") / f"{safe_id(task_id)}__{safe_id(baseline)}.json", patch, id_field="patch_id")
     return {
         "errors": sorted(set(errors)),
         "validation_errors": [],
+        "baseline": baseline,
+        "disabled_components": disabled_components,
         "source_ref": source_ref,
         "extraction_ref": extraction_ref,
         "claim_ref": claim_ref,
@@ -643,66 +628,786 @@ def build_b2_upstream_artifacts(
         "derivation_ref": derivation_ref,
         "compiler_ref": compiler_ref,
         "patch_ref": patch_ref,
-        "patch_text": patch_text,
+        "patch_path": str(patch_path),
+        "patch_text": indent_proof_region(patch_text),
         "rule_ids": rule_ids,
-        "has_non_target_intermediate": True,
-        "has_construction_case_certificate": bool(task.get("requires_construction_case_certificate")),
+        "has_non_target_intermediate": any(
+            isinstance(step, dict) and step.get("non_target_intermediate") is True
+            for step in derivation.get("derivation_steps", [])
+        ),
+        "has_construction_case_certificate": bool(derivation.get("selected_constructions") or derivation.get("selected_certificates")),
+        "used_engine_roles": sorted(str(role) for role in derivation.get("used_engine_roles", [])),
+        "direct_or_wrapped_facade_success": bool(derivation.get("direct_or_wrapped_facade_success")),
+        "provider_nonfatal_errors": provider["nonfatal_errors"],
     }
 
 
-def materialize_b2_record(
+def prepare_proof_worker_run(
+    *,
+    run_dir: Path,
+    corpus_root: Path,
+    task: dict[str, Any],
+    baseline: str,
+    upstream: dict[str, Any],
+    git_head: str,
+    selected_impl: str,
+) -> dict[str, Any]:
+    task_id = str(task["task_id"])
+    disabled_components = list(upstream.get("disabled_components", []))
+    input_refs = [
+        str(upstream.get("claim_ref", "")),
+        str(upstream.get("derivation_ref", "")),
+        str(upstream.get("compiler_ref", "")),
+        str(upstream.get("patch_ref", "")),
+    ]
+    if not str(upstream.get("patch_text", "")).strip():
+        failure_ref = write_stage_failure(
+            run_dir=run_dir,
+            task_id=task_id,
+            baseline=baseline,
+            stage="compiler",
+            input_refs=input_refs,
+            command_log_payload={
+                "schema_version": "CommandLogV05",
+                "stage": "compiler",
+                "stage_sequence": ["claimspec", "provider", "independent_checker", "selected_derivation", "compiler"],
+                "actual_python_function_executed": True,
+                "returncode": 1,
+                "errors": upstream.get("errors", []),
+            },
+            failure_kind="unsupported_after_disabled_component" if disabled_components else "validation_rejected",
+            failure_reason="compiler did not produce a Lean patch from checked selected solver derivation",
+            git_head=git_head,
+            selected_impl=selected_impl,
+            disabled_components=disabled_components,
+        )
+        return {"status": "failed", "proof_run": proof_failure_result(task_id, baseline, failure_ref, "StageFailureReportV1", errors=["compiler_no_patch_text_from_selected_derivation"]), "errors": ["compiler_no_patch_text_from_selected_derivation"], "validation_errors": []}
+
+    patch_path = Path(str(upstream.get("patch_path", "")))
+    if not patch_path.exists():
+        failure_ref = write_stage_failure(
+            run_dir=run_dir,
+            task_id=task_id,
+            baseline=baseline,
+            stage="proof_worker",
+            input_refs=input_refs,
+            command_log_payload={
+                "schema_version": "CommandLogV05",
+                "stage": "proof_worker",
+                "stage_sequence": ["proof_worker"],
+                "actual_python_function_executed": False,
+                "returncode": 1,
+                "errors": ["patch_artifact_path_missing"],
+            },
+            failure_kind="validation_rejected",
+            failure_reason="LeanPatchCandidateFull2D artifact was missing before ProofWorker execution",
+            git_head=git_head,
+            selected_impl=selected_impl,
+            disabled_components=disabled_components,
+        )
+        return {"status": "failed", "proof_run": proof_failure_result(task_id, baseline, failure_ref, "StageFailureReportV1", errors=["patch_artifact_path_missing"]), "errors": ["patch_artifact_path_missing"], "validation_errors": []}
+
+    source_path = write_task_source_lean(run_dir, corpus_root, task, baseline)
+    proof_root = run_dir / "proof_worker_task_runs" / safe_id(baseline) / safe_id(task_id)
+    patch_payload = read_json(patch_path)
+    worker = apply_lean_patch_candidate_full2d_v0_5(
+        source_path=source_path,
+        patch_candidate=patch_payload,
+        output_dir=proof_root,
+        run_id=f"actual_full2d_run:v0_5:{task_id}:{baseline}",
+        task_id=task_id,
+    )
+    worker_ref, _ = write_artifact(
+        run_dir,
+        Path("proof_worker_results") / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
+        strip_identity(worker),
+        id_field="worker_result_id",
+    )
+    validation_errors = [f"proof_worker:{error}" for error in validate_payload(read_json(run_dir / "proof_worker_results" / f"{safe_id(task_id)}__{safe_id(baseline)}.json"), current_head=git_head)]
+    if worker.get("status") != "patch_applied":
+        failure_ref = write_stage_failure(
+            run_dir=run_dir,
+            task_id=task_id,
+            baseline=baseline,
+            stage="proof_worker",
+            input_refs=[*input_refs, worker_ref],
+            command_log_payload={
+                "schema_version": "CommandLogV05",
+                "stage": "proof_worker",
+                "stage_sequence": ["proof_worker"],
+                "actual_python_function_executed": True,
+                "returncode": 1,
+                "errors": worker.get("errors", []),
+                "worker_result_ref": worker_ref,
+            },
+            failure_kind="validation_rejected",
+            failure_reason="ProofWorker rejected the Lean patch candidate",
+            git_head=git_head,
+            selected_impl=selected_impl,
+            disabled_components=disabled_components,
+        )
+        result = proof_failure_result(task_id, baseline, failure_ref, "StageFailureReportV1", errors=[f"proof_worker:{error}" for error in worker.get("errors", [])])
+        result["proof_worker_result_ref"] = worker_ref
+        result["validation_errors"] = validation_errors
+        return {"status": "failed", "proof_run": result, "errors": result["errors"], "validation_errors": validation_errors}
+    return {
+        "status": "prepared",
+        "errors": [],
+        "validation_errors": validation_errors,
+        "source_path": str(source_path),
+        "candidate_path": str(worker.get("generated_candidate_path", "")),
+        "worker_ref": worker_ref,
+        "worker": worker,
+    }
+
+
+def finalize_batch_final_verify_runs(
+    *,
+    run_dir: Path,
+    prepared_runs: list[dict[str, Any]],
+    git_head: str,
+    selected_impl: str,
+) -> dict[str, Any]:
+    proof_runs: dict[tuple[str, str], dict[str, Any]] = {}
+    errors: list[str] = []
+    validation_errors: list[str] = []
+    ready = [item for item in prepared_runs if item.get("prepared", {}).get("status") == "prepared"]
+    for item in prepared_runs:
+        prepared = item.get("prepared", {})
+        if prepared.get("status") != "prepared" and isinstance(prepared.get("proof_run"), dict):
+            proof_runs[(str(item["task"]["task_id"]), str(item["baseline"]))] = prepared["proof_run"]
+    batch_command_count = 0
+    for baseline in ["B2", "B1", "B5", "B6", "B7"]:
+        baseline_items = [item for item in ready if str(item["baseline"]) == baseline]
+        for chunk_index, chunk_items in enumerate(chunks(baseline_items, BATCH_FINAL_VERIFY_CHUNK_SIZE)):
+            if not chunk_items:
+                continue
+            batch = run_batch_lean_verify(run_dir, baseline, chunk_index, chunk_items)
+            batch_command_count += 1
+            for item in chunk_items:
+                task = item["task"]
+                task_id = str(task["task_id"])
+                prepared = item["prepared"]
+                upstream = item["upstream"]
+                disabled_components = list(item.get("disabled_components", []))
+                result = build_batch_final_verify_result(
+                    run_dir=run_dir,
+                    task=task,
+                    baseline=baseline,
+                    upstream=upstream,
+                    prepared=prepared,
+                    batch=batch,
+                    git_head=git_head,
+                    selected_impl=selected_impl,
+                    disabled_components=disabled_components,
+                )
+                validation_errors.extend(result.get("validation_errors", []))
+                errors.extend(f"{task_id}:{baseline}:batch_final_verify:{error}" for error in result.get("errors", []))
+                proof_runs[(task_id, baseline)] = result["proof_run"]
+    return {"proof_runs": proof_runs, "errors": errors, "validation_errors": validation_errors, "batch_command_count": batch_command_count}
+
+
+def run_batch_lean_verify(run_dir: Path, baseline: str, chunk_index: int, items: list[dict[str, Any]]) -> dict[str, Any]:
+    batch_dir = run_dir / "batch_final_verify" / safe_id(baseline)
+    batch_dir.mkdir(parents=True, exist_ok=True)
+    batch_path = batch_dir / f"chunk_{chunk_index:04d}.lean"
+    text = build_batch_candidate_text(items)
+    batch_path.write_text(text, encoding="utf-8")
+    command = ["lake", "env", "lean", str(batch_path)]
+    started = time.time()
+    try:
+        completed = subprocess.run(command, cwd=ROOT, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=600, check=False)
+        return {
+            "batch_path": str(batch_path),
+            "batch_ref": sha256_file(batch_path),
+            "command": command,
+            "returncode": completed.returncode,
+            "stdout_tail": completed.stdout[-2000:],
+            "stderr_tail": completed.stderr[-2000:],
+            "duration_seconds": round(time.time() - started, 3),
+            "task_count": len(items),
+        }
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "batch_path": str(batch_path),
+            "batch_ref": sha256_file(batch_path),
+            "command": command,
+            "returncode": 124,
+            "stdout_tail": (exc.stdout or "")[-2000:] if isinstance(exc.stdout, str) else "",
+            "stderr_tail": (exc.stderr or "")[-2000:] if isinstance(exc.stderr, str) else "batch lake env lean timed out",
+            "duration_seconds": round(time.time() - started, 3),
+            "task_count": len(items),
+        }
+
+
+def build_batch_candidate_text(items: list[dict[str, Any]]) -> str:
+    lines = ["import MathAutoResearch.GeometryFull2D.Inequality", "", "namespace MathAutoResearch.GeometryFull2D", ""]
+    for item in items:
+        candidate_text = Path(str(item["prepared"]["candidate_path"])).read_text(encoding="utf-8")
+        lines.extend(extract_candidate_body(candidate_text))
+        lines.append("")
+    lines.extend(["end MathAutoResearch.GeometryFull2D", ""])
+    return "\n".join(lines)
+
+
+def extract_candidate_body(candidate_text: str) -> list[str]:
+    output: list[str] = []
+    for line in candidate_text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("import "):
+            continue
+        if stripped == "namespace MathAutoResearch.GeometryFull2D":
+            continue
+        if stripped == "end MathAutoResearch.GeometryFull2D":
+            continue
+        output.append(line)
+    return output
+
+
+def build_batch_final_verify_result(
     *,
     run_dir: Path,
     task: dict[str, Any],
+    baseline: str,
+    upstream: dict[str, Any],
+    prepared: dict[str, Any],
+    batch: dict[str, Any],
+    git_head: str,
+    selected_impl: str,
+    disabled_components: list[str],
+) -> dict[str, Any]:
+    task_id = str(task["task_id"])
+    theorem_name = str(task["theorem_name"])
+    source_path = Path(str(prepared["source_path"]))
+    candidate_path = Path(str(prepared["candidate_path"]))
+    source_text = source_path.read_text(encoding="utf-8")
+    candidate_text = candidate_path.read_text(encoding="utf-8")
+    theorem_statement_unchanged = False
+    theorem_statement_hash = ""
+    try:
+        theorem_statement_hash = hash_text(extract_theorem_statement(source_text, theorem_name))
+        theorem_statement_unchanged = theorem_statement_hash == hash_text(extract_theorem_statement(candidate_text, theorem_name))
+    except Exception:
+        theorem_statement_hash = ""
+    no_sorry = re.search(r"\bsorry\b", candidate_text) is None
+    forbidden = forbidden_declarations(candidate_text)
+    toy_tokens = toy_target_tokens(candidate_text)
+    admitted_imports_only, bad_imports = imports_are_admitted(candidate_text, ("MathAutoResearch", "Mathlib", "LeanGeo", "Lean"))
+    proof_region_guard_passed = outside_target_region(source_text, theorem_name) == outside_target_region(candidate_text, theorem_name)
+    provenance = {
+        "claim_spec_ref": upstream["claim_ref"],
+        "compiler_result_ref": upstream["compiler_ref"],
+        "lean_patch_candidate_ref": upstream["patch_ref"],
+        "proof_worker_result_ref": prepared["worker_ref"],
+        "proof_region_diff_ref": prepared["worker"].get("proof_region_diff_ref"),
+        "generated_candidate_file_ref": prepared["worker"].get("generated_candidate_file_ref"),
+    }
+    provenance_errors = validate_proof_use_provenance(provenance)
+    final_errors: list[str] = []
+    if not theorem_statement_unchanged:
+        final_errors.append("theorem_statement_changed")
+    if not proof_region_guard_passed:
+        final_errors.append("candidate_modified_outside_marp_region")
+    if not no_sorry:
+        final_errors.append("sorry_present")
+    if forbidden:
+        final_errors.append("forbidden_declarations")
+    if toy_tokens:
+        final_errors.append("toy_target_definitions")
+    if not admitted_imports_only:
+        final_errors.append("non_admitted_imports")
+    if batch["returncode"] != 0:
+        final_errors.append("batch_lake_env_lean_failed")
+    final_errors.extend(provenance_errors)
+    command_log_ref, _ = write_artifact(
+        run_dir,
+        Path("command_logs") / "final_verify" / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
+        {
+            "schema_version": "CommandLogV05",
+            "stage": "final_verify",
+            "stage_sequence": ["final_verify"],
+            "actual_python_function_executed": True,
+            "actual_subprocess_executed": True,
+            "command": batch["command"],
+            "returncode": batch["returncode"],
+            "stdout_tail": batch["stdout_tail"],
+            "stderr_tail": batch["stderr_tail"],
+            "batch_final_verify": True,
+            "batch_candidate_path": batch["batch_path"],
+            "batch_candidate_ref": batch["batch_ref"],
+            "task_count": batch["task_count"],
+            "task_id": task_id,
+            "candidate_ref": sha256_file(candidate_path),
+        },
+        id_field="command_log_id",
+    )
+    final_body = {
+        "schema_version": "FinalVerifyReportFull2D",
+        "target_obligation_id": task_id,
+        "candidate_ref": sha256_file(candidate_path),
+        "candidate_path": str(candidate_path),
+        "compiled_batch_candidate_ref": batch["batch_ref"],
+        "compiled_batch_candidate_path": batch["batch_path"],
+        "source_path": str(source_path),
+        "lake_env_lean_command": batch["command"],
+        "lake_env_lean_returncode": batch["returncode"],
+        "lake_env_lean_stdout_tail": batch["stdout_tail"],
+        "lake_env_lean_stderr_tail": batch["stderr_tail"],
+        "theorem_name": theorem_name,
+        "theorem_statement_hash": theorem_statement_hash,
+        "theorem_statement_unchanged": theorem_statement_unchanged,
+        "proof_region_guard_passed": proof_region_guard_passed,
+        "no_sorry": no_sorry,
+        "forbidden_declarations": forbidden,
+        "no_forbidden_declarations": not forbidden,
+        "toy_target_definitions": toy_tokens,
+        "no_toy_target_definitions": not toy_tokens,
+        "admitted_import_prefixes": ["MathAutoResearch", "Mathlib", "LeanGeo", "Lean"],
+        "non_admitted_imports": bad_imports,
+        "admitted_imports_only": admitted_imports_only,
+        "proof_use_provenance_status": "passed" if not provenance_errors else "failed",
+        "proof_use_provenance_errors": provenance_errors,
+        "final_status_source": "FinalVerifyReportFull2D",
+        "proof_use_status": "final_theorem" if not final_errors else "not_allowed",
+        "status": "passed" if not final_errors else "failed",
+        "errors": sorted(set(final_errors)),
+    }
+    final_ref, _ = write_artifact(
+        run_dir,
+        Path("final_verify_reports") / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
+        final_body,
+        id_field="report_id",
+    )
+    validation_errors = [
+        f"final_verify:{error}"
+        for error in validate_payload(read_json(run_dir / "final_verify_reports" / f"{safe_id(task_id)}__{safe_id(baseline)}.json"), current_head=git_head)
+    ]
+    if final_errors:
+        failure_ref = write_stage_failure(
+            run_dir=run_dir,
+            task_id=task_id,
+            baseline=baseline,
+            stage="final_verify",
+            input_refs=[str(upstream.get("claim_ref", "")), str(upstream.get("derivation_ref", "")), str(upstream.get("compiler_ref", "")), prepared["worker_ref"], final_ref],
+            command_log_payload={
+                "schema_version": "CommandLogV05",
+                "stage": "final_verify",
+                "stage_sequence": ["final_verify"],
+                "actual_python_function_executed": True,
+                "actual_subprocess_executed": True,
+                "command": batch["command"],
+                "returncode": batch["returncode"],
+                "errors": final_errors,
+                "final_verify_report_ref": final_ref,
+                "batch_final_verify": True,
+            },
+            failure_kind="real_execution_failure",
+            failure_reason="Batch FinalVerifyGate rejected the ProofWorker candidate",
+            git_head=git_head,
+            selected_impl=selected_impl,
+            disabled_components=disabled_components,
+        )
+        proof_run = proof_failure_result(task_id, baseline, failure_ref, "StageFailureReportV1", errors=[f"final_verify:{error}" for error in final_errors])
+        proof_run.update(
+            {
+                "proof_worker_result_ref": prepared["worker_ref"],
+                "final_verify_report_ref": final_ref,
+                "candidate_ref": sha256_file(candidate_path),
+                "candidate_path": str(candidate_path),
+                "command": batch["command"],
+                "command_log_ref": command_log_ref,
+                "validation_errors": validation_errors,
+            }
+        )
+        return {"proof_run": proof_run, "errors": proof_run["errors"], "validation_errors": validation_errors}
+    certificate_ref, _ = write_artifact(
+        run_dir,
+        Path("solver_backed_certificates") / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
+        {
+            "schema_version": "SolverBackedCertificateV05",
+            "task_id": task_id,
+            "baseline_id": baseline,
+            "claim_spec_ref": upstream["claim_ref"],
+            "selected_solver_derivation_ref": upstream["derivation_ref"],
+            "compiler_result_ref": upstream["compiler_ref"],
+            "lean_patch_candidate_ref": upstream["patch_ref"],
+            "proof_worker_result_ref": prepared["worker_ref"],
+            "final_verify_report_ref": final_ref,
+            "used_rule_ids": upstream.get("rule_ids", []),
+            "used_engine_roles": upstream.get("used_engine_roles", []),
+            "batch_final_verify_command_log_ref": command_log_ref,
+            "status": "solver_causal_candidate_pending_mutation",
+        },
+        id_field="certificate_id",
+    )
+    proof_run = {
+        "errors": [],
+        "validation_errors": validation_errors,
+        "final_status": "final_theorem",
+        "final_status_source": "FinalVerifyReportFull2D",
+        "proof_worker_result_ref": prepared["worker_ref"],
+        "final_verify_report_ref": final_ref,
+        "solver_backed_certificate_ref": certificate_ref,
+        "failure_report_ref": None,
+        "candidate_ref": sha256_file(candidate_path),
+        "candidate_path": str(candidate_path),
+        "command": batch["command"],
+        "command_log_ref": command_log_ref,
+        "theorem_statement_unchanged": True,
+        "no_sorry": True,
+        "patch_text": upstream.get("patch_text", ""),
+    }
+    return {"proof_run": proof_run, "errors": [], "validation_errors": validation_errors}
+
+
+def run_proof_worker_and_final_verify(
+    *,
+    run_dir: Path,
+    corpus_root: Path,
+    task: dict[str, Any],
+    baseline: str,
+    upstream: dict[str, Any],
+    git_head: str,
+    selected_impl: str,
+) -> dict[str, Any]:
+    task_id = str(task["task_id"])
+    theorem_name = str(task["theorem_name"])
+    disabled_components = list(upstream.get("disabled_components", []))
+    input_refs = [
+        str(upstream.get("claim_ref", "")),
+        str(upstream.get("derivation_ref", "")),
+        str(upstream.get("compiler_ref", "")),
+        str(upstream.get("patch_ref", "")),
+    ]
+    if not str(upstream.get("patch_text", "")).strip():
+        failure_ref = write_stage_failure(
+            run_dir=run_dir,
+            task_id=task_id,
+            baseline=baseline,
+            stage="compiler",
+            input_refs=input_refs,
+            command_log_payload={
+                "schema_version": "CommandLogV05",
+                "stage": "compiler",
+                "stage_sequence": ["claimspec", "provider", "independent_checker", "selected_derivation", "compiler"],
+                "actual_python_function_executed": True,
+                "returncode": 1,
+                "errors": upstream.get("errors", []),
+            },
+            failure_kind="unsupported_after_disabled_component" if disabled_components else "validation_rejected",
+            failure_reason="compiler did not produce a Lean patch from checked selected solver derivation",
+            git_head=git_head,
+            selected_impl=selected_impl,
+            disabled_components=disabled_components,
+        )
+        return proof_failure_result(task_id, baseline, failure_ref, "StageFailureReportV1", errors=["compiler_no_patch_text_from_selected_derivation"])
+
+    patch_path = Path(str(upstream.get("patch_path", "")))
+    if not patch_path.exists():
+        failure_ref = write_stage_failure(
+            run_dir=run_dir,
+            task_id=task_id,
+            baseline=baseline,
+            stage="proof_worker",
+            input_refs=input_refs,
+            command_log_payload={
+                "schema_version": "CommandLogV05",
+                "stage": "proof_worker",
+                "stage_sequence": ["proof_worker"],
+                "actual_python_function_executed": False,
+                "returncode": 1,
+                "errors": ["patch_artifact_path_missing"],
+            },
+            failure_kind="validation_rejected",
+            failure_reason="LeanPatchCandidateFull2D artifact was missing before ProofWorker execution",
+            git_head=git_head,
+            selected_impl=selected_impl,
+            disabled_components=disabled_components,
+        )
+        return proof_failure_result(task_id, baseline, failure_ref, "StageFailureReportV1", errors=["patch_artifact_path_missing"])
+
+    source_path = write_task_source_lean(run_dir, corpus_root, task, baseline)
+    proof_root = run_dir / "proof_worker_task_runs" / safe_id(baseline) / safe_id(task_id)
+    patch_payload = read_json(patch_path)
+    worker = apply_lean_patch_candidate_full2d_v0_5(
+        source_path=source_path,
+        patch_candidate=patch_payload,
+        output_dir=proof_root,
+        run_id=f"actual_full2d_run:v0_5:{task_id}:{baseline}",
+        task_id=task_id,
+    )
+    worker_ref, _ = write_artifact(
+        run_dir,
+        Path("proof_worker_results") / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
+        strip_identity(worker),
+        id_field="worker_result_id",
+    )
+    validation_errors = [f"proof_worker:{error}" for error in validate_payload(read_json(run_dir / "proof_worker_results" / f"{safe_id(task_id)}__{safe_id(baseline)}.json"), current_head=git_head)]
+    if worker.get("status") != "patch_applied":
+        failure_ref = write_stage_failure(
+            run_dir=run_dir,
+            task_id=task_id,
+            baseline=baseline,
+            stage="proof_worker",
+            input_refs=[*input_refs, worker_ref],
+            command_log_payload={
+                "schema_version": "CommandLogV05",
+                "stage": "proof_worker",
+                "stage_sequence": ["proof_worker"],
+                "actual_python_function_executed": True,
+                "returncode": 1,
+                "errors": worker.get("errors", []),
+                "worker_result_ref": worker_ref,
+            },
+            failure_kind="validation_rejected",
+            failure_reason="ProofWorker rejected the Lean patch candidate",
+            git_head=git_head,
+            selected_impl=selected_impl,
+            disabled_components=disabled_components,
+        )
+        result = proof_failure_result(task_id, baseline, failure_ref, "StageFailureReportV1", errors=[f"proof_worker:{error}" for error in worker.get("errors", [])])
+        result["proof_worker_result_ref"] = worker_ref
+        result["validation_errors"] = validation_errors
+        return result
+
+    candidate_path = Path(str(worker.get("generated_candidate_path", "")))
+    provenance = {
+        "claim_spec_ref": upstream["claim_ref"],
+        "compiler_result_ref": upstream["compiler_ref"],
+        "lean_patch_candidate_ref": upstream["patch_ref"],
+        "proof_worker_result_ref": worker_ref,
+        "proof_region_diff_ref": worker.get("proof_region_diff_ref"),
+        "generated_candidate_file_ref": worker.get("generated_candidate_file_ref"),
+    }
+    final = final_verify_gate_full2d_v0_5(
+        source_path=source_path,
+        candidate_path=candidate_path,
+        theorem_name=theorem_name,
+        target_obligation_id=task_id,
+        proof_use_provenance=provenance,
+        output_dir=proof_root,
+    )
+    command_log_ref, _ = write_artifact(
+        run_dir,
+        Path("command_logs") / "final_verify" / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
+        {
+            "schema_version": "CommandLogV05",
+            "stage": "final_verify",
+            "stage_sequence": ["final_verify"],
+            "actual_python_function_executed": True,
+            "actual_subprocess_executed": True,
+            "command": final.get("lake_env_lean_command", []),
+            "returncode": final.get("lake_env_lean_returncode"),
+            "stdout_tail": final.get("lake_env_lean_stdout_tail", ""),
+            "stderr_tail": final.get("lake_env_lean_stderr_tail", ""),
+        },
+        id_field="command_log_id",
+    )
+    final_ref, _ = write_artifact(
+        run_dir,
+        Path("final_verify_reports") / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
+        strip_identity(final),
+        id_field="report_id",
+    )
+    validation_errors.extend(
+        f"final_verify:{error}"
+        for error in validate_payload(read_json(run_dir / "final_verify_reports" / f"{safe_id(task_id)}__{safe_id(baseline)}.json"), current_head=git_head)
+    )
+    if final.get("status") != "passed":
+        failure_ref = write_stage_failure(
+            run_dir=run_dir,
+            task_id=task_id,
+            baseline=baseline,
+            stage="final_verify",
+            input_refs=[*input_refs, worker_ref, final_ref],
+            command_log_payload={
+                "schema_version": "CommandLogV05",
+                "stage": "final_verify",
+                "stage_sequence": ["final_verify"],
+                "actual_python_function_executed": True,
+                "actual_subprocess_executed": True,
+                "command": final.get("lake_env_lean_command", []),
+                "returncode": final.get("lake_env_lean_returncode"),
+                "errors": final.get("errors", []),
+                "final_verify_report_ref": final_ref,
+            },
+            failure_kind="real_execution_failure",
+            failure_reason="FinalVerifyGate rejected the ProofWorker candidate",
+            git_head=git_head,
+            selected_impl=selected_impl,
+            disabled_components=disabled_components,
+        )
+        result = proof_failure_result(task_id, baseline, failure_ref, "StageFailureReportV1", errors=[f"final_verify:{error}" for error in final.get("errors", [])])
+        result.update(
+            {
+                "proof_worker_result_ref": worker_ref,
+                "final_verify_report_ref": final_ref,
+                "candidate_ref": final.get("candidate_ref", failure_ref),
+                "candidate_path": str(candidate_path),
+                "command": final.get("lake_env_lean_command", []),
+                "command_log_ref": command_log_ref,
+                "validation_errors": validation_errors,
+            }
+        )
+        return result
+
+    certificate_ref, _ = write_artifact(
+        run_dir,
+        Path("solver_backed_certificates") / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
+        {
+            "schema_version": "SolverBackedCertificateV05",
+            "task_id": task_id,
+            "baseline_id": baseline,
+            "claim_spec_ref": upstream["claim_ref"],
+            "selected_solver_derivation_ref": upstream["derivation_ref"],
+            "compiler_result_ref": upstream["compiler_ref"],
+            "lean_patch_candidate_ref": upstream["patch_ref"],
+            "proof_worker_result_ref": worker_ref,
+            "final_verify_report_ref": final_ref,
+            "used_rule_ids": upstream.get("rule_ids", []),
+            "used_engine_roles": upstream.get("used_engine_roles", []),
+            "status": "solver_causal_candidate_pending_mutation",
+        },
+        id_field="certificate_id",
+    )
+    return {
+        "errors": [],
+        "validation_errors": validation_errors,
+        "final_status": "final_theorem",
+        "final_status_source": "FinalVerifyReportFull2D",
+        "proof_worker_result_ref": worker_ref,
+        "final_verify_report_ref": final_ref,
+        "solver_backed_certificate_ref": certificate_ref,
+        "failure_report_ref": None,
+        "candidate_ref": final.get("candidate_ref", ""),
+        "candidate_path": str(candidate_path),
+        "command": final.get("lake_env_lean_command", []),
+        "command_log_ref": command_log_ref,
+        "theorem_statement_unchanged": final.get("theorem_statement_unchanged") is True,
+        "no_sorry": final.get("no_sorry") is True,
+        "patch_text": upstream.get("patch_text", ""),
+    }
+
+
+def proof_failure_result(task_id: str, baseline: str, failure_ref: str, source: str, *, errors: list[str]) -> dict[str, Any]:
+    del task_id, baseline
+    return {
+        "errors": errors,
+        "validation_errors": [],
+        "final_status": "measured_failure",
+        "final_status_source": source,
+        "proof_worker_result_ref": failure_ref,
+        "final_verify_report_ref": failure_ref,
+        "solver_backed_certificate_ref": failure_ref,
+        "failure_report_ref": failure_ref,
+        "candidate_ref": failure_ref,
+        "candidate_path": "",
+        "command": [],
+        "command_log_ref": failure_ref,
+        "theorem_statement_unchanged": False,
+        "no_sorry": False,
+        "patch_text": "",
+    }
+
+
+def write_task_source_lean(run_dir: Path, corpus_root: Path, task: dict[str, Any], baseline: str) -> Path:
+    del corpus_root
+    task_id = str(task["task_id"])
+    theorem_name = str(task["theorem_name"])
+    statement = str(task["formal_statement"])
+    header = statement.split(":= by", 1)[0].strip()
+    text = "\n".join(
+        [
+            "import MathAutoResearch.GeometryFull2D.Inequality",
+            "",
+            "namespace MathAutoResearch.GeometryFull2D",
+            "",
+            header + " := by",
+            f"  -- MARP_PROOF_REGION_START:{theorem_name}",
+            "  sorry",
+            f"  -- MARP_PROOF_REGION_END:{theorem_name}",
+            "",
+            "end MathAutoResearch.GeometryFull2D",
+            "",
+        ]
+    )
+    path = run_dir / "source_lean_tasks" / safe_id(baseline) / f"{safe_id(task_id)}.lean"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
+    return path
+
+
+def write_stage_failure(
+    *,
+    run_dir: Path,
+    task_id: str,
+    baseline: str,
+    stage: str,
+    input_refs: list[str],
+    command_log_payload: dict[str, Any],
+    failure_kind: str,
+    failure_reason: str,
+    git_head: str,
+    selected_impl: str,
+    disabled_components: list[str],
+) -> str:
+    command_ref, _ = write_artifact(
+        run_dir,
+        Path("command_logs") / "stage_failures" / f"{safe_id(task_id)}__{safe_id(baseline)}__{safe_id(stage)}.json",
+        command_log_payload,
+        id_field="command_log_id",
+    )
+    failure_ref, _ = write_artifact(
+        run_dir,
+        Path("stage_failures") / f"{safe_id(task_id)}__{safe_id(baseline)}__{safe_id(stage)}.json",
+        {
+            "schema_version": "StageFailureReportV1",
+            "stage": stage,
+            "baseline_id": baseline,
+            "disabled_components": disabled_components,
+            "input_refs": [ref for ref in input_refs if valid_ref(ref)],
+            "command_log_ref": command_ref,
+            "failure_kind": failure_kind,
+            "failure_reason": failure_reason,
+            "git_head": git_head,
+            "selected_implementation_hash": selected_impl,
+        },
+        id_field="failure_report_id",
+    )
+    return failure_ref
+
+
+def materialize_record(
+    *,
+    run_dir: Path,
+    task: dict[str, Any],
+    baseline: str,
     corpus_ref: str,
     config_ref: str,
     selected_impl: str,
     git_head: str,
     run_dir_hash: str,
     upstream: dict[str, Any],
-    final_verify: dict[str, Any],
+    proof_run: dict[str, Any],
+    disabled_components: list[str] | None = None,
 ) -> dict[str, Any]:
+    del run_dir
     task_id = str(task["task_id"])
     theorem_name = str(task["theorem_name"])
-    worker = {
-        "schema_version": "ProofWorkerResultFull2D",
-        "lean_patch_candidate_ref": upstream["patch_ref"],
-        "patched_candidate_ref": final_verify["candidate_ref"],
-        "proof_region_only": True,
-        "generated_candidate_file_ref": final_verify["candidate_ref"],
-        "proof_region_diff_ref": sha256_text(str(task["formal_statement"]) + "\n---\n" + final_verify["patch_text"]),
-        "status": "patch_applied",
-    }
-    worker_ref, _ = write_artifact(run_dir, Path("proof_worker_results") / f"{safe_id(task_id)}.json", worker, id_field="worker_result_id")
-    final_report = {
-        "schema_version": "FinalVerifyReportFull2D",
-        "candidate_ref": final_verify["candidate_ref"],
-        "candidate_path": str(final_verify["candidate_path"]),
-        "theorem_name": theorem_name,
-        "target_obligation_id": task_id,
-        "lake_env_lean_command": final_verify["command"],
-        "lake_env_lean_returncode": 0 if final_verify["passed"] else 1,
-        "theorem_statement_unchanged": final_verify["theorem_statement_unchanged"],
-        "no_sorry": final_verify["no_sorry"],
-        "forbidden_declarations": [],
-        "no_forbidden_declarations": True,
-        "admitted_imports_only": True,
-        "proof_region_guard_passed": True,
-        "final_status_source": "FinalVerifyReportFull2D",
-        "proof_use_status": "final_theorem" if final_verify["passed"] else "not_allowed",
-        "status": "passed" if final_verify["passed"] else "failed",
-        "errors": [],
-        "command_log_ref": final_verify["command_log_ref"],
-    }
-    final_ref, _ = write_artifact(run_dir, Path("final_verify_reports") / f"{safe_id(task_id)}.json", final_report, id_field="report_id")
     pending_causality_ref = sha256_text("pending_causality:" + task_id)
-    cert_ref = sha256_text("pending_certificate:" + task_id)
+    cert_ref = str(proof_run.get("solver_backed_certificate_ref") or proof_run.get("failure_report_ref") or sha256_text("missing_certificate:" + task_id))
+    failure_ref = str(proof_run.get("failure_report_ref") or "")
+    patch_available = bool(str(upstream.get("patch_text", "")).strip())
+    checker_refs = list(upstream.get("checker_refs") or ([failure_ref] if valid_ref(failure_ref) else []))
+    selected_derivation_ref = str(upstream["derivation_ref"]) if patch_available else failure_ref
+    compiler_refs = [str(upstream["compiler_ref"])] if patch_available else ([failure_ref] if valid_ref(failure_ref) else [str(upstream["compiler_ref"])])
+    patch_ref = str(upstream["patch_ref"]) if patch_available else failure_ref
     record = {
         "schema_version": "ActualTaskPipelineRunV4",
-        "run_id": f"actual_full2d_run:v0_5:{task_id}:B2",
+        "run_id": f"actual_full2d_run:v0_5:{task_id}:{baseline}",
         "task_id": task_id,
         "theorem_name": theorem_name,
-        "baseline_id": "B2",
+        "baseline_id": baseline,
         "corpus_manifest_hash": corpus_ref,
         "config_hash": config_ref,
         "git_head": git_head,
@@ -714,23 +1419,27 @@ def materialize_b2_record(
         "claim_spec_ref": upstream["claim_ref"],
         "provider_run_manifest_ref": upstream["provider_ref"],
         "engine_output_refs": upstream["engine_refs"],
-        "independent_checker_report_refs": upstream["checker_refs"],
-        "selected_solver_derivation_ref": upstream["derivation_ref"],
-        "compiler_result_refs": [upstream["compiler_ref"]],
-        "lean_patch_candidate_ref": upstream["patch_ref"],
-        "proof_worker_result_ref": worker_ref,
-        "final_verify_report_ref": final_ref,
+        "independent_checker_report_refs": checker_refs,
+        "selected_solver_derivation_ref": selected_derivation_ref,
+        "compiler_result_refs": compiler_refs,
+        "lean_patch_candidate_ref": patch_ref,
+        "proof_worker_result_ref": proof_run["proof_worker_result_ref"],
+        "final_verify_report_ref": proof_run["final_verify_report_ref"],
         "solver_causality_report_ref": pending_causality_ref,
         "solver_backed_certificate_ref": cert_ref,
         "causal_chain_hash": MUTATION_PENDING_REF,
-        "final_status": "final_theorem" if final_verify["passed"] else "measured_failure",
-        "final_status_source": "FinalVerifyReportFull2D",
+        "final_status": proof_run["final_status"],
+        "final_status_source": proof_run["final_status_source"],
         "used_rule_ids": upstream["rule_ids"],
-        "used_engine_roles": list(ENGINE_ROLES),
+        "used_engine_roles": upstream.get("used_engine_roles") or [],
         "has_non_target_intermediate": upstream["has_non_target_intermediate"],
         "has_construction_case_certificate": upstream["has_construction_case_certificate"],
-        "direct_or_wrapped_facade_success": False,
+        "direct_or_wrapped_facade_success": bool(upstream.get("direct_or_wrapped_facade_success")),
     }
+    if disabled_components:
+        record["baseline_disabled_components"] = disabled_components
+    if proof_run.get("failure_report_ref"):
+        record["failure_report_ref"] = proof_run["failure_report_ref"]
     record["causal_chain_hash"] = causal_chain_hash(record)
     return {"record": record, "validation_errors": validate_payload(record, current_head=git_head)}
 
@@ -738,45 +1447,42 @@ def materialize_b2_record(
 def missing_b2_upstream_bundle(task_id: str, extraction_ref: str) -> dict[str, Any]:
     missing = sha256_text("missing_b2_upstream:" + task_id)
     return {
+        "errors": ["missing_upstream_bundle"],
+        "validation_errors": [],
+        "baseline": "unknown",
+        "disabled_components": [],
         "source_ref": missing,
         "extraction_ref": extraction_ref,
         "claim_ref": missing,
+        "claim_path": "",
         "provider_ref": missing,
         "engine_refs": [missing],
         "checker_refs": [missing],
         "derivation_ref": missing,
         "compiler_ref": missing,
         "patch_ref": missing,
+        "patch_path": "",
         "patch_text": "",
         "rule_ids": [],
         "has_non_target_intermediate": False,
         "has_construction_case_certificate": False,
+        "used_engine_roles": [],
+        "direct_or_wrapped_facade_success": False,
     }
 
 
-def build_ablation_record(
-    *,
+def run_provider_and_checkers(
     run_dir: Path,
-    task: dict[str, Any],
+    task_id: str,
+    claim_path: Path,
+    claim_ref: str,
+    *,
     baseline: str,
     disabled_components: list[str],
-    extraction_ref: str,
-    corpus_ref: str,
-    config_ref: str,
-    selected_impl: str,
-    git_head: str,
-    run_dir_hash: str,
-    upstream: dict[str, Any],
 ) -> dict[str, Any]:
-    task_id = str(task["task_id"])
-    source_ref = str(upstream.get("source_ref") or sha256_text("missing_source:" + task_id))
-    claim_ref = str(upstream.get("claim_ref") or sha256_text("missing_claim:" + task_id))
-    claim_path = Path(str(upstream.get("claim_path") or ""))
-    if not claim_path.exists():
-        claim_path = run_dir / "claim_specs" / f"{safe_id(task_id)}.json"
-    component = "geometry_solver_provider" if "geometry_solver_provider" in disabled_components else (disabled_components[0] if disabled_components else "undeclared")
     disabled_roles = tuple(role for role in disabled_components if role in ENGINE_ROLES)
-    task_root = run_dir / "provider_baseline_task_runs" / f"{safe_id(task_id)}__{safe_id(baseline)}"
+    disabled_component = "geometry_solver_provider" if "geometry_solver_provider" in disabled_components else (disabled_components[0] if disabled_components else "none")
+    task_root = run_dir / "provider_task_runs" / safe_id(baseline) / safe_id(task_id)
     if task_root.exists():
         shutil.rmtree(task_root)
     provider_summary = run_provider_cli(
@@ -786,146 +1492,32 @@ def build_ablation_record(
         claim_spec_ref=claim_ref,
         task_id=task_id,
         baseline_id=baseline,
-        disabled_component=component,
+        disabled_component=disabled_component,
         disabled_engine_roles=disabled_roles,
     )
-    provider_manifest_ref = str(provider_summary.get("provider_manifest_ref") or "")
-    manifest_path = task_root / "provider_stage" / "provider_manifest.json"
-    if manifest_path.exists():
-        provider_manifest_ref, _ = write_artifact(
-            run_dir,
-            Path("provider_stage") / "baseline_manifests" / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
-            strip_identity(read_json(manifest_path)),
-            id_field="manifest_id",
-        )
-    engine_refs: list[str] = []
-    engine_roles_seen: list[str] = []
-    engine_dir = task_root / "provider_stage" / "engine_outputs"
-    for path in sorted(engine_dir.glob("*.json")) if engine_dir.exists() else []:
-        payload = read_json(path)
-        role = str(payload.get("engine_role"))
-        engine_roles_seen.append(role)
-        ref, _ = write_artifact(
-            run_dir,
-            Path("provider_stage") / "baseline_engine_outputs" / f"{safe_id(task_id)}__{safe_id(baseline)}__{safe_id(role)}.json",
-            strip_identity(payload),
-            id_field="output_id",
-        )
-        engine_refs.append(ref)
-    missing_roles = sorted(set(ENGINE_ROLES) - set(engine_roles_seen))
-    command_log_ref, _ = write_artifact(
-        run_dir,
-        Path("command_logs") / "baseline_ablation" / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
-        {
-            "schema_version": "CommandLogV05",
-            "stage": "provider",
-            "stage_sequence": ["claimspec", "provider"],
-            "actual_python_function_executed": True,
-            "command": [
-                sys.executable,
-                "-m",
-                "plugins.geometry_full2d.provider_cli",
-                "--claim-spec-json",
-                str(claim_path),
-                "--output-dir",
-                str(task_root),
-                "--request-id",
-                f"provider:v0_5:{task_id}:{baseline}",
-                "--baseline-id",
-                baseline,
-                "--disabled-component",
-                component,
-                *[item for role in disabled_roles for item in ("--disabled-engine-role", role)],
-            ],
-            "returncode": 0 if provider_summary.get("status") == "passed" else 1,
-            "provider_cli_summary_ref": sha256_text(canonical_json(provider_summary)),
-            "disabled_components": disabled_components,
-            "engine_roles_seen": sorted(engine_roles_seen),
-            "missing_engine_roles": missing_roles,
-        },
-        id_field="command_log_id",
-    )
-    failure_ref, _ = write_artifact(
-        run_dir,
-        Path("stage_failures") / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
-        {
-            "schema_version": "StageFailureReportV1",
-            "stage": "provider",
-            "baseline_id": baseline,
-            "disabled_components": disabled_components,
-            "input_refs": [source_ref, extraction_ref, claim_ref, *(engine_refs or [])],
-            "command_log_ref": command_log_ref,
-            "failure_kind": "declared_baseline_ablation",
-            "failure_reason": "declared baseline ablation only: disabled components prevented a complete solver-causal provider stage",
-            "provider_manifest_ref": provider_manifest_ref if provider_manifest_ref.startswith("sha256:") else sha256_text(canonical_json(provider_summary)),
-            "provider_cli_status": provider_summary.get("status"),
-            "provider_cli_errors": provider_summary.get("errors", []),
-            "engine_output_refs": engine_refs,
-            "engine_roles_seen": sorted(engine_roles_seen),
-            "missing_engine_roles": missing_roles,
-        },
-        id_field="failure_report_id",
-    )
-    downstream_failure_ref = failure_ref
-    if not provider_manifest_ref.startswith("sha256:"):
-        provider_manifest_ref = downstream_failure_ref
-    if not engine_refs:
-        engine_refs = [downstream_failure_ref]
-    record = {
-        "schema_version": "ActualTaskPipelineRunV4",
-        "run_id": f"actual_full2d_run:v0_5:{task_id}:{baseline}",
-        "task_id": task_id,
-        "baseline_id": baseline,
-        "corpus_manifest_hash": corpus_ref,
-        "config_hash": config_ref,
-        "git_head": git_head,
-        "selected_implementation_hash": selected_impl,
-        "release_run_dir_hash": run_dir_hash,
-        "source_theorem_ref": source_ref,
-        "source_theorem_preproved": False,
-        "extraction_report_ref": extraction_ref,
-        "claim_spec_ref": claim_ref,
-        "provider_run_manifest_ref": provider_manifest_ref,
-        "engine_output_refs": engine_refs,
-        "independent_checker_report_refs": [downstream_failure_ref],
-        "selected_solver_derivation_ref": downstream_failure_ref,
-        "compiler_result_refs": [downstream_failure_ref],
-        "lean_patch_candidate_ref": downstream_failure_ref,
-        "proof_worker_result_ref": downstream_failure_ref,
-        "final_verify_report_ref": downstream_failure_ref,
-        "solver_causality_report_ref": downstream_failure_ref,
-        "solver_backed_certificate_ref": downstream_failure_ref,
-        "causal_chain_hash": MUTATION_PENDING_REF,
-        "final_status": "measured_failure",
-        "final_status_source": "StageFailureReportV1",
-        "failure_report_ref": downstream_failure_ref,
-        "baseline_disabled_components": disabled_components,
-        "ablation_pipeline_executed_until_stage": "provider",
-        "ablation_engine_roles_seen": sorted(engine_roles_seen),
-        "ablation_missing_engine_roles": missing_roles,
-    }
-    record["engine_output_refs"] = engine_refs
-    record["causal_chain_hash"] = causal_chain_hash(record)
-    return record
-
-
-def run_provider_and_checkers(run_dir: Path, task_id: str, claim_path: Path, claim_ref: str) -> dict[str, Any]:
-    task_root = run_dir / "provider_task_runs" / safe_id(task_id)
-    if task_root.exists():
-        shutil.rmtree(task_root)
-    provider_summary = run_provider_cli(claim_path, task_root, f"provider:v0_5:{task_id}:B2", claim_spec_ref=claim_ref)
     checker_summary = run_independent_solver_checkers(task_root, claim_spec_json=claim_path, write_reports=True)
-    errors = [f"provider_cli:{error}" for error in provider_summary.get("errors", [])]
-    errors.extend(f"independent_checker:{error}" for error in checker_summary.get("errors", []))
+    provider_errors = [f"provider_cli:{error}" for error in provider_summary.get("errors", [])]
+    checker_errors = [f"independent_checker:{error}" for error in checker_summary.get("errors", [])]
+    fatal_errors: list[str] = []
+    for error in provider_errors:
+        if disabled_components and error == "provider_cli:engine_output_count_mismatch":
+            continue
+        fatal_errors.append(error)
     checker_refs_by_role: dict[str, str] = {}
     for ref, rel_path in checker_summary.get("report_paths", {}).items():
         payload = read_json(task_root / rel_path)
         role = str(payload.get("engine_role"))
-        checker_refs_by_role[role] = str(ref)
-        write_json(run_dir / "independent_checker_reports" / f"{safe_id(task_id)}__{safe_id(role)}.json", payload)
+        if payload.get("status") == "passed":
+            checker_refs_by_role[role] = str(ref)
+        write_json(run_dir / "independent_checker_reports" / f"{safe_id(task_id)}__{safe_id(baseline)}__{safe_id(role)}.json", payload)
     engine_refs: list[str] = []
     engine_refs_by_role: dict[str, str] = {}
+    normalized_artifact_refs_by_role: dict[str, str] = {}
+    normalized_artifacts_by_role: dict[str, dict[str, Any]] = {}
     selected_facts: list[str] = []
+    artifact_paths = provider_summary.get("artifact_paths", {})
+    if not isinstance(artifact_paths, dict):
+        artifact_paths = {}
     engine_dir = task_root / "provider_stage" / "engine_outputs"
     for path in sorted(engine_dir.glob("*.json")) if engine_dir.exists() else []:
         payload = read_json(path)
@@ -945,48 +1537,50 @@ def run_provider_and_checkers(run_dir: Path, task_id: str, claim_path: Path, cla
                     certificate["checker_report_ref"] = checker_refs_by_role[role]
         ref, _ = write_artifact(
             run_dir,
-            Path("provider_stage") / "engine_outputs" / f"{safe_id(task_id)}__{safe_id(role)}.json",
+            Path("provider_stage") / "engine_outputs" / f"{safe_id(task_id)}__{safe_id(baseline)}__{safe_id(role)}.json",
             body,
             id_field="output_id",
         )
         engine_refs.append(ref)
         engine_refs_by_role[role] = ref
-    portfolio_artifact_path = task_root / "provider_stage" / "normalized_artifacts" / "portfolio_coordinator.json"
-    checked_rule_application: dict[str, Any] = {}
-    checked_rule_application_ref = ""
-    if portfolio_artifact_path.exists():
-        portfolio_artifact = strip_identity(read_json(portfolio_artifact_path))
-        application = portfolio_artifact.get("checked_rule_application")
-        if isinstance(application, dict):
-            checked_rule_application = application
-            checked_rule_application_ref = sha256_text(canonical_json(portfolio_artifact))
-        else:
-            errors.append("portfolio_checked_rule_application_missing")
-    else:
-        errors.append("portfolio_normalized_artifact_missing")
+        normalized_refs = [str(item) for item in payload.get("normalized_artifact_refs", []) if isinstance(item, str)]
+        if normalized_refs:
+            normalized_ref = normalized_refs[0]
+            normalized_artifact_refs_by_role[role] = normalized_ref
+            rel_path = artifact_paths.get(normalized_ref)
+            if isinstance(rel_path, str):
+                artifact_path = task_root / rel_path
+                if artifact_path.exists():
+                    normalized_artifacts_by_role[role] = strip_identity(read_json(artifact_path))
+                else:
+                    fatal_errors.append(f"normalized_artifact_path_missing:{role}")
+            else:
+                fatal_errors.append(f"normalized_artifact_ref_unresolved:{role}")
     provider_summary_ref, _ = write_artifact(
         run_dir,
-        Path("provider_stage") / "provider_summaries" / f"{safe_id(task_id)}.json",
+        Path("provider_stage") / "provider_summaries" / f"{safe_id(task_id)}__{safe_id(baseline)}.json",
         strip_identity(provider_summary),
         id_field="summary_id",
     )
     checker_summary_ref, _ = write_artifact(
         run_dir,
-        Path("independent_checker_reports") / f"{safe_id(task_id)}__summary.json",
+        Path("independent_checker_reports") / f"{safe_id(task_id)}__{safe_id(baseline)}__summary.json",
         strip_identity(checker_summary),
         id_field="summary_id",
     )
     return {
-        "errors": sorted(set(errors)),
+        "fatal_errors": sorted(set(fatal_errors)),
+        "nonfatal_errors": sorted(set(provider_errors + checker_errors)),
         "engine_refs": engine_refs,
         "engine_refs_by_role": engine_refs_by_role,
         "checker_refs": [checker_refs_by_role[role] for role in sorted(checker_refs_by_role)],
         "checker_refs_by_role": checker_refs_by_role,
         "selected_facts": sorted(set(selected_facts)),
-        "checked_rule_application": checked_rule_application,
-        "checked_rule_application_ref": checked_rule_application_ref,
+        "normalized_artifact_refs_by_role": normalized_artifact_refs_by_role,
+        "normalized_artifacts_by_role": normalized_artifacts_by_role,
         "provider_summary_ref": provider_summary_ref,
         "checker_summary_ref": checker_summary_ref,
+        "disabled_engine_roles": list(disabled_roles),
     }
 
 
@@ -1032,15 +1626,26 @@ def strip_identity(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def valid_ref(value: Any) -> bool:
+    return isinstance(value, str) and value.startswith("sha256:") and len(value) == 71
+
+
+def indent_proof_region(proof_text: str) -> str:
+    if not proof_text.strip():
+        return ""
+    lines = proof_text.splitlines()
+    return "\n".join("" if not line.strip() else "  " + line for line in lines)
+
+
 def causal_chain_hash(record: dict[str, Any]) -> str:
     payload = {key: value for key, value in record.items() if key != "causal_chain_hash"}
     return sha256_text(canonical_json(payload))
 
 
 def write_artifact(run_dir: Path, rel_path: Path, payload_without_id: dict[str, Any], *, id_field: str) -> tuple[str, Path]:
-    body = dict(payload_without_id)
+    body = strip_identity(dict(payload_without_id))
     content_ref = sha256_text(canonical_json(body))
-    payload = {id_field: content_ref, "content_sha256": content_ref, **body}
+    payload = {**body, id_field: content_ref, "content_sha256": content_ref}
     path = run_dir / rel_path
     write_json(path, payload)
     return content_ref, path

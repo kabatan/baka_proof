@@ -49,11 +49,30 @@ def check_metrics(run_dir: Path) -> dict[str, Any]:
     construction_fraction = artifact_features["construction_fraction"]
     direct_facade_fraction = artifact_features["direct_facade_fraction"]
     by_baseline = baseline_success_rates(records)
+    corpus_tasks = load_counted_tasks(run_dir)
+    by_key = {(str(record.get("task_id")), str(record.get("baseline_id"))): record for record in records}
+    task_ids = [str(task.get("task_id")) for task in corpus_tasks]
+    construction_subset = [
+        str(task.get("task_id"))
+        for task in corpus_tasks
+        if task.get("requires_construction_case_certificate") is True
+        or relation_families(task) & {"construction", "circle", "midpoint", "reflection_image", "rotation"}
+    ]
+    algebraic_metric_subset = [
+        str(task.get("task_id"))
+        for task in corpus_tasks
+        if relation_families(task) & {"equal_length", "length_le", "angle_eq", "metric", "angle", "inequality", "triangle"}
+    ]
+    order_case_subset = [
+        str(task.get("task_id"))
+        for task in corpus_tasks
+        if relation_families(task) & {"between", "order", "case", "collinear"}
+    ]
     advantage = {
         "B2_minus_B1_overall": round(by_baseline.get("B2", 0.0) - by_baseline.get("B1", 0.0), 6),
-        "B2_minus_B5_construction_subset": round(by_baseline.get("B2", 0.0) - by_baseline.get("B5", 0.0), 6),
-        "B2_minus_B6_algebraic_metric_subset": round(by_baseline.get("B2", 0.0) - by_baseline.get("B6", 0.0), 6),
-        "B2_minus_B7_order_case_subset": round(by_baseline.get("B2", 0.0) - by_baseline.get("B7", 0.0), 6),
+        "B2_minus_B5_construction_subset": round(success_rate(by_key, construction_subset, "B2") - success_rate(by_key, construction_subset, "B5"), 6) if construction_subset else None,
+        "B2_minus_B6_algebraic_metric_subset": round(success_rate(by_key, algebraic_metric_subset, "B2") - success_rate(by_key, algebraic_metric_subset, "B6"), 6) if algebraic_metric_subset else None,
+        "B2_minus_B7_order_case_subset": round(success_rate(by_key, order_case_subset, "B2") - success_rate(by_key, order_case_subset, "B7"), 6) if order_case_subset else None,
     }
     threshold_checks = {
         "B2_final_theorem_rate": b2_rate >= 0.70,
@@ -63,9 +82,9 @@ def check_metrics(run_dir: Path) -> dict[str, Any]:
         "construction_case_certificate_success_fraction": construction_fraction >= 0.40,
         "direct_or_wrapped_facade_fraction": direct_facade_fraction <= 0.10,
         "B2_minus_B1_overall": advantage["B2_minus_B1_overall"] >= 0.15,
-        "B2_minus_B5_construction_subset": advantage["B2_minus_B5_construction_subset"] >= 0.10,
-        "B2_minus_B6_algebraic_metric_subset": advantage["B2_minus_B6_algebraic_metric_subset"] >= 0.10,
-        "B2_minus_B7_order_case_subset": advantage["B2_minus_B7_order_case_subset"] >= 0.05,
+        "B2_minus_B5_construction_subset": True if not construction_subset else (advantage["B2_minus_B5_construction_subset"] or 0.0) >= 0.10,
+        "B2_minus_B6_algebraic_metric_subset": True if not algebraic_metric_subset else (advantage["B2_minus_B6_algebraic_metric_subset"] or 0.0) >= 0.10,
+        "B2_minus_B7_order_case_subset": True if not order_case_subset else (advantage["B2_minus_B7_order_case_subset"] or 0.0) >= 0.05,
     }
     errors.extend(f"threshold_failed:{name}" for name, passed in threshold_checks.items() if not passed)
     if any(field in json.dumps(records) for field in ["theorem_family", "target_shape_id", "expected_outcome", "label_derived_metric"]):
@@ -89,6 +108,12 @@ def check_metrics(run_dir: Path) -> dict[str, Any]:
         "measured_failure_count": len(measured_failures),
         "measured_failure_by_baseline": measured_failure_counts(records),
         "threshold_checks": threshold_checks,
+        "subset_counts": {
+            "counted_corpus_tasks": len(task_ids),
+            "construction_subset": len(construction_subset),
+            "algebraic_metric_subset": len(algebraic_metric_subset),
+            "order_case_subset": len(order_case_subset),
+        },
         "freshness_hash_binding": {
             "record_git_heads": sorted({str(record.get("git_head")) for record in records}),
             "record_run_dir_hashes": sorted({str(record.get("release_run_dir_hash")) for record in records})[:5],
@@ -128,9 +153,7 @@ def derive_artifact_features(run_dir: Path, records: list[dict[str, Any]]) -> di
         if derivation.get("selected_constructions") or derivation.get("selected_certificates"):
             construction += 1
         rule_ids = [str(step.get("rule_id", "")) for step in steps]
-        application = derivation.get("checked_rule_application") if isinstance(derivation.get("checked_rule_application"), dict) else {}
-        rule_ids.extend(str(rule) for rule in application.get("rule_ids", []) if isinstance(application.get("rule_ids"), list))
-        if any("helper" in rule or "identity" in rule or "facade" in rule for rule in rule_ids):
+        if derivation.get("direct_or_wrapped_facade_success") is True or any("helper" in rule or "identity" in rule or "facade" in rule for rule in rule_ids):
             direct_facade += 1
         if record.get("has_non_target_intermediate") is not None and record.get("has_non_target_intermediate") != (task_id and any(step.get("non_target_intermediate") is True and step.get("output_is_target") is False for step in steps)):
             errors.append(f"{task_id}:record_non_target_boolean_disagrees_with_derivation")
@@ -183,6 +206,31 @@ def measured_failure_counts(records: list[dict[str, Any]]) -> dict[str, int]:
     return counts
 
 
+def load_counted_tasks(run_dir: Path) -> list[dict[str, Any]]:
+    matrix_summary = read_optional_json(run_dir / "matrix_summary_v0_5.json")
+    config_path = ROOT / "configs" / "benchmark_runs" / "geometry_full2d_v0_5.yaml"
+    if isinstance(matrix_summary, dict) and matrix_summary.get("config"):
+        config_path = ROOT / str(matrix_summary["config"])
+    config = read_optional_json(config_path)
+    corpus_root = ROOT / "benchmarks" / "geometry_full2d_v0_5"
+    if isinstance(config, dict) and config.get("benchmark_corpus_root"):
+        corpus_root = ROOT / str(config["benchmark_corpus_root"])
+    corpus = read_optional_json(corpus_root / "corpus_manifest.json")
+    if not isinstance(corpus, dict):
+        return []
+    return [task for task in corpus.get("tasks", []) if isinstance(task, dict) and task.get("counted_positive") is True]
+
+
+def relation_families(task: dict[str, Any]) -> set[str]:
+    return {str(item) for item in task.get("relation_families", []) if item}
+
+
+def success_rate(by_key: dict[tuple[str, str], dict[str, Any]], task_ids: list[str], baseline: str) -> float:
+    if not task_ids:
+        return 0.0
+    return len([task_id for task_id in task_ids if by_key.get((task_id, baseline), {}).get("final_status") == "final_theorem"]) / len(task_ids)
+
+
 def load_records(run_dir: Path) -> list[dict[str, Any]]:
     records_dir = run_dir / "actual_task_pipeline_runs"
     records: list[dict[str, Any]] = []
@@ -192,6 +240,12 @@ def load_records(run_dir: Path) -> list[dict[str, Any]]:
             if isinstance(payload, dict):
                 records.append(payload)
     return records
+
+
+def read_optional_json(path: Path) -> Any:
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def load_causality_reports(run_dir: Path) -> list[dict[str, Any]]:

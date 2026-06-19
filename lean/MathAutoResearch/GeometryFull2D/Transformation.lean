@@ -13,6 +13,15 @@ abbrev rotation_preserves_collinear (a b c a' b' c' : Point) : Prop :=
 theorem reflection_has_evidence (r : Reflection) : reflection_image r := by
   exact r.evidence
 
+theorem homothety_has_evidence (h : Homothety) : homothety_image h := by
+  exact h.evidence
+
+theorem inversion_has_evidence (i : Inversion) : inversion_image i := by
+  exact i.evidence
+
+theorem spiral_similarity_has_evidence (s : SpiralSimilarity) : spiral_similarity_center s := by
+  exact s.evidence
+
 theorem rotation_preserves_collinear_of_eq (a b c a' b' c' : Point) :
     a = a' → b = b' → c = c' →
       rotation_preserves_collinear a b c a' b' c' := by

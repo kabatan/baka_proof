@@ -14,7 +14,7 @@ from plugins.geometry_full2d.engine_contracts import (
 )
 
 ENGINE_ROLE = "synthetic_closure"
-BACKEND_IDENTITY = "geometry_full2d.synthetic_closure:local_rule_closure:v0_4_2"
+BACKEND_IDENTITY = "geometry_full2d.synthetic_closure:local_rule_closure:v0_5"
 
 
 @dataclass(frozen=True)
@@ -158,3 +158,4 @@ def _predicate_fact_key(predicate: dict[str, Any]) -> str:
 
 def _fact_key(target: dict[str, Any]) -> str:
     return f"{target.get('family')}:{','.join(map(str, target.get('args', [])))}:positive"
+

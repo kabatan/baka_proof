@@ -19,7 +19,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from plugins.geometry_full2d.compiler_v0_5 import run_compiler_cli
-from plugins.geometry_full2d.proof_worker_v0_5 import apply_lean_patch_candidate_full2d_v0_5
+from plugins.geometry_full2d.proof_worker_v0_5 import apply_lean_patch_candidate_full2d_v0_5, final_verify_gate_full2d_v0_5
 
 
 MUTATIONS = [
@@ -36,7 +36,7 @@ def main() -> int:
     parser.add_argument("--run-dir", required=True)
     parser.add_argument("--all-b2-successes", action="store_true")
     parser.add_argument("--fresh-reruns", action="store_true")
-    parser.add_argument("--workers", type=int, default=min(8, max(1, os.cpu_count() or 1)))
+    parser.add_argument("--workers", type=int, default=min(16, max(1, os.cpu_count() or 1)))
     args = parser.parse_args()
     report = run_causality_mutations(Path(args.run_dir), all_b2_successes=args.all_b2_successes, fresh_reruns=args.fresh_reruns, workers=args.workers)
     print(json.dumps(report, indent=2, sort_keys=True))
@@ -135,7 +135,9 @@ def build_task_rerun_inputs(run_dir: Path, rerun_root: Path, record: dict[str, A
     theorem_name = str(record.get("theorem_name") or task_id)
     source_record_path = run_dir / "source_theorems" / f"{safe_id(task_id)}.json"
     claim_path = run_dir / "claim_specs" / f"{safe_id(task_id)}.json"
-    derivation_path = run_dir / "selected_solver_derivations" / f"{safe_id(task_id)}.json"
+    derivation_path = run_dir / "selected_solver_derivations" / f"{safe_id(task_id)}__B2.json"
+    if not derivation_path.exists():
+        derivation_path = run_dir / "selected_solver_derivations" / f"{safe_id(task_id)}.json"
     errors: list[str] = []
     missing_inputs = [path for path in [source_record_path, claim_path, derivation_path, registry_path] if not path.exists()]
     if missing_inputs:
@@ -186,7 +188,7 @@ def build_task_rerun_inputs(run_dir: Path, rerun_root: Path, record: dict[str, A
         compiler_ref = str(compiler_summary.get("compiler_result_ref") or sha256_text(canonical_json(compiler_summary)))
         proof_text = str(compiler_result.get("proof_text", ""))
         if compiler_summary.get("status") != "passed" or not proof_text:
-            proof_text = f"exact __full2d_{safe_id(mutation)}_requires_selected_solver_artifact"
+            proof_text = "exact solver_causality_missing_compiler_artifact"
         patch = make_rerun_patch_candidate(
             compiler_result_ref=compiler_ref,
             theorem_name=theorem_name,
@@ -205,17 +207,33 @@ def build_task_rerun_inputs(run_dir: Path, rerun_root: Path, record: dict[str, A
         candidate_path = Path(str(worker.get("generated_candidate_path") or ""))
         if not candidate_path.exists():
             fallback = temp_dir / "Candidate.failed.lean"
-            fallback.write_text(single_theorem_source(header, theorem_name, f"  exact __full2d_{safe_id(mutation)}_proof_worker_failed"), encoding="utf-8")
+            fallback.write_text(
+                single_theorem_source(header, theorem_name, "  exact solver_causality_missing_proof_worker_artifact"),
+                encoding="utf-8",
+            )
             candidate_path = fallback
         command_ref, command_log = run_final_verify_task_command(
             run_dir=run_dir,
             task_id=task_id,
             theorem_name=theorem_name,
             mutation=mutation,
+            source_path=source_path,
             candidate_path=candidate_path,
             task_manifest_ref=task_manifest_ref,
+            proof_use_provenance={
+                "claim_spec_ref": record.get("claim_spec_ref"),
+                "compiler_result_ref": compiler_ref,
+                "lean_patch_candidate_ref": patch.get("patch_id"),
+                "proof_worker_result_ref": worker.get("worker_result_id"),
+                "proof_region_diff_ref": worker.get("proof_region_diff_ref") or sha256_text("missing_proof_region_diff:" + mutation),
+                "generated_candidate_file_ref": worker.get("generated_candidate_file_ref") or sha256_file(candidate_path),
+            },
         )
-        same_final = command_log.get("returncode") == 0
+        same_final = (
+            compiler_summary.get("status") == "passed"
+            and worker.get("status") == "patch_applied"
+            and command_log.get("final_verify_status") == "passed"
+        )
         if mutation == "positive_control" and not same_final:
             errors.append("positive_control_final_verify_failed")
         if mutation != "positive_control" and same_final:
@@ -251,21 +269,25 @@ def mutate_selected_derivation(base_derivation: dict[str, Any], mutation: str) -
         selected["derivation_steps"] = []
         return selected
     if mutation == "corrupt_selected_fact_or_construction":
-        selected["selected_facts"] = ["fact:corrupted_selected_solver_fact"]
-        application = selected.get("checked_rule_application")
-        bindings = application.get("arguments") if isinstance(application, dict) else {}
-        if isinstance(bindings, dict):
-            for key in ["h", "h0", "h1", "A", "r"]:
-                if key in bindings:
-                    bindings[key] = "__full2d_corrupted_binding"
-                    break
+        if selected.get("selected_facts"):
+            selected["selected_facts"] = ["fact:corrupted_selected_solver_fact"]
+        if selected.get("selected_constructions"):
+            selected["selected_constructions"] = [sha256_text("corrupted_selected_construction")]
+        for step in selected.get("derivation_steps", []):
+            if not isinstance(step, dict):
+                continue
+            step["supporting_engine_output_ref"] = "corrupted_selected_solver_fact_ref"
+            step["supporting_artifact_ref"] = "corrupted_selected_solver_artifact_ref"
+            step["input_refs"] = ["corrupted_selected_solver_fact_ref"]
+            return selected
         return selected
     if mutation == "corrupt_certificate_or_checker_output":
         for step in selected.get("derivation_steps", []):
             if isinstance(step, dict):
                 step["independent_checker_report_ref"] = "corrupted_checker_output_ref"
+                step["supporting_artifact_ref"] = "corrupted_supporting_artifact_ref"
+                break
         selected["selected_certificates"] = ["certificate:corrupted_checker_output"]
-        selected["checked_rule_application_ref"] = "corrupted_checker_output_ref"
         return selected
     if mutation == "unsupported_rule_mutation":
         for step in selected.get("derivation_steps", []):
@@ -335,29 +357,24 @@ def run_final_verify_task_command(
     task_id: str,
     theorem_name: str,
     mutation: str,
+    source_path: Path,
     candidate_path: Path,
     task_manifest_ref: str,
+    proof_use_provenance: dict[str, Any],
 ) -> tuple[str, dict[str, Any]]:
-    command = ["lake", "env", "lean", str(candidate_path)]
     started = time.time()
-    try:
-        completed = subprocess.run(
-            command,
-            cwd=ROOT,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            check=False,
-            timeout=300,
-        )
-        returncode = completed.returncode
-        stdout_tail = completed.stdout[-4000:]
-        stderr_tail = completed.stderr[-4000:]
-    except subprocess.TimeoutExpired as exc:
-        returncode = 124
-        stdout_tail = str(exc.stdout or "")[-4000:]
-        stderr_tail = str(exc.stderr or "solver causality task final verify timed out")[-4000:]
+    final = final_verify_gate_full2d_v0_5(
+        source_path=source_path,
+        candidate_path=candidate_path,
+        theorem_name=theorem_name,
+        target_obligation_id=task_id,
+        proof_use_provenance=proof_use_provenance,
+        output_dir=candidate_path.parent / "final_verify_gate",
+    )
+    command = final.get("lake_env_lean_command", ["lake", "env", "lean", str(candidate_path)])
+    returncode = final.get("lake_env_lean_returncode")
+    stdout_tail = final.get("lake_env_lean_stdout_tail", "")
+    stderr_tail = final.get("lake_env_lean_stderr_tail", "")
     ref, path = write_artifact(
         run_dir,
         Path("command_logs") / "solver_causality" / f"{safe_id(task_id)}__{safe_id(mutation)}.json",
@@ -374,6 +391,9 @@ def run_final_verify_task_command(
             "stderr_tail": stderr_tail,
             "candidate_ref": sha256_file(candidate_path),
             "candidate_path": str(candidate_path),
+            "final_verify_status": final.get("status"),
+            "final_verify_errors": final.get("errors", []),
+            "final_verify_report_ref": final.get("report_id"),
             "task_manifest_ref": task_manifest_ref,
             "task_count": 1,
             "duration_seconds": round(time.time() - started, 3),
@@ -490,12 +510,40 @@ def causal_chain_hash(record: dict[str, Any]) -> str:
 
 
 def write_artifact(run_dir: Path, rel_path: Path, payload_without_id: dict[str, Any], *, id_field: str) -> tuple[str, Path]:
-    body = dict(payload_without_id)
+    body = strip_identity(dict(payload_without_id))
     content_ref = sha256_text(canonical_json(body))
-    payload = {id_field: content_ref, "content_sha256": content_ref, **body}
+    payload = {**body, id_field: content_ref, "content_sha256": content_ref}
     path = run_dir / rel_path
     write_json(path, payload)
     return content_ref, path
+
+
+def strip_identity(payload: dict[str, Any]) -> dict[str, Any]:
+    return {
+        key: value
+        for key, value in payload.items()
+        if key
+        not in {
+            "artifact_sha256",
+            "certificate_id",
+            "claim_id",
+            "command_log_id",
+            "content_sha256",
+            "derivation_id",
+            "failure_report_id",
+            "manifest_id",
+            "output_id",
+            "patch_id",
+            "payload_sha256",
+            "registry_content_id",
+            "registry_id",
+            "report_id",
+            "result_id",
+            "source_theorem_id",
+            "summary_id",
+            "worker_result_id",
+        }
+    }
 
 
 def current_git_head() -> str:
