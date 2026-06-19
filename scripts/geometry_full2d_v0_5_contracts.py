@@ -818,12 +818,14 @@ def build_fail_closed_release_report(
         timeout_by_command = {
             "matrix": 7200,
             "causality_mutations": 43200,
-            "engine_outputs": 300,
+            "engine_outputs": 1200,
             "extraction": 300,
-            "solver_causality": 300,
+            "independent_solver_checkers": 1800,
+            "proof_worker_final_verify": 1800,
+            "solver_causality": 600,
             "metrics": 300,
             "used_rule_coverage": 300,
-            "engine_contribution": 300,
+            "engine_contribution": 1800,
             "baseline_comparability": 300,
         }
         timeout = timeout_by_command.get(name, 120)

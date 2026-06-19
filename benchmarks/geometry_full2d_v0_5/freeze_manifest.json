@@ -189,17 +189,17 @@
     "scripts/check_release_acceptance_v0_5.py": "sha256:9d45ede3105b080d91748060e02371391417c1406a966ae1a1195c177f529061",
     "scripts/check_schema_validators_v0_5.py": "sha256:6d61353ca0900741ac3a9e4d0724cae958a2976ee62d9fd87669de319d7898d1",
     "scripts/check_solver_causality_reports_v0_5.py": "sha256:bd221a15d0c96b6d53686f3d790e06707dbfcfc4d77c8676bc7be17337811f2e",
-    "scripts/geometry_full2d_v0_5_contracts.py": "sha256:4ad3579809e2f05aef34e98d6cc3f343fda75eee416d6b5091a1dc60e764e8d3",
+    "scripts/geometry_full2d_v0_5_contracts.py": "sha256:863278a3825f31ff3c8afeaf33ecc6afe00362bea72aa6d87d25c881adcf9f94",
     "scripts/run_full2d_matrix_v0_5.py": "sha256:86d3ac487b97a19fd05de9f1d08ab1af0cced2ea5683c705904e884e84720974",
     "scripts/run_red_cases_v0_5.py": "sha256:26f62f4d7f71a7ad45aae6357cc37a82be30a8c2161de6b50248dea0fcad0c77",
     "scripts/run_solver_causality_mutations_v0_5.py": "sha256:eb2fd6a91b0bd4780a137d0ac73a533384960376dd1226016f239c4c80e4cf89"
   },
-  "checker_hashes": "sha256:28380a297e753ede36419aa263ce61aa3e7362d758c6086794e57bf80ea2365a",
+  "checker_hashes": "sha256:126a3764533fb95e35b1de8402429daa5720d2414f20074a1eafdf69b6419cc4",
   "config_hash": "sha256:649a03cf4c67ec17b2bcc1e66ff63958678f352fe90c019a10a438315206b40f",
   "config_hashes": {
     "configs/benchmark_runs/geometry_full2d_v0_5.yaml": "sha256:cdaa67d9da9bc0bad5cf6dc1e4390520be172fb493725321eb105ef138288370"
   },
-  "content_sha256": "sha256:e93283f9dbe7dc7307546167e842337a504bb3add673c00288b8001d664427c2",
+  "content_sha256": "sha256:e37ae1a5a8a795123f2d9d8dea520db594e8be630cfb493cb6439609c3dc6414",
   "corpus_tool_hash": "sha256:f875900df98f61e815ce6acd3c65dca78787fcd4a180e3f7b3247186d3330289",
   "corpus_tool_hashes": {
     "scripts/create_freeze_manifest_v0_5.py": "sha256:1520dda1d7616ff9d5830da63b97f6a18dfdced099d0e63f554b68f4fbc3cf0e",
@@ -209,7 +209,7 @@
     "scripts/import_external_goal_preserved_v0_5.py": "sha256:9ea69f4899d9250ed38b18b713d609bc3d1c5b640f136a0520e2303b2f9a3882"
   },
   "errors": [],
-  "freeze_id": "sha256:e93283f9dbe7dc7307546167e842337a504bb3add673c00288b8001d664427c2",
+  "freeze_id": "sha256:e37ae1a5a8a795123f2d9d8dea520db594e8be630cfb493cb6439609c3dc6414",
   "freeze_policy": "any later change to provider, compiler, rule registry, proof worker, final verifier, matrix runner, release checker, corpus generator, or checker code invalidates this manifest",
   "implementation_file_hashes": {
     "lean/MathAutoResearch/GeometryFull2D/Angle.lean": "sha256:4488bc11954d01c0dff4fb71a62d18f6ddd512ca60bbbd33b695dc2ebac7b101",
@@ -249,7 +249,7 @@
     "scripts/run_full2d_matrix_v0_5.py": "sha256:86d3ac487b97a19fd05de9f1d08ab1af0cced2ea5683c705904e884e84720974",
     "scripts/run_solver_causality_mutations_v0_5.py": "sha256:eb2fd6a91b0bd4780a137d0ac73a533384960376dd1226016f239c4c80e4cf89"
   },
-  "implementation_git_head": "06e5475de04340dba36b2c82d96bfb0bf9284837",
+  "implementation_git_head": "0f3fdf588175cb396905e46a745cfc485897320f",
   "schema_version": "GeometryFull2DImplementationFreezeManifestV05",
   "selected_implementation_hash": "sha256:960b1a6c6411c1f1493c39403fcf16991fd735a03de0d7788aaab08aec36ed57",
   "status": "passed"
