@@ -169,7 +169,7 @@
     "scripts/check_acceptance_coverage_v0_5.py": "sha256:f14a9721f6b1a6074b23c654f833e6b911411a28c634b2f11d1e5c7a77b6977c",
     "scripts/check_active_guardian_spec_v0_5.py": "sha256:f9244d4eebba2835f6623da8343d823b63084897e58ee9ece28b149ede305a61",
     "scripts/check_closure_claim_ceiling_v0_5.py": "sha256:55b957bda5639649f6bb0f76aa5d83ebb061e866a7cab2aaaf01483fe5ea9e91",
-    "scripts/check_compiler_input_isolation_v0_5.py": "sha256:01466940318b0e8d9f8a848ef7b05c742a7e2edf29828388fbf22fa571ab5946",
+    "scripts/check_compiler_input_isolation_v0_5.py": "sha256:489647a87090f32e28bfdb594abaf367213f49378022b0513c90186740a4f846",
     "scripts/check_compiler_taint_v0_5.py": "sha256:828e2fe4e830463404e9fc7f383eb022b9a9350437a5fbf8248adfd5cb65d950",
     "scripts/check_corpus_independence_v0_5.py": "sha256:acff80b4fcfa4c3f2da29a0e535fc3167f78188f9ac1a471ecf81af2ff915009",
     "scripts/check_corpus_statement_diversity_v0_5.py": "sha256:521976ec79f43ae107734fdc761f2d3947717e0bb877fa5a5833fad7a6e124e6",
@@ -194,22 +194,22 @@
     "scripts/run_red_cases_v0_5.py": "sha256:26f62f4d7f71a7ad45aae6357cc37a82be30a8c2161de6b50248dea0fcad0c77",
     "scripts/run_solver_causality_mutations_v0_5.py": "sha256:eb2fd6a91b0bd4780a137d0ac73a533384960376dd1226016f239c4c80e4cf89"
   },
-  "checker_hashes": "sha256:c15d4f17900f08ed9c11584c29d70981246d5ee9e2e83b6c27745f5e8db705d2",
+  "checker_hashes": "sha256:e868b6b3dd52a8edce13b9bcaf4eff7b4276c013001cfb877cdf352e1e92d2c5",
   "config_hash": "sha256:649a03cf4c67ec17b2bcc1e66ff63958678f352fe90c019a10a438315206b40f",
   "config_hashes": {
     "configs/benchmark_runs/geometry_full2d_v0_5.yaml": "sha256:cdaa67d9da9bc0bad5cf6dc1e4390520be172fb493725321eb105ef138288370"
   },
-  "content_sha256": "sha256:23f398e2a2f6e7e763c51b3fa8b61952776f4f264468552e4a2d4f5b57f1cfa7",
-  "corpus_tool_hash": "sha256:173e2f5f1c4ef99ade003a57eefb500c9f3cf432dc73f766cc0a70d3435f18d5",
+  "content_sha256": "sha256:1ff08b18ffca23028b9e99dabe317a481a7ec4b2b2cb19899aca2d22c44e5082",
+  "corpus_tool_hash": "sha256:d2aac3a8f29c4d5293e5de0571bf01bb791336139b1704d595af66e64d2710bf",
   "corpus_tool_hashes": {
     "scripts/create_freeze_manifest_v0_5.py": "sha256:1520dda1d7616ff9d5830da63b97f6a18dfdced099d0e63f554b68f4fbc3cf0e",
     "scripts/discover_external_goal_sources_v0_5.py": "sha256:0b96a72bc532b94a9b1631e9ac6252dfa54efa11b75e82dd81333b8f93f30aad",
     "scripts/generate_sealed_adversarial_holdout_v0_5.py": "sha256:c75a28e00b27d415457a3f828a3e89b9f64e0d1fad58b548dc169eccec4828cb",
-    "scripts/geometry_full2d_v0_5_corpus.py": "sha256:62af66733600ce8c289e1897a6ff803bf23bc7a6dd4e70cb3a03735ab63bf668",
+    "scripts/geometry_full2d_v0_5_corpus.py": "sha256:62e25f653d3c23d376953d8b73c3f2e74780e4b4153de31501ad86a9dc2863b8",
     "scripts/import_external_goal_preserved_v0_5.py": "sha256:9ea69f4899d9250ed38b18b713d609bc3d1c5b640f136a0520e2303b2f9a3882"
   },
   "errors": [],
-  "freeze_id": "sha256:23f398e2a2f6e7e763c51b3fa8b61952776f4f264468552e4a2d4f5b57f1cfa7",
+  "freeze_id": "sha256:1ff08b18ffca23028b9e99dabe317a481a7ec4b2b2cb19899aca2d22c44e5082",
   "freeze_policy": "any later change to provider, compiler, rule registry, proof worker, final verifier, matrix runner, release checker, corpus generator, or checker code invalidates this manifest",
   "implementation_file_hashes": {
     "lean/MathAutoResearch/GeometryFull2D/Angle.lean": "sha256:4488bc11954d01c0dff4fb71a62d18f6ddd512ca60bbbd33b695dc2ebac7b101",
@@ -227,7 +227,7 @@
     "lean/MathAutoResearch/GeometryFull2D/Triangle.lean": "sha256:c134156ec33ab556cb57494fef57dd30e74556ff491594dab337a71ea035bfbb",
     "plugins/geometry_full2d/__init__.py": "sha256:5d4b671223725f687339e97f81bb2bbbe5940ccbee2241920cd08f0cb4284214",
     "plugins/geometry_full2d/claim_spec.py": "sha256:5b4b32a42e359c749df2cd46d39eeb4e9c4d160d8557a89d175f4160b7a1040d",
-    "plugins/geometry_full2d/compiler_v0_5.py": "sha256:19ca1ad55f05975ae7d88bcabdf15171485f1e6e5fd62d1869aff8e6cce0b741",
+    "plugins/geometry_full2d/compiler_v0_5.py": "sha256:b2070e011c18271b1808f51e204ccca57dbd4762e963a3b531c2b051d5b3c579",
     "plugins/geometry_full2d/engine_contracts.py": "sha256:f22da402b7c7aab84a1c8ebfeab759133a7d2bb6d0f7654757a1b4920cb98e1b",
     "plugins/geometry_full2d/engines/algebraic_geometry.py": "sha256:ebe4f98cda3afd3de17dcdd1b6b5a9b8192de919d32891306eeff598b61739c1",
     "plugins/geometry_full2d/engines/construction_search.py": "sha256:c844ee11ba737edd2fb0f027b7d3cacf3f8e3b1351924f238da347533d19a933",
@@ -241,16 +241,16 @@
     "plugins/geometry_full2d/proof_worker_v0_5.py": "sha256:1759c975fb3f00b527078ed0d09acef1fec3af4c6591948ebedc44038c4ca191",
     "plugins/geometry_full2d/provider.py": "sha256:8a6e1ac4d2001d4babda859c153b03563ec7d0bc9bb57de4286b35dc9e3401af",
     "plugins/geometry_full2d/provider_cli.py": "sha256:281af0d33e507059636172495d267fc9103afcaef16f7df79fb857a3daeb3f8c",
-    "plugins/geometry_full2d/rule_registry.py": "sha256:1804992b43053bf7540e1ddfb6ccfba5a28d7a9ffda1dd1259ce88f1f1bafb39",
-    "plugins/geometry_full2d/solver_derivation.py": "sha256:ae719cb155d32a32786204ef65adbc22bbf0df000d841097e0c11ddabc685998",
+    "plugins/geometry_full2d/rule_registry.py": "sha256:664cbf51d97acfc25b28edde3ba78398f612504dbe004a613652266987e32ae0",
+    "plugins/geometry_full2d/solver_derivation.py": "sha256:a1aac1ada054d7f1c4938b6f13915e0a50d03cda15a3333096c306d9b1a6c036",
     "scripts/geometry_full2d_v0_5_extraction.py": "sha256:7eb38e9dfaa57f2bcebbea6f03bc1657c74c66eaa61678a0b8ddc69a31bc44f9",
     "scripts/geometry_full2d_v0_5_independent_checkers.py": "sha256:690151a5453ba355a58f5f566e50191504d46c8740734a51ab0eb11007283ba0",
-    "scripts/geometry_full2d_v0_5_schemas.py": "sha256:b85d622b94940e2f359a807b815ab082d1037b9608792002011fed30c2c0fa9f",
+    "scripts/geometry_full2d_v0_5_schemas.py": "sha256:156b957cbfada654c0e708302162e66931d8e36ceddff1dc4dcef73293b4f96d",
     "scripts/run_full2d_matrix_v0_5.py": "sha256:86d3ac487b97a19fd05de9f1d08ab1af0cced2ea5683c705904e884e84720974",
     "scripts/run_solver_causality_mutations_v0_5.py": "sha256:eb2fd6a91b0bd4780a137d0ac73a533384960376dd1226016f239c4c80e4cf89"
   },
-  "implementation_git_head": "ac2bbb11e5eea7e61effa7f3040b99c2eac6f122",
+  "implementation_git_head": "55c7ecc442978ed461c3040dad39be52063af83b",
   "schema_version": "GeometryFull2DImplementationFreezeManifestV05",
-  "selected_implementation_hash": "sha256:4bf11dd87863a58042bd24212cc4fe0e350227b33885bfdbd7fd773f32a18665",
+  "selected_implementation_hash": "sha256:d462907a762f4b1d0358ddf35c13bada472908db80f3da5156a5f1f3617bf5ec",
   "status": "passed"
 }
