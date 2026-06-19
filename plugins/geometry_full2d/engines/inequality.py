@@ -23,6 +23,7 @@ class InequalityCertificateFull2D:
     certificate_id: str
     certificate_scope: str
     expression_family: str
+    derivation_operator: str
     domain_constraints: tuple[str, ...]
     inequality_goal: str
     certificate_steps: tuple[str, ...]
@@ -83,6 +84,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> InequalityCertificateFull2
                 certificate_id=f"inequality_certificate:{hash_ref(seed)[7:23]}",
                 certificate_scope="target_inequality",
                 expression_family="length_le",
+                derivation_operator="length_le_transitive",
                 domain_constraints=side_conditions,
                 inequality_goal=inequality_goal,
                 certificate_steps=steps,
@@ -103,6 +105,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> InequalityCertificateFull2
             certificate_id=f"inequality_certificate:{hash_ref(seed)[7:23]}",
             certificate_scope="target_inequality",
             expression_family="length_le",
+            derivation_operator="length_le_reflexive",
             domain_constraints=side_conditions,
             inequality_goal=inequality_goal,
             certificate_steps=steps,
@@ -130,6 +133,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> InequalityCertificateFull2
         certificate_id=f"inequality_certificate:{hash_ref(seed)[7:23]}",
         certificate_scope="side_condition_domain",
         expression_family="length_nonzero",
+        derivation_operator="side_condition_domain_positive_distance",
         domain_constraints=side_conditions,
         inequality_goal=inequality_goal,
         certificate_steps=steps,

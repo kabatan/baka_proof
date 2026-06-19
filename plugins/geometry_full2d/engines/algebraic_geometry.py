@@ -22,6 +22,7 @@ class AlgebraicCertificateFull2D:
     schema_version: str
     certificate_id: str
     target_family: str
+    derivation_operator: str
     coordinate_model: str
     variables: tuple[str, ...]
     polynomial_goal: str
@@ -84,6 +85,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
                 schema_version="1.0.0",
                 certificate_id=f"algebraic_certificate:{hash_ref(payload_seed)[7:23]}",
                 target_family=family,
+                derivation_operator="equilateral_adjacent_equal_length",
                 coordinate_model="symbolic_metric_term_algebra",
                 variables=variables,
                 polynomial_goal=polynomial_goal,
@@ -113,6 +115,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
                 schema_version="1.0.0",
                 certificate_id=f"algebraic_certificate:{hash_ref(payload_seed)[7:23]}",
                 target_family=family,
+                derivation_operator="metric_equal_length_symmetry",
                 coordinate_model="symbolic_metric_term_algebra",
                 variables=variables,
                 polynomial_goal=polynomial_goal,
@@ -141,6 +144,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
             schema_version="1.0.0",
             certificate_id=f"algebraic_certificate:{hash_ref(payload_seed)[7:23]}",
             target_family=family,
+            derivation_operator="metric_equal_length_reflexive",
             coordinate_model="symbolic_metric_term_algebra",
             variables=variables,
             polynomial_goal=polynomial_goal,
@@ -171,6 +175,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
             schema_version="1.0.0",
             certificate_id=f"algebraic_certificate:{hash_ref(payload_seed)[7:23]}",
             target_family=family,
+            derivation_operator=rule,
             coordinate_model="symbolic_area_term_algebra",
             variables=variables,
             polynomial_goal="area_left - area_right = 0",
@@ -196,6 +201,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
             schema_version="1.0.0",
             certificate_id=f"algebraic_certificate:{hash_ref(payload_seed)[7:23]}",
             target_family=family,
+            derivation_operator=rule,
             coordinate_model="symbolic_ratio_term_algebra",
             variables=variables,
             polynomial_goal="ratio_left - ratio_right = 0",
@@ -227,6 +233,7 @@ def _build_certificate(claim_spec: dict[str, Any]) -> AlgebraicCertificateFull2D
         schema_version="1.0.0",
         certificate_id=f"algebraic_certificate:{hash_ref(payload_seed)[7:23]}",
         target_family=family,
+        derivation_operator="collinearity_duplicate_row",
         coordinate_model="affine_plane_over_exact_field",
         variables=variables,
         polynomial_goal=polynomial_goal,

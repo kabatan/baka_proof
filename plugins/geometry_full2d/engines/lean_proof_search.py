@@ -24,6 +24,7 @@ class LeanProofSearchTraceFull2D:
     target_fact: str
     source_statement_hash: str
     search_strategy_id: str
+    derivation_operator: str
     admissible_rule_refs: tuple[str, ...]
     used_rule_refs: tuple[str, ...]
     used_side_condition_refs: tuple[str, ...]
@@ -67,7 +68,8 @@ def _build_trace(claim_spec: dict[str, Any]) -> LeanProofSearchTraceFull2D | Non
     side_conditions = _side_conditions(claim_spec)
     target_fact = f"{target.get('family')}:{','.join(map(str, target.get('args', [])))}:positive"
     args = tuple(str(arg) for arg in target.get("args", ()))
-    rules = ("full2d_rule:incidence_collinearity:04",) if len(args) == 3 and args[1] == args[2] else ("full2d_rule:incidence_collinearity:02",)
+    right_reflexive = len(args) == 3 and args[1] == args[2]
+    rules = ("full2d_rule:incidence_collinearity:04",) if right_reflexive else ("full2d_rule:incidence_collinearity:02",)
     seed = canonical_json({"target": target, "side_conditions": side_conditions, "rules": rules})
     return LeanProofSearchTraceFull2D(
         schema_version="1.0.0",
@@ -75,6 +77,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> LeanProofSearchTraceFull2D | Non
         target_fact=target_fact,
         source_statement_hash=str(claim_spec.get("source_statement_hash", "")),
         search_strategy_id="full2d_rule_search:incidence_repeated_collinearity",
+        derivation_operator="collinear_reflexive_right" if right_reflexive else "collinear_reflexive_left",
         admissible_rule_refs=rules,
         used_rule_refs=rules,
         used_side_condition_refs=side_conditions,

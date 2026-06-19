@@ -46,11 +46,33 @@ def select_solver_derivation(
     return None, sorted(set(errors or ["no_replay_checked_derivation_found"]))
 
 
+def artifact_operator(context: dict[str, Any], role: str) -> str:
+    artifact = context["normalized_artifacts_by_role"].get(role, {})
+    if not isinstance(artifact, dict):
+        return ""
+    operator = artifact.get("derivation_operator")
+    if operator:
+        return str(operator)
+    # Backward-compatible semantic fields are accepted only as artifact fields,
+    # never as target/source-expression proof selectors.
+    for key in ("normalization_policy", "construction_kind", "transformation_kind", "search_strategy_id"):
+        value = artifact.get(key)
+        if value:
+            return str(value)
+    return ""
+
+
+def operator_is(context: dict[str, Any], role: str, *expected: str) -> bool:
+    return artifact_operator(context, role) in set(expected)
+
+
 def build_order_between_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
     claim = context["claim_spec"]
     target = target_dict(claim)
     args = target_args(claim)
-    if target_family(claim) not in {"incidence", "collinear"} or len(args) != 3:
+    if not operator_is(context, "order_case", "between_implies_collinearity"):
+        return None, None
+    if len(args) != 3:
         return None, None
     hyp = hypothesis_with_args(claim, "between", args)
     if hyp is None:
@@ -84,7 +106,9 @@ def build_order_between_derivation(context: dict[str, Any]) -> tuple[dict[str, A
 def build_midpoint_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
     claim = context["claim_spec"]
     args = target_args(claim)
-    if target_family(claim) not in {"incidence", "collinear"} or len(args) != 3:
+    if not operator_is(context, "construction_search", "midpoint_collinearity_witness"):
+        return None, None
+    if len(args) != 3:
         return None, None
     hyp = hypothesis_with_args(claim, "midpoint", args)
     if hyp is None:
@@ -118,9 +142,9 @@ def build_midpoint_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] |
 def build_construction_projection_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
     claim = context["claim_spec"]
     target = target_dict(claim)
-    source = target_source_expr(claim)
     args = target_args(claim)
-    if target_family(claim) != "construction":
+    operator = artifact_operator(context, "construction_search")
+    if operator not in {"circle_construction_projection", "line_circle_intersection_projection", "center_construction_projection"}:
         return None, None
     if not role_ready(context, "construction_search"):
         return None, "construction_search_artifact_not_ready"
@@ -128,7 +152,7 @@ def build_construction_projection_derivation(context: dict[str, Any]) -> tuple[d
     engine = engine_ref(context, "construction_search")
     artifact = artifact_ref(context, "construction_search")
     names_args = names(args)
-    if "constructed_circle_point" in source and len(args) == 3:
+    if operator == "circle_construction_projection" and len(args) == 3:
         hyp = hypothesis_by_token(claim, "circle_with_center_through_point")
         if hyp is None:
             return None, None
@@ -140,7 +164,7 @@ def build_construction_projection_derivation(context: dict[str, Any]) -> tuple[d
         rule_1 = "full2d_rule:construction_circle:01"
         rule_2 = "full2d_rule:construction_circle:02"
         h = hyp_name(hyp)
-    elif "constructed_line_circle_point" in source:
+    elif operator == "line_circle_intersection_projection" and len(args) == 3:
         hyp = hypothesis_by_token(claim, "line_circle_intersection")
         if hyp is None:
             return None, None
@@ -152,7 +176,7 @@ def build_construction_projection_derivation(context: dict[str, Any]) -> tuple[d
         rule_1 = "full2d_rule:construction_intersection:01"
         rule_2 = "full2d_rule:construction_intersection:02"
         h = hyp_name(hyp)
-    elif "constructed_center_point" in source and len(args) == 2:
+    elif operator == "center_construction_projection" and len(args) == 2:
         hyp = hypothesis_by_token(claim, "constructed_center_point")
         if hyp is None:
             return None, None
@@ -186,15 +210,17 @@ def build_construction_projection_derivation(context: dict[str, Any]) -> tuple[d
 def build_equal_length_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
     claim = context["claim_spec"]
     args = target_args(claim)
-    source = target_source_expr(claim)
-    if target_family(claim) != "metric" or "equal_length" not in source or len(args) != 4:
+    operator = artifact_operator(context, "algebraic_geometry")
+    if operator not in {"metric_equal_length_reflexive", "metric_equal_length_symmetry"}:
+        return None, None
+    if len(args) != 4:
         return None, None
     if not role_ready(context, "algebraic_geometry"):
         return None, "algebraic_geometry_artifact_not_ready"
     checker = checker_ref(context, "algebraic_geometry")
     engine = engine_ref(context, "algebraic_geometry")
     artifact = artifact_ref(context, "algebraic_geometry")
-    if args[:2] == args[2:]:
+    if operator == "metric_equal_length_reflexive" and args[:2] == args[2:]:
         a, b = names(args[:2])
         steps = [
             certificate_step("equal_length_reflexive_certificate", "full2d_rule:metric_equal_length:01", artifact, checker, engine),
@@ -211,6 +237,8 @@ def build_equal_length_derivation(context: dict[str, Any]) -> tuple[dict[str, An
             ),
         ]
         return derivation_for(context, "algebraic_geometry", steps, selected_certificates=[artifact]), None
+    if operator != "metric_equal_length_symmetry":
+        return None, None
     hyp = hypothesis_with_args(claim, "equal_length", args[2:] + args[:2])
     if hyp is None:
         return None, None
@@ -236,15 +264,17 @@ def build_equal_length_derivation(context: dict[str, Any]) -> tuple[dict[str, An
 def build_length_le_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
     claim = context["claim_spec"]
     args = target_args(claim)
-    source = target_source_expr(claim)
-    if target_family(claim) != "inequality" or "length_le" not in source or len(args) != 4:
+    operator = artifact_operator(context, "inequality")
+    if operator not in {"length_le_reflexive", "length_le_transitive"}:
+        return None, None
+    if len(args) != 4:
         return None, None
     if not role_ready(context, "inequality"):
         return None, "inequality_artifact_not_ready"
     checker = checker_ref(context, "inequality")
     engine = engine_ref(context, "inequality")
     artifact = artifact_ref(context, "inequality")
-    if args[:2] == args[2:]:
+    if operator == "length_le_reflexive" and args[:2] == args[2:]:
         a, b = names(args[:2])
         steps = [
             certificate_step("length_le_reflexive_certificate", "full2d_rule:inequality_length:01", artifact, checker, engine),
@@ -261,6 +291,8 @@ def build_length_le_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] 
             ),
         ]
         return derivation_for(context, "inequality", steps, selected_certificates=[artifact]), None
+    if operator != "length_le_transitive":
+        return None, None
     chain = length_le_chain(claim, args)
     if chain is None:
         return None, None
@@ -298,20 +330,25 @@ def build_area_eq_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | 
     claim = context["claim_spec"]
     args = target_args(claim)
     source = target_source_expr(claim)
-    if target_family(claim) != "metric" or "area_eq" not in source or len(args) != 6:
+    operator = artifact_operator(context, "algebraic_geometry")
+    if operator not in {"area_relation_reflexive", "area_relation_symmetry"}:
+        return None, None
+    if len(args) != 6:
         return None, None
     if not role_ready(context, "algebraic_geometry"):
         return None, "algebraic_geometry_artifact_not_ready"
     checker = checker_ref(context, "algebraic_geometry")
     engine = engine_ref(context, "algebraic_geometry")
     artifact = artifact_ref(context, "algebraic_geometry")
-    if args[:3] == args[3:]:
+    if operator == "area_relation_reflexive" and args[:3] == args[3:]:
         a, b, c = names(args[:3])
         steps = [
             certificate_step("area_eq_reflexive_certificate", "full2d_rule:area_relation:01", artifact, checker, engine),
             target_step("area_eq_reflexive_target", "full2d_rule:area_relation:02", [support_ref("area_eq_reflexive_certificate"), artifact], source, checker, engine, artifact, "lean_template:area_eq_refl", {"A": a, "B": b, "C": c}),
         ]
         return derivation_for(context, "algebraic_geometry", steps, selected_certificates=[artifact]), None
+    if operator != "area_relation_symmetry":
+        return None, None
     hyp = hypothesis_with_args(claim, "area_eq", args[3:] + args[:3])
     if hyp is None:
         return None, None
@@ -328,20 +365,25 @@ def build_ratio_eq_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] |
     claim = context["claim_spec"]
     args = target_args(claim)
     source = target_source_expr(claim)
-    if target_family(claim) != "metric" or "ratio_eq" not in source or len(args) != 8:
+    operator = artifact_operator(context, "algebraic_geometry")
+    if operator not in {"ratio_similarity_reflexive", "ratio_similarity_symmetry"}:
+        return None, None
+    if len(args) != 8:
         return None, None
     if not role_ready(context, "algebraic_geometry"):
         return None, "algebraic_geometry_artifact_not_ready"
     checker = checker_ref(context, "algebraic_geometry")
     engine = engine_ref(context, "algebraic_geometry")
     artifact = artifact_ref(context, "algebraic_geometry")
-    if args[:4] == args[4:]:
+    if operator == "ratio_similarity_reflexive" and args[:4] == args[4:]:
         a, b, c, d = names(args[:4])
         steps = [
             certificate_step("ratio_eq_reflexive_certificate", "full2d_rule:ratio_similarity:01", artifact, checker, engine),
             target_step("ratio_eq_reflexive_target", "full2d_rule:ratio_similarity:02", [support_ref("ratio_eq_reflexive_certificate"), artifact], source, checker, engine, artifact, "lean_template:ratio_eq_refl", {"A": a, "B": b, "C": c, "D": d}),
         ]
         return derivation_for(context, "algebraic_geometry", steps, selected_certificates=[artifact]), None
+    if operator != "ratio_similarity_symmetry":
+        return None, None
     hyp = hypothesis_with_args(claim, "ratio_eq", args[4:] + args[:4])
     if hyp is None:
         return None, None
@@ -357,15 +399,17 @@ def build_ratio_eq_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] |
 def build_angle_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
     claim = context["claim_spec"]
     args = target_args(claim)
-    source = target_source_expr(claim)
-    if target_family(claim) != "angle" or "directed_angle_eq_mod_pi" not in source or len(args) != 6:
+    operator = artifact_operator(context, "metric_angle")
+    if operator not in {"directed_angle_mod_pi_reflexivity", "directed_angle_mod_pi_symmetry_from_hypothesis"}:
+        return None, None
+    if len(args) != 6:
         return None, None
     if not role_ready(context, "metric_angle"):
         return None, "metric_angle_artifact_not_ready"
     checker = checker_ref(context, "metric_angle")
     engine = engine_ref(context, "metric_angle")
     artifact = artifact_ref(context, "metric_angle")
-    if args[:3] == args[3:]:
+    if operator == "directed_angle_mod_pi_reflexivity" and args[:3] == args[3:]:
         a, b, c = names(args[:3])
         steps = [
             certificate_step("angle_reflexive_certificate", "full2d_rule:directed_angle_mod_pi:01", artifact, checker, engine),
@@ -382,6 +426,8 @@ def build_angle_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | No
             ),
         ]
         return derivation_for(context, "metric_angle", steps, selected_certificates=[artifact]), None
+    if operator != "directed_angle_mod_pi_symmetry_from_hypothesis":
+        return None, None
     hyp = hypothesis_with_args(claim, "directed_angle_eq_mod_pi", args[3:] + args[:3])
     if hyp is None:
         return None, None
@@ -408,14 +454,17 @@ def build_angle_2pi_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] 
     claim = context["claim_spec"]
     args = target_args(claim)
     source = target_source_expr(claim)
-    if target_family(claim) != "angle" or "directed_angle_eq_mod_2pi" not in source or len(args) != 6:
+    operator = artifact_operator(context, "metric_angle")
+    if operator not in {"directed_angle_mod_2pi_reflexivity", "directed_angle_mod_2pi_symmetry_from_hypothesis"}:
+        return None, None
+    if len(args) != 6:
         return None, None
     if not role_ready(context, "metric_angle"):
         return None, "metric_angle_artifact_not_ready"
     checker = checker_ref(context, "metric_angle")
     engine = engine_ref(context, "metric_angle")
     artifact = artifact_ref(context, "metric_angle")
-    if args[:3] == args[3:]:
+    if operator == "directed_angle_mod_2pi_reflexivity" and args[:3] == args[3:]:
         a, b, c = names(args[:3])
         steps = [
             certificate_step("angle_2pi_reflexive_certificate", "full2d_rule:angle_chase:01", artifact, checker, engine),
@@ -432,6 +481,8 @@ def build_angle_2pi_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] 
             ),
         ]
         return derivation_for(context, "metric_angle", steps, selected_certificates=[artifact]), None
+    if operator != "directed_angle_mod_2pi_symmetry_from_hypothesis":
+        return None, None
     hyp = hypothesis_with_args(claim, "directed_angle_eq_mod_2pi", args[3:] + args[:3])
     if hyp is None:
         return None, None
@@ -457,8 +508,9 @@ def build_angle_2pi_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] 
 def build_chord_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
     claim = context["claim_spec"]
     args = target_args(claim)
-    source = target_source_expr(claim)
-    if target_family(claim) != "circle" or "chord" not in source or len(args) != 3:
+    if not operator_is(context, "metric_angle", "circle_chord_endpoint_symmetry_from_hypothesis"):
+        return None, None
+    if len(args) != 3:
         return None, None
     if not role_ready(context, "metric_angle"):
         return None, "metric_angle_artifact_not_ready"
@@ -490,7 +542,9 @@ def build_chord_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | No
 def build_triangle_metric_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
     claim = context["claim_spec"]
     args = target_args(claim)
-    if target_family(claim) != "metric" or len(args) != 4:
+    if not operator_is(context, "algebraic_geometry", "equilateral_adjacent_equal_length"):
+        return None, None
+    if len(args) != 4:
         return None, None
     hyp = hypothesis_by_token(claim, "equilateral")
     if hyp is None:
@@ -523,14 +577,21 @@ def build_transformation_derivation(context: dict[str, Any]) -> tuple[dict[str, 
     claim = context["claim_spec"]
     source = target_source_expr(claim)
     args = target_args(claim)
-    if target_family(claim) != "transformation":
+    operator = artifact_operator(context, "transformation")
+    if operator not in {
+        "reflection_evidence_projection",
+        "homothety_evidence_projection",
+        "inversion_evidence_projection",
+        "spiral_similarity_evidence_projection",
+        "rotation_identity_collinearity_preservation",
+    }:
         return None, None
     if not role_ready(context, "transformation"):
         return None, "transformation_artifact_not_ready"
     checker = checker_ref(context, "transformation")
     engine = engine_ref(context, "transformation")
     artifact = artifact_ref(context, "transformation")
-    if "reflection_image" in source and len(args) == 1:
+    if operator == "reflection_evidence_projection" and len(args) == 1:
         r = names(args)[0]
         steps = [
             certificate_step("reflection_evidence_certificate", "full2d_rule:transformation_reflection:01", artifact, checker, engine),
@@ -548,12 +609,12 @@ def build_transformation_derivation(context: dict[str, Any]) -> tuple[dict[str, 
         ]
         return derivation_for(context, "transformation", steps, selected_certificates=[artifact]), None
     transformation_evidence = (
-        ("homothety_image", "homothety_evidence_certificate", "full2d_rule:transformation_homothety:01", "full2d_rule:transformation_homothety:02", "lean_template:homothety_has_evidence", "h"),
-        ("inversion_image", "inversion_evidence_certificate", "full2d_rule:transformation_inversion:01", "full2d_rule:transformation_inversion:02", "lean_template:inversion_has_evidence", "i"),
-        ("spiral_similarity_center", "spiral_similarity_evidence_certificate", "full2d_rule:spiral_similarity:01", "full2d_rule:spiral_similarity:02", "lean_template:spiral_similarity_has_evidence", "s"),
+        ("homothety_evidence_projection", "homothety_evidence_certificate", "full2d_rule:transformation_homothety:01", "full2d_rule:transformation_homothety:02", "lean_template:homothety_has_evidence", "h"),
+        ("inversion_evidence_projection", "inversion_evidence_certificate", "full2d_rule:transformation_inversion:01", "full2d_rule:transformation_inversion:02", "lean_template:inversion_has_evidence", "i"),
+        ("spiral_similarity_evidence_projection", "spiral_similarity_evidence_certificate", "full2d_rule:spiral_similarity:01", "full2d_rule:spiral_similarity:02", "lean_template:spiral_similarity_has_evidence", "s"),
     )
-    for token, certificate_id, rule_1, rule_2, template, binding_key in transformation_evidence:
-        if token in source and len(args) == 1:
+    for expected_operator, certificate_id, rule_1, rule_2, template, binding_key in transformation_evidence:
+        if operator == expected_operator and len(args) == 1:
             value = names(args)[0]
             steps = [
                 certificate_step(certificate_id, rule_1, artifact, checker, engine),
@@ -570,7 +631,7 @@ def build_transformation_derivation(context: dict[str, Any]) -> tuple[dict[str, 
                 ),
             ]
             return derivation_for(context, "transformation", steps, selected_certificates=[artifact]), None
-    if "rotation_preserves_collinear" in source and len(args) == 6:
+    if operator == "rotation_identity_collinearity_preservation" and len(args) == 6:
         a, b, c, d, e, f = names(args)
         steps = [
             certificate_step("rotation_identity_certificate", "full2d_rule:transformation_rotation:01", artifact, checker, engine),
@@ -593,7 +654,9 @@ def build_transformation_derivation(context: dict[str, Any]) -> tuple[dict[str, 
 def build_lean_search_reflexive_right_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
     claim = context["claim_spec"]
     args = target_args(claim)
-    if target_family(claim) not in {"incidence", "collinear"} or len(args) != 3 or args[1] != args[2]:
+    if not operator_is(context, "lean_proof_search", "collinear_reflexive_right"):
+        return None, None
+    if len(args) != 3 or args[1] != args[2]:
         return None, None
     if not role_ready(context, "lean_proof_search"):
         return None, "lean_proof_search_artifact_not_ready"
@@ -621,7 +684,9 @@ def build_lean_search_reflexive_right_derivation(context: dict[str, Any]) -> tup
 def build_synthetic_reflexive_derivation(context: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
     claim = context["claim_spec"]
     args = target_args(claim)
-    if target_family(claim) not in {"incidence", "collinear"} or len(args) != 3 or args[0] != args[1]:
+    if not operator_is(context, "synthetic_closure", "collinear_reflexive_left"):
+        return None, None
+    if len(args) != 3 or args[0] != args[1]:
         return None, None
     if not role_ready(context, "synthetic_closure"):
         return None, "synthetic_closure_artifact_not_ready"
@@ -735,10 +800,14 @@ def derivation_for(
     direct_facade: bool = False,
 ) -> dict[str, Any]:
     normalized_steps = []
+    operator = artifact_operator(context, primary_role)
     for step in steps:
         normalized_step = dict(step)
         if not normalized_step.get("supporting_engine_role"):
             normalized_step["supporting_engine_role"] = primary_role
+        if normalized_step.get("output_is_target") is True:
+            normalized_step.setdefault("proof_selection_source", "engine_artifact_derivation_operator")
+            normalized_step.setdefault("derivation_operator", operator)
         normalized_steps.append(normalized_step)
     selection_metadata = context.get("selection_metadata", {})
     selection_controller_role = str(selection_metadata.get("selection_controller_role", ""))
@@ -762,6 +831,8 @@ def derivation_for(
         "portfolio_decision_id": str(selection_metadata.get("portfolio_decision_id", "")),
         "portfolio_selected_engine_order": list(selection_metadata.get("portfolio_selected_engine_order", [])),
         "primary_engine_role": primary_role,
+        "proof_selection_source": "engine_artifact_derivation_operator",
+        "selected_derivation_operator": operator,
         "selected_engine_output_refs": selected_engine_refs,
         "selected_facts": selected_facts or [],
         "selected_constructions": selected_constructions or [],

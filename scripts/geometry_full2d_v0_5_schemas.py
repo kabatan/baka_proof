@@ -279,6 +279,11 @@ def _validate_selected_derivation(payload: dict[str, Any], errors: list[str]) ->
             errors.append(f"missing_proof_bindings:derivation_steps[{index}]")
         if not step.get("output_expr"):
             errors.append(f"missing_output_expr:derivation_steps[{index}]")
+        if step.get("output_is_target") is True:
+            if step.get("proof_selection_source") != "engine_artifact_derivation_operator":
+                errors.append(f"target_step_proof_selection_not_engine_artifact_operator:derivation_steps[{index}]")
+            if not str(step.get("derivation_operator", "")).strip():
+                errors.append(f"target_step_missing_derivation_operator:derivation_steps[{index}]")
     if not has_non_target and not has_selected_support:
         errors.append("naked_target_assertion")
 
@@ -529,6 +534,8 @@ def positive_fixtures() -> dict[str, dict[str, Any]]:
                     "supporting_engine_output_ref": ref,
                     "supporting_artifact_ref": ref,
                     "lean_template_id": "lean_template:collinear_refl_left",
+                    "proof_selection_source": "engine_artifact_derivation_operator",
+                    "derivation_operator": "collinear_reflexive_left",
                     "proof_bindings": {"A": "A", "B": "B"},
                     "output_is_target": True,
                     "non_target_intermediate": False,

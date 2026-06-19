@@ -93,6 +93,8 @@ def sample_selected_derivation() -> dict[str, Any]:
                 "supporting_artifact_ref": REF_A,
                 "supporting_engine_role": "synthetic_closure",
                 "lean_template_id": "lean_template:collinear_refl_left",
+                "proof_selection_source": "engine_artifact_derivation_operator",
+                "derivation_operator": "collinear_reflexive_left",
                 "proof_bindings": {"A": "A", "B": "B"},
                 "output_is_target": True,
                 "non_target_intermediate": False,

@@ -20,6 +20,7 @@ from scripts.geometry_full2d_v0_5_schemas import validate_payload
 
 
 COMPILER_PATH = ROOT / "plugins" / "geometry_full2d" / "compiler_v0_5.py"
+SOLVER_DERIVATION_PATH = ROOT / "plugins" / "geometry_full2d" / "solver_derivation.py"
 FORBIDDEN_PATTERNS = {
     "target_expr_startswith": re.compile(r"target_expr\.startswith\s*\("),
     "match_target_expr": re.compile(r"match\s+target_expr\b"),
@@ -30,6 +31,12 @@ FORBIDDEN_PATTERNS = {
     "difficulty_tier": re.compile(r"\bdifficulty_tier\b"),
     "benchmark_config": re.compile(r"\bbenchmark_config\b"),
     "corpus_manifest": re.compile(r"\bcorpus_manifest\b"),
+}
+SOLVER_FORBIDDEN_PATTERNS = {
+    "solver_source_string_branch": re.compile(r"\bsource\s*=\s*target_source_expr\s*\([^)]*\).*?if\s+.*\bin\s+source\b", re.DOTALL),
+    "solver_target_expr_startswith": re.compile(r"target_source_expr\s*\([^)]*\)\.startswith\s*\("),
+    "solver_target_shape_id": re.compile(r"\btarget_shape_id\b"),
+    "solver_template_id_metadata": re.compile(r"\btemplate_id\b"),
 }
 
 
@@ -63,11 +70,20 @@ def check_compiler_input_isolation(run_dir: Path) -> dict[str, Any]:
 def scan_compiler_source(extra_text: str | None = None) -> dict[str, Any]:
     text = extra_text if extra_text is not None else COMPILER_PATH.read_text(encoding="utf-8")
     hits = [name for name, pattern in FORBIDDEN_PATTERNS.items() if pattern.search(text)]
+    solver_hits: list[str] = []
+    if extra_text is None:
+        solver_text = SOLVER_DERIVATION_PATH.read_text(encoding="utf-8")
+        solver_hits.extend(name for name, pattern in SOLVER_FORBIDDEN_PATTERNS.items() if pattern.search(solver_text))
+        if "artifact_operator" not in solver_text:
+            solver_hits.append("solver_missing_artifact_operator_selector")
+        if "engine_artifact_derivation_operator" not in solver_text:
+            solver_hits.append("solver_missing_engine_artifact_selection_provenance")
     return {
         "schema_version": "CompilerInputStaticScanV05",
-        "status": "passed" if not hits else "failed",
-        "errors": hits,
+        "status": "passed" if not hits and not solver_hits else "failed",
+        "errors": hits + solver_hits,
         "path": COMPILER_PATH.relative_to(ROOT).as_posix(),
+        "solver_path": SOLVER_DERIVATION_PATH.relative_to(ROOT).as_posix(),
     }
 
 
@@ -132,6 +148,18 @@ def self_test_report(run_dir: Path) -> dict[str, Any]:
             rule_registry_ref=fixture["rule_registry_ref"],
             side_condition_checker_refs=fixture["side_condition_checker_refs"],
         )
+        missing_operator = copy.deepcopy(fixture["selected_derivation"])
+        missing_operator["derivation_steps"][1].pop("proof_selection_source", None)
+        missing_operator["derivation_steps"][1].pop("derivation_operator", None)
+        missing_operator_compile = compile_selected_derivation(
+            claim_spec=fixture["claim"],
+            claim_spec_ref=fixture["claim_ref"],
+            selected_derivation=missing_operator,
+            selected_solver_derivation_ref=fixture["selected_derivation_ref"],
+            rule_registry=fixture["rule_registry"],
+            rule_registry_ref=fixture["rule_registry_ref"],
+            side_condition_checker_refs=fixture["side_condition_checker_refs"],
+        )
     errors: list[str] = []
     if positive["status"] != "passed":
         errors.append("positive_input_isolation_failed")
@@ -139,6 +167,8 @@ def self_test_report(run_dir: Path) -> dict[str, Any]:
         errors.append("proof_from_shape_static_not_rejected")
     if bad_compile["status"] != "failed" or "naked_target_assertion" not in bad_compile["errors"]:
         errors.append("naked_target_derivation_not_rejected")
+    if missing_operator_compile["status"] != "failed" or not any("derivation_operator" in error or "proof_selection" in error for error in missing_operator_compile.get("errors", [])):
+        errors.append("missing_artifact_operator_derivation_not_rejected")
     return {
         "schema_version": "CompilerInputIsolationSelfTestV05",
         "status": "passed" if not errors else "failed",
@@ -146,6 +176,7 @@ def self_test_report(run_dir: Path) -> dict[str, Any]:
         "positive": positive,
         "bad_static": bad_static,
         "bad_compile": bad_compile,
+        "missing_operator_compile": missing_operator_compile,
     }
 
 

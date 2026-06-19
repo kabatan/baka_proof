@@ -22,6 +22,7 @@ class AuxiliaryConstructionFull2D:
     schema_version: str
     construction_id: str
     construction_kind: str
+    derivation_operator: str
     introduced_objects: tuple[str, ...]
     dependencies: tuple[str, ...]
     required_side_conditions: tuple[str, ...]
@@ -68,6 +69,7 @@ def _construct_auxiliary_line(claim_spec: dict[str, Any]) -> AuxiliaryConstructi
             schema_version="1.0.0",
             construction_id=construction_id,
             construction_kind=construction_kind,
+            derivation_operator=construction_kind,
             introduced_objects=(),
             dependencies=args,
             required_side_conditions=side_conditions,
@@ -82,6 +84,7 @@ def _construct_auxiliary_line(claim_spec: dict[str, Any]) -> AuxiliaryConstructi
             schema_version="1.0.0",
             construction_id=construction_id,
             construction_kind="midpoint_collinearity_witness",
+            derivation_operator="midpoint_collinearity_witness",
             introduced_objects=(),
             dependencies=args,
             required_side_conditions=side_conditions,
@@ -104,6 +107,7 @@ def _construct_auxiliary_line(claim_spec: dict[str, Any]) -> AuxiliaryConstructi
         schema_version="1.0.0",
         construction_id=construction_id,
         construction_kind="line_through_two_points",
+        derivation_operator="line_through_two_points",
         introduced_objects=(f"line:{a.split(':', 1)[-1]}{b.split(':', 1)[-1]}:Line",),
         dependencies=(a, b),
         required_side_conditions=side_conditions,

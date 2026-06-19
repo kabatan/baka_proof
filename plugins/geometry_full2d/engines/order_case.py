@@ -33,6 +33,7 @@ class CoverageGateFull2D:
     schema_version: str
     gate_id: str
     target_fact: str
+    derivation_operator: str
     cases: tuple[ProofStateDAGCaseFull2D, ...]
     coverage_rule_ids: tuple[str, ...]
     coverage_result: str
@@ -102,6 +103,7 @@ def _build_gate(claim_spec: dict[str, Any]) -> CoverageGateFull2D | None:
             schema_version="1.0.0",
             gate_id=f"coverage_gate:{hash_ref(seed)[7:23]}",
             target_fact=target_fact,
+            derivation_operator="between_implies_collinearity",
             cases=(case,),
             coverage_rule_ids=coverage_rule_ids,
             coverage_result=coverage_result,
@@ -125,6 +127,7 @@ def _build_gate(claim_spec: dict[str, Any]) -> CoverageGateFull2D | None:
         schema_version="1.0.0",
         gate_id=f"coverage_gate:{hash_ref(seed)[7:23]}",
         target_fact=target_fact,
+        derivation_operator="repeated_point_collinearity",
         cases=(case,),
         coverage_rule_ids=coverage_rule_ids,
         coverage_result=coverage_result,

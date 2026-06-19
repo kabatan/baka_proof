@@ -37,6 +37,7 @@ class Full2DTraceV1:
     target_fact: str
     steps: tuple[Full2DTraceStep, ...]
     used_rule_ids: tuple[str, ...]
+    derivation_operator: str
     proof_use_status: str = "not_allowed"
 
     def to_dict(self) -> dict[str, Any]:
@@ -107,11 +108,12 @@ def _derive_trace(
                 discharged_side_conditions=side_conditions,
             ),
         )
-        return _trace(target_fact, steps)
+        operator = "collinear_reflexive_left" if args[0] == args[1] else "collinear_reflexive_right"
+        return _trace(target_fact, steps, operator)
     return None
 
 
-def _trace(target_fact: str, steps: tuple[Full2DTraceStep, ...]) -> Full2DTraceV1:
+def _trace(target_fact: str, steps: tuple[Full2DTraceStep, ...], operator: str) -> Full2DTraceV1:
     used = tuple(step.rule_id for step in steps)
     trace_id = f"full2d_trace:{hash_ref(canonical_json([step.to_dict() for step in steps]))[7:23]}"
     return Full2DTraceV1(
@@ -121,6 +123,7 @@ def _trace(target_fact: str, steps: tuple[Full2DTraceStep, ...]) -> Full2DTraceV
         target_fact=target_fact,
         steps=steps,
         used_rule_ids=used,
+        derivation_operator=operator,
     )
 
 

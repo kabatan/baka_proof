@@ -232,6 +232,10 @@ def validate_compile_inputs(
             errors.append(f"unsupported_lean_template_id:{index}:{lean_template_id}")
         if step.get("output_is_target") is True:
             target_steps += 1
+            if step.get("proof_selection_source") != "engine_artifact_derivation_operator":
+                errors.append(f"target_step_proof_selection_not_engine_artifact_operator:{index}")
+            if not str(step.get("derivation_operator", "")).strip():
+                errors.append(f"target_step_missing_derivation_operator:{index}")
             if not step.get("input_refs"):
                 errors.append(f"target_step_missing_inputs:{index}")
             if str(step.get("output_expr", "")).strip() != target_source_expr(claim_spec).strip():

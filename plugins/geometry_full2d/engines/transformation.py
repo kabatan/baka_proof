@@ -22,6 +22,7 @@ class TransformationTraceFull2D:
     schema_version: str
     trace_id: str
     transformation_kind: str
+    derivation_operator: str
     source_objects: tuple[str, ...]
     image_objects: tuple[str, ...]
     invariant: str
@@ -78,6 +79,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> TransformationTraceFull2D | None
             schema_version="1.0.0",
             trace_id=f"transformation_trace:{hash_ref(seed)[7:23]}",
             transformation_kind="rotation_identity_collinearity_preservation",
+            derivation_operator="rotation_identity_collinearity_preservation",
             source_objects=args[:3],
             image_objects=args[3:],
             invariant="collinearity_preserved_under_identity_rotation_witnesses",
@@ -93,6 +95,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> TransformationTraceFull2D | None
             schema_version="1.0.0",
             trace_id=f"transformation_trace:{hash_ref(seed)[7:23]}",
             transformation_kind="reflection_evidence_projection",
+            derivation_operator="reflection_evidence_projection",
             source_objects=args,
             image_objects=args,
             invariant="reflection_image_predicate",
@@ -114,6 +117,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> TransformationTraceFull2D | None
                 schema_version="1.0.0",
                 trace_id=f"transformation_trace:{hash_ref(seed)[7:23]}",
                 transformation_kind=kind,
+                derivation_operator=kind,
                 source_objects=args,
                 image_objects=args,
                 invariant=invariant,
@@ -140,6 +144,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> TransformationTraceFull2D | None
         schema_version="1.0.0",
         trace_id=f"transformation_trace:{hash_ref(seed)[7:23]}",
         transformation_kind="rotation_zero_angle_identity",
+        derivation_operator="rotation_zero_angle_identity",
         source_objects=args,
         image_objects=image_objects,
         invariant="collinearity_preserved",

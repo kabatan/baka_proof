@@ -13,6 +13,8 @@ import time
 from pathlib import Path
 from typing import Any
 
+from scripts.geometry_full2d_v0_5_corpus import validate_freeze_manifest
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CHANGE_DIR = ROOT / "docs" / "ai" / "changes" / "geometry-full2d-v0_5"
@@ -639,12 +641,40 @@ def compiler_isolation_summary(command_results: dict[str, Any]) -> dict[str, Any
 
 def final_verify_summary(command_results: dict[str, Any]) -> dict[str, Any]:
     report = command_report(command_results, "proof_worker_final_verify")
-    positive = report.get("positive") if isinstance(report.get("positive"), dict) else {}
+    if report.get("schema_version") == "ProofWorkerFinalVerifySelfTestAndRunCheckV05":
+        self_report = report.get("self_test") if isinstance(report.get("self_test"), dict) else {}
+        run_report = report.get("run_check") if isinstance(report.get("run_check"), dict) else {}
+    else:
+        self_report = report
+        run_report = {}
+    positive = self_report.get("positive") if isinstance(self_report.get("positive"), dict) else {}
     final = positive.get("final_verify") if isinstance(positive.get("final_verify"), dict) else {}
-    passed = command_passed(command_results, "proof_worker_final_verify")
+    worker_count = int(run_report.get("proof_worker_report_count", 0) or 0)
+    final_count = int(run_report.get("final_verify_report_count", 0) or 0)
+    run_check_present = bool(run_report)
+    passed = (
+        command_passed(command_results, "proof_worker_final_verify")
+        and self_report.get("status") == "passed"
+        and (not run_check_present or (run_report.get("status") == "passed" and worker_count > 0 and final_count > 0))
+    )
+    errors: list[str] = []
+    if not command_passed(command_results, "proof_worker_final_verify"):
+        errors.append("proof_worker_final_verify_command_failed")
+    if self_report.get("status") != "passed":
+        errors.append("proof_worker_final_verify_self_test_failed")
+    if not run_check_present:
+        errors.append("proof_worker_final_verify_run_check_missing")
+    elif worker_count <= 0 or final_count <= 0:
+        errors.append("proof_worker_final_verify_run_artifact_count_zero")
+    elif run_report.get("status") != "passed":
+        errors.extend(f"run_check:{error}" for error in run_report.get("errors", []) if isinstance(error, str))
     return {
         "status": "passed" if passed else "failed",
-        "self_test_status": report.get("status", "not_run"),
+        "errors": errors,
+        "self_test_status": self_report.get("status", "not_run"),
+        "run_check_status": run_report.get("status", "not_run"),
+        "proof_worker_report_count": worker_count,
+        "final_verify_report_count": final_count,
         "lake_env_lean_command": final.get("lake_env_lean_command", []),
         "lake_env_lean_returncode": final.get("lake_env_lean_returncode"),
         "theorem_statement_unchanged": final.get("theorem_statement_unchanged") is True,
@@ -653,6 +683,43 @@ def final_verify_summary(command_results: dict[str, Any]) -> dict[str, Any]:
         "no_toy_target_definitions": final.get("no_toy_target_definitions") is True,
         "admitted_imports_only": final.get("admitted_imports_only") is True,
         "final_status_source": final.get("final_status_source"),
+    }
+
+
+def freshness_summary(*, fresh_run: bool, run_dir: Path, command_results: dict[str, Any]) -> dict[str, Any]:
+    freeze_path = DEFAULT_CORPUS_ROOT / "freeze_manifest.json"
+    errors: list[str] = []
+    if not fresh_run:
+        errors.append("release_not_fresh_run")
+    if not run_dir.exists():
+        errors.append("release_run_dir_missing")
+    freeze_manifest: dict[str, Any] = {}
+    freeze_errors = validate_freeze_manifest(freeze_path)
+    errors.extend(f"freeze_manifest:{error}" for error in freeze_errors)
+    if freeze_path.exists():
+        try:
+            loaded = read_json(freeze_path)
+            freeze_manifest = loaded if isinstance(loaded, dict) else {}
+        except json.JSONDecodeError:
+            errors.append("freeze_manifest_unparseable")
+    completed_commands = sorted(name for name, result in command_results.items() if isinstance(result, dict) and result.get("returncode") == 0)
+    failed_commands = sorted(name for name, result in command_results.items() if isinstance(result, dict) and result.get("returncode") not in {0, None})
+    current_head = current_git_head()
+    implementation_head = str(freeze_manifest.get("implementation_git_head", ""))
+    return {
+        "status": "passed" if not errors else "failed",
+        "errors": errors,
+        "fresh_run": fresh_run,
+        "release_run_dir": run_dir.relative_to(ROOT).as_posix() if run_dir.exists() else str(run_dir),
+        "release_git_head": current_head,
+        "implementation_git_head": implementation_head,
+        "implementation_git_head_is_ancestor": not any(error.endswith("implementation_head_not_ancestor_of_current_head") for error in freeze_errors),
+        "current_git_head_bound": not errors,
+        "freeze_manifest_ref": sha256_file(freeze_path) if freeze_path.exists() else None,
+        "freeze_id": freeze_manifest.get("freeze_id"),
+        "selected_implementation_hash": freeze_manifest.get("selected_implementation_hash"),
+        "completed_required_commands": completed_commands,
+        "failed_required_commands": failed_commands,
     }
 
 
@@ -724,6 +791,8 @@ def corpus_statement_diversity_summary(command_results: dict[str, Any]) -> dict[
         "unique_normalized_theorem_skeletons": report.get("unique_normalized_theorem_skeletons", 0),
         "max_exact_skeleton_duplicate": report.get("max_exact_skeleton_duplicate", 0),
         "used_relation_families": report.get("used_relation_families", 0),
+        "unique_core_target_signatures": report.get("unique_core_target_signatures", 0),
+        "max_core_target_signature_duplicate": report.get("max_core_target_signature_duplicate", 0),
         "construction_case_certificate_required_tasks": report.get("construction_case_certificate_required_tasks", 0),
         "non_target_intermediate_required_tasks": report.get("non_target_intermediate_required_tasks", 0),
         "counted_positive_count": report.get("counted_positive_count", 0),
@@ -888,6 +957,13 @@ def build_fail_closed_release_report(
     if diversity["status"] != "passed":
         release_blockers.add("K-029")
 
+    final_summary = final_verify_summary(command_results)
+    freshness = freshness_summary(fresh_run=fresh_run, run_dir=run_dir, command_results=command_results)
+    if final_summary["status"] != "passed":
+        release_blockers.update({"K-001", "K-032"})
+    if freshness["status"] != "passed":
+        release_blockers.add("K-026")
+
     report = {
         "schema_version": "GeometryFull2DReleaseAcceptanceV05",
         "status": "passed" if not release_blockers and not hard_blockers else "failed",
@@ -905,20 +981,14 @@ def build_fail_closed_release_report(
         "compiler_isolation_summary": compiler_isolation_summary(command_results),
         "actual_pipeline_run_summary": actual_pipeline_run_summary(command_results),
         "solver_causality_summary": report_summary(command_results, "solver_causality", "solver_causality"),
-        "final_verify_summary": final_verify_summary(command_results),
+        "final_verify_summary": final_summary,
         "metrics_summary": report_summary(command_results, "metrics", "metrics"),
         "used_rule_coverage_summary": report_summary(command_results, "used_rule_coverage", "used_rule_coverage"),
         "engine_contribution_summary": report_summary(command_results, "engine_contribution", "engine_contribution"),
         "baseline_comparability_summary": report_summary(command_results, "baseline_comparability", "baseline_comparability"),
         "measured_failure_summary": measured_failure_summary(command_results),
         "debt_ledger_summary": report_summary(command_results, "debt_ledger", "debt_ledger"),
-        "freshness_summary": {
-            "status": "passed",
-            "fresh_run": fresh_run,
-            "release_run_dir": run_dir.relative_to(ROOT).as_posix(),
-            "current_git_head_bound": True,
-            "git_head": current_git_head(),
-        },
+        "freshness_summary": freshness,
         "closure_claim_ceiling": {"allowed_final_claim": CLAIM_TARGET, "forbidden_claims_present": []},
         "closure_claim_ceiling_summary": report_summary(command_results, "closure_claim_ceiling", "closure_claim_ceiling"),
         "required_command_results": command_results,

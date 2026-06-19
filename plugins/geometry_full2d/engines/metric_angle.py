@@ -24,6 +24,7 @@ class MetricAngleTraceFull2D:
     target_fact: str
     angle_expression: str
     normalization_policy: str
+    derivation_operator: str
     normalized_value: str
     required_side_conditions: tuple[str, ...]
     rule_ids: tuple[str, ...]
@@ -80,6 +81,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
             target_fact=target_fact,
             angle_expression=f"chord({args[0]}, {args[1]}, {args[2]})",
             normalization_policy="circle_chord_endpoint_symmetry_from_hypothesis",
+            derivation_operator="circle_chord_endpoint_symmetry_from_hypothesis",
             normalized_value="symmetric chord endpoints",
             required_side_conditions=_side_conditions(claim_spec),
             rule_ids=(
@@ -100,6 +102,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
                 target_fact=target_fact,
                 angle_expression=f"angle({args[0]}, {args[1]}, {args[2]}) = angle({args[3]}, {args[4]}, {args[5]})",
                 normalization_policy="directed_angle_mod_pi_symmetry_from_hypothesis",
+                derivation_operator="directed_angle_mod_pi_symmetry_from_hypothesis",
                 normalized_value="symmetric directed angle equality modulo pi",
                 required_side_conditions=_side_conditions(claim_spec),
                 rule_ids=(
@@ -120,6 +123,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
             target_fact=target_fact,
             angle_expression=f"angle({args[0]}, {args[1]}, {args[2]})",
             normalization_policy="directed_angle_mod_pi_reflexivity",
+            derivation_operator="directed_angle_mod_pi_reflexivity",
             normalized_value="same directed angle modulo pi",
             required_side_conditions=_side_conditions(claim_spec),
             rule_ids=(
@@ -150,6 +154,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
             target_fact=target_fact,
             angle_expression=f"angle({args[0]}, {args[1]}, {args[2]}) = angle({args[3]}, {args[4]}, {args[5]})",
             normalization_policy=policy,
+            derivation_operator=policy,
             normalized_value="directed angle equality modulo 2pi",
             required_side_conditions=_side_conditions(claim_spec),
             rule_ids=rules,
@@ -180,6 +185,7 @@ def _build_trace(claim_spec: dict[str, Any]) -> MetricAngleTraceFull2D | None:
         target_fact=target_fact,
         angle_expression=angle_expression,
         normalization_policy=policy,
+        derivation_operator="collinear_repeated_endpoint_angle",
         normalized_value="0 mod pi",
         required_side_conditions=side_conditions,
         rule_ids=(

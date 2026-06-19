@@ -243,6 +243,9 @@ def check_synthetic_trace(claim_spec: dict[str, Any], artifact: dict[str, Any]) 
         errors.append("synthetic_trace_missing_non_target_intermediate")
     if is_collinear_reflexive_target(claim_spec):
         args = target_args(claim_spec)
+        expected_operator = "collinear_reflexive_left" if args[0] == args[1] else "collinear_reflexive_right"
+        if artifact.get("derivation_operator") != expected_operator:
+            errors.append("synthetic_derivation_operator_mismatch")
         expected_support = f"synthetic_support:repeated_point_collinearity:{','.join(args)}"
         if expected_support not in prior_outputs:
             errors.append("synthetic_recomputed_support_missing")
@@ -256,6 +259,8 @@ def check_synthetic_trace(claim_spec: dict[str, Any], artifact: dict[str, Any]) 
 def check_construction_artifact(claim_spec: dict[str, Any], artifact: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     kind = str(artifact.get("construction_kind", ""))
+    if artifact.get("derivation_operator") != kind:
+        errors.append("construction_derivation_operator_mismatch")
     deps = tuple(str(item) for item in artifact.get("dependencies", ()))
     required_side = tuple(str(item) for item in artifact.get("required_side_conditions", ()))
     obligations = tuple(str(item) for item in artifact.get("generated_obligations", ()))
@@ -287,42 +292,56 @@ def check_algebraic_certificate(claim_spec: dict[str, Any], artifact: dict[str, 
     family = target_family(claim_spec)
     args = target_args(claim_spec)
     steps = tuple(str(item) for item in artifact.get("reduction_steps", ()))
+    expected_operator = ""
     if str(artifact.get("target_family")) != family:
         errors.append("algebraic_target_family_mismatch")
     if family == "metric" and "equal_length" in target_source_expr(claim_spec) and len(args) == 4:
         if args[:2] == args[2:]:
+            expected_operator = "metric_equal_length_reflexive"
             if "cancel_identical_distance_terms" not in steps:
                 errors.append("algebraic_reflexive_metric_step_missing")
         elif args[2] == args[1] and hypothesis_with_args(claim_spec, "equilateral", (args[0], args[1], args[3])):
+            expected_operator = "equilateral_adjacent_equal_length"
             if "select_adjacent_equal_lengths" not in steps:
                 errors.append("algebraic_equilateral_metric_step_missing")
         elif not hypothesis_with_args(claim_spec, "equal_length", args[2:] + args[:2]):
             errors.append("algebraic_reverse_equal_length_hypothesis_missing")
         elif "apply_symmetric_equality_rewrite" not in steps:
             errors.append("algebraic_metric_symmetry_step_missing")
+        else:
+            expected_operator = "metric_equal_length_symmetry"
     elif family == "metric" and "area_eq" in target_source_expr(claim_spec) and len(args) == 6:
         if args[:3] == args[3:]:
+            expected_operator = "area_relation_reflexive"
             if "cancel_identical_area_terms" not in steps:
                 errors.append("algebraic_area_reflexive_step_missing")
         elif not hypothesis_with_args(claim_spec, "area_eq", args[3:] + args[:3]):
             errors.append("algebraic_reverse_area_eq_hypothesis_missing")
         elif "apply_symmetric_equality_rewrite" not in steps:
             errors.append("algebraic_area_symmetry_step_missing")
+        else:
+            expected_operator = "area_relation_symmetry"
     elif family == "metric" and "ratio_eq" in target_source_expr(claim_spec) and len(args) == 8:
         if args[:4] == args[4:]:
+            expected_operator = "ratio_similarity_reflexive"
             if "cancel_identical_ratio_terms" not in steps:
                 errors.append("algebraic_ratio_reflexive_step_missing")
         elif not hypothesis_with_args(claim_spec, "ratio_eq", args[4:] + args[:4]):
             errors.append("algebraic_reverse_ratio_eq_hypothesis_missing")
         elif "apply_symmetric_equality_rewrite" not in steps:
             errors.append("algebraic_ratio_symmetry_step_missing")
+        else:
+            expected_operator = "ratio_similarity_symmetry"
     elif family in {"incidence", "collinear"} and len(args) == 3 and has_repeated_point(args):
+        expected_operator = "collinearity_duplicate_row"
         if "det(" not in str(artifact.get("polynomial_goal", "")) or "reduce_determinant_with_equal_rows_to_zero" not in steps:
             errors.append("algebraic_collinearity_certificate_not_replayed")
     else:
         errors.append("algebraic_unsupported_claimspec")
     if artifact.get("checker_result") != "passed":
         errors.append("algebraic_certificate_internal_status_not_passed")
+    if expected_operator and artifact.get("derivation_operator") != expected_operator:
+        errors.append("algebraic_derivation_operator_mismatch")
     return errors
 
 
@@ -332,6 +351,9 @@ def check_metric_angle_trace(claim_spec: dict[str, Any], artifact: dict[str, Any
     args = target_args(claim_spec)
     if artifact.get("target_fact") != target_fact(claim_spec):
         errors.append("metric_angle_target_fact_mismatch")
+    if artifact.get("derivation_operator") != artifact.get("normalization_policy"):
+        if artifact.get("derivation_operator") != "collinear_repeated_endpoint_angle":
+            errors.append("metric_angle_derivation_operator_mismatch")
     rules = tuple(str(item) for item in artifact.get("rule_ids", ()))
     if not rules:
         errors.append("metric_angle_missing_rules")
@@ -369,6 +391,8 @@ def check_transformation_trace(claim_spec: dict[str, Any], artifact: dict[str, A
     family = target_family(claim_spec)
     args = target_args(claim_spec)
     kind = str(artifact.get("transformation_kind", ""))
+    if artifact.get("derivation_operator") != kind:
+        errors.append("transformation_derivation_operator_mismatch")
     if family == "transformation" and "rotation_preserves_collinear" in target_source_expr(claim_spec) and len(args) == 6:
         for index in range(3):
             if args[index] != args[index + 3] and equality_hypothesis(claim_spec, args[index], args[index + 3]) is None:
@@ -414,9 +438,13 @@ def check_order_case_gate(claim_spec: dict[str, Any], artifact: dict[str, Any]) 
     between = between_hypothesis(claim_spec, args)
     statuses = {str(case.get("status")) for case in cases if isinstance(case, dict)}
     if between:
+        if artifact.get("derivation_operator") != "between_implies_collinearity":
+            errors.append("order_case_derivation_operator_mismatch")
         if "closed_by_between_order" not in statuses:
             errors.append("order_case_between_status_missing")
     elif has_repeated_point(args):
+        if artifact.get("derivation_operator") != "repeated_point_collinearity":
+            errors.append("order_case_derivation_operator_mismatch")
         if "closed_by_repeated_point" not in statuses:
             errors.append("order_case_repeated_status_missing")
     else:
@@ -433,15 +461,20 @@ def check_inequality_certificate(claim_spec: dict[str, Any], artifact: dict[str,
     source = target_source_expr(claim_spec)
     steps = tuple(str(item) for item in artifact.get("certificate_steps", ()))
     scope = str(artifact.get("certificate_scope", ""))
+    expected_operator = ""
     if target_family(claim_spec) == "inequality" and "length_le" in source and len(args) == 4:
         if args[:2] == args[2:]:
+            expected_operator = "length_le_reflexive"
             if "apply_reflexive_order_certificate" not in steps:
                 errors.append("inequality_reflexive_step_missing")
         elif length_le_trans_hypotheses(claim_spec, args) is None:
             errors.append("inequality_transitive_hypotheses_missing")
         elif "compose_length_inequalities_by_transitivity" not in steps:
             errors.append("inequality_transitive_step_missing")
+        else:
+            expected_operator = "length_le_transitive"
     elif scope == "side_condition_domain":
+        expected_operator = "side_condition_domain_positive_distance"
         pair = first_distinct_point_pair(nondegeneracy_conditions(claim_spec))
         if pair is None:
             errors.append("inequality_domain_pair_missing")
@@ -451,6 +484,8 @@ def check_inequality_certificate(claim_spec: dict[str, Any], artifact: dict[str,
             errors.append("inequality_domain_step_missing")
     else:
         errors.append("inequality_unsupported_claimspec")
+    if expected_operator and artifact.get("derivation_operator") != expected_operator:
+        errors.append("inequality_derivation_operator_mismatch")
     return errors
 
 
@@ -464,6 +499,9 @@ def check_lean_search_trace(claim_spec: dict[str, Any], artifact: dict[str, Any]
     used_rules = tuple(str(item) for item in artifact.get("used_rule_refs", ()))
     if not used_rules:
         errors.append("lean_search_missing_used_rules")
+    expected_operator = "collinear_reflexive_right" if len(args) == 3 and args[1] == args[2] else "collinear_reflexive_left"
+    if artifact.get("derivation_operator") != expected_operator:
+        errors.append("lean_search_derivation_operator_mismatch")
     if artifact.get("semantic_check_status") != "passed":
         errors.append("lean_search_semantic_check_not_passed")
     if str(artifact.get("source_statement_hash", "")) != str(claim_spec.get("source_statement_hash", "")):

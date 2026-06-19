@@ -5,6 +5,7 @@ import hashlib
 import json
 import random
 import re
+import subprocess
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -200,6 +201,18 @@ def file_sha256(path: Path) -> str:
     return "sha256:" + digest.hexdigest()
 
 
+def current_git_head() -> str:
+    proc = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, capture_output=True)
+    return proc.stdout.strip() if proc.returncode == 0 else "unknown"
+
+
+def git_head_is_ancestor(ancestor: str, descendant: str) -> bool:
+    if not ancestor or ancestor == "unknown" or not descendant or descendant == "unknown":
+        return False
+    proc = subprocess.run(["git", "merge-base", "--is-ancestor", ancestor, descendant], cwd=ROOT, text=True, capture_output=True)
+    return proc.returncode == 0
+
+
 def validate_freeze_manifest(freeze_manifest: Path) -> list[str]:
     errors: list[str] = []
     if not freeze_manifest.exists():
@@ -207,6 +220,12 @@ def validate_freeze_manifest(freeze_manifest: Path) -> list[str]:
     manifest = read_json(freeze_manifest)
     if manifest.get("schema_version") != "GeometryFull2DImplementationFreezeManifestV05":
         errors.append("freeze_manifest_schema_version_invalid")
+    implementation_git_head = str(manifest.get("implementation_git_head", ""))
+    current_head = current_git_head()
+    if not implementation_git_head:
+        errors.append("freeze_manifest_implementation_git_head_missing")
+    elif not git_head_is_ancestor(implementation_git_head, current_head):
+        errors.append("freeze_manifest_implementation_head_not_ancestor_of_current_head")
     implementation_hashes = manifest.get("implementation_file_hashes", {})
     checker_hashes = manifest.get("checker_file_hashes", {})
     corpus_hashes = manifest.get("corpus_tool_hashes", {})
@@ -427,7 +446,7 @@ COMMON_BINDERS = (
     "(hm : Homothety) (iv : Inversion) (ss : SpiralSimilarity)"
 )
 
-GOAL_SCHEMES: list[dict[str, Any]] = [
+SEMANTIC_TARGET_GRAMMAR: list[dict[str, Any]] = [
     {"id": "incidence_reflexive_left", "families": ["collinear"], "assumptions": [], "target": "collinear A A B"},
     {"id": "incidence_reflexive_right", "families": ["collinear"], "assumptions": [], "target": "collinear A B B"},
     {"id": "order_between_collinear", "families": ["between", "collinear"], "assumptions": ["between A B C"], "target": "collinear A B C"},
@@ -456,6 +475,8 @@ GOAL_SCHEMES: list[dict[str, Any]] = [
     {"id": "transformation_rotation_collinear", "families": ["rotation", "collinear"], "assumptions": [], "target": "rotation_preserves_collinear A B C A B C"},
 ]
 
+POINT_SYMBOLS = ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "M", "O", "P", "Q")
+
 SEMANTIC_CONTEXT_PROFILES: list[dict[str, Any]] = [
     {"id": "empty", "families": [], "assumptions": []},
     {"id": "incidence_context", "families": ["on_line", "collinear"], "assumptions": ["on_line D l", "collinear D E F"]},
@@ -471,11 +492,11 @@ SEMANTIC_CONTEXT_PROFILES: list[dict[str, Any]] = [
 
 
 def holdout_theorem(index: int, marker: int) -> dict[str, Any]:
-    variant = index % (len(GOAL_SCHEMES) * 48)
-    scheme = GOAL_SCHEMES[variant % len(GOAL_SCHEMES)]
-    profile_index = variant // len(GOAL_SCHEMES)
+    variant = index % (len(SEMANTIC_TARGET_GRAMMAR) * 48)
+    grammar_entry = instantiate_semantic_target(SEMANTIC_TARGET_GRAMMAR[variant % len(SEMANTIC_TARGET_GRAMMAR)], variant)
+    profile_index = variant // len(SEMANTIC_TARGET_GRAMMAR)
     context_profiles = semantic_context_profiles(profile_index)
-    raw_assumptions = list(scheme["assumptions"])
+    raw_assumptions = list(grammar_entry["assumptions"])
     context_families: list[str] = []
     for profile in context_profiles:
         raw_assumptions.extend(str(item) for item in profile["assumptions"])
@@ -486,18 +507,36 @@ def holdout_theorem(index: int, marker: int) -> dict[str, Any]:
     header = f"theorem {theorem_name} {COMMON_BINDERS}"
     if assumption_text:
         header += " " + assumption_text
-    header += f" : {scheme['target']}"
+    header += f" : {grammar_entry['target']}"
     statement = f"{header} := by sorry"
-    families = list(dict.fromkeys(list(scheme["families"]) + context_families))
+    families = list(dict.fromkeys(list(grammar_entry["families"]) + context_families))
     return {
         "theorem_name": theorem_name,
         "header": header,
         "statement": statement,
         "families": families,
-        "scheme_id": scheme["id"],
+        "semantic_operator_id": grammar_entry["id"],
         "profile_index": profile_index,
         "context_profile_ids": [str(profile["id"]) for profile in context_profiles],
     }
+
+
+def instantiate_semantic_target(entry: dict[str, Any], variant: int) -> dict[str, Any]:
+    rotation = (variant // max(1, len(SEMANTIC_TARGET_GRAMMAR))) % len(POINT_SYMBOLS)
+    mapping = {symbol: POINT_SYMBOLS[(position + rotation) % len(POINT_SYMBOLS)] for position, symbol in enumerate(POINT_SYMBOLS)}
+    # Preserve the special midpoint/center names often tied to the corresponding theorem template.
+    for fixed in ("M", "O", "P", "Q"):
+        mapping[fixed] = fixed
+    return {
+        "id": str(entry["id"]),
+        "families": list(entry["families"]),
+        "assumptions": [substitute_point_symbols(str(item), mapping) for item in entry["assumptions"]],
+        "target": substitute_point_symbols(str(entry["target"]), mapping),
+    }
+
+
+def substitute_point_symbols(expr: str, mapping: dict[str, str]) -> str:
+    return re.sub(r"\b[A-Z]\b", lambda match: mapping.get(match.group(0), match.group(0)), expr)
 
 
 def semantic_context_profiles(profile_index: int) -> list[dict[str, Any]]:
@@ -693,9 +732,13 @@ def check_statement_diversity(corpus_root: Path) -> dict[str, Any]:
     relation_families: set[str] = set()
     construction_required = 0
     non_target_required = 0
+    target_core_signatures: dict[str, int] = {}
     for task in tasks:
         skeleton = str(task.get("normalized_skeleton") or normalized_skeleton(str(task.get("formal_statement", ""))))
         skeletons[skeleton] = skeletons.get(skeleton, 0) + 1
+        target_signature = normalized_core_target_signature(final_goal_expr(str(task.get("formal_statement", ""))))
+        if target_signature:
+            target_core_signatures[target_signature] = target_core_signatures.get(target_signature, 0) + 1
         relation_families.update(str(item) for item in task.get("relation_families", []) if item)
         if task.get("requires_construction_case_certificate") is True:
             construction_required += 1
@@ -708,6 +751,10 @@ def check_statement_diversity(corpus_root: Path) -> dict[str, Any]:
         errors.append("max_exact_skeleton_duplicate_gt_8")
     if len(relation_families) < 8:
         errors.append("used_relation_families_lt_8")
+    if len(target_core_signatures) < 24:
+        errors.append("unique_core_target_signatures_lt_24")
+    if target_core_signatures and max(target_core_signatures.values()) > 100:
+        errors.append("max_core_target_signature_duplicate_gt_100")
     if construction_required < 350:
         errors.append("construction_case_certificate_required_tasks_lt_350")
     if non_target_required < 600:
@@ -720,9 +767,43 @@ def check_statement_diversity(corpus_root: Path) -> dict[str, Any]:
         "unique_normalized_theorem_skeletons": len(skeletons),
         "max_exact_skeleton_duplicate": max(skeletons.values()) if skeletons else 0,
         "used_relation_families": len(relation_families),
+        "unique_core_target_signatures": len(target_core_signatures),
+        "max_core_target_signature_duplicate": max(target_core_signatures.values()) if target_core_signatures else 0,
         "construction_case_certificate_required_tasks": construction_required,
         "non_target_intermediate_required_tasks": non_target_required,
     }
+
+
+def final_goal_expr(statement: str) -> str:
+    prefix = statement.split(" := by", 1)[0]
+    depth = 0
+    for index in range(len(prefix) - 1, -1, -1):
+        char = prefix[index]
+        if char == ")":
+            depth += 1
+        elif char == "(":
+            depth = max(0, depth - 1)
+        elif char == ":" and depth == 0:
+            return prefix[index + 1 :].strip()
+    return ""
+
+
+def normalized_core_target_signature(expr: str) -> str:
+    tokens = re.findall(r"[A-Za-z_][A-Za-z0-9_']*|[≤<>=]+|≠", expr)
+    if not tokens:
+        return ""
+    relation = tokens[0]
+    variable_map: dict[str, str] = {}
+    pattern: list[str] = []
+    next_index = 0
+    for token in tokens[1:]:
+        if token in {"Point", "Line", "Circle", "Reflection", "Homothety", "Inversion", "SpiralSimilarity"}:
+            continue
+        if token not in variable_map:
+            variable_map[token] = f"v{next_index}"
+            next_index += 1
+        pattern.append(variable_map[token])
+    return relation + ":" + ",".join(pattern)
 
 
 def check_goal_preservation_reports(corpus_root: Path) -> dict[str, Any]:
