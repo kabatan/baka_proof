@@ -1,0 +1,258 @@
+{
+  "acceptance": "MARP-GEOLEAN-ACCEPTANCE-012",
+  "base_spec": "MARP-GEOLEAN-BASE-012",
+  "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json",
+  "schema_version": "GeometryFull2DAcceptanceCoverageMapV06",
+  "rows": [
+    {
+      "K": "K-001",
+      "checker": "check_active_guardian_spec_v0_6.py",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: exactly one USER_APPROVED_ACTIVE GeometryFull2D Base Spec and checked R-ID set",
+      "evidence_field": "checked_rids",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-002",
+      "checker": "check_no_old_release_dependency_v0_6.py",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: v0.4.x, draft v0.5, and prior v0.5 artifacts are rejected as release evidence",
+      "evidence_field": "freshness_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-003",
+      "checker": "check_red_case_suite_v0_6.py --all",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: all RC-001..RC-019 and K-010/K-013/K-028 red fixtures reject with positive controls",
+      "evidence_field": "red_case_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-004",
+      "checker": "check_acceptance_coverage_v0_6.py",
+      "red_case_or_dynamic_invariant": "RC-009 RedCase_CheckerOmission",
+      "evidence_field": "acceptance_coverage_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-005",
+      "checker": "check_red_case_suite_v0_6.py --all",
+      "supporting_checkers": ["check_acceptance_coverage_v0_6.py"],
+      "red_case_or_dynamic_invariant": "RC-010 RedCase_CheckerWhitelist",
+      "evidence_field": "K_to_checker_evidence_map",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-006",
+      "checker": "check_no_old_release_dependency_v0_6.py",
+      "red_case_or_dynamic_invariant": "RC-012 RedCase_StaleEvidenceReplay",
+      "evidence_field": "freshness_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-007",
+      "checker": "check_independent_solver_artifacts_v0_6.py --all --red-cases",
+      "supporting_checkers": ["check_provider_isolation_v0_6.py --run-dir <fresh> --red-cases"],
+      "red_case_or_dynamic_invariant": "RC-001 RedCase_TargetFactProvider",
+      "evidence_field": "solver_artifact_check_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-008",
+      "checker": "check_provider_isolation_v0_6.py --run-dir <fresh> --red-cases",
+      "red_case_or_dynamic_invariant": "RC-019 RedCase_ProviderImportsCompiler",
+      "evidence_field": "provider_isolation_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-009",
+      "checker": "check_independent_solver_artifacts_v0_6.py --all --red-cases",
+      "red_case_or_dynamic_invariant": "RC-014 RedCase_TargetAsCertificate",
+      "evidence_field": "solver_artifact_check_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-010",
+      "checker": "check_engine_output_not_from_compiler_rules_v0_6.py --run-dir <fresh> --red-cases",
+      "red_case_or_dynamic_invariant": "K-010 EngineOutputContainsProofText",
+      "evidence_field": "engine_output_not_from_compiler_rules_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-011",
+      "checker": "check_engine_output_not_from_compiler_rules_v0_6.py --run-dir <fresh> --red-cases",
+      "red_case_or_dynamic_invariant": "RC-005 RedCase_RuleListArtifactSynthesis",
+      "evidence_field": "engine_output_not_from_compiler_rules_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-012",
+      "checker": "check_rule_registry_v0_6.py --release --red-cases",
+      "red_case_or_dynamic_invariant": "RC-003 RedCase_IdentityDirectRuleRegistry",
+      "evidence_field": "rule_registry_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-013",
+      "checker": "check_selected_derivation_v0_6.py --run-dir <fresh> --red-cases",
+      "red_case_or_dynamic_invariant": "K-013 TargetEquivalentIntermediate",
+      "evidence_field": "selected_derivation_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-014",
+      "checker": "check_derivation_target_matcher_v0_6.py --run-dir <fresh> --red-cases",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: target matcher stage emits only target-hash equivalence and no proof text, target expression strings, strategy labels, rule ids, or corpus labels",
+      "evidence_field": "derivation_target_matcher_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-015",
+      "checker": "check_compiler_input_lock_v0_6.py --self-test --red-cases --dynamic-taint",
+      "red_case_or_dynamic_invariant": "RC-004 RedCase_ProofFromShapeCompiler",
+      "evidence_field": "compiler_input_lock_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-016",
+      "checker": "check_compiler_input_lock_v0_6.py --self-test --red-cases --dynamic-taint",
+      "red_case_or_dynamic_invariant": "RC-004 RedCase_ProofFromShapeCompiler",
+      "evidence_field": "compiler_input_lock_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-017",
+      "checker": "check_proof_worker_final_verify_v0_6.py --self-test --red-cases",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: ProofWorker never claims final theorem and FinalVerifyGate rejects sorry/admit/axiom/unsafe/toy target/protected theorem mutation/stale candidate",
+      "evidence_field": "proof_worker_final_verify_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-018",
+      "checker": "check_solver_causality_live_v0_6.py --run-dir <fresh> --red-cases",
+      "supporting_checkers": ["run_solver_causality_live_v0_6.py --run-dir <fresh> --all-b2-successes"],
+      "red_case_or_dynamic_invariant": "RC-006 RedCase_ReportOnlyCausality",
+      "evidence_field": "live_causality_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-019",
+      "checker": "check_solver_causality_live_v0_6.py --run-dir <fresh> --red-cases",
+      "supporting_checkers": ["run_solver_causality_live_v0_6.py --run-dir <fresh> --all-b2-successes"],
+      "red_case_or_dynamic_invariant": "RC-006 RedCase_ReportOnlyCausality",
+      "evidence_field": "live_causality_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-020",
+      "checker": "check_corpus_independence_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6 --red-cases",
+      "red_case_or_dynamic_invariant": "RC-008 RedCase_ProjectionBenchmark",
+      "evidence_field": "corpus_independence_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-021",
+      "checker": "check_corpus_independence_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6 --red-cases",
+      "red_case_or_dynamic_invariant": "RC-008 RedCase_ProjectionBenchmark",
+      "evidence_field": "corpus_independence_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-022",
+      "checker": "check_corpus_independence_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6 --red-cases",
+      "red_case_or_dynamic_invariant": "RC-011 RedCase_SealedChallengeCollusion",
+      "evidence_field": "corpus_independence_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-023",
+      "checker": "check_statement_diversity_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: corpus floor and diversity metrics are computed from corpus records, not static comments or labels",
+      "evidence_field": "statement_diversity_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-024",
+      "checker": "check_all_baseline_matrix_v0_6.py --run-dir <fresh> --red-cases",
+      "supporting_checkers": ["run_full2d_matrix_v0_6.py --config ... --run-dir <fresh> --execute-all --all-baselines --no-skip"],
+      "red_case_or_dynamic_invariant": "RC-017 RedCase_B2OnlyMatrix",
+      "evidence_field": "all_baseline_matrix_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-025",
+      "checker": "check_all_baseline_matrix_v0_6.py --run-dir <fresh> --red-cases",
+      "red_case_or_dynamic_invariant": "RC-007 RedCase_FamilyCodedBaseline",
+      "evidence_field": "all_baseline_matrix_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-026",
+      "checker": "check_full2d_metrics_v0_6.py --run-dir <fresh>",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: metrics and advantage are computed from ActualTaskPipelineRunV4 and SolverCausalityLiveRunV1 records only",
+      "evidence_field": "metrics_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-027",
+      "checker": "check_full2d_metrics_v0_6.py --run-dir <fresh>",
+      "red_case_or_dynamic_invariant": "RC-018 RedCase_DirectLemmaWrappedAsIntermediate",
+      "evidence_field": "metrics_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-028",
+      "checker": "check_engine_contribution_v0_6.py --run-dir <fresh> --red-cases",
+      "red_case_or_dynamic_invariant": "K-028 NarrowEngineRoleSet",
+      "evidence_field": "engine_contribution_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-029",
+      "checker": "check_used_rule_coverage_v0_6.py --run-dir <fresh> --red-cases",
+      "red_case_or_dynamic_invariant": "RC-013 RedCase_RuleHack",
+      "evidence_field": "used_rule_coverage_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-030",
+      "checker": "check_all_baseline_matrix_v0_6.py --run-dir <fresh> --red-cases",
+      "red_case_or_dynamic_invariant": "RC-007 RedCase_FamilyCodedBaseline",
+      "evidence_field": "measured_failure_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-031",
+      "checker": "check_no_old_release_dependency_v0_6.py",
+      "red_case_or_dynamic_invariant": "RC-012 RedCase_StaleEvidenceReplay",
+      "evidence_field": "freshness_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-032",
+      "checker": "check_closure_claim_ceiling_v0_6.py",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: closure claim is generated from release report and cannot exceed report claim ceiling",
+      "evidence_field": "closure_claim_ceiling_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-033",
+      "checker": "check_full2d_metrics_v0_6.py --run-dir <fresh>",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: nonessential blockers are represented as ReleaseBlockers or MeasuredFailures and never as threshold-lowering success",
+      "evidence_field": "measured_failure_summary",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-034",
+      "checker": "check_acceptance_coverage_v0_6.py",
+      "red_case_or_dynamic_invariant": "RC-015 RedCase_CheckerGeneratedSuccessArtifacts",
+      "evidence_field": "K_to_checker_evidence_map",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    },
+    {
+      "K": "K-035",
+      "checker": "check_acceptance_coverage_v0_6.py",
+      "red_case_or_dynamic_invariant": "RC-009 RedCase_CheckerOmission",
+      "evidence_field": "K_to_checker_evidence_map",
+      "release_report_path": "docs/ai/changes/geometry-full2d-v0_6/evidence/release_acceptance_report.json"
+    }
+  ]
+}

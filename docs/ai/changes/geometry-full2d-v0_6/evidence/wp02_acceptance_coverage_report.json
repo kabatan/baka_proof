@@ -1,0 +1,347 @@
+{
+  "coverage_rows": [
+    {
+      "K": "K-001",
+      "checker": "check_active_guardian_spec_v0_6.py",
+      "evidence_field": "checked_rids",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: exactly one USER_APPROVED_ACTIVE GeometryFull2D Base Spec and checked R-ID set"
+    },
+    {
+      "K": "K-002",
+      "checker": "check_no_old_release_dependency_v0_6.py",
+      "evidence_field": "freshness_summary",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: v0.4.x, draft v0.5, and prior v0.5 artifacts are rejected as release evidence"
+    },
+    {
+      "K": "K-003",
+      "checker": "check_red_case_suite_v0_6.py --all",
+      "evidence_field": "red_case_summary",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: all RC-001..RC-019 and K-010/K-013/K-028 red fixtures reject with positive controls"
+    },
+    {
+      "K": "K-004",
+      "checker": "check_acceptance_coverage_v0_6.py",
+      "evidence_field": "acceptance_coverage_summary",
+      "red_case_or_dynamic_invariant": "RC-009 RedCase_CheckerOmission"
+    },
+    {
+      "K": "K-005",
+      "checker": "check_red_case_suite_v0_6.py --all",
+      "evidence_field": "K_to_checker_evidence_map",
+      "red_case_or_dynamic_invariant": "RC-010 RedCase_CheckerWhitelist"
+    },
+    {
+      "K": "K-006",
+      "checker": "check_no_old_release_dependency_v0_6.py",
+      "evidence_field": "freshness_summary",
+      "red_case_or_dynamic_invariant": "RC-012 RedCase_StaleEvidenceReplay"
+    },
+    {
+      "K": "K-007",
+      "checker": "check_independent_solver_artifacts_v0_6.py --all --red-cases",
+      "evidence_field": "solver_artifact_check_summary",
+      "red_case_or_dynamic_invariant": "RC-001 RedCase_TargetFactProvider"
+    },
+    {
+      "K": "K-008",
+      "checker": "check_provider_isolation_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "provider_isolation_summary",
+      "red_case_or_dynamic_invariant": "RC-019 RedCase_ProviderImportsCompiler"
+    },
+    {
+      "K": "K-009",
+      "checker": "check_independent_solver_artifacts_v0_6.py --all --red-cases",
+      "evidence_field": "solver_artifact_check_summary",
+      "red_case_or_dynamic_invariant": "RC-014 RedCase_TargetAsCertificate"
+    },
+    {
+      "K": "K-010",
+      "checker": "check_engine_output_not_from_compiler_rules_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "engine_output_not_from_compiler_rules_summary",
+      "red_case_or_dynamic_invariant": "K-010 EngineOutputContainsProofText"
+    },
+    {
+      "K": "K-011",
+      "checker": "check_engine_output_not_from_compiler_rules_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "engine_output_not_from_compiler_rules_summary",
+      "red_case_or_dynamic_invariant": "RC-005 RedCase_RuleListArtifactSynthesis"
+    },
+    {
+      "K": "K-012",
+      "checker": "check_rule_registry_v0_6.py --release --red-cases",
+      "evidence_field": "rule_registry_summary",
+      "red_case_or_dynamic_invariant": "RC-003 RedCase_IdentityDirectRuleRegistry"
+    },
+    {
+      "K": "K-013",
+      "checker": "check_selected_derivation_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "selected_derivation_summary",
+      "red_case_or_dynamic_invariant": "K-013 TargetEquivalentIntermediate"
+    },
+    {
+      "K": "K-014",
+      "checker": "check_derivation_target_matcher_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "derivation_target_matcher_summary",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: target matcher stage emits only target-hash equivalence and no proof text, target expression strings, strategy labels, rule ids, or corpus labels"
+    },
+    {
+      "K": "K-015",
+      "checker": "check_compiler_input_lock_v0_6.py --self-test --red-cases --dynamic-taint",
+      "evidence_field": "compiler_input_lock_summary",
+      "red_case_or_dynamic_invariant": "RC-004 RedCase_ProofFromShapeCompiler"
+    },
+    {
+      "K": "K-016",
+      "checker": "check_compiler_input_lock_v0_6.py --self-test --red-cases --dynamic-taint",
+      "evidence_field": "compiler_input_lock_summary",
+      "red_case_or_dynamic_invariant": "RC-004 RedCase_ProofFromShapeCompiler"
+    },
+    {
+      "K": "K-017",
+      "checker": "check_proof_worker_final_verify_v0_6.py --self-test --red-cases",
+      "evidence_field": "proof_worker_final_verify_summary",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: ProofWorker never claims final theorem and FinalVerifyGate rejects sorry/admit/axiom/unsafe/toy target/protected theorem mutation/stale candidate"
+    },
+    {
+      "K": "K-018",
+      "checker": "check_solver_causality_live_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "live_causality_summary",
+      "red_case_or_dynamic_invariant": "RC-006 RedCase_ReportOnlyCausality"
+    },
+    {
+      "K": "K-019",
+      "checker": "check_solver_causality_live_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "live_causality_summary",
+      "red_case_or_dynamic_invariant": "RC-006 RedCase_ReportOnlyCausality"
+    },
+    {
+      "K": "K-020",
+      "checker": "check_corpus_independence_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6 --red-cases",
+      "evidence_field": "corpus_independence_summary",
+      "red_case_or_dynamic_invariant": "RC-008 RedCase_ProjectionBenchmark"
+    },
+    {
+      "K": "K-021",
+      "checker": "check_corpus_independence_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6 --red-cases",
+      "evidence_field": "corpus_independence_summary",
+      "red_case_or_dynamic_invariant": "RC-008 RedCase_ProjectionBenchmark"
+    },
+    {
+      "K": "K-022",
+      "checker": "check_corpus_independence_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6 --red-cases",
+      "evidence_field": "corpus_independence_summary",
+      "red_case_or_dynamic_invariant": "RC-011 RedCase_SealedChallengeCollusion"
+    },
+    {
+      "K": "K-023",
+      "checker": "check_statement_diversity_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6",
+      "evidence_field": "statement_diversity_summary",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: corpus floor and diversity metrics are computed from corpus records, not static comments or labels"
+    },
+    {
+      "K": "K-024",
+      "checker": "check_all_baseline_matrix_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "all_baseline_matrix_summary",
+      "red_case_or_dynamic_invariant": "RC-017 RedCase_B2OnlyMatrix"
+    },
+    {
+      "K": "K-025",
+      "checker": "check_all_baseline_matrix_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "all_baseline_matrix_summary",
+      "red_case_or_dynamic_invariant": "RC-007 RedCase_FamilyCodedBaseline"
+    },
+    {
+      "K": "K-026",
+      "checker": "check_full2d_metrics_v0_6.py --run-dir <fresh>",
+      "evidence_field": "metrics_summary",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: metrics and advantage are computed from ActualTaskPipelineRunV4 and SolverCausalityLiveRunV1 records only"
+    },
+    {
+      "K": "K-027",
+      "checker": "check_full2d_metrics_v0_6.py --run-dir <fresh>",
+      "evidence_field": "metrics_summary",
+      "red_case_or_dynamic_invariant": "RC-018 RedCase_DirectLemmaWrappedAsIntermediate"
+    },
+    {
+      "K": "K-028",
+      "checker": "check_engine_contribution_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "engine_contribution_summary",
+      "red_case_or_dynamic_invariant": "K-028 NarrowEngineRoleSet"
+    },
+    {
+      "K": "K-029",
+      "checker": "check_used_rule_coverage_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "used_rule_coverage_summary",
+      "red_case_or_dynamic_invariant": "RC-013 RedCase_RuleHack"
+    },
+    {
+      "K": "K-030",
+      "checker": "check_all_baseline_matrix_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "measured_failure_summary",
+      "red_case_or_dynamic_invariant": "RC-007 RedCase_FamilyCodedBaseline"
+    },
+    {
+      "K": "K-031",
+      "checker": "check_no_old_release_dependency_v0_6.py",
+      "evidence_field": "freshness_summary",
+      "red_case_or_dynamic_invariant": "RC-012 RedCase_StaleEvidenceReplay"
+    },
+    {
+      "K": "K-032",
+      "checker": "check_closure_claim_ceiling_v0_6.py",
+      "evidence_field": "closure_claim_ceiling_summary",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: closure claim is generated from release report and cannot exceed report claim ceiling"
+    },
+    {
+      "K": "K-033",
+      "checker": "check_full2d_metrics_v0_6.py --run-dir <fresh>",
+      "evidence_field": "measured_failure_summary",
+      "red_case_or_dynamic_invariant": "dynamic_invariant: nonessential blockers are represented as ReleaseBlockers or MeasuredFailures and never as threshold-lowering success"
+    },
+    {
+      "K": "K-034",
+      "checker": "check_acceptance_coverage_v0_6.py",
+      "evidence_field": "K_to_checker_evidence_map",
+      "red_case_or_dynamic_invariant": "RC-015 RedCase_CheckerGeneratedSuccessArtifacts"
+    },
+    {
+      "K": "K-035",
+      "checker": "check_acceptance_coverage_v0_6.py",
+      "evidence_field": "K_to_checker_evidence_map",
+      "red_case_or_dynamic_invariant": "RC-009 RedCase_CheckerOmission"
+    }
+  ],
+  "covered_K": [
+    "K-001",
+    "K-002",
+    "K-003",
+    "K-004",
+    "K-005",
+    "K-006",
+    "K-007",
+    "K-008",
+    "K-009",
+    "K-010",
+    "K-011",
+    "K-012",
+    "K-013",
+    "K-014",
+    "K-015",
+    "K-016",
+    "K-017",
+    "K-018",
+    "K-019",
+    "K-020",
+    "K-021",
+    "K-022",
+    "K-023",
+    "K-024",
+    "K-025",
+    "K-026",
+    "K-027",
+    "K-028",
+    "K-029",
+    "K-030",
+    "K-031",
+    "K-032",
+    "K-033",
+    "K-034",
+    "K-035"
+  ],
+  "errors": [],
+  "expected_K": [
+    "K-001",
+    "K-002",
+    "K-003",
+    "K-004",
+    "K-005",
+    "K-006",
+    "K-007",
+    "K-008",
+    "K-009",
+    "K-010",
+    "K-011",
+    "K-012",
+    "K-013",
+    "K-014",
+    "K-015",
+    "K-016",
+    "K-017",
+    "K-018",
+    "K-019",
+    "K-020",
+    "K-021",
+    "K-022",
+    "K-023",
+    "K-024",
+    "K-025",
+    "K-026",
+    "K-027",
+    "K-028",
+    "K-029",
+    "K-030",
+    "K-031",
+    "K-032",
+    "K-033",
+    "K-034",
+    "K-035"
+  ],
+  "red_case_suite_status": "passed",
+  "required_checker_commands_checked": [
+    "check_acceptance_coverage_v0_6.py",
+    "check_active_guardian_spec_v0_6.py",
+    "check_all_baseline_matrix_v0_6.py --run-dir <fresh> --red-cases",
+    "check_closure_claim_ceiling_v0_6.py",
+    "check_compiler_input_lock_v0_6.py --self-test --red-cases --dynamic-taint",
+    "check_corpus_independence_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6 --red-cases",
+    "check_derivation_target_matcher_v0_6.py --run-dir <fresh> --red-cases",
+    "check_engine_contribution_v0_6.py --run-dir <fresh> --red-cases",
+    "check_engine_output_not_from_compiler_rules_v0_6.py --run-dir <fresh> --red-cases",
+    "check_full2d_claimspec_v0_6.py --run-dir <fresh> --self-test",
+    "check_full2d_extraction_corpus_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6 --run-dir <fresh>",
+    "check_full2d_metrics_v0_6.py --run-dir <fresh>",
+    "check_independent_solver_artifacts_v0_6.py --all --red-cases",
+    "check_no_old_release_dependency_v0_6.py",
+    "check_proof_worker_final_verify_v0_6.py --self-test --red-cases",
+    "check_provider_isolation_v0_6.py --run-dir <fresh> --red-cases",
+    "check_red_case_suite_v0_6.py --all",
+    "check_rule_registry_v0_6.py --release --red-cases",
+    "check_schema_contracts_v0_6.py --self-test --red-cases",
+    "check_selected_derivation_v0_6.py --run-dir <fresh> --red-cases",
+    "check_solver_causality_live_v0_6.py --run-dir <fresh> --red-cases",
+    "check_statement_diversity_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6",
+    "check_used_rule_coverage_v0_6.py --run-dir <fresh> --red-cases",
+    "run_full2d_matrix_v0_6.py --config ... --run-dir <fresh> --execute-all --all-baselines --no-skip",
+    "run_solver_causality_live_v0_6.py --run-dir <fresh> --all-b2-successes"
+  ],
+  "required_report_fields_checked": [
+    "K_to_checker_evidence_map",
+    "acceptance_coverage_summary",
+    "advantage_summary",
+    "all_baseline_matrix_summary",
+    "checked_rids",
+    "claimspec_summary",
+    "closure_claim_ceiling_summary",
+    "compiler_input_lock_summary",
+    "corpus_independence_summary",
+    "derivation_target_matcher_summary",
+    "engine_contribution_summary",
+    "engine_output_not_from_compiler_rules_summary",
+    "extraction_summary",
+    "freshness_summary",
+    "live_causality_summary",
+    "measured_failure_summary",
+    "metrics_summary",
+    "proof_worker_final_verify_summary",
+    "provider_isolation_summary",
+    "red_case_summary",
+    "rule_registry_summary",
+    "schema_contract_summary",
+    "selected_derivation_summary",
+    "solver_artifact_check_summary",
+    "statement_diversity_summary",
+    "used_rule_coverage_summary"
+  ],
+  "schema_version": "GeometryFull2DAcceptanceCoverageReportV06",
+  "status": "passed"
+}
