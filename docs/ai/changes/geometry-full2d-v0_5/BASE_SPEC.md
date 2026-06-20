@@ -3,7 +3,7 @@ title: "Guardian Base Spec — GeometryFull2D v0.5 Real Solver-Causal Full Pipel
 spec_id: "MARP-GEOLEAN-BASE-011"
 related_plan: "MARP-GEOLEAN-PLAN-011"
 related_acceptance: "MARP-GEOLEAN-ACCEPTANCE-011"
-status: "USER_APPROVED_ACTIVE"
+status: "SUPERSEDED_BY_MARP-GEOLEAN-BASE-012_RETAINED_AS_PRIOR_EVIDENCE"
 supersedes_when_approved:
   - "MARP-GEOLEAN-BASE-010"
 claim_target: "V0.5_GEOMETRY_FULL2D_REAL_SOLVER_CAUSAL_FULL_PIPELINE_READY"

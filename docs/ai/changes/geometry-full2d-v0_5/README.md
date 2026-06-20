@@ -1,10 +1,10 @@
 # GeometryFull2D v0.5 Guardian Authority
 
-Status: active user-approved correction track.
+Status: superseded by GeometryFull2D v0.6 and retained as prior evidence.
 
-This directory contains the active Guardian authority set for the v0.5 reviewed-strict GeometryFull2D real solver-causal full pipeline recovery.
+This directory contains the previous Guardian authority set for the v0.5 reviewed-strict GeometryFull2D real solver-causal full pipeline recovery. It is no longer active release authority after `MARP-GEOLEAN-BASE-012` / `PLAN-012` / `ACCEPTANCE-012` became active, and it is not active release authority for any v0.6 closure claim.
 
-Read first:
+Read first for historical context only:
 
 - `BASE_SPEC.md`
 - `PLAN.md`
@@ -15,7 +15,7 @@ Read first:
 - `CODEX_HANDOFF.md`
 - `FAILURE_ANALYSIS.md`
 
-The v0.4.5 closure is invalidated as a false-positive closure and retained only as negative evidence.
+The v0.4.5 closure remains invalidated as a false-positive closure and retained only as negative evidence.
 
 Review evidence:
 
@@ -32,9 +32,4 @@ Review evidence:
 - `evidence/wp10_proof_worker_final_verify_evidence.md`
 - `evidence/wp10a_freeze_corpus_evidence.md`
 
-First checks:
-
-```bash
-python scripts/check_active_guardian_spec_v0_5.py
-python scripts/check_v0_5_spec_plan_consistency.py docs/ai/changes/geometry-full2d-v0_5
-```
+Do not use v0.5 evidence as active v0.6 closure evidence.
