@@ -89,7 +89,7 @@ A counted rule may not transform a fact into itself, may not have output equal t
 
 ### RC-004 Proof-from-shape compiler
 
-Compiler chooses proof text or rule plan from target expression, theorem family, task id, target_shape_id, grammar family, corpus category, source_ref, template_id, difficulty tier, or benchmark label.
+Compiler chooses proof text or rule plan from target expression, theorem family, task id, target_shape_id, grammar family, corpus category, source_ref, template_id, difficulty tier, benchmark label, theorem name, statement hash, proof-region identity, binder-map identity, or any `TheoremAnchorV1` identifier field.
 
 Forbidden release decision patterns include:
 
@@ -101,6 +101,10 @@ proof_from_shape
 proof_from_source
 if theorem_family == ...
 if baseline == ... and family == ...
+if theorem_anchor.theorem_name == ...
+lookup_by_statement_hash
+lookup_by_proof_region
+lookup_by_binder_map
 ```
 
 ### RC-005 Rule-list artifact synthesis
@@ -203,6 +207,8 @@ Provider output must be persisted before compiler starts. Release records must i
 
 Provider may receive the goal for directed search, but provider selected artifacts cannot be the naked final target. At least one selected artifact in every counted B2 success must be non-target or must be a checked certificate/construction/case split that is not equivalent to writing the final target directly.
 
+Semantic non-targetness is required. A selected intermediate does not count as non-target if it is alpha-renaming-equivalent to the final target, has the final target hash, is a trivial wrapper around the target, is a reflexivity/symmetry-equivalent form of the target, is proved only by a direct facade lemma for the target, or can be normalized to the target without using a checked solver construction, certificate, side-condition discharge, or case split.
+
 ### DR-012-003 Engine artifact schema and checking
 
 Each selected solver artifact must be one of:
@@ -231,6 +237,8 @@ compile_derivation(
 ```
 
 `TheoremAnchorV1` contains theorem name, proof-region markers, statement hash, and variable binder map. It must not contain raw target expression, theorem family, task id, corpus category, difficulty tier, source_ref, target_shape_id, or benchmark labels. Final target matching is performed by `DerivationTargetMatcher`, which returns only a target-hash equivalence result and no proof tactic or target expression string.
+
+Theorem anchor fields may locate, bind, and patch the theorem region only. Compiler proof text, rule plan, rule selection, lemma selection, derivation-step ordering, and proof strategy must not branch on theorem name, statement hash, proof-region identity, binder-map identity, or any other anchor identifier. Anchor-identifier taint tests are release-critical.
 
 ### DR-012-005 No target-shape proof strategy
 
@@ -308,6 +316,39 @@ multi-step derivation required tasks >= 800
 ```
 
 No family may exceed 20% of counted positives. No target predicate family may exceed 30%.
+
+### DR-012-015 Release-critical engine role set
+
+The release-critical engine role set is fixed by this Base Spec:
+
+```yaml
+ReleaseCriticalEngineRoleV1:
+  synthetic_trace:
+    enabled_when: any counted B2 task is enabled
+    corpus_subset: all counted positives
+  construction:
+    enabled_when: construction/case/certificate-required task subset is nonempty
+    corpus_subset: construction-required and construction-producing tasks
+  algebraic_metric_certificate:
+    enabled_when: algebraic, metric, distance, angle, ratio, coordinate, or certificate-required subset is nonempty
+    corpus_subset: algebraic/metric/certificate-required tasks
+  order_case:
+    enabled_when: order, betweenness, incidence-case, orientation, or case-split subset is nonempty
+    corpus_subset: order/case-required tasks
+  inequality:
+    enabled_when: inequality, comparison, nondegeneracy, positivity, or ordering side-condition subset is nonempty
+    corpus_subset: inequality/side-condition tasks
+  lean_search_certificate:
+    enabled_when: Lean-side search or local lemma search is enabled for any counted B2 task
+    corpus_subset: Lean-search-assisted tasks
+  external_solver_trace:
+    enabled_when: any external solver adapter is enabled or external-source preserved tasks require an external solver trace
+    corpus_subset: external-solver-trace tasks
+```
+
+The enabled role set is derived from corpus metadata and config before provider execution. It must not be chosen after seeing provider success/failure. Disabling a role requires an explicit `DisabledStageReportV1` and removes or disables the corresponding actual stage in baseline/matrix execution; it does not remove the role from engine-contribution accounting when its enabled condition is true.
+
+Every enabled release-critical engine role must contribute to at least one counted B2 final theorem success in its mapped corpus subset. `check_engine_contribution_v0_6.py` must enforce this exact role list, enabled/disabled rules, and corpus-subset mapping.
 
 ### DR-012-011 External source availability is not a HardBlocker
 
@@ -436,6 +477,8 @@ B2 - B7 order/case subset advantage >= 0.05
 
 Thresholds are evaluated on artifact-derived actual records only.
 
+A measured unavailability or debt report can explain why a release attempt failed, but it cannot satisfy a final release metric for an enabled release-critical engine role, a counted rule-family threshold, or any minimum success threshold. Such a report is ReleaseBlocker/WorkDebt evidence, not success evidence.
+
 ## 6. HardBlocker / ReleaseBlocker policy
 
 Codex stops only for HardBlockers:
@@ -448,6 +491,8 @@ license restriction blocking use of required external data
 ```
 
 Everything else is ReleaseBlocker or WorkDebt. Codex must record it and continue with next unblocked work package. ReleaseBlockers block final closure but not implementation progress.
+
+ReleaseBlocker or WorkDebt records never lower thresholds, remove required baselines, reduce corpus floors, or convert a missing executable stage into a passing release condition.
 
 ## 7. Forbidden completion claims
 

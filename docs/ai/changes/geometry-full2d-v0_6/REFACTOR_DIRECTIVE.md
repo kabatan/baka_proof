@@ -6,7 +6,7 @@ status: "USER_APPROVED_ACTIVE"
 
 # Refactor Directive v0.6
 
-The v0.6 release path must supersede v0.4.x and draft v0.5 release paths. Old implementations remain only as red-case fixtures.
+The v0.6 release path must supersede v0.4.x, draft v0.5, and prior v0.5 release paths. Old implementations remain only as red-case fixtures or historical evidence.
 
 Remove or isolate from release path:
 

@@ -60,7 +60,7 @@ Empty placeholder fields fail `K-001`.
 Exactly one active GeometryFull2D Base Spec: `MARP-GEOLEAN-BASE-012`.
 
 ### K-002 Old closure invalidation
-v0.4.x and draft v0.5 closures are historical evidence only and cannot be release evidence.
+v0.4.x, draft v0.5, and prior v0.5 closures/release artifacts are historical evidence only and cannot be release evidence.
 
 ### K-003 Red-case suite must run first
 `check_red_case_suite_v0_6.py --all` must run and reject all generalized red-case classes with positive controls.
@@ -93,7 +93,7 @@ Engine output derived from compiler-selected `used_rules`, rule registry output,
 Counted registry must have >=35 non-alias semantic rules across >=15 families. Identity/direct/facade rules cannot count. Rule-level negative fixtures must fail.
 
 ### K-013 Selected derivation non-target requirement
-Every B2 counted success must have a selected non-target intermediate or checked construction/certificate/case split.
+Every B2 counted success must have a selected semantic non-target intermediate or checked construction/certificate/case split. Alpha-renamed target equivalents, target-hash intermediates, trivial target wrappers, reflexivity/symmetry-equivalent targets, direct-facade target intermediates, and intermediates that normalize to the target without checked solver construction/certificate/side-condition/case-split evidence do not count.
 
 ### K-014 Derivation target matcher isolation
 Target matching must be a separate stage and must not output proof text, target expression strings, strategy labels, rule ids, or corpus labels.
@@ -102,7 +102,7 @@ Target matching must be a separate stage and must not output proof text, target 
 Compiler must accept only TheoremAnchor, SelectedSolverDerivation, RuleRegistrySnapshot, and side-condition reports. It cannot branch on target shape/corpus metadata.
 
 ### K-016 No proof-from-shape
-Static and dynamic taint tests must prove target shape / theorem family / task id / target_shape_id / source_ref / category do not determine proof text.
+Static and dynamic taint tests must prove target shape / theorem family / task id / target_shape_id / source_ref / category / theorem name / statement hash / proof-region identity / binder-map identity / any `TheoremAnchorV1` identifier field do not determine proof text, rule plan, rule selection, lemma selection, derivation-step ordering, or proof strategy.
 
 ### K-017 ProofWorker/final verify strictness
 ProofWorker cannot claim final theorem; FinalVerifyGate must compile candidate and reject sorry/admit/axiom/unsafe/toy target/protected theorem mutation/stale candidate.
@@ -151,7 +151,7 @@ Metrics and advantages must be computed from `ActualTaskPipelineRunV4` and `Solv
 Release requires all Base Spec minimum metrics.
 
 ### K-028 Engine contribution
-Every release-critical engine role used in enabled corpus subset must contribute to at least one counted success or have a measured unavailability/debt report. Cosmetic engine roles fail.
+Every release-critical engine role from the exact `ReleaseCriticalEngineRoleV1` list in Base Spec DR-012-015 that is enabled for an enabled corpus subset must contribute to at least one counted B2 final theorem success in its mapped subset. The enabled role set must be derived from corpus metadata and config before provider execution. A measured unavailability/debt report may explain a measured failure or ReleaseBlocker, but it cannot satisfy the final release metric for an enabled release-critical engine role. Cosmetic, post-hoc, or narrowly redefined engine roles fail.
 
 ### K-029 Used rule coverage
 Used rule count/family thresholds must be certificate-bound, compiler-consumed, mutation-sensitive, and final-theorem successful.
@@ -160,7 +160,7 @@ Used rule count/family thresholds must be certificate-bound, compiler-consumed, 
 Measured failures must be actual stage failures or disabled-stage reports, not label-coded failures.
 
 ### K-031 Stale evidence
-No stale v0.4.x / draft v0.5 / previous v0.6 evidence may be used in closure mode. Closure mode requires fresh run by default.
+No stale v0.4.x / draft v0.5 / prior v0.5 / previous v0.6 evidence may be used in closure mode. Closure mode requires fresh run by default.
 
 ### K-032 Closure ceiling
 Closure claim must be generated from release report. Manual closure claim or claim beyond report fails.
@@ -204,6 +204,8 @@ check_all_baseline_matrix_v0_6.py --run-dir <fresh> --red-cases
 run_solver_causality_live_v0_6.py --run-dir <fresh> --all-b2-successes
 check_solver_causality_live_v0_6.py --run-dir <fresh> --red-cases
 check_full2d_metrics_v0_6.py --run-dir <fresh>
+check_used_rule_coverage_v0_6.py --run-dir <fresh> --red-cases
+check_engine_contribution_v0_6.py --run-dir <fresh> --red-cases
 check_closure_claim_ceiling_v0_6.py
 ```
 

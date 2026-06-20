@@ -15,13 +15,15 @@ Do not optimize for green release first. Optimize for preventing shortcut implem
 
 Codex must not reduce Base Spec thresholds, rename v0.6 to a partial release, create bypass modes, or claim completion with ReleaseBlockers open. When a non-HardBlocker is encountered, record it in DebtLedger and continue with the next unblocked work package.
 
+Implementation discretion is limited to internal code organization, performance engineering, and harmless refactoring. It never permits mocks, synthetic success artifacts, sampled-only release runs, static-only release checks, label-coded outcomes, checker-generated counted artifacts, report-shaped causality, reduced corpus floors, reduced baseline sets, reduced rule-family floors, or replacing an executable stage with a summary field.
+
 ## WP00 — Install v0.6 authority and invalidate earlier closures
 
 ### Tasks
 
 1. Place all v0.6 authority docs under `docs/ai/changes/geometry-full2d-v0_6/`.
 2. Set `docs/ai/ACTIVE_CONTEXT.md` and `docs/ai/INDEX.md` to point to `MARP-GEOLEAN-BASE-012`, `PLAN-012`, `ACCEPTANCE-012`.
-3. Mark v0.4.5 and older closures as historical false-positive/regression evidence only.
+3. Mark v0.4.x, prior v0.5, and older closures/release artifacts as historical false-positive/regression evidence only.
 4. Implement `scripts/check_active_guardian_spec_v0_6.py`.
 5. Implement `scripts/check_v0_6_spec_plan_consistency.py` and make it check claim target, ids, K coverage, required checker names, and no active v0.4/v0.5 release authority.
 
@@ -55,7 +57,7 @@ positive_control_passed: true
 ```
 
 5. Positive controls must include at least one minimal non-red fixture that the relevant checker accepts.
-6. Do not implement provider/compiler/matrix release code until this report passes.
+6. Do not implement provider, compiler, rule registry, matrix, corpus expansion, or release-acceptance code until this report passes.
 
 ### Acceptance
 
@@ -182,6 +184,8 @@ external solver trace normalizer/checker
 
 Each selected artifact must have `IndependentSolverArtifactCheckV1(status=passed)`. Checkers must reject naked final target fact, target-as-certificate, proof-text artifacts, missing premises, missing side conditions, and schema-only certificates.
 
+Each independent checker must import neither provider nor compiler code, must not consume downstream proof-generation artifacts, and must verify premises, side conditions, and conclusions from artifact data plus ClaimSpec/hypotheses only.
+
 ### Acceptance
 
 ```bash
@@ -212,7 +216,7 @@ passes and rejects identity-only registries and alias inflation.
 ### Tasks
 
 1. Build `SelectedSolverDerivationV3` only from checked solver artifacts.
-2. Every B2 counted success must have at least one selected non-target intermediate or checked construction/certificate/case split.
+2. Every B2 counted success must have at least one selected semantic non-target intermediate or checked construction/certificate/case split. A selected intermediate does not count if it is alpha-renaming-equivalent to the final target, has the final target hash, trivially wraps the target, is reflexivity/symmetry-equivalent to the target, is proved by a direct facade lemma, or normalizes to the target without a checked solver construction, certificate, side-condition discharge, or case split.
 3. Implement `DerivationTargetMatcher` as a separate stage. It may compare final derivation step hash to target hash but must not output proof text, tactics, target expressions, rule choices, or strategy labels.
 4. `DerivationTargetMatcher` is a release-orchestration gate before compiler invocation. The compiler API remains exactly DR-012-004 and does not receive a target-match report, raw target expression, target expression string, proof tactic, rule choice, or strategy label as an input.
 
@@ -232,7 +236,7 @@ passes.
 1. Compiler API must match Base Spec DR-012-004 exactly.
 2. Compiler cannot import corpus, matrix, benchmark metadata, provider internals, release checker, or prior release code.
 3. Compiler cannot read raw target expression. Release orchestration may invoke the compiler only after `DerivationTargetMatcher` has passed target-hash equivalence, but the target-match report is not a `compile_derivation` input.
-4. Implement taint tests: poison theorem_family, target_shape_id, task_id, raw target expression, source_ref, category, and difficulty tier. If compiler proof text changes for any forbidden field, release fails.
+4. Implement taint tests: poison theorem_family, target_shape_id, task_id, raw target expression, source_ref, category, difficulty tier, theorem name, statement hash, proof-region identity, binder-map identity, and every other `TheoremAnchorV1` identifier field. If compiler proof text or rule plan changes for any forbidden field, release fails. Anchor fields may locate and patch the theorem region only; they must not choose proof strategy, rule selection, lemma selection, or derivation-step ordering.
 5. Compiler emits Lean patch by translating selected derivation steps and rule contracts only.
 
 ### Acceptance
@@ -301,7 +305,7 @@ passes. Field-only causality fixture fails.
 3. Freeze implementation hash before counted sealed holdout generation.
 4. Generate `SealedAdversarialHoldout` after implementation freeze with a generator that imports no provider, compiler, rule registry, proof worker, final verifier, matrix, previous release code, run records, or proof lemmas.
 5. Generator receives release seed from final acceptance pre-run and emits theorem statements only, no proof text, expected rule ids, expected engine roles, target_shape ids, or proof labels.
-6. Ensure diversity floors from Base Spec.
+6. If external sources are unavailable, record `ExternalSourceAvailabilityReportV2`, reduce only the ExternalGoalPreserved subfloor affected by availability, replace the missing counted positives with sealed adversarial holdout tasks, and keep every total corpus/diversity floor from Base Spec.
 
 ### Acceptance
 
@@ -351,10 +355,16 @@ baseline advantages
 measured failure summary
 ```
 
+Used-rule coverage and engine contribution are not optional subfields of a broad metrics report. They must be checked by dedicated release checkers. A measured unavailability or debt report can explain a release failure, but it cannot satisfy a final release metric for an enabled release-critical engine role or counted rule-family threshold.
+
+`check_engine_contribution_v0_6.py` must enforce the exact `ReleaseCriticalEngineRoleV1` set, enabled/disabled rules, and corpus-subset mapping from Base Spec DR-012-015. The enabled role set must be derived from corpus metadata and config before provider execution, not after observing provider success or failure.
+
 ### Acceptance
 
 ```bash
 python scripts/check_full2d_metrics_v0_6.py --run-dir <fresh> --thresholds-from docs/ai/changes/geometry-full2d-v0_6/BASE_SPEC.md
+python scripts/check_used_rule_coverage_v0_6.py --run-dir <fresh> --red-cases
+python scripts/check_engine_contribution_v0_6.py --run-dir <fresh> --red-cases
 ```
 
 passes thresholds from Base Spec.

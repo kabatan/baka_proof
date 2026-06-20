@@ -52,6 +52,60 @@ Non-blocking reviewer note resolved:
 PLAN.md and RED_CASE_SUITE.md now both use tests/red_cases/geometry_full2d_v0_6/ as the WP01 red-case fixture path.
 ```
 
+## Second Intent-Fidelity Review
+
+Reviewer: main agent self-review before implementation start.
+
+Status:
+
+```text
+fixes applied; pending boundary re-review
+```
+
+Issues found:
+
+1. `PLAN.md` red-case-first prohibition named provider/compiler/matrix but did not explicitly name rule registry, corpus expansion, or release-acceptance code.
+2. Some historical-evidence language said only `draft v0.5`, which could leave prior v0.5 implementation artifacts looking more authoritative than intended.
+3. Used-rule coverage and engine contribution were present as report fields and metrics, but not as dedicated required release checkers.
+4. `K-028` could be read as letting a measured unavailability/debt report satisfy engine contribution in final release, instead of only explaining a ReleaseBlocker or measured failure.
+
+Fixes applied:
+
+1. `PLAN.md` now forbids provider, compiler, rule registry, matrix, corpus expansion, and release-acceptance implementation before WP01 red cases pass.
+2. `BASE_SPEC.md`, `PLAN.md`, `ACCEPTANCE.md`, `REFACTOR_DIRECTIVE.md`, `ACTIVE_CONTEXT.md`, and `SOURCE_MAP.md` now consistently treat prior v0.5 release artifacts as historical/non-release evidence.
+3. `PLAN.md` and `ACCEPTANCE.md` now require `check_used_rule_coverage_v0_6.py` and `check_engine_contribution_v0_6.py` as dedicated release checks.
+4. `BASE_SPEC.md`, `PLAN.md`, and `ACCEPTANCE.md` now state that measured unavailability/debt reports cannot satisfy final release metrics for enabled release-critical engine roles or counted rule-family thresholds.
+
+Boundary reviewer result:
+
+```text
+RESULT: FAIL_FIXABLE
+```
+
+Additional issues found:
+
+1. The compiler could still use theorem anchor identifiers, such as theorem name, statement hash, proof-region identity, or binder-map identity, as strategy keys.
+2. Release-critical engine roles were not enumerated, so an implementation could define a narrow role set after seeing what succeeded.
+3. The non-target intermediate requirement was partly syntactic and could count target-equivalent wrappers or direct facade targets.
+
+Fixes applied:
+
+1. `BASE_SPEC.md`, `PLAN.md`, `ACCEPTANCE.md`, and `RED_CASE_SUITE.md` now forbid compiler proof/rule-plan selection from theorem anchor identifiers and require anchor-identifier taint tests.
+2. `BASE_SPEC.md` defines the exact `ReleaseCriticalEngineRoleV1` set, enabled/disabled rules, and corpus-subset mapping; `PLAN.md` and `ACCEPTANCE.md` require `check_engine_contribution_v0_6.py` to enforce that exact list.
+3. `BASE_SPEC.md`, `PLAN.md`, `ACCEPTANCE.md`, and `RED_CASE_SUITE.md` now require semantic non-targetness and reject target-hash, alpha-renamed, trivial wrapper, reflexivity/symmetry-equivalent, and direct-facade intermediates.
+
+Re-review:
+
+```text
+RESULT: PASS
+```
+
+Final reviewer note:
+
+```text
+No remaining blocker found in the provided packet scope. Anchor identifiers cannot drive compiler strategy/rules/lemmas/ordering; ReleaseCriticalEngineRoleV1 is enumerated and checker-bound; semantic non-targetness rejects target-equivalent intermediates and facade wrappers.
+```
+
 ## Claim Ceiling
 
 Allowed after checks and boundary review pass:

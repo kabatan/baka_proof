@@ -71,18 +71,25 @@ REQUIRED_CHECKERS = (
     "run_solver_causality_live_v0_6.py --run-dir <fresh> --all-b2-successes",
     "check_solver_causality_live_v0_6.py --run-dir <fresh> --red-cases",
     "check_full2d_metrics_v0_6.py --run-dir <fresh>",
+    "check_used_rule_coverage_v0_6.py --run-dir <fresh> --red-cases",
+    "check_engine_contribution_v0_6.py --run-dir <fresh> --red-cases",
     "check_closure_claim_ceiling_v0_6.py",
 )
 
 PLAN_BASE_BRIDGES = (
     "Do not optimize for green release first",
+    "Implementation discretion is limited to internal code organization",
     "record it in DebtLedger and continue with the next unblocked work package",
-    "Do not implement provider/compiler/matrix release code until this report passes",
+    "Do not implement provider, compiler, rule registry, matrix, corpus expansion, or release-acceptance code until this report passes",
     "Compiler API must match Base Spec DR-012-004 exactly",
     "FinalVerifyGate runs",
     "Live destructive causality runner",
     "all-baselines",
     "It must generate closure only if release passes",
+    "A measured unavailability or debt report can explain a release failure, but it cannot satisfy a final release metric",
+    "theorem name, statement hash, proof-region identity, binder-map identity",
+    "ReleaseCriticalEngineRoleV1",
+    "semantic non-target intermediate",
 )
 
 BASE_DECISION_TERMS = (
@@ -100,6 +107,7 @@ BASE_DECISION_TERMS = (
     "DR-012-012",
     "DR-012-013",
     "DR-012-014",
+    "DR-012-015",
 )
 
 FORBIDDEN = (
@@ -107,6 +115,16 @@ FORBIDDEN = (
     "geometry-full2d_v0_6",
     "optional bypass",
     "optional shortcut",
+)
+
+ENGINE_ROLES = (
+    "synthetic_trace",
+    "construction",
+    "algebraic_metric_certificate",
+    "order_case",
+    "inequality",
+    "lean_search_certificate",
+    "external_solver_trace",
 )
 
 
@@ -139,6 +157,8 @@ def _check_ids(errors: list[str], texts: dict[str, str]) -> None:
         for item in (BASE_ID, PLAN_ID, ACCEPTANCE_ID, CLAIM):
             if item not in text:
                 errors.append(f"{name}:missing:{item}")
+    if "prior v0.5 completion claims or release artifacts" not in texts["source_map"]:
+        errors.append("source_map_missing_prior_v0_5_supersession")
 
     if _field(texts["base"], "spec_id") != BASE_ID:
         errors.append("base_frontmatter_spec_id_mismatch")
@@ -191,6 +211,14 @@ def _check_red_cases(errors: list[str], texts: dict[str, str]) -> None:
         errors.append(f"red_suite_fixture_count_mismatch:{red.count('RedCase_')}")
     if "EngineOutputContainsProofText" not in red or "K-010" not in red:
         errors.append("red_suite_missing_non_rc_engine_output_proof_text_fixture")
+    for phrase in (
+        "TheoremAnchorV1",
+        "TargetEquivalentIntermediate",
+        "NarrowEngineRoleSet",
+        "binder-map identity",
+    ):
+        if phrase not in red:
+            errors.append(f"red_suite_missing_hardening_fixture:{phrase}")
 
 
 def _check_acceptance(errors: list[str], texts: dict[str, str]) -> None:
@@ -212,7 +240,11 @@ def _check_acceptance(errors: list[str], texts: dict[str, str]) -> None:
         "Any checker-generated success artifact",
         "B2-only matrix fails",
         "Field-only causality fails",
-        "No stale v0.4.x / draft v0.5 / previous v0.6 evidence",
+        "No stale v0.4.x / draft v0.5 / prior v0.5 / previous v0.6 evidence",
+        "cannot satisfy the final release metric",
+        "theorem name / statement hash / proof-region identity / binder-map identity",
+        "ReleaseCriticalEngineRoleV1",
+        "semantic non-target intermediate",
     ):
         if phrase not in acceptance:
             errors.append(f"acceptance_missing_phrase:{phrase}")
@@ -235,6 +267,8 @@ def _check_plan(errors: list[str], texts: dict[str, str]) -> None:
         "check_full2d_extraction_corpus_v0_6.py",
         "check_full2d_claimspec_v0_6.py",
         "check_engine_output_not_from_compiler_rules_v0_6.py",
+        "check_used_rule_coverage_v0_6.py",
+        "check_engine_contribution_v0_6.py",
         "run_solver_causality_live_v0_6.py",
         "run_full2d_matrix_v0_6.py",
         "check_closure_claim_ceiling_v0_6.py",
@@ -259,9 +293,18 @@ def _check_base(errors: list[str], texts: dict[str, str]) -> None:
         "B2 solver-causal success fraction = 1.00",
         "schema contradiction",
         "license restriction blocking use of required external data",
+        "ReleaseBlocker or WorkDebt records never lower thresholds",
+        "cannot satisfy a final release metric",
+        "Theorem anchor fields may locate, bind, and patch the theorem region only",
+        "Anchor-identifier taint tests are release-critical",
+        "Semantic non-targetness is required",
+        "ReleaseCriticalEngineRoleV1",
     ):
         if phrase not in base:
             errors.append(f"base_missing_phrase:{phrase}")
+    for role in ENGINE_ROLES:
+        if role not in base:
+            errors.append(f"base_missing_release_critical_engine_role:{role}")
 
 
 def _check_forbidden(errors: list[str], texts: dict[str, str]) -> None:

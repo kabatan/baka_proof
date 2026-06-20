@@ -13,7 +13,7 @@ Required red cases:
 1. `RC-001 RedCase_TargetFactProvider` (`Target-fact provider`): provider emits final target as selected fact with empty premises.
 2. `RC-002 RedCase_NakedTargetAssertion` (`Naked target assertion`): selected derivation has only final target.
 3. `RC-003 RedCase_IdentityDirectRuleRegistry` (`Identity/direct-rule registry`): counted rule is identity, reflexivity, pure symmetry, direct facade lemma, alias inflation, or an output equal to its input modulo renaming.
-4. `RC-004 RedCase_ProofFromShapeCompiler` (`Proof-from-shape compiler`): compiler chooses proof text from target shape, theorem family, task id, source ref, target_shape_id, grammar family, corpus category, source_ref, template_id, difficulty tier, or baseline.
+4. `RC-004 RedCase_ProofFromShapeCompiler` (`Proof-from-shape compiler`): compiler chooses proof text or rule plan from target shape, theorem family, task id, source ref, target_shape_id, grammar family, corpus category, source_ref, template_id, difficulty tier, baseline, theorem name, statement hash, proof-region identity, binder-map identity, or any `TheoremAnchorV1` identifier field.
 5. `RC-005 RedCase_RuleListArtifactSynthesis` (`Rule-list artifact synthesis`): engine artifact is derived from downstream `used_rules`, compiler decisions, proof text, rule registry output, or any proof-generation object.
 6. `RC-006 RedCase_ReportOnlyCausality` (`Report-only causality`): causality report contains status fields but no live compiler, proof worker, and FinalVerifyGate rerun logs.
 7. `RC-007 RedCase_FamilyCodedBaseline` (`Family-coded baseline`): baseline result is computed from family/category labels, target type, or hard-coded baseline id.
@@ -35,6 +35,8 @@ The suite passes only when each fixture fails release acceptance for the expecte
 Required non-RC K-level fixture:
 
 - `K-010 EngineOutputContainsProofText`: engine output contains Lean proof text, tactic script, Lean lemma template id, proof replacement text, or final target proof text. This fixture enforces Acceptance K-010 and does not replace any Base Spec RC identifier.
+- `K-013 TargetEquivalentIntermediate`: selected derivation uses an alpha-renamed target, target-hash intermediate, trivial target wrapper, reflexivity/symmetry-equivalent target, or direct-facade target lemma as its alleged non-target intermediate.
+- `K-028 NarrowEngineRoleSet`: implementation defines release-critical engine roles after observing provider success or omits an enabled Base Spec `ReleaseCriticalEngineRoleV1` role from contribution accounting.
 
 
 ## Authority identifiers
