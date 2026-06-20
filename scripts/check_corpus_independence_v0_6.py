@@ -199,7 +199,7 @@ def validate_sorry_only_theorem(task: dict[str, Any], corpus_root: Path) -> list
     body = match.group("body")
     if f"MARP_PROOF_REGION_START:{theorem_name}" not in body or f"MARP_PROOF_REGION_END:{theorem_name}" not in body:
         errors.append("sealed_theorem_missing_marp_region")
-    region = body.split(f"MARP_PROOF_REGION_START:{theorem_name}", 1)[-1].split(f"MARP_PROOF_REGION_END:{theorem_name}", 1)[0]
+    region = proof_region_between_markers(body, theorem_name)
     stripped = [line.strip() for line in region.splitlines() if line.strip()]
     if stripped != ["sorry"]:
         errors.append("sealed_theorem_not_sorry_only")
@@ -207,6 +207,23 @@ def validate_sorry_only_theorem(task: dict[str, Any], corpus_root: Path) -> list
     if any(token in region for token in forbidden_tokens):
         errors.append("sealed_theorem_contains_proof_tactic")
     return errors
+
+
+def proof_region_between_markers(text: str, theorem_name: str) -> str:
+    start = f"-- MARP_PROOF_REGION_START:{theorem_name}"
+    end = f"-- MARP_PROOF_REGION_END:{theorem_name}"
+    lines = text.splitlines()
+    output: list[str] = []
+    in_region = False
+    for line in lines:
+        if line.strip() == start:
+            in_region = True
+            continue
+        if line.strip() == end:
+            break
+        if in_region:
+            output.append(line)
+    return "\n".join(output)
 
 
 def validate_sealed_manifest(manifest: dict[str, Any], corpus_root: Path) -> list[str]:
