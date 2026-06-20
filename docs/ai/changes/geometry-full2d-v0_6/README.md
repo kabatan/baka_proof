@@ -31,6 +31,7 @@ Review evidence:
 
 - `evidence/v0_6_bundle_import.md`
 - `evidence/v0_6_post_admission_review_loop.md`
+- `evidence/WP14_ZERO_B2_SUCCESS_BLOCKER_REPORT.md`
 - `evidence/bundle_sha256sums.txt`
 - `evidence/bundle_original_sha256sums.txt`
 - `evidence/bundle_actual_sha256sums.txt`
