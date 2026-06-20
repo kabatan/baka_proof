@@ -69,13 +69,14 @@ def check_solver_causality_live(run_dir: Path) -> dict[str, Any]:
     errors: list[str] = []
     b2_records = load_b2_success_record_refs(run_dir)
     reports = load_reports(run_dir)
+    command_logs = build_command_log_index(run_dir)
     reports_by_source: dict[str, dict[str, Any]] = {}
     for report_path, report in reports:
         source_ref = str(report.get("source_actual_run_ref", ""))
         if source_ref in reports_by_source:
             errors.append(f"duplicate_causality_report:{source_ref}")
         reports_by_source[source_ref] = report
-        errors.extend(f"{report_path.name}:{error}" for error in validate_report(report_path, report, run_dir, b2_records))
+        errors.extend(f"{report_path.name}:{error}" for error in validate_report(report_path, report, run_dir, b2_records, command_logs))
 
     missing = sorted(set(b2_records) - set(reports_by_source))
     errors.extend(f"missing_live_causality_report:{ref}" for ref in missing)
@@ -96,14 +97,19 @@ def check_solver_causality_live(run_dir: Path) -> dict[str, Any]:
     return report
 
 
-def validate_report(report_path: Path, report: dict[str, Any], run_dir: Path, b2_records: dict[str, Path]) -> list[str]:
+def validate_report(
+    report_path: Path,
+    report: dict[str, Any],
+    run_dir: Path,
+    b2_records: dict[str, Path],
+    command_logs: dict[str, dict[str, Any]],
+) -> list[str]:
     errors = validate_payload(report)
     if report.get("status") != "passed":
         errors.append("causality_report_status_not_passed")
     source_ref = str(report.get("source_actual_run_ref", ""))
     if source_ref not in b2_records:
         errors.append("source_actual_run_ref_not_b2_success")
-    command_logs = build_command_log_index(run_dir)
     seen_kinds: set[str] = set()
     seen_temp_dirs: set[str] = set()
     mutation_cases = report.get("mutation_cases")
