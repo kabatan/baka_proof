@@ -1,0 +1,24 @@
+{
+  "schema_version": "GeometryFull2DBenchmarkRunConfigV06",
+  "matrix_id": "geometry_full2d_v0_6",
+  "benchmark_corpus_root": "benchmarks/geometry_full2d_v0_6",
+  "output_root": "runs/geometry_full2d_v0_6",
+  "matrix_runner": "scripts/run_full2d_matrix_v0_6.py",
+  "required_baselines": ["B1", "B2", "B5", "B6", "B7", "B8"],
+  "baseline_disabled_components": {
+    "B1": ["geometry_solver_provider"],
+    "B2": [],
+    "B5": ["construction"],
+    "B6": ["algebraic_metric_certificate", "inequality", "lean_search_certificate"],
+    "B7": ["order_case"],
+    "B8": ["model_provider"]
+  },
+  "baseline_success_policy": {
+    "B2": "full_solver_backed_pipeline",
+    "B1": "measured_failure_after_declared_ablation",
+    "B5": "measured_failure_after_declared_ablation",
+    "B6": "measured_failure_after_declared_ablation",
+    "B7": "measured_failure_after_declared_ablation",
+    "B8": "measured_failure_after_declared_model_provider_unavailable"
+  }
+}
