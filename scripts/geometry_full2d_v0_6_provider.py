@@ -5,15 +5,20 @@ import ast
 import hashlib
 import json
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from scripts.geometry_full2d_v0_6_extraction import CLAIM_SPEC_DIR, canonical_json, read_json, resolve_path, write_json
 from scripts.geometry_full2d_v0_6_schemas import ENGINE_ROLES, validate_payload
 
 
-ROOT = Path(__file__).resolve().parents[1]
 PROVIDER_MANIFEST_DIR = "provider_manifests_v0_6"
 ENGINE_OUTPUT_DIR = "engine_outputs_v0_6"
 PROVIDER_INDEX_NAME = "provider_index_v0_6.json"

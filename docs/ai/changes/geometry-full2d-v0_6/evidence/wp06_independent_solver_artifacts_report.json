@@ -1,0 +1,293 @@
+{
+  "check_run": {
+    "check_count": 21,
+    "checker_import_report": {
+      "checker_code_hash": "sha256:c370692523a32678482abf17271984f625ec3ecdde9fb00cd8c1422376e71ff3",
+      "forbidden_imports": [],
+      "git_head": "f765471bb8f5ee2fec3c2f95925bb4dd3e43b22d",
+      "imports": [
+        "__future__",
+        "ast",
+        "hashlib",
+        "json",
+        "pathlib",
+        "scripts.geometry_full2d_v0_6_extraction",
+        "scripts.geometry_full2d_v0_6_schemas",
+        "subprocess",
+        "typing"
+      ],
+      "module": "scripts.geometry_full2d_v0_6_independent_checkers",
+      "module_path": "scripts/geometry_full2d_v0_6_independent_checkers.py",
+      "schema_version": "IndependentCheckerImportReportV06",
+      "status": "passed"
+    },
+    "checker_names_seen": [
+      "algebraic_metric_certificate_checker",
+      "construction_checker",
+      "external_solver_trace_normalizer_checker",
+      "inequality_checker",
+      "lean_search_certificate_checker",
+      "order_case_checker",
+      "synthetic_trace_checker"
+    ],
+    "engine_output_count": 21,
+    "engine_roles_seen": [
+      "algebraic_metric_certificate",
+      "construction",
+      "external_solver_trace",
+      "inequality",
+      "lean_search_certificate",
+      "order_case",
+      "synthetic_trace"
+    ],
+    "errors": [],
+    "index_path": "runs/wp06_v0_6_fresh/independent_solver_artifact_check_index_v0_6.json",
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp06_v0_6_fresh",
+    "schema_version": "RunIndependentSolverArtifactChecksV06Report",
+    "status": "passed"
+  },
+  "checker_name": "check_independent_solver_artifacts_v0_6.py",
+  "errors": [],
+  "import_report": {
+    "checker_code_hash": "sha256:c370692523a32678482abf17271984f625ec3ecdde9fb00cd8c1422376e71ff3",
+    "forbidden_imports": [],
+    "git_head": "f765471bb8f5ee2fec3c2f95925bb4dd3e43b22d",
+    "imports": [
+      "__future__",
+      "ast",
+      "hashlib",
+      "json",
+      "pathlib",
+      "scripts.geometry_full2d_v0_6_extraction",
+      "scripts.geometry_full2d_v0_6_schemas",
+      "subprocess",
+      "typing"
+    ],
+    "module": "scripts.geometry_full2d_v0_6_independent_checkers",
+    "module_path": "scripts/geometry_full2d_v0_6_independent_checkers.py",
+    "schema_version": "IndependentCheckerImportReportV06",
+    "status": "passed"
+  },
+  "prerequisites": {
+    "commands": [
+      {
+        "args": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_extraction_corpus_v0_6.py",
+          "--corpus-root",
+          "benchmarks/geometry_full2d_v0_6",
+          "--run-dir",
+          "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp06_v0_6_fresh",
+          "--self-test"
+        ],
+        "returncode": 0,
+        "status": "passed",
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"build_report\": {\n    \"errors\": [],\n    \"index_path\": \"runs/wp06_v0_6_fresh/extraction_corpus_index_v0_6.json\",\n    \"report_count\": 3,\n    \"required_task_count\": 3,\n    \"schema_version\": \"BuildFull2DExtractionCorpusV06Report\",\n    \"status\": \"passed\"\n  },\n  \"errors\": [],\n  \"schema_version\": \"CheckFull2DExtractionCorpusV06AcceptanceReport\",\n  \"self_test\": {\n    \"errors\": [],\n    \"schema_version\": \"GeometryFull2DExtractionV06SelfTest\",\n    \"status\": \"passed\"\n  },\n  \"status\": \"passed\",\n  \"validate_report\": {\n    \"errors\": [],\n    \"report_count\": 3,\n    \"required_task_count\": 3,\n    \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp06_v0_6_fresh\",\n    \"schema_version\": \"CheckFull2DExtractionCorpusV06Report\",\n    \"status\": \"passed\"\n  }\n}\n"
+      },
+      {
+        "args": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_claimspec_v0_6.py",
+          "--run-dir",
+          "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp06_v0_6_fresh",
+          "--self-test"
+        ],
+        "returncode": 0,
+        "status": "passed",
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"build_report\": {\n    \"claim_spec_count\": 3,\n    \"errors\": [],\n    \"index_path\": \"runs/wp06_v0_6_fresh/claimspec_index_v0_6.json\",\n    \"schema_version\": \"BuildFull2DClaimSpecV06Report\",\n    \"status\": \"passed\"\n  },\n  \"claim_spec_count\": 3,\n  \"errors\": [],\n  \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp06_v0_6_fresh\",\n  \"schema_version\": \"CheckFull2DClaimSpecV06Report\",\n  \"self_test\": {\n    \"errors\": [],\n    \"schema_version\": \"GeometryFull2DClaimSpecV06SelfTest\",\n    \"status\": \"passed\"\n  },\n  \"status\": \"passed\"\n}\n"
+      },
+      {
+        "args": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/geometry_full2d_v0_6_provider.py",
+          "--run-dir",
+          "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp06_v0_6_fresh"
+        ],
+        "returncode": 0,
+        "status": "passed",
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"claim_spec_count\": 3,\n  \"engine_output_count\": 21,\n  \"errors\": [],\n  \"provider_index_path\": \"runs/wp06_v0_6_fresh/provider_index_v0_6.json\",\n  \"provider_manifest_count\": 3,\n  \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp06_v0_6_fresh\",\n  \"schema_version\": \"RunProviderStageV06Report\",\n  \"status\": \"passed\"\n}\n"
+      }
+    ],
+    "errors": [],
+    "fresh": true,
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp06_v0_6_fresh",
+    "schema_version": "IndependentSolverArtifactPrereqReportV06",
+    "status": "passed"
+  },
+  "red_cases": {
+    "errors": [],
+    "local_negative_results": {
+      "arbitrary_side_condition_hash": [
+        "side_conditions_not_verified"
+      ],
+      "bogus_unbound_conclusion": [
+        "conclusion_not_verified"
+      ],
+      "extra_unbound_solver_context_premise": [
+        "premises_not_exactly_bound_to_claim",
+        "unverified_premise:solver_context:not_claim_bound"
+      ],
+      "missing_premises": [
+        "missing_premises"
+      ],
+      "missing_side_conditions": [
+        "side_conditions_not_verified"
+      ],
+      "naked_final_target_fact": [
+        "algebraic_metric_certificate_checker:bad_artifact_kind",
+        "conclusion_not_verified",
+        "missing_premises",
+        "naked_final_target_fact"
+      ],
+      "proof_text": [
+        "proof_material_in_artifact"
+      ],
+      "schema_normalized_target_certificate": [
+        "algebraic_metric_certificate_checker:bad_certificate_payload"
+      ],
+      "schema_only_certificate": [
+        "algebraic_metric_certificate_checker:bad_certificate_payload",
+        "schema_only_certificate"
+      ],
+      "target_as_certificate": [
+        "algebraic_metric_certificate_checker:bad_certificate_payload",
+        "target_as_certificate"
+      ],
+      "target_hash_embedded_certificate": [
+        "algebraic_metric_certificate_checker:bad_certificate_payload",
+        "target_as_certificate"
+      ],
+      "target_hash_field_certificate": [
+        "target_as_certificate"
+      ]
+    },
+    "local_positive_errors": [],
+    "manifest_cases": [
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-007",
+          "K-013"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:990033c9dc1d765d2fdf96c3fee37e655930c97055f107b2092ca1b6c998968e",
+        "expected_K": [
+          "K-007",
+          "K-013"
+        ],
+        "failure_class": "Target-fact provider",
+        "fixture_name": "RedCase_TargetFactProvider",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-001",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "RC-001",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-007"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-007",
+              "K-013"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          }
+        ]
+      },
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-009",
+          "K-013"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:e5a3add178e96b9c082b30890bc379d878f0baea7eaaaed8c7104e641e4ce099",
+        "expected_K": [
+          "K-009",
+          "K-013"
+        ],
+        "failure_class": "Target-as-certificate",
+        "fixture_name": "RedCase_TargetAsCertificate",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-014",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "RC-014",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-009"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-009",
+              "K-013"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          }
+        ]
+      },
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-010"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:e25ac16c1e89378735a2d0700fc4b694f7feacba4d6d1911fba14a977e746d82",
+        "expected_K": [
+          "K-010"
+        ],
+        "failure_class": "Engine output contains proof text",
+        "fixture_name": "EngineOutputContainsProofText",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#K-010",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "K-010",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-010"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-010"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          }
+        ]
+      }
+    ],
+    "schema_version": "IndependentSolverArtifactRedCaseReportV06",
+    "status": "passed"
+  },
+  "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp06_v0_6_fresh",
+  "schema_version": "CheckIndependentSolverArtifactsV06Report",
+  "status": "passed"
+}
