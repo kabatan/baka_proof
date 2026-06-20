@@ -1,0 +1,306 @@
+{
+  "checker_name": "check_proof_worker_final_verify_v0_6.py",
+  "errors": [],
+  "red_cases": {
+    "errors": [],
+    "local_negative_results": {
+      "final_verify_accepts_sorry": [
+        "no_sorry_not_true"
+      ],
+      "final_verify_not_lake": [
+        "final_verify_not_lake_env_lean"
+      ],
+      "worker_claims_final": [
+        "proof_worker_claims_final_theorem"
+      ]
+    },
+    "manifest_cases": [
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-034"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:08b80e2820aa2633ef0d9ff91e0f2401c798eb3ba4a09ba59d1c54fe80393ea4",
+        "expected_K": [
+          "K-034"
+        ],
+        "failure_class": "Checker-generated success artifacts",
+        "fixture_name": "RedCase_CheckerGeneratedSuccessArtifacts",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-015",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "RC-015",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-034"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-034"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          }
+        ]
+      },
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-006",
+          "K-018",
+          "K-024",
+          "K-034",
+          "K-035"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:a88d2efc28dfb0fe176abb0093eef2716d40dc64b3b18b7c420e3bb2024cc851",
+        "expected_K": [
+          "K-006",
+          "K-018",
+          "K-024",
+          "K-034",
+          "K-035"
+        ],
+        "failure_class": "Static-only green release",
+        "fixture_name": "RedCase_StaticOnlyGreenRelease",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-016",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "RC-016",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-006",
+              "K-018",
+              "K-024",
+              "K-034",
+              "K-035"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-006",
+              "K-018",
+              "K-024",
+              "K-034",
+              "K-035"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          }
+        ]
+      }
+    ],
+    "schema_version": "ProofWorkerFinalVerifyRedCaseReportV06",
+    "status": "passed"
+  },
+  "run_dir_report": null,
+  "schema_version": "CheckProofWorkerFinalVerifyV06Report",
+  "self_test": {
+    "errors": [],
+    "negative_results": {
+      "admit_present": {
+        "expected_error": "admit_present",
+        "observed_errors": [
+          "admit_present",
+          "stale_or_mismatched_candidate_hash"
+        ],
+        "rejected": true,
+        "status": "failed"
+      },
+      "axiom_present": {
+        "expected_error": "axiom_present",
+        "observed_errors": [
+          "axiom_present",
+          "candidate_modified_outside_marp_region",
+          "stale_or_mismatched_candidate_hash"
+        ],
+        "rejected": true,
+        "status": "failed"
+      },
+      "non_admitted_import": {
+        "expected_error": "non_admitted_imports",
+        "observed_errors": [
+          "candidate_modified_outside_marp_region",
+          "lake_env_lean_failed",
+          "non_admitted_imports",
+          "stale_or_mismatched_candidate_hash"
+        ],
+        "rejected": true,
+        "status": "failed"
+      },
+      "patch_outside_region": {
+        "expected_error": "patch_not_inside_marp_region",
+        "observed_errors": [
+          "patch_not_inside_marp_region",
+          "patch_outside_marp_region"
+        ],
+        "rejected": true,
+        "status": "failed"
+      },
+      "preproved_source": {
+        "expected_error": "source_theorem_not_sorry_only",
+        "observed_errors": [
+          "source_theorem_not_sorry_only"
+        ],
+        "rejected": true,
+        "status": "failed"
+      },
+      "sorry_present": {
+        "expected_error": "sorry_present",
+        "observed_errors": [
+          "sorry_present",
+          "stale_or_mismatched_candidate_hash"
+        ],
+        "rejected": true,
+        "status": "failed"
+      },
+      "stale_candidate_hash": {
+        "expected_error": "stale_or_mismatched_candidate_hash",
+        "observed_errors": [
+          "stale_or_mismatched_candidate_hash"
+        ],
+        "rejected": true,
+        "status": "failed"
+      },
+      "statement_changed": {
+        "expected_error": "theorem_statement_changed",
+        "observed_errors": [
+          "candidate_modified_outside_marp_region",
+          "lake_env_lean_failed",
+          "stale_or_mismatched_candidate_hash",
+          "theorem_statement_changed"
+        ],
+        "rejected": true,
+        "status": "failed"
+      },
+      "toy_target_definition": {
+        "expected_error": "toy_target_definitions",
+        "observed_errors": [
+          "candidate_modified_outside_marp_region",
+          "stale_or_mismatched_candidate_hash",
+          "toy_target_definitions"
+        ],
+        "rejected": true,
+        "status": "failed"
+      },
+      "unsafe_present": {
+        "expected_error": "unsafe_present",
+        "observed_errors": [
+          "axiom_present",
+          "candidate_modified_outside_marp_region",
+          "stale_or_mismatched_candidate_hash",
+          "unsafe_present"
+        ],
+        "rejected": true,
+        "status": "failed"
+      }
+    },
+    "positive": {
+      "certificate_binding": {
+        "actual_task_run_ref": "sha256:2b75cef2e987b4304efcbb4c780622811431dd320f80cfb65dbd335ddd0011ed",
+        "causal_chain_hash": "sha256:27fb4899ba960815f30dd30137621a6223470b8bde38e637f7c65f9a26206d4e",
+        "certificate_binding_source": "explicit_upstream_refs_and_final_verify_report",
+        "certificate_id": "sha256:060b4d25d106768ae3233aee3395e1441e6426e5c37ad4f477299078978bfe86",
+        "claim_spec_ref": "sha256:cdc75c296f02e130781a690d074fbb8ab67af20d47e90fed24edeebf74c9ecfc",
+        "compiler_result_ref": "sha256:0bf176b503b13e5ec30943892bcbf1b35d26caa2570300fb94fb8d27f71e3300",
+        "engine_output_refs": [
+          "sha256:129362add8cfb35c6c6d08a84d6b6aaf4fd094425a0138f70b7f28b3a48f97ed"
+        ],
+        "final_verify_report_ref": "sha256:082db2da5ab679d1343800f6a00e29d12244f2bf943acebd4ea6ae12a514c9e2",
+        "git_head": "ba9ab39301441a365a1caac7448c03d4a12b777f",
+        "proof_worker_result_ref": "sha256:5620ec4b23927fd1627762d1b62aae1504163952b9e617edd3558927d7106413",
+        "schema_version": "SolverBackedProofCertificateFull2D",
+        "selected_derivation_ref": "sha256:dbcb9c21c3e3f2175b32bb8b748117b7497ea8041839d0755ebca031b2a8f125",
+        "solver_causality_live_run_ref": "sha256:95cff4c2ca1ebb4381d9d08c9c4db08d827431c47282e2fae05e3ad7a1fa7637"
+      },
+      "errors": [],
+      "final_verify": {
+        "candidate_hash": "sha256:fead60082844e9bba86701cbde99f80b3ce261b0c47062a56910b61ae4073ede",
+        "candidate_path": "C:\\Users\\bakat\\AppData\\Local\\Temp\\tmpd_fwcw6k\\positive\\out\\patched_candidates_v0_6\\wp10_positive\\wp10_v06_positive__ac8dfa850fad9acc.lean",
+        "command_log_ref": "sha256:a69cb8d4c72f7d47b58118585e5849e99182310b4cc0f38a6e2739332c27d611",
+        "errors": [],
+        "final_status_source": "FinalVerifyReportFull2D",
+        "git_head": "ba9ab39301441a365a1caac7448c03d4a12b777f",
+        "lake_env_lean_command": [
+          "lake",
+          "env",
+          "lean",
+          "C:\\Users\\bakat\\AppData\\Local\\Temp\\tmpd_fwcw6k\\positive\\out\\patched_candidates_v0_6\\wp10_positive\\wp10_v06_positive__ac8dfa850fad9acc.lean"
+        ],
+        "lake_env_lean_returncode": 0,
+        "lake_env_lean_stderr_tail": "warning: UnicodeBasic: repository '.\\.\\.lake/packages\\UnicodeBasic' has local changes\nwarning: batteries: repository '.\\.\\.lake/packages\\batteries' has local changes\n",
+        "lake_env_lean_stdout_tail": "",
+        "no_admit": true,
+        "no_axiom": true,
+        "no_sorry": true,
+        "no_toy_target_definitions": true,
+        "no_unsafe": true,
+        "non_admitted_imports": [],
+        "patched_candidate_ref": "sha256:fead60082844e9bba86701cbde99f80b3ce261b0c47062a56910b61ae4073ede",
+        "proof_region_guard_passed": true,
+        "proof_use_status": "final_theorem",
+        "proof_worker_code_hash": "sha256:8b2f6a52a44b7652ffee71920681449cbace16862f8d1db928012bfd7540b0e2",
+        "proof_worker_result_ref": "sha256:5620ec4b23927fd1627762d1b62aae1504163952b9e617edd3558927d7106413",
+        "protected_theorem_unchanged": true,
+        "schema_version": "FinalVerifyReportFull2D",
+        "source_path": "C:\\Users\\bakat\\AppData\\Local\\Temp\\tmpd_fwcw6k\\positive\\WP10Positive.lean",
+        "status": "passed",
+        "theorem_anchor_ref": "sha256:a990ac839a1aee96af4f0dcdf5dde32f5b60db436bcb97c5799dd3a887ff3e9f",
+        "theorem_statement_unchanged": true,
+        "toy_target_definitions": [],
+        "verify_report_id": "sha256:082db2da5ab679d1343800f6a00e29d12244f2bf943acebd4ea6ae12a514c9e2"
+      },
+      "schema_version": "ProofWorkerFinalVerifyPositiveFixtureV06",
+      "status": "passed",
+      "worker": {
+        "claim_final_theorem": false,
+        "compiler_result_ref": "sha256:0bf176b503b13e5ec30943892bcbf1b35d26caa2570300fb94fb8d27f71e3300",
+        "errors": [],
+        "generated_candidate_path": "C:\\Users\\bakat\\AppData\\Local\\Temp\\tmpd_fwcw6k\\positive\\out\\patched_candidates_v0_6\\wp10_positive\\wp10_v06_positive__ac8dfa850fad9acc.lean",
+        "git_head": "ba9ab39301441a365a1caac7448c03d4a12b777f",
+        "lean_patch_candidate_ref": "sha256:ac8dfa850fad9acc0ddd329c8e1c77c141f77b8c3958f6cc4b345f45f8122e93",
+        "patched_candidate_ref": "sha256:fead60082844e9bba86701cbde99f80b3ce261b0c47062a56910b61ae4073ede",
+        "proof_region_diff_ref": "sha256:5f896d9428555a1fb642b7ff93fb160d4bd761df7b944439188501258f4de338",
+        "proof_region_only": true,
+        "proof_use_status": "not_final_theorem",
+        "proof_worker_code_hash": "sha256:8b2f6a52a44b7652ffee71920681449cbace16862f8d1db928012bfd7540b0e2",
+        "schema_version": "ProofWorkerResultFull2D",
+        "source_theorem_sorry_only": true,
+        "status": "patch_applied",
+        "theorem_anchor_ref": "sha256:a990ac839a1aee96af4f0dcdf5dde32f5b60db436bcb97c5799dd3a887ff3e9f",
+        "worker_command_log_ref": "sha256:331f095ad3257ad1d046ddb06768f35807efdc723d444c03f10903731056d9ea",
+        "worker_result_id": "sha256:5620ec4b23927fd1627762d1b62aae1504163952b9e617edd3558927d7106413"
+      }
+    },
+    "run_dir_failure_fixture": {
+      "errors": [],
+      "observed_errors": [
+        "run_dir_failure.json:final_verify:final_verify_not_passed",
+        "run_dir_failure.json:final_verify:final_verify_status_not_passed",
+        "run_dir_failure.json:final_verify:lake_env_lean_failed"
+      ],
+      "schema_version": "ProofWorkerFinalVerifyRunDirFailureFixtureV06",
+      "stage_status": "failed",
+      "status": "passed"
+    },
+    "schema_version": "ProofWorkerFinalVerifySelfTestV06",
+    "status": "passed"
+  },
+  "status": "passed"
+}
