@@ -145,6 +145,13 @@ def validate_external_report(manifest: dict[str, Any], corpus_root: Path, counte
                 errors.append(f"external_report_check_missing_evidence:{index}")
     external_tasks = [task for task in counted if task.get("source_type") == "ExternalGoalPreserved"]
     sealed_tasks = [task for task in counted if task.get("source_type") == "SealedAdversarialHoldout"]
+    if report.get("status") == "available":
+        if int(report.get("importable_goal_count", 0)) <= 0:
+            errors.append("external_report_available_without_importable_goals")
+        if not external_tasks:
+            errors.append("external_sources_available_but_no_external_goal_preserved_tasks")
+    if external_tasks and report.get("status") != "available":
+        errors.append("external_goal_preserved_tasks_without_available_source_report")
     if not external_tasks and report.get("status") == "unavailable":
         if manifest.get("external_goal_preserved_unavailable_replaced_by_sealed_holdout") is not True:
             errors.append("external_unavailable_not_replaced_by_sealed_holdout")
@@ -164,6 +171,8 @@ def validate_external_goal_preservation(task: dict[str, Any], corpus_root: Path)
     errors = forbidden_metadata_errors(artifact)
     if artifact.get("schema_version") != "ExternalGoalPreservationV2":
         errors.append("external_goal_preservation_bad_schema")
+    if artifact.get("status") != "passed":
+        errors.append("external_goal_preservation_not_passed")
     if artifact.get("mapping_kind") not in {"machine_checked_goal_map", "formal_equivalence"}:
         errors.append("external_goal_preservation_not_machine_checkable")
     if artifact.get("source_ref_only") is True:
@@ -171,6 +180,8 @@ def validate_external_goal_preservation(task: dict[str, Any], corpus_root: Path)
     for key in ["source_goal_hash", "imported_goal_hash", "checker_command_transcript_ref"]:
         if not valid_ref(artifact.get(key)):
             errors.append(f"external_goal_preservation_bad_ref:{key}")
+    if artifact.get("normalized_source_goal") != artifact.get("normalized_imported_goal"):
+        errors.append("external_goal_preservation_goal_mapping_mismatch")
     return errors
 
 
@@ -309,6 +320,7 @@ def red_case_report() -> dict[str, Any]:
             ["forbidden_metadata_key:expected_rule_ids", "forbidden_metadata_key:proof_label"],
         ),
         "generator_forbidden_import": expect_generator_import_failure("from scripts.geometry_full2d_v0_6_compiler import compile_derivation\n"),
+        "available_source_without_external_tasks": expect_available_source_without_external_tasks_failure(),
     }
     errors = [name for name, result in cases.items() if result.get("status") != "passed"]
     return {
@@ -344,6 +356,66 @@ def expect_generator_import_failure(source: str) -> dict[str, Any]:
         path.write_text(source, encoding="utf-8")
         errors = validate_generator_imports(path)
         return expected_errors_present({"errors": errors, "status": "failed"}, ["sealed_generator_forbidden_import"])
+
+
+def expect_available_source_without_external_tasks_failure() -> dict[str, Any]:
+    with temp_corpus() as root:
+        write_json(
+            root / "metadata" / "external_source_availability_report_v0_6.json",
+            {
+                "schema_version": "ExternalSourceAvailabilityReportV2",
+                "status": "available",
+                "importable_goal_count": 1,
+                "source_checks": [
+                    {
+                        "source_id": "fixture_available",
+                        "check_kind": "local_path_exists",
+                        "exists": True,
+                        "command_transcript_ref": sha256_text("available"),
+                    }
+                ],
+            },
+        )
+        write_json(
+            root / "metadata" / "sealed_adversarial_holdout_manifest_v0_6.json",
+            {
+                "schema_version": "SealedAdversarialHoldoutManifestV1",
+                "seed_source": "release_acceptance_pre_run_seed_v0_6",
+                "emits_theorem_statements_only": True,
+                "forbidden_metadata_absent": True,
+                "generator_path": "scripts/generate_geometry_full2d_v0_6_corpus.py",
+                "generator_hash": file_sha256(ROOT / "scripts" / "generate_geometry_full2d_v0_6_corpus.py"),
+            },
+        )
+        write_json(
+            root / "metadata" / "implementation_freeze_manifest_v0_6.json",
+            {
+                "schema_version": "GeometryFull2DImplementationFreezeManifestV06",
+                "freeze_created_before_holdout_generation": True,
+                "implementation_file_hashes": {"scripts/x.py": sha256_text("x")},
+                "selected_implementation_hash": sha256_text(canonical_json({"scripts/x.py": sha256_text("x")})),
+            },
+        )
+        write_json(
+            root / "corpus_manifest.json",
+            {
+                "schema_version": "GeometryFull2DCorpusManifestV06",
+                "release_counted_corpus": True,
+                "external_source_availability_report_ref": "metadata/external_source_availability_report_v0_6.json",
+                "sealed_holdout_manifest_ref": "metadata/sealed_adversarial_holdout_manifest_v0_6.json",
+                "implementation_freeze_manifest_ref": "metadata/implementation_freeze_manifest_v0_6.json",
+                "tasks": [
+                    {
+                        "task_id": "sealed_only_when_external_available",
+                        "counted_positive": True,
+                        "source_type": "SealedAdversarialHoldout",
+                        "lean_file": "Missing.lean",
+                    }
+                ],
+            },
+        )
+        result = check_corpus_independence(root)
+        return expected_errors_present(result, ["external_sources_available_but_no_external_goal_preserved_tasks"])
 
 
 class temp_corpus:

@@ -93,16 +93,22 @@ def generate_corpus(*, corpus_root: Path, release_seed: str, positive_count: int
     external = build_external_source_availability_report()
     external_path = corpus_root / "metadata" / "external_source_availability_report_v0_6.json"
     write_json(external_path, external)
-    positive_tasks, positive_lean = build_positive_holdout_tasks(
+    external_tasks, external_lean, preservation_artifacts = build_external_goal_preserved_tasks(
+        corpus_root=corpus_root,
+        external_report=external,
+        max_count=positive_count,
+    )
+    sealed_positive_count = positive_count - len(external_tasks)
+    sealed_tasks, positive_lean = build_positive_holdout_tasks(
         release_seed=release_seed,
-        positive_count=positive_count,
+        positive_count=sealed_positive_count,
     )
     negative_tasks, negative_lean = build_negative_tasks(negative_count=negative_count)
     sealed_manifest = build_sealed_manifest(
         corpus_root=corpus_root,
         release_seed=release_seed,
         freeze_path=freeze_path,
-        positive_count=len(positive_tasks),
+        positive_count=len(sealed_tasks),
         negative_replacement_count=len(negative_tasks),
     )
     sealed_path = corpus_root / "metadata" / "sealed_adversarial_holdout_manifest_v0_6.json"
@@ -111,9 +117,14 @@ def generate_corpus(*, corpus_root: Path, release_seed: str, positive_count: int
     negative_lean_path = corpus_root / "lean" / "GeneratedTargetOutside.lean"
     positive_lean_path.write_text(positive_lean, encoding="utf-8")
     negative_lean_path.write_text(negative_lean, encoding="utf-8")
+    if external_tasks:
+        external_lean_path = corpus_root / "lean" / "ImportedExternalGoals.lean"
+        external_lean_path.write_text(external_lean, encoding="utf-8")
+        for rel_path, payload in preservation_artifacts.items():
+            write_json(corpus_root / rel_path, payload)
 
     sealed_ref = file_sha256(sealed_path)
-    for task in positive_tasks:
+    for task in sealed_tasks:
         task["sealed_challenge_manifest_ref"] = sealed_path.relative_to(corpus_root).as_posix()
         task["sealed_challenge_manifest_hash"] = sealed_ref
     for task in negative_tasks:
@@ -130,12 +141,14 @@ def generate_corpus(*, corpus_root: Path, release_seed: str, positive_count: int
         "external_source_availability_report_hash": file_sha256(external_path),
         "sealed_holdout_manifest_ref": sealed_path.relative_to(corpus_root).as_posix(),
         "sealed_holdout_manifest_hash": sealed_ref,
-        "external_goal_preserved_unavailable_replaced_by_sealed_holdout": True,
-        "tasks": positive_tasks + negative_tasks,
+        "external_goal_preserved_task_count": len(external_tasks),
+        "sealed_adversarial_holdout_task_count": len(sealed_tasks),
+        "external_goal_preserved_unavailable_replaced_by_sealed_holdout": len(external_tasks) == 0 and external.get("status") == "unavailable",
+        "tasks": external_tasks + sealed_tasks + negative_tasks,
     }
     manifest_path = corpus_root / "corpus_manifest.json"
     write_json(manifest_path, manifest)
-    if len(positive_tasks) < 1200:
+    if len(external_tasks) + len(sealed_tasks) < 1200:
         errors.append("positive_count_below_floor")
     if len(negative_tasks) < 200:
         errors.append("negative_count_below_floor")
@@ -144,7 +157,9 @@ def generate_corpus(*, corpus_root: Path, release_seed: str, positive_count: int
         "status": "passed" if not errors else "failed",
         "errors": errors,
         "corpus_root": str(corpus_root),
-        "positive_count": len(positive_tasks),
+        "positive_count": len(external_tasks) + len(sealed_tasks),
+        "external_goal_preserved_count": len(external_tasks),
+        "sealed_adversarial_holdout_count": len(sealed_tasks),
         "negative_count": len(negative_tasks),
         "manifest_path": manifest_path.relative_to(ROOT).as_posix() if is_relative_to(manifest_path, ROOT) else str(manifest_path),
         "manifest_hash": file_sha256(manifest_path),
@@ -168,10 +183,17 @@ def build_positive_holdout_tasks(*, release_seed: str, positive_count: int) -> t
     for index in range(positive_count):
         family = FAMILIES[index % len(FAMILIES)]
         predicate, arity = FAMILY_PREDICATES[family][(index // len(FAMILIES)) % len(FAMILY_PREDICATES[family])]
-        target = unique_predicate_expr(predicate, arity, index, used_targets, salt=17)
         requires_construction = index < 650
         requires_multi_step = index < 850
-        hypotheses = build_hypotheses(index, rng, requires_construction=requires_construction, requires_multi_step=requires_multi_step, target=target)
+        target, hypotheses = build_non_direct_holdout_goal(
+            predicate=predicate,
+            arity=arity,
+            index=index,
+            rng=rng,
+            used_targets=used_targets,
+            requires_construction=requires_construction,
+            requires_multi_step=requires_multi_step,
+        )
         theorem_name = f"v06_sealed_holdout_{index:04d}"
         theorem_blocks.append(render_theorem(theorem_name, hypotheses, target))
         task = {
@@ -191,6 +213,31 @@ def build_positive_holdout_tasks(*, release_seed: str, positive_count: int) -> t
     theorem_blocks.append("end MathAutoResearch.GeometryFull2D")
     theorem_blocks.append("")
     return tasks, "\n".join(theorem_blocks)
+
+
+def build_non_direct_holdout_goal(
+    *,
+    predicate: str,
+    arity: int,
+    index: int,
+    rng: random.Random,
+    used_targets: set[str],
+    requires_construction: bool,
+    requires_multi_step: bool,
+) -> tuple[str, list[str]]:
+    for attempt in range(200):
+        target = unique_predicate_expr(predicate, arity, index + attempt * 997, used_targets, salt=17 + attempt)
+        hypotheses = build_hypotheses(
+            index + attempt * 997,
+            rng,
+            requires_construction=requires_construction,
+            requires_multi_step=requires_multi_step,
+            target=target,
+        )
+        if direct_facade_reason_for_goal(target, hypotheses) is None:
+            return target, hypotheses
+        used_targets.discard(target)
+    raise RuntimeError(f"unable_to_generate_non_direct_holdout_goal:{predicate}:{index}")
 
 
 def build_negative_tasks(*, negative_count: int) -> tuple[list[dict[str, Any]], str]:
@@ -224,6 +271,153 @@ def build_negative_tasks(*, negative_count: int) -> tuple[list[dict[str, Any]], 
     theorem_blocks.append("end MathAutoResearch.GeometryFull2D")
     theorem_blocks.append("")
     return tasks, "\n".join(theorem_blocks)
+
+
+def build_external_goal_preserved_tasks(
+    *,
+    corpus_root: Path,
+    external_report: dict[str, Any],
+    max_count: int,
+) -> tuple[list[dict[str, Any]], str, dict[Path, dict[str, Any]]]:
+    specs = discover_external_goal_specs()
+    if external_report.get("status") != "available":
+        specs = []
+    tasks: list[dict[str, Any]] = []
+    theorem_blocks: list[str] = [
+        "import MathAutoResearch.GeometryFull2D.Inequality",
+        "",
+        "namespace MathAutoResearch.GeometryFull2D",
+        "",
+    ]
+    artifacts: dict[Path, dict[str, Any]] = {}
+    seen_targets: set[str] = set()
+    for index, spec in enumerate(specs[:max_count]):
+        target = normalize_goal_expr(str(spec["target"]))
+        hypotheses = [normalize_goal_expr(str(item)) for item in spec["hypotheses"]]
+        if target in seen_targets:
+            continue
+        if direct_facade_reason_for_goal(target, hypotheses) is not None:
+            continue
+        seen_targets.add(target)
+        theorem_name = f"v06_external_goal_preserved_{len(tasks):04d}"
+        source_goal = {"target": target, "hypotheses": hypotheses}
+        imported_goal = {"target": target, "hypotheses": hypotheses}
+        transcript = {
+            "checker": "external_goal_preservation_importer_v0_6",
+            "source_file": spec["source_file"],
+            "source_index": spec["source_index"],
+            "normalized_source_goal": source_goal,
+            "normalized_imported_goal": imported_goal,
+            "result": "passed",
+        }
+        artifact_rel = Path("metadata") / "external_goal_preservation" / f"{theorem_name}.json"
+        artifact = {
+            "schema_version": "ExternalGoalPreservationV2",
+            "status": "passed",
+            "mapping_kind": "machine_checked_goal_map",
+            "source_ref_only": False,
+            "source_id": spec["source_id"],
+            "source_goal_file_ref": file_sha256(resolve_external_source_file(str(spec["source_file"])))
+            if resolve_external_source_file(str(spec["source_file"])).exists()
+            else sha256_text(str(spec["source_file"])),
+            "source_goal_hash": sha256_text(canonical_json(source_goal)),
+            "imported_goal_hash": sha256_text(canonical_json(imported_goal)),
+            "normalized_source_goal": source_goal,
+            "normalized_imported_goal": imported_goal,
+            "checker_command_transcript": canonical_json(transcript),
+            "checker_command_transcript_ref": sha256_text(canonical_json(transcript)),
+            "git_head": current_git_head(),
+        }
+        artifacts[artifact_rel] = artifact
+        theorem_blocks.append(render_theorem(theorem_name, hypotheses, target))
+        tasks.append(
+            {
+                "task_id": theorem_name,
+                "theorem_name": theorem_name,
+                "lean_file": "lean/ImportedExternalGoals.lean",
+                "counted_positive": True,
+                "used_in_metrics": True,
+                "negative_target_outside_malformed": False,
+                "source_type": "ExternalGoalPreserved",
+                "external_source_id": spec["source_id"],
+                "goal_preservation_ref": artifact_rel.as_posix(),
+                "requires_non_target_intermediate": True,
+                "requires_construction_case_certificate": has_construction_case_certificate_witness(hypotheses),
+                "requires_multi_step_derivation": len(hypotheses) >= 2,
+                "statement_hash": sha256_text(theorem_name + ":" + target + ":" + canonical_json(hypotheses)),
+            }
+        )
+    theorem_blocks.append("end MathAutoResearch.GeometryFull2D")
+    theorem_blocks.append("")
+    return tasks, "\n".join(theorem_blocks), artifacts
+
+
+def discover_external_goal_specs() -> list[dict[str, Any]]:
+    specs: list[dict[str, Any]] = []
+    for candidate in external_source_candidates():
+        root = ROOT / candidate["local_path"]
+        if not root.exists():
+            continue
+        for path in sorted(root.rglob("*.json")):
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            for index, goal in enumerate(goal_rows_from_payload(payload)):
+                normalized = normalize_external_goal(goal)
+                if normalized is None:
+                    continue
+                specs.append(
+                    {
+                        **normalized,
+                        "source_id": candidate["source_id"],
+                        "source_file": path.relative_to(ROOT).as_posix() if is_relative_to(path, ROOT) else str(path),
+                        "source_index": index,
+                    }
+                )
+    return specs
+
+
+def external_source_candidates() -> list[dict[str, str]]:
+    return [
+        {"source_id": "external_geometry_local_cache", "local_path": "data/external/geometry_full2d"},
+        {"source_id": "tonggeometry_local_cache", "local_path": "data/external/TongGeometry"},
+        {"source_id": "user_reviewed_external_goals", "local_path": "benchmarks/external_geometry_full2d"},
+    ]
+
+
+def resolve_external_source_file(value: str) -> Path:
+    path = Path(value)
+    return path if path.is_absolute() else ROOT / path
+
+
+def goal_rows_from_payload(payload: Any) -> list[dict[str, Any]]:
+    if isinstance(payload, dict) and isinstance(payload.get("goals"), list):
+        return [item for item in payload["goals"] if isinstance(item, dict)]
+    if isinstance(payload, dict) and "target" in payload:
+        return [payload]
+    return []
+
+
+def normalize_external_goal(goal: dict[str, Any]) -> dict[str, Any] | None:
+    target = normalize_goal_expr(str(goal.get("target", "")))
+    hypotheses_raw = goal.get("hypotheses", [])
+    if not isinstance(hypotheses_raw, list):
+        return None
+    hypotheses = [normalize_goal_expr(str(item)) for item in hypotheses_raw]
+    if not valid_supported_goal_expr(target):
+        return None
+    if any(not valid_supported_goal_expr(hypothesis) for hypothesis in hypotheses):
+        return None
+    if len(hypotheses) < 2:
+        return None
+    return {"target": target, "hypotheses": hypotheses}
+
+
+def valid_supported_goal_expr(expr: str) -> bool:
+    predicate, args = parse_predicate_expr(expr)
+    expected_arities = {name: arity for rows in FAMILY_PREDICATES.values() for name, arity in rows}
+    return predicate in expected_arities and len(args) == expected_arities[predicate] and all(arg in POINTS for arg in args)
 
 
 def build_hypotheses(
@@ -274,8 +468,73 @@ def force_shared_target_point(expr: str, point: str) -> str:
     return " ".join(parts)
 
 
+def direct_facade_reason_for_goal(target: str, hypotheses: list[str]) -> str | None:
+    target_predicate, target_args = parse_predicate_expr(target)
+    parsed_hypotheses = [parse_predicate_expr(hypothesis) for hypothesis in hypotheses]
+    if target in hypotheses:
+        return "target_identical_to_hypothesis"
+    if is_reflexive_or_degenerate_target(target_predicate, target_args):
+        return "target_matches_known_reflexive_or_degenerate_direct_lemma"
+    for hyp_predicate, hyp_args in parsed_hypotheses:
+        if direct_implication_matches(hyp_predicate, hyp_args, target_predicate, target_args):
+            return f"one_step_direct_implication_from_{hyp_predicate}"
+    return None
+
+
+def parse_predicate_expr(expr: str) -> tuple[str, list[str]]:
+    parts = normalize_goal_expr(expr).split()
+    if not parts:
+        return "unknown", []
+    return parts[0], parts[1:]
+
+
+def is_reflexive_or_degenerate_target(predicate: str, args: list[str]) -> bool:
+    if predicate == "collinear" and len(args) == 3:
+        return args[0] == args[1] or args[1] == args[2] or args[0] == args[2]
+    if predicate == "equal_length" and len(args) == 4:
+        return args[:2] == args[2:] or args[:2] == list(reversed(args[2:]))
+    if predicate == "area_eq" and len(args) == 6:
+        return args[:3] == args[3:]
+    if predicate == "length_le" and len(args) == 4:
+        return args[:2] == args[2:] or args[:2] == list(reversed(args[2:]))
+    if predicate in {"area_le", "angle_le", "directed_angle_eq_mod_pi", "directed_angle_eq_mod_2pi"} and len(args) == 6:
+        return args[:3] == args[3:]
+    return False
+
+
+def direct_implication_matches(hyp_predicate: str, hyp_args: list[str], target_predicate: str, target_args: list[str]) -> bool:
+    if hyp_predicate == "midpoint" and target_predicate == "collinear" and hyp_args == target_args:
+        return True
+    if hyp_predicate == "between" and target_predicate == "collinear" and hyp_args == target_args:
+        return True
+    if hyp_predicate == "equal_length" and target_predicate == "equal_length" and len(hyp_args) == len(target_args) == 4:
+        return hyp_args[:2] == target_args[2:] and hyp_args[2:] == target_args[:2]
+    if hyp_predicate == "area_eq" and target_predicate == "area_eq" and len(hyp_args) == len(target_args) == 6:
+        return hyp_args[:3] == target_args[3:] and hyp_args[3:] == target_args[:3]
+    if hyp_predicate in {"directed_angle_eq_mod_pi", "directed_angle_eq_mod_2pi"} and hyp_predicate == target_predicate and len(hyp_args) == len(target_args) == 6:
+        return hyp_args[:3] == target_args[3:] and hyp_args[3:] == target_args[:3]
+    return False
+
+
+def has_construction_case_certificate_witness(hypotheses: list[str]) -> bool:
+    markers = ("midpoint", "between", "area_le", "directed_angle_eq_mod_pi", "angle_le", "triangle_inequality")
+    return any(hypothesis.startswith(markers) for hypothesis in hypotheses)
+
+
 def extract_point_names(expr: str) -> list[str]:
     return [part for part in expr.replace("(", " ").replace(")", " ").split() if part in POINTS]
+
+
+def normalize_goal_expr(expr: str) -> str:
+    return " ".join(str(expr).split())
+
+
+def count_by(rows: list[dict[str, Any]], key: str) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for row in rows:
+        value = str(row.get(key, ""))
+        counts[value] = counts.get(value, 0) + 1
+    return counts
 
 
 def render_theorem(theorem_name: str, hypotheses: list[str], target: str) -> str:
@@ -329,30 +588,29 @@ def build_freeze_manifest() -> dict[str, Any]:
 
 
 def build_external_source_availability_report() -> dict[str, Any]:
-    candidates = [
-        {"source_id": "external_geometry_local_cache", "local_path": "data/external/geometry_full2d"},
-        {"source_id": "tonggeometry_local_cache", "local_path": "data/external/TongGeometry"},
-        {"source_id": "user_reviewed_external_goals", "local_path": "benchmarks/external_geometry_full2d"},
-    ]
     checks = []
-    for candidate in candidates:
+    discovered_specs = discover_external_goal_specs()
+    importable_by_source = count_by(discovered_specs, "source_id")
+    for candidate in external_source_candidates():
         path = ROOT / candidate["local_path"]
         checks.append(
             {
                 **candidate,
                 "exists": path.exists(),
                 "check_kind": "local_path_exists",
+                "importable_goal_count": importable_by_source.get(candidate["source_id"], 0),
                 "command_transcript": f"Test-Path {candidate['local_path']} -> {path.exists()}",
                 "command_transcript_ref": sha256_text(f"Test-Path {candidate['local_path']} -> {path.exists()}"),
             }
         )
-    available = [check for check in checks if check["exists"]]
+    available = [check for check in checks if check["importable_goal_count"] > 0]
     body = {
         "schema_version": "ExternalSourceAvailabilityReportV2",
         "status": "available" if available else "unavailable",
         "source_checks": checks,
         "available_source_count": len(available),
         "unavailable_source_count": len(checks) - len(available),
+        "importable_goal_count": len(discovered_specs),
         "external_goal_preserved_floor_adjustment": "external_subfloor_only",
         "replacement_policy": "replace_missing_external_goal_preserved_with_sealed_adversarial_holdout_without_reducing_total_floors",
         "git_head": current_git_head(),

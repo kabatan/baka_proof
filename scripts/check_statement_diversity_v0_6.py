@@ -71,6 +71,8 @@ def check_statement_diversity(corpus_root: Path) -> dict[str, Any]:
     near_duplicate_fraction = compute_near_duplicate_fraction(statements)
     construction_count = count_requirement(positives, statements, "requires_construction_case_certificate", require_witness=True)
     multistep_count = count_requirement(positives, statements, "requires_multi_step_derivation", require_hyp_count=2)
+    direct_facade_rows = [row for row in statements if row.get("direct_facade_eligible") is True]
+    direct_facade_fraction = len(direct_facade_rows) / len(statements) if statements else 1.0
 
     if len(positives) < 1200:
         errors.append(f"counted_positive_floor_not_met:{len(positives)}")
@@ -82,6 +84,8 @@ def check_statement_diversity(corpus_root: Path) -> dict[str, Any]:
         errors.append(f"unique_dependency_signature_floor_not_met:{len(dependency_signatures)}")
     if near_duplicate_fraction > 0.05:
         errors.append(f"near_duplicate_fraction_too_high:{near_duplicate_fraction:.6f}")
+    if direct_facade_fraction > 0.05:
+        errors.append(f"direct_facade_lemma_eligible_fraction_too_high:{direct_facade_fraction:.6f}")
     for family, count in target_family_counts.items():
         fraction = count / len(positives) if positives else 1.0
         if fraction > 0.20:
@@ -104,6 +108,16 @@ def check_statement_diversity(corpus_root: Path) -> dict[str, Any]:
         "unique_normalized_target_ast_count": len(target_asts),
         "unique_hypothesis_target_dependency_signature_count": len(dependency_signatures),
         "near_duplicate_fraction": round(near_duplicate_fraction, 6),
+        "direct_facade_lemma_eligible_count": len(direct_facade_rows),
+        "direct_facade_lemma_eligible_fraction": round(direct_facade_fraction, 6),
+        "direct_facade_lemma_eligible_examples": [
+            {
+                "task_id": row.get("task_id"),
+                "target": row.get("target"),
+                "reason": row.get("direct_facade_reason"),
+            }
+            for row in direct_facade_rows[:20]
+        ],
         "construction_case_certificate_required_count": construction_count,
         "multi_step_derivation_required_count": multistep_count,
         "target_family_counts": target_family_counts,
@@ -151,6 +165,8 @@ def extract_statement(corpus_root: Path, task: dict[str, Any]) -> dict[str, Any]
         "near_duplicate_key": near_duplicate_key(target, hypotheses),
         "construction_witness": has_construction_case_certificate_witness(hypotheses),
         "hypothesis_count": len(hypotheses),
+        "direct_facade_eligible": direct_facade_reason(target, hypotheses) is not None,
+        "direct_facade_reason": direct_facade_reason(target, hypotheses),
     }
 
 
@@ -200,6 +216,54 @@ def count_requirement(
 def has_construction_case_certificate_witness(hypotheses: list[str]) -> bool:
     markers = ("midpoint", "between", "area_le", "directed_angle_eq_mod_pi", "angle_le", "triangle_inequality")
     return any(hyp.startswith(markers) for hyp in hypotheses)
+
+
+def direct_facade_reason(target: str, hypotheses: list[str]) -> str | None:
+    target_predicate, target_args = parse_predicate_expr(target)
+    parsed_hypotheses = [parse_predicate_expr(hyp) for hyp in hypotheses]
+    if target in hypotheses:
+        return "target_identical_to_hypothesis"
+    if is_reflexive_or_degenerate_target(target_predicate, target_args):
+        return "target_matches_known_reflexive_or_degenerate_direct_lemma"
+    for hyp_predicate, hyp_args in parsed_hypotheses:
+        if direct_implication_matches(hyp_predicate, hyp_args, target_predicate, target_args):
+            return f"one_step_direct_implication_from_{hyp_predicate}"
+    return None
+
+
+def parse_predicate_expr(expr: str) -> tuple[str, list[str]]:
+    parts = normalize_ws(expr).split()
+    if not parts:
+        return "unknown", []
+    return parts[0], parts[1:]
+
+
+def is_reflexive_or_degenerate_target(predicate: str, args: list[str]) -> bool:
+    if predicate == "collinear" and len(args) == 3:
+        return args[0] == args[1] or args[1] == args[2] or args[0] == args[2]
+    if predicate == "equal_length" and len(args) == 4:
+        return args[:2] == args[2:] or args[:2] == list(reversed(args[2:]))
+    if predicate == "area_eq" and len(args) == 6:
+        return args[:3] == args[3:]
+    if predicate in {"length_le"} and len(args) == 4:
+        return args[:2] == args[2:] or args[:2] == list(reversed(args[2:]))
+    if predicate in {"area_le", "angle_le", "directed_angle_eq_mod_pi", "directed_angle_eq_mod_2pi"} and len(args) == 6:
+        return args[:3] == args[3:]
+    return False
+
+
+def direct_implication_matches(hyp_predicate: str, hyp_args: list[str], target_predicate: str, target_args: list[str]) -> bool:
+    if hyp_predicate == "midpoint" and target_predicate == "collinear" and hyp_args == target_args:
+        return True
+    if hyp_predicate == "between" and target_predicate == "collinear" and hyp_args == target_args:
+        return True
+    if hyp_predicate == "equal_length" and target_predicate == "equal_length" and len(hyp_args) == len(target_args) == 4:
+        return hyp_args[:2] == target_args[2:] and hyp_args[2:] == target_args[:2]
+    if hyp_predicate == "area_eq" and target_predicate == "area_eq" and len(hyp_args) == len(target_args) == 6:
+        return hyp_args[:3] == target_args[3:] and hyp_args[3:] == target_args[:3]
+    if hyp_predicate in {"directed_angle_eq_mod_pi", "directed_angle_eq_mod_2pi"} and hyp_predicate == target_predicate and len(hyp_args) == len(target_args) == 6:
+        return hyp_args[:3] == target_args[3:] and hyp_args[3:] == target_args[:3]
+    return False
 
 
 def extract_point_names(expr: str) -> list[str]:
