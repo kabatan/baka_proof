@@ -1,0 +1,431 @@
+{
+  "errors": [],
+  "schema_version": "GeometryFull2DV06SchemaContractReport",
+  "sections": {
+    "red_cases": {
+      "checked": [
+        {
+          "errors": [
+            "bad_engine_role",
+            "bad_ref:backend_code_hash",
+            "bad_ref:claim_spec_ref",
+            "bad_ref:provider_run_manifest_ref",
+            "bad_ref_list:independent_checker_refs",
+            "engine_output_not_before_compiler",
+            "missing:backend_code_hash",
+            "missing:backend_identity",
+            "missing:claim_spec_ref",
+            "missing:created_before_compiler",
+            "missing:engine_output_id",
+            "missing:engine_role",
+            "missing:git_head",
+            "missing:independent_checker_refs",
+            "missing:proof_text_present",
+            "missing:provider_run_manifest_ref",
+            "missing:provider_stage_run_id",
+            "missing:selected_artifacts",
+            "missing_selected_artifacts",
+            "proof_text_in_engine_output"
+          ],
+          "red_case_id": "RC-001",
+          "rejected": true,
+          "schema_version": "EngineOutputFull2D",
+          "variant_index": 2
+        },
+        {
+          "errors": [
+            "bad_ref:claim_spec_ref",
+            "bad_ref:derivation_id",
+            "bad_ref:final_step_ref",
+            "missing:claim_spec_ref",
+            "missing:derivation_id",
+            "missing:final_step_ref",
+            "missing:has_checked_side_condition_or_certificate",
+            "missing:has_non_target_intermediate",
+            "missing:selected_steps",
+            "missing_selected_steps",
+            "missing_semantic_non_target_or_checked_support"
+          ],
+          "red_case_id": "RC-002",
+          "rejected": true,
+          "schema_version": "SelectedSolverDerivationV3",
+          "variant_index": 2
+        },
+        {
+          "errors": [
+            "bad_ref:compiler_code_hash",
+            "bad_ref:lean_patch_candidate_ref",
+            "bad_ref:rule_registry_snapshot_ref",
+            "bad_ref:selected_derivation_ref",
+            "bad_ref:theorem_anchor_ref",
+            "bad_ref_list:side_condition_report_refs",
+            "compiler_forbidden_input_or_branch:binder_map_identity",
+            "compiler_forbidden_input_or_branch:proof_region_identity",
+            "compiler_forbidden_input_or_branch:statement_hash",
+            "compiler_forbidden_input_or_branch:target_shape_id",
+            "compiler_forbidden_input_or_branch:theorem_family",
+            "compiler_forbidden_input_or_branch:theorem_name",
+            "missing:compiler_code_hash",
+            "missing:compiler_result_id",
+            "missing:git_head",
+            "missing:lean_patch_candidate_ref",
+            "missing:rule_registry_snapshot_ref",
+            "missing:selected_derivation_ref",
+            "missing:side_condition_report_refs",
+            "missing:theorem_anchor_ref"
+          ],
+          "red_case_id": "RC-004",
+          "rejected": true,
+          "schema_version": "CompilerResultFull2D",
+          "variant_index": 2
+        },
+        {
+          "errors": [
+            "bad_engine_role",
+            "bad_ref:backend_code_hash",
+            "bad_ref:claim_spec_ref",
+            "bad_ref:provider_run_manifest_ref",
+            "bad_ref_list:independent_checker_refs",
+            "engine_output_not_before_compiler",
+            "missing:backend_code_hash",
+            "missing:backend_identity",
+            "missing:claim_spec_ref",
+            "missing:created_before_compiler",
+            "missing:engine_output_id",
+            "missing:engine_role",
+            "missing:git_head",
+            "missing:independent_checker_refs",
+            "missing:proof_text_present",
+            "missing:provider_run_manifest_ref",
+            "missing:provider_stage_run_id",
+            "missing:selected_artifacts",
+            "missing_selected_artifacts",
+            "proof_text_in_engine_output"
+          ],
+          "red_case_id": "RC-005",
+          "rejected": true,
+          "schema_version": "EngineOutputFull2D",
+          "variant_index": 2
+        },
+        {
+          "errors": [
+            "bad_causality_status",
+            "bad_ref:report_id",
+            "bad_ref:source_actual_run_ref",
+            "bad_ref:temp_run_dir_ref",
+            "causality_report_not_live_rerun",
+            "missing:mutation_cases",
+            "missing:report_id",
+            "missing:source_actual_run_ref",
+            "missing:status",
+            "missing:temp_run_dir_ref",
+            "schema_only_or_forbidden_marker:report_only_causality"
+          ],
+          "red_case_id": "RC-006",
+          "rejected": true,
+          "schema_version": "SolverCausalityLiveRunV1",
+          "variant_index": 2
+        },
+        {
+          "errors": [
+            "bad_baseline_id",
+            "bad_final_status",
+            "bad_ref:checker_hash_set_ref",
+            "bad_ref:claim_spec_ref",
+            "bad_ref:config_hash",
+            "bad_ref:corpus_manifest_hash",
+            "bad_ref:derivation_target_match_ref",
+            "bad_ref:extraction_report_ref",
+            "bad_ref:final_verify_report_ref",
+            "bad_ref:git_status_hash",
+            "bad_ref:lean_patch_candidate_ref",
+            "bad_ref:proof_worker_result_ref",
+            "bad_ref:provider_run_manifest_ref",
+            "bad_ref:release_run_dir_hash",
+            "bad_ref:selected_implementation_hash",
+            "bad_ref:selected_solver_derivation_ref",
+            "bad_ref:source_theorem_ref",
+            "bad_ref_list:compiler_result_refs",
+            "bad_ref_list:engine_output_refs",
+            "bad_ref_list:independent_solver_artifact_check_refs",
+            "missing:baseline_id",
+            "missing:checker_hash_set_ref",
+            "missing:claim_spec_ref",
+            "missing:compiler_result_refs",
+            "missing:config_hash",
+            "missing:corpus_manifest_hash",
+            "missing:derivation_target_match_ref",
+            "missing:engine_output_refs",
+            "missing:extraction_report_ref",
+            "missing:final_status",
+            "missing:final_verify_report_ref",
+            "missing:git_head",
+            "missing:git_status_hash",
+            "missing:independent_solver_artifact_check_refs",
+            "missing:lean_patch_candidate_ref",
+            "missing:proof_worker_result_ref",
+            "missing:provider_run_manifest_ref",
+            "missing:release_run_dir_hash",
+            "missing:run_id",
+            "missing:selected_implementation_hash",
+            "missing:selected_solver_derivation_ref",
+            "missing:solver_backed_certificate_ref",
+            "missing:source_theorem_ref",
+            "missing:stage_failure_report_ref",
+            "missing:stage_timestamps",
+            "missing:task_id",
+            "stage_timestamps_not_object"
+          ],
+          "red_case_id": "RC-007",
+          "rejected": true,
+          "schema_version": "ActualTaskPipelineRunV4",
+          "variant_index": 2
+        },
+        {
+          "errors": [
+            "bad_ref:actual_task_run_ref",
+            "bad_ref:causal_chain_hash",
+            "bad_ref:claim_spec_ref",
+            "bad_ref:compiler_result_ref",
+            "bad_ref:final_verify_report_ref",
+            "bad_ref:proof_worker_result_ref",
+            "bad_ref:selected_derivation_ref",
+            "bad_ref:solver_causality_live_run_ref",
+            "bad_ref_list:engine_output_refs",
+            "missing:actual_task_run_ref",
+            "missing:causal_chain_hash",
+            "missing:certificate_id",
+            "missing:claim_spec_ref",
+            "missing:compiler_result_ref",
+            "missing:engine_output_refs",
+            "missing:final_verify_report_ref",
+            "missing:git_head",
+            "missing:proof_worker_result_ref",
+            "missing:selected_derivation_ref",
+            "missing:solver_causality_live_run_ref",
+            "target_as_certificate"
+          ],
+          "red_case_id": "RC-014",
+          "rejected": true,
+          "schema_version": "SolverBackedProofCertificateFull2D",
+          "variant_index": 2
+        },
+        {
+          "errors": [
+            "bad_ref:claim_spec_ref",
+            "bad_ref:derivation_id",
+            "bad_ref:final_step_ref",
+            "missing:claim_spec_ref",
+            "missing:derivation_id",
+            "missing:final_step_ref",
+            "missing:has_checked_side_condition_or_certificate",
+            "missing:has_non_target_intermediate",
+            "missing:selected_steps",
+            "missing_selected_steps",
+            "missing_semantic_non_target_or_checked_support"
+          ],
+          "red_case_id": "RC-018",
+          "rejected": true,
+          "schema_version": "SelectedSolverDerivationV3",
+          "variant_index": 2
+        },
+        {
+          "errors": [
+            "bad_engine_role",
+            "bad_ref:backend_code_hash",
+            "bad_ref:claim_spec_ref",
+            "bad_ref:provider_run_manifest_ref",
+            "bad_ref_list:independent_checker_refs",
+            "engine_output_contains_proof",
+            "engine_output_not_before_compiler",
+            "missing:backend_code_hash",
+            "missing:backend_identity",
+            "missing:claim_spec_ref",
+            "missing:created_before_compiler",
+            "missing:engine_output_id",
+            "missing:engine_role",
+            "missing:git_head",
+            "missing:independent_checker_refs",
+            "missing:provider_run_manifest_ref",
+            "missing:provider_stage_run_id",
+            "missing:selected_artifacts",
+            "missing_selected_artifacts",
+            "proof_text_in_engine_output"
+          ],
+          "red_case_id": "K-010",
+          "rejected": true,
+          "schema_version": "EngineOutputFull2D",
+          "variant_index": 2
+        },
+        {
+          "errors": [
+            "bad_ref:claim_spec_ref",
+            "bad_ref:derivation_id",
+            "bad_ref:final_step_ref",
+            "missing:claim_spec_ref",
+            "missing:derivation_id",
+            "missing:final_step_ref",
+            "missing:has_checked_side_condition_or_certificate",
+            "missing:has_non_target_intermediate",
+            "missing:selected_steps",
+            "missing_selected_steps",
+            "missing_semantic_non_target_or_checked_support",
+            "target_equivalent_intermediate:alpha_renamed_target",
+            "target_equivalent_intermediate:target_hash_intermediate",
+            "target_equivalent_intermediate:trivial_target_wrapper"
+          ],
+          "red_case_id": "K-013",
+          "rejected": true,
+          "schema_version": "SelectedSolverDerivationV3",
+          "variant_index": 2
+        }
+      ],
+      "errors": [],
+      "red_case_suite_status": "passed",
+      "schema_version": "GeometryFull2DV06SchemaRedCaseReport",
+      "skipped": [
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "RC-003",
+          "schema_version": "RuleRegistryFull2D"
+        },
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "RC-008",
+          "schema_version": "CorpusTaskRecordV1"
+        },
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "RC-009",
+          "schema_version": "ReleaseAcceptanceReportV06"
+        },
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "RC-010",
+          "schema_version": "CheckerReportV1"
+        },
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "RC-011",
+          "schema_version": "SealedAdversarialHoldoutManifestV1"
+        },
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "RC-012",
+          "schema_version": "FreshnessSummaryV1"
+        },
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "RC-013",
+          "schema_version": "RuleRegistryFull2D"
+        },
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "RC-015",
+          "schema_version": "ReleaseCheckerTraceV1"
+        },
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "RC-016",
+          "schema_version": "ReleaseAcceptanceReportV06"
+        },
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "RC-017",
+          "schema_version": "Full2DMatrixRunV06"
+        },
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "RC-019",
+          "schema_version": "ProviderBoundaryReportV1"
+        },
+        {
+          "reason": "not_wp03_schema",
+          "red_case_id": "K-028",
+          "schema_version": "EngineContributionReportV1"
+        }
+      ],
+      "status": "passed"
+    },
+    "self_test": {
+      "errors": [],
+      "negative_results": {
+        "b2_label_final_status": [
+          "final_theorem_missing_solver_backed_certificate_ref"
+        ],
+        "compiler_forbidden_anchor_branch": [
+          "compiler_forbidden_input_or_branch:statement_hash",
+          "compiler_forbidden_input_or_branch:theorem_name"
+        ],
+        "disabled_stage_not_disabled": [
+          "disabled_stage_not_removed_or_disabled"
+        ],
+        "final_verify_accepts_sorry": [
+          "no_sorry_not_true"
+        ],
+        "hash_mismatch": [
+          "hash_mismatch"
+        ],
+        "naked_target_derivation": [
+          "missing_semantic_non_target_or_checked_support"
+        ],
+        "proof_text_engine_output": [
+          "engine_output_contains_proof_text",
+          "proof_text_in_engine_output"
+        ],
+        "proof_worker_claims_final": [
+          "proof_worker_claims_final_theorem"
+        ],
+        "provider_imports_compiler": [
+          "provider_imports_downstream_module"
+        ],
+        "report_only_causality": [
+          "causality_report_not_live_rerun",
+          "empty:mutation_cases",
+          "schema_only_or_forbidden_marker:report_only_causality"
+        ],
+        "stage_failure_label_coded": [
+          "measured_failure_not_actual_stage_failure"
+        ],
+        "stale_git_head": [
+          "stale_artifact:git_head",
+          "stale_artifact:git_head_mismatch"
+        ],
+        "target_as_certificate": [
+          "target_as_certificate"
+        ],
+        "target_equivalent_intermediate": [
+          "target_equivalent_intermediate:selected_steps[0].target_hash_intermediate"
+        ],
+        "target_fact_provider": [
+          "fact_missing_premises:0",
+          "target_fact_without_derivation"
+        ],
+        "target_matcher_outputs_strategy": [
+          "target_matcher_forbidden_output:strategy_label"
+        ]
+      },
+      "positive_results": {
+        "ActualTaskPipelineRunV4": [],
+        "CompilerResultFull2D": [],
+        "DerivationTargetMatchReportV1": [],
+        "DisabledStageReportV1": [],
+        "EngineOutputFull2D": [],
+        "FinalVerifyReportFull2D": [],
+        "GeometryFull2DClaimSpec": [],
+        "IndependentSolverArtifactCheckV1": [],
+        "LeanExtractionReportFull2D": [],
+        "LeanPatchCandidateFull2D": [],
+        "ProofWorkerResultFull2D": [],
+        "ProviderRunManifestV3": [],
+        "SelectedSolverDerivationV3": [],
+        "SolverBackedProofCertificateFull2D": [],
+        "SolverCausalityLiveRunV1": [],
+        "StageFailureReportV1": []
+      },
+      "schema_version": "GeometryFull2DV06SchemaValidatorSelfTest",
+      "status": "passed"
+    }
+  },
+  "status": "passed"
+}
