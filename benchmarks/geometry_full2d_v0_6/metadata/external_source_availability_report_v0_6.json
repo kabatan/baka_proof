@@ -1,0 +1,40 @@
+{
+  "available_source_count": 0,
+  "external_goal_preserved_floor_adjustment": "external_subfloor_only",
+  "git_head": "d767432937def1bca5dc444dec2429d54b262c37",
+  "importable_goal_count": 0,
+  "replacement_policy": "replace_missing_external_goal_preserved_with_sealed_adversarial_holdout_without_reducing_total_floors",
+  "report_id": "sha256:e571390f1a1015caac1ffe6778ad83ec23451fc5453f3cf48813df4d3e818149",
+  "schema_version": "ExternalSourceAvailabilityReportV2",
+  "source_checks": [
+    {
+      "check_kind": "local_path_exists",
+      "command_transcript": "Test-Path data/external/geometry_full2d -> False",
+      "command_transcript_ref": "sha256:fe88fe42051a1c29a2eab9af26e8d723898caa85109a919f08f10693f2963359",
+      "exists": false,
+      "importable_goal_count": 0,
+      "local_path": "data/external/geometry_full2d",
+      "source_id": "external_geometry_local_cache"
+    },
+    {
+      "check_kind": "local_path_exists",
+      "command_transcript": "Test-Path data/external/TongGeometry -> False",
+      "command_transcript_ref": "sha256:f08f078aa7a950bb248f3db0bbccd695d224dff67a9cc6269a8354fda6b6e2c3",
+      "exists": false,
+      "importable_goal_count": 0,
+      "local_path": "data/external/TongGeometry",
+      "source_id": "tonggeometry_local_cache"
+    },
+    {
+      "check_kind": "local_path_exists",
+      "command_transcript": "Test-Path benchmarks/external_geometry_full2d -> False",
+      "command_transcript_ref": "sha256:4ce02181fae7adcf618a46b88c0655d7f8deee56832ddf221c23c80e17f914bf",
+      "exists": false,
+      "importable_goal_count": 0,
+      "local_path": "benchmarks/external_geometry_full2d",
+      "source_id": "user_reviewed_external_goals"
+    }
+  ],
+  "status": "unavailable",
+  "unavailable_source_count": 3
+}

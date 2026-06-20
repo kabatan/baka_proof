@@ -1,0 +1,1545 @@
+import MathAutoResearch.GeometryFull2D.Inequality
+
+namespace MathAutoResearch.GeometryFull2D
+
+theorem v06_target_outside_0000
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0000
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0000
+
+theorem v06_target_outside_0001
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P01 = P08 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0001
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0001
+
+theorem v06_target_outside_0002
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0002
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0002
+
+theorem v06_target_outside_0003
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P03 = P18 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0003
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0003
+
+theorem v06_target_outside_0004
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0004
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0004
+
+theorem v06_target_outside_0005
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P05 = P28 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0005
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0005
+
+theorem v06_target_outside_0006
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0006
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0006
+
+theorem v06_target_outside_0007
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P07 = P06 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0007
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0007
+
+theorem v06_target_outside_0008
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0008
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0008
+
+theorem v06_target_outside_0009
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P09 = P16 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0009
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0009
+
+theorem v06_target_outside_0010
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0010
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0010
+
+theorem v06_target_outside_0011
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P11 = P26 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0011
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0011
+
+theorem v06_target_outside_0012
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0012
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0012
+
+theorem v06_target_outside_0013
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P13 = P04 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0013
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0013
+
+theorem v06_target_outside_0014
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0014
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0014
+
+theorem v06_target_outside_0015
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P15 = P14 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0015
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0015
+
+theorem v06_target_outside_0016
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0016
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0016
+
+theorem v06_target_outside_0017
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P17 = P24 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0017
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0017
+
+theorem v06_target_outside_0018
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0018
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0018
+
+theorem v06_target_outside_0019
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P19 = P02 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0019
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0019
+
+theorem v06_target_outside_0020
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0020
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0020
+
+theorem v06_target_outside_0021
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P21 = P12 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0021
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0021
+
+theorem v06_target_outside_0022
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0022
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0022
+
+theorem v06_target_outside_0023
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P23 = P22 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0023
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0023
+
+theorem v06_target_outside_0024
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0024
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0024
+
+theorem v06_target_outside_0025
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P25 = P00 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0025
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0025
+
+theorem v06_target_outside_0026
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0026
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0026
+
+theorem v06_target_outside_0027
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P27 = P10 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0027
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0027
+
+theorem v06_target_outside_0028
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0028
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0028
+
+theorem v06_target_outside_0029
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P29 = P20 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0029
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0029
+
+theorem v06_target_outside_0030
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0030
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0030
+
+theorem v06_target_outside_0031
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P31 = P30 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0031
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0031
+
+theorem v06_target_outside_0032
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0032
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0032
+
+theorem v06_target_outside_0033
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P01 = P08 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0033
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0033
+
+theorem v06_target_outside_0034
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0034
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0034
+
+theorem v06_target_outside_0035
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P03 = P18 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0035
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0035
+
+theorem v06_target_outside_0036
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0036
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0036
+
+theorem v06_target_outside_0037
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P05 = P28 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0037
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0037
+
+theorem v06_target_outside_0038
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0038
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0038
+
+theorem v06_target_outside_0039
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P07 = P06 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0039
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0039
+
+theorem v06_target_outside_0040
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0040
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0040
+
+theorem v06_target_outside_0041
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P09 = P16 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0041
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0041
+
+theorem v06_target_outside_0042
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0042
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0042
+
+theorem v06_target_outside_0043
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P11 = P26 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0043
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0043
+
+theorem v06_target_outside_0044
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0044
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0044
+
+theorem v06_target_outside_0045
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P13 = P04 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0045
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0045
+
+theorem v06_target_outside_0046
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0046
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0046
+
+theorem v06_target_outside_0047
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P15 = P14 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0047
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0047
+
+theorem v06_target_outside_0048
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0048
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0048
+
+theorem v06_target_outside_0049
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P17 = P24 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0049
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0049
+
+theorem v06_target_outside_0050
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0050
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0050
+
+theorem v06_target_outside_0051
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P19 = P02 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0051
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0051
+
+theorem v06_target_outside_0052
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0052
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0052
+
+theorem v06_target_outside_0053
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P21 = P12 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0053
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0053
+
+theorem v06_target_outside_0054
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0054
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0054
+
+theorem v06_target_outside_0055
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P23 = P22 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0055
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0055
+
+theorem v06_target_outside_0056
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0056
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0056
+
+theorem v06_target_outside_0057
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P25 = P00 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0057
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0057
+
+theorem v06_target_outside_0058
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0058
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0058
+
+theorem v06_target_outside_0059
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P27 = P10 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0059
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0059
+
+theorem v06_target_outside_0060
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0060
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0060
+
+theorem v06_target_outside_0061
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P29 = P20 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0061
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0061
+
+theorem v06_target_outside_0062
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0062
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0062
+
+theorem v06_target_outside_0063
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P31 = P30 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0063
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0063
+
+theorem v06_target_outside_0064
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0064
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0064
+
+theorem v06_target_outside_0065
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P01 = P08 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0065
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0065
+
+theorem v06_target_outside_0066
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0066
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0066
+
+theorem v06_target_outside_0067
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P03 = P18 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0067
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0067
+
+theorem v06_target_outside_0068
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0068
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0068
+
+theorem v06_target_outside_0069
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P05 = P28 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0069
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0069
+
+theorem v06_target_outside_0070
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0070
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0070
+
+theorem v06_target_outside_0071
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P07 = P06 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0071
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0071
+
+theorem v06_target_outside_0072
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0072
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0072
+
+theorem v06_target_outside_0073
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P09 = P16 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0073
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0073
+
+theorem v06_target_outside_0074
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0074
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0074
+
+theorem v06_target_outside_0075
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P11 = P26 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0075
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0075
+
+theorem v06_target_outside_0076
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0076
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0076
+
+theorem v06_target_outside_0077
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P13 = P04 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0077
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0077
+
+theorem v06_target_outside_0078
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0078
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0078
+
+theorem v06_target_outside_0079
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P15 = P14 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0079
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0079
+
+theorem v06_target_outside_0080
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0080
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0080
+
+theorem v06_target_outside_0081
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P17 = P24 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0081
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0081
+
+theorem v06_target_outside_0082
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0082
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0082
+
+theorem v06_target_outside_0083
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P19 = P02 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0083
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0083
+
+theorem v06_target_outside_0084
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0084
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0084
+
+theorem v06_target_outside_0085
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P21 = P12 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0085
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0085
+
+theorem v06_target_outside_0086
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0086
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0086
+
+theorem v06_target_outside_0087
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P23 = P22 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0087
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0087
+
+theorem v06_target_outside_0088
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0088
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0088
+
+theorem v06_target_outside_0089
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P25 = P00 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0089
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0089
+
+theorem v06_target_outside_0090
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0090
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0090
+
+theorem v06_target_outside_0091
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P27 = P10 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0091
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0091
+
+theorem v06_target_outside_0092
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0092
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0092
+
+theorem v06_target_outside_0093
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P29 = P20 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0093
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0093
+
+theorem v06_target_outside_0094
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0094
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0094
+
+theorem v06_target_outside_0095
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P31 = P30 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0095
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0095
+
+theorem v06_target_outside_0096
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0096
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0096
+
+theorem v06_target_outside_0097
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P01 = P08 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0097
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0097
+
+theorem v06_target_outside_0098
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0098
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0098
+
+theorem v06_target_outside_0099
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P03 = P18 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0099
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0099
+
+theorem v06_target_outside_0100
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0100
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0100
+
+theorem v06_target_outside_0101
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P05 = P28 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0101
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0101
+
+theorem v06_target_outside_0102
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0102
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0102
+
+theorem v06_target_outside_0103
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P07 = P06 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0103
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0103
+
+theorem v06_target_outside_0104
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0104
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0104
+
+theorem v06_target_outside_0105
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P09 = P16 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0105
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0105
+
+theorem v06_target_outside_0106
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0106
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0106
+
+theorem v06_target_outside_0107
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P11 = P26 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0107
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0107
+
+theorem v06_target_outside_0108
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0108
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0108
+
+theorem v06_target_outside_0109
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P13 = P04 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0109
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0109
+
+theorem v06_target_outside_0110
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0110
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0110
+
+theorem v06_target_outside_0111
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P15 = P14 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0111
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0111
+
+theorem v06_target_outside_0112
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0112
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0112
+
+theorem v06_target_outside_0113
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P17 = P24 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0113
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0113
+
+theorem v06_target_outside_0114
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0114
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0114
+
+theorem v06_target_outside_0115
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P19 = P02 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0115
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0115
+
+theorem v06_target_outside_0116
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0116
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0116
+
+theorem v06_target_outside_0117
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P21 = P12 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0117
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0117
+
+theorem v06_target_outside_0118
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0118
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0118
+
+theorem v06_target_outside_0119
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P23 = P22 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0119
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0119
+
+theorem v06_target_outside_0120
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0120
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0120
+
+theorem v06_target_outside_0121
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P25 = P00 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0121
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0121
+
+theorem v06_target_outside_0122
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0122
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0122
+
+theorem v06_target_outside_0123
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P27 = P10 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0123
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0123
+
+theorem v06_target_outside_0124
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0124
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0124
+
+theorem v06_target_outside_0125
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P29 = P20 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0125
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0125
+
+theorem v06_target_outside_0126
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0126
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0126
+
+theorem v06_target_outside_0127
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P31 = P30 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0127
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0127
+
+theorem v06_target_outside_0128
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0128
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0128
+
+theorem v06_target_outside_0129
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P01 = P08 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0129
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0129
+
+theorem v06_target_outside_0130
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0130
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0130
+
+theorem v06_target_outside_0131
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P03 = P18 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0131
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0131
+
+theorem v06_target_outside_0132
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0132
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0132
+
+theorem v06_target_outside_0133
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P05 = P28 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0133
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0133
+
+theorem v06_target_outside_0134
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0134
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0134
+
+theorem v06_target_outside_0135
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P07 = P06 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0135
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0135
+
+theorem v06_target_outside_0136
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0136
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0136
+
+theorem v06_target_outside_0137
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P09 = P16 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0137
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0137
+
+theorem v06_target_outside_0138
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0138
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0138
+
+theorem v06_target_outside_0139
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P11 = P26 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0139
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0139
+
+theorem v06_target_outside_0140
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0140
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0140
+
+theorem v06_target_outside_0141
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P13 = P04 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0141
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0141
+
+theorem v06_target_outside_0142
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0142
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0142
+
+theorem v06_target_outside_0143
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P15 = P14 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0143
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0143
+
+theorem v06_target_outside_0144
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0144
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0144
+
+theorem v06_target_outside_0145
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P17 = P24 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0145
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0145
+
+theorem v06_target_outside_0146
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0146
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0146
+
+theorem v06_target_outside_0147
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P19 = P02 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0147
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0147
+
+theorem v06_target_outside_0148
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0148
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0148
+
+theorem v06_target_outside_0149
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P21 = P12 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0149
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0149
+
+theorem v06_target_outside_0150
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0150
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0150
+
+theorem v06_target_outside_0151
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P23 = P22 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0151
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0151
+
+theorem v06_target_outside_0152
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0152
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0152
+
+theorem v06_target_outside_0153
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P25 = P00 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0153
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0153
+
+theorem v06_target_outside_0154
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0154
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0154
+
+theorem v06_target_outside_0155
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P27 = P10 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0155
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0155
+
+theorem v06_target_outside_0156
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0156
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0156
+
+theorem v06_target_outside_0157
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P29 = P20 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0157
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0157
+
+theorem v06_target_outside_0158
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0158
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0158
+
+theorem v06_target_outside_0159
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P31 = P30 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0159
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0159
+
+theorem v06_target_outside_0160
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0160
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0160
+
+theorem v06_target_outside_0161
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P01 = P08 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0161
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0161
+
+theorem v06_target_outside_0162
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0162
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0162
+
+theorem v06_target_outside_0163
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P03 = P18 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0163
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0163
+
+theorem v06_target_outside_0164
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0164
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0164
+
+theorem v06_target_outside_0165
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P05 = P28 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0165
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0165
+
+theorem v06_target_outside_0166
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0166
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0166
+
+theorem v06_target_outside_0167
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P07 = P06 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0167
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0167
+
+theorem v06_target_outside_0168
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0168
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0168
+
+theorem v06_target_outside_0169
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P09 = P16 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0169
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0169
+
+theorem v06_target_outside_0170
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0170
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0170
+
+theorem v06_target_outside_0171
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P11 = P26 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0171
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0171
+
+theorem v06_target_outside_0172
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0172
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0172
+
+theorem v06_target_outside_0173
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P13 = P04 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0173
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0173
+
+theorem v06_target_outside_0174
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0174
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0174
+
+theorem v06_target_outside_0175
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P15 = P14 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0175
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0175
+
+theorem v06_target_outside_0176
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0176
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0176
+
+theorem v06_target_outside_0177
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P17 = P24 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0177
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0177
+
+theorem v06_target_outside_0178
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0178
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0178
+
+theorem v06_target_outside_0179
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P19 = P02 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0179
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0179
+
+theorem v06_target_outside_0180
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0180
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0180
+
+theorem v06_target_outside_0181
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P21 = P12 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0181
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0181
+
+theorem v06_target_outside_0182
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0182
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0182
+
+theorem v06_target_outside_0183
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P23 = P22 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0183
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0183
+
+theorem v06_target_outside_0184
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0184
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0184
+
+theorem v06_target_outside_0185
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P25 = P00 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0185
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0185
+
+theorem v06_target_outside_0186
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0186
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0186
+
+theorem v06_target_outside_0187
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P27 = P10 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0187
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0187
+
+theorem v06_target_outside_0188
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0188
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0188
+
+theorem v06_target_outside_0189
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P29 = P20 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0189
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0189
+
+theorem v06_target_outside_0190
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0190
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0190
+
+theorem v06_target_outside_0191
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P31 = P30 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0191
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0191
+
+theorem v06_target_outside_0192
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0192
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0192
+
+theorem v06_target_outside_0193
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P01 = P08 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0193
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0193
+
+theorem v06_target_outside_0194
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0194
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0194
+
+theorem v06_target_outside_0195
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P03 = P18 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0195
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0195
+
+theorem v06_target_outside_0196
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0196
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0196
+
+theorem v06_target_outside_0197
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P05 = P28 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0197
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0197
+
+theorem v06_target_outside_0198
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0198
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0198
+
+theorem v06_target_outside_0199
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P07 = P06 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0199
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0199
+
+theorem v06_target_outside_0200
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0200
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0200
+
+theorem v06_target_outside_0201
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P09 = P16 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0201
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0201
+
+theorem v06_target_outside_0202
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0202
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0202
+
+theorem v06_target_outside_0203
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P11 = P26 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0203
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0203
+
+theorem v06_target_outside_0204
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0204
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0204
+
+theorem v06_target_outside_0205
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P13 = P04 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0205
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0205
+
+theorem v06_target_outside_0206
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0206
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0206
+
+theorem v06_target_outside_0207
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P15 = P14 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0207
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0207
+
+theorem v06_target_outside_0208
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0208
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0208
+
+theorem v06_target_outside_0209
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P17 = P24 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0209
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0209
+
+theorem v06_target_outside_0210
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0210
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0210
+
+theorem v06_target_outside_0211
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P19 = P02 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0211
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0211
+
+theorem v06_target_outside_0212
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0212
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0212
+
+theorem v06_target_outside_0213
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P21 = P12 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0213
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0213
+
+theorem v06_target_outside_0214
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0214
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0214
+
+theorem v06_target_outside_0215
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P23 = P22 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0215
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0215
+
+theorem v06_target_outside_0216
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0216
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0216
+
+theorem v06_target_outside_0217
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P25 = P00 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0217
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0217
+
+theorem v06_target_outside_0218
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : True := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0218
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0218
+
+theorem v06_target_outside_0219
+    (P00 P01 P02 P03 P04 P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24 P25 P26 P27 P28 P29 P30 P31 : Point)
+    : P27 = P10 := by
+  -- MARP_PROOF_REGION_START:v06_target_outside_0219
+  sorry
+  -- MARP_PROOF_REGION_END:v06_target_outside_0219
+
+end MathAutoResearch.GeometryFull2D

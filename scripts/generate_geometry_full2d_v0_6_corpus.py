@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import ast
 import hashlib
 import json
 import random
@@ -35,21 +34,6 @@ FORBIDDEN_METADATA_KEYS = {
     "tactic_script",
     "template_id",
 }
-FORBIDDEN_GENERATOR_IMPORT_PARTS = (
-    "provider",
-    "compiler",
-    "rule_registry",
-    "proof_worker",
-    "final_verify",
-    "matrix",
-    "release",
-    "run_records",
-    "previous_release",
-    "prior_release",
-    "v0_5",
-    "v0_4",
-)
-
 FAMILY_PREDICATES: dict[str, list[tuple[str, int]]] = {
     "incidence": [("collinear", 3), ("concyclic", 4)],
     "construction": [("midpoint", 3)],
@@ -67,12 +51,20 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--corpus-root", default=str(DEFAULT_CORPUS_ROOT))
     parser.add_argument("--release-seed", required=True)
+    parser.add_argument("--implementation-freeze-manifest", required=True)
+    parser.add_argument("--implementation-freeze-manifest-hash", required=True)
+    parser.add_argument("--release-seed-transcript", required=True)
+    parser.add_argument("--release-seed-transcript-hash", required=True)
     parser.add_argument("--positive-count", type=int, default=POSITIVE_COUNT)
     parser.add_argument("--negative-count", type=int, default=NEGATIVE_COUNT)
     args = parser.parse_args()
     report = generate_corpus(
         corpus_root=Path(args.corpus_root),
         release_seed=args.release_seed,
+        implementation_freeze_manifest=Path(args.implementation_freeze_manifest),
+        implementation_freeze_manifest_hash=args.implementation_freeze_manifest_hash,
+        release_seed_transcript=Path(args.release_seed_transcript),
+        release_seed_transcript_hash=args.release_seed_transcript_hash,
         positive_count=args.positive_count,
         negative_count=args.negative_count,
     )
@@ -80,16 +72,37 @@ def main() -> int:
     return 0 if report["status"] == "passed" else 1
 
 
-def generate_corpus(*, corpus_root: Path, release_seed: str, positive_count: int, negative_count: int) -> dict[str, Any]:
+def generate_corpus(
+    *,
+    corpus_root: Path,
+    release_seed: str,
+    implementation_freeze_manifest: Path,
+    implementation_freeze_manifest_hash: str,
+    release_seed_transcript: Path,
+    release_seed_transcript_hash: str,
+    positive_count: int,
+    negative_count: int,
+) -> dict[str, Any]:
     corpus_root = corpus_root if corpus_root.is_absolute() else ROOT / corpus_root
     corpus_root.mkdir(parents=True, exist_ok=True)
     (corpus_root / "lean").mkdir(parents=True, exist_ok=True)
     (corpus_root / "metadata").mkdir(parents=True, exist_ok=True)
     errors: list[str] = []
 
-    freeze = build_freeze_manifest()
     freeze_path = corpus_root / "metadata" / "implementation_freeze_manifest_v0_6.json"
-    write_json(freeze_path, freeze)
+    freeze_hash = copy_preexisting_freeze_manifest(
+        implementation_freeze_manifest,
+        freeze_path,
+        expected_hash=implementation_freeze_manifest_hash,
+    )
+    seed_transcript_path = corpus_root / "metadata" / "release_seed_transcript_v0_6.json"
+    seed_transcript_hash = copy_preexisting_seed_transcript(
+        release_seed_transcript,
+        seed_transcript_path,
+        expected_hash=release_seed_transcript_hash,
+        expected_seed=release_seed,
+        expected_freeze_hash=freeze_hash,
+    )
     external = build_external_source_availability_report()
     external_path = corpus_root / "metadata" / "external_source_availability_report_v0_6.json"
     write_json(external_path, external)
@@ -108,6 +121,7 @@ def generate_corpus(*, corpus_root: Path, release_seed: str, positive_count: int
         corpus_root=corpus_root,
         release_seed=release_seed,
         freeze_path=freeze_path,
+        seed_transcript_path=seed_transcript_path,
         positive_count=len(sealed_tasks),
         negative_replacement_count=len(negative_tasks),
     )
@@ -135,8 +149,11 @@ def generate_corpus(*, corpus_root: Path, release_seed: str, positive_count: int
         "schema_version": "GeometryFull2DCorpusManifestV06",
         "status": "release_counted_sealed_holdout_v0_6",
         "release_counted_corpus": True,
+        "release_seed": release_seed,
         "implementation_freeze_manifest_ref": freeze_path.relative_to(corpus_root).as_posix(),
-        "implementation_freeze_manifest_hash": file_sha256(freeze_path),
+        "implementation_freeze_manifest_hash": freeze_hash,
+        "release_seed_transcript_ref": seed_transcript_path.relative_to(corpus_root).as_posix(),
+        "release_seed_transcript_hash": seed_transcript_hash,
         "external_source_availability_report_ref": external_path.relative_to(corpus_root).as_posix(),
         "external_source_availability_report_hash": file_sha256(external_path),
         "sealed_holdout_manifest_ref": sealed_path.relative_to(corpus_root).as_posix(),
@@ -163,8 +180,9 @@ def generate_corpus(*, corpus_root: Path, release_seed: str, positive_count: int
         "negative_count": len(negative_tasks),
         "manifest_path": manifest_path.relative_to(ROOT).as_posix() if is_relative_to(manifest_path, ROOT) else str(manifest_path),
         "manifest_hash": file_sha256(manifest_path),
-        "implementation_freeze_manifest_hash": file_sha256(freeze_path),
+        "implementation_freeze_manifest_hash": freeze_hash,
         "sealed_holdout_manifest_hash": sealed_ref,
+        "release_seed_transcript_hash": seed_transcript_hash,
         "release_seed": release_seed,
         "git_head": current_git_head(),
     }
@@ -556,37 +574,6 @@ def render_theorem(theorem_name: str, hypotheses: list[str], target: str) -> str
     return "\n".join(lines)
 
 
-def build_freeze_manifest() -> dict[str, Any]:
-    implementation_paths = [
-        "scripts/geometry_full2d_v0_6_extraction.py",
-        "scripts/geometry_full2d_v0_6_provider.py",
-        "scripts/geometry_full2d_v0_6_independent_check.py",
-        "scripts/geometry_full2d_v0_6_derivation.py",
-        "scripts/geometry_full2d_v0_6_compiler.py",
-        "scripts/geometry_full2d_v0_6_proof_worker.py",
-        "scripts/run_solver_causality_live_v0_6.py",
-        "scripts/geometry_full2d_v0_6_schemas.py",
-    ]
-    generator_paths = [
-        "scripts/generate_geometry_full2d_v0_6_corpus.py",
-        "scripts/check_corpus_independence_v0_6.py",
-        "scripts/check_statement_diversity_v0_6.py",
-    ]
-    implementation_hashes = hash_existing_files(implementation_paths)
-    generator_hashes = hash_existing_files(generator_paths)
-    body = {
-        "schema_version": "GeometryFull2DImplementationFreezeManifestV06",
-        "implementation_git_head": current_git_head(),
-        "implementation_file_hashes": implementation_hashes,
-        "corpus_generator_file_hashes": generator_hashes,
-        "selected_implementation_hash": sha256_text(canonical_json(implementation_hashes)),
-        "corpus_generator_hash": sha256_text(canonical_json(generator_hashes)),
-        "freeze_created_before_holdout_generation": True,
-        "git_status_hash": git_status_hash(),
-    }
-    return {"freeze_manifest_id": sha256_text(canonical_json(body)), **body}
-
-
 def build_external_source_availability_report() -> dict[str, Any]:
     checks = []
     discovered_specs = discover_external_goal_specs()
@@ -623,6 +610,7 @@ def build_sealed_manifest(
     corpus_root: Path,
     release_seed: str,
     freeze_path: Path,
+    seed_transcript_path: Path,
     positive_count: int,
     negative_replacement_count: int,
 ) -> dict[str, Any]:
@@ -641,6 +629,8 @@ def build_sealed_manifest(
         "grammar_hash": sha256_text(canonical_json(grammar)),
         "implementation_freeze_manifest_ref": freeze_path.relative_to(corpus_root).as_posix(),
         "implementation_freeze_manifest_hash": file_sha256(freeze_path),
+        "release_seed_transcript_ref": seed_transcript_path.relative_to(corpus_root).as_posix(),
+        "release_seed_transcript_hash": file_sha256(seed_transcript_path),
         "generated_counted_positive_count": positive_count,
         "generated_negative_target_outside_count": negative_replacement_count,
         "emits_theorem_statements_only": True,
@@ -651,35 +641,9 @@ def build_sealed_manifest(
     return {"sealed_manifest_id": sha256_text(canonical_json(body)), **body}
 
 
-def hash_existing_files(paths: list[str]) -> dict[str, str]:
-    rows: dict[str, str] = {}
-    for rel in paths:
-        path = ROOT / rel
-        if path.exists():
-            rows[rel] = file_sha256(path)
-    return rows
-
-
-def generator_import_report(path: Path) -> dict[str, Any]:
-    tree = ast.parse(path.read_text(encoding="utf-8"))
-    imports: list[str] = []
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Import):
-            imports.extend(alias.name for alias in node.names)
-        elif isinstance(node, ast.ImportFrom) and node.module:
-            imports.append(node.module)
-    forbidden = [item for item in imports if any(part in item for part in FORBIDDEN_GENERATOR_IMPORT_PARTS)]
-    return {"imports": sorted(set(imports)), "forbidden_imports": sorted(set(forbidden))}
-
-
 def current_git_head() -> str:
     proc = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, capture_output=True)
     return proc.stdout.strip() if proc.returncode == 0 else "unknown"
-
-
-def git_status_hash() -> str:
-    proc = subprocess.run(["git", "status", "--short"], cwd=ROOT, text=True, capture_output=True)
-    return sha256_text(proc.stdout if proc.returncode == 0 else "git_status_unavailable")
 
 
 def canonical_json(payload: Any) -> str:
@@ -701,6 +665,50 @@ def file_sha256(path: Path) -> str:
 def write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def copy_preexisting_freeze_manifest(source: Path, destination: Path, *, expected_hash: str) -> str:
+    source = source if source.is_absolute() else ROOT / source
+    if not source.exists():
+        raise FileNotFoundError(f"implementation_freeze_manifest_missing:{source}")
+    actual_hash = file_sha256(source)
+    if actual_hash != expected_hash:
+        raise ValueError(f"implementation_freeze_manifest_hash_mismatch:{actual_hash}!={expected_hash}")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if source.resolve() != destination.resolve():
+        destination.write_bytes(source.read_bytes())
+    return actual_hash
+
+
+def copy_preexisting_seed_transcript(
+    source: Path,
+    destination: Path,
+    *,
+    expected_hash: str,
+    expected_seed: str,
+    expected_freeze_hash: str,
+) -> str:
+    source = source if source.is_absolute() else ROOT / source
+    if not source.exists():
+        raise FileNotFoundError(f"release_seed_transcript_missing:{source}")
+    actual_hash = file_sha256(source)
+    if actual_hash != expected_hash:
+        raise ValueError(f"release_seed_transcript_hash_mismatch:{actual_hash}!={expected_hash}")
+    payload = json.loads(source.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "GeometryFull2DReleaseSeedTranscriptV06":
+        raise ValueError("release_seed_transcript_bad_schema")
+    if payload.get("seed") != expected_seed:
+        raise ValueError("release_seed_transcript_seed_mismatch")
+    if payload.get("seed_source") != "release_acceptance_pre_run_seed_v0_6":
+        raise ValueError("release_seed_transcript_bad_seed_source")
+    if payload.get("implementation_freeze_manifest_hash") != expected_freeze_hash:
+        raise ValueError("release_seed_transcript_freeze_hash_mismatch")
+    if not isinstance(payload.get("command_transcript_ref"), str) or not payload["command_transcript_ref"].startswith("sha256:"):
+        raise ValueError("release_seed_transcript_missing_command_transcript_ref")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if source.resolve() != destination.resolve():
+        destination.write_bytes(source.read_bytes())
+    return actual_hash
 
 
 def is_relative_to(path: Path, root: Path) -> bool:

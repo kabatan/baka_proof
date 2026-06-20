@@ -1,0 +1,13 @@
+{
+  "command_transcript": "python scripts\\create_geometry_full2d_v0_6_release_seed.py --implementation-freeze-manifest benchmarks/geometry_full2d_v0_6/metadata/implementation_freeze_manifest_v0_6.json --implementation-freeze-manifest-hash sha256:f937afebd9fff64dd42bec8723daeb8ab513b168f94610b3e1726b967b588008 --output benchmarks/geometry_full2d_v0_6/metadata/release_seed_transcript_v0_6.json",
+  "command_transcript_ref": "sha256:6b09864a83ce89e5a826b303cb98feb656de3662ce8c6f8e3757f9ea68c9f000",
+  "generated_after_freeze_manifest_hash": "sha256:f937afebd9fff64dd42bec8723daeb8ab513b168f94610b3e1726b967b588008",
+  "generated_at_utc": "2026-06-20T12:43:38Z",
+  "git_head": "d767432937def1bca5dc444dec2429d54b262c37",
+  "implementation_freeze_manifest_hash": "sha256:f937afebd9fff64dd42bec8723daeb8ab513b168f94610b3e1726b967b588008",
+  "implementation_freeze_manifest_ref": "benchmarks/geometry_full2d_v0_6/metadata/implementation_freeze_manifest_v0_6.json",
+  "schema_version": "GeometryFull2DReleaseSeedTranscriptV06",
+  "seed": "v0_6_release_acceptance_pre_run_seed_5169dd893286d0aef2f892d428cdabce1aed15e8095f3c23",
+  "seed_source": "release_acceptance_pre_run_seed_v0_6",
+  "transcript_id": "sha256:4135068df8568a309307ef817cae52d349baf842aa1aa3a20bf0ff466287333b"
+}

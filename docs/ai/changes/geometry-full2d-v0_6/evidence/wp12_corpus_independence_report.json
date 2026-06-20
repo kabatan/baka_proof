@@ -1,0 +1,174 @@
+{
+  "errors": [],
+  "git_head": "d767432937def1bca5dc444dec2429d54b262c37",
+  "schema_version": "CheckCorpusIndependenceV06Report",
+  "sections": {
+    "corpus_check": {
+      "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\benchmarks\\geometry_full2d_v0_6",
+      "counted_positive_count": 1200,
+      "errors": [],
+      "git_head": "d767432937def1bca5dc444dec2429d54b262c37",
+      "negative_target_outside_malformed_count": 220,
+      "schema_version": "CorpusIndependenceCheckV06",
+      "source_type_counts": {
+        "SealedAdversarialHoldout": 1200
+      },
+      "status": "passed"
+    },
+    "red_cases": {
+      "case_results": {
+        "available_source_without_external_tasks": {
+          "errors": [
+            "counted_positive_floor_not_met:1",
+            "external_source_availability_report_hash_mismatch",
+            "external_sources_available_but_no_external_goal_preserved_tasks",
+            "freeze_builder_path_missing_or_unexpected",
+            "freeze_manifest_missing_generator_file_hashes",
+            "freeze_missing_required_implementation_path:docs/ai/changes/geometry-full2d-v0_6/evidence/rule_registry_full2d_v0_6.json",
+            "freeze_missing_required_implementation_path:lean/MathAutoResearch/GeometryFull2D/RuleLemmas.lean",
+            "freeze_missing_required_implementation_path:scripts/check_rule_registry_v0_6.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_compiler.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_derivation.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_extraction.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_independent_checkers.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_proof_worker.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_provider.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_checkers.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_registry.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_schemas.py",
+            "freeze_missing_required_implementation_path:scripts/run_solver_causality_live_v0_6.py",
+            "freeze_missing_required_path_existence_flag",
+            "freeze_missing_rule_registry_coverage_flag",
+            "implementation_freeze_manifest_hash_mismatch",
+            "missing_release_seed_transcript_ref",
+            "negative_target_outside_floor_not_met:0",
+            "sealed_holdout_manifest_hash_mismatch",
+            "sealed_manifest_freeze_hash_mismatch",
+            "task_0:sealed_task_lean_file_missing",
+            "task_0:sealed_task_missing_manifest_ref"
+          ],
+          "missing_expected": [],
+          "status": "passed"
+        },
+        "freeze_missing_rule_registry": {
+          "errors": [
+            "implementation_freeze_manifest_hash_mismatch",
+            "freeze_missing_rule_registry_coverage_flag",
+            "freeze_missing_required_path_existence_flag",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_extraction.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_independent_checkers.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_derivation.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_proof_worker.py",
+            "freeze_missing_required_implementation_path:scripts/run_solver_causality_live_v0_6.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_registry.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_checkers.py",
+            "freeze_missing_required_implementation_path:scripts/check_rule_registry_v0_6.py",
+            "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_schemas.py",
+            "freeze_missing_required_implementation_path:lean/MathAutoResearch/GeometryFull2D/RuleLemmas.lean",
+            "freeze_missing_required_implementation_path:docs/ai/changes/geometry-full2d-v0_6/evidence/rule_registry_full2d_v0_6.json",
+            "freeze_missing_required_generator_path:scripts/create_geometry_full2d_v0_6_release_seed.py",
+            "freeze_missing_required_generator_path:scripts/check_corpus_independence_v0_6.py",
+            "freeze_missing_required_generator_path:scripts/check_statement_diversity_v0_6.py",
+            "freeze_builder_path_missing_or_unexpected"
+          ],
+          "missing_expected": [],
+          "status": "passed"
+        },
+        "generator_forbidden_import": {
+          "errors": [
+            "sealed_generator_forbidden_import:scripts.geometry_full2d_v0_6_compiler"
+          ],
+          "missing_expected": [],
+          "status": "passed"
+        },
+        "generator_forbidden_read": {
+          "errors": [
+            "sealed_generator_forbidden_read_path_literal:scripts/geometry_full2d_v0_6_provider.py"
+          ],
+          "missing_expected": [],
+          "status": "passed"
+        },
+        "manifest_hash_mismatch": {
+          "errors": [
+            "external_source_availability_report_hash_mismatch",
+            "external_report_missing_source_checks",
+            "external_unavailable_not_replaced_by_sealed_holdout",
+            "sealed_replacement_does_not_preserve_positive_floor",
+            "sealed_holdout_manifest_hash_mismatch",
+            "sealed_manifest_freeze_hash_mismatch",
+            "missing_release_seed_transcript_ref",
+            "implementation_freeze_manifest_hash_mismatch",
+            "freeze_missing_rule_registry_coverage_flag",
+            "freeze_missing_required_path_existence_flag",
+            "freeze_manifest_missing_implementation_file_hashes",
+            "freeze_manifest_missing_generator_file_hashes",
+            "freeze_builder_path_missing_or_unexpected"
+          ],
+          "missing_expected": [],
+          "status": "passed"
+        },
+        "projection_counted": {
+          "errors": [
+            "counted_positive_floor_not_met:1",
+            "counted_task_bad_source_type:0:ProjectionBenchmark",
+            "missing_external_source_availability_report_ref",
+            "missing_implementation_freeze_manifest_ref",
+            "missing_sealed_holdout_manifest_ref",
+            "negative_target_outside_floor_not_met:0",
+            "projection_task_counted_positive:projection_bad"
+          ],
+          "missing_expected": [],
+          "status": "passed"
+        },
+        "release_seed_transcript_mismatch": {
+          "errors": [
+            "release_seed_transcript_freeze_hash_mismatch",
+            "release_seed_transcript_not_bound_to_freeze",
+            "release_seed_transcript_command_ref_mismatch"
+          ],
+          "missing_expected": [],
+          "status": "passed"
+        },
+        "sealed_forbidden_metadata": {
+          "errors": [
+            "forbidden_metadata_key:expected_rule_ids",
+            "forbidden_metadata_key:proof_label"
+          ],
+          "missing_expected": [],
+          "status": "passed"
+        },
+        "sealed_freeze_hash_mismatch": {
+          "errors": [
+            "sealed_manifest_freeze_hash_mismatch",
+            "missing_release_seed_transcript_ref"
+          ],
+          "missing_expected": [],
+          "status": "passed"
+        },
+        "sealed_task_manifest_hash_mismatch": {
+          "errors": [
+            "sealed_task_manifest_hash_mismatch"
+          ],
+          "missing_expected": [],
+          "status": "passed"
+        },
+        "source_ref_only_goal_preservation": {
+          "errors": [
+            "external_goal_preservation_not_passed",
+            "external_goal_preservation_not_machine_checkable",
+            "external_goal_preservation_source_ref_only",
+            "external_goal_preservation_bad_ref:source_goal_hash",
+            "external_goal_preservation_bad_ref:imported_goal_hash",
+            "external_goal_preservation_bad_ref:checker_command_transcript_ref"
+          ],
+          "missing_expected": [],
+          "status": "passed"
+        }
+      },
+      "errors": [],
+      "schema_version": "CorpusIndependenceRedCasesV06",
+      "status": "passed"
+    }
+  },
+  "status": "passed"
+}

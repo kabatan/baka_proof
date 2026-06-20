@@ -45,6 +45,36 @@ FORBIDDEN_GENERATOR_IMPORT_PARTS = (
     "prior_release",
     "v0_5",
     "v0_4",
+    "build_geometry_full2d_v0_6_freeze_manifest",
+)
+REQUIRED_IMPLEMENTATION_FREEZE_PATHS = [
+    "scripts/geometry_full2d_v0_6_extraction.py",
+    "scripts/geometry_full2d_v0_6_provider.py",
+    "scripts/geometry_full2d_v0_6_independent_checkers.py",
+    "scripts/geometry_full2d_v0_6_derivation.py",
+    "scripts/geometry_full2d_v0_6_compiler.py",
+    "scripts/geometry_full2d_v0_6_proof_worker.py",
+    "scripts/run_solver_causality_live_v0_6.py",
+    "scripts/geometry_full2d_v0_6_rule_registry.py",
+    "scripts/geometry_full2d_v0_6_rule_checkers.py",
+    "scripts/check_rule_registry_v0_6.py",
+    "scripts/geometry_full2d_v0_6_schemas.py",
+    "lean/MathAutoResearch/GeometryFull2D/RuleLemmas.lean",
+    "docs/ai/changes/geometry-full2d-v0_6/evidence/rule_registry_full2d_v0_6.json",
+]
+REQUIRED_GENERATOR_FREEZE_PATHS = [
+    "scripts/build_geometry_full2d_v0_6_freeze_manifest.py",
+    "scripts/create_geometry_full2d_v0_6_release_seed.py",
+    "scripts/generate_geometry_full2d_v0_6_corpus.py",
+    "scripts/check_corpus_independence_v0_6.py",
+    "scripts/check_statement_diversity_v0_6.py",
+]
+FORBIDDEN_GENERATOR_READ_PATH_FRAGMENTS = REQUIRED_IMPLEMENTATION_FREEZE_PATHS
+FORBIDDEN_GENERATOR_FREEZE_BUILDER_SYMBOLS = (
+    "build_freeze_manifest",
+    "hash_required_files",
+    "IMPLEMENTATION_FREEZE_PATHS",
+    "implementation_file_hashes",
 )
 
 
@@ -130,6 +160,10 @@ def validate_external_report(manifest: dict[str, Any], corpus_root: Path, counte
     path = corpus_root / ref
     if not path.exists():
         return ["external_source_availability_report_missing"]
+    expected_hash = manifest.get("external_source_availability_report_hash")
+    actual_hash = file_sha256(path)
+    if expected_hash != actual_hash:
+        errors.append("external_source_availability_report_hash_mismatch")
     report = read_json(path)
     if report.get("schema_version") != "ExternalSourceAvailabilityReportV2":
         errors.append("external_report_bad_schema")
@@ -187,10 +221,15 @@ def validate_external_goal_preservation(task: dict[str, Any], corpus_root: Path)
 
 def validate_sealed_task(task: dict[str, Any], corpus_root: Path) -> list[str]:
     errors: list[str] = []
-    if not isinstance(task.get("sealed_challenge_manifest_ref"), str):
+    ref = task.get("sealed_challenge_manifest_ref")
+    if not isinstance(ref, str):
         errors.append("sealed_task_missing_manifest_ref")
+        return errors
     if not valid_ref(task.get("sealed_challenge_manifest_hash")):
         errors.append("sealed_task_missing_manifest_hash")
+    path = corpus_root / ref
+    if path.exists() and valid_ref(task.get("sealed_challenge_manifest_hash")) and file_sha256(path) != task.get("sealed_challenge_manifest_hash"):
+        errors.append("sealed_task_manifest_hash_mismatch")
     if task.get("source_type") != "SealedAdversarialHoldout":
         errors.append("sealed_task_bad_source_type")
     return errors
@@ -243,8 +282,13 @@ def validate_sealed_manifest(manifest: dict[str, Any], corpus_root: Path) -> lis
     path = corpus_root / ref
     if not path.exists():
         return ["sealed_holdout_manifest_missing"]
+    errors: list[str] = []
+    expected_hash = manifest.get("sealed_holdout_manifest_hash")
+    actual_hash = file_sha256(path)
+    if expected_hash != actual_hash:
+        errors.append("sealed_holdout_manifest_hash_mismatch")
     payload = read_json(path)
-    errors = forbidden_metadata_errors(payload)
+    errors.extend(forbidden_metadata_errors(payload))
     if payload.get("schema_version") != "SealedAdversarialHoldoutManifestV1":
         errors.append("sealed_manifest_bad_schema")
     if payload.get("seed_source") != "release_acceptance_pre_run_seed_v0_6":
@@ -253,13 +297,63 @@ def validate_sealed_manifest(manifest: dict[str, Any], corpus_root: Path) -> lis
         errors.append("sealed_manifest_not_statement_only")
     if payload.get("forbidden_metadata_absent") is not True:
         errors.append("sealed_manifest_forbidden_metadata_not_absent")
+    freeze_ref = manifest.get("implementation_freeze_manifest_ref")
+    if isinstance(freeze_ref, str):
+        freeze_path = corpus_root / freeze_ref
+        if freeze_path.exists() and payload.get("implementation_freeze_manifest_hash") != file_sha256(freeze_path):
+            errors.append("sealed_manifest_freeze_hash_mismatch")
+    else:
+        errors.append("sealed_manifest_missing_freeze_ref_context")
+    errors.extend(validate_release_seed_transcript(manifest, payload, corpus_root))
     generator_path = ROOT / str(payload.get("generator_path", ""))
     if not generator_path.exists():
         errors.append("sealed_generator_missing")
     else:
         if file_sha256(generator_path) != payload.get("generator_hash"):
             errors.append("sealed_generator_hash_mismatch")
-        errors.extend(validate_generator_imports(generator_path))
+        errors.extend(validate_generator_independence(generator_path))
+    return errors
+
+
+def validate_release_seed_transcript(manifest: dict[str, Any], sealed_payload: dict[str, Any], corpus_root: Path) -> list[str]:
+    errors: list[str] = []
+    manifest_ref = manifest.get("release_seed_transcript_ref")
+    sealed_ref = sealed_payload.get("release_seed_transcript_ref")
+    if not isinstance(manifest_ref, str):
+        return ["missing_release_seed_transcript_ref"]
+    if sealed_ref != manifest_ref:
+        errors.append("sealed_manifest_release_seed_transcript_ref_mismatch")
+    path = corpus_root / manifest_ref
+    if not path.exists():
+        return errors + ["release_seed_transcript_missing"]
+    actual_hash = file_sha256(path)
+    manifest_hash_value = manifest.get("release_seed_transcript_hash")
+    sealed_hash_value = sealed_payload.get("release_seed_transcript_hash")
+    if manifest_hash_value != actual_hash:
+        errors.append("release_seed_transcript_hash_mismatch")
+    if sealed_hash_value != actual_hash:
+        errors.append("sealed_manifest_release_seed_transcript_hash_mismatch")
+    payload = read_json(path)
+    if payload.get("schema_version") != "GeometryFull2DReleaseSeedTranscriptV06":
+        errors.append("release_seed_transcript_bad_schema")
+    if payload.get("seed_source") != "release_acceptance_pre_run_seed_v0_6":
+        errors.append("release_seed_transcript_bad_seed_source")
+    expected_seed = sealed_payload.get("seed")
+    if manifest.get("release_seed") != expected_seed:
+        errors.append("manifest_release_seed_mismatch")
+    if payload.get("seed") != expected_seed:
+        errors.append("release_seed_transcript_seed_mismatch")
+    expected_freeze_hash = manifest.get("implementation_freeze_manifest_hash")
+    if payload.get("implementation_freeze_manifest_hash") != expected_freeze_hash:
+        errors.append("release_seed_transcript_freeze_hash_mismatch")
+    if payload.get("generated_after_freeze_manifest_hash") != expected_freeze_hash:
+        errors.append("release_seed_transcript_not_bound_to_freeze")
+    command = payload.get("command_transcript")
+    command_ref = payload.get("command_transcript_ref")
+    if not isinstance(command, str) or not command:
+        errors.append("release_seed_transcript_missing_command_transcript")
+    elif command_ref != sha256_text(command):
+        errors.append("release_seed_transcript_command_ref_mismatch")
     return errors
 
 
@@ -272,17 +366,66 @@ def validate_freeze_manifest(manifest: dict[str, Any], corpus_root: Path) -> lis
         return ["implementation_freeze_manifest_missing"]
     payload = read_json(path)
     errors: list[str] = []
+    expected_hash = manifest.get("implementation_freeze_manifest_hash")
+    actual_hash = file_sha256(path)
+    if expected_hash != actual_hash:
+        errors.append("implementation_freeze_manifest_hash_mismatch")
     if payload.get("schema_version") != "GeometryFull2DImplementationFreezeManifestV06":
         errors.append("freeze_manifest_bad_schema")
     if payload.get("freeze_created_before_holdout_generation") is not True:
         errors.append("freeze_not_before_holdout")
+    if payload.get("freeze_includes_provider_compiler_rule_registry") is not True:
+        errors.append("freeze_missing_rule_registry_coverage_flag")
+    if payload.get("required_freeze_paths_checked_for_existence") is not True:
+        errors.append("freeze_missing_required_path_existence_flag")
     file_hashes = payload.get("implementation_file_hashes")
     if not isinstance(file_hashes, dict) or not file_hashes:
         errors.append("freeze_manifest_missing_implementation_file_hashes")
-    selected = payload.get("selected_implementation_hash")
-    if selected != sha256_text(canonical_json(file_hashes)):
-        errors.append("freeze_selected_implementation_hash_mismatch")
+    else:
+        errors.extend(validate_required_hashes(file_hashes, REQUIRED_IMPLEMENTATION_FREEZE_PATHS, "implementation"))
+        selected = payload.get("selected_implementation_hash")
+        if selected != sha256_text(canonical_json(file_hashes)):
+            errors.append("freeze_selected_implementation_hash_mismatch")
+    generator_hashes = payload.get("corpus_generator_file_hashes")
+    if not isinstance(generator_hashes, dict) or not generator_hashes:
+        errors.append("freeze_manifest_missing_generator_file_hashes")
+    else:
+        errors.extend(validate_required_hashes(generator_hashes, REQUIRED_GENERATOR_FREEZE_PATHS, "generator"))
+        if payload.get("corpus_generator_hash") != sha256_text(canonical_json(generator_hashes)):
+            errors.append("freeze_generator_hash_mismatch")
+    builder_path = payload.get("freeze_builder_path")
+    if builder_path != "scripts/build_geometry_full2d_v0_6_freeze_manifest.py":
+        errors.append("freeze_builder_path_missing_or_unexpected")
+    elif payload.get("freeze_builder_hash") != file_sha256(ROOT / str(builder_path)):
+        errors.append("freeze_builder_hash_mismatch")
     return errors
+
+
+def validate_required_hashes(file_hashes: dict[str, Any], required_paths: list[str], group: str) -> list[str]:
+    errors: list[str] = []
+    for rel in required_paths:
+        path = ROOT / rel
+        if rel not in file_hashes:
+            errors.append(f"freeze_missing_required_{group}_path:{rel}")
+            continue
+        if not path.exists():
+            errors.append(f"freeze_required_{group}_path_missing_on_disk:{rel}")
+            continue
+        if file_hashes.get(rel) != file_sha256(path):
+            errors.append(f"freeze_{group}_hash_mismatch:{rel}")
+    return errors
+
+
+def validate_generator_independence(path: Path) -> list[str]:
+    errors = validate_generator_imports(path)
+    text = path.read_text(encoding="utf-8")
+    for fragment in FORBIDDEN_GENERATOR_READ_PATH_FRAGMENTS:
+        if fragment in text or Path(fragment).name in text:
+            errors.append(f"sealed_generator_forbidden_read_path_literal:{fragment}")
+    for symbol in FORBIDDEN_GENERATOR_FREEZE_BUILDER_SYMBOLS:
+        if symbol in text:
+            errors.append(f"sealed_generator_forbidden_freeze_builder_symbol:{symbol}")
+    return sorted(set(errors))
 
 
 def validate_generator_imports(path: Path) -> list[str]:
@@ -320,7 +463,15 @@ def red_case_report() -> dict[str, Any]:
             ["forbidden_metadata_key:expected_rule_ids", "forbidden_metadata_key:proof_label"],
         ),
         "generator_forbidden_import": expect_generator_import_failure("from scripts.geometry_full2d_v0_6_compiler import compile_derivation\n"),
+        "generator_forbidden_read": expect_generator_read_failure(
+            "from pathlib import Path\n_ = (Path('scripts') / 'geometry_full2d_v0_6_provider.py').read_text()\n"
+        ),
+        "manifest_hash_mismatch": expect_manifest_hash_mismatch_failure(),
+        "sealed_freeze_hash_mismatch": expect_sealed_freeze_hash_mismatch_failure(),
+        "sealed_task_manifest_hash_mismatch": expect_sealed_task_manifest_hash_mismatch_failure(),
+        "release_seed_transcript_mismatch": expect_release_seed_transcript_failure(),
         "available_source_without_external_tasks": expect_available_source_without_external_tasks_failure(),
+        "freeze_missing_rule_registry": expect_freeze_manifest_failure(),
     }
     errors = [name for name, result in cases.items() if result.get("status") != "passed"]
     return {
@@ -356,6 +507,128 @@ def expect_generator_import_failure(source: str) -> dict[str, Any]:
         path.write_text(source, encoding="utf-8")
         errors = validate_generator_imports(path)
         return expected_errors_present({"errors": errors, "status": "failed"}, ["sealed_generator_forbidden_import"])
+
+
+def expect_generator_read_failure(source: str) -> dict[str, Any]:
+    with temp_corpus() as root:
+        path = root / "bad_generator.py"
+        path.write_text(source, encoding="utf-8")
+        errors = validate_generator_independence(path)
+        return expected_errors_present({"errors": errors, "status": "failed"}, ["sealed_generator_forbidden_read_path_literal"])
+
+
+def expect_manifest_hash_mismatch_failure() -> dict[str, Any]:
+    with temp_corpus() as root:
+        write_json(root / "external.json", {"schema_version": "ExternalSourceAvailabilityReportV2", "status": "unavailable", "source_checks": []})
+        write_json(
+            root / "sealed.json",
+            {
+                "schema_version": "SealedAdversarialHoldoutManifestV1",
+                "seed": "seed",
+                "seed_source": "release_acceptance_pre_run_seed_v0_6",
+                "emits_theorem_statements_only": True,
+                "forbidden_metadata_absent": True,
+                "generator_path": "scripts/generate_geometry_full2d_v0_6_corpus.py",
+                "generator_hash": file_sha256(ROOT / "scripts" / "generate_geometry_full2d_v0_6_corpus.py"),
+            },
+        )
+        write_json(
+            root / "freeze.json",
+            {
+                "schema_version": "GeometryFull2DImplementationFreezeManifestV06",
+                "freeze_created_before_holdout_generation": True,
+                "implementation_file_hashes": {},
+                "corpus_generator_file_hashes": {},
+            },
+        )
+        manifest = {
+            "external_source_availability_report_ref": "external.json",
+            "external_source_availability_report_hash": sha256_text("wrong_external"),
+            "sealed_holdout_manifest_ref": "sealed.json",
+            "sealed_holdout_manifest_hash": sha256_text("wrong_sealed"),
+            "implementation_freeze_manifest_ref": "freeze.json",
+            "implementation_freeze_manifest_hash": sha256_text("wrong_freeze"),
+        }
+        errors = []
+        errors.extend(validate_external_report(manifest, root, []))
+        errors.extend(validate_sealed_manifest(manifest, root))
+        errors.extend(validate_freeze_manifest(manifest, root))
+        return expected_errors_present(
+            {"errors": errors, "status": "failed"},
+            [
+                "external_source_availability_report_hash_mismatch",
+                "sealed_holdout_manifest_hash_mismatch",
+                "implementation_freeze_manifest_hash_mismatch",
+            ],
+        )
+
+
+def expect_sealed_freeze_hash_mismatch_failure() -> dict[str, Any]:
+    with temp_corpus() as root:
+        write_json(root / "freeze.json", {"schema_version": "GeometryFull2DImplementationFreezeManifestV06"})
+        write_json(
+            root / "sealed.json",
+            {
+                "schema_version": "SealedAdversarialHoldoutManifestV1",
+                "seed": "seed",
+                "seed_source": "release_acceptance_pre_run_seed_v0_6",
+                "implementation_freeze_manifest_hash": sha256_text("wrong_freeze"),
+                "emits_theorem_statements_only": True,
+                "forbidden_metadata_absent": True,
+                "generator_path": "scripts/generate_geometry_full2d_v0_6_corpus.py",
+                "generator_hash": file_sha256(ROOT / "scripts" / "generate_geometry_full2d_v0_6_corpus.py"),
+            },
+        )
+        manifest = {
+            "sealed_holdout_manifest_ref": "sealed.json",
+            "sealed_holdout_manifest_hash": file_sha256(root / "sealed.json"),
+            "implementation_freeze_manifest_ref": "freeze.json",
+            "implementation_freeze_manifest_hash": file_sha256(root / "freeze.json"),
+        }
+        errors = validate_sealed_manifest(manifest, root)
+        return expected_errors_present({"errors": errors, "status": "failed"}, ["sealed_manifest_freeze_hash_mismatch"])
+
+
+def expect_sealed_task_manifest_hash_mismatch_failure() -> dict[str, Any]:
+    with temp_corpus() as root:
+        write_json(root / "sealed.json", {"schema_version": "SealedAdversarialHoldoutManifestV1"})
+        task = {
+            "source_type": "SealedAdversarialHoldout",
+            "sealed_challenge_manifest_ref": "sealed.json",
+            "sealed_challenge_manifest_hash": sha256_text("wrong_sealed_task_hash"),
+        }
+        errors = validate_sealed_task(task, root)
+        return expected_errors_present({"errors": errors, "status": "failed"}, ["sealed_task_manifest_hash_mismatch"])
+
+
+def expect_release_seed_transcript_failure() -> dict[str, Any]:
+    with temp_corpus() as root:
+        transcript = {
+            "schema_version": "GeometryFull2DReleaseSeedTranscriptV06",
+            "seed": "seed",
+            "seed_source": "release_acceptance_pre_run_seed_v0_6",
+            "implementation_freeze_manifest_hash": sha256_text("wrong_freeze"),
+            "generated_after_freeze_manifest_hash": sha256_text("wrong_freeze"),
+            "command_transcript": "python fixture",
+            "command_transcript_ref": sha256_text("different command"),
+        }
+        write_json(root / "seed.json", transcript)
+        manifest = {
+            "release_seed": "seed",
+            "release_seed_transcript_ref": "seed.json",
+            "release_seed_transcript_hash": file_sha256(root / "seed.json"),
+            "implementation_freeze_manifest_hash": sha256_text("expected_freeze"),
+        }
+        sealed = {
+            "seed": "seed",
+            "release_seed_transcript_ref": "seed.json",
+            "release_seed_transcript_hash": file_sha256(root / "seed.json"),
+        }
+        errors = validate_release_seed_transcript(manifest, sealed, root)
+        return expected_errors_present(
+            {"errors": errors, "status": "failed"},
+            ["release_seed_transcript_freeze_hash_mismatch", "release_seed_transcript_command_ref_mismatch"],
+        )
 
 
 def expect_available_source_without_external_tasks_failure() -> dict[str, Any]:
@@ -416,6 +689,52 @@ def expect_available_source_without_external_tasks_failure() -> dict[str, Any]:
         )
         result = check_corpus_independence(root)
         return expected_errors_present(result, ["external_sources_available_but_no_external_goal_preserved_tasks"])
+
+
+def expect_freeze_manifest_failure() -> dict[str, Any]:
+    with temp_corpus() as root:
+        write_json(
+            root / "metadata" / "implementation_freeze_manifest_v0_6.json",
+            {
+                "schema_version": "GeometryFull2DImplementationFreezeManifestV06",
+                "freeze_created_before_holdout_generation": True,
+                "implementation_file_hashes": {
+                    "scripts/geometry_full2d_v0_6_provider.py": file_sha256(ROOT / "scripts" / "geometry_full2d_v0_6_provider.py"),
+                    "scripts/geometry_full2d_v0_6_compiler.py": file_sha256(ROOT / "scripts" / "geometry_full2d_v0_6_compiler.py"),
+                },
+                "selected_implementation_hash": sha256_text(
+                    canonical_json(
+                        {
+                            "scripts/geometry_full2d_v0_6_provider.py": file_sha256(ROOT / "scripts" / "geometry_full2d_v0_6_provider.py"),
+                            "scripts/geometry_full2d_v0_6_compiler.py": file_sha256(ROOT / "scripts" / "geometry_full2d_v0_6_compiler.py"),
+                        }
+                    )
+                ),
+                "corpus_generator_file_hashes": {
+                    "scripts/build_geometry_full2d_v0_6_freeze_manifest.py": file_sha256(
+                        ROOT / "scripts" / "build_geometry_full2d_v0_6_freeze_manifest.py"
+                    ),
+                    "scripts/generate_geometry_full2d_v0_6_corpus.py": file_sha256(ROOT / "scripts" / "generate_geometry_full2d_v0_6_corpus.py")
+                },
+                "corpus_generator_hash": sha256_text(
+                    canonical_json(
+                        {
+                            "scripts/build_geometry_full2d_v0_6_freeze_manifest.py": file_sha256(
+                                ROOT / "scripts" / "build_geometry_full2d_v0_6_freeze_manifest.py"
+                            ),
+                            "scripts/generate_geometry_full2d_v0_6_corpus.py": file_sha256(
+                                ROOT / "scripts" / "generate_geometry_full2d_v0_6_corpus.py"
+                            )
+                        }
+                    )
+                ),
+            },
+        )
+        errors = validate_freeze_manifest({"implementation_freeze_manifest_ref": "metadata/implementation_freeze_manifest_v0_6.json"}, root)
+        return expected_errors_present(
+            {"errors": errors, "status": "failed"},
+            ["freeze_missing_rule_registry_coverage_flag", "freeze_missing_required_implementation_path"],
+        )
 
 
 class temp_corpus:
