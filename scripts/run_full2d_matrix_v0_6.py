@@ -2,12 +2,14 @@
 from __future__ import annotations
 
 import argparse
+import os
 import hashlib
 import json
 import shutil
 import subprocess
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -65,7 +67,6 @@ from scripts.geometry_full2d_v0_6_proof_worker import (  # noqa: E402
     FINAL_VERIFY_REPORT_DIR,
     PROOF_WORKER_RESULT_DIR,
     build_solver_backed_certificate_v0_6,
-    run_proof_worker_final_verify_stage,
 )
 from scripts.geometry_full2d_v0_6_provider import run_provider_stage  # noqa: E402
 from scripts.geometry_full2d_v0_6_schemas import ENGINE_ROLES, validate_payload  # noqa: E402
@@ -77,13 +78,20 @@ SOURCE_TASK_DIR = "source_theorems_v0_6"
 STAGE_FAILURE_DIR = "stage_failures_v0_6"
 DISABLED_STAGE_DIR = "disabled_stage_reports_v0_6"
 MATRIX_SUMMARY = "full2d_matrix_summary_v0_6.json"
+_GIT_STATUS_HASH: str | None = None
+_SELECTED_IMPLEMENTATION_HASH_BY_CORPUS: dict[str, str] = {}
+_RELEASE_RUN_DIR_HASH_BY_KEY: dict[tuple[str, str, str], str] = {}
 
 
 def install_cached_git_head() -> None:
     head = current_git_head()
+    proof_worker_hash = proof_worker_module.proof_worker_code_hash()
 
     def cached_head() -> str:
         return head
+
+    def cached_proof_worker_hash() -> str:
+        return proof_worker_hash
 
     for module in [
         compiler_module,
@@ -96,6 +104,7 @@ def install_cached_git_head() -> None:
     ]:
         if hasattr(module, "current_git_head"):
             setattr(module, "current_git_head", cached_head)
+    proof_worker_module.proof_worker_code_hash = cached_proof_worker_hash
 
 
 def main() -> int:
@@ -160,7 +169,7 @@ def run_matrix(*, config_path: Path, run_dir: Path, execute_all: bool, all_basel
     errors.extend(f"target_match:{error}" for error in target_match_report.get("errors", []))
     compiler_report = run_compiler_stage(b2_dir)
     errors.extend(f"compiler:{error}" for error in compiler_report.get("errors", []))
-    proof_report = run_proof_worker_final_verify_stage(b2_dir)
+    proof_report = run_parallel_proof_worker_final_verify_stage(b2_dir)
     proof_structural_errors = proof_stage_structural_errors(b2_dir, positive_tasks)
     errors.extend(f"proof_worker_final_verify:{error}" for error in proof_structural_errors)
 
@@ -381,6 +390,182 @@ def batch_extract_from_file(source_path: Path, tasks: list[dict[str, Any]], erro
         theorem_header_hash = lean_sha256_text(_theorem_header_for_cache(theorem_source))
         _write_lean_extraction_cache(_lean_extraction_cache_path(_lean_extraction_cache_key(theorem_name, theorem_header_hash)), theorem_name, theorem_header_hash, results[theorem_name])
     return results
+
+
+def proof_worker_parallelism() -> int:
+    raw = os.environ.get("FULL2D_PROOF_WORKERS", "").strip()
+    if raw:
+        try:
+            parsed = int(raw)
+            if parsed >= 1:
+                return parsed
+        except ValueError:
+            pass
+    cpu_count = os.cpu_count() or 4
+    return max(2, min(8, cpu_count // 2 if cpu_count > 2 else 2))
+
+
+def run_parallel_proof_worker_final_verify_stage(run_dir: Path) -> dict[str, Any]:
+    run_dir = run_dir if run_dir.is_absolute() else ROOT / run_dir
+    patch_paths = sorted((run_dir / proof_worker_module.LEAN_PATCH_DIR).glob("*.json"))
+    anchor_by_ref: dict[str, dict[str, Any]] = {}
+    for path in sorted((run_dir / proof_worker_module.THEOREM_ANCHOR_DIR).glob("*.json")):
+        anchor = read_json(path)
+        anchor_by_ref[file_sha256(path)] = anchor
+        if anchor.get("anchor_ref") not in anchor_by_ref:
+            anchor_by_ref[str(anchor.get("anchor_ref"))] = anchor
+
+    errors: list[str] = []
+    if not patch_paths:
+        errors.append("missing_lean_patch_candidates")
+
+    bundles: list[dict[str, Any]] = []
+    max_workers = proof_worker_parallelism()
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_patch = {
+            executor.submit(run_one_proof_worker_final_verify, run_dir, patch_path, anchor_by_ref): patch_path
+            for patch_path in patch_paths
+        }
+        for future in as_completed(future_to_patch):
+            patch_path = future_to_patch[future]
+            try:
+                bundles.append(future.result())
+            except Exception as exc:  # pragma: no cover - defensive release evidence path.
+                bundles.append(
+                    {
+                        "patch_name": patch_path.name,
+                        "worker_path": None,
+                        "verify_path": None,
+                        "result": {
+                            "patch_candidate_ref": file_sha256(patch_path),
+                            "proof_worker_result_ref": None,
+                            "final_verify_report_ref": None,
+                            "worker_status": "exception",
+                            "final_verify_status": "not_run",
+                            "worker_errors": [str(exc)],
+                            "final_verify_errors": [],
+                        },
+                        "errors": [f"{patch_path.name}:proof_worker_final_verify_exception:{exc}"],
+                    }
+                )
+
+    worker_paths: list[str] = []
+    verify_paths: list[str] = []
+    results: list[dict[str, Any]] = []
+    for bundle in sorted(bundles, key=lambda item: str(item["patch_name"])):
+        if bundle.get("worker_path"):
+            worker_paths.append(str(bundle["worker_path"]))
+        if bundle.get("verify_path"):
+            verify_paths.append(str(bundle["verify_path"]))
+        results.append(bundle["result"])
+        errors.extend(str(error) for error in bundle.get("errors", []))
+
+    index = {
+        "schema_version": "ProofWorkerFinalVerifyIndexV06",
+        "run_dir": str(run_dir),
+        "proof_worker_result_paths": worker_paths,
+        "final_verify_report_paths": verify_paths,
+        "results": results,
+        "proof_worker_code_hash": proof_worker_module.proof_worker_code_hash(),
+        "git_head": current_git_head(),
+        "parallel_execution": True,
+        "parallel_workers": max_workers,
+    }
+    write_json(run_dir / proof_worker_module.PROOF_WORKER_INDEX_NAME, index)
+    return {
+        "schema_version": "RunProofWorkerFinalVerifyStageV06Report",
+        "status": "passed" if not errors else "failed",
+        "errors": sorted(set(errors)),
+        "run_dir": str(run_dir),
+        "proof_worker_result_count": len(worker_paths),
+        "final_verify_report_count": len(verify_paths),
+        "index_path": (run_dir / proof_worker_module.PROOF_WORKER_INDEX_NAME).relative_to(ROOT).as_posix()
+        if is_relative_to(run_dir / proof_worker_module.PROOF_WORKER_INDEX_NAME, ROOT)
+        else str(run_dir / proof_worker_module.PROOF_WORKER_INDEX_NAME),
+        "parallel_execution": True,
+        "parallel_workers": max_workers,
+    }
+
+
+def run_one_proof_worker_final_verify(
+    run_dir: Path,
+    patch_path: Path,
+    anchor_by_ref: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    errors: list[str] = []
+    patch = read_json(patch_path)
+    anchor = anchor_by_ref.get(str(patch.get("theorem_anchor_ref")))
+    if anchor is None:
+        return {
+            "patch_name": patch_path.name,
+            "worker_path": None,
+            "verify_path": None,
+            "result": {
+                "patch_candidate_ref": file_sha256(patch_path),
+                "proof_worker_result_ref": None,
+                "final_verify_report_ref": None,
+                "worker_status": "not_run",
+                "final_verify_status": "not_run",
+                "worker_errors": ["theorem_anchor_not_found"],
+                "final_verify_errors": [],
+            },
+            "errors": [f"{patch_path.name}:theorem_anchor_not_found"],
+        }
+
+    source_path = proof_worker_module.resolve_source_path(anchor)
+    worker = proof_worker_module.apply_lean_patch_candidate_v0_6(
+        source_path=source_path,
+        theorem_anchor=anchor,
+        patch_candidate=patch,
+        output_dir=run_dir,
+        run_id=patch_path.stem,
+    )
+    worker_path = run_dir / PROOF_WORKER_RESULT_DIR / patch_path.name
+    write_json(worker_path, worker)
+    worker_errors = validate_payload(worker)
+    if worker.get("status") != "patch_applied":
+        worker_errors.extend(str(item) for item in worker.get("errors", []))
+        worker_errors.append("proof_worker_status_not_patch_applied")
+    if worker_errors:
+        errors.extend(f"{patch_path.name}:worker:{error}" for error in sorted(set(worker_errors)))
+
+    verify: dict[str, Any] | None = None
+    candidate_path = worker.get("generated_candidate_path")
+    if isinstance(candidate_path, str) and candidate_path:
+        verify = proof_worker_module.final_verify_gate_v0_6(
+            source_path=source_path,
+            candidate_path=Path(candidate_path),
+            theorem_anchor=anchor,
+            proof_worker_result=worker,
+            output_dir=run_dir,
+        )
+        verify_path = run_dir / FINAL_VERIFY_REPORT_DIR / patch_path.name
+        write_json(verify_path, verify)
+        verify_errors = validate_payload(verify)
+        if verify.get("status") != "passed":
+            verify_errors.extend(str(item) for item in verify.get("errors", []))
+            verify_errors.append("final_verify_status_not_passed")
+        if verify_errors:
+            errors.extend(f"{patch_path.name}:final_verify:{error}" for error in verify_errors)
+    else:
+        verify_path = None
+        errors.append(f"{patch_path.name}:final_verify:not_run")
+
+    return {
+        "patch_name": patch_path.name,
+        "worker_path": worker_path.relative_to(run_dir).as_posix(),
+        "verify_path": verify_path.relative_to(run_dir).as_posix() if verify is not None and verify_path is not None else None,
+        "result": {
+            "patch_candidate_ref": file_sha256(patch_path),
+            "proof_worker_result_ref": file_sha256(worker_path),
+            "final_verify_report_ref": file_sha256(verify_path) if verify is not None and verify_path is not None else None,
+            "worker_status": worker.get("status"),
+            "final_verify_status": verify.get("status") if verify is not None else "not_run",
+            "worker_errors": worker.get("errors", []),
+            "final_verify_errors": verify.get("errors", []) if verify is not None else [],
+        },
+        "errors": errors,
+    }
 
 
 def materialize_b2_records(*, run_dir: Path, baseline_dir: Path, corpus_root: Path, config_path: Path, tasks: list[dict[str, Any]]) -> dict[str, Any]:
@@ -753,17 +938,35 @@ def resolve_task_lean_file(corpus_root: Path, task: dict[str, Any]) -> Path:
 
 
 def selected_implementation_hash(corpus_root: Path) -> str:
+    cache_key = str(corpus_root.resolve())
+    if cache_key in _SELECTED_IMPLEMENTATION_HASH_BY_CORPUS:
+        return _SELECTED_IMPLEMENTATION_HASH_BY_CORPUS[cache_key]
     path = corpus_root / "metadata" / "implementation_freeze_manifest_v0_6.json"
     if path.exists():
         payload = read_json(path)
         value = payload.get("selected_implementation_hash")
         if isinstance(value, str) and is_sha_ref(value):
+            _SELECTED_IMPLEMENTATION_HASH_BY_CORPUS[cache_key] = value
             return value
-    return sha256_text("missing_selected_implementation_hash:" + current_git_head())
+    value = sha256_text("missing_selected_implementation_hash:" + current_git_head())
+    _SELECTED_IMPLEMENTATION_HASH_BY_CORPUS[cache_key] = value
+    return value
 
 
 def release_run_dir_hash(run_dir: Path, corpus_root: Path, config_path: Path) -> str:
-    return sha256_text(canonical_json({"run_dir": str(run_dir.resolve()), "corpus_manifest_hash": file_sha256(corpus_root / "corpus_manifest.json"), "config_hash": file_sha256(config_path), "git_head": current_git_head()}))
+    cache_key = (str(run_dir.resolve()), str(corpus_root.resolve()), str(config_path.resolve()))
+    if cache_key not in _RELEASE_RUN_DIR_HASH_BY_KEY:
+        _RELEASE_RUN_DIR_HASH_BY_KEY[cache_key] = sha256_text(
+            canonical_json(
+                {
+                    "run_dir": str(run_dir.resolve()),
+                    "corpus_manifest_hash": file_sha256(corpus_root / "corpus_manifest.json"),
+                    "config_hash": file_sha256(config_path),
+                    "git_head": current_git_head(),
+                }
+            )
+        )
+    return _RELEASE_RUN_DIR_HASH_BY_KEY[cache_key]
 
 
 def current_git_head() -> str:
@@ -772,8 +975,12 @@ def current_git_head() -> str:
 
 
 def git_status_hash() -> str:
+    global _GIT_STATUS_HASH
+    if _GIT_STATUS_HASH is not None:
+        return _GIT_STATUS_HASH
     proc = subprocess.run(["git", "status", "--short"], cwd=ROOT, text=True, capture_output=True)
-    return sha256_text(proc.stdout if proc.returncode == 0 else "git_status_unavailable")
+    _GIT_STATUS_HASH = sha256_text(proc.stdout if proc.returncode == 0 else "git_status_unavailable")
+    return _GIT_STATUS_HASH
 
 
 def read_json(path: Path) -> Any:
