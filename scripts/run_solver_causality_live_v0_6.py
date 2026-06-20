@@ -3,9 +3,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -25,6 +27,7 @@ from scripts.geometry_full2d_v0_6_proof_worker import (
     file_sha256,
     final_verify_gate_v0_6,
     proof_worker_code_hash,
+    run_lake_env_lean,
 )
 from scripts.geometry_full2d_v0_6_schemas import current_git_head, sha256_text
 
@@ -33,6 +36,7 @@ ACTUAL_TASK_RUN_DIRS = ("actual_task_pipeline_runs_v0_6", "actual_task_pipeline_
 CAUSALITY_REPORT_DIR = "solver_causality_live_runs_v0_6"
 CAUSALITY_TEMP_DIR = "solver_causality_live_temp_v0_6"
 COMMAND_LOG_DIR = Path("command_logs") / "solver_causality_live_v0_6"
+CAUSALITY_BATCH_DIR = "solver_causality_live_final_verify_batches_v0_6"
 COMPILER_RESULT_DIR = "compiler_results_v0_6"
 LEAN_PATCH_DIR = "lean_patch_candidates_v0_6"
 PROOF_WORKER_RESULT_DIR = "proof_worker_results_v0_6"
@@ -106,25 +110,37 @@ def run_solver_causality_live(run_dir: Path, *, all_b2_successes: bool) -> dict[
     report_dir = run_dir / CAUSALITY_REPORT_DIR
     temp_root = run_dir / CAUSALITY_TEMP_DIR
     command_root = run_dir / COMMAND_LOG_DIR
-    if temp_root.exists():
-        shutil.rmtree(temp_root)
+    batch_root = run_dir / CAUSALITY_BATCH_DIR
+    for path in (temp_root, report_dir, command_root, batch_root):
+        if path.exists():
+            shutil.rmtree(path)
     temp_root.mkdir(parents=True, exist_ok=True)
     report_dir.mkdir(parents=True, exist_ok=True)
     command_root.mkdir(parents=True, exist_ok=True)
+    batch_root.mkdir(parents=True, exist_ok=True)
 
-    reports: list[dict[str, Any]] = []
-    task_results: list[dict[str, Any]] = []
+    task_states: list[dict[str, Any]] = []
+    case_states: list[dict[str, Any]] = []
     for record_path, record, record_ref in records:
-        result = process_b2_success_record(
+        state = prepare_b2_success_record(
             run_dir=run_dir,
             ref_index=ref_index,
             record_path=record_path,
             record=record,
             source_actual_run_ref=record_ref,
         )
+        task_states.append(state)
+        case_states.extend(state.get("case_states", []))
+
+    run_causality_final_verify_batches(run_dir, case_states)
+
+    reports: list[dict[str, Any]] = []
+    task_results: list[dict[str, Any]] = []
+    for state in task_states:
+        result = finalize_b2_success_record(run_dir=run_dir, state=state)
         task_results.append(result)
         reports.append(result["report"])
-        errors.extend(f"{record.get('task_id', record_ref)}:{error}" for error in result.get("errors", []))
+        errors.extend(f"{state.get('task_id', state.get('source_actual_run_ref'))}:{error}" for error in result.get("errors", []))
 
     summary = {
         "schema_version": "RunSolverCausalityLiveV06Report",
@@ -147,7 +163,7 @@ def run_solver_causality_live(run_dir: Path, *, all_b2_successes: bool) -> dict[
     return summary
 
 
-def process_b2_success_record(
+def prepare_b2_success_record(
     *,
     run_dir: Path,
     ref_index: dict[str, tuple[Path, dict[str, Any]]],
@@ -157,8 +173,7 @@ def process_b2_success_record(
 ) -> dict[str, Any]:
     task_id = str(record.get("task_id") or record_path.stem)
     errors: list[str] = []
-    mutation_cases: list[dict[str, Any]] = []
-    case_temp_refs: list[str] = []
+    case_states: list[dict[str, Any]] = []
     try:
         inputs = reconstruct_inputs(run_dir, ref_index, record)
     except CausalityInputError as exc:
@@ -167,7 +182,7 @@ def process_b2_success_record(
 
     if inputs is not None:
         for mutation_kind in MUTATION_KINDS:
-            case = run_mutation_case(
+            case = prepare_mutation_case(
                 run_dir=run_dir,
                 source_actual_run_ref=source_actual_run_ref,
                 task_id=task_id,
@@ -175,13 +190,71 @@ def process_b2_success_record(
                 mutation_kind=mutation_kind,
                 inputs=inputs,
             )
-            mutation_cases.append(case["case_record"])
-            case_temp_refs.append(case["temp_run_dir_ref"])
-            errors.extend(f"{mutation_kind}:{error}" for error in case.get("errors", []))
+            case_states.append(case)
+            errors.extend(f"{mutation_kind}:{error}" for error in case.get("prepare_errors", []))
+
+    return {
+        "task_id": task_id,
+        "record_path": record_path,
+        "record_path_rel": record_path.relative_to(run_dir).as_posix(),
+        "baseline_id": str(record.get("baseline_id", "B2")),
+        "source_actual_run_ref": source_actual_run_ref,
+        "case_states": case_states,
+        "errors": sorted(set(errors)),
+    }
+
+
+def finalize_b2_success_record(*, run_dir: Path, state: dict[str, Any]) -> dict[str, Any]:
+    task_id = str(state.get("task_id"))
+    errors: list[str] = list(state.get("errors", []))
+    mutation_cases: list[dict[str, Any]] = []
+    case_temp_refs: list[str] = []
+    for case in state.get("case_states", []):
+        mutation_kind = str(case.get("mutation_kind"))
+        verify = case.get("final_verify_report")
+        verify_path = case.get("final_verify_report_path")
+        final_verify_status = str(verify.get("status", "not_run")) if isinstance(verify, dict) else "not_run"
+        counted_same_final_theorem = final_verify_status == "passed"
+        if mutation_kind == "positive_control":
+            if not counted_same_final_theorem:
+                errors.append(f"{mutation_kind}:positive_control_did_not_reproduce_final_theorem")
+        else:
+            if counted_same_final_theorem:
+                errors.append(f"{mutation_kind}:mutation_produced_same_counted_final_theorem")
+
+        command_log, command_log_ref = build_command_log(
+            run_dir=run_dir,
+            temp_dir=Path(str(case.get("temp_dir"))),
+            task_id=task_id,
+            baseline_id=str(state.get("baseline_id", "B2")),
+            source_actual_run_ref=str(state.get("source_actual_run_ref")),
+            mutation_kind=mutation_kind,
+            input_artifact_set_hash=str(case.get("input_artifact_set_hash")),
+            output_patch_hash=str(case.get("output_patch_hash")),
+            compiler_status=str(case.get("compiler_status")),
+            compiler_error=case.get("compiler_error"),
+            proof_worker_result=case.get("worker") if isinstance(case.get("worker"), dict) else {},
+            final_verify_report=verify if isinstance(verify, dict) else None,
+            final_verify_report_path=verify_path if isinstance(verify_path, Path) else None,
+        )
+        command_log_path = run_dir / COMMAND_LOG_DIR / f"{safe_path_part(task_id)}__{safe_path_part(mutation_kind)}.json"
+        write_json(command_log_path, command_log)
+        mutation_cases.append(
+            {
+                "mutation_kind": mutation_kind,
+                "command_log_ref": command_log_ref,
+                "input_artifact_set_hash": case.get("input_artifact_set_hash"),
+                "output_patch_hash": case.get("output_patch_hash"),
+                "final_verify_status": final_verify_status,
+                "counted_same_final_theorem": counted_same_final_theorem,
+            }
+        )
+        case_temp_refs.append(str(case.get("temp_run_dir_ref")))
+        errors.extend(f"{mutation_kind}:{error}" for error in case.get("verify_errors", []))
 
     unsigned = {
         "schema_version": "SolverCausalityLiveRunV1",
-        "source_actual_run_ref": source_actual_run_ref,
+        "source_actual_run_ref": state.get("source_actual_run_ref"),
         "temp_run_dir_ref": sha256_text(canonical_json(case_temp_refs)),
         "mutation_cases": mutation_cases,
         "status": "passed" if not errors else "failed",
@@ -192,8 +265,8 @@ def process_b2_success_record(
     write_json(report_path, report)
     return {
         "task_id": task_id,
-        "record_path": record_path.relative_to(run_dir).as_posix(),
-        "source_actual_run_ref": source_actual_run_ref,
+        "record_path": state.get("record_path_rel"),
+        "source_actual_run_ref": state.get("source_actual_run_ref"),
         "status": report["status"],
         "errors": sorted(set(errors)),
         "report": report,
@@ -238,7 +311,7 @@ def reconstruct_inputs(
     }
 
 
-def run_mutation_case(
+def prepare_mutation_case(
     *,
     run_dir: Path,
     source_actual_run_ref: str,
@@ -299,63 +372,152 @@ def run_mutation_case(
     )
     worker_path = temp_dir / PROOF_WORKER_RESULT_DIR / "proof_worker_result.json"
     write_json(worker_path, worker)
-    worker_status = str(worker.get("status", "failed"))
     candidate_path = Path(str(worker.get("generated_candidate_path") or ""))
-    final_verify_status = "not_run"
-    verify: dict[str, Any] | None = None
-    verify_path: Path | None = None
-    if candidate_path.exists():
-        verify = final_verify_gate_v0_6(
-            source_path=source_path,
-            candidate_path=candidate_path,
-            theorem_anchor=theorem_anchor,
-            proof_worker_result=worker,
-            output_dir=temp_dir,
-        )
-        final_verify_status = str(verify.get("status", "failed"))
-        verify_path = temp_dir / FINAL_VERIFY_REPORT_DIR / "final_verify_report.json"
-        write_json(verify_path, verify)
-    else:
+    if not candidate_path.exists():
         errors.append("proof_worker_did_not_generate_candidate")
 
-    counted_same_final_theorem = final_verify_status == "passed"
-    if mutation_kind == "positive_control":
-        if not counted_same_final_theorem:
-            errors.append("positive_control_did_not_reproduce_final_theorem")
-    else:
-        if counted_same_final_theorem:
-            errors.append("mutation_produced_same_counted_final_theorem")
-
-    command_log, command_log_ref = build_command_log(
-        run_dir=run_dir,
-        temp_dir=temp_dir,
-        task_id=task_id,
-        baseline_id=baseline_id,
-        source_actual_run_ref=source_actual_run_ref,
-        mutation_kind=mutation_kind,
-        input_artifact_set_hash=input_artifact_set_hash,
-        output_patch_hash=output_patch_hash,
-        compiler_status=compiler_status,
-        compiler_error=compiler_error,
-        proof_worker_result=worker,
-        final_verify_report=verify,
-        final_verify_report_path=verify_path,
-    )
-    command_log_path = run_dir / COMMAND_LOG_DIR / f"{safe_path_part(task_id)}__{safe_path_part(mutation_kind)}.json"
-    write_json(command_log_path, command_log)
-    case_record = {
+    return {
+        "task_id": task_id,
+        "baseline_id": baseline_id,
+        "source_actual_run_ref": source_actual_run_ref,
         "mutation_kind": mutation_kind,
-        "command_log_ref": command_log_ref,
+        "temp_dir": temp_dir,
+        "source_path": source_path,
+        "theorem_anchor": theorem_anchor,
+        "worker": worker,
+        "worker_path": worker_path,
+        "candidate_path": candidate_path if candidate_path.exists() else None,
         "input_artifact_set_hash": input_artifact_set_hash,
         "output_patch_hash": output_patch_hash,
-        "final_verify_status": final_verify_status,
-        "counted_same_final_theorem": counted_same_final_theorem,
-    }
-    return {
-        "case_record": case_record,
+        "compiler_status": compiler_status,
+        "compiler_error": compiler_error,
         "temp_run_dir_ref": sha256_text(canonical_json({"temp_dir": str(temp_dir), "input_hash": input_artifact_set_hash, "patch_hash": output_patch_hash})),
-        "errors": sorted(set(errors)),
+        "prepare_errors": sorted(set(errors)),
+        "verify_errors": [],
     }
+
+
+def causality_final_verify_batch_size() -> int:
+    return max(1, int(os.environ.get("FULL2D_CAUSALITY_FINAL_VERIFY_BATCH_SIZE", "40")))
+
+
+def causality_final_verify_batch_workers() -> int:
+    return max(1, int(os.environ.get("FULL2D_CAUSALITY_FINAL_VERIFY_BATCH_WORKERS", "4")))
+
+
+def run_causality_final_verify_batches(run_dir: Path, case_states: list[dict[str, Any]]) -> None:
+    candidate_states = [case for case in case_states if isinstance(case.get("candidate_path"), Path)]
+    batch_size = causality_final_verify_batch_size()
+    batch_workers = causality_final_verify_batch_workers()
+    batches: list[tuple[int, str, list[dict[str, Any]]]] = []
+    batch_index = 0
+    for mutation_kind in MUTATION_KINDS:
+        rows = [case for case in candidate_states if case.get("mutation_kind") == mutation_kind]
+        for index in range(0, len(rows), batch_size):
+            batches.append((batch_index, mutation_kind, rows[index : index + batch_size]))
+            batch_index += 1
+    if not batches:
+        return
+    batch_rows_by_index = {batch_index: rows for batch_index, _mutation_kind, rows in batches}
+    with ThreadPoolExecutor(max_workers=batch_workers) as executor:
+        futures = {
+            executor.submit(run_one_causality_final_verify_batch, run_dir, batch_index, mutation_kind, rows): batch_index
+            for batch_index, mutation_kind, rows in batches
+        }
+        for future in as_completed(futures):
+            try:
+                future.result()
+            except Exception as exc:  # pragma: no cover - release evidence defensive path.
+                batch_index = futures[future]
+                for case in batch_rows_by_index.get(batch_index, []):
+                    if case.get("final_verify_report") is None:
+                        case.setdefault("verify_errors", []).append(f"final_verify_batch_{batch_index}_exception:{exc}")
+
+
+def run_one_causality_final_verify_batch(run_dir: Path, batch_index: int, mutation_kind: str, case_states: list[dict[str, Any]]) -> None:
+    if not case_states:
+        return
+    batch_path = write_causality_final_verify_batch_source(run_dir, batch_index, mutation_kind, case_states)
+    batch_ref = file_sha256(batch_path)
+    lean = run_lake_env_lean(batch_path, timeout_sec=max(180, len(case_states) * 30))
+    if mutation_kind == "positive_control" and lean.get("returncode") != 0:
+        for case in case_states:
+            verify_case_state(run_dir, case, lean_result=None, batch_path=None, batch_ref=None)
+        return
+    for case in case_states:
+        verify_case_state(run_dir, case, lean_result=lean, batch_path=batch_path, batch_ref=batch_ref)
+
+
+def write_causality_final_verify_batch_source(
+    run_dir: Path,
+    batch_index: int,
+    mutation_kind: str,
+    case_states: list[dict[str, Any]],
+) -> Path:
+    batch_dir = run_dir / CAUSALITY_BATCH_DIR
+    batch_dir.mkdir(parents=True, exist_ok=True)
+    lines = [
+        "import MathAutoResearch.GeometryFull2D.RuleLemmas",
+        "",
+        "namespace MathAutoResearch.GeometryFull2D",
+        "",
+    ]
+    for case in case_states:
+        candidate_path = case.get("candidate_path")
+        if not isinstance(candidate_path, Path):
+            continue
+        lines.append(f"-- causality_mutation_kind:{mutation_kind}")
+        lines.append(f"-- causality_task_id:{safe_path_part(str(case.get('task_id')))}")
+        lines.append(f"-- final_verify_batch_member:{candidate_path.as_posix()}")
+        lines.append(f"-- final_verify_candidate_ref:{file_sha256(candidate_path)}")
+        lines.append(candidate_theorem_body_for_batch(candidate_path))
+        lines.append("")
+    lines.append("end MathAutoResearch.GeometryFull2D")
+    path = batch_dir / f"{batch_index:04d}__{safe_path_part(mutation_kind)}.lean"
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return path
+
+
+def candidate_theorem_body_for_batch(candidate_path: Path) -> str:
+    rows: list[str] = []
+    for line in candidate_path.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if stripped.startswith("import "):
+            continue
+        if stripped == "namespace MathAutoResearch.GeometryFull2D":
+            continue
+        if stripped == "end MathAutoResearch.GeometryFull2D":
+            continue
+        rows.append(line)
+    return "\n".join(rows).strip() + "\n"
+
+
+def verify_case_state(
+    run_dir: Path,
+    case: dict[str, Any],
+    *,
+    lean_result: dict[str, Any] | None,
+    batch_path: Path | None,
+    batch_ref: str | None,
+) -> None:
+    candidate_path = case.get("candidate_path")
+    if not isinstance(candidate_path, Path):
+        case.setdefault("verify_errors", []).append("final_verify_candidate_missing")
+        return
+    verify = final_verify_gate_v0_6(
+        source_path=Path(str(case["source_path"])),
+        candidate_path=candidate_path,
+        theorem_anchor=case["theorem_anchor"],
+        proof_worker_result=case["worker"],
+        output_dir=Path(str(case["temp_dir"])),
+        lean_result=lean_result,
+        batch_source_path=batch_path,
+        batch_source_ref=batch_ref,
+    )
+    verify_path = Path(str(case["temp_dir"])) / FINAL_VERIFY_REPORT_DIR / "final_verify_report.json"
+    write_json(verify_path, verify)
+    case["final_verify_report"] = verify
+    case["final_verify_report_path"] = verify_path
 
 
 def compile_case(
