@@ -253,13 +253,19 @@ def final_verify_gate_v0_6(
     proof_worker_result: dict[str, Any],
     output_dir: Path,
     timeout_sec: int = 120,
+    lean_result: dict[str, Any] | None = None,
+    batch_source_path: Path | None = None,
+    batch_source_ref: str | None = None,
 ) -> dict[str, Any]:
     source_path = source_path if source_path.is_absolute() else ROOT / source_path
     candidate_path = candidate_path if candidate_path.is_absolute() else ROOT / candidate_path
     source_text = source_path.read_text(encoding="utf-8")
     candidate_text = candidate_path.read_text(encoding="utf-8") if candidate_path.exists() else ""
     theorem_name = theorem_name_from_anchor(theorem_anchor)
-    lean = run_lake_env_lean(candidate_path, timeout_sec=timeout_sec) if candidate_path.exists() else {"command": ["lake", "env", "lean", str(candidate_path)], "returncode": 127, "stdout_tail": "", "stderr_tail": "candidate missing"}
+    if lean_result is not None:
+        lean = lean_result
+    else:
+        lean = run_lake_env_lean(candidate_path, timeout_sec=timeout_sec) if candidate_path.exists() else {"command": ["lake", "env", "lean", str(candidate_path)], "returncode": 127, "stdout_tail": "", "stderr_tail": "candidate missing"}
     candidate_hash = file_sha256(candidate_path) if candidate_path.exists() else sha256_text("missing_candidate")
     errors: list[str] = []
     theorem_statement_unchanged = False
@@ -312,6 +318,9 @@ def final_verify_gate_v0_6(
         "lake_env_lean_returncode": lean["returncode"],
         "lake_env_lean_stdout_tail": lean["stdout_tail"],
         "lake_env_lean_stderr_tail": lean["stderr_tail"],
+        "final_verify_execution_mode": "batch_lake_env_lean" if lean_result is not None else "single_candidate_lake_env_lean",
+        "final_verify_batch_source_path": str(batch_source_path) if batch_source_path is not None else None,
+        "final_verify_batch_source_ref": batch_source_ref,
         "status": "passed" if not errors else "failed",
         "theorem_statement_unchanged": theorem_statement_unchanged,
         "proof_region_guard_passed": proof_region_guard_passed,
@@ -323,7 +332,18 @@ def final_verify_gate_v0_6(
         "toy_target_definitions": toy_tokens,
         "non_admitted_imports": bad_imports,
         "protected_theorem_unchanged": protected_theorem_unchanged,
-        "command_log_ref": sha256_text(canonical_json({"stage": "final_verify", "candidate": str(candidate_path), "lean": lean, "errors": errors})),
+        "command_log_ref": sha256_text(
+            canonical_json(
+                {
+                    "stage": "final_verify",
+                    "candidate": str(candidate_path),
+                    "lean": lean,
+                    "batch_source_path": str(batch_source_path) if batch_source_path is not None else None,
+                    "batch_source_ref": batch_source_ref,
+                    "errors": errors,
+                }
+            )
+        ),
         "candidate_hash": candidate_hash,
         "final_status_source": "FinalVerifyReportFull2D",
         "proof_use_status": "final_theorem" if not errors else "not_allowed",

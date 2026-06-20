@@ -77,6 +77,7 @@ ACTUAL_RUN_DIR = "actual_task_pipeline_runs_v0_6"
 SOURCE_TASK_DIR = "source_theorems_v0_6"
 STAGE_FAILURE_DIR = "stage_failures_v0_6"
 DISABLED_STAGE_DIR = "disabled_stage_reports_v0_6"
+FINAL_VERIFY_BATCH_DIR = "final_verify_batches_v0_6"
 MATRIX_SUMMARY = "full2d_matrix_summary_v0_6.json"
 _GIT_STATUS_HASH: str | None = None
 _SELECTED_IMPLEMENTATION_HASH_BY_CORPUS: dict[str, str] = {}
@@ -413,6 +414,30 @@ def proof_worker_parallelism() -> int:
     return max(2, min(8, cpu_count // 2 if cpu_count > 2 else 2))
 
 
+def final_verify_batch_size() -> int:
+    raw = os.environ.get("FULL2D_FINAL_VERIFY_BATCH_SIZE", "").strip()
+    if raw:
+        try:
+            parsed = int(raw)
+            if parsed >= 1:
+                return parsed
+        except ValueError:
+            pass
+    return 40
+
+
+def final_verify_batch_workers() -> int:
+    raw = os.environ.get("FULL2D_FINAL_VERIFY_BATCH_WORKERS", "").strip()
+    if raw:
+        try:
+            parsed = int(raw)
+            if parsed >= 1:
+                return parsed
+        except ValueError:
+            pass
+    return max(1, min(4, proof_worker_parallelism()))
+
+
 def run_parallel_proof_worker_final_verify_stage(run_dir: Path) -> dict[str, Any]:
     run_dir = run_dir if run_dir.is_absolute() else ROOT / run_dir
     patch_paths = sorted((run_dir / proof_worker_module.LEAN_PATCH_DIR).glob("*.json"))
@@ -427,19 +452,19 @@ def run_parallel_proof_worker_final_verify_stage(run_dir: Path) -> dict[str, Any
     if not patch_paths:
         errors.append("missing_lean_patch_candidates")
 
-    bundles: list[dict[str, Any]] = []
+    apply_bundles: list[dict[str, Any]] = []
     max_workers = proof_worker_parallelism()
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_patch = {
-            executor.submit(run_one_proof_worker_final_verify, run_dir, patch_path, anchor_by_ref): patch_path
+            executor.submit(run_one_proof_worker_apply, run_dir, patch_path, anchor_by_ref): patch_path
             for patch_path in patch_paths
         }
         for future in as_completed(future_to_patch):
             patch_path = future_to_patch[future]
             try:
-                bundles.append(future.result())
+                apply_bundles.append(future.result())
             except Exception as exc:  # pragma: no cover - defensive release evidence path.
-                bundles.append(
+                apply_bundles.append(
                     {
                         "patch_name": patch_path.name,
                         "worker_path": None,
@@ -456,6 +481,26 @@ def run_parallel_proof_worker_final_verify_stage(run_dir: Path) -> dict[str, Any
                         "errors": [f"{patch_path.name}:proof_worker_final_verify_exception:{exc}"],
                     }
                 )
+
+    bundles = list(apply_bundles)
+    candidate_bundles = [
+        bundle
+        for bundle in bundles
+        if bundle.get("candidate_path") and bundle.get("worker", {}).get("status") == "patch_applied"
+    ]
+    batch_size = final_verify_batch_size()
+    batch_workers = final_verify_batch_workers()
+    batch_groups = [candidate_bundles[index : index + batch_size] for index in range(0, len(candidate_bundles), batch_size)]
+    with ThreadPoolExecutor(max_workers=batch_workers) as executor:
+        futures = {
+            executor.submit(run_one_final_verify_batch, run_dir, batch_index, group): batch_index
+            for batch_index, group in enumerate(batch_groups)
+        }
+        for future in as_completed(futures):
+            try:
+                future.result()
+            except Exception as exc:  # pragma: no cover - defensive release evidence path.
+                errors.append(f"final_verify_batch_{futures[future]}_exception:{exc}")
 
     worker_paths: list[str] = []
     verify_paths: list[str] = []
@@ -478,6 +523,9 @@ def run_parallel_proof_worker_final_verify_stage(run_dir: Path) -> dict[str, Any
         "git_head": current_git_head(),
         "parallel_execution": True,
         "parallel_workers": max_workers,
+        "final_verify_execution_mode": "batch_lake_env_lean",
+        "final_verify_batch_size": batch_size,
+        "final_verify_batch_workers": batch_workers,
     }
     write_json(run_dir / proof_worker_module.PROOF_WORKER_INDEX_NAME, index)
     return {
@@ -492,10 +540,13 @@ def run_parallel_proof_worker_final_verify_stage(run_dir: Path) -> dict[str, Any
         else str(run_dir / proof_worker_module.PROOF_WORKER_INDEX_NAME),
         "parallel_execution": True,
         "parallel_workers": max_workers,
+        "final_verify_execution_mode": "batch_lake_env_lean",
+        "final_verify_batch_size": batch_size,
+        "final_verify_batch_workers": batch_workers,
     }
 
 
-def run_one_proof_worker_final_verify(
+def run_one_proof_worker_apply(
     run_dir: Path,
     patch_path: Path,
     anchor_by_ref: dict[str, dict[str, Any]],
@@ -537,43 +588,117 @@ def run_one_proof_worker_final_verify(
     if worker_errors:
         errors.extend(f"{patch_path.name}:worker:{error}" for error in sorted(set(worker_errors)))
 
-    verify: dict[str, Any] | None = None
     candidate_path = worker.get("generated_candidate_path")
-    if isinstance(candidate_path, str) and candidate_path:
-        verify = proof_worker_module.final_verify_gate_v0_6(
-            source_path=source_path,
-            candidate_path=Path(candidate_path),
-            theorem_anchor=anchor,
-            proof_worker_result=worker,
-            output_dir=run_dir,
-        )
-        verify_path = run_dir / FINAL_VERIFY_REPORT_DIR / patch_path.name
-        write_json(verify_path, verify)
-        verify_errors = validate_payload(verify)
-        if verify.get("status") != "passed":
-            verify_errors.extend(str(item) for item in verify.get("errors", []))
-            verify_errors.append("final_verify_status_not_passed")
-        if verify_errors:
-            errors.extend(f"{patch_path.name}:final_verify:{error}" for error in verify_errors)
-    else:
-        verify_path = None
+    if not isinstance(candidate_path, str) or not candidate_path:
         errors.append(f"{patch_path.name}:final_verify:not_run")
 
     return {
         "patch_name": patch_path.name,
+        "patch_path": patch_path,
+        "anchor": anchor,
+        "source_path": source_path,
+        "worker": worker,
+        "candidate_path": Path(candidate_path) if isinstance(candidate_path, str) and candidate_path else None,
         "worker_path": worker_path.relative_to(run_dir).as_posix(),
-        "verify_path": verify_path.relative_to(run_dir).as_posix() if verify is not None and verify_path is not None else None,
+        "verify_path": None,
         "result": {
             "patch_candidate_ref": file_sha256(patch_path),
             "proof_worker_result_ref": file_sha256(worker_path),
-            "final_verify_report_ref": file_sha256(verify_path) if verify is not None and verify_path is not None else None,
+            "final_verify_report_ref": None,
             "worker_status": worker.get("status"),
-            "final_verify_status": verify.get("status") if verify is not None else "not_run",
+            "final_verify_status": "not_run",
             "worker_errors": worker.get("errors", []),
-            "final_verify_errors": verify.get("errors", []) if verify is not None else [],
+            "final_verify_errors": [],
         },
         "errors": errors,
     }
+
+
+def run_one_final_verify_batch(run_dir: Path, batch_index: int, bundles: list[dict[str, Any]]) -> None:
+    if not bundles:
+        return
+    batch_path = write_final_verify_batch_source(run_dir, batch_index, bundles)
+    batch_ref = file_sha256(batch_path)
+    lean = proof_worker_module.run_lake_env_lean(batch_path, timeout_sec=max(180, len(bundles) * 30))
+    if lean.get("returncode") != 0:
+        for bundle in bundles:
+            verify_one_bundle(run_dir, bundle, lean_result=None, batch_path=None, batch_ref=None)
+        return
+    for bundle in bundles:
+        verify_one_bundle(run_dir, bundle, lean_result=lean, batch_path=batch_path, batch_ref=batch_ref)
+
+
+def write_final_verify_batch_source(run_dir: Path, batch_index: int, bundles: list[dict[str, Any]]) -> Path:
+    batch_dir = run_dir / FINAL_VERIFY_BATCH_DIR
+    batch_dir.mkdir(parents=True, exist_ok=True)
+    lines = [
+        "import MathAutoResearch.GeometryFull2D.RuleLemmas",
+        "",
+        "namespace MathAutoResearch.GeometryFull2D",
+        "",
+    ]
+    for bundle in bundles:
+        candidate_path = bundle.get("candidate_path")
+        if not isinstance(candidate_path, Path):
+            continue
+        lines.append(f"-- final_verify_batch_member:{candidate_path.as_posix()}")
+        lines.append(f"-- final_verify_candidate_ref:{file_sha256(candidate_path)}")
+        lines.append(candidate_theorem_body_for_batch(candidate_path))
+        lines.append("")
+    lines.append("end MathAutoResearch.GeometryFull2D")
+    path = batch_dir / f"batch_{batch_index:04d}.lean"
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return path
+
+
+def candidate_theorem_body_for_batch(candidate_path: Path) -> str:
+    rows: list[str] = []
+    for line in candidate_path.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if stripped.startswith("import "):
+            continue
+        if stripped == "namespace MathAutoResearch.GeometryFull2D":
+            continue
+        if stripped == "end MathAutoResearch.GeometryFull2D":
+            continue
+        rows.append(line)
+    return "\n".join(rows).strip() + "\n"
+
+
+def verify_one_bundle(
+    run_dir: Path,
+    bundle: dict[str, Any],
+    *,
+    lean_result: dict[str, Any] | None,
+    batch_path: Path | None,
+    batch_ref: str | None,
+) -> None:
+    candidate_path = bundle.get("candidate_path")
+    if not isinstance(candidate_path, Path):
+        bundle.setdefault("errors", []).append(f"{bundle.get('patch_name')}:final_verify:not_run")
+        return
+    verify = proof_worker_module.final_verify_gate_v0_6(
+        source_path=bundle["source_path"],
+        candidate_path=candidate_path,
+        theorem_anchor=bundle["anchor"],
+        proof_worker_result=bundle["worker"],
+        output_dir=run_dir,
+        lean_result=lean_result,
+        batch_source_path=batch_path,
+        batch_source_ref=batch_ref,
+    )
+    verify_path = run_dir / FINAL_VERIFY_REPORT_DIR / str(bundle["patch_name"])
+    write_json(verify_path, verify)
+    verify_errors = validate_payload(verify)
+    if verify.get("status") != "passed":
+        verify_errors.extend(str(item) for item in verify.get("errors", []))
+        verify_errors.append("final_verify_status_not_passed")
+    if verify_errors:
+        bundle.setdefault("errors", []).extend(f"{bundle.get('patch_name')}:final_verify:{error}" for error in verify_errors)
+    bundle["verify_path"] = verify_path.relative_to(run_dir).as_posix()
+    bundle["result"]["final_verify_report_ref"] = file_sha256(verify_path)
+    bundle["result"]["final_verify_status"] = verify.get("status")
+    bundle["result"]["final_verify_errors"] = verify.get("errors", [])
 
 
 def materialize_b2_records(*, run_dir: Path, baseline_dir: Path, corpus_root: Path, config_path: Path, tasks: list[dict[str, Any]]) -> dict[str, Any]:
