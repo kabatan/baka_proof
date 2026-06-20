@@ -1,0 +1,3890 @@
+{
+  "checker_name": "check_rule_registry_v0_6.py",
+  "counted_rule_count": 36,
+  "counted_rule_family_count": 21,
+  "errors": [],
+  "helper_rule_count": 3,
+  "lean_report": {
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "lean\\MathAutoResearch\\GeometryFull2D\\RuleLemmas.lean"
+    ],
+    "returncode": 0,
+    "schema_version": "RuleLemmaLeanElaborationReportV06",
+    "status": "passed",
+    "stderr_tail": "warning: UnicodeBasic: repository '.\\.\\.lake/packages\\UnicodeBasic' has local changes\nwarning: batteries: repository '.\\.\\.lake/packages\\batteries' has local changes\n",
+    "stdout_tail": ""
+  },
+  "red_cases": {
+    "errors": [],
+    "local_negative_results": {
+      "alias_inflation_registry": [
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:02",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:03",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:04",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:05",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:06",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:07",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:08",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:09",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:10",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:11",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:12",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:13",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:14",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:15",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:16",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:17",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:18",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:19",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:20",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:21",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:22",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:23",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:24",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:25",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:26",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:27",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:28",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:29",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:30",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:31",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:32",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:33",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:34",
+        "alias_inflation_duplicate_semantics:full2d_rule:alias_inflation:35",
+        "counted_alias_rule:full2d_rule:alias_inflation:02",
+        "counted_alias_rule:full2d_rule:alias_inflation:03",
+        "counted_alias_rule:full2d_rule:alias_inflation:04",
+        "counted_alias_rule:full2d_rule:alias_inflation:05",
+        "counted_alias_rule:full2d_rule:alias_inflation:06",
+        "counted_alias_rule:full2d_rule:alias_inflation:07",
+        "counted_alias_rule:full2d_rule:alias_inflation:08",
+        "counted_alias_rule:full2d_rule:alias_inflation:09",
+        "counted_alias_rule:full2d_rule:alias_inflation:10",
+        "counted_alias_rule:full2d_rule:alias_inflation:11",
+        "counted_alias_rule:full2d_rule:alias_inflation:12",
+        "counted_alias_rule:full2d_rule:alias_inflation:13",
+        "counted_alias_rule:full2d_rule:alias_inflation:14",
+        "counted_alias_rule:full2d_rule:alias_inflation:15",
+        "counted_alias_rule:full2d_rule:alias_inflation:16",
+        "counted_alias_rule:full2d_rule:alias_inflation:17",
+        "counted_alias_rule:full2d_rule:alias_inflation:18",
+        "counted_alias_rule:full2d_rule:alias_inflation:19",
+        "counted_alias_rule:full2d_rule:alias_inflation:20",
+        "counted_alias_rule:full2d_rule:alias_inflation:21",
+        "counted_alias_rule:full2d_rule:alias_inflation:22",
+        "counted_alias_rule:full2d_rule:alias_inflation:23",
+        "counted_alias_rule:full2d_rule:alias_inflation:24",
+        "counted_alias_rule:full2d_rule:alias_inflation:25",
+        "counted_alias_rule:full2d_rule:alias_inflation:26",
+        "counted_alias_rule:full2d_rule:alias_inflation:27",
+        "counted_alias_rule:full2d_rule:alias_inflation:28",
+        "counted_alias_rule:full2d_rule:alias_inflation:29",
+        "counted_alias_rule:full2d_rule:alias_inflation:30",
+        "counted_alias_rule:full2d_rule:alias_inflation:31",
+        "counted_alias_rule:full2d_rule:alias_inflation:32",
+        "counted_alias_rule:full2d_rule:alias_inflation:33",
+        "counted_alias_rule:full2d_rule:alias_inflation:34",
+        "counted_alias_rule:full2d_rule:alias_inflation:35",
+        "counted_rule_family_count_below_15:1",
+        "rule_fixture_suite:full2d_rule:alias_inflation:01:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:01:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:01:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:02:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:02:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:02:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:03:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:03:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:03:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:04:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:04:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:04:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:05:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:05:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:05:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:06:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:06:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:06:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:07:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:07:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:07:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:08:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:08:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:08:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:09:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:09:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:09:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:10:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:10:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:10:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:11:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:11:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:11:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:12:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:12:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:12:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:13:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:13:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:13:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:14:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:14:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:14:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:15:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:15:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:15:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:16:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:16:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:16:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:17:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:17:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:17:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:18:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:18:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:18:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:19:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:19:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:19:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:20:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:20:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:20:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:21:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:21:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:21:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:22:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:22:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:22:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:23:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:23:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:23:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:24:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:24:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:24:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:25:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:25:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:25:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:26:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:26:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:26:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:27:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:27:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:27:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:28:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:28:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:28:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:29:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:29:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:29:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:30:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:30:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:30:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:31:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:31:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:31:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:32:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:32:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:32:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:33:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:33:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:33:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:34:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:34:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:34:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:35:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:alias_inflation:35:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:alias_inflation:35:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed"
+      ],
+      "identity_only_registry": [
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:02",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:03",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:04",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:05",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:06",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:07",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:08",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:09",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:10",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:11",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:12",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:13",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:14",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:15",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:16",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:17",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:18",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:19",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:20",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:21",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:22",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:23",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:24",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:25",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:26",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:27",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:28",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:29",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:30",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:31",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:32",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:33",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:34",
+        "alias_inflation_duplicate_semantics:full2d_rule:identity_only:35",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:01",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:02",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:03",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:04",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:05",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:06",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:07",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:08",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:09",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:10",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:11",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:12",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:13",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:14",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:15",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:16",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:17",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:18",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:19",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:20",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:21",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:22",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:23",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:24",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:25",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:26",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:27",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:28",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:29",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:30",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:31",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:32",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:33",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:34",
+        "counted_identity_or_facade_rule:full2d_rule:identity_only:35",
+        "counted_identity_rule:full2d_rule:identity_only:01",
+        "counted_identity_rule:full2d_rule:identity_only:02",
+        "counted_identity_rule:full2d_rule:identity_only:03",
+        "counted_identity_rule:full2d_rule:identity_only:04",
+        "counted_identity_rule:full2d_rule:identity_only:05",
+        "counted_identity_rule:full2d_rule:identity_only:06",
+        "counted_identity_rule:full2d_rule:identity_only:07",
+        "counted_identity_rule:full2d_rule:identity_only:08",
+        "counted_identity_rule:full2d_rule:identity_only:09",
+        "counted_identity_rule:full2d_rule:identity_only:10",
+        "counted_identity_rule:full2d_rule:identity_only:11",
+        "counted_identity_rule:full2d_rule:identity_only:12",
+        "counted_identity_rule:full2d_rule:identity_only:13",
+        "counted_identity_rule:full2d_rule:identity_only:14",
+        "counted_identity_rule:full2d_rule:identity_only:15",
+        "counted_identity_rule:full2d_rule:identity_only:16",
+        "counted_identity_rule:full2d_rule:identity_only:17",
+        "counted_identity_rule:full2d_rule:identity_only:18",
+        "counted_identity_rule:full2d_rule:identity_only:19",
+        "counted_identity_rule:full2d_rule:identity_only:20",
+        "counted_identity_rule:full2d_rule:identity_only:21",
+        "counted_identity_rule:full2d_rule:identity_only:22",
+        "counted_identity_rule:full2d_rule:identity_only:23",
+        "counted_identity_rule:full2d_rule:identity_only:24",
+        "counted_identity_rule:full2d_rule:identity_only:25",
+        "counted_identity_rule:full2d_rule:identity_only:26",
+        "counted_identity_rule:full2d_rule:identity_only:27",
+        "counted_identity_rule:full2d_rule:identity_only:28",
+        "counted_identity_rule:full2d_rule:identity_only:29",
+        "counted_identity_rule:full2d_rule:identity_only:30",
+        "counted_identity_rule:full2d_rule:identity_only:31",
+        "counted_identity_rule:full2d_rule:identity_only:32",
+        "counted_identity_rule:full2d_rule:identity_only:33",
+        "counted_identity_rule:full2d_rule:identity_only:34",
+        "counted_identity_rule:full2d_rule:identity_only:35",
+        "counted_rule_family_count_below_15:1",
+        "rule_fixture_suite:full2d_rule:identity_only:01:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:01:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:01:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:02:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:02:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:02:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:03:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:03:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:03:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:04:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:04:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:04:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:05:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:05:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:05:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:06:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:06:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:06:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:07:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:07:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:07:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:08:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:08:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:08:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:09:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:09:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:09:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:10:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:10:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:10:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:11:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:11:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:11:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:12:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:12:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:12:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:13:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:13:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:13:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:14:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:14:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:14:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:15:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:15:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:15:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:16:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:16:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:16:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:17:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:17:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:17:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:18:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:18:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:18:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:19:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:19:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:19:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:20:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:20:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:20:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:21:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:21:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:21:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:22:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:22:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:22:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:23:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:23:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:23:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:24:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:24:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:24:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:25:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:25:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:25:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:26:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:26:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:26:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:27:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:27:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:27:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:28:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:28:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:28:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:29:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:29:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:29:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:30:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:30:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:30:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:31:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:31:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:31:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:32:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:32:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:32:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:33:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:33:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:33:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:34:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:34:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:34:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:35:positive_fixture_not_passing",
+        "rule_fixture_suite:full2d_rule:identity_only:35:positive_fixtures:positive:full2d_rule:construction_circle:01:canonical:expected_passed_observed_failed",
+        "rule_fixture_suite:full2d_rule:identity_only:35:positive_fixtures:positive:full2d_rule:construction_circle:01:renamed_objects:expected_passed_observed_failed"
+      ],
+      "missing_lean_lemma": [
+        "lean_lemma_missing:full2d_rule:construction_circle:01:MathAutoResearch.GeometryFull2D.not_a_real_lemma"
+      ],
+      "missing_mutation_sensitivity": [
+        "counted_rule_missing_mutation_fixtures:full2d_rule:construction_circle:01",
+        "counted_rule_not_mutation_sensitive:full2d_rule:construction_circle:01",
+        "rule_fixture_suite:full2d_rule:construction_circle:01:missing_executable_mutation_fixtures"
+      ],
+      "missing_negative_fixtures": [
+        "empty_rule_list_field:full2d_rule:construction_circle:01:negative_fixtures",
+        "empty_rule_list_field:full2d_rule:construction_circle:01:unsupported_variants",
+        "rule_fixture_suite:full2d_rule:construction_circle:01:missing_executable_negative_fixtures",
+        "rule_fixture_suite:full2d_rule:construction_circle:01:missing_executable_unsupported_variants"
+      ]
+    },
+    "manifest_cases": [
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-012",
+          "K-013",
+          "K-027"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:76a40ccdbaa1c8d5940c772778fbb73020f544c9a1c5fbf9dd13c6d790bb70eb",
+        "expected_K": [
+          "K-012"
+        ],
+        "failure_class": "Identity/direct-rule registry",
+        "fixture_name": "RedCase_IdentityDirectRuleRegistry",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-003",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "RC-003",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-012"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-012",
+              "K-013",
+              "K-027"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          }
+        ]
+      },
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-012",
+          "K-029"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:f00cc1ef51c5ee4f3cb87a9a2e668065f3def8e6520db511fa72d1314cfd093c",
+        "expected_K": [
+          "K-012",
+          "K-029"
+        ],
+        "failure_class": "Rule hack",
+        "fixture_name": "RedCase_RuleHack",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-013",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "RC-013",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-012",
+              "K-029"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-012",
+              "K-029"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          }
+        ]
+      }
+    ],
+    "schema_version": "RuleRegistryV06RedCaseReport",
+    "status": "passed"
+  },
+  "registry_hash": "sha256:0e557d332b5f9452f4a2be1ba777688ebda5d4b76a500fc229147a9b0a04ebef",
+  "release_mode": true,
+  "rule_count": 39,
+  "rule_fixture_suite": {
+    "errors": [],
+    "rule_checker_import_report": {
+      "checker_code_hash": "sha256:03d2541c5a2ddce844d9ab5095a42efd529a5ae40735bfc33a3683bc9f16e971",
+      "forbidden_imports": [],
+      "imports": [
+        "__future__",
+        "ast",
+        "hashlib",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "module": "scripts.geometry_full2d_v0_6_rule_checkers",
+      "module_path": "scripts/geometry_full2d_v0_6_rule_checkers.py",
+      "schema_version": "RuleCheckerImportReportV06",
+      "status": "passed"
+    },
+    "rule_count": 36,
+    "rule_results": [
+      {
+        "family": "construction_circle",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:13e92651ced3c43f69921c8cebc3d00b051a35feda82ad4fb225f12808df7a2b",
+            "fixture_id": "positive:full2d_rule:construction_circle:01:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:04ee802a4fc0edb68f5377660d592bb54ab73a9a20cbe27a6a18aa947fe284b1",
+            "fixture_id": "positive:full2d_rule:construction_circle:01:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:015e6b31632bb72ae24305f36079ce64308ae179da17c0c06753533202903608",
+            "fixture_id": "negative:full2d_rule:construction_circle:01:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:c5bc3ccdcda9ac56662a32cb7ca8ee4fd76a60c99781da9e156272492cfd5a9b",
+            "fixture_id": "negative:full2d_rule:construction_circle:01:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:8d0f818804a03bac305a9cdf73db3d401c63bd9792e2f1c98848c271330eae20",
+            "fixture_id": "unsupported:full2d_rule:construction_circle:01:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:49dfc9e9c91c11669b26152a57d9e8bcceffdbc525757e41b87dab63bdc7072e",
+            "fixture_id": "unsupported:full2d_rule:construction_circle:01:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:274e25d61854cb3a03beaeb957351d590b3ca13589ac2e8fb4e067992166a077",
+            "fixture_id": "mutation:full2d_rule:construction_circle:01:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:8839eb74f051b4a88aa0a5baa4f5fdc1ddc50e494af0248065eac4af11780d07",
+            "fixture_id": "mutation:full2d_rule:construction_circle:01:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "construction_circle_rule_checker_v0_6",
+        "rule_id": "full2d_rule:construction_circle:01"
+      },
+      {
+        "family": "construction_circle",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:fdfd67754b9ff7ca20caecd399f7bbdabe04f79ae51d26417e13f4d55b1b90e0",
+            "fixture_id": "positive:full2d_rule:construction_circle:02:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:ee8002c4c7708b8c958499d3c9a520a36023a4f1ded40a46d7166fb4f3f2a6b1",
+            "fixture_id": "positive:full2d_rule:construction_circle:02:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:f8691fbcbc04c4fdf878e63d5523ed0f49a7bd8f7f35c09345010b70c05cfb7b",
+            "fixture_id": "negative:full2d_rule:construction_circle:02:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:50f504dc0cce2755dc4d2c963031da7c69f3d1fb67c9db02b151df2ed76f4332",
+            "fixture_id": "negative:full2d_rule:construction_circle:02:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:3974945331b6994ce0dad7b5455ea934ac37d7f12a5883c04852e27e866c8c2a",
+            "fixture_id": "unsupported:full2d_rule:construction_circle:02:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:72118582fe56fced94b1cfed35e3d77ff83eb319a1346437c6e1c93d0adb0b2a",
+            "fixture_id": "unsupported:full2d_rule:construction_circle:02:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:18e75aa437e6dad3a969c6bc7a4f3d21a4b2ed047008d667059e9a7eeb382c1a",
+            "fixture_id": "mutation:full2d_rule:construction_circle:02:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:92b0085c15faea415b2f0111b635d613e2cf50075a2f1e7032f4f884926cc30d",
+            "fixture_id": "mutation:full2d_rule:construction_circle:02:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "construction_circle_rule_checker_v0_6",
+        "rule_id": "full2d_rule:construction_circle:02"
+      },
+      {
+        "family": "construction_circle",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:4e3b99872fcd46c8de707c26e538fc47cf29d6ae8871226df1d7b26ec4972def",
+            "fixture_id": "positive:full2d_rule:construction_circle:03:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:ecaa4111486b2e361cf0adf69c800cf48f5f9823c970b463759e91c05c37c695",
+            "fixture_id": "positive:full2d_rule:construction_circle:03:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:9572422789ac4121081633aef9afd6ef0ae4819a3107b063d2f874a38cd9495d",
+            "fixture_id": "negative:full2d_rule:construction_circle:03:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:969ab929a0eaeca2cc6bac5e15f1eb7c3b14c1bf9734cb26b65d804fb47a913c",
+            "fixture_id": "negative:full2d_rule:construction_circle:03:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:28ab1d873e1f7e697c1c07cf2ab9401df9a2b52170951f56cfd7ebc59c6be980",
+            "fixture_id": "unsupported:full2d_rule:construction_circle:03:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:058313c4ff76b68a2c2bd3b06c1366001720e6d6bfa510723e8d17e2ad587c45",
+            "fixture_id": "unsupported:full2d_rule:construction_circle:03:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:955c50bfe4567d0fc775daf86d60dddd270c9ce3d37b6bb732e8b602f99a28bb",
+            "fixture_id": "mutation:full2d_rule:construction_circle:03:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:a6d9e46afa2318eebcc4fe65ac6dd28b696f9848d7e06064d229e005be19fd30",
+            "fixture_id": "mutation:full2d_rule:construction_circle:03:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "construction_circle_rule_checker_v0_6",
+        "rule_id": "full2d_rule:construction_circle:03"
+      },
+      {
+        "family": "construction_circle",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:2df87a3fa3905766e8f17f807ccd990cfaed011ed969f04695862ddd1fa3864e",
+            "fixture_id": "positive:full2d_rule:construction_circle:04:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:7965086a463a24e62a490aa8d30e8695409de32fe70eed63b0940cd6d679244c",
+            "fixture_id": "positive:full2d_rule:construction_circle:04:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:f76b05141fc3bacf6bd1e43afc53e5ef0844b0a7bf061a489a24fcc8b147a66e",
+            "fixture_id": "negative:full2d_rule:construction_circle:04:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:0214fd9b79c324cb8da4e2ba2c3817b8746b33945e4bc0d50b99809b909fbac5",
+            "fixture_id": "negative:full2d_rule:construction_circle:04:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:30eb06a677ff6f343686c57cd4da22d8d2762d3a6ef146b521fdaf154397ec6e",
+            "fixture_id": "unsupported:full2d_rule:construction_circle:04:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:2d415adbb1880af694bb7f79b9f0bde078872cef8d4b8ed7e61f88706d169869",
+            "fixture_id": "unsupported:full2d_rule:construction_circle:04:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:184432f24b73edf7e555618364a36dbd1631a197b5f162858dc13e8ddc5f9e6f",
+            "fixture_id": "mutation:full2d_rule:construction_circle:04:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:2236ffb0e53c8ccd1f7c8f3e8d347036e2f104b09e9f2a66acf8bcbfc7fef7c9",
+            "fixture_id": "mutation:full2d_rule:construction_circle:04:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "construction_circle_rule_checker_v0_6",
+        "rule_id": "full2d_rule:construction_circle:04"
+      },
+      {
+        "family": "construction_circle",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:437470935ad7b3096af887f8ca2f059b5a1d36a188de1fae5361b33f341fc926",
+            "fixture_id": "positive:full2d_rule:construction_circle:05:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:899237c5869bcc5d2466b2a1a3062190a860446401054dd34beec1f9306b3733",
+            "fixture_id": "positive:full2d_rule:construction_circle:05:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:a413547476bd247e0debefc6bed507bc6171b682d3d6166f9e6df9b54eb5c8f4",
+            "fixture_id": "negative:full2d_rule:construction_circle:05:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:0156d87552de380c695f7fac328a5dc0231cc86fb033ee7447ce917be5ca9910",
+            "fixture_id": "negative:full2d_rule:construction_circle:05:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:80f936d4e79af553bd02b8abdb892db1798390b7506568dd051f4bfe71331c1c",
+            "fixture_id": "unsupported:full2d_rule:construction_circle:05:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:ea8dcd26cdfc7ecdafe7f451c9cb3245e1164afae2a72447463fa78c7dde0c4c",
+            "fixture_id": "unsupported:full2d_rule:construction_circle:05:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:b51516bd178347b68a13893bffded37ba675279e67eb2c998805459e0d8a78a3",
+            "fixture_id": "mutation:full2d_rule:construction_circle:05:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:218255b554cb48b3a6be1cb76459f327a46fd4baa8c4c8da858b3a0d72df2ce0",
+            "fixture_id": "mutation:full2d_rule:construction_circle:05:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "construction_circle_rule_checker_v0_6",
+        "rule_id": "full2d_rule:construction_circle:05"
+      },
+      {
+        "family": "triangle_structure",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:e6602d12cf526e639fb152eeb724e0c6d7aa996a33ef9f3824430757a03326ab",
+            "fixture_id": "positive:full2d_rule:triangle_structure:06:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:69eb22ad05393f123465e72495308b98e70e1c96bd5528ff749e3ced88416d5d",
+            "fixture_id": "positive:full2d_rule:triangle_structure:06:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:71f9170962699996c4d1132c791cce0a3f7c1e1feba73c17d2feaa17ecfde5a1",
+            "fixture_id": "negative:full2d_rule:triangle_structure:06:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:14a692ce5fc2127ad587e2ffc82cc0acef5c3963c899584e52ce2b3cb02f6178",
+            "fixture_id": "negative:full2d_rule:triangle_structure:06:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:fc6ce95139f58bb39166b739a28c354fae218c43859bd1b319860edb542a2b3e",
+            "fixture_id": "unsupported:full2d_rule:triangle_structure:06:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:1e69c2c10d7051abfe05c3ab6518873ad3a7048978c66b4b8f152bb83cf4e17a",
+            "fixture_id": "unsupported:full2d_rule:triangle_structure:06:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:2bb79c524c01cc7eea55361079ddebc1aad3ca0907177ed1d3cefcdc09a48e92",
+            "fixture_id": "mutation:full2d_rule:triangle_structure:06:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:8ebc4eb1c4d4bc08ef614096df72bb63e3952d1abd6f2005eb5c15fa47b7cad6",
+            "fixture_id": "mutation:full2d_rule:triangle_structure:06:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "triangle_structure_rule_checker_v0_6",
+        "rule_id": "full2d_rule:triangle_structure:06"
+      },
+      {
+        "family": "construction_intersection",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:d95269bbe3ce85313d2661fea234a4c906d74586945d3d541b37045a0de3d9b3",
+            "fixture_id": "positive:full2d_rule:construction_intersection:07:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:0dc1ab96803b71c9e95f8f6b45bd30b85f090b48f6b4badeda1a780eaf3c7587",
+            "fixture_id": "positive:full2d_rule:construction_intersection:07:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:4ad9ec3acaeb04059c959659e0b2dbebd0b68d2c4ad324a4c1336719d3b85f7d",
+            "fixture_id": "negative:full2d_rule:construction_intersection:07:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:69f875c9e44fbfe98e66421d0e7d31a5c1024be977c504aa810b505dd7d2b4ca",
+            "fixture_id": "negative:full2d_rule:construction_intersection:07:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:e3dcba99cf325bedb7380bf18349ff7aeac5bffe088a7d137d59ecf696ff64db",
+            "fixture_id": "unsupported:full2d_rule:construction_intersection:07:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:dc0c81d77691c39e1fe00da299872d035f786e2972f8b4cc4c87ce556bf65b1c",
+            "fixture_id": "unsupported:full2d_rule:construction_intersection:07:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:257ff4688cc627254642da85ed420e2b7f722e49b0438cb182c990391d42b600",
+            "fixture_id": "mutation:full2d_rule:construction_intersection:07:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:2027f7f3d017f370bf545c0c754cf05d93b8b5c196f72bb9e4c4405db04aa57b",
+            "fixture_id": "mutation:full2d_rule:construction_intersection:07:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "construction_intersection_rule_checker_v0_6",
+        "rule_id": "full2d_rule:construction_intersection:07"
+      },
+      {
+        "family": "construction_intersection",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:1b37056f0dfdbd7b345523719f17b5c3b9300cdaa29bed6ea66c47afa1dd5a3a",
+            "fixture_id": "positive:full2d_rule:construction_intersection:08:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:46c681f0174807398e797fa165c7dcdba90ad21b08c505a6e96f96fc036ce813",
+            "fixture_id": "positive:full2d_rule:construction_intersection:08:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:8ecede2e03982476eb2a7cd89447cf35b044d9b9282f985e674b989408bdbf5e",
+            "fixture_id": "negative:full2d_rule:construction_intersection:08:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:5a46d41b5df7c2a995cf36b0bde075380982c5f1a11f3656b4eb218c46942438",
+            "fixture_id": "negative:full2d_rule:construction_intersection:08:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:401fa264f55230afc4621d24c1a3b0c6db63ecead812521095abc73aba7805cb",
+            "fixture_id": "unsupported:full2d_rule:construction_intersection:08:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:42daaa78082d32f41b021c3817a67dd819d10631d5b57a058e97452d40f958fe",
+            "fixture_id": "unsupported:full2d_rule:construction_intersection:08:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:9f772046168da6f20640993ee830d8acb4261deb68e33aef8a3cd5c41682a96d",
+            "fixture_id": "mutation:full2d_rule:construction_intersection:08:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:d12519a6af084b04f8d24d6c7494b95640cd4a9ecf29fbca4257a54cf195262b",
+            "fixture_id": "mutation:full2d_rule:construction_intersection:08:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "construction_intersection_rule_checker_v0_6",
+        "rule_id": "full2d_rule:construction_intersection:08"
+      },
+      {
+        "family": "construction_intersection",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:a6e5d9160c5839f82059f0ad54cb7115db81f9a16e2892f6669798095f236358",
+            "fixture_id": "positive:full2d_rule:construction_intersection:09:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:c27272fde254ac2cfd7f046608c846f8442488f84582583337882d26c67bc7ff",
+            "fixture_id": "positive:full2d_rule:construction_intersection:09:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:8233581eb1c6c4187cf808d8dc7df15aa61af5a0176fc5edbde5d5563ac47fc6",
+            "fixture_id": "negative:full2d_rule:construction_intersection:09:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:ae3908c8d457215feb67208b1a5df5ccb5a38c3c61783e35e71d3e985c0536f9",
+            "fixture_id": "negative:full2d_rule:construction_intersection:09:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:d70215bdd74dec711dfc159b3ffc38edaf2ee47965963f6086a28e1a1cb62a4a",
+            "fixture_id": "unsupported:full2d_rule:construction_intersection:09:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:e47ac24b3661b3d3b942d8be443c1edc7abd8149859c71e21a2e57c5160b2351",
+            "fixture_id": "unsupported:full2d_rule:construction_intersection:09:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:a3393e053984a45e760dba5e011a0822e40c4f303d890e57652a0c29c394c0e9",
+            "fixture_id": "mutation:full2d_rule:construction_intersection:09:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:1c68daaddcaa0aa763284f4022039b5503e50da7b8e1e422945498cbd61eb614",
+            "fixture_id": "mutation:full2d_rule:construction_intersection:09:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "construction_intersection_rule_checker_v0_6",
+        "rule_id": "full2d_rule:construction_intersection:09"
+      },
+      {
+        "family": "construction_intersection",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:0bf505bbd49a8ccff335462cc203a148e49a5e490dda04a116f667cd6b6dce25",
+            "fixture_id": "positive:full2d_rule:construction_intersection:10:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:5e50bf3461cc9a5717a5642c1c0c59500db7600c7dc0a1ca00a2f295f0c83be0",
+            "fixture_id": "positive:full2d_rule:construction_intersection:10:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:44527cd252a42f9c91ad8c24ea7d2c1d964ab32b6d743b62fb03f6380144b42c",
+            "fixture_id": "negative:full2d_rule:construction_intersection:10:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:6b8264adadb7e38767c3e04f6d2d0b4c6a28be1a428f0b6a73f9d3b2d66c2f0d",
+            "fixture_id": "negative:full2d_rule:construction_intersection:10:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:42404af9739c82f23f7170638b873751c89a1356cd723dae6f512717d15ff083",
+            "fixture_id": "unsupported:full2d_rule:construction_intersection:10:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:a8db28f207d87a7cbe9114b3912672ce11a69b05281486cf8e0bb4748ddf5461",
+            "fixture_id": "unsupported:full2d_rule:construction_intersection:10:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:762ed2da7b1096b52af3d64fddde4567859cb3e104c533fd3ffa89f48dc0e713",
+            "fixture_id": "mutation:full2d_rule:construction_intersection:10:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:f6eb0097dc2d9599faad11f3190007134303e43de834de1234070dfaacf6be0e",
+            "fixture_id": "mutation:full2d_rule:construction_intersection:10:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "construction_intersection_rule_checker_v0_6",
+        "rule_id": "full2d_rule:construction_intersection:10"
+      },
+      {
+        "family": "circle_cyclicity",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:04a115c1cfe05df0ea10111a7ce8a0df50ef650f1ca532811671397c9907c5e6",
+            "fixture_id": "positive:full2d_rule:circle_cyclicity:11:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:9d9d8c484810f9c71e3f1d9fee262cf68533f90d11a32a35dc65b2494b5a8b1c",
+            "fixture_id": "positive:full2d_rule:circle_cyclicity:11:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:a7bb7e16c3f502b6c1aaaebd3ef9703d07129a8f6da1f02992b86bd477f64726",
+            "fixture_id": "negative:full2d_rule:circle_cyclicity:11:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:88f871b1b6edf8086df3f66ff58f86b2de10ce5881e3c162456609e1f8ea59d6",
+            "fixture_id": "negative:full2d_rule:circle_cyclicity:11:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:efa111e11f615dec0ecf2fb3eb91f198b04d08ace8f5e9f31931b96c1eddcc9c",
+            "fixture_id": "unsupported:full2d_rule:circle_cyclicity:11:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:6817a57668d1f92b4f7e76384159c0fe1918010628ae6210e8885f60f9174bca",
+            "fixture_id": "unsupported:full2d_rule:circle_cyclicity:11:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:64de1b8703a99dfecc77bda4bc2af03271e4dce330841f3f2e7d3953d5d7a201",
+            "fixture_id": "mutation:full2d_rule:circle_cyclicity:11:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:a7549ba31ccfc998efd5e811213067b649d3d467b358f11aa5ae24de36b0d77d",
+            "fixture_id": "mutation:full2d_rule:circle_cyclicity:11:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "circle_cyclicity_rule_checker_v0_6",
+        "rule_id": "full2d_rule:circle_cyclicity:11"
+      },
+      {
+        "family": "circle_cyclicity",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:5e20632b3fa44e1909983ff68b05aea4f6dc88cd7871a51687ca3cacf6e75f80",
+            "fixture_id": "positive:full2d_rule:circle_cyclicity:12:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:ffed2c03b83f4a14081742cfd00c136b2a483ff0a3169b4205ec423fb3c151c1",
+            "fixture_id": "positive:full2d_rule:circle_cyclicity:12:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:b47d5ee2d15d186ada95d3e00aa965599e00a5eb981890860292d4d6b861ad00",
+            "fixture_id": "negative:full2d_rule:circle_cyclicity:12:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:23d2283a1d5401a1214a6d891223923e7b4e2d04d1297cb15a6229d824f68d57",
+            "fixture_id": "negative:full2d_rule:circle_cyclicity:12:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:e65d599c3a38281c107eae61983f7d3abbd6b0c3e24aa1c83bde16ca7bdb7db8",
+            "fixture_id": "unsupported:full2d_rule:circle_cyclicity:12:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:72fe00095e48e51b788d57041ce75cc5b551a9a172de5868179ea4806de9bdbe",
+            "fixture_id": "unsupported:full2d_rule:circle_cyclicity:12:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:7a6f0221ac8402f480d7645020f24813921bfd91ae8e81f24da0095b93cf6ab9",
+            "fixture_id": "mutation:full2d_rule:circle_cyclicity:12:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:17859394977850cd4db9d9a04c5be47c7af32193e2e760a38176a56933344674",
+            "fixture_id": "mutation:full2d_rule:circle_cyclicity:12:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "circle_cyclicity_rule_checker_v0_6",
+        "rule_id": "full2d_rule:circle_cyclicity:12"
+      },
+      {
+        "family": "circle_cyclicity",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:0351e6d9eecd318645f68e155e54bd0ca9d40e49692fb760909f517ab50fe4ac",
+            "fixture_id": "positive:full2d_rule:circle_cyclicity:13:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:c40b22aec59fa53bbc30f083d5b41feeaae8d61c7202872588c7c7563d672732",
+            "fixture_id": "positive:full2d_rule:circle_cyclicity:13:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:51749ec8a48ae97641548e99a7f7854f471f1115543f563b21004657f101ac5b",
+            "fixture_id": "negative:full2d_rule:circle_cyclicity:13:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:c766342cdce4cb524d36c9700b9e9df0c87215eed86d27a0ba0a406cf0dc34f7",
+            "fixture_id": "negative:full2d_rule:circle_cyclicity:13:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:91d4e84fa36160c9cf7ac0d662c2deb9fe9812479aefda93206321774beab9ab",
+            "fixture_id": "unsupported:full2d_rule:circle_cyclicity:13:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:69c85ebe2ef7126d5b0aa58e05b1396e47be9d40713d6af19917e8c543af4918",
+            "fixture_id": "unsupported:full2d_rule:circle_cyclicity:13:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:0b2a547eb511c2bbce5a84fafe7951fb5854db615da6ee278d23a0f3134d21ff",
+            "fixture_id": "mutation:full2d_rule:circle_cyclicity:13:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:69107c1b03c31c2810602b4f736fe7e7622dce6ce85dc1f0c8c8df1d33d0508b",
+            "fixture_id": "mutation:full2d_rule:circle_cyclicity:13:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "circle_cyclicity_rule_checker_v0_6",
+        "rule_id": "full2d_rule:circle_cyclicity:13"
+      },
+      {
+        "family": "circle_tangent",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:609160d9c310e542413d61bd4e6cf28b5a560bdce40b0550c7a1623711778f43",
+            "fixture_id": "positive:full2d_rule:circle_tangent:14:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:8e6871093a859e44fae204e66387c2733e3bc3a2e943b27c4efe05f7c0166fee",
+            "fixture_id": "positive:full2d_rule:circle_tangent:14:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:f9bce67d1fba76855d8c5d00d990490e8f2d961ff4d1261bb4717e9d77dd31ad",
+            "fixture_id": "negative:full2d_rule:circle_tangent:14:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:b44a79d9ce9407acf9e804bd08ec05f129deec30a6a387ab179a21f2c90fb1a2",
+            "fixture_id": "negative:full2d_rule:circle_tangent:14:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:84db536e6f33090b8779db31c14897c3226defb9183a87b5ba7d830ed74a3b11",
+            "fixture_id": "unsupported:full2d_rule:circle_tangent:14:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:8234790306a04489cb679c1f2acee398d5d82181a630e618d2fa0bda968002c9",
+            "fixture_id": "unsupported:full2d_rule:circle_tangent:14:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:153b77d941c01914c14b44b98bf0a5597717e0b9fdb0531090f9f9840990e491",
+            "fixture_id": "mutation:full2d_rule:circle_tangent:14:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:b6ce165f762da9f3851315679915dcc087b3c8acc9cb519c7a59a23b4909363c",
+            "fixture_id": "mutation:full2d_rule:circle_tangent:14:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "circle_tangent_rule_checker_v0_6",
+        "rule_id": "full2d_rule:circle_tangent:14"
+      },
+      {
+        "family": "circle_tangent",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:a9798878b5ad3d0d99f6d8a8c56117dbd6c3d28c51b885b4f7368277850240c6",
+            "fixture_id": "positive:full2d_rule:circle_tangent:15:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:2f123950088200bc979799b9ad685a029461147a60c9c8e42043ea74fdd30326",
+            "fixture_id": "positive:full2d_rule:circle_tangent:15:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:30848b2f4c26ae5adf88560c86c543c277703b6232ad2b7536145fbbffc1411e",
+            "fixture_id": "negative:full2d_rule:circle_tangent:15:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:c2465b7a5478fdb0c86704f6e0126b40a1874ae9c3046b481bbcd8c9fe00880c",
+            "fixture_id": "negative:full2d_rule:circle_tangent:15:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:d462aab2cd391140513fd2cb29f634a9f95b0e9202e8ca1a4582b5a021410063",
+            "fixture_id": "unsupported:full2d_rule:circle_tangent:15:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:92d898aeaa289e3318c5720bc46cf1f3123d1a0b6b05ebe71547a61656d3c1ad",
+            "fixture_id": "unsupported:full2d_rule:circle_tangent:15:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:d2a2276da0cbda19f49b789bab4cd023271c9f2084c034d53240711f5a7ee896",
+            "fixture_id": "mutation:full2d_rule:circle_tangent:15:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:01e39f9a9e69131e95e96b9d467c83e4e5d6d66797a762b3acc205f028e251a2",
+            "fixture_id": "mutation:full2d_rule:circle_tangent:15:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "circle_tangent_rule_checker_v0_6",
+        "rule_id": "full2d_rule:circle_tangent:15"
+      },
+      {
+        "family": "triangle_metric",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:f85c06eaa7f74e846f3c11a4c4fe5bbc57ea1bf514fdb833fd1d5d7c1fef39c7",
+            "fixture_id": "positive:full2d_rule:triangle_metric:16:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:feb5e986cf3b7650410f75205a46f09474b84d146d2fb5692c06cf1fc73e8e49",
+            "fixture_id": "positive:full2d_rule:triangle_metric:16:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:b7533f0679e4ad2f374f9fe72a6ec69a67c185c7033fe4ec8f4862de0137296d",
+            "fixture_id": "negative:full2d_rule:triangle_metric:16:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:7368f5d2c3ba82d0447d0a2e824f7979482254fc9e63855a1766a7add939a138",
+            "fixture_id": "negative:full2d_rule:triangle_metric:16:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:86512f2f1829db35c4730b2dcb882cecd1a653a694d8bf7f5b75797c128b9603",
+            "fixture_id": "unsupported:full2d_rule:triangle_metric:16:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:d9f34d0f46e9f57b9d81b14057b8b59983c04b5e4d5481b6b44ef931f5333feb",
+            "fixture_id": "unsupported:full2d_rule:triangle_metric:16:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:7c09b06b212515a26e223240a54a8532dcafa236ca34f34b40962886c73fd2ab",
+            "fixture_id": "mutation:full2d_rule:triangle_metric:16:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:c81c53a7f47e352266c5e663159e7d6c6161172b6942f0c332f3fbdb20944481",
+            "fixture_id": "mutation:full2d_rule:triangle_metric:16:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "triangle_metric_rule_checker_v0_6",
+        "rule_id": "full2d_rule:triangle_metric:16"
+      },
+      {
+        "family": "triangle_metric",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:2ac75a40be22c5250285a78749305de0f611444bb23ecb4ebfbf091689a57913",
+            "fixture_id": "positive:full2d_rule:triangle_metric:17:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:01e3ce64e4e3fbe8a9b44e6d46384ce5965a8ccc8325990ac017dbcd9a35f283",
+            "fixture_id": "positive:full2d_rule:triangle_metric:17:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:57af3e4076626175bd8b0cbcfaad2dabddd468135b4eda53e0b6049080c8ded6",
+            "fixture_id": "negative:full2d_rule:triangle_metric:17:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:3f7f6a9ff5f6bcddfe38453fc902992740ddbe4a618bf8d0b31630e91f325264",
+            "fixture_id": "negative:full2d_rule:triangle_metric:17:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:8b2e897a9e183aef9f1c974cd984c7f600eac5989ffa1a2a17ed907941431845",
+            "fixture_id": "unsupported:full2d_rule:triangle_metric:17:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:7b4f71f0573f6799c5d445652b74bb0f2845fcd5737e150fd5d9e25243947e0f",
+            "fixture_id": "unsupported:full2d_rule:triangle_metric:17:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:0eb1ba2eda21dcf0dfac362a82314eeca235ea3197cbb0301409a4821c81707c",
+            "fixture_id": "mutation:full2d_rule:triangle_metric:17:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:019761f9a6bd051c00218002870196e2a6fb8dc5d220daeeb7014769822fd03c",
+            "fixture_id": "mutation:full2d_rule:triangle_metric:17:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "triangle_metric_rule_checker_v0_6",
+        "rule_id": "full2d_rule:triangle_metric:17"
+      },
+      {
+        "family": "triangle_structure",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:38251045dc9d7c2a8737dc7dc91b77584db0762aafd155d2b69b3c38116c1e52",
+            "fixture_id": "positive:full2d_rule:triangle_structure:18:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:5f2dab0615eb9dee449ab7e13d9d8977a1f7eda4505e505bf24a467c46728517",
+            "fixture_id": "positive:full2d_rule:triangle_structure:18:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:b2ace84c25c2bafb958588e69600973c98ece231f4e93b47542d1ae2baed66d1",
+            "fixture_id": "negative:full2d_rule:triangle_structure:18:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:1778fcc2500b26e4df9f01fbdf41c074966523e619ba23212f8c9302435ebde2",
+            "fixture_id": "negative:full2d_rule:triangle_structure:18:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:0b1226b54a43e77ea680563a4abc2d007c0fc8e2dcc75493f9a621f7739eb65f",
+            "fixture_id": "unsupported:full2d_rule:triangle_structure:18:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:8b5c143e53fd4db4a2e76c59610fdd47898482209d22a08523e5ac42a9192bf4",
+            "fixture_id": "unsupported:full2d_rule:triangle_structure:18:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:b3a0c746612f29e0c88e1682b591e3f342e27b5f57113a55f78d9b834981bbdb",
+            "fixture_id": "mutation:full2d_rule:triangle_structure:18:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:59ae5fa89ab309b9c37a193f07d8073a11ed4d5d34bd57109afd9dbde7fdf982",
+            "fixture_id": "mutation:full2d_rule:triangle_structure:18:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "triangle_structure_rule_checker_v0_6",
+        "rule_id": "full2d_rule:triangle_structure:18"
+      },
+      {
+        "family": "triangle_altitude",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:afdfb6a32e67f9698ebb8d90edcd5e999f367a8e1de28d19617ba1fb32d6b854",
+            "fixture_id": "positive:full2d_rule:triangle_altitude:19:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:b212d2f17bf7507e70b10a15252f3a1544d2431bcacd5e71e574bf12773cb0fe",
+            "fixture_id": "positive:full2d_rule:triangle_altitude:19:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:e36aff98992cc31d7f1baf52822c12917dfc5f731aedf74c8bf5334c6ecbeb2c",
+            "fixture_id": "negative:full2d_rule:triangle_altitude:19:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:120c4a5b9632d768b10c97926250d3e483c6d3ac7735dfa3bd11fc693af46c53",
+            "fixture_id": "negative:full2d_rule:triangle_altitude:19:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:f3528360fb3ce1769460842d6a9bc123843b86a453629ad9fe61496f62450224",
+            "fixture_id": "unsupported:full2d_rule:triangle_altitude:19:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:94051c7c5e3fda7e11771e6322f9d080e160c9cd01f78c849b0fa7b6beec3cbc",
+            "fixture_id": "unsupported:full2d_rule:triangle_altitude:19:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:aa6f48840e24aa9d0e352cbb4b7d5b9f8a1b9b15c8b94209ec6bd00ea336f0ef",
+            "fixture_id": "mutation:full2d_rule:triangle_altitude:19:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:3c6fcdf1a406eed3883aa6d6955771081149a40a8eaefd2bd69ee6d49a741b6a",
+            "fixture_id": "mutation:full2d_rule:triangle_altitude:19:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "triangle_altitude_rule_checker_v0_6",
+        "rule_id": "full2d_rule:triangle_altitude:19"
+      },
+      {
+        "family": "triangle_altitude",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:8a28ed1057ef1da2ce638505aca2fb496144885bded8a4f674ab17c7dfdc8c67",
+            "fixture_id": "positive:full2d_rule:triangle_altitude:20:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:93bca26ba1021bf1cf508a8cbbf91981dd30882e75fbc11a6458e97a1dd32b46",
+            "fixture_id": "positive:full2d_rule:triangle_altitude:20:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:8647e37be951deda840ac4af09637029cab6b66402a9c434885f2a639f0be5e5",
+            "fixture_id": "negative:full2d_rule:triangle_altitude:20:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:90912ab7fe377d93b3e539c25cd737fb42def72050e7ddd833e4cddbfbc9ac16",
+            "fixture_id": "negative:full2d_rule:triangle_altitude:20:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:81b923eb82ece9d5e033138f24b8d1883232eb20eaf4f21afb11874d4fa91dc7",
+            "fixture_id": "unsupported:full2d_rule:triangle_altitude:20:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:420355b6f2201beb259a8c29a37465ca1658a9994728f1e300c8c6c384b79d8f",
+            "fixture_id": "unsupported:full2d_rule:triangle_altitude:20:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:e35852a5c237cb00e75ec10bc73d5096c79486ccb361da43b6cc7e37b3993438",
+            "fixture_id": "mutation:full2d_rule:triangle_altitude:20:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:528f12c9bf3d9bb8b69b22e19883a9f3ce35deb461b42531b6ae0c22f45f5ac8",
+            "fixture_id": "mutation:full2d_rule:triangle_altitude:20:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "triangle_altitude_rule_checker_v0_6",
+        "rule_id": "full2d_rule:triangle_altitude:20"
+      },
+      {
+        "family": "triangle_altitude",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:c72e4ccfc22ea7b3c8fbab799ea7b3c38935ece914dbd3b5abf5522a43e93754",
+            "fixture_id": "positive:full2d_rule:triangle_altitude:21:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:59eba0cf7c048a8b9e2d5a657c7d3f4a40a5cf99d1be5244f7b9d6ba89572ad3",
+            "fixture_id": "positive:full2d_rule:triangle_altitude:21:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:fab69df7a3dce4f9a8b184f6f7757ce84393b1f778b561a34ff6c3ed49a0baf2",
+            "fixture_id": "negative:full2d_rule:triangle_altitude:21:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:5fcf8f16137410722e76a34dab00a15765e8475688c8403a529245921ad11eba",
+            "fixture_id": "negative:full2d_rule:triangle_altitude:21:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:d2e78aa7a9e3cb5af3e15ad5e2d0a82c5f81e68f0e7ebd311f5b75cd7e3526c2",
+            "fixture_id": "unsupported:full2d_rule:triangle_altitude:21:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:4af68669fcda93725445411bbedf53a23fd017bbb9776603733c98fd62453cd4",
+            "fixture_id": "unsupported:full2d_rule:triangle_altitude:21:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:49265c23aedbea916f27d0a06862237e1aabe18c062dd3009cdfed2142beb0f7",
+            "fixture_id": "mutation:full2d_rule:triangle_altitude:21:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:d5184dd2661ee53000d6aabf91e84085c3d22e69674a6e37dcffc338c77125ef",
+            "fixture_id": "mutation:full2d_rule:triangle_altitude:21:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "triangle_altitude_rule_checker_v0_6",
+        "rule_id": "full2d_rule:triangle_altitude:21"
+      },
+      {
+        "family": "angle_bisector",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:30d618f492a681f507b10c24a401dc39131a16b6fa41f6a57c004a3ff8cc288d",
+            "fixture_id": "positive:full2d_rule:angle_bisector:22:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:69555c569eebb51189578a60b985c2c9ed915f29a8847b7285c478bc75aedff3",
+            "fixture_id": "positive:full2d_rule:angle_bisector:22:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:347bfac3566ef964e16fb7dd9da58af57081cc9360998d9355a358837ca87117",
+            "fixture_id": "negative:full2d_rule:angle_bisector:22:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:9730670d993bb55a25c6eb8c0804f207bb4e6f13ded35003fb62bade4764338c",
+            "fixture_id": "negative:full2d_rule:angle_bisector:22:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:077e1318609acada98ad9df2e8780dccd57e9ea08baa63d9015f02ab9e438745",
+            "fixture_id": "unsupported:full2d_rule:angle_bisector:22:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:09ff43768cfc44a60f1e46e89a5b59cd6ccbaa1365a4e3c1086563237e074ba4",
+            "fixture_id": "unsupported:full2d_rule:angle_bisector:22:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:8545211cd61368bab874eb8af297682bb9fbc81066910e97696e322d345ba7ab",
+            "fixture_id": "mutation:full2d_rule:angle_bisector:22:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:9d80eab8ea18f4e20bc0aedb63806342ef76fdfca09a5d6a89b1dbdd0137c742",
+            "fixture_id": "mutation:full2d_rule:angle_bisector:22:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "angle_bisector_rule_checker_v0_6",
+        "rule_id": "full2d_rule:angle_bisector:22"
+      },
+      {
+        "family": "angle_bisector",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:5c1eed53580ec59ce5add72f2d1170340fb7ae597033e6875fbc167f5dccf0e5",
+            "fixture_id": "positive:full2d_rule:angle_bisector:23:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:4c9094870db85a333be471f3ff4513b2f3c56e05693e084c9d6f780eb4a57bbb",
+            "fixture_id": "positive:full2d_rule:angle_bisector:23:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:bc7cf70eaa121e49b9110c63d361cd47af62df59c9a097b95af4fc1701e46022",
+            "fixture_id": "negative:full2d_rule:angle_bisector:23:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:98b4310fc756cd58a14c23dca1aea5292c27af783e264daa47b8f4a2f419bf40",
+            "fixture_id": "negative:full2d_rule:angle_bisector:23:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:a84844c676c2496a8159357322b33634178b79ad0c8a9632ebe2a84d4d2ff681",
+            "fixture_id": "unsupported:full2d_rule:angle_bisector:23:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:5f7177f19dc3e2c4794c6212bbda3d01d33cede121b872bd6b912fb16f6bb9e5",
+            "fixture_id": "unsupported:full2d_rule:angle_bisector:23:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:24c7c631ce1297ead79167556837877b35e9714133d9306797ab207382ab934d",
+            "fixture_id": "mutation:full2d_rule:angle_bisector:23:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:0215ba3999a5f111fb331480dd60eea8103506c06e1e1beed88f9b0f8a3a9765",
+            "fixture_id": "mutation:full2d_rule:angle_bisector:23:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "angle_bisector_rule_checker_v0_6",
+        "rule_id": "full2d_rule:angle_bisector:23"
+      },
+      {
+        "family": "metric_length_sum",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:7e60c29fac039380a175b52b4324e373aa1a27f386603de568e682f2f5c8f4fc",
+            "fixture_id": "positive:full2d_rule:metric_length_sum:24:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:4c5122d58b13059f6cac2c2a9e5a5df4d275d4f326035e4a157d7cf6d84ece2a",
+            "fixture_id": "positive:full2d_rule:metric_length_sum:24:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:c3e6119694ef01794f8993ffb3dda95f97bb9b26318ccfc449cbad5b0103d13a",
+            "fixture_id": "negative:full2d_rule:metric_length_sum:24:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:93903f27927ff5a21f0ac14f2b49d19efbfeecf480567b891d99daff539830c6",
+            "fixture_id": "negative:full2d_rule:metric_length_sum:24:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:4ecf7afd097747cfb98abe056235eaff821a951f1a1067375f8ef2a4bbb08935",
+            "fixture_id": "unsupported:full2d_rule:metric_length_sum:24:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:dd165aaa6dd8efe496cb3c229ff6d07d334cc3b1d906ac13718359b64dd914f4",
+            "fixture_id": "unsupported:full2d_rule:metric_length_sum:24:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:9b7c2cf834250bb824762ece48ee7e72774f682fbace13c125bcd4267d26de4c",
+            "fixture_id": "mutation:full2d_rule:metric_length_sum:24:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:0c3db353674b7ea5cbc9b1e159d3d2626fc3f6152b0ab44ef7b51dfed89c0414",
+            "fixture_id": "mutation:full2d_rule:metric_length_sum:24:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "metric_length_sum_rule_checker_v0_6",
+        "rule_id": "full2d_rule:metric_length_sum:24"
+      },
+      {
+        "family": "ratio_algebra",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:52db3b6f3ebc87672d13bf9e330ea051522475580adf27e7b3492c85a2b9771c",
+            "fixture_id": "positive:full2d_rule:ratio_algebra:25:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:189abbce7d527fab464b58c823fe85ddac9940aad19a1b2e45f72715055d9b8b",
+            "fixture_id": "positive:full2d_rule:ratio_algebra:25:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:bd4196e0ebc330f853dc1f642418fa2901f3837e896d09d95a219f38c680298b",
+            "fixture_id": "negative:full2d_rule:ratio_algebra:25:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:ce54d1015d678a932d278a4c9f5d882321bacfb1cb1b112c2155b1e01bbe0ae0",
+            "fixture_id": "negative:full2d_rule:ratio_algebra:25:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:dfd85e1c374a1afd98d89e6b626b491b49be08496ef127848c6e2e32dc2e7975",
+            "fixture_id": "unsupported:full2d_rule:ratio_algebra:25:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:ddd657a57a4ef81c0fc91ef687227e1900eee3b668eb2e980274a7769100d32b",
+            "fixture_id": "unsupported:full2d_rule:ratio_algebra:25:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:b314eeec53216235ff136a29620996429b1bfb51fea8a0d3585b9e3871980208",
+            "fixture_id": "mutation:full2d_rule:ratio_algebra:25:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:01c732963cc0d2da9968d99ad7cc311f1a615c7d7b901c0cd561eedec5d00441",
+            "fixture_id": "mutation:full2d_rule:ratio_algebra:25:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "ratio_algebra_rule_checker_v0_6",
+        "rule_id": "full2d_rule:ratio_algebra:25"
+      },
+      {
+        "family": "directed_angle_mod_pi",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:d8e7fafdc1c2007acc9dd61ccf7aaaec57b28bc18dc845186a81afe0e2682bbe",
+            "fixture_id": "positive:full2d_rule:directed_angle_mod_pi:26:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:948ab49c1a89a32310383218c4820c1feaad801a5816a0dad4157601d0ae3840",
+            "fixture_id": "positive:full2d_rule:directed_angle_mod_pi:26:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:d28c2b7864e5ca5a3d7975d6fb6978dbf9c042e793d1f3db0ebd3380a59a2dd9",
+            "fixture_id": "negative:full2d_rule:directed_angle_mod_pi:26:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:92df6105fbda5cc8b8a66888c77667916d2ed4d333af0164b8aa0b8580954d9b",
+            "fixture_id": "negative:full2d_rule:directed_angle_mod_pi:26:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:1d46d9e0d126a0ca29dd766fd09e680f9ae4da980a92f49ca5e8d09fbfc7498f",
+            "fixture_id": "unsupported:full2d_rule:directed_angle_mod_pi:26:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:7c22100f9884b6900bdbd70586f6794e8c0f64358e8edde03cb18b9b98cd15a8",
+            "fixture_id": "unsupported:full2d_rule:directed_angle_mod_pi:26:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:f454b1e509bd1c093ec6d3d5681b3e60410b21aad5f0d80c574cdaa327ab1a8d",
+            "fixture_id": "mutation:full2d_rule:directed_angle_mod_pi:26:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:f328d910da4b0f241205205c4cfea454f582df4fb84f365bf85aee04ff996a3d",
+            "fixture_id": "mutation:full2d_rule:directed_angle_mod_pi:26:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "directed_angle_mod_pi_rule_checker_v0_6",
+        "rule_id": "full2d_rule:directed_angle_mod_pi:26"
+      },
+      {
+        "family": "directed_angle_mod_2pi",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:277f7e08f90e24306c21111fc105bfe9836950703a458115b393197e2246e9cd",
+            "fixture_id": "positive:full2d_rule:directed_angle_mod_2pi:27:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:325462f852a38d60c03bc17c3e11d223df11d2502dfd351526ced6a572c9c2b5",
+            "fixture_id": "positive:full2d_rule:directed_angle_mod_2pi:27:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:acddaa328ac096d5743acc4210e80755b0592b07968ec3dd57526fade1756e28",
+            "fixture_id": "negative:full2d_rule:directed_angle_mod_2pi:27:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:addeaaf713e52c2f9111787536fa781535ba36418a70d67a426579834d7ce87a",
+            "fixture_id": "negative:full2d_rule:directed_angle_mod_2pi:27:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:fb7115dd269a56c0eb5b21a51708703fd0c6c8e5aee8e35f89ff78426abed3b0",
+            "fixture_id": "unsupported:full2d_rule:directed_angle_mod_2pi:27:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:66438a9d269713fe767e43d2bc2083df1a656fe683c670dcecc9cbe3acaaf317",
+            "fixture_id": "unsupported:full2d_rule:directed_angle_mod_2pi:27:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:1ada8a47d55cf5461907340ae6fed266c448b1a180c4c737b670b66198501a6f",
+            "fixture_id": "mutation:full2d_rule:directed_angle_mod_2pi:27:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:88f86eefd2849ab5dbb7c7786da17e2055a10aaf33cc65930cca04c5dd6e4034",
+            "fixture_id": "mutation:full2d_rule:directed_angle_mod_2pi:27:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "directed_angle_mod_2pi_rule_checker_v0_6",
+        "rule_id": "full2d_rule:directed_angle_mod_2pi:27"
+      },
+      {
+        "family": "metric_equal_length",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:b782d23a37e7c47f575799de1079ac99752a2fae941bc16587f39b19644c7978",
+            "fixture_id": "positive:full2d_rule:metric_equal_length:28:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:845e106b65014d3f67ed60b45fa59437a197ea3a592de77f09473c4ce692e91f",
+            "fixture_id": "positive:full2d_rule:metric_equal_length:28:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:13ddda997135227536afd5d807a8799ff4d73e8cc7d55e0b050c9c14b53181ee",
+            "fixture_id": "negative:full2d_rule:metric_equal_length:28:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:325fe06682053d0f2550d191be4dfebd6f93c2b2138b69a6a0cd00b05b038f42",
+            "fixture_id": "negative:full2d_rule:metric_equal_length:28:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:8a0422ea70f911cea9e3564bd94d9e4c86717b33eb14a796f7eec57af785cb8b",
+            "fixture_id": "unsupported:full2d_rule:metric_equal_length:28:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:850abeab4e1a5b9d5e4ec69cf06d0dd92a170b4117b0e9a813bfeccffb479137",
+            "fixture_id": "unsupported:full2d_rule:metric_equal_length:28:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:25d087d711f797b7d908e37cacf0bd837532e76540754a8b1b391519b9ac0768",
+            "fixture_id": "mutation:full2d_rule:metric_equal_length:28:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:ada968a4f06684342c01bdf22e4798a825763f95bb16a0491b45ab4ce9562ed1",
+            "fixture_id": "mutation:full2d_rule:metric_equal_length:28:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "metric_equal_length_rule_checker_v0_6",
+        "rule_id": "full2d_rule:metric_equal_length:28"
+      },
+      {
+        "family": "area_relation",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:f2a708d6667ddac6a9aafe599adccc0b41b1739aae53968db7f276736e0ef6e2",
+            "fixture_id": "positive:full2d_rule:area_relation:29:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:73587a154243f6b62ab436d800e614c508b09a4975aa5f386db25f4d7856efc6",
+            "fixture_id": "positive:full2d_rule:area_relation:29:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:fdc9900a4302f73d439bc146956dd9672aaf24248aec6c8a71c664e7aa859bac",
+            "fixture_id": "negative:full2d_rule:area_relation:29:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:c4d1a6d5c40fd5c516141784d67a87583a43e85670279e8811c61d699ea6a3ff",
+            "fixture_id": "negative:full2d_rule:area_relation:29:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:50ba502c82e80ef13cbee139611a37dc2c706d640f52b86bb3ba8e100053952f",
+            "fixture_id": "unsupported:full2d_rule:area_relation:29:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:41dd47e17b4557dd1ed35b00be468c0d9b544ee6737294865c326ca07a94831f",
+            "fixture_id": "unsupported:full2d_rule:area_relation:29:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:b14f681d6e8126b57c74f0ba325760f8e4ce7787aa8196608caf63045039a416",
+            "fixture_id": "mutation:full2d_rule:area_relation:29:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:bfa21540eac66c3d4ad9ee0b2f62ae6f3d2ed96fd9388688259c34497cba667c",
+            "fixture_id": "mutation:full2d_rule:area_relation:29:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "area_relation_rule_checker_v0_6",
+        "rule_id": "full2d_rule:area_relation:29"
+      },
+      {
+        "family": "midpoint_segment",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:5b9064bbd3d34237f1637f33a53a41eb5730a5a84516793e52446d80236fb27d",
+            "fixture_id": "positive:full2d_rule:midpoint_segment:30:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:ab65e1e2b7ffcf8f8e5b46a2bdc6790365be81eba8d368f0e18b4ad7e9a8263e",
+            "fixture_id": "positive:full2d_rule:midpoint_segment:30:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:beac84b47e2b835dff5cc54cdce1406058e5d55722d68a24015987cf2a80149a",
+            "fixture_id": "negative:full2d_rule:midpoint_segment:30:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:aab80c5d7c3376edd36cf3f3bea2e0d4a65995e17ee0129b28ffe1227ec2a401",
+            "fixture_id": "negative:full2d_rule:midpoint_segment:30:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:27c773c53b33340fd7c621496e3962e2ed0faed49edc4e9ae40a5291c65fe7b8",
+            "fixture_id": "unsupported:full2d_rule:midpoint_segment:30:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:02028c4424cc1761f730e0f6e71dc92815defb89ae8abc23c0518756ade4e292",
+            "fixture_id": "unsupported:full2d_rule:midpoint_segment:30:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:42275e04c3b2b3a3e53e9b84dccad3e406875051b80fe934f81e1537029f3709",
+            "fixture_id": "mutation:full2d_rule:midpoint_segment:30:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:7a849ef2fa15a02ed76271bd906d6bbc901e7c0fc27102d73154bf1019084786",
+            "fixture_id": "mutation:full2d_rule:midpoint_segment:30:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "midpoint_segment_rule_checker_v0_6",
+        "rule_id": "full2d_rule:midpoint_segment:30"
+      },
+      {
+        "family": "order_between",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:61fe9722c3fa9ea7deaf8b17c0062a84de4af8be76169a3731c2b4209d389d72",
+            "fixture_id": "positive:full2d_rule:order_between:31:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:779ebbf45066493d43a4079854fe7aa8fbae6642a97feb35762ce81d310561cf",
+            "fixture_id": "positive:full2d_rule:order_between:31:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:76c408b08047cd1c6f85e736639682c1d42605cd574c6cc6232c1ff030474a11",
+            "fixture_id": "negative:full2d_rule:order_between:31:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:df33ba9e9b01e37e0cecdf48356631e3e6c4a2f039e604515f42da900d5e03db",
+            "fixture_id": "negative:full2d_rule:order_between:31:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:60aa94b000d2b296cfcafc6835a248106a12bc5116abfb668cbabbff1648f3fa",
+            "fixture_id": "unsupported:full2d_rule:order_between:31:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:76689def9728a0172279c8f74d6babdb49f017753d8f7133a22fc0d085a41c96",
+            "fixture_id": "unsupported:full2d_rule:order_between:31:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:5d4acb909bab9282855f1a3991d2839cd4c3ebd6cef57d1f1bd7eb088dba5cd6",
+            "fixture_id": "mutation:full2d_rule:order_between:31:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:5e2c1770d043e0e1d0e2bd6517a9e2813f089b0614f0e94276e2683f193481d3",
+            "fixture_id": "mutation:full2d_rule:order_between:31:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "order_between_rule_checker_v0_6",
+        "rule_id": "full2d_rule:order_between:31"
+      },
+      {
+        "family": "transformation_reflection",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:daf6c28f86b544b28991c2d47f2da82349242967218c2e9ebacaa484fe789e49",
+            "fixture_id": "positive:full2d_rule:transformation_reflection:32:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:8cc05c04438a6ccdd5076f45557691a4e3cce4c08a229e937a960066d7576c72",
+            "fixture_id": "positive:full2d_rule:transformation_reflection:32:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:ea4a8df2069f50cf2d6be34afaae920289a6aa02dc596c15c04e6b3aff46303f",
+            "fixture_id": "negative:full2d_rule:transformation_reflection:32:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:fc63ef3e242d5c706934f5ae8067f44e32122f9785c99c6e227c14289f9caf26",
+            "fixture_id": "negative:full2d_rule:transformation_reflection:32:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:baa1e75cd333db82dbf2b89de669fde93cd2ae02e28449fdc56c920bcacafc74",
+            "fixture_id": "unsupported:full2d_rule:transformation_reflection:32:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:b9cc29ad5710214fc2a59404418fbfe45e26b20cb2fed6c1011c715b22a68c9a",
+            "fixture_id": "unsupported:full2d_rule:transformation_reflection:32:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:32d89a2b56ff44dd0d2ae6e2b33a518acd45dbe2f2a4d1711f66d79287c35248",
+            "fixture_id": "mutation:full2d_rule:transformation_reflection:32:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:eebfd2a482c7d11d8272b278a90de8e361b507618b2f44d5a677e7d0b50b4f2b",
+            "fixture_id": "mutation:full2d_rule:transformation_reflection:32:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "transformation_reflection_rule_checker_v0_6",
+        "rule_id": "full2d_rule:transformation_reflection:32"
+      },
+      {
+        "family": "transformation_homothety",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:7dabc1afa91eee902c40d89673f0293eb8531b76a26171c8a55f1c77a40359a2",
+            "fixture_id": "positive:full2d_rule:transformation_homothety:33:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:e26bd55f095c6e336dce36cdfc97e5d0d4cc6dae91535dfde2b68c9f8c01e2db",
+            "fixture_id": "positive:full2d_rule:transformation_homothety:33:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:05d78987dc08c3d471ca6b3a1fec19fb8a290037a0e6cd31f3d5c2c50ddf5daf",
+            "fixture_id": "negative:full2d_rule:transformation_homothety:33:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:017354e1d71379e8715cfd3dde3e1eb7539acea2f779bf0750f6981de6aecde8",
+            "fixture_id": "negative:full2d_rule:transformation_homothety:33:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:bb977e883d59f577e015a041780265e2d748af58a93dfd5be32049d71e751ece",
+            "fixture_id": "unsupported:full2d_rule:transformation_homothety:33:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:d5baefb3de9e0c879f53ec39d4381d2fee2dd747000457a6bfda0684bcb88674",
+            "fixture_id": "unsupported:full2d_rule:transformation_homothety:33:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:a25a48929c3e6c54400913d2a23ceae59675438a9181bacadce60eafcd593d85",
+            "fixture_id": "mutation:full2d_rule:transformation_homothety:33:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:192985586cbc1d6164c1c4f4388fdf3e1baa1247deb50738b8e18894f03d73d8",
+            "fixture_id": "mutation:full2d_rule:transformation_homothety:33:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "transformation_homothety_rule_checker_v0_6",
+        "rule_id": "full2d_rule:transformation_homothety:33"
+      },
+      {
+        "family": "transformation_inversion",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:f5039c1aa5a7b136e0acf0bf778efe913d353387966f62b970300af3c60e0a2e",
+            "fixture_id": "positive:full2d_rule:transformation_inversion:34:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:b3abdc8594ac47f9627141643bb8808ef7a546109c6e108b99c81dd3520b064b",
+            "fixture_id": "positive:full2d_rule:transformation_inversion:34:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:655a0c3c74971b67bd8bcae8ac546265b6b849bde7a395f64ecab4a8c3afb819",
+            "fixture_id": "negative:full2d_rule:transformation_inversion:34:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:1f140f0b0422ce879c075d54297678f3ed1b70847e8a01139733d536008f5cf9",
+            "fixture_id": "negative:full2d_rule:transformation_inversion:34:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:d5086f3de5c26b3ea968ff287686b4013460ee2d604aeea688187434b41faa71",
+            "fixture_id": "unsupported:full2d_rule:transformation_inversion:34:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:6bfd65433c29bf57dcf7a1c58ce562c96ff62774075fa0a9a98ffb2b2044f524",
+            "fixture_id": "unsupported:full2d_rule:transformation_inversion:34:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:87e8da25841786bc44331de695cc6b745d526604d76008c8ea1e73c41f112de1",
+            "fixture_id": "mutation:full2d_rule:transformation_inversion:34:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:038b4826482eb84f432b49b08c3e00230a942e433a05ab1ff0606f2b797f4752",
+            "fixture_id": "mutation:full2d_rule:transformation_inversion:34:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "transformation_inversion_rule_checker_v0_6",
+        "rule_id": "full2d_rule:transformation_inversion:34"
+      },
+      {
+        "family": "spiral_similarity",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:60454de2153d4609bc45013694cf1cc7b8e2dbe53fe6ef89174466db1f1f257c",
+            "fixture_id": "positive:full2d_rule:spiral_similarity:35:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:89de497235c433284e4f8f04754a425318f95396cc5a46f718c4eb616e767f4d",
+            "fixture_id": "positive:full2d_rule:spiral_similarity:35:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:2139b8fe8e990420e096f899804003d5656dcf61368cc4be7966ec775975ea07",
+            "fixture_id": "negative:full2d_rule:spiral_similarity:35:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:5f434856dd7700bad402e2e8413a6764a9a8adfc9c183376bc8c4a7f24b5732c",
+            "fixture_id": "negative:full2d_rule:spiral_similarity:35:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:4a4436f497dd8be64e6efd9bacaea7bb80b7a213bd54794a8ddd6094dc72b693",
+            "fixture_id": "unsupported:full2d_rule:spiral_similarity:35:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:4112d5b776493bfa99b6df75a33e35271089c8406ef7d5b4e3f2824a885f1cc9",
+            "fixture_id": "unsupported:full2d_rule:spiral_similarity:35:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:4fe0d08e1c8a754182c74b02727ddc62cdf286b07ac60924a86bb426dcd31bce",
+            "fixture_id": "mutation:full2d_rule:spiral_similarity:35:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:3ed385cf6aed75356623c4f4484b1e7da0c41085b3fb78095d5c5e1792dac9ae",
+            "fixture_id": "mutation:full2d_rule:spiral_similarity:35:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "spiral_similarity_rule_checker_v0_6",
+        "rule_id": "full2d_rule:spiral_similarity:35"
+      },
+      {
+        "family": "transformation_rotation",
+        "fixture_results": [
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:eeaa33527cadb6ad7773b92b1b2d207755b7d0e8cca354ed993e5d6f024620c2",
+            "fixture_id": "positive:full2d_rule:transformation_rotation:36:canonical",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [],
+            "expected_status": "passed",
+            "field": "positive_fixtures",
+            "fixture_hash": "sha256:9b49d4d5e9f6daec48554a99cdfc74c64ee5d6efc18c7942f594a6d8dd63f49c",
+            "fixture_id": "positive:full2d_rule:transformation_rotation:36:renamed_objects",
+            "fixture_kind": "positive",
+            "observed_status": "passed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:04d32b2c46223ee311f192b3f0e0d1f3aae841be2fa43c7a92f01cb06d6cde26",
+            "fixture_id": "negative:full2d_rule:transformation_rotation:36:missing_premise",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "negative_fixtures",
+            "fixture_hash": "sha256:1145b706ced4bc6112d0769bbc069e75241d0af410ad6d2ae88d84eaa83ebb3b",
+            "fixture_id": "negative:full2d_rule:transformation_rotation:36:wrong_output",
+            "fixture_kind": "negative",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified",
+              "target_assertion_or_equivalent"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:77f2c474bb3c0e5d7ee87f8228b16a425ba6ce487f6f4731c5105da2a5fbb8e6",
+            "fixture_id": "unsupported:full2d_rule:transformation_rotation:36:target_assertion",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "schema_only_certificate",
+              "side_conditions_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "unsupported_variants",
+            "fixture_hash": "sha256:14a2af5c9491ec83905afaf35413e9dad464065d571eee1c587793b49c4e8d0b",
+            "fixture_id": "unsupported:full2d_rule:transformation_rotation:36:schema_only_certificate",
+            "fixture_kind": "unsupported",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "premises_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:0f7b0d3d8168397f02d484b9b810d41d371c94f8c9746ef84b60f228f7c34760",
+            "fixture_id": "mutation:full2d_rule:transformation_rotation:36:premise_removed",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          },
+          {
+            "errors": [
+              "conclusion_not_verified"
+            ],
+            "expected_status": "failed",
+            "field": "mutation_fixtures",
+            "fixture_hash": "sha256:ce06c7849d2dd0da83b53e876d209d2d695d230d0f381c5b043e02daba614110",
+            "fixture_id": "mutation:full2d_rule:transformation_rotation:36:output_corrupted",
+            "fixture_kind": "mutation",
+            "observed_status": "failed"
+          }
+        ],
+        "independent_rule_checker": "transformation_rotation_rule_checker_v0_6",
+        "rule_id": "full2d_rule:transformation_rotation:36"
+      }
+    ],
+    "schema_version": "RuleFixtureSuiteReportV06",
+    "status": "passed"
+  },
+  "schema_version": "CheckRuleRegistryV06Report",
+  "status": "passed"
+}
