@@ -1,0 +1,889 @@
+{
+  "all_rejected": true,
+  "checker_name": "check_red_case_suite_v0_6.py",
+  "errors": [],
+  "evidence_ref": "sha256:d041739bcce5fcaa6091373a6be1d01e728b25281a1c399c25342475131890f4",
+  "expected_red_case_count": 22,
+  "manifest_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json",
+  "red_case_count": 22,
+  "red_cases": [
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-007",
+        "K-013"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:990033c9dc1d765d2fdf96c3fee37e655930c97055f107b2092ca1b6c998968e",
+      "expected_K": [
+        "K-007",
+        "K-013"
+      ],
+      "failure_class": "Target-fact provider",
+      "fixture_name": "RedCase_TargetFactProvider",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-001",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-001",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-007"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-007",
+            "K-013"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-013"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:31b999c9fa542c186527a48d23c116f4f1593aaf2a59b3e05aaf1f89a8e66789",
+      "expected_K": [
+        "K-013"
+      ],
+      "failure_class": "Naked target assertion",
+      "fixture_name": "RedCase_NakedTargetAssertion",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-002",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-002",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-013"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-013"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-012",
+        "K-013",
+        "K-027"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:76a40ccdbaa1c8d5940c772778fbb73020f544c9a1c5fbf9dd13c6d790bb70eb",
+      "expected_K": [
+        "K-012"
+      ],
+      "failure_class": "Identity/direct-rule registry",
+      "fixture_name": "RedCase_IdentityDirectRuleRegistry",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-003",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-003",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-012"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-012",
+            "K-013",
+            "K-027"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-015",
+        "K-016"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:c9bbe0c5c73511c7a3baa69182b08bdc42b269328563724b5ef4bae2085964e0",
+      "expected_K": [
+        "K-015",
+        "K-016"
+      ],
+      "failure_class": "Proof-from-shape compiler",
+      "fixture_name": "RedCase_ProofFromShapeCompiler",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-004",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-004",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-015",
+            "K-016"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-015",
+            "K-016"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-011"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:685448463476f46f0db436797b51d56dbd29edb1bd7c4e9aff5899a7052e7434",
+      "expected_K": [
+        "K-011"
+      ],
+      "failure_class": "Rule-list artifact synthesis",
+      "fixture_name": "RedCase_RuleListArtifactSynthesis",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-005",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-005",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-011"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-011"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-018",
+        "K-019"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:42f31984f3ad1eca907aa33ded65c37312f4ab9743279fdf4d3e9f4bf450f7c0",
+      "expected_K": [
+        "K-018",
+        "K-019"
+      ],
+      "failure_class": "Report-only causality",
+      "fixture_name": "RedCase_ReportOnlyCausality",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-006",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-006",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-018",
+            "K-019"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-018",
+            "K-019"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-025",
+        "K-030"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:31e103a045013c4f881eeeb76ab55d8d94237beac03324f3d90a92e6174642d4",
+      "expected_K": [
+        "K-025",
+        "K-030"
+      ],
+      "failure_class": "Family-coded baseline",
+      "fixture_name": "RedCase_FamilyCodedBaseline",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-007",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-007",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-025",
+            "K-030"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-025",
+            "K-030"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-020",
+        "K-021"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:a464ecd89c563b9ab1638dced004b860014cf31bb0d199f844c078e5a03c34c4",
+      "expected_K": [
+        "K-020",
+        "K-021"
+      ],
+      "failure_class": "Projection benchmark",
+      "fixture_name": "RedCase_ProjectionBenchmark",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-008",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-008",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-020",
+            "K-021"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-020",
+            "K-021"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-004",
+        "K-035"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:fa484020bbb327da0c5ee3599828427537e4a6ef59bbc9ed2dbd979a55dcc45d",
+      "expected_K": [
+        "K-004",
+        "K-035"
+      ],
+      "failure_class": "Checker omission",
+      "fixture_name": "RedCase_CheckerOmission",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-009",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-009",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-004",
+            "K-035"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-004",
+            "K-035"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-005",
+        "K-010"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:5321adfc82e7be08e26d2cd410868b23b3e6ac975b9c1437d83f0b487686e1a8",
+      "expected_K": [
+        "K-005"
+      ],
+      "failure_class": "Checker whitelist",
+      "fixture_name": "RedCase_CheckerWhitelist",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-010",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-010",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-005",
+            "K-010"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-005"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-022"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:9cf4d2129e5ec2393a38761bfbff71bcfa553a60ca9f3792174b571ae0df2881",
+      "expected_K": [
+        "K-022"
+      ],
+      "failure_class": "Sealed challenge collusion",
+      "fixture_name": "RedCase_SealedChallengeCollusion",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-011",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-011",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-022"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-022"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-006",
+        "K-031"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:0821b4860ee1e04bd4a5b7f14ec13bb0db72eb602bbf0d7b6e68bfd65f849bb8",
+      "expected_K": [
+        "K-006",
+        "K-031"
+      ],
+      "failure_class": "Stale evidence replay",
+      "fixture_name": "RedCase_StaleEvidenceReplay",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-012",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-012",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-006",
+            "K-031"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-006",
+            "K-031"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-012",
+        "K-029"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:f00cc1ef51c5ee4f3cb87a9a2e668065f3def8e6520db511fa72d1314cfd093c",
+      "expected_K": [
+        "K-012",
+        "K-029"
+      ],
+      "failure_class": "Rule hack",
+      "fixture_name": "RedCase_RuleHack",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-013",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-013",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-012",
+            "K-029"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-012",
+            "K-029"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-009",
+        "K-013"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:e5a3add178e96b9c082b30890bc379d878f0baea7eaaaed8c7104e641e4ce099",
+      "expected_K": [
+        "K-009",
+        "K-013"
+      ],
+      "failure_class": "Target-as-certificate",
+      "fixture_name": "RedCase_TargetAsCertificate",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-014",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-014",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-009"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-009",
+            "K-013"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-034"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:08b80e2820aa2633ef0d9ff91e0f2401c798eb3ba4a09ba59d1c54fe80393ea4",
+      "expected_K": [
+        "K-034"
+      ],
+      "failure_class": "Checker-generated success artifacts",
+      "fixture_name": "RedCase_CheckerGeneratedSuccessArtifacts",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-015",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-015",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-034"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-034"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-006",
+        "K-018",
+        "K-024",
+        "K-034",
+        "K-035"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:a88d2efc28dfb0fe176abb0093eef2716d40dc64b3b18b7c420e3bb2024cc851",
+      "expected_K": [
+        "K-006",
+        "K-018",
+        "K-024",
+        "K-034",
+        "K-035"
+      ],
+      "failure_class": "Static-only green release",
+      "fixture_name": "RedCase_StaticOnlyGreenRelease",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-016",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-016",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-006",
+            "K-018",
+            "K-024",
+            "K-034",
+            "K-035"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-006",
+            "K-018",
+            "K-024",
+            "K-034",
+            "K-035"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-024"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:5046f76283c31d6e7677e7fd24937de26c18f4dd156a49320596beca2c8027d1",
+      "expected_K": [
+        "K-024"
+      ],
+      "failure_class": "B2-only matrix",
+      "fixture_name": "RedCase_B2OnlyMatrix",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-017",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-017",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-024"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-024"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-012",
+        "K-013",
+        "K-027"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:ce0a06cd83e28dd95b66eaf640e9aa1340aa0fd232de186dcc5678261c7c321c",
+      "expected_K": [
+        "K-013",
+        "K-027"
+      ],
+      "failure_class": "Direct lemma wrapped as intermediate",
+      "fixture_name": "RedCase_DirectLemmaWrappedAsIntermediate",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-018",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-018",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-013",
+            "K-027"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-012",
+            "K-013",
+            "K-027"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-008"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:960887c2c79cc671e45df00ccd476d7441aed260239c723bd57e5c40d9092643",
+      "expected_K": [
+        "K-008"
+      ],
+      "failure_class": "Provider imports compiler",
+      "fixture_name": "RedCase_ProviderImportsCompiler",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-019",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "RC-019",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-008"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-008"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-010"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:e25ac16c1e89378735a2d0700fc4b694f7feacba4d6d1911fba14a977e746d82",
+      "expected_K": [
+        "K-010"
+      ],
+      "failure_class": "Engine output contains proof text",
+      "fixture_name": "EngineOutputContainsProofText",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#K-010",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "K-010",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-010"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-010"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-013"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:029beee25117fd8fec22a0141b3a9b0f4650e804b0dc2021d8ba3d1277de6382",
+      "expected_K": [
+        "K-013"
+      ],
+      "failure_class": "Target-equivalent intermediate",
+      "fixture_name": "TargetEquivalentIntermediate",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#K-013",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "K-013",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-013"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-013"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    },
+    {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "detected_K": [
+        "K-028"
+      ],
+      "errors": [],
+      "evidence_ref": "sha256:7b111c40e9a2fd07c0afef65a7d541d87be8e1d0d15861d3400d3b92b2992e34",
+      "expected_K": [
+        "K-028"
+      ],
+      "failure_class": "Narrow engine role set",
+      "fixture_name": "NarrowEngineRoleSet",
+      "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#K-028",
+      "missing_expected_K": [],
+      "observed_failure": true,
+      "positive_control_detected_K": [],
+      "positive_control_passed": true,
+      "red_case_id": "K-028",
+      "variant_results": [
+        {
+          "detected_K": [
+            "K-028"
+          ],
+          "errors": [],
+          "kind": "static-code",
+          "variant_index": 1
+        },
+        {
+          "detected_K": [
+            "K-028"
+          ],
+          "errors": [],
+          "kind": "artifact-run",
+          "variant_index": 2
+        }
+      ]
+    }
+  ],
+  "schema_version": "GeometryFull2DRedCaseReportV06",
+  "status": "passed"
+}

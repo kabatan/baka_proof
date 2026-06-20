@@ -1,0 +1,679 @@
+{
+  "schema_version": "GeometryFull2DRedCaseManifestV06",
+  "fixtures": [
+    {
+      "red_case_id": "RC-001",
+      "fixture_name": "RedCase_TargetFactProvider",
+      "failure_class": "Target-fact provider",
+      "expected_K": ["K-007", "K-013"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "target_fact_with_empty_premises = True\nselected_fact_is_final_target = True\nselected_facts = [{\"conclusion\": \"FINAL_TARGET\", \"premises\": []}]\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "EngineOutputFull2D",
+            "selected_facts": [
+              {"conclusion": "FINAL_TARGET", "is_final_target": true, "premises": []}
+            ],
+            "red_case_markers": ["target_fact_with_empty_premises", "selected_fact_is_final_target"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "EngineOutputFull2D",
+          "selected_facts": [
+            {"conclusion": "midpoint(M,A,B)", "is_final_target": false, "premises": ["hyp_segment"]}
+          ],
+          "independent_checker": {"schema_version": "IndependentSolverArtifactCheckV1", "status": "passed"}
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-002",
+      "fixture_name": "RedCase_NakedTargetAssertion",
+      "failure_class": "Naked target assertion",
+      "expected_K": ["K-013"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "naked_target_assertion = True\nselected_derivation_only_final_target = True\nderivation_steps = [{\"conclusion\": \"FINAL_TARGET\"}]\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "SelectedSolverDerivationV3",
+            "derivation_steps": [{"conclusion": "FINAL_TARGET", "non_target_intermediate": false}],
+            "red_case_markers": ["naked_target_assertion", "selected_derivation_only_final_target"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "SelectedSolverDerivationV3",
+          "derivation_steps": [
+            {"conclusion": "parallel(A B, C D)", "non_target_intermediate": true, "checker_ref": "sha256:positive"}
+          ],
+          "target_matcher": {"status": "passed", "final_hash_matches_target": true}
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-003",
+      "fixture_name": "RedCase_IdentityDirectRuleRegistry",
+      "failure_class": "Identity/direct-rule registry",
+      "expected_K": ["K-012"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "identity_direct_rule = True\ndirect_facade_rule = True\ncounted_release_rule = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "RuleRegistryFull2D",
+            "counted_rules": [
+              {"rule_id": "identity_target", "identity_direct_rule": true, "counted_release_rule": true}
+            ],
+            "red_case_markers": ["identity_direct_rule", "direct_facade_rule"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "RuleRegistryFull2D",
+          "counted_rules": [
+            {"rule_id": "angle_sum_triangle", "family": "angle", "independent_rule_checker": "passed"}
+          ]
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-004",
+      "fixture_name": "RedCase_ProofFromShapeCompiler",
+      "failure_class": "Proof-from-shape compiler",
+      "expected_K": ["K-015", "K-016"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "def compile_derivation(theorem_anchor, target_expr, theorem_family, target_shape_id, statement_hash):\n    compiler_uses_forbidden_input = True\n    if target_shape_id == \"collinear\" or statement_hash.startswith(\"abc\"):\n        return proof_from_shape(target_expr)\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "CompilerResultFull2D",
+            "compile_inputs": ["TheoremAnchorV1", "SelectedSolverDerivationV3", "RuleRegistrySnapshot", "SideConditionReport"],
+            "uses_theorem_anchor_identifier": true,
+            "target_shape_id": "collinear_menu",
+            "theorem_family": "collinear",
+            "theorem_name": "T_collinear_01",
+            "statement_hash": "abc123",
+            "proof_region_identity": "region-7",
+            "binder_map_identity": "binder-7",
+            "red_case_markers": ["compiler_uses_forbidden_input", "proof_from_shape"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "CompilerResultFull2D",
+          "compile_inputs": ["TheoremAnchorV1", "SelectedSolverDerivationV3", "RuleRegistrySnapshot", "SideConditionReport"],
+          "proof_strategy_source": "selected_derivation_steps_only",
+          "anchor_used_only_for_patch_location": true
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-005",
+      "fixture_name": "RedCase_RuleListArtifactSynthesis",
+      "failure_class": "Rule-list artifact synthesis",
+      "expected_K": ["K-011"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "rule_list_artifact_synthesis = True\ncompiler_selected_rule_list = [\"target_finish\"]\nused_rules_as_engine_artifact = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "EngineOutputFull2D",
+            "engine_output_from_compiler_selected_rules": true,
+            "used_rules_as_engine_artifact": true,
+            "red_case_markers": ["rule_list_artifact_synthesis"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "EngineOutputFull2D",
+          "artifact_source": "provider_before_compiler",
+          "solver_trace_ref": "sha256:solver-trace-positive"
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-006",
+      "fixture_name": "RedCase_ReportOnlyCausality",
+      "failure_class": "Report-only causality",
+      "expected_K": ["K-018", "K-019"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "report_only_causality = True\nno_live_rerun_logs = True\nmutation_sensitivity_missing = True\ndestructive_causality_passed = False\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "SolverCausalityLiveRunV1",
+            "status_fields_only": true,
+            "no_live_rerun_logs": true,
+            "mutation_sensitivity_missing": true,
+            "red_case_markers": ["report_only_causality"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "SolverCausalityLiveRunV1",
+          "positive_control_rerun_logs": ["compiler.log", "proof_worker.log", "final_verify.log"],
+          "mutation_results": [{"mutation": "remove_selected_artifact", "same_final_theorem": false}]
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-007",
+      "fixture_name": "RedCase_FamilyCodedBaseline",
+      "failure_class": "Family-coded baseline",
+      "expected_K": ["K-025", "K-030"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "family_coded_baseline = True\nbaseline_outcome_from_family = True\nbaseline_result_from_label = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "ActualTaskPipelineRunV4",
+            "baseline_outcome_from_family": true,
+            "family_coded_baseline": true,
+            "red_case_markers": ["family_coded_baseline"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "ActualTaskPipelineRunV4",
+          "baseline": "B5",
+          "disabled_stage_report": {"schema_version": "DisabledStageReportV1", "stage": "provider_artifact", "status": "measured_failure"}
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-008",
+      "fixture_name": "RedCase_ProjectionBenchmark",
+      "failure_class": "Projection benchmark",
+      "expected_K": ["K-020", "K-021"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "projection_counted_positive = True\nself_attested_goal_preservation = True\nExternalGoalPreserved = \"projection task counted as release positive\"\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "CorpusTaskRecordV1",
+            "category": "ExternalGoalPreserved",
+            "projection_counted_positive": true,
+            "self_attested_goal_preservation": true,
+            "red_case_markers": ["projection_counted_positive", "self_attested_goal_preservation"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "CorpusTaskRecordV1",
+          "category": "ProjectionFixtureNonCounted",
+          "counted_positive": false,
+          "goal_preservation": {"method": "formal_equivalence", "status": "passed"}
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-009",
+      "fixture_name": "RedCase_CheckerOmission",
+      "failure_class": "Checker omission",
+      "expected_K": ["K-004", "K-035"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "checker_coverage_matrix = {}\nomitted_checker = True\nmissing_required_checker = \"check_solver_causality_live_v0_6.py\"\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "ReleaseAcceptanceReportV06",
+            "missing_k_coverage": true,
+            "omitted_checker": true,
+            "missing_required_checker": "check_solver_causality_live_v0_6.py",
+            "red_case_markers": ["checker_omission"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "AcceptanceCoverageMapV06",
+          "K_to_checker_evidence_map": {"K-004": {"checker": "check_acceptance_coverage_v0_6.py", "evidence_ref": "sha256:positive"}},
+          "all_required_checkers_invoked": true
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-010",
+      "fixture_name": "RedCase_CheckerWhitelist",
+      "failure_class": "Checker whitelist",
+      "expected_K": ["K-005"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "def check(path):\n    if path.endswith(\"release_impl.py\"):\n        return True  # whitelist forbidden shortcut by filename\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "CheckerReportV1",
+            "checker_whitelist": true,
+            "suppressed_forbidden_shortcut": true,
+            "suppression_basis": "filename",
+            "red_case_markers": ["checker_whitelist"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "CheckerReportV1",
+          "detected_forbidden_shortcut": false,
+          "release_entrypoints_scanned": true
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-011",
+      "fixture_name": "RedCase_SealedChallengeCollusion",
+      "failure_class": "Sealed challenge collusion",
+      "expected_K": ["K-022"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "sealed_challenge_collusion = True\nsealed_generator_imports_implementation = True\nsealed_generator_reads_run_record = True\nemits_expected_rule_labels = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "SealedAdversarialHoldoutManifestV1",
+            "sealed_generator_imports_implementation": true,
+            "sealed_generator_reads_run_record": true,
+            "emits_expected_rule_labels": true,
+            "red_case_markers": ["sealed_challenge_collusion"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "SealedAdversarialHoldoutManifestV1",
+          "implementation_hash_frozen_before_generation": true,
+          "emitted_fields": ["theorem_statement"],
+          "imports": []
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-012",
+      "fixture_name": "RedCase_StaleEvidenceReplay",
+      "failure_class": "Stale evidence replay",
+      "expected_K": ["K-006", "K-031"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "stale_evidence = True\nstale_evidence_replay = True\ncurrent_git_head_bound = False\nchecker_hash_set_unbound = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "FreshnessSummaryV1",
+            "stale_evidence": true,
+            "current_git_head_bound_false": true,
+            "run_dir_hash_unbound": true,
+            "checker_hash_set_unbound": true,
+            "red_case_markers": ["stale_evidence_replay"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "FreshnessSummaryV1",
+          "current_git_head_bound": true,
+          "implementation_hash_bound": true,
+          "run_dir_hash_bound": true,
+          "checker_hash_set_bound": true
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-013",
+      "fixture_name": "RedCase_RuleHack",
+      "failure_class": "Rule hack",
+      "expected_K": ["K-012", "K-029"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "rule_hack = True\nfake_broad_family = True\nalias_inflation = True\nunchecked_rule = True\nnon_mutation_sensitive_rule = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "RuleRegistryFull2D",
+            "fake_broad_family": true,
+            "alias_inflation": true,
+            "unchecked_rule": true,
+            "non_mutation_sensitive_rule": true,
+            "red_case_markers": ["rule_hack"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "RuleRegistryFull2D",
+          "counted_rules": [
+            {"rule_id": "circle_power", "family": "circle", "checker_verifies_premises": true, "mutation_sensitive": true}
+          ]
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-014",
+      "fixture_name": "RedCase_TargetAsCertificate",
+      "failure_class": "Target-as-certificate",
+      "expected_K": ["K-009", "K-013"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "target_as_certificate = True\ncertificate_is_target = True\ncertificate_payload = target\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "SolverBackedProofCertificateFull2D",
+            "target_as_certificate": true,
+            "certificate": {"kind": "target_statement", "payload": "FINAL_TARGET"},
+            "red_case_markers": ["certificate_is_target"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "SolverBackedProofCertificateFull2D",
+          "certificate": {"kind": "checked_construction", "payload_ref": "sha256:construction-positive"},
+          "independent_checker": {"schema_version": "IndependentSolverArtifactCheckV1", "status": "passed"}
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-015",
+      "fixture_name": "RedCase_CheckerGeneratedSuccessArtifacts",
+      "failure_class": "Checker-generated success artifacts",
+      "expected_K": ["K-034"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "checker_generated_success_artifacts = True\nfabricated_pipeline_success = True\nchecker_creates_final_verify_success = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "ReleaseCheckerTraceV1",
+            "checker_generated_success_artifacts": true,
+            "fabricated_pipeline_success": true,
+            "checker_creates_final_verify_success": true,
+            "red_case_markers": ["checker_generated_success_artifacts"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "ReleaseCheckerTraceV1",
+          "checker_mode": "validate_existing_or_execute_pipeline",
+          "generated_artifact_scope": "red_case_fixture_report_only"
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-016",
+      "fixture_name": "RedCase_StaticOnlyGreenRelease",
+      "failure_class": "Static-only green release",
+      "expected_K": ["K-006", "K-018", "K-024", "K-034", "K-035"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "static_only_release = True\nno_live_rerun_logs = True\nb2_only_matrix = True\nchecker_generated_success_artifacts = True\nmissing_required_checker = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "ReleaseAcceptanceReportV06",
+            "static_only_release": true,
+            "no_live_rerun_logs": true,
+            "b2_only_matrix": true,
+            "checker_generated_success_artifacts": true,
+            "missing_required_checker": "run_full2d_matrix_v0_6.py",
+            "red_case_markers": ["static_only_release"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "ReleaseAcceptanceReportV06",
+          "fresh_run": true,
+          "live_mutations": true,
+          "all_baselines": true,
+          "all_required_checkers_invoked": true
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-017",
+      "fixture_name": "RedCase_B2OnlyMatrix",
+      "failure_class": "B2-only matrix",
+      "expected_K": ["K-024"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "b2_only_matrix = True\nmissing_required_baselines = [\"B1\", \"B5\", \"B6\", \"B7\"]\nmaterialized_from_b2_cache = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "Full2DMatrixRunV06",
+            "b2_only_matrix": true,
+            "missing_required_baselines": ["B1", "B5", "B6", "B7"],
+            "materialized_from_b2_cache": true,
+            "red_case_markers": ["b2_only_matrix"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "Full2DMatrixRunV06",
+          "executed_baselines": ["B1", "B2", "B5", "B6", "B7"],
+          "records_from_actual_pipeline_execution": true
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-018",
+      "fixture_name": "RedCase_DirectLemmaWrappedAsIntermediate",
+      "failure_class": "Direct lemma wrapped as intermediate",
+      "expected_K": ["K-013", "K-027"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "direct_lemma_wrapped_as_intermediate = True\ndirect_facade_target = True\ndirect_facade_lemma_fraction_too_high = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "SelectedSolverDerivationV3",
+            "direct_lemma_wrapped_as_intermediate": true,
+            "direct_facade_rule": true,
+            "direct_facade_lemma_fraction_too_high": true,
+            "red_case_markers": ["direct_lemma_wrapped_as_intermediate"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "SelectedSolverDerivationV3",
+          "selected_intermediate": {"kind": "checked_case_split", "target_equivalent": false, "checker_ref": "sha256:case-positive"}
+        }
+      }
+    },
+    {
+      "red_case_id": "RC-019",
+      "fixture_name": "RedCase_ProviderImportsCompiler",
+      "failure_class": "Provider imports compiler",
+      "expected_K": ["K-008"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "provider_imports_compiler = True\nfrom geometry_full2d import compiler, rule_registry, proof_worker, final_verify\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "ProviderBoundaryReportV1",
+            "provider_imports_compiler": true,
+            "imports": ["geometry_full2d.compiler", "geometry_full2d.rule_registry", "geometry_full2d.proof_worker"],
+            "red_case_markers": ["provider_imports_compiler"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "ProviderBoundaryReportV1",
+          "provider_imports": ["geometry_full2d.provider_primitives", "geometry_full2d.solver_core"],
+          "imports_downstream_modules": false
+        }
+      }
+    },
+    {
+      "red_case_id": "K-010",
+      "fixture_name": "EngineOutputContainsProofText",
+      "failure_class": "Engine output contains proof text",
+      "expected_K": ["K-010"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "engine_output_contains_proof_text = True\nproof_text_present = True\ntactic_script = \"exact h\"\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "EngineOutputFull2D",
+            "proof_text_present": true,
+            "proof": "exact h",
+            "red_case_markers": ["proof_text_present"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "EngineOutputFull2D",
+          "solver_trace_ref": "sha256:trace-without-proof-text",
+          "facts": [{"conclusion": "angle_eq(A,B,C,D)", "premises": ["hyp1", "hyp2"]}]
+        }
+      }
+    },
+    {
+      "red_case_id": "K-013",
+      "fixture_name": "TargetEquivalentIntermediate",
+      "failure_class": "Target-equivalent intermediate",
+      "expected_K": ["K-013"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "target_equivalent_intermediate = True\nalpha_renamed_target = True\ntarget_hash_intermediate = True\ntrivial_target_wrapper = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "SelectedSolverDerivationV3",
+            "target_equivalent_intermediate": true,
+            "alpha_renamed_target": true,
+            "target_hash_intermediate": true,
+            "trivial_target_wrapper": true,
+            "red_case_markers": ["target_equivalent_intermediate"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "SelectedSolverDerivationV3",
+          "selected_intermediate": {"kind": "metric_certificate", "target_equivalent": false, "checker_ref": "sha256:metric-positive"}
+        }
+      }
+    },
+    {
+      "red_case_id": "K-028",
+      "fixture_name": "NarrowEngineRoleSet",
+      "failure_class": "Narrow engine role set",
+      "expected_K": ["K-028"],
+      "variants": [
+        {
+          "kind": "static-code",
+          "code": "narrow_engine_role_set = True\nposthoc_enabled_engine_roles = True\nomits_release_critical_role = True\nrole_set_after_provider_success = True\n"
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "EngineContributionReportV1",
+            "narrow_engine_role_set": true,
+            "posthoc_enabled_engine_roles": true,
+            "omits_release_critical_role": true,
+            "red_case_markers": ["narrow_engine_role_set"]
+          }
+        }
+      ],
+      "positive_control": {
+        "kind": "artifact-run",
+        "payload": {
+          "schema_version": "EngineContributionReportV1",
+          "enabled_role_set_source": "corpus_metadata_and_config_before_provider_execution",
+          "roles": ["synthetic_trace", "construction", "algebraic_metric_certificate", "order_case", "inequality", "lean_search_certificate", "external_solver_trace"]
+        }
+      }
+    }
+  ]
+}
