@@ -27,8 +27,15 @@ DOWNSTREAM_IMPORT_PARTS = (
     "proof_worker",
     "final_verify",
     "matrix",
+    "release",
     "release_checker",
+    "corpus",
     "corpus_generator",
+    "previous_release",
+    "prior_release",
+    "proof_template",
+    "v0_5",
+    "v0_4",
 )
 SCHEMA_ALIASES = {
     "LeanExtractionReportFull2D": "LeanExtractionReportFull2D",
@@ -261,7 +268,7 @@ def _validate_provider_manifest(payload: dict[str, Any], errors: list[str]) -> N
 
 
 def _validate_engine_output(payload: dict[str, Any], errors: list[str]) -> None:
-    _require(
+    _require_present(
         payload,
         [
             "engine_output_id",
@@ -283,7 +290,7 @@ def _validate_engine_output(payload: dict[str, Any], errors: list[str]) -> None:
         errors.append("bad_engine_role")
     for key in ["claim_spec_ref", "provider_run_manifest_ref", "backend_code_hash"]:
         _require_ref(payload, key, errors)
-    _require_ref_list(payload, "independent_checker_refs", errors)
+    _require_ref_list(payload, "independent_checker_refs", errors, allow_empty=True)
     if payload.get("proof_text_present") is not False:
         errors.append("proof_text_in_engine_output")
     if payload.get("created_before_compiler") is not True:
@@ -303,7 +310,13 @@ def _validate_engine_output(payload: dict[str, Any], errors: list[str]) -> None:
             errors.append("target_fact_without_derivation")
         if artifact.get("kind") in {"fact", "construction", "certificate"} and not artifact.get("premises") and artifact.get("kind") == "fact":
             errors.append(f"fact_missing_premises:{index}")
-        if artifact.get("certificate_payload") in {"FINAL_TARGET", "target_hash", "target_expr"}:
+        certificate_payload = artifact.get("certificate_payload")
+        if isinstance(certificate_payload, str) and certificate_payload in {"FINAL_TARGET", "target_hash", "target_expr"}:
+            errors.append("target_as_certificate")
+        if isinstance(certificate_payload, dict) and (
+            certificate_payload.get("kind") in {"FINAL_TARGET", "target_hash", "target_expr", "target_statement"}
+            or certificate_payload.get("payload") in {"FINAL_TARGET", "target_hash", "target_expr"}
+        ):
             errors.append("target_as_certificate")
 
 

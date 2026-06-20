@@ -222,8 +222,15 @@ FORBIDDEN_PROVIDER_IMPORT_PARTS = (
     "proof_worker",
     "final_verify",
     "matrix",
+    "release",
     "release_checker",
+    "corpus",
     "corpus_generator",
+    "previous_release",
+    "prior_release",
+    "proof_template",
+    "v0_5",
+    "v0_4",
 )
 
 

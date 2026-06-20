@@ -575,6 +575,19 @@
             "imports": ["geometry_full2d.compiler", "geometry_full2d.rule_registry", "geometry_full2d.proof_worker"],
             "red_case_markers": ["provider_imports_compiler"]
           }
+        },
+        {
+          "kind": "artifact-run",
+          "payload": {
+            "schema_version": "ProviderBoundaryReportV1",
+            "imports": [
+              "geometry_full2d.release",
+              "geometry_full2d.corpus",
+              "geometry_full2d.previous_release",
+              "geometry_full2d.proof_template"
+            ],
+            "red_case_markers": ["imports_downstream_module"]
+          }
         }
       ],
       "positive_control": {

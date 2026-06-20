@@ -1,0 +1,130 @@
+{
+  "checker_name": "check_provider_isolation_v0_6.py",
+  "errors": [],
+  "import_scan": {
+    "forbidden_imports": [],
+    "git_head": "9e010a990c8eac8d9b92a00886fe29a31c84e827",
+    "imports": [
+      "__future__",
+      "argparse",
+      "ast",
+      "datetime",
+      "hashlib",
+      "json",
+      "pathlib",
+      "scripts.geometry_full2d_v0_6_extraction",
+      "scripts.geometry_full2d_v0_6_schemas",
+      "subprocess",
+      "typing"
+    ],
+    "module": "scripts.geometry_full2d_v0_6_provider",
+    "module_path": "scripts/geometry_full2d_v0_6_provider.py",
+    "provider_code_hash": "sha256:3259438feecaa659fd60fc084f0ed123fbd664ef477317236f2ecf0890873bc5",
+    "schema_version": "ProviderImportScanV06",
+    "status": "passed"
+  },
+  "manifest_results": [
+    {
+      "errors": [],
+      "path": "provider_manifests_v0_6/v06_bootstrap_collinear_refl.json",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "path": "provider_manifests_v0_6/v06_bootstrap_equal_length_symm.json",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "path": "provider_manifests_v0_6/v06_bootstrap_midpoint_collinear.json",
+      "status": "passed"
+    }
+  ],
+  "provider_run": {
+    "claim_spec_count": 3,
+    "engine_output_count": 21,
+    "errors": [],
+    "provider_index_path": "runs/wp05_v0_6_fresh/provider_index_v0_6.json",
+    "provider_manifest_count": 3,
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp05_v0_6_fresh",
+    "schema_version": "RunProviderStageV06Report",
+    "status": "passed"
+  },
+  "red_cases": {
+    "cases": [
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-008"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:841a56169c82d92edabc4e7643e21ddf73432b38df4a0995dda9fc320e140afc",
+        "expected_K": [
+          "K-008"
+        ],
+        "failure_class": "Provider imports compiler",
+        "fixture_name": "RedCase_ProviderImportsCompiler",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-019",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "RC-019",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-008"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-008"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          },
+          {
+            "detected_K": [
+              "K-008"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 3
+          }
+        ]
+      }
+    ],
+    "errors": [],
+    "local_negative_errors": {
+      "compiler": [
+        "forbidden_provider_import:scripts.geometry_full2d_v0_6_compiler",
+        "provider_imports_downstream_module"
+      ],
+      "corpus": [
+        "forbidden_provider_import:scripts.geometry_full2d_v0_6_corpus",
+        "provider_imports_downstream_module"
+      ],
+      "previous_release": [
+        "forbidden_provider_import:scripts.geometry_full2d_v0_5_provider",
+        "provider_imports_downstream_module"
+      ],
+      "proof_template": [
+        "forbidden_provider_import:scripts.geometry_full2d_v0_6_proof_templates",
+        "provider_imports_downstream_module"
+      ],
+      "release": [
+        "forbidden_provider_import:scripts.geometry_full2d_v0_6_release",
+        "provider_imports_downstream_module"
+      ]
+    },
+    "schema_version": "ProviderIsolationRedCaseReportV06",
+    "status": "passed"
+  },
+  "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp05_v0_6_fresh",
+  "schema_version": "CheckProviderIsolationV06Report",
+  "status": "passed"
+}
