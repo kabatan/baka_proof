@@ -1,0 +1,339 @@
+{
+  "checker_name": "check_compiler_input_lock_v0_6.py",
+  "compiler_run": {
+    "compiler_result_count": 3,
+    "errors": [],
+    "index_path": "runs/wp09_v0_6_fresh/compiler_index_v0_6.json",
+    "lean_patch_candidate_count": 3,
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh",
+    "schema_version": "RunCompilerStageV06Report",
+    "status": "passed"
+  },
+  "dynamic_taint": {
+    "baseline_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+    "case_results": {
+      "binder_map": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      },
+      "binder_map_identity": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      },
+      "category": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      },
+      "difficulty_tier": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      },
+      "proof_region_identity": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      },
+      "raw_target_expr": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      },
+      "source_ref": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      },
+      "statement_hash": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      },
+      "target_shape_id": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      },
+      "task_id": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      },
+      "theorem_family": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      },
+      "theorem_name": {
+        "observed_hash": "sha256:385cb8e3a72a7ac4d7c2474d25f103ada7306cd2bacf4f67da7e6461f49f4827",
+        "stable": true
+      }
+    },
+    "errors": [],
+    "schema_version": "CompilerDynamicTaintReportV06",
+    "status": "passed"
+  },
+  "errors": [],
+  "output_validation": {
+    "compiler_rows": [
+      {
+        "errors": [],
+        "path": "compiler_results_v0_6/0472912afb9c0e4c6ae87edb05f2cfc8857e85ea3058fcf033b258b0e687652a.json"
+      },
+      {
+        "errors": [],
+        "path": "compiler_results_v0_6/325fce66bca29a49ce627a856cfead926c32a55554dea9821f16af6d99532c84.json"
+      },
+      {
+        "errors": [],
+        "path": "compiler_results_v0_6/f7d635bfab1ab60e446be4b2f46d1c3bb34649947fd9a28938bce1a4adb91059.json"
+      }
+    ],
+    "errors": [],
+    "patch_rows": [
+      {
+        "errors": [],
+        "path": "lean_patch_candidates_v0_6/0472912afb9c0e4c6ae87edb05f2cfc8857e85ea3058fcf033b258b0e687652a.json"
+      },
+      {
+        "errors": [],
+        "path": "lean_patch_candidates_v0_6/325fce66bca29a49ce627a856cfead926c32a55554dea9821f16af6d99532c84.json"
+      },
+      {
+        "errors": [],
+        "path": "lean_patch_candidates_v0_6/f7d635bfab1ab60e446be4b2f46d1c3bb34649947fd9a28938bce1a4adb91059.json"
+      }
+    ],
+    "schema_version": "CompilerOutputValidationReportV06",
+    "status": "passed"
+  },
+  "prerequisites": {
+    "errors": [],
+    "fresh": true,
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh",
+    "schema_version": "CompilerInputLockPrereqReportV06",
+    "status": "passed",
+    "target_matcher_report": {
+      "checker_name": "check_derivation_target_matcher_v0_6.py",
+      "errors": [],
+      "prerequisites": {
+        "commands": [
+          {
+            "args": [
+              "C:\\Users\\bakat\\miniforge3\\python.exe",
+              "scripts/check_full2d_extraction_corpus_v0_6.py",
+              "--corpus-root",
+              "benchmarks/geometry_full2d_v0_6",
+              "--run-dir",
+              "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh",
+              "--self-test"
+            ],
+            "returncode": 0,
+            "status": "passed",
+            "stderr_tail": "",
+            "stdout_tail": "{\n  \"build_report\": {\n    \"errors\": [],\n    \"index_path\": \"runs/wp09_v0_6_fresh/extraction_corpus_index_v0_6.json\",\n    \"report_count\": 3,\n    \"required_task_count\": 3,\n    \"schema_version\": \"BuildFull2DExtractionCorpusV06Report\",\n    \"status\": \"passed\"\n  },\n  \"errors\": [],\n  \"schema_version\": \"CheckFull2DExtractionCorpusV06AcceptanceReport\",\n  \"self_test\": {\n    \"errors\": [],\n    \"schema_version\": \"GeometryFull2DExtractionV06SelfTest\",\n    \"status\": \"passed\"\n  },\n  \"status\": \"passed\",\n  \"validate_report\": {\n    \"errors\": [],\n    \"report_count\": 3,\n    \"required_task_count\": 3,\n    \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp09_v0_6_fresh\",\n    \"schema_version\": \"CheckFull2DExtractionCorpusV06Report\",\n    \"status\": \"passed\"\n  }\n}\n"
+          },
+          {
+            "args": [
+              "C:\\Users\\bakat\\miniforge3\\python.exe",
+              "scripts/check_full2d_claimspec_v0_6.py",
+              "--run-dir",
+              "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh",
+              "--self-test"
+            ],
+            "returncode": 0,
+            "status": "passed",
+            "stderr_tail": "",
+            "stdout_tail": "{\n  \"build_report\": {\n    \"claim_spec_count\": 3,\n    \"errors\": [],\n    \"index_path\": \"runs/wp09_v0_6_fresh/claimspec_index_v0_6.json\",\n    \"schema_version\": \"BuildFull2DClaimSpecV06Report\",\n    \"status\": \"passed\"\n  },\n  \"claim_spec_count\": 3,\n  \"errors\": [],\n  \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp09_v0_6_fresh\",\n  \"schema_version\": \"CheckFull2DClaimSpecV06Report\",\n  \"self_test\": {\n    \"errors\": [],\n    \"schema_version\": \"GeometryFull2DClaimSpecV06SelfTest\",\n    \"status\": \"passed\"\n  },\n  \"status\": \"passed\"\n}\n"
+          },
+          {
+            "args": [
+              "C:\\Users\\bakat\\miniforge3\\python.exe",
+              "scripts/geometry_full2d_v0_6_provider.py",
+              "--run-dir",
+              "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh"
+            ],
+            "returncode": 0,
+            "status": "passed",
+            "stderr_tail": "",
+            "stdout_tail": "{\n  \"claim_spec_count\": 3,\n  \"engine_output_count\": 21,\n  \"errors\": [],\n  \"provider_index_path\": \"runs/wp09_v0_6_fresh/provider_index_v0_6.json\",\n  \"provider_manifest_count\": 3,\n  \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp09_v0_6_fresh\",\n  \"schema_version\": \"RunProviderStageV06Report\",\n  \"status\": \"passed\"\n}\n"
+          },
+          {
+            "args": [
+              "C:\\Users\\bakat\\miniforge3\\python.exe",
+              "scripts/check_independent_solver_artifacts_v0_6.py",
+              "--all",
+              "--run-dir",
+              "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh"
+            ],
+            "returncode": 0,
+            "status": "passed",
+            "stderr_tail": "",
+            "stdout_tail": "{\n  \"check_run\": {\n    \"check_count\": 21,\n    \"checker_import_report\": {\n      \"checker_code_hash\": \"sha256:6822fbf85435824f0c584fc0e76fad578a5c0d7f2aa8153f951942a6d8ee69bf\",\n      \"forbidden_imports\": [],\n      \"git_head\": \"3e3252caefdbe6ac74648ec7f8184688935d07e9\",\n      \"imports\": [\n        \"__future__\",\n        \"ast\",\n        \"hashlib\",\n        \"json\",\n        \"pathlib\",\n        \"scripts.geometry_full2d_v0_6_extraction\",\n        \"scripts.geometry_full2d_v0_6_schemas\",\n        \"subprocess\",\n        \"typing\"\n      ],\n      \"module\": \"scripts.geometry_full2d_v0_6_independent_checkers\",\n      \"module_path\": \"scripts/geometry_full2d_v0_6_independent_checkers.py\",\n      \"schema_version\": \"IndependentCheckerImportReportV06\",\n      \"status\": \"passed\"\n    },\n    \"checker_names_seen\": [\n      \"algebraic_metric_certificate_checker\",\n      \"construction_checker\",\n      \"external_solver_trace_normalizer_checker\",\n      \"inequality_checker\",\n      \"lean_search_certificate_checker\",\n      \"order_case_checker\",\n      \"synthetic_trace_checker\"\n    ],\n    \"engine_output_count\": 21,\n    \"engine_roles_seen\": [\n      \"algebraic_metric_certificate\",\n      \"construction\",\n      \"external_solver_trace\",\n      \"inequality\",\n      \"lean_search_certificate\",\n      \"order_case\",\n      \"synthetic_trace\"\n    ],\n    \"errors\": [],\n    \"index_path\": \"runs/wp09_v0_6_fresh/independent_solver_artifact_check_index_v0_6.json\",\n    \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp09_v0_6_fresh\",\n    \"schema_version\": \"RunIndependentSolverArtifactChecksV06Report\",\n    \"status\": \"passed\"\n  },\n  \"checker_name\": \"check_independent_solver_artifacts_v0_6.py\",\n  \"errors\": [],\n  \"import_report\": {\n    \"checker_code_hash\": \"sha256:6822fbf85435824f0c584fc0e76fad578a5c0d7f2aa8153f951942a6d8ee69bf\",\n    \"forbidden_imports\": [],\n    \"git_head\": \"3e3252caefdbe6ac74648ec7f8184688935d07e9\",\n    \"imports\": [\n      \"__future__\",\n      \"ast\",\n      \"hashlib\",\n      \"json\",\n      \"pathlib\",\n      \"scripts.geometry_full2d_v0_6_extraction\",\n      \"scripts.geometry_full2d_v0_6_schemas\",\n      \"subprocess\",\n      \"typing\"\n    ],\n    \"module\": \"scripts.geometry_full2d_v0_6_independent_checkers\",\n    \"module_path\": \"scripts/geometry_full2d_v0_6_independent_checkers.py\",\n    \"schema_version\": \"IndependentCheckerImportReportV06\",\n    \"status\": \"passed\"\n  },\n  \"prerequisites\": {\n    \"commands\": [],\n    \"errors\": [],\n    \"fresh\": false,\n    \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp09_v0_6_fresh\",\n    \"schema_version\": \"IndependentSolverArtifactPrereqReportV06\",\n    \"status\": \"passed\"\n  },\n  \"red_cases\": null,\n  \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp09_v0_6_fresh\",\n  \"schema_version\": \"CheckIndependentSolverArtifactsV06Report\",\n  \"status\": \"passed\"\n}\n"
+          }
+        ],
+        "errors": [],
+        "fresh": true,
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh",
+        "schema_version": "SelectedDerivationPrereqReportV06",
+        "status": "passed"
+      },
+      "red_cases": null,
+      "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh",
+      "schema_version": "CheckDerivationTargetMatcherV06Report",
+      "selected_derivation_report": {
+        "errors": [],
+        "index_path": "runs/wp09_v0_6_fresh/selected_solver_derivation_index_v0_6.json",
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh",
+        "schema_version": "BuildSelectedSolverDerivationsV06Report",
+        "selected_derivation_count": 3,
+        "status": "passed"
+      },
+      "status": "passed",
+      "target_match_report": {
+        "errors": [],
+        "index_path": "runs/wp09_v0_6_fresh/derivation_target_match_index_v0_6.json",
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh",
+        "schema_version": "BuildDerivationTargetMatchReportsV06Report",
+        "status": "passed",
+        "target_match_count": 3
+      },
+      "validation_rows": [
+        {
+          "errors": [],
+          "match_report_id": "sha256:f52a35d8e2bbeea8f23c8e77349b198f682e2a312d711b7ccc8df879e84cbeca",
+          "path": "derivation_target_matches_v0_6/0472912afb9c0e4c6ae87edb05f2cfc8857e85ea3058fcf033b258b0e687652a.json",
+          "status": "passed"
+        },
+        {
+          "errors": [],
+          "match_report_id": "sha256:53942f161e609cd42498ee9f76566f0f540feb0dd39b7e966cd42af4262083f3",
+          "path": "derivation_target_matches_v0_6/325fce66bca29a49ce627a856cfead926c32a55554dea9821f16af6d99532c84.json",
+          "status": "passed"
+        },
+        {
+          "errors": [],
+          "match_report_id": "sha256:0b63c68aaca1057393b51f673306255485948ecf1d0f52cbbc39d85d09ba513b",
+          "path": "derivation_target_matches_v0_6/f7d635bfab1ab60e446be4b2f46d1c3bb34649947fd9a28938bce1a4adb91059.json",
+          "status": "passed"
+        }
+      ]
+    }
+  },
+  "red_cases": {
+    "errors": [],
+    "local_negative_results": {
+      "binder_map_identity_branch": [
+        "compiler_forbidden_input_or_branch:binder_map_identity"
+      ],
+      "proof_region_identity_branch": [
+        "compiler_forbidden_input_or_branch:proof_region_identity"
+      ],
+      "statement_hash_branch": [
+        "compiler_forbidden_input_or_branch:statement_hash"
+      ],
+      "target_expr_input": [
+        "compiler_forbidden_input_or_branch:target_expr"
+      ],
+      "target_shape_id_input": [
+        "compiler_forbidden_input_or_branch:target_shape_id"
+      ],
+      "theorem_name_branch": [
+        "compiler_forbidden_input_or_branch:theorem_name"
+      ],
+      "wrong_api_inputs": [
+        "compiler_api_inputs_not_exact",
+        "compiler_api_inputs_not_exact_v1"
+      ]
+    },
+    "local_patch_negative_results": {
+      "fixed_proof_menu": [
+        "patch_text_contains_fixed_or_shape_proof_menu",
+        "patch_text_untraceable_lemma:collinear_refl_left"
+      ],
+      "missing_registry_trace": [
+        "patch_text_missing_trace:0:registry_lean_lemma"
+      ],
+      "non_contract_render_source": [
+        "patch_rendered_step_not_rule_contract_source:0"
+      ]
+    },
+    "local_positive_errors": [],
+    "local_positive_patch_errors": [],
+    "manifest_cases": [
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-015",
+          "K-016"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:c9bbe0c5c73511c7a3baa69182b08bdc42b269328563724b5ef4bae2085964e0",
+        "expected_K": [
+          "K-015",
+          "K-016"
+        ],
+        "failure_class": "Proof-from-shape compiler",
+        "fixture_name": "RedCase_ProofFromShapeCompiler",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-004",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "RC-004",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-015",
+              "K-016"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-015",
+              "K-016"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          }
+        ]
+      }
+    ],
+    "schema_version": "CompilerInputLockRedCaseReportV06",
+    "status": "passed"
+  },
+  "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh",
+  "schema_version": "CheckCompilerInputLockV06Report",
+  "self_test": {
+    "compiler_import_report": {
+      "compiler_code_hash": "sha256:5a8ab96e1aeec42b902fa3e941467cc48c259b6e9a45ff2c73a4486bbcca5df7",
+      "forbidden_imports": [],
+      "git_head": "3e3252caefdbe6ac74648ec7f8184688935d07e9",
+      "imports": [
+        "__future__",
+        "ast",
+        "hashlib",
+        "inspect",
+        "json",
+        "pathlib",
+        "scripts.geometry_full2d_v0_6_derivation",
+        "scripts.geometry_full2d_v0_6_extraction",
+        "scripts.geometry_full2d_v0_6_schemas",
+        "subprocess",
+        "typing"
+      ],
+      "module": "scripts.geometry_full2d_v0_6_compiler",
+      "module_path": "scripts/geometry_full2d_v0_6_compiler.py",
+      "schema_version": "CompilerImportReportV06",
+      "status": "passed"
+    },
+    "errors": [],
+    "expected_parameters": [
+      "theorem_anchor",
+      "selected_derivation",
+      "rule_registry_snapshot",
+      "side_condition_reports"
+    ],
+    "schema_self_test_status": "passed",
+    "schema_version": "CompilerInputLockSelfTestV06",
+    "signature": "(theorem_anchor: 'dict[str, Any]', selected_derivation: 'dict[str, Any]', rule_registry_snapshot: 'dict[str, Any]', side_condition_reports: 'list[dict[str, Any]]') -> 'dict[str, Any]'",
+    "status": "passed"
+  },
+  "status": "passed"
+}

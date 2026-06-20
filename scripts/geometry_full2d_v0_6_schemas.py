@@ -434,7 +434,7 @@ def _validate_compiler_result(payload: dict[str, Any], errors: list[str]) -> Non
     for key in ["theorem_anchor_ref", "selected_derivation_ref", "rule_registry_snapshot_ref", "lean_patch_candidate_ref", "compiler_code_hash"]:
         _require_ref(payload, key, errors)
     _require_ref_list(payload, "side_condition_report_refs", errors, allow_empty=True)
-    expected_inputs = {"TheoremAnchorV1", "SelectedSolverDerivationV3", "RuleRegistrySnapshot", "SideConditionReport"}
+    expected_inputs = {"TheoremAnchorV1", "SelectedSolverDerivationV3", "RuleRegistrySnapshotV1", "SideConditionReportV1"}
     if set(payload.get("compile_inputs", [])) != expected_inputs:
         errors.append("compiler_api_inputs_not_exact")
     for forbidden in (
@@ -771,7 +771,7 @@ def positive_fixtures() -> dict[str, dict[str, Any]]:
             "side_condition_report_refs": [a],
             "lean_patch_candidate_ref": b,
             "compiler_code_hash": c,
-            "compile_inputs": ["TheoremAnchorV1", "SelectedSolverDerivationV3", "RuleRegistrySnapshot", "SideConditionReport"],
+            "compile_inputs": ["TheoremAnchorV1", "SelectedSolverDerivationV3", "RuleRegistrySnapshotV1", "SideConditionReportV1"],
         },
         "LeanPatchCandidateFull2D": {
             **common,
