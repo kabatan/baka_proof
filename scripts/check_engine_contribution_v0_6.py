@@ -160,7 +160,7 @@ def roles_used_by_record(record: dict[str, Any], derivations: dict[str, dict[str
     derivation = derivations.get(str(record.get("selected_solver_derivation_ref")))
     if isinstance(derivation, dict):
         for step in derivation.get("selected_steps", []):
-            if isinstance(step, dict) and step.get("engine_role"):
+            if isinstance(step, dict) and step.get("engine_role") and step.get("is_final_target") is not True:
                 roles.add(str(step["engine_role"]))
     return roles
 

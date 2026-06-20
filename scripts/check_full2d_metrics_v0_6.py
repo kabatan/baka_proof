@@ -26,6 +26,14 @@ THRESHOLDS = {
     "B2_minus_B6_algebraic_metric_certificate_subset_advantage": 0.10,
     "B2_minus_B7_order_case_subset_advantage": 0.05,
 }
+DESTRUCTIVE_MUTATION_KINDS = {
+    "remove_selected_artifact",
+    "corrupt_non_target_intermediate",
+    "corrupt_construction_or_certificate",
+    "unsupported_rule_mutation",
+    "side_condition_mutation",
+    "remove_checker_transcript",
+}
 
 
 def main() -> int:
@@ -71,6 +79,8 @@ def check_metrics(run_dir: Path, thresholds_from: Path) -> dict[str, Any]:
             causal_success_count += 1
         for case in report.get("mutation_cases", []) if isinstance(report, dict) else []:
             if not isinstance(case, dict):
+                continue
+            if case.get("mutation_kind") not in DESTRUCTIVE_MUTATION_KINDS:
                 continue
             mutation_case_count += 1
             if case.get("counted_same_final_theorem") is False and case.get("final_verify_status") in {"passed", "failed", "not_run"}:
@@ -201,7 +211,7 @@ def record_features(record: dict[str, Any], derivations: dict[str, dict[str, Any
     rule_ids = {str(rule) for rule in record.get("used_rule_ids", []) if rule}
     rule_ids.update(str(step.get("rule_id")) for step in step_rows if step.get("rule_id"))
     engine_roles = {str(role) for role in record.get("used_engine_roles", []) if role}
-    engine_roles.update(str(step.get("engine_role")) for step in step_rows if step.get("engine_role"))
+    engine_roles.update(str(step.get("engine_role")) for step in step_rows if step.get("engine_role") and step.get("is_final_target") is not True)
     artifact_kinds = {str(step.get("artifact_kind")) for step in step_rows if step.get("artifact_kind")}
     return {
         "errors": errors,
