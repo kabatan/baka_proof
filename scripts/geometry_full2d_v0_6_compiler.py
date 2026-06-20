@@ -27,6 +27,8 @@ RULE_REGISTRY_SNAPSHOT_DIR = "rule_registry_snapshots_v0_6"
 SIDE_CONDITION_REPORT_DIR = "side_condition_reports_v0_6"
 COMPILER_INDEX_NAME = "compiler_index_v0_6.json"
 RULE_REGISTRY_EVIDENCE = ROOT / "docs" / "ai" / "changes" / "geometry-full2d-v0_6" / "evidence" / "rule_registry_full2d_v0_6.json"
+_GIT_HEAD_CACHE: str | None = None
+_COMPILER_CODE_HASH_CACHE: str | None = None
 
 FORBIDDEN_COMPILER_IMPORT_PARTS = (
     "provider",
@@ -64,16 +66,24 @@ def sha256_text(text: str) -> str:
 
 
 def current_git_head() -> str:
+    global _GIT_HEAD_CACHE
+    if _GIT_HEAD_CACHE is not None:
+        return _GIT_HEAD_CACHE
     proc = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, capture_output=True)
-    return proc.stdout.strip() if proc.returncode == 0 else "unknown"
+    _GIT_HEAD_CACHE = proc.stdout.strip() if proc.returncode == 0 else "unknown"
+    return _GIT_HEAD_CACHE
 
 
 def compiler_code_hash() -> str:
+    global _COMPILER_CODE_HASH_CACHE
+    if _COMPILER_CODE_HASH_CACHE is not None:
+        return _COMPILER_CODE_HASH_CACHE
     paths = [
         ROOT / "scripts" / "geometry_full2d_v0_6_compiler.py",
         ROOT / "scripts" / "geometry_full2d_v0_6_schemas.py",
     ]
-    return sha256_text(canonical_json({path.relative_to(ROOT).as_posix(): file_sha256(path) for path in paths}))
+    _COMPILER_CODE_HASH_CACHE = sha256_text(canonical_json({path.relative_to(ROOT).as_posix(): file_sha256(path) for path in paths}))
+    return _COMPILER_CODE_HASH_CACHE
 
 
 def module_imports(path: Path) -> list[str]:
@@ -402,18 +412,22 @@ def run_compiler_stage(run_dir: Path) -> dict[str, Any]:
     registry_snapshot_path = run_dir / RULE_REGISTRY_SNAPSHOT_DIR / "rule_registry_snapshot_v0_6.json"
     write_json(registry_snapshot_path, registry_snapshot)
     registry_snapshot_ref = file_sha256(registry_snapshot_path)
+    extraction_by_ref = {
+        file_sha256(path): read_json(path)
+        for path in sorted((run_dir / EXTRACTION_REPORT_DIR).glob("*.json"))
+    }
     extraction_by_claim: dict[str, dict[str, Any]] = {}
     for claim_path in sorted((run_dir / CLAIM_SPEC_DIR).glob("*.json")):
         claim = read_json(claim_path)
         extraction_ref = str(claim.get("extraction_report_ref"))
-        extraction_path = next((path for path in sorted((run_dir / EXTRACTION_REPORT_DIR).glob("*.json")) if file_sha256(path) == extraction_ref), None)
-        if extraction_path is not None:
-            extraction_by_claim[file_sha256(claim_path)] = read_json(extraction_path)
+        extraction = extraction_by_ref.get(extraction_ref)
+        if extraction is not None:
+            extraction_by_claim[file_sha256(claim_path)] = extraction
 
-    target_matches = {
-        str(read_json(path).get("selected_derivation_ref")): read_json(path)
-        for path in sorted((run_dir / TARGET_MATCH_DIR).glob("*.json"))
-    }
+    target_matches = {}
+    for path in sorted((run_dir / TARGET_MATCH_DIR).glob("*.json")):
+        payload = read_json(path)
+        target_matches[str(payload.get("selected_derivation_ref"))] = payload
     compiler_paths: list[str] = []
     patch_paths: list[str] = []
     side_condition_paths: list[str] = []
