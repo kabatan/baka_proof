@@ -17,6 +17,13 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+import scripts.geometry_full2d_v0_6_compiler as compiler_module  # noqa: E402
+import scripts.geometry_full2d_v0_6_derivation as derivation_module  # noqa: E402
+import scripts.geometry_full2d_v0_6_extraction as extraction_module  # noqa: E402
+import scripts.geometry_full2d_v0_6_independent_checkers as independent_module  # noqa: E402
+import scripts.geometry_full2d_v0_6_proof_worker as proof_worker_module  # noqa: E402
+import scripts.geometry_full2d_v0_6_provider as provider_module  # noqa: E402
+import scripts.geometry_full2d_v0_6_schemas as schemas_module  # noqa: E402
 from scripts.extract_geometry_full2d_theorem import (  # noqa: E402
     _canonical_json as lean_canonical_json,
     _canonicalize_lean_structured_output,
@@ -72,6 +79,25 @@ DISABLED_STAGE_DIR = "disabled_stage_reports_v0_6"
 MATRIX_SUMMARY = "full2d_matrix_summary_v0_6.json"
 
 
+def install_cached_git_head() -> None:
+    head = current_git_head()
+
+    def cached_head() -> str:
+        return head
+
+    for module in [
+        compiler_module,
+        derivation_module,
+        extraction_module,
+        independent_module,
+        proof_worker_module,
+        provider_module,
+        schemas_module,
+    ]:
+        if hasattr(module, "current_git_head"):
+            setattr(module, "current_git_head", cached_head)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
@@ -93,6 +119,7 @@ def main() -> int:
 
 def run_matrix(*, config_path: Path, run_dir: Path, execute_all: bool, all_baselines: bool, no_skip: bool) -> dict[str, Any]:
     started = time.time()
+    install_cached_git_head()
     config_path = resolve_path(config_path)
     run_dir = resolve_path(run_dir)
     config = read_json(config_path)
@@ -359,9 +386,10 @@ def batch_extract_from_file(source_path: Path, tasks: list[dict[str, Any]], erro
 def materialize_b2_records(*, run_dir: Path, baseline_dir: Path, corpus_root: Path, config_path: Path, tasks: list[dict[str, Any]]) -> dict[str, Any]:
     records: list[dict[str, Any]] = []
     errors: list[str] = []
+    ref_index = build_b2_ref_index(baseline_dir)
     for task in tasks:
         task_id = str(task["task_id"])
-        refs = collect_b2_refs(baseline_dir, task_id)
+        refs = collect_b2_refs(baseline_dir, task_id, ref_index)
         if refs.get("errors"):
             errors.extend(f"{task_id}:{error}" for error in refs["errors"])
         final_payload = refs.get("final_verify_payload") or {}
@@ -412,16 +440,40 @@ def materialize_b2_records(*, run_dir: Path, baseline_dir: Path, corpus_root: Pa
     return {"records": records, "errors": sorted(set(errors))}
 
 
-def collect_b2_refs(baseline_dir: Path, task_id: str) -> dict[str, Any]:
+def build_b2_ref_index(baseline_dir: Path) -> dict[str, dict[str, Path]]:
+    derivation_by_claim_ref: dict[str, Path] = {}
+    derivation_ref_by_path: dict[str, str] = {}
+    for path in sorted((baseline_dir / "selected_solver_derivations_v0_6").glob("*.json")):
+        payload = read_json(path)
+        derivation_by_claim_ref[str(payload.get("claim_spec_ref"))] = path
+        derivation_ref_by_path[str(path)] = file_sha256(path)
+    target_by_derivation_ref: dict[str, Path] = {}
+    for path in sorted((baseline_dir / "derivation_target_matches_v0_6").glob("*.json")):
+        payload = read_json(path)
+        target_by_derivation_ref[str(payload.get("selected_derivation_ref"))] = path
+    compiler_by_derivation_ref: dict[str, Path] = {}
+    for path in sorted((baseline_dir / "compiler_results_v0_6").glob("*.json")):
+        payload = read_json(path)
+        compiler_by_derivation_ref[str(payload.get("selected_derivation_ref"))] = path
+    return {
+        "derivation_by_claim_ref": derivation_by_claim_ref,
+        "derivation_ref_by_path": derivation_ref_by_path,
+        "target_by_derivation_ref": target_by_derivation_ref,
+        "compiler_by_derivation_ref": compiler_by_derivation_ref,
+    }
+
+
+def collect_b2_refs(baseline_dir: Path, task_id: str, ref_index: dict[str, dict[str, Path]]) -> dict[str, Any]:
     errors: list[str] = []
     extraction_path = baseline_dir / EXTRACTION_REPORT_DIR / f"{safe_id(task_id)}.json"
     claim_path = baseline_dir / CLAIM_SPEC_DIR / f"{safe_id(task_id)}.json"
     extraction = read_json(extraction_path) if extraction_path.exists() else {}
     claim = read_json(claim_path) if claim_path.exists() else {}
     claim_ref = file_sha256(claim_path) if claim_path.exists() else sha256_text(f"missing_claim:{task_id}")
-    derivation_path = find_payload_path(baseline_dir / "selected_solver_derivations_v0_6", lambda payload: payload.get("claim_spec_ref") == claim_ref)
-    target_path = find_payload_path(baseline_dir / "derivation_target_matches_v0_6", lambda payload: payload.get("selected_derivation_ref") == file_sha256(derivation_path) if derivation_path else False)
-    compiler_path = find_payload_path(baseline_dir / "compiler_results_v0_6", lambda payload: payload.get("selected_derivation_ref") == file_sha256(derivation_path) if derivation_path else False)
+    derivation_path = ref_index["derivation_by_claim_ref"].get(claim_ref)
+    derivation_ref = ref_index["derivation_ref_by_path"].get(str(derivation_path)) if derivation_path else None
+    target_path = ref_index["target_by_derivation_ref"].get(str(derivation_ref)) if derivation_ref else None
+    compiler_path = ref_index["compiler_by_derivation_ref"].get(str(derivation_ref)) if derivation_ref else None
     patch_path = (baseline_dir / "lean_patch_candidates_v0_6" / derivation_path.name) if derivation_path else None
     worker_path = (baseline_dir / PROOF_WORKER_RESULT_DIR / derivation_path.name) if derivation_path else None
     final_path = (baseline_dir / FINAL_VERIFY_REPORT_DIR / derivation_path.name) if derivation_path else None
