@@ -1,0 +1,185 @@
+{
+  "errors": [],
+  "git_head": "6cef02f566b6b73ed22ca4c6ad7f49982258e0bb",
+  "schema_version": "CheckSolverCausalityLiveV06Report",
+  "sections": {
+    "red_cases": {
+      "case_results": {
+        "checker_generated_success_artifact": {
+          "missing_expected_errors": [],
+          "status": "passed",
+          "validator_errors": [
+            "schema_only_or_forbidden_marker:checker_generated_success_artifacts"
+          ]
+        },
+        "field_only_causality": {
+          "missing_expected_errors": [],
+          "status": "passed",
+          "validator_errors": [
+            "causality_report_not_live_rerun",
+            "empty:mutation_cases",
+            "schema_only_or_forbidden_marker:report_only_causality"
+          ]
+        },
+        "missing_command_log": {
+          "check": {
+            "b2_success_count": 1,
+            "causality_report_count": 1,
+            "coverage_fraction": 1.0,
+            "errors": [
+              "bad.json:corrupt_construction_or_certificate:command_log_ref_unresolved",
+              "bad.json:corrupt_non_target_intermediate:command_log_ref_unresolved",
+              "bad.json:positive_control:command_log_ref_unresolved",
+              "bad.json:remove_checker_transcript:command_log_ref_unresolved",
+              "bad.json:remove_selected_artifact:command_log_ref_unresolved",
+              "bad.json:side_condition_mutation:command_log_ref_unresolved",
+              "bad.json:unsupported_rule_mutation:command_log_ref_unresolved"
+            ],
+            "git_head": "6cef02f566b6b73ed22ca4c6ad7f49982258e0bb",
+            "not_applicable_no_b2_successes": false,
+            "run_dir": "C:\\Users\\bakat\\AppData\\Local\\Temp\\tmplv4lhrg1\\bad_run",
+            "schema_version": "SolverCausalityLiveRunCheckV06",
+            "status": "failed"
+          },
+          "missing_expected_errors": [],
+          "status": "passed"
+        },
+        "mutation_same_final_theorem": {
+          "missing_expected_errors": [],
+          "status": "passed",
+          "validator_errors": [
+            "mutation_did_not_break_same_final_theorem:1"
+          ]
+        },
+        "positive_control_not_passed": {
+          "missing_expected_errors": [],
+          "status": "passed",
+          "validator_errors": [
+            "positive_control_did_not_reproduce_final_theorem",
+            "positive_control_final_verify_not_passed"
+          ]
+        }
+      },
+      "errors": [],
+      "git_head": "6cef02f566b6b73ed22ca4c6ad7f49982258e0bb",
+      "rc006_manifest": {
+        "detected_K": [
+          "K-018",
+          "K-019"
+        ],
+        "errors": []
+      },
+      "schema_version": "SolverCausalityLiveRedCasesV06",
+      "status": "passed"
+    },
+    "self_test": {
+      "checker": {
+        "b2_success_count": 1,
+        "causality_report_count": 1,
+        "coverage_fraction": 1.0,
+        "errors": [],
+        "git_head": "6cef02f566b6b73ed22ca4c6ad7f49982258e0bb",
+        "not_applicable_no_b2_successes": false,
+        "run_dir": "C:\\Users\\bakat\\AppData\\Local\\Temp\\tmpc3m9win7\\wp11_self_test_run",
+        "schema_version": "SolverCausalityLiveRunCheckV06",
+        "status": "passed"
+      },
+      "errors": [],
+      "runner": {
+        "all_b2_successes": true,
+        "b2_success_count": 1,
+        "causality_report_count": 1,
+        "errors": [],
+        "git_head": "6cef02f566b6b73ed22ca4c6ad7f49982258e0bb",
+        "mutation_case_count": 7,
+        "not_applicable_no_b2_successes": false,
+        "report_paths": [
+          "solver_causality_live_runs_v0_6/wp11_self_test.json"
+        ],
+        "run_dir": "C:\\Users\\bakat\\AppData\\Local\\Temp\\tmpc3m9win7\\wp11_self_test_run",
+        "schema_version": "RunSolverCausalityLiveV06Report",
+        "status": "passed",
+        "task_results": [
+          {
+            "errors": [],
+            "mutation_case_count": 7,
+            "record_path": "actual_task_pipeline_runs_v0_6/wp11_self_test__B2.json",
+            "report": {
+              "git_head": "6cef02f566b6b73ed22ca4c6ad7f49982258e0bb",
+              "mutation_cases": [
+                {
+                  "command_log_ref": "sha256:97b3450b85f26948a5e5e26287d592a8c0d1fe73e5e749b5f906685400c3e859",
+                  "counted_same_final_theorem": true,
+                  "final_verify_status": "passed",
+                  "input_artifact_set_hash": "sha256:618fe99b03cb7f950ee644b5d3c3f21927a352c9ae373f9e68018125df89ab1d",
+                  "mutation_kind": "positive_control",
+                  "output_patch_hash": "sha256:a2cb5533642040e79b781610853b5fcfb80406d43896daee4f38f003ce2e6151"
+                },
+                {
+                  "command_log_ref": "sha256:57aa760bf8bb49b91d0bf21b91d691e8c230456d398b196a9d03c97b262df8aa",
+                  "counted_same_final_theorem": false,
+                  "final_verify_status": "failed",
+                  "input_artifact_set_hash": "sha256:3ba4681d1913d8f84106801c203fd8ce68e501ec87d9316f29cfb3e4dd6bcff3",
+                  "mutation_kind": "remove_selected_artifact",
+                  "output_patch_hash": "sha256:e31cae0b5b6abce06b8a69cd4c9bcf89a2333775e61d123540ed290eda2694a0"
+                },
+                {
+                  "command_log_ref": "sha256:c3eaca7949bd91ac350476f264b01cbdb4c47da1464311ac763aa07c391f1b95",
+                  "counted_same_final_theorem": false,
+                  "final_verify_status": "failed",
+                  "input_artifact_set_hash": "sha256:27cc8db886acf9adcf3eef9011c817df5dc6fff4c3131eb586607875e850c27d",
+                  "mutation_kind": "corrupt_non_target_intermediate",
+                  "output_patch_hash": "sha256:240c31201728ec1d5043c253d5a2432024a5c8b403f2139fc49d1ad7b33f9d03"
+                },
+                {
+                  "command_log_ref": "sha256:b18b9023ee58defadfed86b88e94b693606cef35412c82a61c65441da1af683d",
+                  "counted_same_final_theorem": false,
+                  "final_verify_status": "failed",
+                  "input_artifact_set_hash": "sha256:7c1e072f8cb40bd3023eefc9a2ab729f6512d01947be35bf17e5d86f6f793ef3",
+                  "mutation_kind": "corrupt_construction_or_certificate",
+                  "output_patch_hash": "sha256:f8f560977196c880d9b52706579a648998067d80fbffcd508276b7120ab42343"
+                },
+                {
+                  "command_log_ref": "sha256:0deab6b5e9b5c450def303ee8af5610f7572398b3262a27c3af32bec63b39982",
+                  "counted_same_final_theorem": false,
+                  "final_verify_status": "failed",
+                  "input_artifact_set_hash": "sha256:62a8a38d760e1b8baabfd6f179b5638cc1012d2091a014295ce205b480c747aa",
+                  "mutation_kind": "unsupported_rule_mutation",
+                  "output_patch_hash": "sha256:aec78aebd0646690f4ea150da3c34d159a8defc056f368aed44f72df73eda47c"
+                },
+                {
+                  "command_log_ref": "sha256:7b3e5c30434ab23be8c910a1fe22b4002b9ad7e65673ec72b4cf41df812fd1dc",
+                  "counted_same_final_theorem": false,
+                  "final_verify_status": "failed",
+                  "input_artifact_set_hash": "sha256:239b9e354188aa0bd693ca02da6f46da64d6a01dc7bb2d16459756bfcdcf5950",
+                  "mutation_kind": "side_condition_mutation",
+                  "output_patch_hash": "sha256:e040b9283244fb2a1b1cf6235185a2d473df270b4a7c5711ca4fb0b74020c08d"
+                },
+                {
+                  "command_log_ref": "sha256:21e418747513f462fd9740066c936327e37b528c851eb3dedc8c28b30f2d6e99",
+                  "counted_same_final_theorem": false,
+                  "final_verify_status": "failed",
+                  "input_artifact_set_hash": "sha256:515c4539a89ef1bef567f195a48d08127356dad0a39b1f5acdc9ffc62469d9b1",
+                  "mutation_kind": "remove_checker_transcript",
+                  "output_patch_hash": "sha256:02cb54a7903c5c675bfb0220eae3e2d7861da90f6440356bf21fbc2d33aa88a1"
+                }
+              ],
+              "report_id": "sha256:9068ea0ce6f7178142f64755b469ce9976ecbee001d1c9b2f2199ea96681ceb5",
+              "schema_version": "SolverCausalityLiveRunV1",
+              "source_actual_run_ref": "sha256:b86452f66d277c5706b115a735680ff08584a89bfd7ca1846c4b09986f2e5d71",
+              "status": "passed",
+              "temp_run_dir_ref": "sha256:7d7e5de5f39ce0c49adccb45c86a7180fc865a9ce39658f8830c603809323645"
+            },
+            "report_ref": "sha256:2b0819dbdf2f9288f7276f12b74aeea9dace038d8783109cc1034ae1e85d4924",
+            "source_actual_run_ref": "sha256:b86452f66d277c5706b115a735680ff08584a89bfd7ca1846c4b09986f2e5d71",
+            "status": "passed",
+            "task_id": "wp11_self_test"
+          }
+        ]
+      },
+      "schema_version": "SolverCausalityLiveSelfTestV06",
+      "status": "passed"
+    }
+  },
+  "status": "passed"
+}

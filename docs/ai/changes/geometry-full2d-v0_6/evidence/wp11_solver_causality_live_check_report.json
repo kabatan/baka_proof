@@ -1,0 +1,88 @@
+{
+  "errors": [],
+  "git_head": "6cef02f566b6b73ed22ca4c6ad7f49982258e0bb",
+  "schema_version": "CheckSolverCausalityLiveV06Report",
+  "sections": {
+    "red_cases": {
+      "case_results": {
+        "checker_generated_success_artifact": {
+          "missing_expected_errors": [],
+          "status": "passed",
+          "validator_errors": [
+            "schema_only_or_forbidden_marker:checker_generated_success_artifacts"
+          ]
+        },
+        "field_only_causality": {
+          "missing_expected_errors": [],
+          "status": "passed",
+          "validator_errors": [
+            "causality_report_not_live_rerun",
+            "empty:mutation_cases",
+            "schema_only_or_forbidden_marker:report_only_causality"
+          ]
+        },
+        "missing_command_log": {
+          "check": {
+            "b2_success_count": 1,
+            "causality_report_count": 1,
+            "coverage_fraction": 1.0,
+            "errors": [
+              "bad.json:corrupt_construction_or_certificate:command_log_ref_unresolved",
+              "bad.json:corrupt_non_target_intermediate:command_log_ref_unresolved",
+              "bad.json:positive_control:command_log_ref_unresolved",
+              "bad.json:remove_checker_transcript:command_log_ref_unresolved",
+              "bad.json:remove_selected_artifact:command_log_ref_unresolved",
+              "bad.json:side_condition_mutation:command_log_ref_unresolved",
+              "bad.json:unsupported_rule_mutation:command_log_ref_unresolved"
+            ],
+            "git_head": "6cef02f566b6b73ed22ca4c6ad7f49982258e0bb",
+            "not_applicable_no_b2_successes": false,
+            "run_dir": "C:\\Users\\bakat\\AppData\\Local\\Temp\\tmptt5v8qwg\\bad_run",
+            "schema_version": "SolverCausalityLiveRunCheckV06",
+            "status": "failed"
+          },
+          "missing_expected_errors": [],
+          "status": "passed"
+        },
+        "mutation_same_final_theorem": {
+          "missing_expected_errors": [],
+          "status": "passed",
+          "validator_errors": [
+            "mutation_did_not_break_same_final_theorem:1"
+          ]
+        },
+        "positive_control_not_passed": {
+          "missing_expected_errors": [],
+          "status": "passed",
+          "validator_errors": [
+            "positive_control_did_not_reproduce_final_theorem",
+            "positive_control_final_verify_not_passed"
+          ]
+        }
+      },
+      "errors": [],
+      "git_head": "6cef02f566b6b73ed22ca4c6ad7f49982258e0bb",
+      "rc006_manifest": {
+        "detected_K": [
+          "K-018",
+          "K-019"
+        ],
+        "errors": []
+      },
+      "schema_version": "SolverCausalityLiveRedCasesV06",
+      "status": "passed"
+    },
+    "run_check": {
+      "b2_success_count": 0,
+      "causality_report_count": 0,
+      "coverage_fraction": null,
+      "errors": [],
+      "git_head": "6cef02f566b6b73ed22ca4c6ad7f49982258e0bb",
+      "not_applicable_no_b2_successes": true,
+      "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp09_v0_6_fresh",
+      "schema_version": "SolverCausalityLiveRunCheckV06",
+      "status": "passed"
+    }
+  },
+  "status": "passed"
+}
