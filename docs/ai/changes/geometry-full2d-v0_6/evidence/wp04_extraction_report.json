@@ -1,0 +1,26 @@
+{
+  "build_report": {
+    "errors": [],
+    "index_path": "runs/wp04_v0_6_fresh/extraction_corpus_index_v0_6.json",
+    "report_count": 3,
+    "required_task_count": 3,
+    "schema_version": "BuildFull2DExtractionCorpusV06Report",
+    "status": "passed"
+  },
+  "errors": [],
+  "schema_version": "CheckFull2DExtractionCorpusV06AcceptanceReport",
+  "self_test": {
+    "errors": [],
+    "schema_version": "GeometryFull2DExtractionV06SelfTest",
+    "status": "passed"
+  },
+  "status": "passed",
+  "validate_report": {
+    "errors": [],
+    "report_count": 3,
+    "required_task_count": 3,
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp04_v0_6_fresh",
+    "schema_version": "CheckFull2DExtractionCorpusV06Report",
+    "status": "passed"
+  }
+}

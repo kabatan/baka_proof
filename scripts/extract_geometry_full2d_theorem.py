@@ -31,6 +31,7 @@ TARGET_LIBRARY = "GeometryFull2DTarget:1.0.0"
 _LEAN_COMPILE_CACHE: dict[tuple[str, str], dict[str, Any]] = {}
 _LEAN_EXTRACTOR_CACHE: dict[tuple[str, str, str], dict[str, Any]] = {}
 _EXTRACTION_OLEAN_READY = False
+_LEAN_VERSION_CACHE: str | None = None
 _EXTRACTION_METHOD = "lean_elaborator_structured_theorem"
 _EXTRACTION_MARKER = "FULL2D_EXTRACTION_JSON:"
 _EXTRACTION_IMPORT = "import MathAutoResearch.GeometryFull2D.Extraction"
@@ -188,7 +189,12 @@ def validate_lean_extraction_report_full2d(payload: dict[str, Any], *, lean_file
 def _run_lean_semantic_extractor(lean_file: Path, theorem_name: str, theorem_header_hash: str) -> dict[str, Any]:
     disk_cache_key = _lean_extraction_cache_key(theorem_name, theorem_header_hash)
     disk_cache_path = _lean_extraction_cache_path(disk_cache_key)
-    cached_payload = _read_lean_extraction_cache(disk_cache_path)
+    cached_payload = _read_lean_extraction_cache(
+        disk_cache_path,
+        expected_theorem_name=theorem_name,
+        expected_theorem_header_hash=theorem_header_hash,
+        expected_cache_key=disk_cache_key,
+    )
     if cached_payload is not None:
         structured = cached_payload["structured_output"]
         encoded = _canonical_json(structured)
@@ -371,14 +377,30 @@ def _parse_all_lean_extraction_json(stdout: str) -> list[dict[str, Any]]:
 
 def _lean_extraction_cache_key(theorem_name: str, theorem_header_hash: str) -> str:
     extractor_hash = _file_sha256(ROOT / "lean" / "MathAutoResearch" / "GeometryFull2D" / "Extraction.lean")
-    return _sha256_text(_canonical_json({"theorem_name": theorem_name, "theorem_header_hash": theorem_header_hash, "extractor_hash": extractor_hash}))
+    return _sha256_text(
+        _canonical_json(
+            {
+                "theorem_name": theorem_name,
+                "theorem_header_hash": theorem_header_hash,
+                "extractor_hash": extractor_hash,
+                "lean_context_hash": _lean_context_hash(),
+                "lean_version": _lean_version(),
+            }
+        )
+    )
 
 
 def _lean_extraction_cache_path(cache_key: str) -> Path:
     return ROOT / ".cache" / "geometry_full2d_lean_extraction" / f"{cache_key[7:]}.json"
 
 
-def _read_lean_extraction_cache(path: Path) -> dict[str, Any] | None:
+def _read_lean_extraction_cache(
+    path: Path,
+    *,
+    expected_theorem_name: str,
+    expected_theorem_header_hash: str,
+    expected_cache_key: str,
+) -> dict[str, Any] | None:
     if not path.exists():
         return None
     try:
@@ -387,15 +409,35 @@ def _read_lean_extraction_cache(path: Path) -> dict[str, Any] | None:
         return None
     if not isinstance(payload, dict) or not isinstance(payload.get("structured_output"), dict):
         return None
+    if payload.get("schema_version") != "GeometryFull2DLeanExtractionCacheV2":
+        return None
+    if payload.get("theorem_name") != expected_theorem_name:
+        return None
+    if payload.get("theorem_header_hash") != expected_theorem_header_hash:
+        return None
+    if payload.get("cache_key") != expected_cache_key:
+        return None
+    if payload.get("lean_context_hash") != _lean_context_hash():
+        return None
+    if payload.get("lean_version") != _lean_version():
+        return None
+    structured = payload.get("structured_output")
+    if structured.get("semantic_extraction_authority") != "lean_elaborator":
+        return None
+    if structured.get("theorem_name") != expected_theorem_name:
+        return None
     return payload
 
 
 def _write_lean_extraction_cache(path: Path, theorem_name: str, theorem_header_hash: str, structured_output: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = {
-        "schema_version": "1.0.0",
+        "schema_version": "GeometryFull2DLeanExtractionCacheV2",
         "theorem_name": theorem_name,
         "theorem_header_hash": theorem_header_hash,
+        "cache_key": _lean_extraction_cache_key(theorem_name, theorem_header_hash),
+        "lean_context_hash": _lean_context_hash(),
+        "lean_version": _lean_version(),
         "structured_output": structured_output,
     }
     path.write_text(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
@@ -574,6 +616,24 @@ def _lean() -> str:
     if elan_lean.exists():
         return str(elan_lean)
     return shutil.which("lean") or "lean"
+
+
+def _lean_version() -> str:
+    global _LEAN_VERSION_CACHE
+    if _LEAN_VERSION_CACHE is not None:
+        return _LEAN_VERSION_CACHE
+    completed = subprocess.run(
+        [_lean(), "--version"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+        env=_browser_suppressed_env(),
+    )
+    _LEAN_VERSION_CACHE = completed.stdout.strip() if completed.returncode == 0 else "unknown"
+    return _LEAN_VERSION_CACHE
 
 
 def _direct_lean_env() -> dict[str, str]:

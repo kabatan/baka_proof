@@ -156,6 +156,14 @@ def _require(payload: dict[str, Any], keys: list[str], errors: list[str]) -> Non
             errors.append(f"empty:{key}")
 
 
+def _require_present(payload: dict[str, Any], keys: list[str], errors: list[str]) -> None:
+    for key in keys:
+        if key not in payload:
+            errors.append(f"missing:{key}")
+        elif payload.get(key) in (None, ""):
+            errors.append(f"empty:{key}")
+
+
 def _require_ref(payload: dict[str, Any], key: str, errors: list[str]) -> None:
     if not valid_ref(payload.get(key)):
         errors.append(f"bad_ref:{key}")
@@ -183,7 +191,7 @@ def _require_ref_or_null(payload: dict[str, Any], key: str, errors: list[str]) -
 
 
 def _validate_extraction(payload: dict[str, Any], errors: list[str]) -> None:
-    _require(
+    _require_present(
         payload,
         [
             "report_id",
@@ -225,7 +233,7 @@ def _validate_extraction(payload: dict[str, Any], errors: list[str]) -> None:
 
 
 def _validate_claim_spec(payload: dict[str, Any], errors: list[str]) -> None:
-    _require(payload, ["claim_id", "extraction_report_ref", "canonical_target", "objects", "hypotheses", "side_conditions", "target_hash", "source_ref", "git_head", "content_hash"], errors)
+    _require_present(payload, ["claim_id", "extraction_report_ref", "canonical_target", "objects", "hypotheses", "side_conditions", "target_hash", "source_ref", "git_head", "content_hash"], errors)
     for key in ["extraction_report_ref", "target_hash", "source_ref", "content_hash"]:
         _require_ref(payload, key, errors)
     if not isinstance(payload.get("objects"), list):

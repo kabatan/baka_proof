@@ -1,0 +1,37 @@
+{
+  "schema_version": "GeometryFull2DCorpusManifestV06",
+  "status": "wp04_bootstrap_extraction_corpus",
+  "release_counted_corpus": false,
+  "tasks": [
+    {
+      "task_id": "v06_bootstrap_collinear_refl",
+      "theorem_name": "v06_bootstrap_collinear_refl",
+      "lean_file": "lean/WP04Bootstrap.lean",
+      "counted_positive": true,
+      "used_in_metrics": false,
+      "source_type": "UserReviewedGoal",
+      "requires_non_target_intermediate": false,
+      "requires_construction_case_certificate": false
+    },
+    {
+      "task_id": "v06_bootstrap_midpoint_collinear",
+      "theorem_name": "v06_bootstrap_midpoint_collinear",
+      "lean_file": "lean/WP04Bootstrap.lean",
+      "counted_positive": true,
+      "used_in_metrics": false,
+      "source_type": "UserReviewedGoal",
+      "requires_non_target_intermediate": true,
+      "requires_construction_case_certificate": true
+    },
+    {
+      "task_id": "v06_bootstrap_equal_length_symm",
+      "theorem_name": "v06_bootstrap_equal_length_symm",
+      "lean_file": "lean/WP04Bootstrap.lean",
+      "counted_positive": true,
+      "used_in_metrics": false,
+      "source_type": "UserReviewedGoal",
+      "requires_non_target_intermediate": true,
+      "requires_construction_case_certificate": false
+    }
+  ]
+}
