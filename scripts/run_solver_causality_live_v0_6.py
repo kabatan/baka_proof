@@ -645,14 +645,20 @@ def build_self_test_run(run_dir: Path) -> None:
         shutil.rmtree(run_dir)
     run_dir.mkdir(parents=True)
     source_path = run_dir / "self_test_source.lean"
-    theorem_name = "wp11_self_test_true"
+    theorem_name = "wp11_self_test_line_circle"
     source_path.write_text(
         "\n".join(
             [
-                f"theorem {theorem_name} : True := by",
+                "import MathAutoResearch.GeometryFull2D.RuleLemmas",
+                "",
+                "namespace MathAutoResearch.GeometryFull2D",
+                "",
+                f"theorem {theorem_name} (P : Point) (L : Line) (C : Circle) (h00 : line_circle_intersection P L C) : on_line P L := by",
                 f"-- MARP_PROOF_REGION_START:{theorem_name}",
                 "  sorry",
                 f"-- MARP_PROOF_REGION_END:{theorem_name}",
+                "",
+                "end MathAutoResearch.GeometryFull2D",
                 "",
             ]
         ),
@@ -667,8 +673,8 @@ def build_self_test_run(run_dir: Path) -> None:
             "start_marker": f"-- MARP_PROOF_REGION_START:{theorem_name}",
             "end_marker": f"-- MARP_PROOF_REGION_END:{theorem_name}",
         },
-        "statement_hash": sha256_text(f"theorem {theorem_name} : True"),
-        "binder_map": {},
+        "statement_hash": sha256_text(f"theorem {theorem_name} (P : Point) (L : Line) (C : Circle) (h00 : line_circle_intersection P L C) : on_line P L"),
+        "binder_map": {"P": "point:P", "L": "line:L", "C": "circle:C", "h00": "hyp:h00"},
         "proof_region_identity": sha256_text(f"proof-region:{theorem_name}"),
         "binder_map_identity": sha256_text("{}"),
         "anchor_use_policy": "locate_and_patch_only",
@@ -690,16 +696,35 @@ def build_self_test_run(run_dir: Path) -> None:
                 "artifact_kind": "construction",
                 "checker_ref": checker_ref,
                 "rule_id": "full2d_rule:construction_intersection:07",
-                "premises": [],
+                "premises": ["hypothesis:h00"],
                 "conclusion": "self_test_non_target_intermediate",
                 "is_final_target": False,
                 "engine_output_ref": sha256_text("wp11_self_test_engine"),
                 "engine_role": "construction",
                 "checked_side_conditions": ["self_test_side_condition"],
                 "non_target_source": "checked_solver_artifact",
-            }
+            },
+            {
+                "step_id": "wp11-self-test-final-step",
+                "artifact_ref": sha256_text("wp11_self_test_final_application"),
+                "artifact_kind": "fact",
+                "checker_ref": sha256_text("wp11_self_test_final_checker"),
+                "rule_id": "full2d_rule:construction_intersection:07",
+                "premises": ["hypothesis:h00"],
+                "conclusion": sha256_text("wp11_self_test_target"),
+                "is_final_target": True,
+                "engine_output_ref": None,
+                "engine_role": "derivation_target_closure",
+                "checked_side_conditions": [{"kind": "claim_hypothesis_target_alignment", "expr_hash": sha256_text("wp11_self_test_alignment")}],
+                "rule_application": {
+                    "rule_id": "full2d_rule:construction_intersection:07",
+                    "object_args": ["P", "L", "C"],
+                    "premise_bindings": ["h00"],
+                    "application_source": "claim_hypothesis_target_alignment_v0_6",
+                },
+            },
         ],
-        "final_step_ref": sha256_text("wp11_self_test_final_step"),
+        "final_step_ref": sha256_text("wp11_self_test_target"),
         "has_non_target_intermediate": True,
         "has_checked_side_condition_or_certificate": True,
         "target_hash_commitment": sha256_text("wp11_self_test_target"),
@@ -719,7 +744,7 @@ def build_self_test_run(run_dir: Path) -> None:
         "rules": [
             {
                 "rule_id": "full2d_rule:construction_intersection:07",
-                "lean_lemma": "MathAutoResearch.GeometryFull2D.self_test_rule",
+                "lean_lemma": "MathAutoResearch.GeometryFull2D.line_circle_meet_on_line",
                 "lean_lemma_type_hash": sha256_text("wp11_self_test_rule_type"),
                 "counted_release_rule": True,
             }

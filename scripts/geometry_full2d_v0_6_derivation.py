@@ -118,14 +118,230 @@ def _step_from_artifact(engine_path: Path, engine_output: dict[str, Any], artifa
     }
 
 
+def _parse_source_expr(expr: str) -> tuple[str, list[str]]:
+    parts = " ".join(str(expr).split()).split()
+    if not parts:
+        return "", []
+    return parts[0], parts[1:]
+
+
+def _hypothesis_rows(claim: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for index, item in enumerate(claim.get("hypotheses", [])):
+        if not isinstance(item, dict):
+            continue
+        predicate, args = _parse_source_expr(str(item.get("source_expr", "")))
+        predicate_id = str(item.get("predicate_id") or f"hyp:h{index:02d}")
+        lean_name = predicate_id.split(":")[-1]
+        rows.append(
+            {
+                "index": index,
+                "predicate": predicate,
+                "args": args,
+                "predicate_id": predicate_id,
+                "lean_name": lean_name,
+                "source_expr_hash": str(item.get("source_expr_hash", "")),
+                "canonical_expr_hash": str(item.get("canonical_expr_hash", "")),
+            }
+        )
+    return rows
+
+
+def _object_names_by_kind(claim: dict[str, Any]) -> dict[str, set[str]]:
+    rows: dict[str, set[str]] = {}
+    for item in claim.get("objects", []):
+        if not isinstance(item, dict):
+            continue
+        kind = str(item.get("kind", ""))
+        name = str(item.get("canonical_name", ""))
+        if kind and name:
+            rows.setdefault(kind, set()).add(name)
+    return rows
+
+
+def _hypothesis_premise(row: dict[str, Any]) -> str:
+    return "hypothesis:" + str(row["lean_name"])
+
+
+def _rule_application(rule_id: str, object_args: list[str], premise_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "rule_id": rule_id,
+        "object_args": object_args,
+        "premise_bindings": [str(row["lean_name"]) for row in premise_rows],
+        "premise_source_hashes": [str(row.get("source_expr_hash", "")) for row in premise_rows],
+        "application_source": "claim_hypothesis_target_alignment_v0_6",
+    }
+
+
+def _final_match_for_claim(claim: dict[str, Any]) -> dict[str, Any] | None:
+    target = claim.get("canonical_target", {}) if isinstance(claim.get("canonical_target"), dict) else {}
+    target_predicate, target_args = _parse_source_expr(str(target.get("source_expr", "")))
+    hypotheses = _hypothesis_rows(claim)
+    objects = _object_names_by_kind(claim)
+
+    for row in hypotheses:
+        pred = row["predicate"]
+        args = row["args"]
+        if pred == "circle_with_center_through_point" and target_predicate == "on_circle" and len(args) == 3:
+            if target_args == [args[1], args[2]]:
+                return _rule_application("full2d_rule:construction_circle:02", args, [row])
+        if pred == "circle_through_three_noncollinear_points" and len(args) == 4:
+            if target_predicate == "on_circle" and target_args == [args[0], args[3]]:
+                return _rule_application("full2d_rule:construction_circle:03", args, [row])
+            if target_predicate == "on_circle" and target_args == [args[1], args[3]]:
+                return _rule_application("full2d_rule:construction_circle:04", args, [row])
+            if target_predicate == "on_circle" and target_args == [args[2], args[3]]:
+                return _rule_application("full2d_rule:construction_circle:05", args, [row])
+            if target_predicate == "triangle_pred" and target_args == args[:3]:
+                return _rule_application("full2d_rule:triangle_structure:06", args, [row])
+        if pred == "line_circle_intersection" and len(args) == 3:
+            if target_predicate == "on_line" and target_args == args[:2]:
+                return _rule_application("full2d_rule:construction_intersection:07", args, [row])
+            if target_predicate == "on_circle" and target_args == [args[0], args[2]]:
+                return _rule_application("full2d_rule:construction_intersection:08", args, [row])
+        if pred == "circle_circle_intersection" and len(args) == 3:
+            if target_predicate == "on_circle" and target_args == [args[0], args[1]]:
+                return _rule_application("full2d_rule:construction_intersection:09", args, [row])
+            if target_predicate == "on_circle" and target_args == [args[0], args[2]]:
+                return _rule_application("full2d_rule:construction_intersection:10", args, [row])
+        if pred == "chord" and len(args) == 3:
+            if target_predicate == "on_circle" and target_args == [args[0], args[2]]:
+                return _rule_application("full2d_rule:circle_cyclicity:11", args, [row])
+            if target_predicate == "on_circle" and target_args == [args[1], args[2]]:
+                return _rule_application("full2d_rule:circle_cyclicity:12", args, [row])
+        if pred == "tangent_chord_angle" and len(args) == 5:
+            if target_predicate == "on_circle" and target_args == [args[2], args[4]]:
+                return _rule_application("full2d_rule:circle_tangent:15", args, [row])
+        if pred == "equilateral" and len(args) == 3:
+            if target_predicate == "equal_length" and target_args == [args[0], args[1], args[1], args[2]]:
+                return _rule_application("full2d_rule:triangle_metric:16", args, [row])
+            if target_predicate == "equal_length" and target_args == [args[1], args[2], args[2], args[0]]:
+                return _rule_application("full2d_rule:triangle_metric:17", args, [row])
+            if target_predicate == "triangle_pred" and target_args == args:
+                return _rule_application("full2d_rule:triangle_structure:18", args, [row])
+        if pred == "altitude" and len(args) == 5:
+            if target_predicate == "on_line" and target_args == [args[2], args[4]]:
+                return _rule_application("full2d_rule:triangle_altitude:20", args, [row])
+            if target_predicate == "on_line" and target_args == [args[3], args[4]]:
+                return _rule_application("full2d_rule:triangle_altitude:21", args, [row])
+        if pred == "angle_bisector_line" and len(args) == 5:
+            if target_predicate == "on_line" and target_args == [args[0], args[4]]:
+                return _rule_application("full2d_rule:angle_bisector:22", args, [row])
+            if target_predicate == "angle_bisector" and target_args == args[:4]:
+                return _rule_application("full2d_rule:angle_bisector:23", args, [row])
+        if pred == "length_sum" and len(args) == 6:
+            if target_predicate == "length_sum" and target_args == [args[2], args[3], args[0], args[1], args[4], args[5]]:
+                return _rule_application("full2d_rule:metric_length_sum:24", args, [row])
+
+    for first in hypotheses:
+        for second in hypotheses:
+            if first is second:
+                continue
+            a_pred, a_args = first["predicate"], first["args"]
+            b_pred, b_args = second["predicate"], second["args"]
+            if (
+                target_predicate == "directed_angle_eq_mod_pi"
+                and a_pred == b_pred == "directed_angle_eq_mod_pi"
+                and len(a_args) == len(b_args) == len(target_args) == 6
+                and a_args[3:] == b_args[:3]
+                and target_args == a_args[:3] + b_args[3:]
+            ):
+                return _rule_application("full2d_rule:directed_angle_mod_pi:26", a_args[:3] + a_args[3:] + b_args[3:], [first, second])
+            if (
+                target_predicate == "directed_angle_eq_mod_2pi"
+                and a_pred == b_pred == "directed_angle_eq_mod_2pi"
+                and len(a_args) == len(b_args) == len(target_args) == 6
+                and a_args[3:] == b_args[:3]
+                and target_args == a_args[:3] + b_args[3:]
+            ):
+                return _rule_application("full2d_rule:directed_angle_mod_2pi:27", a_args[:3] + a_args[3:] + b_args[3:], [first, second])
+            if (
+                target_predicate == "equal_length"
+                and a_pred == b_pred == "equal_length"
+                and len(a_args) == len(b_args) == len(target_args) == 4
+                and a_args[2:] == b_args[:2]
+                and target_args == a_args[:2] + b_args[2:]
+            ):
+                return _rule_application("full2d_rule:metric_equal_length:28", a_args[:2] + a_args[2:] + b_args[2:], [first, second])
+            if (
+                target_predicate == "area_eq"
+                and a_pred == b_pred == "area_eq"
+                and len(a_args) == len(b_args) == len(target_args) == 6
+                and a_args[3:] == b_args[:3]
+                and target_args == a_args[:3] + b_args[3:]
+            ):
+                return _rule_application("full2d_rule:area_relation:29", a_args[:3] + a_args[3:] + b_args[3:], [first, second])
+
+    if target_predicate == "reflection_image" and len(target_args) == 1 and target_args[0] in objects.get("Reflection", set()):
+        return {"rule_id": "full2d_rule:transformation_reflection:32", "object_args": target_args, "premise_bindings": [], "premise_source_hashes": [], "application_source": "typed_object_target_alignment_v0_6"}
+    if target_predicate == "homothety_image" and len(target_args) == 1 and target_args[0] in objects.get("Homothety", set()):
+        return {"rule_id": "full2d_rule:transformation_homothety:33", "object_args": target_args, "premise_bindings": [], "premise_source_hashes": [], "application_source": "typed_object_target_alignment_v0_6"}
+    if target_predicate == "inversion_image" and len(target_args) == 1 and target_args[0] in objects.get("Inversion", set()):
+        return {"rule_id": "full2d_rule:transformation_inversion:34", "object_args": target_args, "premise_bindings": [], "premise_source_hashes": [], "application_source": "typed_object_target_alignment_v0_6"}
+    if target_predicate == "spiral_similarity_center" and len(target_args) == 1 and target_args[0] in objects.get("SpiralSimilarity", set()):
+        return {"rule_id": "full2d_rule:spiral_similarity:35", "object_args": target_args, "premise_bindings": [], "premise_source_hashes": [], "application_source": "typed_object_target_alignment_v0_6"}
+    if target_predicate == "rotation_preserves_collinear" and len(target_args) == 6:
+        required = [(target_args[0], target_args[3]), (target_args[1], target_args[4]), (target_args[2], target_args[5])]
+        premise_rows: list[dict[str, Any]] = []
+        for left, right in required:
+            match = next((row for row in hypotheses if row["predicate"] == left and row["args"] == ["=", right]), None)
+            if match is None:
+                match = next((row for row in hypotheses if row["predicate"] == right and row["args"] == ["=", left]), None)
+            if match is None:
+                break
+            premise_rows.append(match)
+        if len(premise_rows) == 3:
+            return _rule_application("full2d_rule:transformation_rotation:36", target_args, premise_rows)
+    return None
+
+
+def _final_step_from_match(claim_ref: str, claim: dict[str, Any], match: dict[str, Any], support_steps: list[dict[str, Any]]) -> dict[str, Any]:
+    target_hash = str(claim.get("target_hash"))
+    premise_bindings = [str(item) for item in match.get("premise_bindings", [])]
+    premises = ["hypothesis:" + item for item in premise_bindings]
+    if not premises:
+        premises = ["object_context:" + sha256_text(canonical_json(match.get("object_args", [])))]
+    application = {
+        "rule_id": match["rule_id"],
+        "object_args": [str(item) for item in match.get("object_args", [])],
+        "premise_bindings": premise_bindings,
+        "premise_source_hashes": [str(item) for item in match.get("premise_source_hashes", [])],
+        "application_source": str(match.get("application_source", "claim_hypothesis_target_alignment_v0_6")),
+        "support_step_refs": [str(step.get("artifact_ref")) for step in support_steps[:3]],
+    }
+    application_ref = sha256_text(canonical_json({"claim_ref": claim_ref, "target_hash": target_hash, "application": application}))
+    return {
+        "step_id": "final_rule_application:" + application_ref[7:23],
+        "artifact_ref": application_ref,
+        "artifact_kind": "fact",
+        "checker_ref": sha256_text(canonical_json({"checker": "derivation_target_alignment_v0_6", "application": application})),
+        "rule_id": str(match["rule_id"]),
+        "premises": premises,
+        "conclusion": target_hash,
+        "is_final_target": True,
+        "engine_output_ref": None,
+        "engine_role": "derivation_target_closure",
+        "checked_side_conditions": [
+            {
+                "kind": "claim_hypothesis_target_alignment",
+                "expr_hash": sha256_text(canonical_json({"target": claim.get("canonical_target", {}), "application": application})),
+            }
+        ],
+        "rule_application": application,
+        "non_target_support_count": len([step for step in support_steps if step.get("is_final_target") is False]),
+    }
+
+
 def _entailment_payload(claim_ref: str, claim: dict[str, Any], steps: list[dict[str, Any]]) -> dict[str, Any]:
+    final_steps = [step for step in steps if step.get("is_final_target") is True]
     return {
         "claim_spec_ref": claim_ref,
         "target_hash": claim.get("target_hash"),
-        "selected_artifact_refs": [step.get("artifact_ref") for step in steps],
-        "checker_refs": [step.get("checker_ref") for step in steps],
+        "selected_artifact_refs": [step.get("artifact_ref") for step in steps if step.get("is_final_target") is False],
+        "checker_refs": [step.get("checker_ref") for step in steps if step.get("is_final_target") is False],
         "non_target_conclusions": [step.get("conclusion") for step in steps if step.get("is_final_target") is False],
         "checked_support_kinds": sorted({str(step.get("artifact_kind")) for step in steps if step.get("artifact_kind") in CHECKED_SUPPORT_KINDS}),
+        "final_rule_application": final_steps[0].get("rule_application") if final_steps else None,
     }
 
 
@@ -149,18 +365,22 @@ def build_selected_derivation_payload(
                 continue
             steps.append(_step_from_artifact(engine_path, engine_output, artifact, check_ref, index))
     steps = sorted(steps, key=lambda item: (str(item.get("engine_role")), str(item.get("step_id"))))
+    final_match = _final_match_for_claim(claim)
+    if final_match is not None:
+        steps.append(_final_step_from_match(claim_ref, claim, final_match, steps))
     entailment = _entailment_payload(claim_ref, claim, steps)
+    entailment_ref = sha256_text(canonical_json(entailment))
     unsigned = {
         "schema_version": "SelectedSolverDerivationV3",
         "claim_spec_ref": claim_ref,
         "selected_steps": steps,
-        "final_step_ref": sha256_text(canonical_json(entailment)),
+        "final_step_ref": claim.get("target_hash") if final_match is not None else sha256_text(canonical_json(entailment)),
         "has_non_target_intermediate": any(step.get("is_final_target") is False for step in steps),
         "has_checked_side_condition_or_certificate": any(
             step.get("artifact_kind") in CHECKED_SUPPORT_KINDS or bool(step.get("checked_side_conditions")) for step in steps
         ),
         "target_hash_commitment": claim.get("target_hash"),
-        "entailment_witness_ref": sha256_text(canonical_json(entailment)),
+        "entailment_witness_ref": entailment_ref,
         "entailment_witness_input_hash": sha256_text(canonical_json({"claim": claim_ref, "steps": [step.get("artifact_ref") for step in steps]})),
         "source_stage": "selected_solver_derivation_from_independently_checked_solver_artifacts",
         "git_head": current_git_head(),
@@ -183,15 +403,27 @@ def validate_selected_derivation_payload(
     target_hash = str(claim.get("target_hash", "")) if claim else str(derivation.get("target_hash_commitment", ""))
     non_target_seen = False
     checked_support_seen = False
+    final_step_count = 0
     for index, step in enumerate(steps):
         if not isinstance(step, dict):
             errors.append(f"bad_selected_step:{index}")
             continue
-        if step.get("is_final_target") is True:
-            errors.append(f"selected_step_is_final_target:{index}")
+        is_final = step.get("is_final_target") is True
+        if is_final:
+            final_step_count += 1
+            if index != len(steps) - 1:
+                errors.append(f"selected_final_step_not_last:{index}")
+            if step.get("conclusion") != target_hash:
+                errors.append(f"selected_final_step_not_target_hash:{index}")
+            rule_application = step.get("rule_application")
+            if not isinstance(rule_application, dict) or rule_application.get("application_source") not in {
+                "claim_hypothesis_target_alignment_v0_6",
+                "typed_object_target_alignment_v0_6",
+            }:
+                errors.append(f"selected_final_step_missing_rule_application:{index}")
         else:
             non_target_seen = True
-        if step.get("conclusion") == target_hash or step.get("artifact_ref") == target_hash:
+        if not is_final and (step.get("conclusion") == target_hash or step.get("artifact_ref") == target_hash):
             errors.append(f"selected_step_target_equivalent:{index}")
         for marker in TARGET_EQUIVALENT_MARKERS:
             if step.get(marker) is True:
@@ -200,13 +432,15 @@ def validate_selected_derivation_payload(
         for marker in ("proof_text", "tactic_script", "lean_template_id", "exact ", " by "):
             if marker in text:
                 errors.append(f"selected_step_contains_proof_material:{index}")
-        if artifact_refs is not None and step.get("artifact_ref") not in artifact_refs:
+        if artifact_refs is not None and not is_final and step.get("artifact_ref") not in artifact_refs:
             errors.append(f"selected_step_artifact_not_from_engine_output:{index}")
         check = checks_by_id.get(str(step.get("checker_ref"))) if checks_by_id is not None else None
-        if checks_by_id is not None and (not check or check.get("status") != "passed"):
+        if checks_by_id is not None and not is_final and (not check or check.get("status") != "passed"):
             errors.append(f"selected_step_checker_not_passed:{index}")
-        if step.get("artifact_kind") in CHECKED_SUPPORT_KINDS or bool(step.get("checked_side_conditions")):
+        if not is_final and (step.get("artifact_kind") in CHECKED_SUPPORT_KINDS or bool(step.get("checked_side_conditions"))):
             checked_support_seen = True
+    if final_step_count != 1:
+        errors.append(f"selected_derivation_final_step_count_not_one:{final_step_count}")
     if derivation.get("has_non_target_intermediate") is not True or not non_target_seen:
         errors.append("missing_semantic_non_target_intermediate")
     if derivation.get("has_checked_side_condition_or_certificate") is not True or not checked_support_seen:
@@ -215,8 +449,10 @@ def validate_selected_derivation_payload(
         claim_ref = str(derivation.get("claim_spec_ref"))
         expected_entailment = _entailment_payload(claim_ref, claim, steps)
         expected_ref = sha256_text(canonical_json(expected_entailment))
-        if derivation.get("final_step_ref") != expected_ref or derivation.get("entailment_witness_ref") != expected_ref:
+        if derivation.get("entailment_witness_ref") != expected_ref:
             errors.append("entailment_witness_ref_mismatch")
+        if derivation.get("final_step_ref") != claim.get("target_hash"):
+            errors.append("final_step_ref_not_target_hash")
         if derivation.get("target_hash_commitment") != claim.get("target_hash"):
             errors.append("target_hash_commitment_mismatch")
     return sorted(set(errors))
@@ -302,17 +538,22 @@ def validate_target_match_report(report: dict[str, Any], *, derivation: dict[str
             errors.append("target_match_without_checked_support")
     if claim is not None and report.get("target_hash") != claim.get("target_hash"):
         errors.append("target_match_target_hash_mismatch")
+    if derivation is not None and claim is not None and derivation.get("final_step_ref") != claim.get("target_hash"):
+        errors.append("target_match_final_step_not_target_hash")
+    if report.get("final_step_hash") != report.get("target_hash"):
+        errors.append("target_match_hashes_not_equal")
     return sorted(set(errors))
 
 
 def build_target_match_payload(derivation_path: Path, derivation: dict[str, Any], claim: dict[str, Any]) -> dict[str, Any]:
     selected_derivation_ref = file_sha256(derivation_path)
+    matched = derivation.get("final_step_ref") == claim.get("target_hash")
     unsigned = {
         "schema_version": "DerivationTargetMatchReportV1",
         "selected_derivation_ref": selected_derivation_ref,
         "selected_derivation_id": derivation.get("derivation_id"),
         "claim_spec_ref": derivation.get("claim_spec_ref"),
-        "status": "passed",
+        "status": "passed" if matched else "failed",
         "final_step_hash": derivation.get("final_step_ref"),
         "target_hash": claim.get("target_hash"),
         "command_log_ref": sha256_text(

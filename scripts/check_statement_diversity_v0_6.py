@@ -12,8 +12,14 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 FAMILY_BY_PREDICATE = {
     "collinear": "incidence",
+    "on_line": "incidence",
+    "on_circle": "circle",
     "concyclic": "incidence",
     "midpoint": "construction",
+    "circle_with_center_through_point": "construction",
+    "circle_through_three_noncollinear_points": "construction",
+    "line_circle_intersection": "construction",
+    "circle_circle_intersection": "construction",
     "between": "order",
     "equal_length": "metric",
     "area_eq": "metric",
@@ -23,12 +29,23 @@ FAMILY_BY_PREDICATE = {
     "triangle_inequality": "inequality",
     "directed_angle_eq_mod_pi": "angle",
     "directed_angle_eq_mod_2pi": "angle",
+    "angle_bisector": "angle",
     "angle_le": "angle",
     "triangle_pred": "triangle",
     "isosceles": "triangle",
     "right_triangle": "triangle",
     "similar_triangles": "triangle",
     "congruent_triangles": "triangle",
+    "equilateral": "triangle",
+    "altitude": "triangle",
+    "angle_bisector_line": "triangle",
+    "chord": "circle",
+    "tangent_chord_angle": "circle",
+    "reflection_image": "transformation",
+    "homothety_image": "transformation",
+    "inversion_image": "transformation",
+    "spiral_similarity_center": "transformation",
+    "rotation_preserves_collinear": "transformation",
 }
 
 
@@ -214,7 +231,23 @@ def count_requirement(
 
 
 def has_construction_case_certificate_witness(hypotheses: list[str]) -> bool:
-    markers = ("midpoint", "between", "area_le", "directed_angle_eq_mod_pi", "angle_le", "triangle_inequality")
+    markers = (
+        "midpoint",
+        "between",
+        "area_le",
+        "directed_angle_eq_mod_pi",
+        "angle_le",
+        "triangle_inequality",
+        "circle_with_center_through_point",
+        "circle_through_three_noncollinear_points",
+        "line_circle_intersection",
+        "circle_circle_intersection",
+        "chord",
+        "tangent_chord_angle",
+        "equilateral",
+        "altitude",
+        "angle_bisector_line",
+    )
     return any(hyp.startswith(markers) for hyp in hypotheses)
 
 

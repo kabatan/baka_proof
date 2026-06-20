@@ -158,9 +158,26 @@ def red_case_report() -> dict[str, Any]:
                 "conclusion": "non_target_intermediate:compiler_trace_positive",
                 "is_final_target": False,
                 "checked_side_conditions": [{"kind": "compiler_trace_positive", "expr_hash": "sha256:" + "5" * 64}],
-            }
+            },
+            {
+                "step_id": "compiler-trace-final-step",
+                "artifact_ref": "sha256:" + "4" * 64,
+                "artifact_kind": "fact",
+                "checker_ref": "sha256:" + "3" * 64,
+                "rule_id": rule_id,
+                "premises": ["hypothesis:h0"],
+                "conclusion": "sha256:" + "2" * 64,
+                "is_final_target": True,
+                "checked_side_conditions": [{"kind": "compiler_final_positive", "expr_hash": "sha256:" + "1" * 64}],
+                "rule_application": {
+                    "rule_id": rule_id,
+                    "object_args": ["A", "B", "C"],
+                    "premise_bindings": ["h0"],
+                    "application_source": "claim_hypothesis_target_alignment_v0_6",
+                },
+            },
         ],
-        "final_step_ref": "sha256:" + "4" * 64,
+        "final_step_ref": "sha256:" + "2" * 64,
         "has_non_target_intermediate": True,
         "has_checked_side_condition_or_certificate": True,
         "git_head": current_git_head(),
@@ -187,7 +204,7 @@ def red_case_report() -> dict[str, Any]:
     }
     missing_trace_patch = {
         **positive_patch,
-        "patch_replacement_text": positive_patch["patch_replacement_text"].replace("registry_lean_lemma:", "registry_lean_lemma_missing:", 1),
+        "patch_replacement_text": positive_patch["patch_replacement_text"].replace("registry_lean_lemma:", "registry_lean_lemma_missing:"),
     }
     bad_source_patch = json.loads(json.dumps(positive_patch))
     bad_source_patch["proof_plan"]["rendered_rule_steps"][0]["source"] = "target_shape_branch"

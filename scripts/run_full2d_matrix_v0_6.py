@@ -245,20 +245,28 @@ def build_batch_extraction_reports(*, corpus_root: Path, run_dir: Path, tasks: l
     errors: list[str] = []
     output_dir = run_dir / EXTRACTION_REPORT_DIR
     source_dir = run_dir / SOURCE_TASK_DIR
+    batch_source_dir = run_dir / "source_theorem_batches_v0_6"
     report_paths: list[str] = []
     by_file: dict[Path, list[dict[str, Any]]] = {}
     isolated_sources: dict[str, Path] = {}
+    isolated_entries: list[tuple[dict[str, Any], str]] = []
     for task in tasks:
         source_path = resolve_task_lean_file(corpus_root, task)
-        by_file.setdefault(source_path, []).append(task)
         try:
             theorem_source = _extract_theorem_source(source_path.read_text(encoding="utf-8"), str(task["theorem_name"]))
             isolated_path = source_dir / f"{safe_id(str(task['task_id']))}.lean"
             isolated_path.parent.mkdir(parents=True, exist_ok=True)
             isolated_path.write_text(wrap_theorem_source(theorem_source), encoding="utf-8")
             isolated_sources[str(task["task_id"])] = isolated_path
+            isolated_entries.append((task, theorem_source))
         except Exception as exc:
             errors.append(f"{task.get('task_id')}:source_isolation_failed:{exc}")
+    for chunk_index in range(0, len(isolated_entries), 40):
+        chunk = isolated_entries[chunk_index : chunk_index + 40]
+        batch_path = batch_source_dir / f"batch_{chunk_index // 40:04d}.lean"
+        batch_path.parent.mkdir(parents=True, exist_ok=True)
+        batch_path.write_text(wrap_theorem_batch_sources([source for _task, source in chunk]), encoding="utf-8")
+        by_file[batch_path] = [task for task, _source in chunk]
     extracted: dict[str, dict[str, Any]] = {}
     for source_path, source_tasks in by_file.items():
         extracted.update(batch_extract_from_file(source_path, source_tasks, errors))
@@ -917,11 +925,26 @@ def add_seconds(value: str, seconds: int) -> str:
 def wrap_theorem_source(theorem_source: str) -> str:
     return "\n".join(
         [
-            "import MathAutoResearch.GeometryFull2D.Inequality",
+            "import MathAutoResearch.GeometryFull2D.RuleLemmas",
             "",
             "namespace MathAutoResearch.GeometryFull2D",
             "",
             theorem_source.strip(),
+            "",
+            "end MathAutoResearch.GeometryFull2D",
+            "",
+        ]
+    )
+
+
+def wrap_theorem_batch_sources(theorem_sources: list[str]) -> str:
+    return "\n".join(
+        [
+            "import MathAutoResearch.GeometryFull2D.RuleLemmas",
+            "",
+            "namespace MathAutoResearch.GeometryFull2D",
+            "",
+            "\n\n".join(source.strip() for source in theorem_sources),
             "",
             "end MathAutoResearch.GeometryFull2D",
             "",

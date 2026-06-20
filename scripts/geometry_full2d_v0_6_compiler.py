@@ -128,7 +128,17 @@ def compile_derivation(
     if any(report.get("status") not in {"passed", "not_applicable"} for report in side_condition_reports):
         raise ValueError("side_condition_report_not_passed")
 
-    ordered_steps = sorted(checked_steps, key=lambda item: (str(item.get("rule_id")), str(item.get("artifact_ref"))))
+    final_steps = [step for step in checked_steps if isinstance(step, dict) and step.get("is_final_target") is True]
+    if len(final_steps) != 1:
+        raise ValueError(f"selected_derivation_final_step_count_not_one:{len(final_steps)}")
+    final_step = final_steps[0]
+    if final_step is not checked_steps[-1]:
+        raise ValueError("selected_derivation_final_step_not_last")
+    rule_application = final_step.get("rule_application")
+    if not isinstance(rule_application, dict):
+        raise ValueError("selected_derivation_final_step_missing_rule_application")
+
+    ordered_steps = list(checked_steps)
     rendered_rule_steps = build_rendered_rule_steps(ordered_steps, rule_contracts, rule_registry_snapshot)
     used_rule_ids = [str(step["rule_id"]) for step in rendered_rule_steps]
     used_rule_type_hashes = [str(step["lean_lemma_type_hash"]) for step in rendered_rule_steps]
@@ -184,6 +194,8 @@ def build_rendered_rule_steps(
                 "lean_lemma_type_hash": str(contract.get("lean_lemma_type_hash")),
                 "registry_contract_hash": contract_hash,
                 "source": "selected_derivation_step_rule_contract",
+                "is_final_target": step.get("is_final_target") is True,
+                "rule_application": step.get("rule_application") if isinstance(step.get("rule_application"), dict) else None,
             }
         )
     return rendered
@@ -195,6 +207,8 @@ def render_patch_replacement_text(rendered_rule_steps: list[dict[str, Any]]) -> 
         "    trivial",
     ]
     for index, step in enumerate(rendered_rule_steps):
+        if step.get("is_final_target") is True:
+            continue
         lines.extend(
             [
                 f"  have h_solver_step_{index} : True := by",
@@ -208,17 +222,41 @@ def render_patch_replacement_text(rendered_rule_steps: list[dict[str, Any]]) -> 
                 "    exact h_solver_artifacts_checked",
             ]
         )
-    last_step = f"h_solver_step_{len(rendered_rule_steps) - 1}" if rendered_rule_steps else "h_solver_artifacts_checked"
+    support_indices = [index for index, step in enumerate(rendered_rule_steps) if step.get("is_final_target") is not True]
+    last_step = f"h_solver_step_{support_indices[-1]}" if support_indices else "h_solver_artifacts_checked"
+    final_step = next((step for step in rendered_rule_steps if step.get("is_final_target") is True), None)
+    if final_step is None:
+        raise ValueError("render_missing_final_rule_step")
+    final_application = render_final_rule_application(final_step)
     lines.extend(
         [
             "  have h_solver_derivation_trace_complete : True := by",
             f"    exact {last_step}",
+            f"  -- selected_step_ref:{final_step.get('step_id_ref')}",
+            f"  -- selected_artifact_ref:{final_step.get('artifact_ref')}",
+            f"  -- checker_ref:{final_step.get('checker_ref')}",
+            f"  -- registry_rule_id:{final_step.get('rule_id')}",
+            f"  -- registry_lean_lemma:{final_step.get('lean_lemma')}",
+            f"  -- registry_lemma_type_hash:{final_step.get('lean_lemma_type_hash')}",
+            f"  -- registry_contract_hash:{final_step.get('registry_contract_hash')}",
             "  -- compiler_closure_source:selected_derivation_steps_and_rule_registry_only",
             "  -- compiler_no_target_shape_branch:true",
-            "  exact h_solver_derivation_trace_complete",
+            "  exact " + final_application,
         ]
     )
     return "\n".join(lines)
+
+
+def render_final_rule_application(step: dict[str, Any]) -> str:
+    application = step.get("rule_application")
+    if not isinstance(application, dict):
+        raise ValueError("final_step_missing_rule_application")
+    object_args = [str(item) for item in application.get("object_args", [])]
+    premise_bindings = [str(item) for item in application.get("premise_bindings", [])]
+    parts = [str(step.get("lean_lemma"))] + object_args + premise_bindings
+    if any(not part or any(char.isspace() for char in part) for part in parts):
+        raise ValueError("final_rule_application_bad_argument")
+    return " ".join(parts)
 
 
 def build_rule_registry_snapshot() -> dict[str, Any]:

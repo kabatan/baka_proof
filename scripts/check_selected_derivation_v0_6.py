@@ -143,9 +143,26 @@ def red_case_report() -> dict[str, Any]:
                 "conclusion": "non_target_intermediate:construction:context=fixture",
                 "is_final_target": False,
                 "checked_side_conditions": [{"kind": "distinct", "expr_hash": "sha256:" + "f" * 64}],
-            }
+            },
+            {
+                "step_id": "s_final",
+                "artifact_ref": "sha256:" + "2" * 64,
+                "artifact_kind": "fact",
+                "checker_ref": "sha256:" + "3" * 64,
+                "rule_id": "full2d_rule:construction_intersection:07",
+                "premises": ["hypothesis:h1"],
+                "conclusion": claim["target_hash"],
+                "is_final_target": True,
+                "checked_side_conditions": [{"kind": "claim_hypothesis_target_alignment", "expr_hash": "sha256:" + "4" * 64}],
+                "rule_application": {
+                    "rule_id": "full2d_rule:construction_intersection:07",
+                    "object_args": ["P", "L", "C"],
+                    "premise_bindings": ["h1"],
+                    "application_source": "claim_hypothesis_target_alignment_v0_6",
+                },
+            },
         ],
-        "final_step_ref": "sha256:" + "1" * 64,
+        "final_step_ref": claim["target_hash"],
         "has_non_target_intermediate": True,
         "has_checked_side_condition_or_certificate": True,
         "target_hash_commitment": claim["target_hash"],
@@ -155,7 +172,7 @@ def red_case_report() -> dict[str, Any]:
     local_cases = {
         "naked_final_target": {
             **base,
-            "selected_steps": [{**base["selected_steps"][0], "conclusion": claim["target_hash"], "is_final_target": True}],
+            "selected_steps": [base["selected_steps"][1]],
             "has_non_target_intermediate": False,
         },
         "target_hash_intermediate": {

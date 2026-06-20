@@ -31,6 +31,7 @@ TARGET_LIBRARY = "GeometryFull2DTarget:1.0.0"
 _LEAN_COMPILE_CACHE: dict[tuple[str, str], dict[str, Any]] = {}
 _LEAN_EXTRACTOR_CACHE: dict[tuple[str, str, str], dict[str, Any]] = {}
 _EXTRACTION_OLEAN_READY = False
+_RULE_LEMMAS_OLEAN_READY = False
 _LEAN_VERSION_CACHE: str | None = None
 _EXTRACTION_METHOD = "lean_elaborator_structured_theorem"
 _EXTRACTION_MARKER = "FULL2D_EXTRACTION_JSON:"
@@ -269,6 +270,7 @@ def _ensure_extraction_olean() -> None:
     global _EXTRACTION_OLEAN_READY
     if _EXTRACTION_OLEAN_READY:
         return
+    _ensure_rule_lemmas_olean()
     source = ROOT / "lean" / "MathAutoResearch" / "GeometryFull2D" / "Extraction.lean"
     output = ROOT / ".lake" / "build" / "lib" / "MathAutoResearch" / "GeometryFull2D" / "Extraction.olean"
     ilean = ROOT / ".lake" / "build" / "lib" / "MathAutoResearch" / "GeometryFull2D" / "Extraction.ilean"
@@ -284,6 +286,29 @@ def _ensure_extraction_olean() -> None:
             return
         _build_extraction_olean(source, output, ilean)
         _EXTRACTION_OLEAN_READY = True
+    finally:
+        _release_extraction_build_lock(lock_fd, lock_path)
+
+
+def _ensure_rule_lemmas_olean() -> None:
+    global _RULE_LEMMAS_OLEAN_READY
+    if _RULE_LEMMAS_OLEAN_READY:
+        return
+    source = ROOT / "lean" / "MathAutoResearch" / "GeometryFull2D" / "RuleLemmas.lean"
+    output = ROOT / ".lake" / "build" / "lib" / "MathAutoResearch" / "GeometryFull2D" / "RuleLemmas.olean"
+    ilean = ROOT / ".lake" / "build" / "lib" / "MathAutoResearch" / "GeometryFull2D" / "RuleLemmas.ilean"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    if _extraction_olean_is_current(source, output):
+        _RULE_LEMMAS_OLEAN_READY = True
+        return
+    lock_path = output.with_suffix(output.suffix + ".lock")
+    lock_fd = _acquire_extraction_build_lock(lock_path)
+    try:
+        if _extraction_olean_is_current(source, output):
+            _RULE_LEMMAS_OLEAN_READY = True
+            return
+        _build_extraction_olean(source, output, ilean)
+        _RULE_LEMMAS_OLEAN_READY = True
     finally:
         _release_extraction_build_lock(lock_fd, lock_path)
 

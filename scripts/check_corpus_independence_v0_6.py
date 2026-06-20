@@ -49,12 +49,14 @@ FORBIDDEN_GENERATOR_IMPORT_PARTS = (
 )
 REQUIRED_IMPLEMENTATION_FREEZE_PATHS = [
     "scripts/geometry_full2d_v0_6_extraction.py",
+    "scripts/extract_geometry_full2d_theorem.py",
     "scripts/geometry_full2d_v0_6_provider.py",
     "scripts/geometry_full2d_v0_6_independent_checkers.py",
     "scripts/geometry_full2d_v0_6_derivation.py",
     "scripts/geometry_full2d_v0_6_compiler.py",
     "scripts/geometry_full2d_v0_6_proof_worker.py",
     "scripts/run_solver_causality_live_v0_6.py",
+    "scripts/run_full2d_matrix_v0_6.py",
     "scripts/geometry_full2d_v0_6_rule_registry.py",
     "scripts/geometry_full2d_v0_6_rule_checkers.py",
     "scripts/check_rule_registry_v0_6.py",

@@ -15,6 +15,12 @@ DEFAULT_CORPUS_ROOT = ROOT / "benchmarks" / "geometry_full2d_v0_6"
 POSITIVE_COUNT = 1200
 NEGATIVE_COUNT = 220
 POINTS = [f"P{i:02d}" for i in range(32)]
+LINES = [f"L{i:02d}" for i in range(32)]
+CIRCLES = [f"C{i:02d}" for i in range(32)]
+REFLECTIONS = [f"RF{i:02d}" for i in range(64)]
+HOMOTHETIES = [f"HOM{i:02d}" for i in range(64)]
+INVERSIONS = [f"INV{i:02d}" for i in range(64)]
+SPIRALS = [f"SP{i:02d}" for i in range(64)]
 FORBIDDEN_METADATA_KEYS = {
     "proof_text",
     "proof_label",
@@ -35,16 +41,79 @@ FORBIDDEN_METADATA_KEYS = {
     "template_id",
 }
 FAMILY_PREDICATES: dict[str, list[tuple[str, int]]] = {
-    "incidence": [("collinear", 3), ("concyclic", 4)],
-    "construction": [("midpoint", 3)],
+    "incidence": [("collinear", 3), ("on_line", 2), ("on_circle", 2), ("concyclic", 4)],
+    "construction": [
+        ("midpoint", 3),
+        ("circle_with_center_through_point", 3),
+        ("circle_through_three_noncollinear_points", 4),
+        ("line_circle_intersection", 3),
+        ("circle_circle_intersection", 3),
+    ],
     "order": [("between", 3)],
     "metric": [("equal_length", 4), ("area_eq", 6), ("length_sum", 6)],
     "inequality": [("length_le", 4), ("area_le", 6), ("triangle_inequality", 3)],
-    "angle": [("directed_angle_eq_mod_pi", 6), ("directed_angle_eq_mod_2pi", 6), ("angle_le", 6)],
-    "triangle": [("triangle_pred", 3), ("isosceles", 3), ("right_triangle", 3), ("similar_triangles", 6), ("congruent_triangles", 6)],
+    "angle": [("directed_angle_eq_mod_pi", 6), ("directed_angle_eq_mod_2pi", 6), ("angle_bisector", 4), ("angle_le", 6)],
+    "triangle": [
+        ("triangle_pred", 3),
+        ("isosceles", 3),
+        ("right_triangle", 3),
+        ("similar_triangles", 6),
+        ("congruent_triangles", 6),
+        ("equilateral", 3),
+        ("altitude", 5),
+        ("angle_bisector_line", 5),
+    ],
+    "transformation": [
+        ("reflection_image", 1),
+        ("homothety_image", 1),
+        ("inversion_image", 1),
+        ("spiral_similarity_center", 1),
+        ("rotation_preserves_collinear", 6),
+    ],
 }
 FAMILIES = list(FAMILY_PREDICATES)
 CONSTRUCTION_REQUIREMENT_PREDICATES = [("midpoint", 3), ("between", 3), ("area_le", 6), ("directed_angle_eq_mod_pi", 6)]
+SUPPORT_PREDICATES = [
+    ("midpoint", 3),
+    ("between", 3),
+    ("area_le", 6),
+    ("directed_angle_eq_mod_pi", 6),
+    ("line_circle_intersection", 3),
+    ("circle_circle_intersection", 3),
+    ("angle_bisector_line", 5),
+]
+PROOF_SCHEMA_SCHEDULE = [
+    0,
+    1,
+    6,
+    9,
+    11,
+    5,
+    14,
+    15,
+    5,
+    12,
+    17,
+    20,
+    21,
+    20,
+    11,
+    16,
+    18,
+    19,
+    18,
+    19,
+    4,
+    13,
+    4,
+    13,
+    13,
+    22,
+    22,
+    22,
+    22,
+    22,
+]
 
 
 def main() -> int:
@@ -192,20 +261,16 @@ def build_positive_holdout_tasks(*, release_seed: str, positive_count: int) -> t
     rng = random.Random(sha256_text(release_seed))
     tasks: list[dict[str, Any]] = []
     theorem_blocks: list[str] = [
-        "import MathAutoResearch.GeometryFull2D.Inequality",
+        "import MathAutoResearch.GeometryFull2D.RuleLemmas",
         "",
         "namespace MathAutoResearch.GeometryFull2D",
         "",
     ]
     used_targets: set[str] = set()
     for index in range(positive_count):
-        family = FAMILIES[index % len(FAMILIES)]
-        predicate, arity = FAMILY_PREDICATES[family][(index // len(FAMILIES)) % len(FAMILY_PREDICATES[family])]
         requires_construction = index < 650
         requires_multi_step = index < 850
-        target, hypotheses = build_non_direct_holdout_goal(
-            predicate=predicate,
-            arity=arity,
+        target, hypotheses = build_rule_backed_holdout_goal(
             index=index,
             rng=rng,
             used_targets=used_targets,
@@ -223,7 +288,7 @@ def build_positive_holdout_tasks(*, release_seed: str, positive_count: int) -> t
             "negative_target_outside_malformed": False,
             "source_type": "SealedAdversarialHoldout",
             "requires_non_target_intermediate": True,
-            "requires_construction_case_certificate": requires_construction,
+            "requires_construction_case_certificate": has_construction_case_certificate_witness(hypotheses),
             "requires_multi_step_derivation": requires_multi_step,
             "statement_hash": sha256_text(theorem_name + ":" + target + ":" + canonical_json(hypotheses)),
         }
@@ -233,35 +298,172 @@ def build_positive_holdout_tasks(*, release_seed: str, positive_count: int) -> t
     return tasks, "\n".join(theorem_blocks)
 
 
-def build_non_direct_holdout_goal(
+def build_rule_backed_holdout_goal(
     *,
-    predicate: str,
-    arity: int,
     index: int,
     rng: random.Random,
     used_targets: set[str],
     requires_construction: bool,
     requires_multi_step: bool,
 ) -> tuple[str, list[str]]:
-    for attempt in range(200):
-        target = unique_predicate_expr(predicate, arity, index + attempt * 997, used_targets, salt=17 + attempt)
-        hypotheses = build_hypotheses(
-            index + attempt * 997,
-            rng,
+    for attempt in range(2000):
+        target, proof_hypotheses = proof_schema_goal(index=index, attempt=attempt)
+        if target in used_targets:
+            continue
+        hypotheses = build_support_hypotheses(
+            index=index + attempt * 997,
+            rng=rng,
+            proof_hypotheses=proof_hypotheses,
             requires_construction=requires_construction,
             requires_multi_step=requires_multi_step,
             target=target,
         )
         if direct_facade_reason_for_goal(target, hypotheses) is None:
+            used_targets.add(target)
             return target, hypotheses
-        used_targets.discard(target)
-    raise RuntimeError(f"unable_to_generate_non_direct_holdout_goal:{predicate}:{index}")
+    raise RuntimeError(f"unable_to_generate_rule_backed_holdout_goal:{index}")
+
+
+def choose(pool: list[str], index: int, salt: int) -> str:
+    return pool[(index * (7 + salt % 11) + salt * 13) % len(pool)]
+
+
+def choose_many(pool: list[str], index: int, count: int, *, salt: int) -> list[str]:
+    values: list[str] = []
+    n = len(pool)
+    encoded = index + salt * 1009
+    while len(values) < count:
+        position = len(values)
+        candidate_index = (encoded // (n ** position) + salt * (position + 3) + position * 11) % n
+        candidate = pool[candidate_index]
+        retry = 0
+        while candidate in values and retry < n:
+            candidate = pool[(candidate_index + retry + 1) % n]
+            retry += 1
+        if candidate not in values or len(pool) < count:
+            values.append(candidate)
+    return values
+
+
+def proof_schema_goal(*, index: int, attempt: int) -> tuple[str, list[str]]:
+    schema = PROOF_SCHEMA_SCHEDULE[(index + attempt) % len(PROOF_SCHEMA_SCHEDULE)]
+    p = choose_many(POINTS, index + attempt * 997, 9, salt=11 + schema)
+    l0 = choose(LINES, index + attempt * 31, 3 + schema)
+    l1 = choose(LINES, index + attempt * 37, 5 + schema)
+    c0 = choose(CIRCLES, index + attempt * 41, 7 + schema)
+    c1 = choose(CIRCLES, index + attempt * 43, 9 + schema)
+    rf = choose(REFLECTIONS, index + attempt * 47, 11 + schema)
+    hom = choose(HOMOTHETIES, index + attempt * 53, 13 + schema)
+    inv = choose(INVERSIONS, index + attempt * 59, 15 + schema)
+    sp = choose(SPIRALS, index + attempt * 61, 17 + schema)
+    if c1 == c0:
+        c1 = CIRCLES[(CIRCLES.index(c0) + 1) % len(CIRCLES)]
+    if l1 == l0:
+        l1 = LINES[(LINES.index(l0) + 1) % len(LINES)]
+
+    if schema == 0:
+        return f"on_circle {p[1]} {c0}", [f"circle_with_center_through_point {p[0]} {p[1]} {c0}"]
+    if schema == 1:
+        return f"on_circle {p[0]} {c0}", [f"circle_through_three_noncollinear_points {p[0]} {p[1]} {p[2]} {c0}"]
+    if schema == 2:
+        return f"on_circle {p[1]} {c0}", [f"circle_through_three_noncollinear_points {p[0]} {p[1]} {p[2]} {c0}"]
+    if schema == 3:
+        return f"on_circle {p[2]} {c0}", [f"circle_through_three_noncollinear_points {p[0]} {p[1]} {p[2]} {c0}"]
+    if schema == 4:
+        return f"triangle_pred {p[0]} {p[1]} {p[2]}", [f"circle_through_three_noncollinear_points {p[0]} {p[1]} {p[2]} {c0}"]
+    if schema == 5:
+        return f"on_line {p[0]} {l0}", [f"line_circle_intersection {p[0]} {l0} {c0}"]
+    if schema == 6:
+        return f"on_circle {p[0]} {c0}", [f"line_circle_intersection {p[0]} {l0} {c0}"]
+    if schema == 7:
+        return f"on_circle {p[0]} {c0}", [f"circle_circle_intersection {p[0]} {c0} {c1}"]
+    if schema == 8:
+        return f"on_circle {p[0]} {c1}", [f"circle_circle_intersection {p[0]} {c0} {c1}"]
+    if schema == 9:
+        return f"on_circle {p[0]} {c0}", [f"chord {p[0]} {p[1]} {c0}"]
+    if schema == 10:
+        return f"on_circle {p[1]} {c0}", [f"chord {p[0]} {p[1]} {c0}"]
+    if schema == 11:
+        return f"on_circle {p[2]} {c0}", [f"tangent_chord_angle {p[0]} {p[1]} {p[2]} {l0} {c0}"]
+    if schema == 12:
+        return f"equal_length {p[0]} {p[1]} {p[1]} {p[2]}", [f"equilateral {p[0]} {p[1]} {p[2]}"]
+    if schema == 13:
+        return f"triangle_pred {p[0]} {p[1]} {p[2]}", [f"equilateral {p[0]} {p[1]} {p[2]}"]
+    if schema == 14:
+        return f"on_line {p[2]} {l0}", [f"altitude {p[0]} {p[1]} {p[2]} {p[3]} {l0}"]
+    if schema == 15:
+        return f"on_line {p[0]} {l0}", [f"angle_bisector_line {p[0]} {p[1]} {p[2]} {p[3]} {l0}"]
+    if schema == 16:
+        return f"angle_bisector {p[0]} {p[1]} {p[2]} {p[3]}", [f"angle_bisector_line {p[0]} {p[1]} {p[2]} {p[3]} {l0}"]
+    if schema == 17:
+        return f"length_sum {p[2]} {p[3]} {p[0]} {p[1]} {p[4]} {p[5]}", [f"length_sum {p[0]} {p[1]} {p[2]} {p[3]} {p[4]} {p[5]}"]
+    if schema == 18:
+        return (
+            f"directed_angle_eq_mod_pi {p[0]} {p[1]} {p[2]} {p[6]} {p[7]} {p[8]}",
+            [
+                f"directed_angle_eq_mod_pi {p[0]} {p[1]} {p[2]} {p[3]} {p[4]} {p[5]}",
+                f"directed_angle_eq_mod_pi {p[3]} {p[4]} {p[5]} {p[6]} {p[7]} {p[8]}",
+            ],
+        )
+    if schema == 19:
+        return (
+            f"directed_angle_eq_mod_2pi {p[0]} {p[1]} {p[2]} {p[6]} {p[7]} {p[8]}",
+            [
+                f"directed_angle_eq_mod_2pi {p[0]} {p[1]} {p[2]} {p[3]} {p[4]} {p[5]}",
+                f"directed_angle_eq_mod_2pi {p[3]} {p[4]} {p[5]} {p[6]} {p[7]} {p[8]}",
+            ],
+        )
+    if schema == 20:
+        return (
+            f"equal_length {p[0]} {p[1]} {p[4]} {p[5]}",
+            [f"equal_length {p[0]} {p[1]} {p[2]} {p[3]}", f"equal_length {p[2]} {p[3]} {p[4]} {p[5]}"],
+        )
+    if schema == 21:
+        return (
+            f"area_eq {p[0]} {p[1]} {p[2]} {p[6]} {p[7]} {p[8]}",
+            [f"area_eq {p[0]} {p[1]} {p[2]} {p[3]} {p[4]} {p[5]}", f"area_eq {p[3]} {p[4]} {p[5]} {p[6]} {p[7]} {p[8]}"],
+        )
+    transformation_case = (index + attempt) % 5
+    if transformation_case == 0:
+        return f"reflection_image {rf}", []
+    if transformation_case == 1:
+        return f"homothety_image {hom}", []
+    if transformation_case == 2:
+        return f"inversion_image {inv}", []
+    if transformation_case == 3:
+        return f"spiral_similarity_center {sp}", []
+    return (
+        f"rotation_preserves_collinear {p[0]} {p[1]} {p[2]} {p[3]} {p[4]} {p[5]}",
+        [f"{p[0]} = {p[3]}", f"{p[1]} = {p[4]}", f"{p[2]} = {p[5]}"],
+    )
+
+
+def build_support_hypotheses(
+    index: int,
+    rng: random.Random,
+    *,
+    proof_hypotheses: list[str],
+    requires_construction: bool,
+    requires_multi_step: bool,
+    target: str,
+) -> list[str]:
+    count = max(5, len(proof_hypotheses))
+    hypotheses = list(proof_hypotheses)
+    if requires_construction and not has_construction_case_certificate_witness(hypotheses):
+        predicate, arity = SUPPORT_PREDICATES[index % len(SUPPORT_PREDICATES)]
+        hypotheses.append(predicate_expr(predicate, arity, index, salt=71))
+    while len(hypotheses) < count:
+        predicate, arity = SUPPORT_PREDICATES[(index + len(hypotheses) * 13 + rng.randrange(len(SUPPORT_PREDICATES))) % len(SUPPORT_PREDICATES)]
+        expr = predicate_expr(predicate, arity, index + len(hypotheses) * 101, salt=31)
+        if expr not in hypotheses and expr != target:
+            hypotheses.append(expr)
+    return hypotheses
 
 
 def build_negative_tasks(*, negative_count: int) -> tuple[list[dict[str, Any]], str]:
     tasks: list[dict[str, Any]] = []
     theorem_blocks: list[str] = [
-        "import MathAutoResearch.GeometryFull2D.Inequality",
+        "import MathAutoResearch.GeometryFull2D.RuleLemmas",
         "",
         "namespace MathAutoResearch.GeometryFull2D",
         "",
@@ -302,7 +504,7 @@ def build_external_goal_preserved_tasks(
         specs = []
     tasks: list[dict[str, Any]] = []
     theorem_blocks: list[str] = [
-        "import MathAutoResearch.GeometryFull2D.Inequality",
+        "import MathAutoResearch.GeometryFull2D.RuleLemmas",
         "",
         "namespace MathAutoResearch.GeometryFull2D",
         "",
@@ -435,7 +637,7 @@ def normalize_external_goal(goal: dict[str, Any]) -> dict[str, Any] | None:
 def valid_supported_goal_expr(expr: str) -> bool:
     predicate, args = parse_predicate_expr(expr)
     expected_arities = {name: arity for rows in FAMILY_PREDICATES.values() for name, arity in rows}
-    return predicate in expected_arities and len(args) == expected_arities[predicate] and all(arg in POINTS for arg in args)
+    return predicate in expected_arities and len(args) == expected_arities[predicate] and all(valid_object_name(arg) for arg in args)
 
 
 def build_hypotheses(
@@ -473,7 +675,40 @@ def unique_predicate_expr(predicate: str, arity: int, index: int, used: set[str]
 
 
 def predicate_expr(predicate: str, arity: int, index: int, *, salt: int) -> str:
-    args = [POINTS[(index * (7 + j * 2) + salt + j * 11) % len(POINTS)] for j in range(arity)]
+    if predicate == "circle_with_center_through_point":
+        args = choose_many(POINTS, index, 2, salt=salt) + [choose(CIRCLES, index, salt + 19)]
+    elif predicate == "circle_through_three_noncollinear_points":
+        args = choose_many(POINTS, index, 3, salt=salt) + [choose(CIRCLES, index, salt + 23)]
+    elif predicate == "line_circle_intersection":
+        args = [choose(POINTS, index, salt), choose(LINES, index, salt + 3), choose(CIRCLES, index, salt + 5)]
+    elif predicate == "circle_circle_intersection":
+        c0 = choose(CIRCLES, index, salt + 7)
+        c1 = choose(CIRCLES, index, salt + 11)
+        if c1 == c0:
+            c1 = CIRCLES[(CIRCLES.index(c0) + 1) % len(CIRCLES)]
+        args = [choose(POINTS, index, salt), c0, c1]
+    elif predicate == "chord":
+        args = choose_many(POINTS, index, 2, salt=salt) + [choose(CIRCLES, index, salt + 13)]
+    elif predicate == "tangent_chord_angle":
+        args = choose_many(POINTS, index, 3, salt=salt) + [choose(LINES, index, salt + 17), choose(CIRCLES, index, salt + 19)]
+    elif predicate == "altitude":
+        args = choose_many(POINTS, index, 4, salt=salt) + [choose(LINES, index, salt + 23)]
+    elif predicate == "angle_bisector_line":
+        args = choose_many(POINTS, index, 4, salt=salt) + [choose(LINES, index, salt + 29)]
+    elif predicate == "on_line":
+        args = [choose(POINTS, index, salt), choose(LINES, index, salt + 3)]
+    elif predicate == "on_circle":
+        args = [choose(POINTS, index, salt), choose(CIRCLES, index, salt + 5)]
+    elif predicate == "reflection_image":
+        args = [choose(REFLECTIONS, index, salt)]
+    elif predicate == "homothety_image":
+        args = [choose(HOMOTHETIES, index, salt)]
+    elif predicate == "inversion_image":
+        args = [choose(INVERSIONS, index, salt)]
+    elif predicate == "spiral_similarity_center":
+        args = [choose(SPIRALS, index, salt)]
+    else:
+        args = [POINTS[(index * (7 + j * 2) + salt + j * 11) % len(POINTS)] for j in range(arity)]
     if len(set(args)) == 1 and arity > 1:
         args[-1] = POINTS[(POINTS.index(args[-1]) + 1) % len(POINTS)]
     return f"{predicate} {' '.join(args)}"
@@ -535,12 +770,45 @@ def direct_implication_matches(hyp_predicate: str, hyp_args: list[str], target_p
 
 
 def has_construction_case_certificate_witness(hypotheses: list[str]) -> bool:
-    markers = ("midpoint", "between", "area_le", "directed_angle_eq_mod_pi", "angle_le", "triangle_inequality")
+    markers = (
+        "midpoint",
+        "between",
+        "area_le",
+        "directed_angle_eq_mod_pi",
+        "angle_le",
+        "triangle_inequality",
+        "circle_with_center_through_point",
+        "circle_through_three_noncollinear_points",
+        "line_circle_intersection",
+        "circle_circle_intersection",
+        "chord",
+        "tangent_chord_angle",
+        "equilateral",
+        "altitude",
+        "angle_bisector_line",
+    )
     return any(hypothesis.startswith(markers) for hypothesis in hypotheses)
 
 
 def extract_point_names(expr: str) -> list[str]:
     return [part for part in expr.replace("(", " ").replace(")", " ").split() if part in POINTS]
+
+
+def valid_object_name(name: str) -> bool:
+    return name in POINTS or name in LINES or name in CIRCLES or name in REFLECTIONS or name in HOMOTHETIES or name in INVERSIONS or name in SPIRALS
+
+
+def object_names_for_goal(target: str, hypotheses: list[str]) -> dict[str, list[str]]:
+    tokens = set(" ".join([target, *hypotheses]).replace("(", " ").replace(")", " ").split())
+    return {
+        "Point": [name for name in POINTS if name in tokens],
+        "Line": [name for name in LINES if name in tokens],
+        "Circle": [name for name in CIRCLES if name in tokens],
+        "Reflection": [name for name in REFLECTIONS if name in tokens],
+        "Homothety": [name for name in HOMOTHETIES if name in tokens],
+        "Inversion": [name for name in INVERSIONS if name in tokens],
+        "SpiralSimilarity": [name for name in SPIRALS if name in tokens],
+    }
 
 
 def normalize_goal_expr(expr: str) -> str:
@@ -556,10 +824,14 @@ def count_by(rows: list[dict[str, Any]], key: str) -> dict[str, int]:
 
 
 def render_theorem(theorem_name: str, hypotheses: list[str], target: str) -> str:
+    objects = object_names_for_goal(target, hypotheses)
     lines = [
         f"theorem {theorem_name}",
-        f"    ({' '.join(POINTS)} : Point)",
     ]
+    for kind in ("Point", "Line", "Circle", "Reflection", "Homothety", "Inversion", "SpiralSimilarity"):
+        names = objects[kind]
+        if names:
+            lines.append(f"    ({' '.join(names)} : {kind})")
     for index, hypothesis in enumerate(hypotheses):
         lines.append(f"    (h{index:02d} : {hypothesis})")
     lines.extend(

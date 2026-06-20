@@ -37,8 +37,8 @@ def red_case_report() -> dict[str, Any]:
     errors: list[str] = []
     selected_ref = "sha256:" + "a" * 64
     claim_ref = "sha256:" + "b" * 64
-    final_ref = "sha256:" + "c" * 64
     target_hash = "sha256:" + "d" * 64
+    final_ref = target_hash
     derivation = {
         "derivation_id": "sha256:" + "e" * 64,
         "claim_spec_ref": claim_ref,
