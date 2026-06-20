@@ -105,8 +105,7 @@ def check_corpus_independence(corpus_root: Path) -> dict[str, Any]:
             errors.extend(f"task_{index}:{error}" for error in validate_external_goal_preservation(task, corpus_root))
         if source_type == "SealedAdversarialHoldout":
             errors.extend(f"task_{index}:{error}" for error in validate_sealed_task(task, corpus_root))
-            if index < 20:
-                errors.extend(f"task_{index}:{error}" for error in validate_sorry_only_theorem(task, corpus_root))
+            errors.extend(f"task_{index}:{error}" for error in validate_sorry_only_theorem(task, corpus_root))
 
     errors.extend(validate_external_report(manifest, corpus_root, counted))
     errors.extend(validate_sealed_manifest(manifest, corpus_root))
