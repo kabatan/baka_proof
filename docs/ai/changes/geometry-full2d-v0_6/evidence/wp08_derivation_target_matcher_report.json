@@ -1,0 +1,80 @@
+{
+  "checker_name": "check_derivation_target_matcher_v0_6.py",
+  "errors": [],
+  "prerequisites": {
+    "commands": [],
+    "errors": [],
+    "fresh": false,
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp08_v0_6_fresh",
+    "schema_version": "SelectedDerivationPrereqReportV06",
+    "status": "passed"
+  },
+  "red_cases": {
+    "errors": [],
+    "local_negative_results": {
+      "final_step_mismatch": [
+        "target_match_final_step_hash_mismatch"
+      ],
+      "no_non_target_support": [
+        "target_match_without_non_target_intermediate"
+      ],
+      "outputs_proof_text": [
+        "target_matcher_forbidden_output:proof_text"
+      ],
+      "outputs_rule_ids": [
+        "target_matcher_forbidden_output:rule_ids"
+      ],
+      "outputs_strategy_label": [
+        "target_matcher_forbidden_output:strategy_label"
+      ],
+      "outputs_target_expr": [
+        "target_matcher_forbidden_output:target_expr"
+      ],
+      "target_hash_mismatch": [
+        "target_match_target_hash_mismatch"
+      ]
+    },
+    "local_positive_errors": [],
+    "schema_version": "DerivationTargetMatcherRedCaseReportV06",
+    "status": "passed"
+  },
+  "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp08_v0_6_fresh",
+  "schema_version": "CheckDerivationTargetMatcherV06Report",
+  "selected_derivation_report": {
+    "errors": [],
+    "index_path": "runs/wp08_v0_6_fresh/selected_solver_derivation_index_v0_6.json",
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp08_v0_6_fresh",
+    "schema_version": "BuildSelectedSolverDerivationsV06Report",
+    "selected_derivation_count": 3,
+    "status": "passed"
+  },
+  "status": "passed",
+  "target_match_report": {
+    "errors": [],
+    "index_path": "runs/wp08_v0_6_fresh/derivation_target_match_index_v0_6.json",
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp08_v0_6_fresh",
+    "schema_version": "BuildDerivationTargetMatchReportsV06Report",
+    "status": "passed",
+    "target_match_count": 3
+  },
+  "validation_rows": [
+    {
+      "errors": [],
+      "match_report_id": "sha256:d8665f17980a697b0fe0b474cca6376f8e3557904b8613b05e6dba1d9d166d85",
+      "path": "derivation_target_matches_v0_6/2df452c59aa8269971fcf9bc4655e0c298a8dc3d236a8194fbebfea1924b6359.json",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "match_report_id": "sha256:e5101dd2456816b71e25eb30783c2d97470936ebfff0f4acd9e6c6dae718b73f",
+      "path": "derivation_target_matches_v0_6/a20d69b35b55412335ce6600764fec362f9037e61d16e9bbba154e787dd19037.json",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "match_report_id": "sha256:b9c462fb78e809936fe15a0051b2cc4a82216e16d45a4fa3fa596edb36458f15",
+      "path": "derivation_target_matches_v0_6/d9b8f9674e638ed93fd5c00bc333052217e7677ebd304b7f368d8562239869bb.json",
+      "status": "passed"
+    }
+  ]
+}

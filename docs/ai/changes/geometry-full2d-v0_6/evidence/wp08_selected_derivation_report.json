@@ -1,0 +1,252 @@
+{
+  "build_report": {
+    "errors": [],
+    "index_path": "runs/wp08_v0_6_fresh/selected_solver_derivation_index_v0_6.json",
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp08_v0_6_fresh",
+    "schema_version": "BuildSelectedSolverDerivationsV06Report",
+    "selected_derivation_count": 3,
+    "status": "passed"
+  },
+  "checker_name": "check_selected_derivation_v0_6.py",
+  "errors": [],
+  "prerequisites": {
+    "commands": [
+      {
+        "args": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_extraction_corpus_v0_6.py",
+          "--corpus-root",
+          "benchmarks/geometry_full2d_v0_6",
+          "--run-dir",
+          "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp08_v0_6_fresh",
+          "--self-test"
+        ],
+        "returncode": 0,
+        "status": "passed",
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"build_report\": {\n    \"errors\": [],\n    \"index_path\": \"runs/wp08_v0_6_fresh/extraction_corpus_index_v0_6.json\",\n    \"report_count\": 3,\n    \"required_task_count\": 3,\n    \"schema_version\": \"BuildFull2DExtractionCorpusV06Report\",\n    \"status\": \"passed\"\n  },\n  \"errors\": [],\n  \"schema_version\": \"CheckFull2DExtractionCorpusV06AcceptanceReport\",\n  \"self_test\": {\n    \"errors\": [],\n    \"schema_version\": \"GeometryFull2DExtractionV06SelfTest\",\n    \"status\": \"passed\"\n  },\n  \"status\": \"passed\",\n  \"validate_report\": {\n    \"errors\": [],\n    \"report_count\": 3,\n    \"required_task_count\": 3,\n    \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp08_v0_6_fresh\",\n    \"schema_version\": \"CheckFull2DExtractionCorpusV06Report\",\n    \"status\": \"passed\"\n  }\n}\n"
+      },
+      {
+        "args": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_full2d_claimspec_v0_6.py",
+          "--run-dir",
+          "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp08_v0_6_fresh",
+          "--self-test"
+        ],
+        "returncode": 0,
+        "status": "passed",
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"build_report\": {\n    \"claim_spec_count\": 3,\n    \"errors\": [],\n    \"index_path\": \"runs/wp08_v0_6_fresh/claimspec_index_v0_6.json\",\n    \"schema_version\": \"BuildFull2DClaimSpecV06Report\",\n    \"status\": \"passed\"\n  },\n  \"claim_spec_count\": 3,\n  \"errors\": [],\n  \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp08_v0_6_fresh\",\n  \"schema_version\": \"CheckFull2DClaimSpecV06Report\",\n  \"self_test\": {\n    \"errors\": [],\n    \"schema_version\": \"GeometryFull2DClaimSpecV06SelfTest\",\n    \"status\": \"passed\"\n  },\n  \"status\": \"passed\"\n}\n"
+      },
+      {
+        "args": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/geometry_full2d_v0_6_provider.py",
+          "--run-dir",
+          "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp08_v0_6_fresh"
+        ],
+        "returncode": 0,
+        "status": "passed",
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"claim_spec_count\": 3,\n  \"engine_output_count\": 21,\n  \"errors\": [],\n  \"provider_index_path\": \"runs/wp08_v0_6_fresh/provider_index_v0_6.json\",\n  \"provider_manifest_count\": 3,\n  \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp08_v0_6_fresh\",\n  \"schema_version\": \"RunProviderStageV06Report\",\n  \"status\": \"passed\"\n}\n"
+      },
+      {
+        "args": [
+          "C:\\Users\\bakat\\miniforge3\\python.exe",
+          "scripts/check_independent_solver_artifacts_v0_6.py",
+          "--all",
+          "--run-dir",
+          "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp08_v0_6_fresh"
+        ],
+        "returncode": 0,
+        "status": "passed",
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"check_run\": {\n    \"check_count\": 21,\n    \"checker_import_report\": {\n      \"checker_code_hash\": \"sha256:c370692523a32678482abf17271984f625ec3ecdde9fb00cd8c1422376e71ff3\",\n      \"forbidden_imports\": [],\n      \"git_head\": \"c2d428b212206d161c28c309c0c167437fb05eb2\",\n      \"imports\": [\n        \"__future__\",\n        \"ast\",\n        \"hashlib\",\n        \"json\",\n        \"pathlib\",\n        \"scripts.geometry_full2d_v0_6_extraction\",\n        \"scripts.geometry_full2d_v0_6_schemas\",\n        \"subprocess\",\n        \"typing\"\n      ],\n      \"module\": \"scripts.geometry_full2d_v0_6_independent_checkers\",\n      \"module_path\": \"scripts/geometry_full2d_v0_6_independent_checkers.py\",\n      \"schema_version\": \"IndependentCheckerImportReportV06\",\n      \"status\": \"passed\"\n    },\n    \"checker_names_seen\": [\n      \"algebraic_metric_certificate_checker\",\n      \"construction_checker\",\n      \"external_solver_trace_normalizer_checker\",\n      \"inequality_checker\",\n      \"lean_search_certificate_checker\",\n      \"order_case_checker\",\n      \"synthetic_trace_checker\"\n    ],\n    \"engine_output_count\": 21,\n    \"engine_roles_seen\": [\n      \"algebraic_metric_certificate\",\n      \"construction\",\n      \"external_solver_trace\",\n      \"inequality\",\n      \"lean_search_certificate\",\n      \"order_case\",\n      \"synthetic_trace\"\n    ],\n    \"errors\": [],\n    \"index_path\": \"runs/wp08_v0_6_fresh/independent_solver_artifact_check_index_v0_6.json\",\n    \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp08_v0_6_fresh\",\n    \"schema_version\": \"RunIndependentSolverArtifactChecksV06Report\",\n    \"status\": \"passed\"\n  },\n  \"checker_name\": \"check_independent_solver_artifacts_v0_6.py\",\n  \"errors\": [],\n  \"import_report\": {\n    \"checker_code_hash\": \"sha256:c370692523a32678482abf17271984f625ec3ecdde9fb00cd8c1422376e71ff3\",\n    \"forbidden_imports\": [],\n    \"git_head\": \"c2d428b212206d161c28c309c0c167437fb05eb2\",\n    \"imports\": [\n      \"__future__\",\n      \"ast\",\n      \"hashlib\",\n      \"json\",\n      \"pathlib\",\n      \"scripts.geometry_full2d_v0_6_extraction\",\n      \"scripts.geometry_full2d_v0_6_schemas\",\n      \"subprocess\",\n      \"typing\"\n    ],\n    \"module\": \"scripts.geometry_full2d_v0_6_independent_checkers\",\n    \"module_path\": \"scripts/geometry_full2d_v0_6_independent_checkers.py\",\n    \"schema_version\": \"IndependentCheckerImportReportV06\",\n    \"status\": \"passed\"\n  },\n  \"prerequisites\": {\n    \"commands\": [],\n    \"errors\": [],\n    \"fresh\": false,\n    \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp08_v0_6_fresh\",\n    \"schema_version\": \"IndependentSolverArtifactPrereqReportV06\",\n    \"status\": \"passed\"\n  },\n  \"red_cases\": null,\n  \"run_dir\": \"C:\\\\Users\\\\bakat\\\\work\\\\AI_math_research\\\\runs\\\\wp08_v0_6_fresh\",\n  \"schema_version\": \"CheckIndependentSolverArtifactsV06Report\",\n  \"status\": \"passed\"\n}\n"
+      }
+    ],
+    "errors": [],
+    "fresh": true,
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp08_v0_6_fresh",
+    "schema_version": "SelectedDerivationPrereqReportV06",
+    "status": "passed"
+  },
+  "red_cases": {
+    "errors": [],
+    "local_negative_results": {
+      "missing_checked_support": [
+        "entailment_witness_ref_mismatch",
+        "missing_checked_side_condition_or_certificate"
+      ],
+      "missing_checker": [
+        "entailment_witness_ref_mismatch",
+        "selected_step_checker_not_passed:0"
+      ],
+      "naked_final_target": [
+        "entailment_witness_ref_mismatch",
+        "missing_semantic_non_target_intermediate",
+        "selected_step_is_final_target:0",
+        "selected_step_target_equivalent:0"
+      ],
+      "proof_material": [
+        "entailment_witness_ref_mismatch",
+        "selected_derivation_contains_proof_material:0",
+        "selected_step_contains_proof_material:0"
+      ],
+      "target_hash_intermediate": [
+        "entailment_witness_ref_mismatch",
+        "selected_step_target_equivalent:0:target_hash_intermediate",
+        "target_equivalent_intermediate:selected_steps[0].target_hash_intermediate"
+      ],
+      "unpassed_checker": [
+        "entailment_witness_ref_mismatch",
+        "selected_step_checker_not_passed:0"
+      ]
+    },
+    "local_positive_errors": [],
+    "manifest_cases": [
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-013"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:31b999c9fa542c186527a48d23c116f4f1593aaf2a59b3e05aaf1f89a8e66789",
+        "expected_K": [
+          "K-013"
+        ],
+        "failure_class": "Naked target assertion",
+        "fixture_name": "RedCase_NakedTargetAssertion",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-002",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "RC-002",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-013"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-013"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          }
+        ]
+      },
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-012",
+          "K-013",
+          "K-027"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:ce0a06cd83e28dd95b66eaf640e9aa1340aa0fd232de186dcc5678261c7c321c",
+        "expected_K": [
+          "K-013",
+          "K-027"
+        ],
+        "failure_class": "Direct lemma wrapped as intermediate",
+        "fixture_name": "RedCase_DirectLemmaWrappedAsIntermediate",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#RC-018",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "RC-018",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-013",
+              "K-027"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-012",
+              "K-013",
+              "K-027"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          }
+        ]
+      },
+      {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "detected_K": [
+          "K-013"
+        ],
+        "errors": [],
+        "evidence_ref": "sha256:029beee25117fd8fec22a0141b3a9b0f4650e804b0dc2021d8ba3d1277de6382",
+        "expected_K": [
+          "K-013"
+        ],
+        "failure_class": "Target-equivalent intermediate",
+        "fixture_name": "TargetEquivalentIntermediate",
+        "fixture_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json#K-013",
+        "missing_expected_K": [],
+        "observed_failure": true,
+        "positive_control_detected_K": [],
+        "positive_control_passed": true,
+        "red_case_id": "K-013",
+        "variant_results": [
+          {
+            "detected_K": [
+              "K-013"
+            ],
+            "errors": [],
+            "kind": "static-code",
+            "variant_index": 1
+          },
+          {
+            "detected_K": [
+              "K-013"
+            ],
+            "errors": [],
+            "kind": "artifact-run",
+            "variant_index": 2
+          }
+        ]
+      }
+    ],
+    "schema_version": "SelectedDerivationRedCaseReportV06",
+    "status": "passed"
+  },
+  "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\wp08_v0_6_fresh",
+  "schema_version": "CheckSelectedDerivationV06Report",
+  "status": "passed",
+  "validation_rows": [
+    {
+      "derivation_id": "sha256:afe907065362c6bbc7722f5ae51ae60f9471da4197be07233a2afb93a67c1cfd",
+      "errors": [],
+      "path": "selected_solver_derivations_v0_6/2df452c59aa8269971fcf9bc4655e0c298a8dc3d236a8194fbebfea1924b6359.json",
+      "selected_step_count": 7
+    },
+    {
+      "derivation_id": "sha256:7e441c2a0bf0ba42de1ade68bcb1840903f6d5db35c5a0bb7b69b854328cc203",
+      "errors": [],
+      "path": "selected_solver_derivations_v0_6/a20d69b35b55412335ce6600764fec362f9037e61d16e9bbba154e787dd19037.json",
+      "selected_step_count": 7
+    },
+    {
+      "derivation_id": "sha256:88fc6e8b4d74ce7c29f23beb9c850a86f238baa10bd70f8cf34db7b7a5d14abc",
+      "errors": [],
+      "path": "selected_solver_derivations_v0_6/d9b8f9674e638ed93fd5c00bc333052217e7677ebd304b7f368d8562239869bb.json",
+      "selected_step_count": 7
+    }
+  ]
+}
