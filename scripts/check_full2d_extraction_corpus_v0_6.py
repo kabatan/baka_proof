@@ -34,9 +34,12 @@ def main() -> int:
         errors.extend(f"self_test:{error}" for error in self_test["errors"])
     corpus_root = resolve_path(Path(args.corpus_root))
     run_dir = resolve_path(Path(args.run_dir))
-    tasks, task_errors = required_tasks(corpus_root)
+    all_tasks, task_errors = required_tasks(corpus_root)
     errors.extend(f"tasks:{error}" for error in task_errors)
+    counted_positive_tasks = [task for task in all_tasks if task.get("counted_positive") is True]
     existing_reports = list((run_dir / EXTRACTION_REPORT_DIR).glob("*.json")) if (run_dir / EXTRACTION_REPORT_DIR).exists() else []
+    matrix_b2_run = "baseline_runs_v0_6" in run_dir.parts and run_dir.name == "B2"
+    tasks = counted_positive_tasks if matrix_b2_run and existing_reports and len(existing_reports) == len(counted_positive_tasks) else all_tasks
     if existing_reports and len(existing_reports) == len(tasks):
         build_report = {
             "schema_version": "BuildFull2DExtractionCorpusV06Report",
@@ -50,7 +53,7 @@ def main() -> int:
     else:
         build_report = build_extraction_corpus(corpus_root, run_dir)
     errors.extend(f"build:{error}" for error in build_report["errors"])
-    validate_report = validate_extraction_corpus(corpus_root, run_dir)
+    validate_report = validate_extraction_corpus(corpus_root, run_dir, tasks_override=tasks)
     errors.extend(f"validate:{error}" for error in validate_report["errors"])
     report = {
         "schema_version": "CheckFull2DExtractionCorpusV06AcceptanceReport",

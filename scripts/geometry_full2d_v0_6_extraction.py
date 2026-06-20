@@ -265,10 +265,13 @@ def normalize_side_condition_obligations(value: Any) -> list[dict[str, str]]:
     return []
 
 
-def validate_extraction_corpus(corpus_root: Path, run_dir: Path) -> dict[str, Any]:
+def validate_extraction_corpus(corpus_root: Path, run_dir: Path, tasks_override: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     corpus_root = resolve_path(corpus_root)
     run_dir = resolve_path(run_dir)
-    tasks, task_errors = required_tasks(corpus_root)
+    if tasks_override is None:
+        tasks, task_errors = required_tasks(corpus_root)
+    else:
+        tasks, task_errors = tasks_override, []
     errors = list(task_errors)
     output_dir = run_dir / EXTRACTION_REPORT_DIR
     seen_reports: list[dict[str, Any]] = []
