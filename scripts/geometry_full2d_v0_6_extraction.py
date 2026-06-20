@@ -409,10 +409,22 @@ def validate_claimspecs(run_dir: Path, *, self_test: bool = False) -> dict[str, 
     self_test_report = claimspec_self_test() if self_test else None
     if self_test_report:
         errors.extend(f"self_test:{error}" for error in self_test_report["errors"])
-    build_report = build_claim_specs(run_dir)
-    errors.extend(f"build:{error}" for error in build_report["errors"])
     extraction_dir = run_dir / EXTRACTION_REPORT_DIR
     claim_dir = run_dir / CLAIM_SPEC_DIR
+    extraction_reports = list(extraction_dir.glob("*.json")) if extraction_dir.exists() else []
+    existing_claims = list(claim_dir.glob("*.json")) if claim_dir.exists() else []
+    if existing_claims and len(existing_claims) == len(extraction_reports):
+        build_report = {
+            "schema_version": "BuildFull2DClaimSpecV06Report",
+            "status": "passed",
+            "errors": [],
+            "claim_spec_count": len(existing_claims),
+            "run_dir": str(run_dir),
+            "existing_outputs_reused": True,
+        }
+    else:
+        build_report = build_claim_specs(run_dir)
+    errors.extend(f"build:{error}" for error in build_report["errors"])
     claim_count = 0
     for extraction_path in sorted(extraction_dir.glob("*.json")):
         claim_path = claim_dir / extraction_path.name

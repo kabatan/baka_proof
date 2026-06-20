@@ -228,7 +228,20 @@ def check_selected_derivations(run_dir: Path, *, red_cases: bool, fresh: bool) -
     errors: list[str] = []
     prereq = ensure_prerequisites(run_dir, fresh=fresh)
     errors.extend(f"prereq:{error}" for error in prereq.get("errors", []))
-    build_report = build_selected_derivations(run_dir)
+    selected_dir = run_dir / SELECTED_DERIVATION_DIR
+    existing_selected = list(selected_dir.glob("*.json")) if selected_dir.exists() else []
+    claim_count = len(list((run_dir / CLAIM_SPEC_DIR).glob("*.json")))
+    if not fresh and existing_selected and len(existing_selected) == claim_count:
+        build_report = {
+            "schema_version": "BuildSelectedDerivationsV06Report",
+            "status": "passed",
+            "errors": [],
+            "run_dir": str(run_dir),
+            "derivation_count": len(existing_selected),
+            "existing_outputs_reused": True,
+        }
+    else:
+        build_report = build_selected_derivations(run_dir)
     errors.extend(f"build:{error}" for error in build_report.get("errors", []))
     claims = _claims_by_ref(run_dir)
     checks = _checks_by_id(run_dir)

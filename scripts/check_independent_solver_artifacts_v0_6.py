@@ -18,6 +18,7 @@ from scripts.geometry_full2d_v0_6_independent_checkers import (
     CLAIM_SPEC_DIR,
     ENGINE_OUTPUT_DIR,
     INDEPENDENT_CHECK_DIR,
+    ROLE_CHECKERS,
     checker_import_report,
     run_independent_artifact_checks,
     validate_selected_artifact,
@@ -189,7 +190,12 @@ def check_independent_solver_artifacts(run_dir: Path, *, all_required: bool, red
     errors: list[str] = []
     prereq = ensure_pipeline_prerequisites(run_dir, fresh=fresh)
     errors.extend(f"prereq:{error}" for error in prereq.get("errors", []))
-    check_run = run_independent_artifact_checks(run_dir)
+    existing_check_paths = list((run_dir / INDEPENDENT_CHECK_DIR).glob("*.json")) if (run_dir / INDEPENDENT_CHECK_DIR).exists() else []
+    engine_paths = list((run_dir / ENGINE_OUTPUT_DIR).glob("*.json")) if (run_dir / ENGINE_OUTPUT_DIR).exists() else []
+    if not fresh and existing_check_paths and len(existing_check_paths) >= len(engine_paths):
+        check_run = validate_existing_independent_checks(run_dir, engine_paths, existing_check_paths)
+    else:
+        check_run = run_independent_artifact_checks(run_dir)
     errors.extend(f"check_run:{error}" for error in check_run.get("errors", []))
     import_report = checker_import_report()
     if import_report.get("status") != "passed":
@@ -214,6 +220,70 @@ def check_independent_solver_artifacts(run_dir: Path, *, all_required: bool, red
         "check_run": check_run,
         "import_report": import_report,
         "red_cases": red_report,
+    }
+
+
+def validate_existing_independent_checks(run_dir: Path, engine_paths: list[Path], check_paths: list[Path]) -> dict[str, Any]:
+    errors: list[str] = []
+    checks_by_id: dict[str, dict[str, Any]] = {}
+    for path in sorted(check_paths):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except Exception as exc:
+            errors.append(f"{path.name}:unreadable:{exc}")
+            continue
+        checks_by_id[str(payload.get("check_id"))] = payload
+        if payload.get("status") != "passed":
+            errors.append(f"{path.name}:status_not_passed")
+        if payload.get("independent_from_provider") is not True:
+            errors.append(f"{path.name}:not_independent_from_provider")
+        if payload.get("independent_from_compiler") is not True:
+            errors.append(f"{path.name}:not_independent_from_compiler")
+    role_seen: set[str] = set()
+    checker_seen: set[str] = set()
+    engine_results: list[dict[str, Any]] = []
+    for engine_path in sorted(engine_paths):
+        try:
+            engine_output = json.loads(engine_path.read_text(encoding="utf-8"))
+        except Exception as exc:
+            errors.append(f"{engine_path.name}:unreadable:{exc}")
+            continue
+        role = str(engine_output.get("engine_role"))
+        role_seen.add(role)
+        refs = [str(item) for item in engine_output.get("independent_checker_refs", [])]
+        if not refs:
+            errors.append(f"{engine_path.name}:missing_independent_checker_refs")
+        missing = [ref for ref in refs if ref not in checks_by_id]
+        for ref in missing:
+            errors.append(f"{engine_path.name}:checker_ref_unresolved:{ref}")
+        for ref in refs:
+            checker = checks_by_id.get(ref)
+            if isinstance(checker, dict):
+                checker_seen.add(str(checker.get("checker_name")))
+                if checker.get("engine_output_ref") != engine_output.get("engine_output_id"):
+                    errors.append(f"{engine_path.name}:checker_engine_output_ref_mismatch:{ref}")
+        engine_results.append(
+            {
+                "engine_output_path": engine_path.relative_to(run_dir).as_posix(),
+                "engine_role": role,
+                "check_refs": refs,
+            }
+        )
+    missing_roles = sorted(set(ROLE_CHECKERS) - role_seen)
+    if missing_roles:
+        errors.append("missing_engine_roles:" + ",".join(missing_roles))
+    missing_checkers = sorted({name for name, _kind in ROLE_CHECKERS.values()} - checker_seen)
+    if missing_checkers:
+        errors.append("missing_checker_names:" + ",".join(missing_checkers))
+    return {
+        "schema_version": "RunIndependentSolverArtifactChecksV06Report",
+        "status": "passed" if not errors else "failed",
+        "errors": sorted(set(errors)),
+        "run_dir": str(run_dir),
+        "engine_output_count": len(engine_paths),
+        "check_count": len(check_paths),
+        "engine_results": engine_results,
+        "existing_outputs_reused": True,
     }
 
 

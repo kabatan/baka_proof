@@ -95,9 +95,35 @@ def check_derivation_target_matcher(run_dir: Path, *, red_cases: bool, fresh: bo
     errors: list[str] = []
     prereq = ensure_prerequisites(run_dir, fresh=fresh)
     errors.extend(f"prereq:{error}" for error in prereq.get("errors", []))
-    selected_report = build_selected_derivations(run_dir)
+    selected_dir = run_dir / SELECTED_DERIVATION_DIR
+    existing_selected = list(selected_dir.glob("*.json")) if selected_dir.exists() else []
+    claim_count = len(list((run_dir / CLAIM_SPEC_DIR).glob("*.json")))
+    if not fresh and existing_selected and len(existing_selected) == claim_count:
+        selected_report = {
+            "schema_version": "BuildSelectedDerivationsV06Report",
+            "status": "passed",
+            "errors": [],
+            "run_dir": str(run_dir),
+            "derivation_count": len(existing_selected),
+            "existing_outputs_reused": True,
+        }
+    else:
+        selected_report = build_selected_derivations(run_dir)
     errors.extend(f"selected_derivation:{error}" for error in selected_report.get("errors", []))
-    match_report = build_target_match_reports(run_dir)
+    match_dir = run_dir / TARGET_MATCH_DIR
+    existing_matches = list(match_dir.glob("*.json")) if match_dir.exists() else []
+    derivation_count = len(list((run_dir / SELECTED_DERIVATION_DIR).glob("*.json")))
+    if not fresh and existing_matches and len(existing_matches) == derivation_count:
+        match_report = {
+            "schema_version": "BuildDerivationTargetMatchReportsV06",
+            "status": "passed",
+            "errors": [],
+            "run_dir": str(run_dir),
+            "match_report_count": len(existing_matches),
+            "existing_outputs_reused": True,
+        }
+    else:
+        match_report = build_target_match_reports(run_dir)
     errors.extend(f"target_match:{error}" for error in match_report.get("errors", []))
     claims = _claims_by_ref(run_dir)
     derivations = _derivations_by_path(run_dir)

@@ -333,12 +333,26 @@ def validate_compiler_outputs(run_dir: Path) -> dict[str, Any]:
     }
 
 
-def check_compiler_input_lock(run_dir: Path, *, self_test: bool, red_cases: bool, dynamic_taint: bool) -> dict[str, Any]:
+def check_compiler_input_lock(run_dir: Path, *, self_test: bool, red_cases: bool, dynamic_taint: bool, fresh: bool) -> dict[str, Any]:
     run_dir = run_dir if run_dir.is_absolute() else ROOT / run_dir
     errors: list[str] = []
-    prereq = ensure_prerequisites(run_dir, fresh=True)
+    prereq = ensure_prerequisites(run_dir, fresh=fresh)
     errors.extend(f"prereq:{error}" for error in prereq.get("errors", []))
-    compiler_run = run_compiler_stage(run_dir)
+    existing_compiler = list((run_dir / COMPILER_RESULT_DIR).glob("*.json")) if (run_dir / COMPILER_RESULT_DIR).exists() else []
+    existing_patches = list((run_dir / LEAN_PATCH_DIR).glob("*.json")) if (run_dir / LEAN_PATCH_DIR).exists() else []
+    derivation_count = len(list((run_dir / SELECTED_DERIVATION_DIR).glob("*.json"))) if (run_dir / SELECTED_DERIVATION_DIR).exists() else 0
+    if not fresh and existing_compiler and existing_patches and len(existing_compiler) == derivation_count and len(existing_patches) == derivation_count:
+        compiler_run = {
+            "schema_version": "RunCompilerStageV06Report",
+            "status": "passed",
+            "errors": [],
+            "run_dir": str(run_dir),
+            "compiler_result_count": len(existing_compiler),
+            "patch_candidate_count": len(existing_patches),
+            "existing_outputs_reused": True,
+        }
+    else:
+        compiler_run = run_compiler_stage(run_dir)
     errors.extend(f"compiler_run:{error}" for error in compiler_run.get("errors", []))
     output_validation = validate_compiler_outputs(run_dir)
     errors.extend(f"output_validation:{error}" for error in output_validation.get("errors", []))
@@ -371,10 +385,11 @@ def main() -> int:
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--red-cases", action="store_true")
     parser.add_argument("--dynamic-taint", action="store_true")
-    parser.add_argument("--run-dir", type=Path, default=DEFAULT_RUN_DIR)
+    parser.add_argument("--run-dir", type=Path)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    report = check_compiler_input_lock(args.run_dir, self_test=args.self_test, red_cases=args.red_cases, dynamic_taint=args.dynamic_taint)
+    run_dir = args.run_dir or DEFAULT_RUN_DIR
+    report = check_compiler_input_lock(run_dir, self_test=args.self_test, red_cases=args.red_cases, dynamic_taint=args.dynamic_taint, fresh=args.run_dir is None)
     if args.output:
         output = args.output if args.output.is_absolute() else ROOT / args.output
         write_json(output, report)
