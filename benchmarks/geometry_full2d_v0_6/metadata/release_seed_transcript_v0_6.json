@@ -1,13 +1,13 @@
 {
-  "command_transcript": "python scripts\\create_geometry_full2d_v0_6_release_seed.py --implementation-freeze-manifest benchmarks/geometry_full2d_v0_6/metadata/implementation_freeze_manifest_v0_6.json --implementation-freeze-manifest-hash sha256:9ac206d13264395f14b3a456e05398a36a7fb6d38763184d31e92ec7bb98084d --output benchmarks/geometry_full2d_v0_6/metadata/release_seed_transcript_v0_6.json",
-  "command_transcript_ref": "sha256:085aa8f5dd9b115aa7988c98ced80ebcabf52de14c6cf33e44992b35f1c1f170",
-  "generated_after_freeze_manifest_hash": "sha256:9ac206d13264395f14b3a456e05398a36a7fb6d38763184d31e92ec7bb98084d",
-  "generated_at_utc": "2026-06-20T18:08:34Z",
-  "git_head": "d8b919e43a8b6419b52cd402fa5178573b6f83fa",
-  "implementation_freeze_manifest_hash": "sha256:9ac206d13264395f14b3a456e05398a36a7fb6d38763184d31e92ec7bb98084d",
+  "command_transcript": "python scripts\\create_geometry_full2d_v0_6_release_seed.py --implementation-freeze-manifest benchmarks/geometry_full2d_v0_6/metadata/implementation_freeze_manifest_v0_6.json --implementation-freeze-manifest-hash sha256:9f0c2ff3dd230a3d93ada0ad23790d4f0d6212ada9da556c40b50787203d7f57 --output benchmarks/geometry_full2d_v0_6/metadata/release_seed_transcript_v0_6.json",
+  "command_transcript_ref": "sha256:05fde901a037d190cc306001abdd9321ff7b6db6c128492ca29d76b9b60f8c8c",
+  "generated_after_freeze_manifest_hash": "sha256:9f0c2ff3dd230a3d93ada0ad23790d4f0d6212ada9da556c40b50787203d7f57",
+  "generated_at_utc": "2026-06-21T02:43:16Z",
+  "git_head": "25c181217a0f8d51c4609a12938a6450c3f2080e",
+  "implementation_freeze_manifest_hash": "sha256:9f0c2ff3dd230a3d93ada0ad23790d4f0d6212ada9da556c40b50787203d7f57",
   "implementation_freeze_manifest_ref": "benchmarks/geometry_full2d_v0_6/metadata/implementation_freeze_manifest_v0_6.json",
   "schema_version": "GeometryFull2DReleaseSeedTranscriptV06",
-  "seed": "v0_6_release_acceptance_pre_run_seed_1d0cace0b80d3426bb6600442b6c70856955e67410f8ee07",
+  "seed": "v0_6_release_acceptance_pre_run_seed_d606881d89b69dc1b78201a13a423229d9cf33e87ee46b03",
   "seed_source": "release_acceptance_pre_run_seed_v0_6",
-  "transcript_id": "sha256:af5eee57831d48d3723717a10e690e3b65da323b02cf81f7fc9e1307cb481ca5"
+  "transcript_id": "sha256:a71363a03ba8f5d0bbb288ceeff33eba0fae745c49d86ca64f6e18f97dd73fe6"
 }

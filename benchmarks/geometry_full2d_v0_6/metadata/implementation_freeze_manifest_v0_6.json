@@ -4,34 +4,34 @@
     "scripts/check_corpus_independence_v0_6.py": "sha256:a6917cfce6a548539d238def2fc8a2d77cc13133ed2a8192f113989854eceb71",
     "scripts/check_statement_diversity_v0_6.py": "sha256:01ebba074de16e94f66039c2279dda419f6e683873ebfc3030649ba6096a3e11",
     "scripts/create_geometry_full2d_v0_6_release_seed.py": "sha256:ab36871e2d7d68ebd48319dbb1d86063e378598fafb6a5fa15efa00888259d01",
-    "scripts/generate_geometry_full2d_v0_6_corpus.py": "sha256:50a8edbe6946202b232f61bcdfe641103604889efaa2061085eee7e710dbcd19"
+    "scripts/generate_geometry_full2d_v0_6_corpus.py": "sha256:8f1f51ca83c90bc1f4d3134af4f4f5d4950585f357f67672314950f7035a7f53"
   },
-  "corpus_generator_hash": "sha256:1f25a6c4f3507f023e79a242dd617eff78b0a1f13df9f5efeac414bbffa3279d",
+  "corpus_generator_hash": "sha256:b70e300e78ab9d0bf696574f35a3b3c2e585e402fd9a7da269c313193a0a6080",
   "freeze_builder_hash": "sha256:f536834143d4e57686407c2f8fd004e85515188fff1d7cda1e9535a8a83578f3",
   "freeze_builder_path": "scripts/build_geometry_full2d_v0_6_freeze_manifest.py",
   "freeze_created_before_holdout_generation": true,
   "freeze_includes_provider_compiler_rule_registry": true,
-  "freeze_manifest_id": "sha256:57b0aef8ad93e2884c83996c0293c867bf7ed92a68dbee1680a7115002177eaa",
-  "git_status_hash": "sha256:068b6390ad3e42639ad8bb00430b7379d01c9bb0df45b71d19b792e28b13bfb7",
+  "freeze_manifest_id": "sha256:f7566d9aea7652c3304487b0cdc9c4f901d918e2cd0463af55add7e24da12a64",
+  "git_status_hash": "sha256:095684cb48e81436d41541b1f86477e173fdfd7f465ec820c1aad2fa0420c715",
   "implementation_file_hashes": {
     "docs/ai/changes/geometry-full2d-v0_6/evidence/rule_registry_full2d_v0_6.json": "sha256:40f3de76f8368c229fd2603b745f0266b3bce8140f04c3a80e3b05a9f57a5f85",
     "lean/MathAutoResearch/GeometryFull2D/RuleLemmas.lean": "sha256:b0af135bbd20c187234ee5b457810f58c693170fe54de38dee212bb6b9c7b6a9",
     "scripts/check_rule_registry_v0_6.py": "sha256:5fde8024fededbe562f7f711c6e6345333891a4d27bb232e97a365ef72a48f4b",
-    "scripts/extract_geometry_full2d_theorem.py": "sha256:3483408baa212485a3750fb8d40f55f15b5a824ceb11a7e585259b84ae75df8c",
-    "scripts/geometry_full2d_v0_6_compiler.py": "sha256:0387e14c141a7cb522dc8e65a437b5da7d4b59c5a27baea5ebba9626e4ffe28b",
+    "scripts/extract_geometry_full2d_theorem.py": "sha256:ef51ed97d9feccc1f4373b78555cd55a3638f8de792cd92273f47eec77840583",
+    "scripts/geometry_full2d_v0_6_compiler.py": "sha256:df56aaab624da07ccd061d75bf1630f240ba3c86e2cc5c5eff4de818d21f5099",
     "scripts/geometry_full2d_v0_6_derivation.py": "sha256:dd4d4581b9ed75c277ce550701682746ee3edf403cdb96ab111cdaa2c0746ba2",
-    "scripts/geometry_full2d_v0_6_extraction.py": "sha256:ea0f2ea5ecc353ca0d869dfe3ffa0f59cb026d9f2afb430feae9342de37cbf7b",
+    "scripts/geometry_full2d_v0_6_extraction.py": "sha256:d9ca87ef8d79ee0909974ce737ef76bc85734a239c0fa1c872e748966b4d555c",
     "scripts/geometry_full2d_v0_6_independent_checkers.py": "sha256:3ea88ab7baa480273788df16c77503f8f1d570cfc1206bf1602f3cea442f681a",
-    "scripts/geometry_full2d_v0_6_proof_worker.py": "sha256:eb213c4b460df6ca8d67ea7191f2ff5a016e27e1f62910ce6c980d251daa6b92",
+    "scripts/geometry_full2d_v0_6_proof_worker.py": "sha256:62461e087b61c05506077d5523d8ed673349d8ad7e61c6bd0e4288357decbf71",
     "scripts/geometry_full2d_v0_6_provider.py": "sha256:257d2b07a151e0f1879638f1d5b3317853095d9301870724a7b3704a5f67a092",
     "scripts/geometry_full2d_v0_6_rule_checkers.py": "sha256:03d2541c5a2ddce844d9ab5095a42efd529a5ae40735bfc33a3683bc9f16e971",
     "scripts/geometry_full2d_v0_6_rule_registry.py": "sha256:e936f73b9906f31137ceb6045e020eba4ffd500826389aad0d5b2fc649ced4d7",
     "scripts/geometry_full2d_v0_6_schemas.py": "sha256:3d09d0f594e376a08169a53b902ae4886c4a85cd0916934ee66c19bff6ad1bd7",
-    "scripts/run_full2d_matrix_v0_6.py": "sha256:b0d0013639ce281f6fd388579fc0e984ce23a96cdb30df8a90b14864da3f069a",
-    "scripts/run_solver_causality_live_v0_6.py": "sha256:5def25963c72b01b92153f655abc0409711eee866905031f7d39bc800f16b4e7"
+    "scripts/run_full2d_matrix_v0_6.py": "sha256:5bd86dabc4697807e27a35611855f6a9aee0a572f46a8b80e020921cd9d7128c",
+    "scripts/run_solver_causality_live_v0_6.py": "sha256:26a5d59a2c3f0af619024278ed8d5c0b3141832c9f16cf6c3ae122134de577da"
   },
-  "implementation_git_head": "d8b919e43a8b6419b52cd402fa5178573b6f83fa",
+  "implementation_git_head": "25c181217a0f8d51c4609a12938a6450c3f2080e",
   "required_freeze_paths_checked_for_existence": true,
   "schema_version": "GeometryFull2DImplementationFreezeManifestV06",
-  "selected_implementation_hash": "sha256:e30db1d306ccbb8e6fcdcd993481580232f23339505b28b82e5206eabaa03e66"
+  "selected_implementation_hash": "sha256:5c67c5ceefec1c5fd053b4107ee4491eddd684a992df04d5dab660c11f2214ff"
 }
