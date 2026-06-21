@@ -23,6 +23,7 @@ REQUIRED_FLAGS = ("fresh_run", "fail_on_stale", "no_skip", "all_baselines", "liv
 REQUIRED_REPORT_FIELDS = (
     "checked_rids",
     "freshness_summary",
+    "release_corpus_summary",
     "red_case_summary",
     "acceptance_coverage_summary",
     "schema_contract_summary",
@@ -80,6 +81,9 @@ REQUIRED_RESULT_NAMES = (
     "active_guardian_spec",
     "acceptance_coverage",
     "schema_contracts",
+    "implementation_freeze_manifest",
+    "release_seed_transcript",
+    "fresh_corpus_generation",
     "corpus_independence",
     "statement_diversity",
     "rule_registry",
@@ -161,6 +165,8 @@ def run_release_acceptance(args: argparse.Namespace) -> dict[str, Any]:
         return report
 
     evidence_dir.mkdir(parents=True, exist_ok=True)
+    release_corpus_root = evidence_dir / "fresh_corpus_v0_6"
+    effective_config_path = write_effective_release_config(config_path, release_corpus_root, evidence_dir)
     b2_dir = run_dir / "baseline_runs_v0_6" / "B2"
     env = release_env()
     results: dict[str, dict[str, Any]] = {}
@@ -176,8 +182,70 @@ def run_release_acceptance(args: argparse.Namespace) -> dict[str, Any]:
     run("active_guardian_spec", [sys.executable, "scripts/check_active_guardian_spec_v0_6.py"])
     run("acceptance_coverage", [sys.executable, "scripts/check_acceptance_coverage_v0_6.py"], "acceptance_coverage")
     run("schema_contracts", [sys.executable, "scripts/check_schema_contracts_v0_6.py", "--self-test", "--red-cases"], "schema_contracts")
-    run("corpus_independence", [sys.executable, "scripts/check_corpus_independence_v0_6.py", "--corpus-root", "benchmarks/geometry_full2d_v0_6", "--red-cases"], "corpus_independence")
-    run("statement_diversity", [sys.executable, "scripts/check_statement_diversity_v0_6.py", "--corpus-root", "benchmarks/geometry_full2d_v0_6"], "statement_diversity")
+    freeze_path = release_corpus_root / "metadata" / "implementation_freeze_manifest_v0_6.json"
+    seed_path = release_corpus_root / "metadata" / "release_seed_transcript_v0_6.json"
+    results["implementation_freeze_manifest"] = run_command(
+        "implementation_freeze_manifest",
+        [
+            sys.executable,
+            "scripts/build_geometry_full2d_v0_6_freeze_manifest.py",
+            "--output",
+            str(freeze_path),
+        ],
+        evidence_dir / "implementation_freeze_manifest.evidence.json",
+        None,
+        env,
+    )
+    freeze_report = parsed_result(results["implementation_freeze_manifest"])
+    freeze_hash = str(freeze_report.get("manifest_hash") or file_sha256_or_missing(freeze_path))
+    results["release_seed_transcript"] = run_command(
+        "release_seed_transcript",
+        [
+            sys.executable,
+            "scripts/create_geometry_full2d_v0_6_release_seed.py",
+            "--implementation-freeze-manifest",
+            str(freeze_path),
+            "--implementation-freeze-manifest-hash",
+            freeze_hash,
+            "--output",
+            str(seed_path),
+        ],
+        evidence_dir / "release_seed_transcript.evidence.json",
+        None,
+        env,
+    )
+    seed_report = parsed_result(results["release_seed_transcript"])
+    release_seed = str(seed_report.get("seed") or "missing_release_seed")
+    seed_hash = str(seed_report.get("seed_transcript_hash") or file_sha256_or_missing(seed_path))
+    results["fresh_corpus_generation"] = run_command(
+        "fresh_corpus_generation",
+        [
+            sys.executable,
+            "scripts/generate_geometry_full2d_v0_6_corpus.py",
+            "--corpus-root",
+            str(release_corpus_root),
+            "--release-seed",
+            release_seed,
+            "--implementation-freeze-manifest",
+            str(freeze_path),
+            "--implementation-freeze-manifest-hash",
+            freeze_hash,
+            "--release-seed-transcript",
+            str(seed_path),
+            "--release-seed-transcript-hash",
+            seed_hash,
+            "--positive-count",
+            "1200",
+            "--negative-count",
+            "220",
+        ],
+        evidence_dir / "fresh_corpus_generation.evidence.json",
+        None,
+        env,
+    )
+    corpus_root_arg = str(release_corpus_root)
+    run("corpus_independence", [sys.executable, "scripts/check_corpus_independence_v0_6.py", "--corpus-root", corpus_root_arg, "--red-cases"], "corpus_independence")
+    run("statement_diversity", [sys.executable, "scripts/check_statement_diversity_v0_6.py", "--corpus-root", corpus_root_arg], "statement_diversity")
     run("rule_registry", [sys.executable, "scripts/check_rule_registry_v0_6.py", "--release", "--red-cases"], "rule_registry")
     run("proof_worker_final_verify", [sys.executable, "scripts/check_proof_worker_final_verify_v0_6.py", "--self-test", "--red-cases"], "proof_worker_final_verify")
 
@@ -187,7 +255,7 @@ def run_release_acceptance(args: argparse.Namespace) -> dict[str, Any]:
             sys.executable,
             "scripts/run_full2d_matrix_v0_6.py",
             "--config",
-            str(config_path),
+            str(effective_config_path),
             "--run-dir",
             str(run_dir),
             "--execute-all",
@@ -199,7 +267,7 @@ def run_release_acceptance(args: argparse.Namespace) -> dict[str, Any]:
         env,
     )
 
-    run("extraction_corpus", [sys.executable, "scripts/check_full2d_extraction_corpus_v0_6.py", "--corpus-root", "benchmarks/geometry_full2d_v0_6", "--run-dir", str(b2_dir)], "extraction_corpus")
+    run("extraction_corpus", [sys.executable, "scripts/check_full2d_extraction_corpus_v0_6.py", "--corpus-root", corpus_root_arg, "--run-dir", str(b2_dir)], "extraction_corpus")
     run("claimspec", [sys.executable, "scripts/check_full2d_claimspec_v0_6.py", "--run-dir", str(b2_dir), "--self-test"], "claimspec")
     run("provider_isolation", [sys.executable, "scripts/check_provider_isolation_v0_6.py", "--run-dir", str(b2_dir), "--red-cases"], "provider_isolation")
     run("engine_output_not_from_compiler_rules", [sys.executable, "scripts/check_engine_output_not_from_compiler_rules_v0_6.py", "--run-dir", str(b2_dir), "--red-cases"], "engine_output_not_from_compiler_rules")
@@ -311,6 +379,35 @@ def run_command(name: str, command: list[str], evidence_path: Path, output_path:
     }
 
 
+def write_effective_release_config(config_path: Path, release_corpus_root: Path, evidence_dir: Path) -> Path:
+    source = json.loads(config_path.read_text(encoding="utf-8"))
+    if not isinstance(source, dict):
+        raise ValueError("release_config_not_object")
+    effective = dict(source)
+    effective["benchmark_corpus_root"] = rel_or_abs(release_corpus_root)
+    effective["release_fresh_corpus_root"] = rel_or_abs(release_corpus_root)
+    effective["release_source_config"] = rel_or_abs(config_path)
+    effective["release_config_generation_source"] = "check_release_acceptance_v0_6:fresh_corpus_pre_run"
+    path = evidence_dir / "release_matrix_config_v0_6.json"
+    path.write_text(json.dumps(effective, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return path
+
+
+def parsed_result(result: dict[str, Any]) -> dict[str, Any]:
+    evidence_path = result.get("evidence_path")
+    if not evidence_path:
+        return {}
+    path = resolve(Path(str(evidence_path)))
+    if not path.exists():
+        return {}
+    try:
+        evidence = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    parsed = evidence.get("parsed_report")
+    return parsed if isinstance(parsed, dict) else {}
+
+
 def skipped_result(name: str, reason: str, evidence_dir: Path) -> dict[str, Any]:
     evidence_path = evidence_dir / f"{name}.evidence.json"
     evidence = {
@@ -382,6 +479,12 @@ def report_fields(
     all_matrix = parsed_report(results, "all_baseline_matrix")
     live_run = parsed_report(results, "live_causality_run")
     live_check = parsed_report(results, "live_causality_check")
+    release_corpus_root = evidence_dir / "fresh_corpus_v0_6"
+    effective_config_path = evidence_dir / "release_matrix_config_v0_6.json"
+    freeze = parsed_report(results, "implementation_freeze_manifest")
+    seed = parsed_report(results, "release_seed_transcript")
+    corpus_generation = parsed_report(results, "fresh_corpus_generation")
+    release_head = git_head()
     return {
         "checked_rids": [f"K-{index:03d}" for index in range(1, 36)],
         "freshness_summary": {
@@ -392,12 +495,35 @@ def report_fields(
             "live_mutations": bool(args.live_mutations),
             "run_dir": str(run_dir),
             "evidence_dir": str(evidence_dir),
+            "release_corpus_root": str(release_corpus_root),
+            "effective_config": rel_or_abs(effective_config_path),
+            "effective_config_hash": file_sha256(effective_config_path) if effective_config_path.exists() else None,
             "git_head": git_head(),
             "git_status_hash": sha256_text(git_status_short()),
             "config_hash": file_sha256(config_path) if config_path.exists() else None,
             "matrix_status": matrix.get("status"),
             "matrix_git_head": matrix.get("git_head"),
             "no_old_release_dependency": result_status_ref(results, "no_old_release_dependency"),
+        },
+        "release_corpus_summary": {
+            "implementation_freeze_manifest": summary(results, "implementation_freeze_manifest"),
+            "release_seed_transcript": summary(results, "release_seed_transcript"),
+            "fresh_corpus_generation": summary(results, "fresh_corpus_generation"),
+            "fresh_corpus_root": str(release_corpus_root),
+            "effective_config": rel_or_abs(effective_config_path),
+            "implementation_freeze_manifest_hash": freeze.get("manifest_hash") or corpus_generation.get("implementation_freeze_manifest_hash"),
+            "release_seed_transcript_hash": seed.get("seed_transcript_hash") or corpus_generation.get("release_seed_transcript_hash"),
+            "corpus_manifest_path": corpus_generation.get("manifest_path"),
+            "corpus_manifest_hash": corpus_generation.get("manifest_hash"),
+            "release_seed": seed.get("seed") or corpus_generation.get("release_seed"),
+            "freeze_git_head": freeze.get("git_head"),
+            "seed_git_head": seed.get("git_head"),
+            "corpus_generation_git_head": corpus_generation.get("git_head"),
+            "release_report_git_head": release_head,
+            "fresh_freeze_seed_corpus_head_consistent": all(
+                value == release_head
+                for value in (freeze.get("git_head"), seed.get("git_head"), corpus_generation.get("git_head"))
+            ),
         },
         "red_case_summary": summary(results, "red_case_suite"),
         "acceptance_coverage_summary": summary(results, "acceptance_coverage"),
@@ -585,6 +711,16 @@ def compact_report(payload: Any) -> Any:
         "counted_rule_family_count",
         "rule_count",
         "counted_rule_count",
+        "manifest_hash",
+        "manifest_path",
+        "implementation_freeze_manifest_hash",
+        "seed",
+        "seed_transcript_hash",
+        "release_seed",
+        "corpus_root",
+        "positive_count",
+        "negative_count",
+        "git_head",
     ]
     compact: dict[str, Any] = {}
     for key in keep:
@@ -688,6 +824,10 @@ def file_sha256(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return "sha256:" + digest.hexdigest()
+
+
+def file_sha256_or_missing(path: Path) -> str:
+    return file_sha256(path) if path.exists() else "sha256:missing"
 
 
 def sha256_text(text: str) -> str:

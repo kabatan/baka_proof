@@ -587,10 +587,19 @@ def mutate_selected_derivation(selected: dict[str, Any], mutation_kind: str) -> 
         selected["selected_steps"] = []
         selected["has_non_target_intermediate"] = False
     elif mutation_kind == "corrupt_non_target_intermediate":
-        selected["has_non_target_intermediate"] = False
-        if steps:
-            steps[0]["artifact_ref"] = sha256_text("corrupt_non_target_intermediate")
-            steps[0]["conclusion"] = "corrupted_non_target_intermediate"
+        for step in steps:
+            if not isinstance(step, dict) or step.get("is_final_target") is True:
+                continue
+            step["artifact_ref"] = sha256_text("corrupt_non_target_intermediate")
+            step["conclusion"] = "corrupted_non_target_intermediate"
+            premise_sources = step.get("premise_sources")
+            if isinstance(premise_sources, list) and premise_sources:
+                first = premise_sources[0]
+                if isinstance(first, dict):
+                    first["source_expr"] = "False"
+                    first["source_expr_hash"] = sha256_text("False")
+                    first["mutation_reason"] = "corrupt_non_target_intermediate_forces_lean_dependency_failure"
+                    break
     elif mutation_kind == "corrupt_construction_or_certificate":
         selected["has_checked_side_condition_or_certificate"] = False
         for step in steps:

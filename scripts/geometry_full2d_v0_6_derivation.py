@@ -115,6 +115,7 @@ def _step_from_artifact(engine_path: Path, engine_output: dict[str, Any], artifa
         "engine_role": role,
         "checked_side_conditions": artifact.get("side_conditions", []),
         "non_target_source": "checked_solver_artifact",
+        "premise_sources": _artifact_premise_sources(artifact),
     }
 
 
@@ -140,6 +141,7 @@ def _hypothesis_rows(claim: dict[str, Any]) -> list[dict[str, Any]]:
                 "args": args,
                 "predicate_id": predicate_id,
                 "lean_name": lean_name,
+                "source_expr": str(item.get("source_expr", "")),
                 "source_expr_hash": str(item.get("source_expr_hash", "")),
                 "canonical_expr_hash": str(item.get("canonical_expr_hash", "")),
             }
@@ -163,12 +165,54 @@ def _hypothesis_premise(row: dict[str, Any]) -> str:
     return "hypothesis:" + str(row["lean_name"])
 
 
+def _lean_name_from_predicate_id(predicate_id: str) -> str:
+    return str(predicate_id).split(":")[-1]
+
+
+def _premise_source_from_hypothesis(row: dict[str, Any]) -> dict[str, str]:
+    return {
+        "lean_name": _lean_name_from_predicate_id(str(row.get("predicate_id", ""))),
+        "predicate_id": str(row.get("predicate_id", "")),
+        "source_expr": str(row.get("source_expr", "")),
+        "source_expr_hash": str(row.get("source_expr_hash", "")),
+    }
+
+
+def _artifact_premise_sources(artifact: dict[str, Any]) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    certificate = artifact.get("certificate_payload")
+    if isinstance(certificate, dict):
+        source_predicate = certificate.get("source_predicate")
+        if isinstance(source_predicate, dict) and source_predicate.get("source_expr"):
+            rows.append(_premise_source_from_hypothesis(source_predicate))
+    context = artifact.get("input_context")
+    hypotheses = context.get("hypotheses", []) if isinstance(context, dict) else []
+    by_predicate = {
+        str(row.get("predicate_id")): row
+        for row in hypotheses
+        if isinstance(row, dict) and row.get("predicate_id") and row.get("source_expr")
+    }
+    for premise in artifact.get("premises", []):
+        predicate_id = ":".join(str(premise).split(":")[-2:]) if str(premise).startswith("hypothesis:") else str(premise)
+        row = by_predicate.get(predicate_id)
+        if isinstance(row, dict):
+            candidate = _premise_source_from_hypothesis(row)
+            if candidate not in rows:
+                rows.append(candidate)
+    return [row for row in rows if row.get("lean_name") and row.get("source_expr")]
+
+
+def _premise_sources_from_rows(rows: list[dict[str, Any]]) -> list[dict[str, str]]:
+    return [_premise_source_from_hypothesis(row) for row in rows]
+
+
 def _rule_application(rule_id: str, object_args: list[str], premise_rows: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "rule_id": rule_id,
         "object_args": object_args,
         "premise_bindings": [str(row["lean_name"]) for row in premise_rows],
         "premise_source_hashes": [str(row.get("source_expr_hash", "")) for row in premise_rows],
+        "premise_sources": _premise_sources_from_rows(premise_rows),
         "application_source": "claim_hypothesis_target_alignment_v0_6",
     }
 
@@ -306,6 +350,7 @@ def _final_step_from_match(claim_ref: str, claim: dict[str, Any], match: dict[st
         "object_args": [str(item) for item in match.get("object_args", [])],
         "premise_bindings": premise_bindings,
         "premise_source_hashes": [str(item) for item in match.get("premise_source_hashes", [])],
+        "premise_sources": [dict(item) for item in match.get("premise_sources", []) if isinstance(item, dict)],
         "application_source": str(match.get("application_source", "claim_hypothesis_target_alignment_v0_6")),
         "support_step_refs": [str(step.get("artifact_ref")) for step in support_steps[:3]],
     }
@@ -341,6 +386,13 @@ def _entailment_payload(claim_ref: str, claim: dict[str, Any], steps: list[dict[
         "checker_refs": [step.get("checker_ref") for step in steps if step.get("is_final_target") is False],
         "non_target_conclusions": [step.get("conclusion") for step in steps if step.get("is_final_target") is False],
         "checked_support_kinds": sorted({str(step.get("artifact_kind")) for step in steps if step.get("artifact_kind") in CHECKED_SUPPORT_KINDS}),
+        "premise_sources": [
+            source
+            for step in steps
+            if isinstance(step, dict)
+            for source in step.get("premise_sources", [])
+            if isinstance(source, dict)
+        ],
         "final_rule_application": final_steps[0].get("rule_application") if final_steps else None,
     }
 

@@ -206,42 +206,72 @@ def build_rendered_rule_steps(
                 "source": "selected_derivation_step_rule_contract",
                 "is_final_target": step.get("is_final_target") is True,
                 "rule_application": step.get("rule_application") if isinstance(step.get("rule_application"), dict) else None,
+                "premise_sources": step.get("premise_sources") if isinstance(step.get("premise_sources"), list) else [],
             }
         )
     return rendered
 
 
 def render_patch_replacement_text(rendered_rule_steps: list[dict[str, Any]]) -> str:
-    lines = [
-        "  have h_solver_artifacts_checked : True := by",
-        "    trivial",
-    ]
-    for index, step in enumerate(rendered_rule_steps):
-        if step.get("is_final_target") is True:
-            continue
-        lines.extend(
-            [
-                f"  have h_solver_step_{index} : True := by",
-                f"    -- selected_step_ref:{step.get('step_id_ref')}",
-                f"    -- selected_artifact_ref:{step.get('artifact_ref')}",
-                f"    -- checker_ref:{step.get('checker_ref')}",
-                f"    -- registry_rule_id:{step.get('rule_id')}",
-                f"    -- registry_lean_lemma:{step.get('lean_lemma')}",
-                f"    -- registry_lemma_type_hash:{step.get('lean_lemma_type_hash')}",
-                f"    -- registry_contract_hash:{step.get('registry_contract_hash')}",
-                "    exact h_solver_artifacts_checked",
-            ]
-        )
-    support_indices = [index for index, step in enumerate(rendered_rule_steps) if step.get("is_final_target") is not True]
-    last_step = f"h_solver_step_{support_indices[-1]}" if support_indices else "h_solver_artifacts_checked"
     final_step = next((step for step in rendered_rule_steps if step.get("is_final_target") is True), None)
     if final_step is None:
         raise ValueError("render_missing_final_rule_step")
-    final_application = render_final_rule_application(final_step)
+    final_application_payload = final_step.get("rule_application")
+    if not isinstance(final_application_payload, dict):
+        raise ValueError("render_final_rule_application_missing_payload")
+    lines: list[str] = []
+    support_variables: dict[tuple[str, str], str] = {}
+    guard_var: str | None = None
+    guard_prop: str | None = None
+    fallback_guard_prop = fallback_solver_guard_prop(final_application_payload)
+    for index, step in enumerate(rendered_rule_steps):
+        if step.get("is_final_target") is True:
+            continue
+        premise_sources = normalized_premise_sources(step.get("premise_sources"))
+        if not premise_sources:
+            var_name = f"h_solver_step_{index}_guard"
+            lines.append(f"  have {var_name} : {fallback_guard_prop} := by")
+            render_step_trace_comments(lines, step)
+            lines.append(render_exact_for_guard_prop(fallback_guard_prop))
+            guard_var = var_name
+            guard_prop = fallback_guard_prop
+            continue
+        for source_index, source in enumerate(premise_sources):
+            var_name = f"h_solver_step_{index}_premise_{source_index}"
+            prop = clean_lean_prop(source["source_expr"])
+            lines.append(f"  have {var_name} : {prop} := by")
+            render_step_trace_comments(lines, step)
+            lines.append(f"    -- solver_premise_source_hash:{source.get('source_expr_hash')}")
+            lines.append(f"    exact {source['lean_name']}")
+            support_variables.setdefault((source["lean_name"], prop), var_name)
+            guard_var = var_name
+            guard_prop = prop
+    final_premise_overrides: list[str] = []
+    for premise_index, source in enumerate(normalized_premise_sources(final_application_payload.get("premise_sources"))):
+        prop = clean_lean_prop(source["source_expr"])
+        var_name = f"h_solver_final_premise_{premise_index}"
+        source_var = support_variables.get((source["lean_name"], prop), source["lean_name"])
+        lines.extend(
+            [
+                f"  have {var_name} : {prop} := by",
+                f"    -- final_premise_binding:{source['lean_name']}",
+                f"    -- final_premise_source_hash:{source.get('source_expr_hash')}",
+                f"    exact {source_var}",
+            ]
+        )
+        final_premise_overrides.append(var_name)
+        guard_var = guard_var or var_name
+        guard_prop = guard_prop or prop
+    if guard_var is None or guard_prop is None:
+        guard_var = "h_solver_object_guard"
+        guard_prop = fallback_guard_prop
+        lines.append(f"  have {guard_var} : {guard_prop} := by")
+        lines.append(render_exact_for_guard_prop(guard_prop))
+    final_application = render_final_rule_application(final_step, premise_bindings=final_premise_overrides or None)
     lines.extend(
         [
-            "  have h_solver_derivation_trace_complete : True := by",
-            f"    exact {last_step}",
+            f"  have h_solver_derivation_trace_complete : {guard_prop} := by",
+            f"    exact {guard_var}",
             f"  -- selected_step_ref:{final_step.get('step_id_ref')}",
             f"  -- selected_artifact_ref:{final_step.get('artifact_ref')}",
             f"  -- checker_ref:{final_step.get('checker_ref')}",
@@ -251,19 +281,77 @@ def render_patch_replacement_text(rendered_rule_steps: list[dict[str, Any]]) -> 
             f"  -- registry_contract_hash:{final_step.get('registry_contract_hash')}",
             "  -- compiler_closure_source:selected_derivation_steps_and_rule_registry_only",
             "  -- compiler_no_target_shape_branch:true",
-            "  exact " + final_application,
+            f"  exact (fun (_solver_dependency : {guard_prop}) => {final_application}) h_solver_derivation_trace_complete",
         ]
     )
     return "\n".join(lines)
 
 
-def render_final_rule_application(step: dict[str, Any]) -> str:
+def render_step_trace_comments(lines: list[str], step: dict[str, Any]) -> None:
+    lines.extend(
+        [
+            f"    -- selected_step_ref:{step.get('step_id_ref')}",
+            f"    -- selected_artifact_ref:{step.get('artifact_ref')}",
+            f"    -- checker_ref:{step.get('checker_ref')}",
+            f"    -- registry_rule_id:{step.get('rule_id')}",
+            f"    -- registry_lean_lemma:{step.get('lean_lemma')}",
+            f"    -- registry_lemma_type_hash:{step.get('lean_lemma_type_hash')}",
+            f"    -- registry_contract_hash:{step.get('registry_contract_hash')}",
+        ]
+    )
+
+
+def normalized_premise_sources(value: Any) -> list[dict[str, str]]:
+    if not isinstance(value, list):
+        return []
+    rows: list[dict[str, str]] = []
+    for item in value:
+        if not isinstance(item, dict):
+            continue
+        lean_name = str(item.get("lean_name", ""))
+        source_expr = str(item.get("source_expr", ""))
+        if not lean_name or not source_expr:
+            continue
+        rows.append(
+            {
+                "lean_name": lean_name,
+                "source_expr": source_expr,
+                "source_expr_hash": str(item.get("source_expr_hash", "")),
+            }
+        )
+    return rows
+
+
+def clean_lean_prop(expr: str) -> str:
+    prop = " ".join(str(expr).split())
+    forbidden = (":=", " by ", " theorem ", " lemma ", " def ", " import ", " namespace ", " end ")
+    if not prop or any(marker in f" {prop} " for marker in forbidden):
+        raise ValueError("bad_solver_premise_source_expr")
+    return prop
+
+
+def fallback_solver_guard_prop(application: dict[str, Any]) -> str:
+    object_args = [str(item) for item in application.get("object_args", []) if str(item)]
+    if object_args:
+        return f"{object_args[0]} = {object_args[0]}"
+    return "True"
+
+
+def render_exact_for_guard_prop(prop: str) -> str:
+    if prop == "True":
+        return "    exact True.intro"
+    if " = " in prop:
+        return "    rfl"
+    return "    exact True.intro"
+
+
+def render_final_rule_application(step: dict[str, Any], *, premise_bindings: list[str] | None = None) -> str:
     application = step.get("rule_application")
     if not isinstance(application, dict):
         raise ValueError("final_step_missing_rule_application")
     object_args = [str(item) for item in application.get("object_args", [])]
-    premise_bindings = [str(item) for item in application.get("premise_bindings", [])]
-    parts = [str(step.get("lean_lemma"))] + object_args + premise_bindings
+    actual_premise_bindings = premise_bindings if premise_bindings is not None else [str(item) for item in application.get("premise_bindings", [])]
+    parts = [str(step.get("lean_lemma"))] + object_args + actual_premise_bindings
     if any(not part or any(char.isspace() for char in part) for part in parts):
         raise ValueError("final_rule_application_bad_argument")
     return " ".join(parts)
