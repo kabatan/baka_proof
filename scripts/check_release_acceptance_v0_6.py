@@ -318,24 +318,24 @@ def run_release_acceptance(args: argparse.Namespace) -> dict[str, Any]:
     report["release_report_core_ref"] = release_report_core_ref(report)
     output_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     if report["status"] == "passed":
-        write_closure(report, output_path)
-        run(
-            "closure_claim_ceiling",
-            [
-                sys.executable,
-                "scripts/check_closure_claim_ceiling_v0_6.py",
-                "--release-report",
-                str(output_path),
-                "--closure",
-                str(CLOSURE_PATH),
-            ],
-            "closure_claim_ceiling",
-        )
+        provisional_results = dict(results)
+        provisional_results["closure_claim_ceiling"] = provisional_closure_result(evidence_dir)
+        provisional_report = build_report(args, config_path, run_dir, evidence_dir, provisional_results, started, require_closure=True)
+        provisional_report["release_report_core_ref"] = release_report_core_ref(provisional_report)
+        output_path.write_text(json.dumps(provisional_report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        write_closure(provisional_report, output_path)
+        run_closure_claim_ceiling(run, output_path)
     else:
         results["closure_claim_ceiling"] = skipped_result("closure_claim_ceiling", "release_report_not_passed_before_closure", evidence_dir)
 
     final_report = build_report(args, config_path, run_dir, evidence_dir, results, started, require_closure=True)
     final_report["release_report_core_ref"] = release_report_core_ref(final_report)
+    output_path.write_text(json.dumps(final_report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    if final_report["status"] == "passed" and CLOSURE_PATH.exists() and final_report["release_report_core_ref"] not in CLOSURE_PATH.read_text(encoding="utf-8"):
+        write_closure(final_report, output_path)
+        run_closure_claim_ceiling(run, output_path)
+        final_report = build_report(args, config_path, run_dir, evidence_dir, results, started, require_closure=True)
+        final_report["release_report_core_ref"] = release_report_core_ref(final_report)
     return final_report
 
 
@@ -406,6 +406,35 @@ def parsed_result(result: dict[str, Any]) -> dict[str, Any]:
         return {}
     parsed = evidence.get("parsed_report")
     return parsed if isinstance(parsed, dict) else {}
+
+
+def provisional_closure_result(evidence_dir: Path) -> dict[str, Any]:
+    return {
+        "schema_version": "ReleaseCommandResultV06",
+        "name": "closure_claim_ceiling",
+        "command": ["closure_claim_ceiling_pending_before_generated_closure_check"],
+        "returncode": 0,
+        "status": "passed",
+        "evidence_path": rel_or_abs(evidence_dir / "closure_claim_ceiling.pending.json"),
+        "evidence_ref": sha256_text("closure_claim_ceiling_pending_omitted_from_release_report_core_ref"),
+        "output_path": None,
+        "report_summary": {"status": "passed", "provisional": True},
+    }
+
+
+def run_closure_claim_ceiling(run_fn: Any, output_path: Path) -> None:
+    run_fn(
+        "closure_claim_ceiling",
+        [
+            sys.executable,
+            "scripts/check_closure_claim_ceiling_v0_6.py",
+            "--release-report",
+            str(output_path),
+            "--closure",
+            str(CLOSURE_PATH),
+        ],
+        "closure_claim_ceiling",
+    )
 
 
 def skipped_result(name: str, reason: str, evidence_dir: Path) -> dict[str, Any]:
