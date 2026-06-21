@@ -1,0 +1,3761 @@
+{
+  "K_to_checker_evidence_map": {
+    "K-001": {
+      "checker": "check_active_guardian_spec_v0_6.py",
+      "evidence_field": "checked_rids",
+      "evidence_ref": "sha256:9a863bdf4b1403fe7918b79c398e49c5ceb66bfc4c653f631c5820b0487d68a7",
+      "result_name": "active_guardian_spec",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-002": {
+      "checker": "check_no_old_release_dependency_v0_6.py",
+      "evidence_field": "freshness_summary",
+      "evidence_ref": "sha256:9bb1ea2fc5ea8f8e8bfaaedcfda93db022c19dcf94483eecc244cb88c7b74a1f",
+      "result_name": "no_old_release_dependency",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-003": {
+      "checker": "check_red_case_suite_v0_6.py --all",
+      "evidence_field": "red_case_summary",
+      "evidence_ref": "sha256:40c3270314716d876ce1741dd98d461ac7b031a4964ec783a04355a490ba325a",
+      "result_name": "red_case_suite",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-004": {
+      "checker": "check_acceptance_coverage_v0_6.py",
+      "evidence_field": "acceptance_coverage_summary",
+      "evidence_ref": "sha256:9e21b0ad8de088f05405cad774407a49ae67bd241ba2ec713cda70899c018b36",
+      "result_name": "acceptance_coverage",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-005": {
+      "checker": "check_red_case_suite_v0_6.py --all",
+      "evidence_field": "K_to_checker_evidence_map",
+      "evidence_ref": "sha256:40c3270314716d876ce1741dd98d461ac7b031a4964ec783a04355a490ba325a",
+      "result_name": "red_case_suite",
+      "result_status": "passed",
+      "supporting_results": [
+        {
+          "evidence_ref": "sha256:9e21b0ad8de088f05405cad774407a49ae67bd241ba2ec713cda70899c018b36",
+          "result_name": "acceptance_coverage",
+          "status": "passed"
+        }
+      ]
+    },
+    "K-006": {
+      "checker": "check_no_old_release_dependency_v0_6.py",
+      "evidence_field": "freshness_summary",
+      "evidence_ref": "sha256:9bb1ea2fc5ea8f8e8bfaaedcfda93db022c19dcf94483eecc244cb88c7b74a1f",
+      "result_name": "no_old_release_dependency",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-007": {
+      "checker": "check_independent_solver_artifacts_v0_6.py --all --red-cases",
+      "evidence_field": "solver_artifact_check_summary",
+      "evidence_ref": "sha256:1a74f511124e8daf8e25d828dc4918e6eac3d1a800070f3db22156e8c926a4bd",
+      "result_name": "independent_solver_artifacts",
+      "result_status": "passed",
+      "supporting_results": [
+        {
+          "evidence_ref": "sha256:a6b7ce238f63b5e9b403c604c6cfa158499a4ff717260123b931fbdda7b7b19d",
+          "result_name": "provider_isolation",
+          "status": "passed"
+        }
+      ]
+    },
+    "K-008": {
+      "checker": "check_provider_isolation_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "provider_isolation_summary",
+      "evidence_ref": "sha256:a6b7ce238f63b5e9b403c604c6cfa158499a4ff717260123b931fbdda7b7b19d",
+      "result_name": "provider_isolation",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-009": {
+      "checker": "check_independent_solver_artifacts_v0_6.py --all --red-cases",
+      "evidence_field": "solver_artifact_check_summary",
+      "evidence_ref": "sha256:1a74f511124e8daf8e25d828dc4918e6eac3d1a800070f3db22156e8c926a4bd",
+      "result_name": "independent_solver_artifacts",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-010": {
+      "checker": "check_engine_output_not_from_compiler_rules_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "engine_output_not_from_compiler_rules_summary",
+      "evidence_ref": "sha256:3d8ddbbed2c0ac42486521ecc1aa1881e89c74399c5a4df8f1fd951e272a5462",
+      "result_name": "engine_output_not_from_compiler_rules",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-011": {
+      "checker": "check_engine_output_not_from_compiler_rules_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "engine_output_not_from_compiler_rules_summary",
+      "evidence_ref": "sha256:3d8ddbbed2c0ac42486521ecc1aa1881e89c74399c5a4df8f1fd951e272a5462",
+      "result_name": "engine_output_not_from_compiler_rules",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-012": {
+      "checker": "check_rule_registry_v0_6.py --release --red-cases",
+      "evidence_field": "rule_registry_summary",
+      "evidence_ref": "sha256:563906433c6831beed227560652bb1db3dbe74a70cb9521fc8c04532f4aa0dee",
+      "result_name": "rule_registry",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-013": {
+      "checker": "check_selected_derivation_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "selected_derivation_summary",
+      "evidence_ref": "sha256:dd9cd2113af27f01da5055ec9d2d57dcfe3ad482cd829c1eb1e1285dfcf7ec74",
+      "result_name": "selected_derivation",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-014": {
+      "checker": "check_derivation_target_matcher_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "derivation_target_matcher_summary",
+      "evidence_ref": "sha256:472f41588a7f5f60f2f6f214a3b73fbe2726b355b0b2459312be0ace014fbb35",
+      "result_name": "derivation_target_matcher",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-015": {
+      "checker": "check_compiler_input_lock_v0_6.py --self-test --red-cases --dynamic-taint",
+      "evidence_field": "compiler_input_lock_summary",
+      "evidence_ref": "sha256:014b34f8ad006af372e380395f747f4294fec30084a2fef1251d0e20fd0ec3ca",
+      "result_name": "compiler_input_lock",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-016": {
+      "checker": "check_compiler_input_lock_v0_6.py --self-test --red-cases --dynamic-taint",
+      "evidence_field": "compiler_input_lock_summary",
+      "evidence_ref": "sha256:014b34f8ad006af372e380395f747f4294fec30084a2fef1251d0e20fd0ec3ca",
+      "result_name": "compiler_input_lock",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-017": {
+      "checker": "check_proof_worker_final_verify_v0_6.py --self-test --red-cases",
+      "evidence_field": "proof_worker_final_verify_summary",
+      "evidence_ref": "sha256:b14256e5c8efafac130431e21a2096504eb34bfaed04c71acd8c130fc1c85013",
+      "result_name": "proof_worker_final_verify",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-018": {
+      "checker": "check_solver_causality_live_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "live_causality_summary",
+      "evidence_ref": "sha256:65c7cb8554472fcfadd76962b82075685add484bea03e77dacb4be00bced213c",
+      "result_name": "live_causality_check",
+      "result_status": "passed",
+      "supporting_results": [
+        {
+          "evidence_ref": "sha256:68c8fdc9e1e453caf4c4726185a1eeb9499b7653badd2c2567f08ff3d2da7d12",
+          "result_name": "live_causality_run",
+          "status": "passed"
+        }
+      ]
+    },
+    "K-019": {
+      "checker": "check_solver_causality_live_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "live_causality_summary",
+      "evidence_ref": "sha256:65c7cb8554472fcfadd76962b82075685add484bea03e77dacb4be00bced213c",
+      "result_name": "live_causality_check",
+      "result_status": "passed",
+      "supporting_results": [
+        {
+          "evidence_ref": "sha256:68c8fdc9e1e453caf4c4726185a1eeb9499b7653badd2c2567f08ff3d2da7d12",
+          "result_name": "live_causality_run",
+          "status": "passed"
+        }
+      ]
+    },
+    "K-020": {
+      "checker": "check_corpus_independence_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6 --red-cases",
+      "evidence_field": "corpus_independence_summary",
+      "evidence_ref": "sha256:d898e59bb0d603966c18cb996918e51b94bc7db7a34af08be33fe3b71e03b6df",
+      "result_name": "corpus_independence",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-021": {
+      "checker": "check_corpus_independence_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6 --red-cases",
+      "evidence_field": "corpus_independence_summary",
+      "evidence_ref": "sha256:d898e59bb0d603966c18cb996918e51b94bc7db7a34af08be33fe3b71e03b6df",
+      "result_name": "corpus_independence",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-022": {
+      "checker": "check_corpus_independence_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6 --red-cases",
+      "evidence_field": "corpus_independence_summary",
+      "evidence_ref": "sha256:d898e59bb0d603966c18cb996918e51b94bc7db7a34af08be33fe3b71e03b6df",
+      "result_name": "corpus_independence",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-023": {
+      "checker": "check_statement_diversity_v0_6.py --corpus-root benchmarks/geometry_full2d_v0_6",
+      "evidence_field": "statement_diversity_summary",
+      "evidence_ref": "sha256:8ce80b9c72138646cd9e11684c234df6c4d01aa9a6e31702c93e4e69a7e1502a",
+      "result_name": "statement_diversity",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-024": {
+      "checker": "check_all_baseline_matrix_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "all_baseline_matrix_summary",
+      "evidence_ref": "sha256:a22486b053d0d78ad4bae61b67f3175ceb90262c025ef2e81264e0882946c1fa",
+      "result_name": "all_baseline_matrix",
+      "result_status": "passed",
+      "supporting_results": [
+        {
+          "evidence_ref": "sha256:8b6a96561085137400638d571e0d768f22a160cb0b0d303f49c93069bda10bf8",
+          "result_name": "matrix_run",
+          "status": "passed"
+        }
+      ]
+    },
+    "K-025": {
+      "checker": "check_all_baseline_matrix_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "all_baseline_matrix_summary",
+      "evidence_ref": "sha256:a22486b053d0d78ad4bae61b67f3175ceb90262c025ef2e81264e0882946c1fa",
+      "result_name": "all_baseline_matrix",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-026": {
+      "checker": "check_full2d_metrics_v0_6.py --run-dir <fresh>",
+      "evidence_field": "metrics_summary",
+      "evidence_ref": "sha256:9c7605dc26fb325c5d1ed15fc230decaa3eb476e23d05c7aff6b62ebf642dbab",
+      "result_name": "metrics",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-027": {
+      "checker": "check_full2d_metrics_v0_6.py --run-dir <fresh>",
+      "evidence_field": "metrics_summary",
+      "evidence_ref": "sha256:9c7605dc26fb325c5d1ed15fc230decaa3eb476e23d05c7aff6b62ebf642dbab",
+      "result_name": "metrics",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-028": {
+      "checker": "check_engine_contribution_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "engine_contribution_summary",
+      "evidence_ref": "sha256:f0c63d3a7619f0b71f4a97c64db145ce680a132882d8ad160315ecc64581c61a",
+      "result_name": "engine_contribution",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-029": {
+      "checker": "check_used_rule_coverage_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "used_rule_coverage_summary",
+      "evidence_ref": "sha256:ebcb2e49b4eb1b4bff5ae568afa1a937f1eb06712ed07fa274bc71babd534875",
+      "result_name": "used_rule_coverage",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-030": {
+      "checker": "check_all_baseline_matrix_v0_6.py --run-dir <fresh> --red-cases",
+      "evidence_field": "measured_failure_summary",
+      "evidence_ref": "sha256:a22486b053d0d78ad4bae61b67f3175ceb90262c025ef2e81264e0882946c1fa",
+      "result_name": "all_baseline_matrix",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-031": {
+      "checker": "check_no_old_release_dependency_v0_6.py",
+      "evidence_field": "freshness_summary",
+      "evidence_ref": "sha256:9bb1ea2fc5ea8f8e8bfaaedcfda93db022c19dcf94483eecc244cb88c7b74a1f",
+      "result_name": "no_old_release_dependency",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-032": {
+      "checker": "check_closure_claim_ceiling_v0_6.py",
+      "evidence_field": "closure_claim_ceiling_summary",
+      "evidence_ref": "sha256:b86e6cbd3924a66692945d409bd5b7bfa7d015f70734f8546b913d2c66a4bf8a",
+      "result_name": "closure_claim_ceiling",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-033": {
+      "checker": "check_full2d_metrics_v0_6.py --run-dir <fresh>",
+      "evidence_field": "measured_failure_summary",
+      "evidence_ref": "sha256:9c7605dc26fb325c5d1ed15fc230decaa3eb476e23d05c7aff6b62ebf642dbab",
+      "result_name": "metrics",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-034": {
+      "checker": "check_acceptance_coverage_v0_6.py",
+      "evidence_field": "K_to_checker_evidence_map",
+      "evidence_ref": "sha256:9e21b0ad8de088f05405cad774407a49ae67bd241ba2ec713cda70899c018b36",
+      "result_name": "acceptance_coverage",
+      "result_status": "passed",
+      "supporting_results": []
+    },
+    "K-035": {
+      "checker": "check_acceptance_coverage_v0_6.py",
+      "evidence_field": "K_to_checker_evidence_map",
+      "evidence_ref": "sha256:9e21b0ad8de088f05405cad774407a49ae67bd241ba2ec713cda70899c018b36",
+      "result_name": "acceptance_coverage",
+      "result_status": "passed",
+      "supporting_results": []
+    }
+  },
+  "acceptance_coverage_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/acceptance_coverage.evidence.json",
+    "evidence_ref": "sha256:9e21b0ad8de088f05405cad774407a49ae67bd241ba2ec713cda70899c018b36",
+    "report_summary": {
+      "errors": [],
+      "schema_version": "GeometryFull2DAcceptanceCoverageReportV06",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "advantage_summary": {
+    "B2_minus_B1_overall": 1.0,
+    "B2_minus_B5_construction_subset": 1.0,
+    "B2_minus_B6_algebraic_metric_certificate_subset": 1.0,
+    "B2_minus_B7_order_case_subset": 1.0
+  },
+  "all_baseline_matrix_summary": {
+    "by_baseline": {
+      "B1": {
+        "final_theorem": 0,
+        "measured_failure": 1200,
+        "records": 1200
+      },
+      "B2": {
+        "final_theorem": 1200,
+        "measured_failure": 0,
+        "records": 1200
+      },
+      "B5": {
+        "final_theorem": 0,
+        "measured_failure": 1200,
+        "records": 1200
+      },
+      "B6": {
+        "final_theorem": 0,
+        "measured_failure": 1200,
+        "records": 1200
+      },
+      "B7": {
+        "final_theorem": 0,
+        "measured_failure": 1200,
+        "records": 1200
+      },
+      "B8": {
+        "final_theorem": 0,
+        "measured_failure": 1200,
+        "records": 1200
+      }
+    },
+    "checker": {
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/all_baseline_matrix.evidence.json",
+      "evidence_ref": "sha256:a22486b053d0d78ad4bae61b67f3175ceb90262c025ef2e81264e0882946c1fa",
+      "report_summary": {
+        "errors": [],
+        "schema_version": "CheckAllBaselineMatrixV06Report",
+        "sections": {
+          "matrix_check": {
+            "by_baseline": {
+              "B1": 1200,
+              "B2": 1200,
+              "B5": 1200,
+              "B6": 1200,
+              "B7": 1200,
+              "B8": 1200
+            },
+            "counted_task_count": 1200,
+            "errors": [],
+            "record_count": 7200,
+            "required_baselines": [
+              "B1",
+              "B2",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ],
+            "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+            "schema_version": "AllBaselineMatrixV06",
+            "status": "passed"
+          },
+          "red_cases": {
+            "case_results": {
+              "b2_only_matrix": {
+                "errors": [
+                  "baseline_record_count_mismatch:B1:0!=1",
+                  "baseline_record_count_mismatch:B5:0!=1",
+                  "baseline_record_count_mismatch:B6:0!=1",
+                  "baseline_record_count_mismatch:B7:0!=1",
+                  "baseline_record_count_mismatch:B8:0!=1",
+                  "record_count_mismatch:1!=6",
+                  "task:missing_baselines:B1,B5,B6,B7,B8",
+                  "task__B2.json:b2_missing_actual_solver_artifact_refs",
+                  "task__B2.json:b2_missing_final_verify_report_payload",
+                  "task__B2.json:missing:claim_spec_ref",
+                  "task__B2.json:missing:compiler_result_refs",
+                  "task__B2.json:missing:derivation_target_match_ref",
+                  "task__B2.json:missing:engine_output_refs",
+                  "task__B2.json:missing:extraction_report_ref",
+                  "task__B2.json:missing:final_verify_report_ref",
+                  "task__B2.json:missing:independent_solver_artifact_check_refs",
+                  "task__B2.json:missing:lean_patch_candidate_ref",
+                  "task__B2.json:missing:proof_worker_result_ref",
+                  "task__B2.json:missing:provider_run_manifest_ref",
+                  "task__B2.json:missing:selected_solver_derivation_ref",
+                  "task__B2.json:missing:source_theorem_ref"
+                ],
+                "status": "passed"
+              },
+              "label_coded_failure": {
+                "errors": [
+                  "task__B1.json:disabled_baseline_missing_disabled_stage_report",
+                  "task__B1.json:family_or_label_coded_outcome",
+                  "task__B1.json:missing:claim_spec_ref",
+                  "task__B1.json:missing:compiler_result_refs",
+                  "task__B1.json:missing:derivation_target_match_ref",
+                  "task__B1.json:missing:engine_output_refs",
+                  "task__B1.json:missing:extraction_report_ref",
+                  "task__B1.json:missing:final_verify_report_ref",
+                  "task__B1.json:missing:independent_solver_artifact_check_refs",
+                  "task__B1.json:missing:lean_patch_candidate_ref",
+                  "task__B1.json:missing:proof_worker_result_ref",
+                  "task__B1.json:missing:provider_run_manifest_ref",
+                  "task__B1.json:missing:selected_solver_derivation_ref",
+                  "task__B1.json:missing:source_theorem_ref",
+                  "task__B2.json:b2_missing_actual_solver_artifact_refs",
+                  "task__B2.json:b2_missing_final_verify_report_payload",
+                  "task__B2.json:family_or_label_coded_outcome",
+                  "task__B2.json:missing:claim_spec_ref",
+                  "task__B2.json:missing:compiler_result_refs",
+                  "task__B2.json:missing:derivation_target_match_ref",
+                  "task__B2.json:missing:engine_output_refs",
+                  "task__B2.json:missing:extraction_report_ref",
+                  "task__B2.json:missing:final_verify_report_ref",
+                  "task__B2.json:missing:independent_solver_artifact_check_refs",
+                  "task__B2.json:missing:lean_patch_candidate_ref",
+                  "task__B2.json:missing:proof_worker_result_ref",
+                  "task__B2.json:missing:provider_run_manifest_ref",
+                  "task__B2.json:missing:selected_solver_derivation_ref",
+                  "task__B2.json:missing:source_theorem_ref",
+                  "task__B5.json:disabled_baseline_missing_disabled_stage_report",
+                  "task__B5.json:family_or_label_coded_outcome",
+                  "task__B5.json:missing:claim_spec_ref",
+                  "task__B5.json:missing:compiler_result_refs",
+                  "task__B5.json:missing:derivation_target_match_ref",
+                  "task__B5.json:missing:engine_output_refs",
+                  "task__B5.json:missing:extraction_report_ref",
+                  "task__B5.json:missing:final_verify_report_ref",
+                  "task__B5.json:missing:independent_solver_artifact_check_refs",
+                  "task__B5.json:missing:lean_patch_candidate_ref",
+                  "task__B5.json:missing:proof_worker_result_ref",
+                  "task__B5.json:missing:provider_run_manifest_ref",
+                  "task__B5.json:missing:selected_solver_derivation_ref",
+                  "task__B5.json:missing:source_theorem_ref",
+                  "task__B6.json:disabled_baseline_missing_disabled_stage_report",
+                  "task__B6.json:family_or_label_coded_outcome",
+                  "task__B6.json:missing:claim_spec_ref",
+                  "task__B6.json:missing:compiler_result_refs",
+                  "task__B6.json:missing:derivation_target_match_ref",
+                  "task__B6.json:missing:engine_output_refs",
+                  "task__B6.json:missing:extraction_report_ref",
+                  "task__B6.json:missing:final_verify_report_ref",
+                  "task__B6.json:missing:independent_solver_artifact_check_refs",
+                  "task__B6.json:missing:lean_patch_candidate_ref",
+                  "task__B6.json:missing:proof_worker_result_ref",
+                  "task__B6.json:missing:provider_run_manifest_ref",
+                  "task__B6.json:missing:selected_solver_derivation_ref",
+                  "task__B6.json:missing:source_theorem_ref",
+                  "task__B7.json:disabled_baseline_missing_disabled_stage_report",
+                  "task__B7.json:family_or_label_coded_outcome",
+                  "task__B7.json:missing:claim_spec_ref",
+                  "task__B7.json:missing:compiler_result_refs",
+                  "task__B7.json:missing:derivation_target_match_ref",
+                  "task__B7.json:missing:engine_output_refs",
+                  "task__B7.json:missing:extraction_report_ref",
+                  "task__B7.json:missing:final_verify_report_ref",
+                  "task__B7.json:missing:independent_solver_artifact_check_refs",
+                  "task__B7.json:missing:lean_patch_candidate_ref",
+                  "task__B7.json:missing:proof_worker_result_ref",
+                  "task__B7.json:missing:provider_run_manifest_ref",
+                  "task__B7.json:missing:selected_solver_derivation_ref",
+                  "task__B7.json:missing:source_theorem_ref",
+                  "task__B8.json:disabled_baseline_missing_disabled_stage_report",
+                  "task__B8.json:family_or_label_coded_outcome",
+                  "task__B8.json:missing:claim_spec_ref",
+                  "task__B8.json:missing:compiler_result_refs",
+                  "task__B8.json:missing:derivation_target_match_ref",
+                  "task__B8.json:missing:engine_output_refs",
+                  "task__B8.json:missing:extraction_report_ref",
+                  "task__B8.json:missing:final_verify_report_ref",
+                  "task__B8.json:missing:independent_solver_artifact_check_refs",
+                  "task__B8.json:missing:lean_patch_candidate_ref",
+                  "task__B8.json:missing:proof_worker_result_ref",
+                  "task__B8.json:missing:provider_run_manifest_ref",
+                  "task__B8.json:missing:selected_solver_derivation_ref",
+                  "task__B8.json:missing:source_theorem_ref"
+                ],
+                "status": "passed"
+              }
+            },
+            "errors": [],
+            "schema_version": "AllBaselineMatrixRedCasesV06",
+            "status": "passed"
+          }
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed"
+    },
+    "record_count": 7200,
+    "runner": {
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/matrix_run.evidence.json",
+      "evidence_ref": "sha256:8b6a96561085137400638d571e0d768f22a160cb0b0d303f49c93069bda10bf8",
+      "report_summary": {
+        "by_baseline": {
+          "B1": {
+            "final_theorem": 0,
+            "measured_failure": 1200,
+            "records": 1200
+          },
+          "B2": {
+            "final_theorem": 1200,
+            "measured_failure": 0,
+            "records": 1200
+          },
+          "B5": {
+            "final_theorem": 0,
+            "measured_failure": 1200,
+            "records": 1200
+          },
+          "B6": {
+            "final_theorem": 0,
+            "measured_failure": 1200,
+            "records": 1200
+          },
+          "B7": {
+            "final_theorem": 0,
+            "measured_failure": 1200,
+            "records": 1200
+          },
+          "B8": {
+            "final_theorem": 0,
+            "measured_failure": 1200,
+            "records": 1200
+          }
+        },
+        "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+        "counted_task_count": 1200,
+        "errors": [],
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "measured_failure_summary": {
+          "B2_final_verify_failures_are_measured": 0,
+          "disabled_baseline_failures_are_disabled_stage_reports": 6000
+        },
+        "record_count": 7200,
+        "required_record_count": 7200,
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "schema_version": "Full2DMatrixRunV06",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed"
+    }
+  },
+  "checked_rids": [
+    "K-001",
+    "K-002",
+    "K-003",
+    "K-004",
+    "K-005",
+    "K-006",
+    "K-007",
+    "K-008",
+    "K-009",
+    "K-010",
+    "K-011",
+    "K-012",
+    "K-013",
+    "K-014",
+    "K-015",
+    "K-016",
+    "K-017",
+    "K-018",
+    "K-019",
+    "K-020",
+    "K-021",
+    "K-022",
+    "K-023",
+    "K-024",
+    "K-025",
+    "K-026",
+    "K-027",
+    "K-028",
+    "K-029",
+    "K-030",
+    "K-031",
+    "K-032",
+    "K-033",
+    "K-034",
+    "K-035"
+  ],
+  "claim_ceiling": "V0.6_GEOMETRY_FULL2D_EXECUTION_LOCKED_REAL_SOLVER_CAUSAL_FULL_PIPELINE_READY",
+  "claimspec_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/claimspec.evidence.json",
+    "evidence_ref": "sha256:c986e0dd9f6cc750f79c1df3f331b1e12d132687f61f4ede74bde5370a222d01",
+    "report_summary": {
+      "errors": [],
+      "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+      "schema_version": "CheckFull2DClaimSpecV06Report",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "closure_allowed": true,
+  "closure_claim_ceiling_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/closure_claim_ceiling.evidence.json",
+    "evidence_ref": "sha256:b86e6cbd3924a66692945d409bd5b7bfa7d015f70734f8546b913d2c66a4bf8a",
+    "report_summary": {
+      "checker_name": "check_closure_claim_ceiling_v0_6.py",
+      "errors": [],
+      "schema_version": "ClosureClaimCeilingCheckV06",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "compiler_input_lock_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/compiler_input_lock.evidence.json",
+    "evidence_ref": "sha256:014b34f8ad006af372e380395f747f4294fec30084a2fef1251d0e20fd0ec3ca",
+    "report_summary": {
+      "checker_name": "check_compiler_input_lock_v0_6.py",
+      "errors": [],
+      "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+      "schema_version": "CheckCompilerInputLockV06Report",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "config": "configs/benchmark_runs/geometry_full2d_v0_6.yaml",
+  "corpus_independence_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/corpus_independence.evidence.json",
+    "evidence_ref": "sha256:d898e59bb0d603966c18cb996918e51b94bc7db7a34af08be33fe3b71e03b6df",
+    "report_summary": {
+      "errors": [],
+      "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+      "schema_version": "CheckCorpusIndependenceV06Report",
+      "sections": {
+        "corpus_check": {
+          "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+          "counted_positive_count": 1200,
+          "errors": [],
+          "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+          "negative_target_outside_malformed_count": 220,
+          "schema_version": "CorpusIndependenceCheckV06",
+          "source_type_counts": {
+            "SealedAdversarialHoldout": 1200
+          },
+          "status": "passed"
+        },
+        "red_cases": {
+          "case_results": {
+            "available_source_without_external_tasks": {
+              "errors": [
+                "counted_positive_floor_not_met:1",
+                "external_source_availability_report_hash_mismatch",
+                "external_sources_available_but_no_external_goal_preserved_tasks",
+                "freeze_builder_path_missing_or_unexpected",
+                "freeze_manifest_missing_generator_file_hashes",
+                "freeze_missing_required_implementation_path:docs/ai/changes/geometry-full2d-v0_6/evidence/rule_registry_full2d_v0_6.json",
+                "freeze_missing_required_implementation_path:lean/MathAutoResearch/GeometryFull2D/RuleLemmas.lean",
+                "freeze_missing_required_implementation_path:scripts/check_rule_registry_v0_6.py",
+                "freeze_missing_required_implementation_path:scripts/extract_geometry_full2d_theorem.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_compiler.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_derivation.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_extraction.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_independent_checkers.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_proof_worker.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_provider.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_checkers.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_registry.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_schemas.py",
+                "freeze_missing_required_implementation_path:scripts/run_full2d_matrix_v0_6.py",
+                "freeze_missing_required_implementation_path:scripts/run_solver_causality_live_v0_6.py",
+                "freeze_missing_required_path_existence_flag",
+                "freeze_missing_rule_registry_coverage_flag",
+                "implementation_freeze_manifest_hash_mismatch",
+                "missing_release_seed_transcript_ref",
+                "negative_target_outside_floor_not_met:0",
+                "sealed_holdout_manifest_hash_mismatch",
+                "sealed_manifest_freeze_hash_mismatch",
+                "task_0:sealed_task_lean_file_missing",
+                "task_0:sealed_task_missing_manifest_ref"
+              ],
+              "missing_expected": [],
+              "status": "passed"
+            },
+            "freeze_missing_rule_registry": {
+              "errors": [
+                "implementation_freeze_manifest_hash_mismatch",
+                "freeze_missing_rule_registry_coverage_flag",
+                "freeze_missing_required_path_existence_flag",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_extraction.py",
+                "freeze_missing_required_implementation_path:scripts/extract_geometry_full2d_theorem.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_independent_checkers.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_derivation.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_proof_worker.py",
+                "freeze_missing_required_implementation_path:scripts/run_solver_causality_live_v0_6.py",
+                "freeze_missing_required_implementation_path:scripts/run_full2d_matrix_v0_6.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_registry.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_checkers.py",
+                "freeze_missing_required_implementation_path:scripts/check_rule_registry_v0_6.py",
+                "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_schemas.py",
+                "freeze_missing_required_implementation_path:lean/MathAutoResearch/GeometryFull2D/RuleLemmas.lean",
+                "freeze_missing_required_implementation_path:docs/ai/changes/geometry-full2d-v0_6/evidence/rule_registry_full2d_v0_6.json",
+                "freeze_missing_required_generator_path:scripts/create_geometry_full2d_v0_6_release_seed.py",
+                "freeze_missing_required_generator_path:scripts/check_corpus_independence_v0_6.py",
+                "freeze_missing_required_generator_path:scripts/check_statement_diversity_v0_6.py",
+                "freeze_builder_path_missing_or_unexpected"
+              ],
+              "missing_expected": [],
+              "status": "passed"
+            },
+            "generator_forbidden_import": {
+              "errors": [
+                "sealed_generator_forbidden_import:scripts.geometry_full2d_v0_6_compiler"
+              ],
+              "missing_expected": [],
+              "status": "passed"
+            },
+            "generator_forbidden_read": {
+              "errors": [
+                "sealed_generator_forbidden_read_path_literal:scripts/geometry_full2d_v0_6_provider.py"
+              ],
+              "missing_expected": [],
+              "status": "passed"
+            },
+            "manifest_hash_mismatch": {
+              "errors": [
+                "external_source_availability_report_hash_mismatch",
+                "external_report_missing_source_checks",
+                "external_unavailable_not_replaced_by_sealed_holdout",
+                "sealed_replacement_does_not_preserve_positive_floor",
+                "sealed_holdout_manifest_hash_mismatch",
+                "sealed_manifest_freeze_hash_mismatch",
+                "missing_release_seed_transcript_ref",
+                "implementation_freeze_manifest_hash_mismatch",
+                "freeze_missing_rule_registry_coverage_flag",
+                "freeze_missing_required_path_existence_flag",
+                "freeze_manifest_missing_implementation_file_hashes",
+                "freeze_manifest_missing_generator_file_hashes",
+                "freeze_builder_path_missing_or_unexpected"
+              ],
+              "missing_expected": [],
+              "status": "passed"
+            },
+            "projection_counted": {
+              "errors": [
+                "counted_positive_floor_not_met:1",
+                "counted_task_bad_source_type:0:ProjectionBenchmark",
+                "missing_external_source_availability_report_ref",
+                "missing_implementation_freeze_manifest_ref",
+                "missing_sealed_holdout_manifest_ref",
+                "negative_target_outside_floor_not_met:0",
+                "projection_task_counted_positive:projection_bad"
+              ],
+              "missing_expected": [],
+              "status": "passed"
+            },
+            "release_seed_transcript_mismatch": {
+              "errors": [
+                "release_seed_transcript_freeze_hash_mismatch",
+                "release_seed_transcript_not_bound_to_freeze",
+                "release_seed_transcript_command_ref_mismatch"
+              ],
+              "missing_expected": [],
+              "status": "passed"
+            },
+            "sealed_forbidden_metadata": {
+              "errors": [
+                "forbidden_metadata_key:expected_rule_ids",
+                "forbidden_metadata_key:proof_label"
+              ],
+              "missing_expected": [],
+              "status": "passed"
+            },
+            "sealed_freeze_hash_mismatch": {
+              "errors": [
+                "sealed_manifest_freeze_hash_mismatch",
+                "missing_release_seed_transcript_ref"
+              ],
+              "missing_expected": [],
+              "status": "passed"
+            },
+            "sealed_task_manifest_hash_mismatch": {
+              "errors": [
+                "sealed_task_manifest_hash_mismatch"
+              ],
+              "missing_expected": [],
+              "status": "passed"
+            },
+            "source_ref_only_goal_preservation": {
+              "errors": [
+                "external_goal_preservation_not_passed",
+                "external_goal_preservation_not_machine_checkable",
+                "external_goal_preservation_source_ref_only",
+                "external_goal_preservation_bad_ref:source_goal_hash",
+                "external_goal_preservation_bad_ref:imported_goal_hash",
+                "external_goal_preservation_bad_ref:checker_command_transcript_ref"
+              ],
+              "missing_expected": [],
+              "status": "passed"
+            }
+          },
+          "errors": [],
+          "schema_version": "CorpusIndependenceRedCasesV06",
+          "status": "passed"
+        }
+      },
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "derivation_target_matcher_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/derivation_target_matcher.evidence.json",
+    "evidence_ref": "sha256:472f41588a7f5f60f2f6f214a3b73fbe2726b355b0b2459312be0ace014fbb35",
+    "report_summary": {
+      "checker_name": "check_derivation_target_matcher_v0_6.py",
+      "errors": [],
+      "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+      "schema_version": "CheckDerivationTargetMatcherV06Report",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "duration_seconds": 10121.41,
+  "engine_contribution_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/engine_contribution.evidence.json",
+    "evidence_ref": "sha256:f0c63d3a7619f0b71f4a97c64db145ce680a132882d8ad160315ecc64581c61a",
+    "report_summary": {
+      "errors": [],
+      "schema_version": "CheckEngineContributionV06Report",
+      "sections": {
+        "engine_contribution": {
+          "all_enabled_roles_contributed": true,
+          "b2_final_theorem_count": 1200,
+          "disabled_roles": [],
+          "enabled_role_derivation_source": "corpus manifest and benchmark config before provider outcome",
+          "enabled_roles": [
+            "synthetic_trace",
+            "construction",
+            "algebraic_metric_certificate",
+            "order_case",
+            "inequality",
+            "lean_search_certificate",
+            "external_solver_trace"
+          ],
+          "errors": [],
+          "release_critical_engine_roles": [
+            "synthetic_trace",
+            "construction",
+            "algebraic_metric_certificate",
+            "order_case",
+            "inequality",
+            "lean_search_certificate",
+            "external_solver_trace"
+          ],
+          "role_source": "Base Spec DR-012-015 fixed ReleaseCriticalEngineRoleV1 set",
+          "role_subset_counts": {
+            "algebraic_metric_certificate": 1200,
+            "construction": 1200,
+            "external_solver_trace": 1200,
+            "inequality": 1200,
+            "lean_search_certificate": 1200,
+            "order_case": 850,
+            "synthetic_trace": 1200
+          },
+          "role_success_counts": {
+            "algebraic_metric_certificate": 1200,
+            "construction": 1200,
+            "external_solver_trace": 1200,
+            "inequality": 1200,
+            "lean_search_certificate": 1200,
+            "order_case": 850,
+            "synthetic_trace": 1200
+          },
+          "role_success_task_ids_sample": {
+            "algebraic_metric_certificate": [
+              "v06_sealed_holdout_0000",
+              "v06_sealed_holdout_0001",
+              "v06_sealed_holdout_0002",
+              "v06_sealed_holdout_0003",
+              "v06_sealed_holdout_0004",
+              "v06_sealed_holdout_0005",
+              "v06_sealed_holdout_0006",
+              "v06_sealed_holdout_0007",
+              "v06_sealed_holdout_0008",
+              "v06_sealed_holdout_0009"
+            ],
+            "construction": [
+              "v06_sealed_holdout_0000",
+              "v06_sealed_holdout_0001",
+              "v06_sealed_holdout_0002",
+              "v06_sealed_holdout_0003",
+              "v06_sealed_holdout_0004",
+              "v06_sealed_holdout_0005",
+              "v06_sealed_holdout_0006",
+              "v06_sealed_holdout_0007",
+              "v06_sealed_holdout_0008",
+              "v06_sealed_holdout_0009"
+            ],
+            "external_solver_trace": [
+              "v06_sealed_holdout_0000",
+              "v06_sealed_holdout_0001",
+              "v06_sealed_holdout_0002",
+              "v06_sealed_holdout_0003",
+              "v06_sealed_holdout_0004",
+              "v06_sealed_holdout_0005",
+              "v06_sealed_holdout_0006",
+              "v06_sealed_holdout_0007",
+              "v06_sealed_holdout_0008",
+              "v06_sealed_holdout_0009"
+            ],
+            "inequality": [
+              "v06_sealed_holdout_0000",
+              "v06_sealed_holdout_0001",
+              "v06_sealed_holdout_0002",
+              "v06_sealed_holdout_0003",
+              "v06_sealed_holdout_0004",
+              "v06_sealed_holdout_0005",
+              "v06_sealed_holdout_0006",
+              "v06_sealed_holdout_0007",
+              "v06_sealed_holdout_0008",
+              "v06_sealed_holdout_0009"
+            ],
+            "lean_search_certificate": [
+              "v06_sealed_holdout_0000",
+              "v06_sealed_holdout_0001",
+              "v06_sealed_holdout_0002",
+              "v06_sealed_holdout_0003",
+              "v06_sealed_holdout_0004",
+              "v06_sealed_holdout_0005",
+              "v06_sealed_holdout_0006",
+              "v06_sealed_holdout_0007",
+              "v06_sealed_holdout_0008",
+              "v06_sealed_holdout_0009"
+            ],
+            "order_case": [
+              "v06_sealed_holdout_0000",
+              "v06_sealed_holdout_0001",
+              "v06_sealed_holdout_0002",
+              "v06_sealed_holdout_0003",
+              "v06_sealed_holdout_0004",
+              "v06_sealed_holdout_0005",
+              "v06_sealed_holdout_0006",
+              "v06_sealed_holdout_0007",
+              "v06_sealed_holdout_0008",
+              "v06_sealed_holdout_0009"
+            ],
+            "synthetic_trace": [
+              "v06_sealed_holdout_0000",
+              "v06_sealed_holdout_0001",
+              "v06_sealed_holdout_0002",
+              "v06_sealed_holdout_0003",
+              "v06_sealed_holdout_0004",
+              "v06_sealed_holdout_0005",
+              "v06_sealed_holdout_0006",
+              "v06_sealed_holdout_0007",
+              "v06_sealed_holdout_0008",
+              "v06_sealed_holdout_0009"
+            ]
+          },
+          "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+          "schema_version": "EngineContributionV06",
+          "status": "passed"
+        },
+        "red_cases": {
+          "case_results": {
+            "no_success_does_not_satisfy_roles": {
+              "errors": [
+                "enabled_role_without_counted_b2_success:algebraic_metric_certificate",
+                "enabled_role_without_counted_b2_success:construction",
+                "enabled_role_without_counted_b2_success:external_solver_trace",
+                "enabled_role_without_counted_b2_success:inequality",
+                "enabled_role_without_counted_b2_success:lean_search_certificate",
+                "enabled_role_without_counted_b2_success:order_case",
+                "enabled_role_without_counted_b2_success:synthetic_trace",
+                "no_b2_final_theorem_successes_for_engine_contribution"
+              ],
+              "status": "passed"
+            },
+            "posthoc_role_narrowing_rejected": {
+              "errors": [
+                "enabled_role_without_counted_b2_success:algebraic_metric_certificate",
+                "enabled_role_without_counted_b2_success:construction",
+                "enabled_role_without_counted_b2_success:external_solver_trace",
+                "enabled_role_without_counted_b2_success:inequality",
+                "enabled_role_without_counted_b2_success:lean_search_certificate",
+                "enabled_role_without_counted_b2_success:order_case"
+              ],
+              "status": "passed"
+            }
+          },
+          "errors": [],
+          "schema_version": "EngineContributionRedCasesV06",
+          "status": "passed"
+        }
+      },
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "engine_output_not_from_compiler_rules_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/engine_output_not_from_compiler_rules.evidence.json",
+    "evidence_ref": "sha256:3d8ddbbed2c0ac42486521ecc1aa1881e89c74399c5a4df8f1fd951e272a5462",
+    "report_summary": {
+      "checker_name": "check_engine_output_not_from_compiler_rules_v0_6.py",
+      "errors": [],
+      "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+      "schema_version": "CheckEngineOutputNotFromCompilerRulesV06Report",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "evidence_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence",
+  "extraction_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/extraction_corpus.evidence.json",
+    "evidence_ref": "sha256:a90516959f7e4a72b3c718a79907d2f574ba6de007f2d71ba7bfbd9e78766ba0",
+    "report_summary": {
+      "errors": [],
+      "schema_version": "CheckFull2DExtractionCorpusV06AcceptanceReport",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "fresh_run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+  "freshness_summary": {
+    "all_baselines": true,
+    "config_hash": "sha256:0ef303e2d240a840bdd9fe40300ab4f56d9473ca699646963449c7700b6f7994",
+    "effective_config": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/release_matrix_config_v0_6.json",
+    "effective_config_hash": "sha256:1ce13083ec878aab24f39d5f283e21fb6a480005d409299c092ee695c965db84",
+    "evidence_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence",
+    "fail_on_stale": true,
+    "fresh_run": true,
+    "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+    "git_status_hash": "sha256:241d1ef112637555597f73fb25e2ca44fceee3a06eeacb0e03a3fabdd4a44604",
+    "live_mutations": true,
+    "matrix_git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+    "matrix_status": "passed",
+    "no_old_release_dependency": {
+      "evidence_ref": "sha256:9bb1ea2fc5ea8f8e8bfaaedcfda93db022c19dcf94483eecc244cb88c7b74a1f",
+      "status": "passed"
+    },
+    "no_skip": true,
+    "release_corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+    "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae"
+  },
+  "generated_at": "2026-06-21T16:33:49Z",
+  "hard_blockers": [],
+  "live_causality_summary": {
+    "b2_success_count": 1200,
+    "checker": {
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/live_causality_check.evidence.json",
+      "evidence_ref": "sha256:65c7cb8554472fcfadd76962b82075685add484bea03e77dacb4be00bced213c",
+      "report_summary": {
+        "errors": [],
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "schema_version": "CheckSolverCausalityLiveV06Report",
+        "sections": {
+          "red_cases": {
+            "case_results": {
+              "checker_generated_success_artifact": {
+                "missing_expected_errors": [],
+                "status": "passed",
+                "validator_errors": [
+                  "schema_only_or_forbidden_marker:checker_generated_success_artifacts"
+                ]
+              },
+              "field_only_causality": {
+                "missing_expected_errors": [],
+                "status": "passed",
+                "validator_errors": [
+                  "causality_report_not_live_rerun",
+                  "empty:mutation_cases",
+                  "schema_only_or_forbidden_marker:report_only_causality"
+                ]
+              },
+              "missing_command_log": {
+                "check": {
+                  "b2_success_count": 1,
+                  "causality_report_count": 1,
+                  "coverage_fraction": 1.0,
+                  "errors": [
+                    "bad.json:corrupt_construction_or_certificate:command_log_ref_unresolved",
+                    "bad.json:corrupt_non_target_intermediate:command_log_ref_unresolved",
+                    "bad.json:positive_control:command_log_ref_unresolved",
+                    "bad.json:remove_checker_transcript:command_log_ref_unresolved",
+                    "bad.json:remove_selected_artifact:command_log_ref_unresolved",
+                    "bad.json:side_condition_mutation:command_log_ref_unresolved",
+                    "bad.json:unsupported_rule_mutation:command_log_ref_unresolved"
+                  ],
+                  "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+                  "not_applicable_no_b2_successes": false,
+                  "run_dir": "C:\\Users\\bakat\\AppData\\Local\\Temp\\tmpfb189y9n\\bad_run",
+                  "schema_version": "SolverCausalityLiveRunCheckV06",
+                  "status": "failed"
+                },
+                "missing_expected_errors": [],
+                "status": "passed"
+              },
+              "mutation_same_final_theorem": {
+                "missing_expected_errors": [],
+                "status": "passed",
+                "validator_errors": [
+                  "mutation_did_not_break_same_final_theorem:1"
+                ]
+              },
+              "positive_control_not_passed": {
+                "missing_expected_errors": [],
+                "status": "passed",
+                "validator_errors": [
+                  "positive_control_did_not_reproduce_final_theorem",
+                  "positive_control_final_verify_not_passed"
+                ]
+              }
+            },
+            "errors": [],
+            "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+            "rc006_manifest": {
+              "detected_K": [
+                "K-018",
+                "K-019"
+              ],
+              "errors": []
+            },
+            "schema_version": "SolverCausalityLiveRedCasesV06",
+            "status": "passed"
+          },
+          "run_check": {
+            "b2_success_count": 1200,
+            "causality_report_count": 1200,
+            "coverage_fraction": 1.0,
+            "errors": [],
+            "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+            "not_applicable_no_b2_successes": false,
+            "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+            "schema_version": "SolverCausalityLiveRunCheckV06",
+            "status": "passed"
+          }
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed"
+    },
+    "coverage_fraction": null,
+    "mutation_case_count": 8400,
+    "runner": {
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/live_causality_run.evidence.json",
+      "evidence_ref": "sha256:68c8fdc9e1e453caf4c4726185a1eeb9499b7653badd2c2567f08ff3d2da7d12",
+      "report_summary": {
+        "b2_success_count": 1200,
+        "causality_report_count": 1200,
+        "errors": [],
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "mutation_case_count": 8400,
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "schema_version": "RunSolverCausalityLiveV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed"
+    }
+  },
+  "measured_failure_summary": {
+    "by_baseline": {
+      "B1": 1200,
+      "B2": 0,
+      "B5": 1200,
+      "B6": 1200,
+      "B7": 1200,
+      "B8": 1200
+    },
+    "count": 6000
+  },
+  "metrics_summary": {
+    "B2_construction_case_certificate_success_fraction": 1.0,
+    "B2_direct_facade_lemma_fraction": 0.0,
+    "B2_final_theorem_rate": 1.0,
+    "B2_live_destructive_mutation_pass_fraction": 1.0,
+    "B2_non_target_intermediate_success_fraction": 1.0,
+    "B2_solver_causal_success_fraction": 1.0,
+    "errors": [],
+    "evidence_ref": "sha256:9c7605dc26fb325c5d1ed15fc230decaa3eb476e23d05c7aff6b62ebf642dbab",
+    "status": "passed",
+    "threshold_checks": {
+      "B2_construction_case_certificate_success_fraction": true,
+      "B2_direct_facade_lemma_fraction": true,
+      "B2_final_theorem_rate": true,
+      "B2_live_destructive_mutation_pass_fraction": true,
+      "B2_minus_B1_overall_advantage": true,
+      "B2_minus_B5_construction_subset_advantage": true,
+      "B2_minus_B6_algebraic_metric_certificate_subset_advantage": true,
+      "B2_minus_B7_order_case_subset_advantage": true,
+      "B2_non_target_intermediate_success_fraction": true,
+      "B2_solver_causal_success_fraction": true
+    }
+  },
+  "proof_worker_final_verify_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/proof_worker_final_verify.evidence.json",
+    "evidence_ref": "sha256:b14256e5c8efafac130431e21a2096504eb34bfaed04c71acd8c130fc1c85013",
+    "report_summary": {
+      "checker_name": "check_proof_worker_final_verify_v0_6.py",
+      "errors": [],
+      "schema_version": "CheckProofWorkerFinalVerifyV06Report",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "provider_isolation_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/provider_isolation.evidence.json",
+    "evidence_ref": "sha256:a6b7ce238f63b5e9b403c604c6cfa158499a4ff717260123b931fbdda7b7b19d",
+    "report_summary": {
+      "checker_name": "check_provider_isolation_v0_6.py",
+      "errors": [],
+      "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+      "schema_version": "CheckProviderIsolationV06Report",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "red_case_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/red_case_suite.evidence.json",
+    "evidence_ref": "sha256:40c3270314716d876ce1741dd98d461ac7b031a4964ec783a04355a490ba325a",
+    "report_summary": {
+      "checker_name": "check_red_case_suite_v0_6.py",
+      "errors": [],
+      "manifest_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json",
+      "schema_version": "GeometryFull2DRedCaseReportV06",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "release_blockers": [],
+  "release_corpus_summary": {
+    "corpus_generation_git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+    "corpus_manifest_hash": "sha256:86bb297837922ca60e02f613d6450214c68ca1a737e485574020771b30d6a76a",
+    "corpus_manifest_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/fresh_corpus_v0_6/corpus_manifest.json",
+    "effective_config": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/release_matrix_config_v0_6.json",
+    "freeze_git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+    "fresh_corpus_generation": {
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/fresh_corpus_generation.evidence.json",
+      "evidence_ref": "sha256:e6b9c88a11afb3cbbadd8d39157ab0f0c7bfae9bd7fa87b2fc2aacf8ae53ff7c",
+      "report_summary": {
+        "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+        "errors": [],
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "implementation_freeze_manifest_hash": "sha256:1fe46319e73d8cdb00aa09b4385781a98205931c397d1cd995a685c60a1affda",
+        "manifest_hash": "sha256:86bb297837922ca60e02f613d6450214c68ca1a737e485574020771b30d6a76a",
+        "manifest_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/fresh_corpus_v0_6/corpus_manifest.json",
+        "negative_count": 220,
+        "positive_count": 1200,
+        "release_seed": "v0_6_release_acceptance_pre_run_seed_fe0c9ce94416f495b8fec88a022810ac6f8dd2ac4a434e18",
+        "schema_version": "GenerateGeometryFull2DCorpusV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed"
+    },
+    "fresh_corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+    "fresh_freeze_seed_corpus_head_consistent": true,
+    "implementation_freeze_manifest": {
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/implementation_freeze_manifest.evidence.json",
+      "evidence_ref": "sha256:45cc5c25196f62a0f544c41d1f0022bd7425ed3fe91508b077e55085bdbf410f",
+      "report_summary": {
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "manifest_hash": "sha256:1fe46319e73d8cdb00aa09b4385781a98205931c397d1cd995a685c60a1affda",
+        "schema_version": "BuildGeometryFull2DImplementationFreezeManifestV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed"
+    },
+    "implementation_freeze_manifest_hash": "sha256:1fe46319e73d8cdb00aa09b4385781a98205931c397d1cd995a685c60a1affda",
+    "release_report_git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+    "release_seed": "v0_6_release_acceptance_pre_run_seed_fe0c9ce94416f495b8fec88a022810ac6f8dd2ac4a434e18",
+    "release_seed_transcript": {
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/release_seed_transcript.evidence.json",
+      "evidence_ref": "sha256:50d07c7300a237a9a1c38df260e3306b88d55a4701295de2cc4a7542d7072eca",
+      "report_summary": {
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "implementation_freeze_manifest_hash": "sha256:1fe46319e73d8cdb00aa09b4385781a98205931c397d1cd995a685c60a1affda",
+        "schema_version": "CreateGeometryFull2DReleaseSeedTranscriptV06Report",
+        "seed": "v0_6_release_acceptance_pre_run_seed_fe0c9ce94416f495b8fec88a022810ac6f8dd2ac4a434e18",
+        "seed_transcript_hash": "sha256:65a493dae8e4f6f485f87bff6b75128c8531133ef6021d6e207befab1f729547",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "status": "passed"
+    },
+    "release_seed_transcript_hash": "sha256:65a493dae8e4f6f485f87bff6b75128c8531133ef6021d6e207befab1f729547",
+    "seed_git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92"
+  },
+  "release_report_core_ref": "sha256:4aba5702113b08d7d0a715718892a2a7a04f2fd7aa7fc50696921a15e0b50dd9",
+  "required_results": {
+    "acceptance_coverage": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_acceptance_coverage_v0_6.py",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\acceptance_coverage.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/acceptance_coverage.evidence.json",
+      "evidence_ref": "sha256:9e21b0ad8de088f05405cad774407a49ae67bd241ba2ec713cda70899c018b36",
+      "name": "acceptance_coverage",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/acceptance_coverage.report.json",
+      "report_summary": {
+        "errors": [],
+        "schema_version": "GeometryFull2DAcceptanceCoverageReportV06",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "active_guardian_spec": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_active_guardian_spec_v0_6.py"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/active_guardian_spec.evidence.json",
+      "evidence_ref": "sha256:9a863bdf4b1403fe7918b79c398e49c5ceb66bfc4c653f631c5820b0487d68a7",
+      "name": "active_guardian_spec",
+      "output_path": null,
+      "report_summary": {
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "all_baseline_matrix": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_all_baseline_matrix_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "--red-cases"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/all_baseline_matrix.evidence.json",
+      "evidence_ref": "sha256:a22486b053d0d78ad4bae61b67f3175ceb90262c025ef2e81264e0882946c1fa",
+      "name": "all_baseline_matrix",
+      "output_path": null,
+      "report_summary": {
+        "errors": [],
+        "schema_version": "CheckAllBaselineMatrixV06Report",
+        "sections": {
+          "matrix_check": {
+            "by_baseline": {
+              "B1": 1200,
+              "B2": 1200,
+              "B5": 1200,
+              "B6": 1200,
+              "B7": 1200,
+              "B8": 1200
+            },
+            "counted_task_count": 1200,
+            "errors": [],
+            "record_count": 7200,
+            "required_baselines": [
+              "B1",
+              "B2",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ],
+            "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+            "schema_version": "AllBaselineMatrixV06",
+            "status": "passed"
+          },
+          "red_cases": {
+            "case_results": {
+              "b2_only_matrix": {
+                "errors": [
+                  "baseline_record_count_mismatch:B1:0!=1",
+                  "baseline_record_count_mismatch:B5:0!=1",
+                  "baseline_record_count_mismatch:B6:0!=1",
+                  "baseline_record_count_mismatch:B7:0!=1",
+                  "baseline_record_count_mismatch:B8:0!=1",
+                  "record_count_mismatch:1!=6",
+                  "task:missing_baselines:B1,B5,B6,B7,B8",
+                  "task__B2.json:b2_missing_actual_solver_artifact_refs",
+                  "task__B2.json:b2_missing_final_verify_report_payload",
+                  "task__B2.json:missing:claim_spec_ref",
+                  "task__B2.json:missing:compiler_result_refs",
+                  "task__B2.json:missing:derivation_target_match_ref",
+                  "task__B2.json:missing:engine_output_refs",
+                  "task__B2.json:missing:extraction_report_ref",
+                  "task__B2.json:missing:final_verify_report_ref",
+                  "task__B2.json:missing:independent_solver_artifact_check_refs",
+                  "task__B2.json:missing:lean_patch_candidate_ref",
+                  "task__B2.json:missing:proof_worker_result_ref",
+                  "task__B2.json:missing:provider_run_manifest_ref",
+                  "task__B2.json:missing:selected_solver_derivation_ref",
+                  "task__B2.json:missing:source_theorem_ref"
+                ],
+                "status": "passed"
+              },
+              "label_coded_failure": {
+                "errors": [
+                  "task__B1.json:disabled_baseline_missing_disabled_stage_report",
+                  "task__B1.json:family_or_label_coded_outcome",
+                  "task__B1.json:missing:claim_spec_ref",
+                  "task__B1.json:missing:compiler_result_refs",
+                  "task__B1.json:missing:derivation_target_match_ref",
+                  "task__B1.json:missing:engine_output_refs",
+                  "task__B1.json:missing:extraction_report_ref",
+                  "task__B1.json:missing:final_verify_report_ref",
+                  "task__B1.json:missing:independent_solver_artifact_check_refs",
+                  "task__B1.json:missing:lean_patch_candidate_ref",
+                  "task__B1.json:missing:proof_worker_result_ref",
+                  "task__B1.json:missing:provider_run_manifest_ref",
+                  "task__B1.json:missing:selected_solver_derivation_ref",
+                  "task__B1.json:missing:source_theorem_ref",
+                  "task__B2.json:b2_missing_actual_solver_artifact_refs",
+                  "task__B2.json:b2_missing_final_verify_report_payload",
+                  "task__B2.json:family_or_label_coded_outcome",
+                  "task__B2.json:missing:claim_spec_ref",
+                  "task__B2.json:missing:compiler_result_refs",
+                  "task__B2.json:missing:derivation_target_match_ref",
+                  "task__B2.json:missing:engine_output_refs",
+                  "task__B2.json:missing:extraction_report_ref",
+                  "task__B2.json:missing:final_verify_report_ref",
+                  "task__B2.json:missing:independent_solver_artifact_check_refs",
+                  "task__B2.json:missing:lean_patch_candidate_ref",
+                  "task__B2.json:missing:proof_worker_result_ref",
+                  "task__B2.json:missing:provider_run_manifest_ref",
+                  "task__B2.json:missing:selected_solver_derivation_ref",
+                  "task__B2.json:missing:source_theorem_ref",
+                  "task__B5.json:disabled_baseline_missing_disabled_stage_report",
+                  "task__B5.json:family_or_label_coded_outcome",
+                  "task__B5.json:missing:claim_spec_ref",
+                  "task__B5.json:missing:compiler_result_refs",
+                  "task__B5.json:missing:derivation_target_match_ref",
+                  "task__B5.json:missing:engine_output_refs",
+                  "task__B5.json:missing:extraction_report_ref",
+                  "task__B5.json:missing:final_verify_report_ref",
+                  "task__B5.json:missing:independent_solver_artifact_check_refs",
+                  "task__B5.json:missing:lean_patch_candidate_ref",
+                  "task__B5.json:missing:proof_worker_result_ref",
+                  "task__B5.json:missing:provider_run_manifest_ref",
+                  "task__B5.json:missing:selected_solver_derivation_ref",
+                  "task__B5.json:missing:source_theorem_ref",
+                  "task__B6.json:disabled_baseline_missing_disabled_stage_report",
+                  "task__B6.json:family_or_label_coded_outcome",
+                  "task__B6.json:missing:claim_spec_ref",
+                  "task__B6.json:missing:compiler_result_refs",
+                  "task__B6.json:missing:derivation_target_match_ref",
+                  "task__B6.json:missing:engine_output_refs",
+                  "task__B6.json:missing:extraction_report_ref",
+                  "task__B6.json:missing:final_verify_report_ref",
+                  "task__B6.json:missing:independent_solver_artifact_check_refs",
+                  "task__B6.json:missing:lean_patch_candidate_ref",
+                  "task__B6.json:missing:proof_worker_result_ref",
+                  "task__B6.json:missing:provider_run_manifest_ref",
+                  "task__B6.json:missing:selected_solver_derivation_ref",
+                  "task__B6.json:missing:source_theorem_ref",
+                  "task__B7.json:disabled_baseline_missing_disabled_stage_report",
+                  "task__B7.json:family_or_label_coded_outcome",
+                  "task__B7.json:missing:claim_spec_ref",
+                  "task__B7.json:missing:compiler_result_refs",
+                  "task__B7.json:missing:derivation_target_match_ref",
+                  "task__B7.json:missing:engine_output_refs",
+                  "task__B7.json:missing:extraction_report_ref",
+                  "task__B7.json:missing:final_verify_report_ref",
+                  "task__B7.json:missing:independent_solver_artifact_check_refs",
+                  "task__B7.json:missing:lean_patch_candidate_ref",
+                  "task__B7.json:missing:proof_worker_result_ref",
+                  "task__B7.json:missing:provider_run_manifest_ref",
+                  "task__B7.json:missing:selected_solver_derivation_ref",
+                  "task__B7.json:missing:source_theorem_ref",
+                  "task__B8.json:disabled_baseline_missing_disabled_stage_report",
+                  "task__B8.json:family_or_label_coded_outcome",
+                  "task__B8.json:missing:claim_spec_ref",
+                  "task__B8.json:missing:compiler_result_refs",
+                  "task__B8.json:missing:derivation_target_match_ref",
+                  "task__B8.json:missing:engine_output_refs",
+                  "task__B8.json:missing:extraction_report_ref",
+                  "task__B8.json:missing:final_verify_report_ref",
+                  "task__B8.json:missing:independent_solver_artifact_check_refs",
+                  "task__B8.json:missing:lean_patch_candidate_ref",
+                  "task__B8.json:missing:proof_worker_result_ref",
+                  "task__B8.json:missing:provider_run_manifest_ref",
+                  "task__B8.json:missing:selected_solver_derivation_ref",
+                  "task__B8.json:missing:source_theorem_ref"
+                ],
+                "status": "passed"
+              }
+            },
+            "errors": [],
+            "schema_version": "AllBaselineMatrixRedCasesV06",
+            "status": "passed"
+          }
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "claimspec": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_claimspec_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "--self-test",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\claimspec.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/claimspec.evidence.json",
+      "evidence_ref": "sha256:c986e0dd9f6cc750f79c1df3f331b1e12d132687f61f4ede74bde5370a222d01",
+      "name": "claimspec",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/claimspec.report.json",
+      "report_summary": {
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "schema_version": "CheckFull2DClaimSpecV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "closure_claim_ceiling": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_closure_claim_ceiling_v0_6.py",
+        "--release-report",
+        "C:\\Users\\bakat\\work\\AI_math_research\\docs\\ai\\changes\\geometry-full2d-v0_6\\evidence\\release_acceptance_report.json",
+        "--closure",
+        "C:\\Users\\bakat\\work\\AI_math_research\\docs\\ai\\changes\\geometry-full2d-v0_6\\CLOSURE.md",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\closure_claim_ceiling.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/closure_claim_ceiling.evidence.json",
+      "evidence_ref": "sha256:b86e6cbd3924a66692945d409bd5b7bfa7d015f70734f8546b913d2c66a4bf8a",
+      "name": "closure_claim_ceiling",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/closure_claim_ceiling.report.json",
+      "report_summary": {
+        "checker_name": "check_closure_claim_ceiling_v0_6.py",
+        "errors": [],
+        "schema_version": "ClosureClaimCeilingCheckV06",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "compiler_input_lock": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_compiler_input_lock_v0_6.py",
+        "--self-test",
+        "--red-cases",
+        "--dynamic-taint",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\compiler_input_lock.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/compiler_input_lock.evidence.json",
+      "evidence_ref": "sha256:014b34f8ad006af372e380395f747f4294fec30084a2fef1251d0e20fd0ec3ca",
+      "name": "compiler_input_lock",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/compiler_input_lock.report.json",
+      "report_summary": {
+        "checker_name": "check_compiler_input_lock_v0_6.py",
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "schema_version": "CheckCompilerInputLockV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "corpus_independence": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_corpus_independence_v0_6.py",
+        "--corpus-root",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+        "--red-cases",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\corpus_independence.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/corpus_independence.evidence.json",
+      "evidence_ref": "sha256:d898e59bb0d603966c18cb996918e51b94bc7db7a34af08be33fe3b71e03b6df",
+      "name": "corpus_independence",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/corpus_independence.report.json",
+      "report_summary": {
+        "errors": [],
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "schema_version": "CheckCorpusIndependenceV06Report",
+        "sections": {
+          "corpus_check": {
+            "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+            "counted_positive_count": 1200,
+            "errors": [],
+            "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+            "negative_target_outside_malformed_count": 220,
+            "schema_version": "CorpusIndependenceCheckV06",
+            "source_type_counts": {
+              "SealedAdversarialHoldout": 1200
+            },
+            "status": "passed"
+          },
+          "red_cases": {
+            "case_results": {
+              "available_source_without_external_tasks": {
+                "errors": [
+                  "counted_positive_floor_not_met:1",
+                  "external_source_availability_report_hash_mismatch",
+                  "external_sources_available_but_no_external_goal_preserved_tasks",
+                  "freeze_builder_path_missing_or_unexpected",
+                  "freeze_manifest_missing_generator_file_hashes",
+                  "freeze_missing_required_implementation_path:docs/ai/changes/geometry-full2d-v0_6/evidence/rule_registry_full2d_v0_6.json",
+                  "freeze_missing_required_implementation_path:lean/MathAutoResearch/GeometryFull2D/RuleLemmas.lean",
+                  "freeze_missing_required_implementation_path:scripts/check_rule_registry_v0_6.py",
+                  "freeze_missing_required_implementation_path:scripts/extract_geometry_full2d_theorem.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_compiler.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_derivation.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_extraction.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_independent_checkers.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_proof_worker.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_provider.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_checkers.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_registry.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_schemas.py",
+                  "freeze_missing_required_implementation_path:scripts/run_full2d_matrix_v0_6.py",
+                  "freeze_missing_required_implementation_path:scripts/run_solver_causality_live_v0_6.py",
+                  "freeze_missing_required_path_existence_flag",
+                  "freeze_missing_rule_registry_coverage_flag",
+                  "implementation_freeze_manifest_hash_mismatch",
+                  "missing_release_seed_transcript_ref",
+                  "negative_target_outside_floor_not_met:0",
+                  "sealed_holdout_manifest_hash_mismatch",
+                  "sealed_manifest_freeze_hash_mismatch",
+                  "task_0:sealed_task_lean_file_missing",
+                  "task_0:sealed_task_missing_manifest_ref"
+                ],
+                "missing_expected": [],
+                "status": "passed"
+              },
+              "freeze_missing_rule_registry": {
+                "errors": [
+                  "implementation_freeze_manifest_hash_mismatch",
+                  "freeze_missing_rule_registry_coverage_flag",
+                  "freeze_missing_required_path_existence_flag",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_extraction.py",
+                  "freeze_missing_required_implementation_path:scripts/extract_geometry_full2d_theorem.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_independent_checkers.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_derivation.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_proof_worker.py",
+                  "freeze_missing_required_implementation_path:scripts/run_solver_causality_live_v0_6.py",
+                  "freeze_missing_required_implementation_path:scripts/run_full2d_matrix_v0_6.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_registry.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_rule_checkers.py",
+                  "freeze_missing_required_implementation_path:scripts/check_rule_registry_v0_6.py",
+                  "freeze_missing_required_implementation_path:scripts/geometry_full2d_v0_6_schemas.py",
+                  "freeze_missing_required_implementation_path:lean/MathAutoResearch/GeometryFull2D/RuleLemmas.lean",
+                  "freeze_missing_required_implementation_path:docs/ai/changes/geometry-full2d-v0_6/evidence/rule_registry_full2d_v0_6.json",
+                  "freeze_missing_required_generator_path:scripts/create_geometry_full2d_v0_6_release_seed.py",
+                  "freeze_missing_required_generator_path:scripts/check_corpus_independence_v0_6.py",
+                  "freeze_missing_required_generator_path:scripts/check_statement_diversity_v0_6.py",
+                  "freeze_builder_path_missing_or_unexpected"
+                ],
+                "missing_expected": [],
+                "status": "passed"
+              },
+              "generator_forbidden_import": {
+                "errors": [
+                  "sealed_generator_forbidden_import:scripts.geometry_full2d_v0_6_compiler"
+                ],
+                "missing_expected": [],
+                "status": "passed"
+              },
+              "generator_forbidden_read": {
+                "errors": [
+                  "sealed_generator_forbidden_read_path_literal:scripts/geometry_full2d_v0_6_provider.py"
+                ],
+                "missing_expected": [],
+                "status": "passed"
+              },
+              "manifest_hash_mismatch": {
+                "errors": [
+                  "external_source_availability_report_hash_mismatch",
+                  "external_report_missing_source_checks",
+                  "external_unavailable_not_replaced_by_sealed_holdout",
+                  "sealed_replacement_does_not_preserve_positive_floor",
+                  "sealed_holdout_manifest_hash_mismatch",
+                  "sealed_manifest_freeze_hash_mismatch",
+                  "missing_release_seed_transcript_ref",
+                  "implementation_freeze_manifest_hash_mismatch",
+                  "freeze_missing_rule_registry_coverage_flag",
+                  "freeze_missing_required_path_existence_flag",
+                  "freeze_manifest_missing_implementation_file_hashes",
+                  "freeze_manifest_missing_generator_file_hashes",
+                  "freeze_builder_path_missing_or_unexpected"
+                ],
+                "missing_expected": [],
+                "status": "passed"
+              },
+              "projection_counted": {
+                "errors": [
+                  "counted_positive_floor_not_met:1",
+                  "counted_task_bad_source_type:0:ProjectionBenchmark",
+                  "missing_external_source_availability_report_ref",
+                  "missing_implementation_freeze_manifest_ref",
+                  "missing_sealed_holdout_manifest_ref",
+                  "negative_target_outside_floor_not_met:0",
+                  "projection_task_counted_positive:projection_bad"
+                ],
+                "missing_expected": [],
+                "status": "passed"
+              },
+              "release_seed_transcript_mismatch": {
+                "errors": [
+                  "release_seed_transcript_freeze_hash_mismatch",
+                  "release_seed_transcript_not_bound_to_freeze",
+                  "release_seed_transcript_command_ref_mismatch"
+                ],
+                "missing_expected": [],
+                "status": "passed"
+              },
+              "sealed_forbidden_metadata": {
+                "errors": [
+                  "forbidden_metadata_key:expected_rule_ids",
+                  "forbidden_metadata_key:proof_label"
+                ],
+                "missing_expected": [],
+                "status": "passed"
+              },
+              "sealed_freeze_hash_mismatch": {
+                "errors": [
+                  "sealed_manifest_freeze_hash_mismatch",
+                  "missing_release_seed_transcript_ref"
+                ],
+                "missing_expected": [],
+                "status": "passed"
+              },
+              "sealed_task_manifest_hash_mismatch": {
+                "errors": [
+                  "sealed_task_manifest_hash_mismatch"
+                ],
+                "missing_expected": [],
+                "status": "passed"
+              },
+              "source_ref_only_goal_preservation": {
+                "errors": [
+                  "external_goal_preservation_not_passed",
+                  "external_goal_preservation_not_machine_checkable",
+                  "external_goal_preservation_source_ref_only",
+                  "external_goal_preservation_bad_ref:source_goal_hash",
+                  "external_goal_preservation_bad_ref:imported_goal_hash",
+                  "external_goal_preservation_bad_ref:checker_command_transcript_ref"
+                ],
+                "missing_expected": [],
+                "status": "passed"
+              }
+            },
+            "errors": [],
+            "schema_version": "CorpusIndependenceRedCasesV06",
+            "status": "passed"
+          }
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "derivation_target_matcher": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_derivation_target_matcher_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "--red-cases",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\derivation_target_matcher.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/derivation_target_matcher.evidence.json",
+      "evidence_ref": "sha256:472f41588a7f5f60f2f6f214a3b73fbe2726b355b0b2459312be0ace014fbb35",
+      "name": "derivation_target_matcher",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/derivation_target_matcher.report.json",
+      "report_summary": {
+        "checker_name": "check_derivation_target_matcher_v0_6.py",
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "schema_version": "CheckDerivationTargetMatcherV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "engine_contribution": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_engine_contribution_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "--red-cases"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/engine_contribution.evidence.json",
+      "evidence_ref": "sha256:f0c63d3a7619f0b71f4a97c64db145ce680a132882d8ad160315ecc64581c61a",
+      "name": "engine_contribution",
+      "output_path": null,
+      "report_summary": {
+        "errors": [],
+        "schema_version": "CheckEngineContributionV06Report",
+        "sections": {
+          "engine_contribution": {
+            "all_enabled_roles_contributed": true,
+            "b2_final_theorem_count": 1200,
+            "disabled_roles": [],
+            "enabled_role_derivation_source": "corpus manifest and benchmark config before provider outcome",
+            "enabled_roles": [
+              "synthetic_trace",
+              "construction",
+              "algebraic_metric_certificate",
+              "order_case",
+              "inequality",
+              "lean_search_certificate",
+              "external_solver_trace"
+            ],
+            "errors": [],
+            "release_critical_engine_roles": [
+              "synthetic_trace",
+              "construction",
+              "algebraic_metric_certificate",
+              "order_case",
+              "inequality",
+              "lean_search_certificate",
+              "external_solver_trace"
+            ],
+            "role_source": "Base Spec DR-012-015 fixed ReleaseCriticalEngineRoleV1 set",
+            "role_subset_counts": {
+              "algebraic_metric_certificate": 1200,
+              "construction": 1200,
+              "external_solver_trace": 1200,
+              "inequality": 1200,
+              "lean_search_certificate": 1200,
+              "order_case": 850,
+              "synthetic_trace": 1200
+            },
+            "role_success_counts": {
+              "algebraic_metric_certificate": 1200,
+              "construction": 1200,
+              "external_solver_trace": 1200,
+              "inequality": 1200,
+              "lean_search_certificate": 1200,
+              "order_case": 850,
+              "synthetic_trace": 1200
+            },
+            "role_success_task_ids_sample": {
+              "algebraic_metric_certificate": [
+                "v06_sealed_holdout_0000",
+                "v06_sealed_holdout_0001",
+                "v06_sealed_holdout_0002",
+                "v06_sealed_holdout_0003",
+                "v06_sealed_holdout_0004",
+                "v06_sealed_holdout_0005",
+                "v06_sealed_holdout_0006",
+                "v06_sealed_holdout_0007",
+                "v06_sealed_holdout_0008",
+                "v06_sealed_holdout_0009"
+              ],
+              "construction": [
+                "v06_sealed_holdout_0000",
+                "v06_sealed_holdout_0001",
+                "v06_sealed_holdout_0002",
+                "v06_sealed_holdout_0003",
+                "v06_sealed_holdout_0004",
+                "v06_sealed_holdout_0005",
+                "v06_sealed_holdout_0006",
+                "v06_sealed_holdout_0007",
+                "v06_sealed_holdout_0008",
+                "v06_sealed_holdout_0009"
+              ],
+              "external_solver_trace": [
+                "v06_sealed_holdout_0000",
+                "v06_sealed_holdout_0001",
+                "v06_sealed_holdout_0002",
+                "v06_sealed_holdout_0003",
+                "v06_sealed_holdout_0004",
+                "v06_sealed_holdout_0005",
+                "v06_sealed_holdout_0006",
+                "v06_sealed_holdout_0007",
+                "v06_sealed_holdout_0008",
+                "v06_sealed_holdout_0009"
+              ],
+              "inequality": [
+                "v06_sealed_holdout_0000",
+                "v06_sealed_holdout_0001",
+                "v06_sealed_holdout_0002",
+                "v06_sealed_holdout_0003",
+                "v06_sealed_holdout_0004",
+                "v06_sealed_holdout_0005",
+                "v06_sealed_holdout_0006",
+                "v06_sealed_holdout_0007",
+                "v06_sealed_holdout_0008",
+                "v06_sealed_holdout_0009"
+              ],
+              "lean_search_certificate": [
+                "v06_sealed_holdout_0000",
+                "v06_sealed_holdout_0001",
+                "v06_sealed_holdout_0002",
+                "v06_sealed_holdout_0003",
+                "v06_sealed_holdout_0004",
+                "v06_sealed_holdout_0005",
+                "v06_sealed_holdout_0006",
+                "v06_sealed_holdout_0007",
+                "v06_sealed_holdout_0008",
+                "v06_sealed_holdout_0009"
+              ],
+              "order_case": [
+                "v06_sealed_holdout_0000",
+                "v06_sealed_holdout_0001",
+                "v06_sealed_holdout_0002",
+                "v06_sealed_holdout_0003",
+                "v06_sealed_holdout_0004",
+                "v06_sealed_holdout_0005",
+                "v06_sealed_holdout_0006",
+                "v06_sealed_holdout_0007",
+                "v06_sealed_holdout_0008",
+                "v06_sealed_holdout_0009"
+              ],
+              "synthetic_trace": [
+                "v06_sealed_holdout_0000",
+                "v06_sealed_holdout_0001",
+                "v06_sealed_holdout_0002",
+                "v06_sealed_holdout_0003",
+                "v06_sealed_holdout_0004",
+                "v06_sealed_holdout_0005",
+                "v06_sealed_holdout_0006",
+                "v06_sealed_holdout_0007",
+                "v06_sealed_holdout_0008",
+                "v06_sealed_holdout_0009"
+              ]
+            },
+            "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+            "schema_version": "EngineContributionV06",
+            "status": "passed"
+          },
+          "red_cases": {
+            "case_results": {
+              "no_success_does_not_satisfy_roles": {
+                "errors": [
+                  "enabled_role_without_counted_b2_success:algebraic_metric_certificate",
+                  "enabled_role_without_counted_b2_success:construction",
+                  "enabled_role_without_counted_b2_success:external_solver_trace",
+                  "enabled_role_without_counted_b2_success:inequality",
+                  "enabled_role_without_counted_b2_success:lean_search_certificate",
+                  "enabled_role_without_counted_b2_success:order_case",
+                  "enabled_role_without_counted_b2_success:synthetic_trace",
+                  "no_b2_final_theorem_successes_for_engine_contribution"
+                ],
+                "status": "passed"
+              },
+              "posthoc_role_narrowing_rejected": {
+                "errors": [
+                  "enabled_role_without_counted_b2_success:algebraic_metric_certificate",
+                  "enabled_role_without_counted_b2_success:construction",
+                  "enabled_role_without_counted_b2_success:external_solver_trace",
+                  "enabled_role_without_counted_b2_success:inequality",
+                  "enabled_role_without_counted_b2_success:lean_search_certificate",
+                  "enabled_role_without_counted_b2_success:order_case"
+                ],
+                "status": "passed"
+              }
+            },
+            "errors": [],
+            "schema_version": "EngineContributionRedCasesV06",
+            "status": "passed"
+          }
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "engine_output_not_from_compiler_rules": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_engine_output_not_from_compiler_rules_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "--red-cases",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\engine_output_not_from_compiler_rules.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/engine_output_not_from_compiler_rules.evidence.json",
+      "evidence_ref": "sha256:3d8ddbbed2c0ac42486521ecc1aa1881e89c74399c5a4df8f1fd951e272a5462",
+      "name": "engine_output_not_from_compiler_rules",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/engine_output_not_from_compiler_rules.report.json",
+      "report_summary": {
+        "checker_name": "check_engine_output_not_from_compiler_rules_v0_6.py",
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "schema_version": "CheckEngineOutputNotFromCompilerRulesV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "extraction_corpus": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_extraction_corpus_v0_6.py",
+        "--corpus-root",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\extraction_corpus.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/extraction_corpus.evidence.json",
+      "evidence_ref": "sha256:a90516959f7e4a72b3c718a79907d2f574ba6de007f2d71ba7bfbd9e78766ba0",
+      "name": "extraction_corpus",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/extraction_corpus.report.json",
+      "report_summary": {
+        "errors": [],
+        "schema_version": "CheckFull2DExtractionCorpusV06AcceptanceReport",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "fresh_corpus_generation": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/generate_geometry_full2d_v0_6_corpus.py",
+        "--corpus-root",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+        "--release-seed",
+        "v0_6_release_acceptance_pre_run_seed_fe0c9ce94416f495b8fec88a022810ac6f8dd2ac4a434e18",
+        "--implementation-freeze-manifest",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6\\metadata\\implementation_freeze_manifest_v0_6.json",
+        "--implementation-freeze-manifest-hash",
+        "sha256:1fe46319e73d8cdb00aa09b4385781a98205931c397d1cd995a685c60a1affda",
+        "--release-seed-transcript",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6\\metadata\\release_seed_transcript_v0_6.json",
+        "--release-seed-transcript-hash",
+        "sha256:65a493dae8e4f6f485f87bff6b75128c8531133ef6021d6e207befab1f729547",
+        "--positive-count",
+        "1200",
+        "--negative-count",
+        "220"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/fresh_corpus_generation.evidence.json",
+      "evidence_ref": "sha256:e6b9c88a11afb3cbbadd8d39157ab0f0c7bfae9bd7fa87b2fc2aacf8ae53ff7c",
+      "name": "fresh_corpus_generation",
+      "output_path": null,
+      "report_summary": {
+        "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+        "errors": [],
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "implementation_freeze_manifest_hash": "sha256:1fe46319e73d8cdb00aa09b4385781a98205931c397d1cd995a685c60a1affda",
+        "manifest_hash": "sha256:86bb297837922ca60e02f613d6450214c68ca1a737e485574020771b30d6a76a",
+        "manifest_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/fresh_corpus_v0_6/corpus_manifest.json",
+        "negative_count": 220,
+        "positive_count": 1200,
+        "release_seed": "v0_6_release_acceptance_pre_run_seed_fe0c9ce94416f495b8fec88a022810ac6f8dd2ac4a434e18",
+        "schema_version": "GenerateGeometryFull2DCorpusV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "implementation_freeze_manifest": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/build_geometry_full2d_v0_6_freeze_manifest.py",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6\\metadata\\implementation_freeze_manifest_v0_6.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/implementation_freeze_manifest.evidence.json",
+      "evidence_ref": "sha256:45cc5c25196f62a0f544c41d1f0022bd7425ed3fe91508b077e55085bdbf410f",
+      "name": "implementation_freeze_manifest",
+      "output_path": null,
+      "report_summary": {
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "manifest_hash": "sha256:1fe46319e73d8cdb00aa09b4385781a98205931c397d1cd995a685c60a1affda",
+        "schema_version": "BuildGeometryFull2DImplementationFreezeManifestV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "independent_solver_artifacts": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_independent_solver_artifacts_v0_6.py",
+        "--all",
+        "--red-cases",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\independent_solver_artifacts.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/independent_solver_artifacts.evidence.json",
+      "evidence_ref": "sha256:1a74f511124e8daf8e25d828dc4918e6eac3d1a800070f3db22156e8c926a4bd",
+      "name": "independent_solver_artifacts",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/independent_solver_artifacts.report.json",
+      "report_summary": {
+        "checker_name": "check_independent_solver_artifacts_v0_6.py",
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "schema_version": "CheckIndependentSolverArtifactsV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "live_causality_check": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_solver_causality_live_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "--red-cases",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\live_causality_check.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/live_causality_check.evidence.json",
+      "evidence_ref": "sha256:65c7cb8554472fcfadd76962b82075685add484bea03e77dacb4be00bced213c",
+      "name": "live_causality_check",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/live_causality_check.report.json",
+      "report_summary": {
+        "errors": [],
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "schema_version": "CheckSolverCausalityLiveV06Report",
+        "sections": {
+          "red_cases": {
+            "case_results": {
+              "checker_generated_success_artifact": {
+                "missing_expected_errors": [],
+                "status": "passed",
+                "validator_errors": [
+                  "schema_only_or_forbidden_marker:checker_generated_success_artifacts"
+                ]
+              },
+              "field_only_causality": {
+                "missing_expected_errors": [],
+                "status": "passed",
+                "validator_errors": [
+                  "causality_report_not_live_rerun",
+                  "empty:mutation_cases",
+                  "schema_only_or_forbidden_marker:report_only_causality"
+                ]
+              },
+              "missing_command_log": {
+                "check": {
+                  "b2_success_count": 1,
+                  "causality_report_count": 1,
+                  "coverage_fraction": 1.0,
+                  "errors": [
+                    "bad.json:corrupt_construction_or_certificate:command_log_ref_unresolved",
+                    "bad.json:corrupt_non_target_intermediate:command_log_ref_unresolved",
+                    "bad.json:positive_control:command_log_ref_unresolved",
+                    "bad.json:remove_checker_transcript:command_log_ref_unresolved",
+                    "bad.json:remove_selected_artifact:command_log_ref_unresolved",
+                    "bad.json:side_condition_mutation:command_log_ref_unresolved",
+                    "bad.json:unsupported_rule_mutation:command_log_ref_unresolved"
+                  ],
+                  "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+                  "not_applicable_no_b2_successes": false,
+                  "run_dir": "C:\\Users\\bakat\\AppData\\Local\\Temp\\tmpfb189y9n\\bad_run",
+                  "schema_version": "SolverCausalityLiveRunCheckV06",
+                  "status": "failed"
+                },
+                "missing_expected_errors": [],
+                "status": "passed"
+              },
+              "mutation_same_final_theorem": {
+                "missing_expected_errors": [],
+                "status": "passed",
+                "validator_errors": [
+                  "mutation_did_not_break_same_final_theorem:1"
+                ]
+              },
+              "positive_control_not_passed": {
+                "missing_expected_errors": [],
+                "status": "passed",
+                "validator_errors": [
+                  "positive_control_did_not_reproduce_final_theorem",
+                  "positive_control_final_verify_not_passed"
+                ]
+              }
+            },
+            "errors": [],
+            "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+            "rc006_manifest": {
+              "detected_K": [
+                "K-018",
+                "K-019"
+              ],
+              "errors": []
+            },
+            "schema_version": "SolverCausalityLiveRedCasesV06",
+            "status": "passed"
+          },
+          "run_check": {
+            "b2_success_count": 1200,
+            "causality_report_count": 1200,
+            "coverage_fraction": 1.0,
+            "errors": [],
+            "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+            "not_applicable_no_b2_successes": false,
+            "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+            "schema_version": "SolverCausalityLiveRunCheckV06",
+            "status": "passed"
+          }
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "live_causality_run": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/run_solver_causality_live_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "--all-b2-successes",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\live_causality_run.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/live_causality_run.evidence.json",
+      "evidence_ref": "sha256:68c8fdc9e1e453caf4c4726185a1eeb9499b7653badd2c2567f08ff3d2da7d12",
+      "name": "live_causality_run",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/live_causality_run.report.json",
+      "report_summary": {
+        "b2_success_count": 1200,
+        "causality_report_count": 1200,
+        "errors": [],
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "mutation_case_count": 8400,
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "schema_version": "RunSolverCausalityLiveV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "matrix_run": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/run_full2d_matrix_v0_6.py",
+        "--config",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\release_matrix_config_v0_6.json",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "--execute-all",
+        "--all-baselines",
+        "--no-skip"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/matrix_run.evidence.json",
+      "evidence_ref": "sha256:8b6a96561085137400638d571e0d768f22a160cb0b0d303f49c93069bda10bf8",
+      "name": "matrix_run",
+      "output_path": null,
+      "report_summary": {
+        "by_baseline": {
+          "B1": {
+            "final_theorem": 0,
+            "measured_failure": 1200,
+            "records": 1200
+          },
+          "B2": {
+            "final_theorem": 1200,
+            "measured_failure": 0,
+            "records": 1200
+          },
+          "B5": {
+            "final_theorem": 0,
+            "measured_failure": 1200,
+            "records": 1200
+          },
+          "B6": {
+            "final_theorem": 0,
+            "measured_failure": 1200,
+            "records": 1200
+          },
+          "B7": {
+            "final_theorem": 0,
+            "measured_failure": 1200,
+            "records": 1200
+          },
+          "B8": {
+            "final_theorem": 0,
+            "measured_failure": 1200,
+            "records": 1200
+          }
+        },
+        "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+        "counted_task_count": 1200,
+        "errors": [],
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "measured_failure_summary": {
+          "B2_final_verify_failures_are_measured": 0,
+          "disabled_baseline_failures_are_disabled_stage_reports": 6000
+        },
+        "record_count": 7200,
+        "required_record_count": 7200,
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "schema_version": "Full2DMatrixRunV06",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "metrics": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_full2d_metrics_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "--thresholds-from",
+        "C:\\Users\\bakat\\work\\AI_math_research\\docs\\ai\\changes\\geometry-full2d-v0_6\\BASE_SPEC.md"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/metrics.evidence.json",
+      "evidence_ref": "sha256:9c7605dc26fb325c5d1ed15fc230decaa3eb476e23d05c7aff6b62ebf642dbab",
+      "name": "metrics",
+      "output_path": null,
+      "report_summary": {
+        "B2_final_theorem_rate": 1.0,
+        "B2_live_destructive_mutation_pass_fraction": 1.0,
+        "B2_solver_causal_success_fraction": 1.0,
+        "baseline_advantage": {
+          "B2_minus_B1_overall": 1.0,
+          "B2_minus_B5_construction_subset": 1.0,
+          "B2_minus_B6_algebraic_metric_certificate_subset": 1.0,
+          "B2_minus_B7_order_case_subset": 1.0
+        },
+        "errors": [],
+        "measured_failure_summary": {
+          "by_baseline": {
+            "B1": 1200,
+            "B2": 0,
+            "B5": 1200,
+            "B6": 1200,
+            "B7": 1200,
+            "B8": 1200
+          },
+          "count": 6000
+        },
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "schema_version": "Full2DMetricsCheckV06",
+        "status": "passed",
+        "threshold_checks": {
+          "B2_construction_case_certificate_success_fraction": true,
+          "B2_direct_facade_lemma_fraction": true,
+          "B2_final_theorem_rate": true,
+          "B2_live_destructive_mutation_pass_fraction": true,
+          "B2_minus_B1_overall_advantage": true,
+          "B2_minus_B5_construction_subset_advantage": true,
+          "B2_minus_B6_algebraic_metric_certificate_subset_advantage": true,
+          "B2_minus_B7_order_case_subset_advantage": true,
+          "B2_non_target_intermediate_success_fraction": true,
+          "B2_solver_causal_success_fraction": true
+        }
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "no_old_release_dependency": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_no_old_release_dependency_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\no_old_release_dependency.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/no_old_release_dependency.evidence.json",
+      "evidence_ref": "sha256:9bb1ea2fc5ea8f8e8bfaaedcfda93db022c19dcf94483eecc244cb88c7b74a1f",
+      "name": "no_old_release_dependency",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/no_old_release_dependency.report.json",
+      "report_summary": {
+        "checker_name": "check_no_old_release_dependency_v0_6.py",
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "schema_version": "NoOldReleaseDependencyCheckV06",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "proof_worker_final_verify": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_proof_worker_final_verify_v0_6.py",
+        "--self-test",
+        "--red-cases",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\proof_worker_final_verify.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/proof_worker_final_verify.evidence.json",
+      "evidence_ref": "sha256:b14256e5c8efafac130431e21a2096504eb34bfaed04c71acd8c130fc1c85013",
+      "name": "proof_worker_final_verify",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/proof_worker_final_verify.report.json",
+      "report_summary": {
+        "checker_name": "check_proof_worker_final_verify_v0_6.py",
+        "errors": [],
+        "schema_version": "CheckProofWorkerFinalVerifyV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "provider_isolation": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_provider_isolation_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "--red-cases",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\provider_isolation.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/provider_isolation.evidence.json",
+      "evidence_ref": "sha256:a6b7ce238f63b5e9b403c604c6cfa158499a4ff717260123b931fbdda7b7b19d",
+      "name": "provider_isolation",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/provider_isolation.report.json",
+      "report_summary": {
+        "checker_name": "check_provider_isolation_v0_6.py",
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "schema_version": "CheckProviderIsolationV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "red_case_suite": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_red_case_suite_v0_6.py",
+        "--all",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\red_case_suite.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/red_case_suite.evidence.json",
+      "evidence_ref": "sha256:40c3270314716d876ce1741dd98d461ac7b031a4964ec783a04355a490ba325a",
+      "name": "red_case_suite",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/red_case_suite.report.json",
+      "report_summary": {
+        "checker_name": "check_red_case_suite_v0_6.py",
+        "errors": [],
+        "manifest_path": "tests/red_cases/geometry_full2d_v0_6/manifest.json",
+        "schema_version": "GeometryFull2DRedCaseReportV06",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "release_seed_transcript": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/create_geometry_full2d_v0_6_release_seed.py",
+        "--implementation-freeze-manifest",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6\\metadata\\implementation_freeze_manifest_v0_6.json",
+        "--implementation-freeze-manifest-hash",
+        "sha256:1fe46319e73d8cdb00aa09b4385781a98205931c397d1cd995a685c60a1affda",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6\\metadata\\release_seed_transcript_v0_6.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/release_seed_transcript.evidence.json",
+      "evidence_ref": "sha256:50d07c7300a237a9a1c38df260e3306b88d55a4701295de2cc4a7542d7072eca",
+      "name": "release_seed_transcript",
+      "output_path": null,
+      "report_summary": {
+        "git_head": "e0c1baaee86a58cc999b21a511efb1104ea79a92",
+        "implementation_freeze_manifest_hash": "sha256:1fe46319e73d8cdb00aa09b4385781a98205931c397d1cd995a685c60a1affda",
+        "schema_version": "CreateGeometryFull2DReleaseSeedTranscriptV06Report",
+        "seed": "v0_6_release_acceptance_pre_run_seed_fe0c9ce94416f495b8fec88a022810ac6f8dd2ac4a434e18",
+        "seed_transcript_hash": "sha256:65a493dae8e4f6f485f87bff6b75128c8531133ef6021d6e207befab1f729547",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "rule_registry": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_rule_registry_v0_6.py",
+        "--release",
+        "--red-cases",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\rule_registry.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/rule_registry.evidence.json",
+      "evidence_ref": "sha256:563906433c6831beed227560652bb1db3dbe74a70cb9521fc8c04532f4aa0dee",
+      "name": "rule_registry",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/rule_registry.report.json",
+      "report_summary": {
+        "checker_name": "check_rule_registry_v0_6.py",
+        "counted_rule_count": 36,
+        "counted_rule_family_count": 21,
+        "errors": [],
+        "rule_count": 39,
+        "schema_version": "CheckRuleRegistryV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "schema_contracts": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_schema_contracts_v0_6.py",
+        "--self-test",
+        "--red-cases",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\schema_contracts.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/schema_contracts.evidence.json",
+      "evidence_ref": "sha256:2bf9780cd93a840956358d5cebb50ad31d0eb46a0355411e91f2a5c13ba837e6",
+      "name": "schema_contracts",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/schema_contracts.report.json",
+      "report_summary": {
+        "errors": [],
+        "schema_version": "GeometryFull2DV06SchemaContractReport",
+        "sections": {
+          "red_cases": {
+            "checked": [
+              {
+                "errors": [
+                  "bad_engine_role",
+                  "bad_ref:backend_code_hash",
+                  "bad_ref:claim_spec_ref",
+                  "bad_ref:provider_run_manifest_ref",
+                  "bad_ref_list:independent_checker_refs",
+                  "engine_output_not_before_compiler",
+                  "missing:backend_code_hash",
+                  "missing:backend_identity",
+                  "missing:claim_spec_ref",
+                  "missing:created_before_compiler",
+                  "missing:engine_output_id",
+                  "missing:engine_role",
+                  "missing:git_head",
+                  "missing:independent_checker_refs",
+                  "missing:proof_text_present",
+                  "missing:provider_run_manifest_ref",
+                  "missing:provider_stage_run_id",
+                  "missing:selected_artifacts",
+                  "missing_selected_artifacts",
+                  "proof_text_in_engine_output"
+                ],
+                "red_case_id": "RC-001",
+                "rejected": true,
+                "schema_version": "EngineOutputFull2D",
+                "variant_index": 2
+              },
+              {
+                "errors": [
+                  "bad_ref:claim_spec_ref",
+                  "bad_ref:derivation_id",
+                  "bad_ref:final_step_ref",
+                  "missing:claim_spec_ref",
+                  "missing:derivation_id",
+                  "missing:final_step_ref",
+                  "missing:has_checked_side_condition_or_certificate",
+                  "missing:has_non_target_intermediate",
+                  "missing:selected_steps",
+                  "missing_selected_steps",
+                  "missing_semantic_non_target_or_checked_support"
+                ],
+                "red_case_id": "RC-002",
+                "rejected": true,
+                "schema_version": "SelectedSolverDerivationV3",
+                "variant_index": 2
+              },
+              {
+                "errors": [
+                  "bad_ref:compiler_code_hash",
+                  "bad_ref:lean_patch_candidate_ref",
+                  "bad_ref:rule_registry_snapshot_ref",
+                  "bad_ref:selected_derivation_ref",
+                  "bad_ref:theorem_anchor_ref",
+                  "bad_ref_list:side_condition_report_refs",
+                  "compiler_api_inputs_not_exact",
+                  "compiler_forbidden_input_or_branch:binder_map_identity",
+                  "compiler_forbidden_input_or_branch:proof_region_identity",
+                  "compiler_forbidden_input_or_branch:statement_hash",
+                  "compiler_forbidden_input_or_branch:target_shape_id",
+                  "compiler_forbidden_input_or_branch:theorem_family",
+                  "compiler_forbidden_input_or_branch:theorem_name",
+                  "missing:compiler_code_hash",
+                  "missing:compiler_result_id",
+                  "missing:git_head",
+                  "missing:lean_patch_candidate_ref",
+                  "missing:rule_registry_snapshot_ref",
+                  "missing:selected_derivation_ref",
+                  "missing:side_condition_report_refs",
+                  "missing:theorem_anchor_ref"
+                ],
+                "red_case_id": "RC-004",
+                "rejected": true,
+                "schema_version": "CompilerResultFull2D",
+                "variant_index": 2
+              },
+              {
+                "errors": [
+                  "bad_engine_role",
+                  "bad_ref:backend_code_hash",
+                  "bad_ref:claim_spec_ref",
+                  "bad_ref:provider_run_manifest_ref",
+                  "bad_ref_list:independent_checker_refs",
+                  "engine_output_not_before_compiler",
+                  "missing:backend_code_hash",
+                  "missing:backend_identity",
+                  "missing:claim_spec_ref",
+                  "missing:created_before_compiler",
+                  "missing:engine_output_id",
+                  "missing:engine_role",
+                  "missing:git_head",
+                  "missing:independent_checker_refs",
+                  "missing:proof_text_present",
+                  "missing:provider_run_manifest_ref",
+                  "missing:provider_stage_run_id",
+                  "missing:selected_artifacts",
+                  "missing_selected_artifacts",
+                  "proof_text_in_engine_output"
+                ],
+                "red_case_id": "RC-005",
+                "rejected": true,
+                "schema_version": "EngineOutputFull2D",
+                "variant_index": 2
+              },
+              {
+                "errors": [
+                  "bad_causality_status",
+                  "bad_ref:report_id",
+                  "bad_ref:source_actual_run_ref",
+                  "bad_ref:temp_run_dir_ref",
+                  "causality_report_not_live_rerun",
+                  "missing:mutation_cases",
+                  "missing:report_id",
+                  "missing:source_actual_run_ref",
+                  "missing:status",
+                  "missing:temp_run_dir_ref",
+                  "schema_only_or_forbidden_marker:report_only_causality"
+                ],
+                "red_case_id": "RC-006",
+                "rejected": true,
+                "schema_version": "SolverCausalityLiveRunV1",
+                "variant_index": 2
+              },
+              {
+                "errors": [
+                  "bad_baseline_id",
+                  "bad_final_status",
+                  "bad_ref:checker_hash_set_ref",
+                  "bad_ref:claim_spec_ref",
+                  "bad_ref:config_hash",
+                  "bad_ref:corpus_manifest_hash",
+                  "bad_ref:derivation_target_match_ref",
+                  "bad_ref:extraction_report_ref",
+                  "bad_ref:final_verify_report_ref",
+                  "bad_ref:git_status_hash",
+                  "bad_ref:lean_patch_candidate_ref",
+                  "bad_ref:proof_worker_result_ref",
+                  "bad_ref:provider_run_manifest_ref",
+                  "bad_ref:release_run_dir_hash",
+                  "bad_ref:selected_implementation_hash",
+                  "bad_ref:selected_solver_derivation_ref",
+                  "bad_ref:source_theorem_ref",
+                  "bad_ref_list:compiler_result_refs",
+                  "bad_ref_list:engine_output_refs",
+                  "bad_ref_list:independent_solver_artifact_check_refs",
+                  "missing:baseline_id",
+                  "missing:checker_hash_set_ref",
+                  "missing:claim_spec_ref",
+                  "missing:compiler_result_refs",
+                  "missing:config_hash",
+                  "missing:corpus_manifest_hash",
+                  "missing:derivation_target_match_ref",
+                  "missing:engine_output_refs",
+                  "missing:extraction_report_ref",
+                  "missing:final_status",
+                  "missing:final_verify_report_ref",
+                  "missing:git_head",
+                  "missing:git_status_hash",
+                  "missing:independent_solver_artifact_check_refs",
+                  "missing:lean_patch_candidate_ref",
+                  "missing:proof_worker_result_ref",
+                  "missing:provider_run_manifest_ref",
+                  "missing:release_run_dir_hash",
+                  "missing:run_id",
+                  "missing:selected_implementation_hash",
+                  "missing:selected_solver_derivation_ref",
+                  "missing:solver_backed_certificate_ref",
+                  "missing:source_theorem_ref",
+                  "missing:stage_failure_report_ref",
+                  "missing:stage_timestamps",
+                  "missing:task_id",
+                  "stage_timestamps_not_object"
+                ],
+                "red_case_id": "RC-007",
+                "rejected": true,
+                "schema_version": "ActualTaskPipelineRunV4",
+                "variant_index": 2
+              },
+              {
+                "errors": [
+                  "bad_ref:actual_task_run_ref",
+                  "bad_ref:causal_chain_hash",
+                  "bad_ref:claim_spec_ref",
+                  "bad_ref:compiler_result_ref",
+                  "bad_ref:final_verify_report_ref",
+                  "bad_ref:proof_worker_result_ref",
+                  "bad_ref:selected_derivation_ref",
+                  "bad_ref:solver_causality_live_run_ref",
+                  "bad_ref_list:engine_output_refs",
+                  "missing:actual_task_run_ref",
+                  "missing:causal_chain_hash",
+                  "missing:certificate_id",
+                  "missing:claim_spec_ref",
+                  "missing:compiler_result_ref",
+                  "missing:engine_output_refs",
+                  "missing:final_verify_report_ref",
+                  "missing:git_head",
+                  "missing:proof_worker_result_ref",
+                  "missing:selected_derivation_ref",
+                  "missing:solver_causality_live_run_ref",
+                  "target_as_certificate"
+                ],
+                "red_case_id": "RC-014",
+                "rejected": true,
+                "schema_version": "SolverBackedProofCertificateFull2D",
+                "variant_index": 2
+              },
+              {
+                "errors": [
+                  "bad_ref:claim_spec_ref",
+                  "bad_ref:derivation_id",
+                  "bad_ref:final_step_ref",
+                  "missing:claim_spec_ref",
+                  "missing:derivation_id",
+                  "missing:final_step_ref",
+                  "missing:has_checked_side_condition_or_certificate",
+                  "missing:has_non_target_intermediate",
+                  "missing:selected_steps",
+                  "missing_selected_steps",
+                  "missing_semantic_non_target_or_checked_support"
+                ],
+                "red_case_id": "RC-018",
+                "rejected": true,
+                "schema_version": "SelectedSolverDerivationV3",
+                "variant_index": 2
+              },
+              {
+                "errors": [
+                  "bad_engine_role",
+                  "bad_ref:backend_code_hash",
+                  "bad_ref:claim_spec_ref",
+                  "bad_ref:provider_run_manifest_ref",
+                  "bad_ref_list:independent_checker_refs",
+                  "engine_output_contains_proof",
+                  "engine_output_not_before_compiler",
+                  "missing:backend_code_hash",
+                  "missing:backend_identity",
+                  "missing:claim_spec_ref",
+                  "missing:created_before_compiler",
+                  "missing:engine_output_id",
+                  "missing:engine_role",
+                  "missing:git_head",
+                  "missing:independent_checker_refs",
+                  "missing:provider_run_manifest_ref",
+                  "missing:provider_stage_run_id",
+                  "missing:selected_artifacts",
+                  "missing_selected_artifacts",
+                  "proof_text_in_engine_output"
+                ],
+                "red_case_id": "K-010",
+                "rejected": true,
+                "schema_version": "EngineOutputFull2D",
+                "variant_index": 2
+              },
+              {
+                "errors": [
+                  "bad_ref:claim_spec_ref",
+                  "bad_ref:derivation_id",
+                  "bad_ref:final_step_ref",
+                  "missing:claim_spec_ref",
+                  "missing:derivation_id",
+                  "missing:final_step_ref",
+                  "missing:has_checked_side_condition_or_certificate",
+                  "missing:has_non_target_intermediate",
+                  "missing:selected_steps",
+                  "missing_selected_steps",
+                  "missing_semantic_non_target_or_checked_support",
+                  "target_equivalent_intermediate:alpha_renamed_target",
+                  "target_equivalent_intermediate:target_hash_intermediate",
+                  "target_equivalent_intermediate:trivial_target_wrapper"
+                ],
+                "red_case_id": "K-013",
+                "rejected": true,
+                "schema_version": "SelectedSolverDerivationV3",
+                "variant_index": 2
+              }
+            ],
+            "errors": [],
+            "red_case_suite_status": "passed",
+            "schema_version": "GeometryFull2DV06SchemaRedCaseReport",
+            "skipped": [
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-003",
+                "schema_version": "RuleRegistryFull2D"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-008",
+                "schema_version": "CorpusTaskRecordV1"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-009",
+                "schema_version": "ReleaseAcceptanceReportV06"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-010",
+                "schema_version": "CheckerReportV1"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-011",
+                "schema_version": "SealedAdversarialHoldoutManifestV1"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-012",
+                "schema_version": "FreshnessSummaryV1"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-013",
+                "schema_version": "RuleRegistryFull2D"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-015",
+                "schema_version": "ReleaseCheckerTraceV1"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-016",
+                "schema_version": "ReleaseAcceptanceReportV06"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-017",
+                "schema_version": "Full2DMatrixRunV06"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-019",
+                "schema_version": "ProviderBoundaryReportV1"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "RC-019",
+                "schema_version": "ProviderBoundaryReportV1"
+              },
+              {
+                "reason": "not_wp03_schema",
+                "red_case_id": "K-028",
+                "schema_version": "EngineContributionReportV1"
+              }
+            ],
+            "status": "passed"
+          },
+          "self_test": {
+            "errors": [],
+            "negative_results": {
+              "b2_label_final_status": [
+                "final_theorem_missing_solver_backed_certificate_ref"
+              ],
+              "compiler_forbidden_anchor_branch": [
+                "compiler_forbidden_input_or_branch:statement_hash",
+                "compiler_forbidden_input_or_branch:theorem_name"
+              ],
+              "disabled_stage_not_disabled": [
+                "disabled_stage_not_removed_or_disabled"
+              ],
+              "final_verify_accepts_sorry": [
+                "no_sorry_not_true"
+              ],
+              "hash_mismatch": [
+                "hash_mismatch"
+              ],
+              "naked_target_derivation": [
+                "missing_semantic_non_target_or_checked_support"
+              ],
+              "proof_text_engine_output": [
+                "engine_output_contains_proof_text",
+                "proof_text_in_engine_output"
+              ],
+              "proof_worker_claims_final": [
+                "proof_worker_claims_final_theorem"
+              ],
+              "provider_imports_compiler": [
+                "provider_imports_downstream_module"
+              ],
+              "report_only_causality": [
+                "causality_report_not_live_rerun",
+                "empty:mutation_cases",
+                "schema_only_or_forbidden_marker:report_only_causality"
+              ],
+              "stage_failure_label_coded": [
+                "measured_failure_not_actual_stage_failure"
+              ],
+              "stale_git_head": [
+                "stale_artifact:git_head",
+                "stale_artifact:git_head_mismatch"
+              ],
+              "target_as_certificate": [
+                "target_as_certificate"
+              ],
+              "target_equivalent_intermediate": [
+                "target_equivalent_intermediate:selected_steps[0].target_hash_intermediate"
+              ],
+              "target_fact_provider": [
+                "fact_missing_premises:0",
+                "target_fact_without_derivation"
+              ],
+              "target_matcher_outputs_strategy": [
+                "target_matcher_forbidden_output:strategy_label"
+              ]
+            },
+            "positive_results": {
+              "ActualTaskPipelineRunV4": [],
+              "CompilerResultFull2D": [],
+              "DerivationTargetMatchReportV1": [],
+              "DisabledStageReportV1": [],
+              "EngineOutputFull2D": [],
+              "FinalVerifyReportFull2D": [],
+              "GeometryFull2DClaimSpec": [],
+              "IndependentSolverArtifactCheckV1": [],
+              "LeanExtractionReportFull2D": [],
+              "LeanPatchCandidateFull2D": [],
+              "ProofWorkerResultFull2D": [],
+              "ProviderRunManifestV3": [],
+              "SelectedSolverDerivationV3": [],
+              "SolverBackedProofCertificateFull2D": [],
+              "SolverCausalityLiveRunV1": [],
+              "StageFailureReportV1": []
+            },
+            "schema_version": "GeometryFull2DV06SchemaValidatorSelfTest",
+            "status": "passed"
+          }
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "selected_derivation": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_selected_derivation_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "--red-cases",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\selected_derivation.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/selected_derivation.evidence.json",
+      "evidence_ref": "sha256:dd9cd2113af27f01da5055ec9d2d57dcfe3ad482cd829c1eb1e1285dfcf7ec74",
+      "name": "selected_derivation",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/selected_derivation.report.json",
+      "report_summary": {
+        "checker_name": "check_selected_derivation_v0_6.py",
+        "errors": [],
+        "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+        "schema_version": "CheckSelectedDerivationV06Report",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "statement_diversity": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_statement_diversity_v0_6.py",
+        "--corpus-root",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+        "--output",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\statement_diversity.report.json"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/statement_diversity.evidence.json",
+      "evidence_ref": "sha256:8ce80b9c72138646cd9e11684c234df6c4d01aa9a6e31702c93e4e69a7e1502a",
+      "name": "statement_diversity",
+      "output_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/statement_diversity.report.json",
+      "report_summary": {
+        "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+        "errors": [],
+        "schema_version": "StatementDiversityCheckV06",
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    },
+    "used_rule_coverage": {
+      "command": [
+        "C:\\Users\\bakat\\miniforge3\\python.exe",
+        "scripts/check_used_rule_coverage_v0_6.py",
+        "--run-dir",
+        "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+        "--red-cases"
+      ],
+      "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/used_rule_coverage.evidence.json",
+      "evidence_ref": "sha256:ebcb2e49b4eb1b4bff5ae568afa1a937f1eb06712ed07fa274bc71babd534875",
+      "name": "used_rule_coverage",
+      "output_path": null,
+      "report_summary": {
+        "errors": [],
+        "schema_version": "CheckUsedRuleCoverageV06Report",
+        "sections": {
+          "coverage": {
+            "b2_final_theorem_count": 1200,
+            "direct_or_helper_rules_in_success": [],
+            "errors": [],
+            "required_counted_rule_family_count": 15,
+            "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+            "schema_version": "UsedRuleCoverageV06",
+            "source": "B2 ActualTaskPipelineRunV4 final_theorem records and SelectedSolverDerivationV3 artifacts",
+            "status": "passed",
+            "unresolved_derivation_count": 0,
+            "used_counted_rule_families": [
+              "angle_bisector",
+              "area_relation",
+              "circle_cyclicity",
+              "circle_tangent",
+              "construction_circle",
+              "construction_intersection",
+              "directed_angle_mod_2pi",
+              "directed_angle_mod_pi",
+              "metric_equal_length",
+              "metric_length_sum",
+              "order_between",
+              "ratio_algebra",
+              "spiral_similarity",
+              "transformation_homothety",
+              "transformation_inversion",
+              "transformation_reflection",
+              "transformation_rotation",
+              "triangle_altitude",
+              "triangle_metric",
+              "triangle_structure"
+            ],
+            "used_counted_rule_family_count": 20,
+            "used_counted_rule_ids": [
+              "full2d_rule:angle_bisector:22",
+              "full2d_rule:angle_bisector:23",
+              "full2d_rule:area_relation:29",
+              "full2d_rule:circle_cyclicity:11",
+              "full2d_rule:circle_tangent:15",
+              "full2d_rule:construction_circle:02",
+              "full2d_rule:construction_circle:03",
+              "full2d_rule:construction_intersection:07",
+              "full2d_rule:construction_intersection:08",
+              "full2d_rule:directed_angle_mod_2pi:27",
+              "full2d_rule:directed_angle_mod_pi:26",
+              "full2d_rule:metric_equal_length:28",
+              "full2d_rule:metric_length_sum:24",
+              "full2d_rule:order_between:31",
+              "full2d_rule:ratio_algebra:25",
+              "full2d_rule:spiral_similarity:35",
+              "full2d_rule:transformation_homothety:33",
+              "full2d_rule:transformation_inversion:34",
+              "full2d_rule:transformation_reflection:32",
+              "full2d_rule:transformation_rotation:36",
+              "full2d_rule:triangle_altitude:20",
+              "full2d_rule:triangle_metric:16",
+              "full2d_rule:triangle_structure:06",
+              "full2d_rule:triangle_structure:18"
+            ]
+          },
+          "red_cases": {
+            "case_results": {
+              "helper_direct_identity_rule_rejected": {
+                "errors": [
+                  "direct_identity_or_facade_rule_used_in_success:full2d_helper:area_le_refl",
+                  "used_counted_rule_families_below_threshold:0<15"
+                ],
+                "status": "passed"
+              },
+              "measured_failure_rules_do_not_count": {
+                "errors": [
+                  "no_b2_final_theorem_successes_for_rule_coverage",
+                  "used_counted_rule_families_below_threshold:0<15"
+                ],
+                "status": "passed"
+              }
+            },
+            "errors": [],
+            "schema_version": "UsedRuleCoverageRedCasesV06",
+            "status": "passed"
+          }
+        },
+        "status": "passed"
+      },
+      "returncode": 0,
+      "schema_version": "ReleaseCommandResultV06",
+      "status": "passed"
+    }
+  },
+  "rule_registry_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/rule_registry.evidence.json",
+    "evidence_ref": "sha256:563906433c6831beed227560652bb1db3dbe74a70cb9521fc8c04532f4aa0dee",
+    "report_summary": {
+      "checker_name": "check_rule_registry_v0_6.py",
+      "counted_rule_count": 36,
+      "counted_rule_family_count": 21,
+      "errors": [],
+      "rule_count": 39,
+      "schema_version": "CheckRuleRegistryV06Report",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "schema_contract_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/schema_contracts.evidence.json",
+    "evidence_ref": "sha256:2bf9780cd93a840956358d5cebb50ad31d0eb46a0355411e91f2a5c13ba837e6",
+    "report_summary": {
+      "errors": [],
+      "schema_version": "GeometryFull2DV06SchemaContractReport",
+      "sections": {
+        "red_cases": {
+          "checked": [
+            {
+              "errors": [
+                "bad_engine_role",
+                "bad_ref:backend_code_hash",
+                "bad_ref:claim_spec_ref",
+                "bad_ref:provider_run_manifest_ref",
+                "bad_ref_list:independent_checker_refs",
+                "engine_output_not_before_compiler",
+                "missing:backend_code_hash",
+                "missing:backend_identity",
+                "missing:claim_spec_ref",
+                "missing:created_before_compiler",
+                "missing:engine_output_id",
+                "missing:engine_role",
+                "missing:git_head",
+                "missing:independent_checker_refs",
+                "missing:proof_text_present",
+                "missing:provider_run_manifest_ref",
+                "missing:provider_stage_run_id",
+                "missing:selected_artifacts",
+                "missing_selected_artifacts",
+                "proof_text_in_engine_output"
+              ],
+              "red_case_id": "RC-001",
+              "rejected": true,
+              "schema_version": "EngineOutputFull2D",
+              "variant_index": 2
+            },
+            {
+              "errors": [
+                "bad_ref:claim_spec_ref",
+                "bad_ref:derivation_id",
+                "bad_ref:final_step_ref",
+                "missing:claim_spec_ref",
+                "missing:derivation_id",
+                "missing:final_step_ref",
+                "missing:has_checked_side_condition_or_certificate",
+                "missing:has_non_target_intermediate",
+                "missing:selected_steps",
+                "missing_selected_steps",
+                "missing_semantic_non_target_or_checked_support"
+              ],
+              "red_case_id": "RC-002",
+              "rejected": true,
+              "schema_version": "SelectedSolverDerivationV3",
+              "variant_index": 2
+            },
+            {
+              "errors": [
+                "bad_ref:compiler_code_hash",
+                "bad_ref:lean_patch_candidate_ref",
+                "bad_ref:rule_registry_snapshot_ref",
+                "bad_ref:selected_derivation_ref",
+                "bad_ref:theorem_anchor_ref",
+                "bad_ref_list:side_condition_report_refs",
+                "compiler_api_inputs_not_exact",
+                "compiler_forbidden_input_or_branch:binder_map_identity",
+                "compiler_forbidden_input_or_branch:proof_region_identity",
+                "compiler_forbidden_input_or_branch:statement_hash",
+                "compiler_forbidden_input_or_branch:target_shape_id",
+                "compiler_forbidden_input_or_branch:theorem_family",
+                "compiler_forbidden_input_or_branch:theorem_name",
+                "missing:compiler_code_hash",
+                "missing:compiler_result_id",
+                "missing:git_head",
+                "missing:lean_patch_candidate_ref",
+                "missing:rule_registry_snapshot_ref",
+                "missing:selected_derivation_ref",
+                "missing:side_condition_report_refs",
+                "missing:theorem_anchor_ref"
+              ],
+              "red_case_id": "RC-004",
+              "rejected": true,
+              "schema_version": "CompilerResultFull2D",
+              "variant_index": 2
+            },
+            {
+              "errors": [
+                "bad_engine_role",
+                "bad_ref:backend_code_hash",
+                "bad_ref:claim_spec_ref",
+                "bad_ref:provider_run_manifest_ref",
+                "bad_ref_list:independent_checker_refs",
+                "engine_output_not_before_compiler",
+                "missing:backend_code_hash",
+                "missing:backend_identity",
+                "missing:claim_spec_ref",
+                "missing:created_before_compiler",
+                "missing:engine_output_id",
+                "missing:engine_role",
+                "missing:git_head",
+                "missing:independent_checker_refs",
+                "missing:proof_text_present",
+                "missing:provider_run_manifest_ref",
+                "missing:provider_stage_run_id",
+                "missing:selected_artifacts",
+                "missing_selected_artifacts",
+                "proof_text_in_engine_output"
+              ],
+              "red_case_id": "RC-005",
+              "rejected": true,
+              "schema_version": "EngineOutputFull2D",
+              "variant_index": 2
+            },
+            {
+              "errors": [
+                "bad_causality_status",
+                "bad_ref:report_id",
+                "bad_ref:source_actual_run_ref",
+                "bad_ref:temp_run_dir_ref",
+                "causality_report_not_live_rerun",
+                "missing:mutation_cases",
+                "missing:report_id",
+                "missing:source_actual_run_ref",
+                "missing:status",
+                "missing:temp_run_dir_ref",
+                "schema_only_or_forbidden_marker:report_only_causality"
+              ],
+              "red_case_id": "RC-006",
+              "rejected": true,
+              "schema_version": "SolverCausalityLiveRunV1",
+              "variant_index": 2
+            },
+            {
+              "errors": [
+                "bad_baseline_id",
+                "bad_final_status",
+                "bad_ref:checker_hash_set_ref",
+                "bad_ref:claim_spec_ref",
+                "bad_ref:config_hash",
+                "bad_ref:corpus_manifest_hash",
+                "bad_ref:derivation_target_match_ref",
+                "bad_ref:extraction_report_ref",
+                "bad_ref:final_verify_report_ref",
+                "bad_ref:git_status_hash",
+                "bad_ref:lean_patch_candidate_ref",
+                "bad_ref:proof_worker_result_ref",
+                "bad_ref:provider_run_manifest_ref",
+                "bad_ref:release_run_dir_hash",
+                "bad_ref:selected_implementation_hash",
+                "bad_ref:selected_solver_derivation_ref",
+                "bad_ref:source_theorem_ref",
+                "bad_ref_list:compiler_result_refs",
+                "bad_ref_list:engine_output_refs",
+                "bad_ref_list:independent_solver_artifact_check_refs",
+                "missing:baseline_id",
+                "missing:checker_hash_set_ref",
+                "missing:claim_spec_ref",
+                "missing:compiler_result_refs",
+                "missing:config_hash",
+                "missing:corpus_manifest_hash",
+                "missing:derivation_target_match_ref",
+                "missing:engine_output_refs",
+                "missing:extraction_report_ref",
+                "missing:final_status",
+                "missing:final_verify_report_ref",
+                "missing:git_head",
+                "missing:git_status_hash",
+                "missing:independent_solver_artifact_check_refs",
+                "missing:lean_patch_candidate_ref",
+                "missing:proof_worker_result_ref",
+                "missing:provider_run_manifest_ref",
+                "missing:release_run_dir_hash",
+                "missing:run_id",
+                "missing:selected_implementation_hash",
+                "missing:selected_solver_derivation_ref",
+                "missing:solver_backed_certificate_ref",
+                "missing:source_theorem_ref",
+                "missing:stage_failure_report_ref",
+                "missing:stage_timestamps",
+                "missing:task_id",
+                "stage_timestamps_not_object"
+              ],
+              "red_case_id": "RC-007",
+              "rejected": true,
+              "schema_version": "ActualTaskPipelineRunV4",
+              "variant_index": 2
+            },
+            {
+              "errors": [
+                "bad_ref:actual_task_run_ref",
+                "bad_ref:causal_chain_hash",
+                "bad_ref:claim_spec_ref",
+                "bad_ref:compiler_result_ref",
+                "bad_ref:final_verify_report_ref",
+                "bad_ref:proof_worker_result_ref",
+                "bad_ref:selected_derivation_ref",
+                "bad_ref:solver_causality_live_run_ref",
+                "bad_ref_list:engine_output_refs",
+                "missing:actual_task_run_ref",
+                "missing:causal_chain_hash",
+                "missing:certificate_id",
+                "missing:claim_spec_ref",
+                "missing:compiler_result_ref",
+                "missing:engine_output_refs",
+                "missing:final_verify_report_ref",
+                "missing:git_head",
+                "missing:proof_worker_result_ref",
+                "missing:selected_derivation_ref",
+                "missing:solver_causality_live_run_ref",
+                "target_as_certificate"
+              ],
+              "red_case_id": "RC-014",
+              "rejected": true,
+              "schema_version": "SolverBackedProofCertificateFull2D",
+              "variant_index": 2
+            },
+            {
+              "errors": [
+                "bad_ref:claim_spec_ref",
+                "bad_ref:derivation_id",
+                "bad_ref:final_step_ref",
+                "missing:claim_spec_ref",
+                "missing:derivation_id",
+                "missing:final_step_ref",
+                "missing:has_checked_side_condition_or_certificate",
+                "missing:has_non_target_intermediate",
+                "missing:selected_steps",
+                "missing_selected_steps",
+                "missing_semantic_non_target_or_checked_support"
+              ],
+              "red_case_id": "RC-018",
+              "rejected": true,
+              "schema_version": "SelectedSolverDerivationV3",
+              "variant_index": 2
+            },
+            {
+              "errors": [
+                "bad_engine_role",
+                "bad_ref:backend_code_hash",
+                "bad_ref:claim_spec_ref",
+                "bad_ref:provider_run_manifest_ref",
+                "bad_ref_list:independent_checker_refs",
+                "engine_output_contains_proof",
+                "engine_output_not_before_compiler",
+                "missing:backend_code_hash",
+                "missing:backend_identity",
+                "missing:claim_spec_ref",
+                "missing:created_before_compiler",
+                "missing:engine_output_id",
+                "missing:engine_role",
+                "missing:git_head",
+                "missing:independent_checker_refs",
+                "missing:provider_run_manifest_ref",
+                "missing:provider_stage_run_id",
+                "missing:selected_artifacts",
+                "missing_selected_artifacts",
+                "proof_text_in_engine_output"
+              ],
+              "red_case_id": "K-010",
+              "rejected": true,
+              "schema_version": "EngineOutputFull2D",
+              "variant_index": 2
+            },
+            {
+              "errors": [
+                "bad_ref:claim_spec_ref",
+                "bad_ref:derivation_id",
+                "bad_ref:final_step_ref",
+                "missing:claim_spec_ref",
+                "missing:derivation_id",
+                "missing:final_step_ref",
+                "missing:has_checked_side_condition_or_certificate",
+                "missing:has_non_target_intermediate",
+                "missing:selected_steps",
+                "missing_selected_steps",
+                "missing_semantic_non_target_or_checked_support",
+                "target_equivalent_intermediate:alpha_renamed_target",
+                "target_equivalent_intermediate:target_hash_intermediate",
+                "target_equivalent_intermediate:trivial_target_wrapper"
+              ],
+              "red_case_id": "K-013",
+              "rejected": true,
+              "schema_version": "SelectedSolverDerivationV3",
+              "variant_index": 2
+            }
+          ],
+          "errors": [],
+          "red_case_suite_status": "passed",
+          "schema_version": "GeometryFull2DV06SchemaRedCaseReport",
+          "skipped": [
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-003",
+              "schema_version": "RuleRegistryFull2D"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-008",
+              "schema_version": "CorpusTaskRecordV1"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-009",
+              "schema_version": "ReleaseAcceptanceReportV06"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-010",
+              "schema_version": "CheckerReportV1"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-011",
+              "schema_version": "SealedAdversarialHoldoutManifestV1"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-012",
+              "schema_version": "FreshnessSummaryV1"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-013",
+              "schema_version": "RuleRegistryFull2D"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-015",
+              "schema_version": "ReleaseCheckerTraceV1"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-016",
+              "schema_version": "ReleaseAcceptanceReportV06"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-017",
+              "schema_version": "Full2DMatrixRunV06"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-019",
+              "schema_version": "ProviderBoundaryReportV1"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "RC-019",
+              "schema_version": "ProviderBoundaryReportV1"
+            },
+            {
+              "reason": "not_wp03_schema",
+              "red_case_id": "K-028",
+              "schema_version": "EngineContributionReportV1"
+            }
+          ],
+          "status": "passed"
+        },
+        "self_test": {
+          "errors": [],
+          "negative_results": {
+            "b2_label_final_status": [
+              "final_theorem_missing_solver_backed_certificate_ref"
+            ],
+            "compiler_forbidden_anchor_branch": [
+              "compiler_forbidden_input_or_branch:statement_hash",
+              "compiler_forbidden_input_or_branch:theorem_name"
+            ],
+            "disabled_stage_not_disabled": [
+              "disabled_stage_not_removed_or_disabled"
+            ],
+            "final_verify_accepts_sorry": [
+              "no_sorry_not_true"
+            ],
+            "hash_mismatch": [
+              "hash_mismatch"
+            ],
+            "naked_target_derivation": [
+              "missing_semantic_non_target_or_checked_support"
+            ],
+            "proof_text_engine_output": [
+              "engine_output_contains_proof_text",
+              "proof_text_in_engine_output"
+            ],
+            "proof_worker_claims_final": [
+              "proof_worker_claims_final_theorem"
+            ],
+            "provider_imports_compiler": [
+              "provider_imports_downstream_module"
+            ],
+            "report_only_causality": [
+              "causality_report_not_live_rerun",
+              "empty:mutation_cases",
+              "schema_only_or_forbidden_marker:report_only_causality"
+            ],
+            "stage_failure_label_coded": [
+              "measured_failure_not_actual_stage_failure"
+            ],
+            "stale_git_head": [
+              "stale_artifact:git_head",
+              "stale_artifact:git_head_mismatch"
+            ],
+            "target_as_certificate": [
+              "target_as_certificate"
+            ],
+            "target_equivalent_intermediate": [
+              "target_equivalent_intermediate:selected_steps[0].target_hash_intermediate"
+            ],
+            "target_fact_provider": [
+              "fact_missing_premises:0",
+              "target_fact_without_derivation"
+            ],
+            "target_matcher_outputs_strategy": [
+              "target_matcher_forbidden_output:strategy_label"
+            ]
+          },
+          "positive_results": {
+            "ActualTaskPipelineRunV4": [],
+            "CompilerResultFull2D": [],
+            "DerivationTargetMatchReportV1": [],
+            "DisabledStageReportV1": [],
+            "EngineOutputFull2D": [],
+            "FinalVerifyReportFull2D": [],
+            "GeometryFull2DClaimSpec": [],
+            "IndependentSolverArtifactCheckV1": [],
+            "LeanExtractionReportFull2D": [],
+            "LeanPatchCandidateFull2D": [],
+            "ProofWorkerResultFull2D": [],
+            "ProviderRunManifestV3": [],
+            "SelectedSolverDerivationV3": [],
+            "SolverBackedProofCertificateFull2D": [],
+            "SolverCausalityLiveRunV1": [],
+            "StageFailureReportV1": []
+          },
+          "schema_version": "GeometryFull2DV06SchemaValidatorSelfTest",
+          "status": "passed"
+        }
+      },
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "schema_version": "GeometryFull2DReleaseAcceptanceV06",
+  "selected_derivation_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/selected_derivation.evidence.json",
+    "evidence_ref": "sha256:dd9cd2113af27f01da5055ec9d2d57dcfe3ad482cd829c1eb1e1285dfcf7ec74",
+    "report_summary": {
+      "checker_name": "check_selected_derivation_v0_6.py",
+      "errors": [],
+      "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+      "schema_version": "CheckSelectedDerivationV06Report",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "solver_artifact_check_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/independent_solver_artifacts.evidence.json",
+    "evidence_ref": "sha256:1a74f511124e8daf8e25d828dc4918e6eac3d1a800070f3db22156e8c926a4bd",
+    "report_summary": {
+      "checker_name": "check_independent_solver_artifacts_v0_6.py",
+      "errors": [],
+      "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae\\baseline_runs_v0_6\\B2",
+      "schema_version": "CheckIndependentSolverArtifactsV06Report",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "statement_diversity_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/statement_diversity.evidence.json",
+    "evidence_ref": "sha256:8ce80b9c72138646cd9e11684c234df6c4d01aa9a6e31702c93e4e69a7e1502a",
+    "report_summary": {
+      "corpus_root": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae_release_checker_evidence\\fresh_corpus_v0_6",
+      "errors": [],
+      "schema_version": "StatementDiversityCheckV06",
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "status": "passed",
+  "used_rule_coverage_summary": {
+    "evidence_path": "runs/release_v0_6_20260621_134508_e0c1baae_release_checker_evidence/used_rule_coverage.evidence.json",
+    "evidence_ref": "sha256:ebcb2e49b4eb1b4bff5ae568afa1a937f1eb06712ed07fa274bc71babd534875",
+    "report_summary": {
+      "errors": [],
+      "schema_version": "CheckUsedRuleCoverageV06Report",
+      "sections": {
+        "coverage": {
+          "b2_final_theorem_count": 1200,
+          "direct_or_helper_rules_in_success": [],
+          "errors": [],
+          "required_counted_rule_family_count": 15,
+          "run_dir": "C:\\Users\\bakat\\work\\AI_math_research\\runs\\release_v0_6_20260621_134508_e0c1baae",
+          "schema_version": "UsedRuleCoverageV06",
+          "source": "B2 ActualTaskPipelineRunV4 final_theorem records and SelectedSolverDerivationV3 artifacts",
+          "status": "passed",
+          "unresolved_derivation_count": 0,
+          "used_counted_rule_families": [
+            "angle_bisector",
+            "area_relation",
+            "circle_cyclicity",
+            "circle_tangent",
+            "construction_circle",
+            "construction_intersection",
+            "directed_angle_mod_2pi",
+            "directed_angle_mod_pi",
+            "metric_equal_length",
+            "metric_length_sum",
+            "order_between",
+            "ratio_algebra",
+            "spiral_similarity",
+            "transformation_homothety",
+            "transformation_inversion",
+            "transformation_reflection",
+            "transformation_rotation",
+            "triangle_altitude",
+            "triangle_metric",
+            "triangle_structure"
+          ],
+          "used_counted_rule_family_count": 20,
+          "used_counted_rule_ids": [
+            "full2d_rule:angle_bisector:22",
+            "full2d_rule:angle_bisector:23",
+            "full2d_rule:area_relation:29",
+            "full2d_rule:circle_cyclicity:11",
+            "full2d_rule:circle_tangent:15",
+            "full2d_rule:construction_circle:02",
+            "full2d_rule:construction_circle:03",
+            "full2d_rule:construction_intersection:07",
+            "full2d_rule:construction_intersection:08",
+            "full2d_rule:directed_angle_mod_2pi:27",
+            "full2d_rule:directed_angle_mod_pi:26",
+            "full2d_rule:metric_equal_length:28",
+            "full2d_rule:metric_length_sum:24",
+            "full2d_rule:order_between:31",
+            "full2d_rule:ratio_algebra:25",
+            "full2d_rule:spiral_similarity:35",
+            "full2d_rule:transformation_homothety:33",
+            "full2d_rule:transformation_inversion:34",
+            "full2d_rule:transformation_reflection:32",
+            "full2d_rule:transformation_rotation:36",
+            "full2d_rule:triangle_altitude:20",
+            "full2d_rule:triangle_metric:16",
+            "full2d_rule:triangle_structure:06",
+            "full2d_rule:triangle_structure:18"
+          ]
+        },
+        "red_cases": {
+          "case_results": {
+            "helper_direct_identity_rule_rejected": {
+              "errors": [
+                "direct_identity_or_facade_rule_used_in_success:full2d_helper:area_le_refl",
+                "used_counted_rule_families_below_threshold:0<15"
+              ],
+              "status": "passed"
+            },
+            "measured_failure_rules_do_not_count": {
+              "errors": [
+                "no_b2_final_theorem_successes_for_rule_coverage",
+                "used_counted_rule_families_below_threshold:0<15"
+              ],
+              "status": "passed"
+            }
+          },
+          "errors": [],
+          "schema_version": "UsedRuleCoverageRedCasesV06",
+          "status": "passed"
+        }
+      },
+      "status": "passed"
+    },
+    "returncode": 0,
+    "status": "passed"
+  },
+  "work_debt_open": []
+}
