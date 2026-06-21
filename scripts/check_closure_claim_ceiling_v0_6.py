@@ -147,6 +147,9 @@ def release_report_core_ref(report: dict[str, Any]) -> str:
     required = core.get("required_results")
     if isinstance(required, dict):
         required.pop("closure_claim_ceiling", None)
+    k_map = core.get("K_to_checker_evidence_map")
+    if isinstance(k_map, dict):
+        k_map["K-032"] = {"omitted_for_release_report_core_ref": True}
     encoded = json.dumps(core, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("utf-8")
     return "sha256:" + hashlib.sha256(encoded).hexdigest()
 
