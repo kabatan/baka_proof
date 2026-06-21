@@ -61,21 +61,42 @@ def validate_stage_order(run_dir: Path, manifest: dict[str, Any]) -> list[str]:
     if witness.get("compiler_artifacts_observed_at_provider_completion") not in ([], None):
         errors.append("compiler_artifacts_observed_at_provider_completion")
     provider_completed_at = str(manifest.get("provider_completed_at", ""))
-    for path in sorted(run_dir.rglob("*.json")):
-        if PROVIDER_MANIFEST_DIR in path.parts:
+    if not provider_completed_at:
+        errors.append("missing_provider_completed_at")
+    return errors
+
+
+def validate_global_stage_order(run_dir: Path, provider_completed_values: list[str]) -> list[str]:
+    errors: list[str] = []
+    provider_completed_at = max((value for value in provider_completed_values if value), default="")
+    if not provider_completed_at:
+        return errors
+    scan_roots = [
+        run_dir / "compiler_results_v0_6",
+        run_dir / "actual_task_pipeline_runs_v0_6",
+    ]
+    for root in scan_roots:
+        if not root.exists():
             continue
-        try:
-            payload = read_json(path)
-        except Exception:
-            continue
-        timestamps = payload.get("stage_timestamps") if isinstance(payload, dict) else None
-        if isinstance(timestamps, dict):
-            compiler_started_at = timestamps.get("compiler_started_at")
-            if compiler_started_at and provider_completed_at and str(compiler_started_at) <= provider_completed_at:
-                errors.append(f"{path.relative_to(run_dir).as_posix()}:compiler_started_not_after_provider_completed")
-        compiler_started_at = payload.get("compiler_started_at") if isinstance(payload, dict) else None
+        for path in sorted(root.glob("*.json")):
+            errors.extend(_compiler_timestamp_errors(path, run_dir, provider_completed_at))
+    return sorted(set(errors))
+
+
+def _compiler_timestamp_errors(path: Path, run_dir: Path, provider_completed_at: str) -> list[str]:
+    errors: list[str] = []
+    try:
+        payload = read_json(path)
+    except Exception:
+        return errors
+    timestamps = payload.get("stage_timestamps") if isinstance(payload, dict) else None
+    if isinstance(timestamps, dict):
+        compiler_started_at = timestamps.get("compiler_started_at")
         if compiler_started_at and provider_completed_at and str(compiler_started_at) <= provider_completed_at:
             errors.append(f"{path.relative_to(run_dir).as_posix()}:compiler_started_not_after_provider_completed")
+    compiler_started_at = payload.get("compiler_started_at") if isinstance(payload, dict) else None
+    if compiler_started_at and provider_completed_at and str(compiler_started_at) <= provider_completed_at:
+        errors.append(f"{path.relative_to(run_dir).as_posix()}:compiler_started_not_after_provider_completed")
     return errors
 
 
@@ -141,6 +162,7 @@ def check_provider_isolation(run_dir: Path, *, red_cases: bool = False) -> dict[
 
     manifest_results: list[dict[str, Any]] = []
     manifest_dir = run_dir / PROVIDER_MANIFEST_DIR
+    provider_completed_values: list[str] = []
     for path in sorted(manifest_dir.glob("*.json")):
         try:
             payload = read_json(path)
@@ -149,6 +171,7 @@ def check_provider_isolation(run_dir: Path, *, red_cases: bool = False) -> dict[
             continue
         payload_errors = validate_provider_manifest_payload(payload)
         payload_errors.extend(validate_stage_order(run_dir, payload))
+        provider_completed_values.append(str(payload.get("provider_completed_at", "")))
         engine_paths = payload.get("engine_output_paths", [])
         if not isinstance(engine_paths, list) or not engine_paths:
             payload_errors.append("missing_engine_output_paths")
@@ -162,6 +185,8 @@ def check_provider_isolation(run_dir: Path, *, red_cases: bool = False) -> dict[
 
     if not manifest_results:
         errors.append("missing_provider_manifests")
+    global_stage_order_errors = validate_global_stage_order(run_dir, provider_completed_values)
+    errors.extend(f"global_stage_order:{error}" for error in global_stage_order_errors)
 
     red_report = red_case_report() if red_cases else None
     if red_report:
@@ -176,6 +201,7 @@ def check_provider_isolation(run_dir: Path, *, red_cases: bool = False) -> dict[
         "provider_run": provider_run,
         "import_scan": import_scan,
         "manifest_results": manifest_results,
+        "global_stage_order_errors": global_stage_order_errors,
         "red_cases": red_report,
     }
 
