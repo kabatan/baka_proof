@@ -693,7 +693,7 @@ def _extract_theorem_source(text: str, theorem_name: str) -> str:
     match = theorem_re.search(text)
     if match is None:
         raise ValueError(f"theorem_not_found:{theorem_name}")
-    next_decl = re.search(r"(?m)^\s*(?:theorem|lemma|def|abbrev|structure|inductive)\s+\S+", text[match.end() :])
+    next_decl = re.search(r"(?m)^\s*(?:(?:theorem|lemma|def|abbrev|structure|inductive)\s+\S+|end\b)", text[match.end() :])
     end = match.end() + next_decl.start() if next_decl else len(text)
     return text[match.start() : end].strip() + "\n"
 

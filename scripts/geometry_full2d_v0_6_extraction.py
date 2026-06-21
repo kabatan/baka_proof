@@ -219,13 +219,23 @@ def validate_extraction_report(report: dict[str, Any], task: dict[str, Any], lea
         errors.append("task_id_mismatch")
     if report.get("theorem_name") != theorem_name:
         errors.append("theorem_name_mismatch")
-    if report.get("source_file_ref") != file_sha256(lean_file):
+    original_theorem_source = _extract_theorem_source(lean_file.read_text(encoding="utf-8"), theorem_name)
+    report_source_path = _resolve_report_source_path(report, lean_file)
+    if report_source_path is None or not report_source_path.exists():
+        errors.append("source_theorem_path_missing")
+        report_source_path = lean_file
+    report_theorem_source = _extract_theorem_source(report_source_path.read_text(encoding="utf-8"), theorem_name)
+    if report_source_path.resolve() != lean_file.resolve() and report_theorem_source != original_theorem_source:
+        errors.append("isolated_source_theorem_mismatch")
+    if report.get("source_file_ref") != file_sha256(report_source_path):
         errors.append("source_file_ref_hash_mismatch")
-    theorem_source = _extract_theorem_source(lean_file.read_text(encoding="utf-8"), theorem_name)
-    expected_statement_hash = _sha256_text(theorem_source)
+    expected_statement_hash = _sha256_text(report_theorem_source)
     if report.get("statement_hash") != expected_statement_hash:
         errors.append("statement_hash_mismatch")
-    expected_cache_key = _lean_extraction_cache_key(theorem_name, _sha256_text(_theorem_header_for_cache(theorem_source)))
+    task_statement_hash = task.get("statement_hash")
+    if isinstance(task_statement_hash, str) and task_statement_hash.startswith("sha256:") and task_statement_hash != _sha256_text(original_theorem_source):
+        errors.append("task_statement_hash_mismatch")
+    expected_cache_key = _lean_extraction_cache_key(theorem_name, _sha256_text(_theorem_header_for_cache(report_theorem_source)))
     if report.get("lean_semantic_extractor_cache_key") not in {None, expected_cache_key}:
         errors.append("lean_semantic_extractor_cache_key_mismatch")
     if report.get("config_hash") != manifest_hash(corpus_root):
@@ -249,6 +259,15 @@ def validate_extraction_report(report: dict[str, Any], task: dict[str, Any], lea
     if report.get("content_hash") != sha256_text(canonical_json(unsigned)):
         errors.append("content_hash_mismatch")
     return sorted(set(errors))
+
+
+def _resolve_report_source_path(report: dict[str, Any], fallback: Path) -> Path | None:
+    for key in ("source_theorem_path", "source_file_path"):
+        value = report.get(key)
+        if isinstance(value, str) and value:
+            path = Path(value)
+            return path if path.is_absolute() else ROOT / path
+    return fallback
 
 
 def normalize_side_condition_obligations(value: Any) -> list[dict[str, str]]:

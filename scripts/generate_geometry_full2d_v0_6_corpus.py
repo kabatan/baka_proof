@@ -278,7 +278,8 @@ def build_positive_holdout_tasks(*, release_seed: str, positive_count: int) -> t
             requires_multi_step=requires_multi_step,
         )
         theorem_name = f"v06_sealed_holdout_{index:04d}"
-        theorem_blocks.append(render_theorem(theorem_name, hypotheses, target))
+        theorem_source = render_theorem(theorem_name, hypotheses, target)
+        theorem_blocks.append(theorem_source)
         task = {
             "task_id": theorem_name,
             "theorem_name": theorem_name,
@@ -290,7 +291,7 @@ def build_positive_holdout_tasks(*, release_seed: str, positive_count: int) -> t
             "requires_non_target_intermediate": True,
             "requires_construction_case_certificate": has_construction_case_certificate_witness(hypotheses),
             "requires_multi_step_derivation": requires_multi_step,
-            "statement_hash": sha256_text(theorem_name + ":" + target + ":" + canonical_json(hypotheses)),
+            "statement_hash": sha256_text(theorem_source),
         }
         tasks.append(task)
     theorem_blocks.append("end MathAutoResearch.GeometryFull2D")
@@ -475,7 +476,8 @@ def build_negative_tasks(*, negative_count: int) -> tuple[list[dict[str, Any]], 
         else:
             a, b = POINTS[index % len(POINTS)], POINTS[(index * 5 + 3) % len(POINTS)]
             target = f"{a} = {b}"
-        theorem_blocks.append(render_theorem(theorem_name, [], target))
+        theorem_source = render_theorem(theorem_name, [], target)
+        theorem_blocks.append(theorem_source)
         tasks.append(
             {
                 "task_id": theorem_name,
@@ -485,7 +487,7 @@ def build_negative_tasks(*, negative_count: int) -> tuple[list[dict[str, Any]], 
                 "used_in_metrics": False,
                 "negative_target_outside_malformed": True,
                 "source_type": "TargetOutsideFixture",
-                "statement_hash": sha256_text(theorem_name + ":" + target),
+                "statement_hash": sha256_text(theorem_source),
             }
         )
     theorem_blocks.append("end MathAutoResearch.GeometryFull2D")
@@ -549,7 +551,8 @@ def build_external_goal_preserved_tasks(
             "git_head": current_git_head(),
         }
         artifacts[artifact_rel] = artifact
-        theorem_blocks.append(render_theorem(theorem_name, hypotheses, target))
+        theorem_source = render_theorem(theorem_name, hypotheses, target)
+        theorem_blocks.append(theorem_source)
         tasks.append(
             {
                 "task_id": theorem_name,
@@ -564,7 +567,7 @@ def build_external_goal_preserved_tasks(
                 "requires_non_target_intermediate": True,
                 "requires_construction_case_certificate": has_construction_case_certificate_witness(hypotheses),
                 "requires_multi_step_derivation": len(hypotheses) >= 2,
-                "statement_hash": sha256_text(theorem_name + ":" + target + ":" + canonical_json(hypotheses)),
+                "statement_hash": sha256_text(theorem_source),
             }
         )
     theorem_blocks.append("end MathAutoResearch.GeometryFull2D")
